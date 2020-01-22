@@ -1,7 +1,7 @@
 # 6DOF Rotary Stewart Motion Simulator Platform
 Compact yet powerful motion simulator platform utilizing 6 AC servo motors/planetary gears and a ESP32 microcontroller.
 
-I will make a solid attempt to document this project with sufficent code, videos and wiki entries in order to for a user/(crash test dummy...) to build a fast motion simulator that demands respect. 
+I will make a solid attempt to document this project with sufficent code, videos and wiki entries in order to for a user/(crash test dummy...) to build a fast motion simulator that can be can be used for the demanding speeds of realistic automotive racing motion simulation.
 
 ## Disclaimer 
 This is a DANGEROUS project, and if absolute care is not taken you will be injured or killed.

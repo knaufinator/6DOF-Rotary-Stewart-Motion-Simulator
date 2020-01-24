@@ -8,4 +8,4 @@ This is a DANGEROUS project, and if absolute care is not taken you will be injur
 
 <a align="center" href="http://www.youtube.com/watch?feature=player_embedded&v=mN0IrtdKdVY
 " target="_blank"><img align="center" src="http://img.youtube.com/vi/mN0IrtdKdVY/0.jpg" 
-alt="Motion Sim Example" height="480" border="10" /></a>
+alt="Motion Sim Example" height="480" width="auto" border="10" /></a>

@@ -10,7 +10,7 @@ extern "C" {
 
 using namespace std;
 
-//multiplexers for communicating with all 6 servo controllers. 
+//multiplexers for communicating with all 6 AC Servo controllers. 
 SPIClass hspi( HSPI );
 MCP23S17 outputBank( &hspi, 15, 0 );
 MCP23S17 inputBank( &hspi, 15, 1 );

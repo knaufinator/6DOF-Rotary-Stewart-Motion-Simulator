@@ -15,9 +15,11 @@ SPIClass hspi( HSPI );
 MCP23S17 outputBank( &hspi, 15, 0 );
 MCP23S17 inputBank( &hspi, 15, 1 );
 
+//what motors to run in reverse
 #define INV1 0
 #define INV2 2
 #define INV3 4
+
 #define BIT_SET(a,b) ((a) |= (1ULL<<(b)))
 #define BIT_CLEAR(a,b) ((a) &= ~(1ULL<<(b)))
 

@@ -12,6 +12,9 @@ This is a DANGEROUS project, and if absolute care is not taken you will be injur
 " target="_blank"><img align="center" src="http://img.youtube.com/vi/mN0IrtdKdVY/0.jpg" 
 alt="Motion Sim Example" height="340" width="auto" border="5" /></a>
 
+# Projects Included
+These are the components of the project that are included in this repository
+
 ## Controller
 This is an ESP32 Arduino project. This interfaces with the PC through software like simtools, after correctly configuring.  You will need the custom MCP23S17 library in order to compile the project.
 

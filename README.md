@@ -73,3 +73,32 @@ Wind Generator PWM Control https://amzn.to/2Ns1anq
 Wind Generator 90 Degree angle 3"-> 2" Reducer https://amzn.to/2uN6J9z
 Wire Wrap https://amzn.to/2u3jiNu
 
+## AC Servo motor settings
+*explanation needed
+pn002 - 002
+pn003 - 001 - servo enable, without this the motor is limp
+
+pn098 - 80
+pn109 - 002
+pn110 - 050
+pn111 - 300
+pn112 - 150
+
+dn-14 to see input state
+
+On homing trigger use NO top contacts
+
+input settings 
+Sigin 1 - homing trigger
+pn52 - 22 
+
+pn36 - -8
+pn37 -  -5000
+pn38 - 100 init speed
+pn39 - 100 back home speed
+
+
+homing settings
+pn033 -3 power on homing @200rpm
+	pn034 - 0 clockwise
+	pn034 - 1 counter clockwise

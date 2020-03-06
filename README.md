@@ -59,17 +59,17 @@ Main components on the PCB
 - 6 - 3/8"-16 Long Coped Steel Bungs
 
 ## Chassis
-~30' of 1" OD X .870 ID X .065 Wall Steel tubing welded in place with custom rigging to maintain correct proportions. 
-6 - 3/8"-16 Long Coped Steel Bungs
-Monitor mount (modified) https://amzn.to/2TmVS0f
+* [Vesa Monitor mount](https://amzn.to/2TmVS0f)
+* [Coped Steel Bungs](https://amzn.to/2TGOcoo)
+* [1" OD X .870 ID X .065 Wall Steel tubing](https://amzn.to/3au4FCQ)
 
-## Electronics as built in videos
-LG 34" Ultrawide https://amzn.to/2t8YvbC
-Thrustmaster T16000M FCS https://amzn.to/30qkHtY
-Wind Generator Fan https://amzn.to/36W1um9
-Wind Generator PWM Control https://amzn.to/2Ns1anq
-Wind Generator 90 Degree angle 3"-> 2" Reducer https://amzn.to/2uN6J9z
-Wire Wrap https://amzn.to/2u3jiNu
+## Extras as built in demonstration video
+* [LG 34" Ultrawide](https://amzn.to/2t8YvbC)
+* [Thrustmaster T16000M FCS](https://amzn.to/30qkHtY)
+* [Wind Generator Fan](https://amzn.to/36W1um9)
+* [Wind Generator PWM Control](https://amzn.to/2Ns1anq)
+* [Wind Generator 90 Degree angle 3"-> 2" Reducer](https://amzn.to/2uN6J9z)
+* [Wire Wrap](https://amzn.to/2u3jiNu)
 
 ## AC Servo motor settings
 These are my settings on the Servo Driver aasd-15a these both enable specific modes as well define the time it should take to accelerate and decelerate the platform before it hits max speed. This is useful for when you want to protect the platform from self destruction due to to fast of movements. Make them to large and the platform will feel slugish.
@@ -78,6 +78,6 @@ These are my settings on the Servo Driver aasd-15a these both enable specific mo
 - pn098 - Gear - "80"
 - pn109 - Position command deceleration mode- "002"
 - pn110 - Position command a filtering time constant - "050"
-- pn111 - S-shaped filtering time constant Ta position instruction - 300
+- pn111 - S-shaped filtering time constant Ta position instruction - "300"
 - pn112 - position instruction Ts S-shaped filtering
 time constant Ts - "150"

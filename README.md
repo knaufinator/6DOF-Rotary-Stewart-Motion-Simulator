@@ -72,11 +72,12 @@ Wind Generator 90 Degree angle 3"-> 2" Reducer https://amzn.to/2uN6J9z
 Wire Wrap https://amzn.to/2u3jiNu
 
 ## AC Servo motor settings
-These are my settings on the Servo Driver aasd-15a for use with the Controller output
-- pn002 - 002
-- pn003 - 001 - servo enable, without this the motor is limp
-- pn098 - 80
-- pn109 - 002
-- pn110 - 050
-- pn111 - 300
-- pn112 - 150
+These are my settings on the Servo Driver aasd-15a these both enable specific modes as well define the time it should take to accelerate and decelerate the platform before it hits max speed. This is useful for when you want to protect the platform from self destruction due to to fast of movements. Make them to large and the platform will feel slugish.
+- pn002 - Control Mode - "002"
+- pn003 - Servo enable - "001"
+- pn098 - Gear - "80"
+- pn109 - Position command deceleration mode- "002"
+- pn110 - Position command a filtering time constant - "050"
+- pn111 - S-shaped filtering time constant Ta position instruction - 300
+- pn112 - position instruction Ts S-shaped filtering
+time constant Ts - "150"

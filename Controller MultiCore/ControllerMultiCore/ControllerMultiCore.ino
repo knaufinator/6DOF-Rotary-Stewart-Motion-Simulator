@@ -3,12 +3,18 @@
 #include <SPI.h>
 #include <MCP23S17.h> 
 
+#include "soc/timer_group_struct.h"
+#include "soc/timer_group_reg.h"
+
 extern "C" {
   #include "freertos/FreeRTOS.h"
   #include "freertos/timers.h"
 }
 
 using namespace std;
+
+TaskHandle_t Task1;
+TaskHandle_t Task2;
 
 //multiplexers for communicating with all 6 servo controllers. 
 SPIClass hspi( HSPI );
@@ -44,16 +50,11 @@ int  microInterval = 10;
 const unsigned int MAX_INPUT = 60;
 
 struct acServo {
-  int limitHighValue;
   int stepPin;
   int dirPin;
   bool pinState;
   long currentpos;
   long targetpos;  
-  bool limitActive;
-  bool needsHomed;
-  int num;
-  int currentDirection;
 };
 
 struct acServo motors[6];
@@ -75,11 +76,11 @@ static float ServoArmLengthL1 = 7.4;
 static float ConnectingArmLengthL2 = 28.5;
 static float platformHeight = 25.546;
 
-//how many pulses per radians of arm movement
+//how many pulses per radians of arm movement, tuned untill actual degrees matched expected output
 static float servoPulseMultiplierPerRadian =  800/(pi/4);
 
-//current target from pc
-static float arr[6]={0,0,0, 0,0,0};
+//current target from pc, modified from 2 seperate tasks/cores
+static volatile float arr[6]={0,0,0, 0,0,0};
 
 // for Platform Coord algorithm
 float platformPDx[6]={0,0,0, 0,0,0};
@@ -150,12 +151,8 @@ float getAlpha(int i){
         return asin(l[i]/(sqrt(pow(m[i], 2.0)+pow(n[i], 2.0))))-atan(n[i]/m[i]);
 }
 
-unsigned char setPos(float pe[]){  
-    unsigned char errorcount;
-    errorcount=0;
-    
-    printf("Alpha\n");
-    
+void setPos(){  
+  
     //Platform and Base Coords
     for(int i = 0; i < 6; i++)
     {    
@@ -164,8 +161,6 @@ unsigned char setPos(float pe[]){
 
           if(alpha >= servo_min && alpha <= servo_max)
           {
-             Serial.print(alpha);
-              Serial.print(",");
               if(i==INV1||i==INV2||i==INV3){
                   x = -(alpha)*servoPulseMultiplierPerRadian;
               }
@@ -176,15 +171,11 @@ unsigned char setPos(float pe[]){
               servo_pos[i] = x;            
           }     
     }
-    
-    Serial.println("");
 
     for(int i = 0; i < 6; i++)
     {
           motors[i].targetpos = servo_pos[i];
     }    
-    
-    return errorcount;
 }
 
 //parses the data packet from the pc => x,y,z,RX,RY,RZ
@@ -209,7 +200,7 @@ void process_data ( char * data)
           tok = strtok(NULL, ",");
     }   
     
-    setPos(arr);
+    setPos();
 } 
 
 //for debugging motor position
@@ -222,24 +213,50 @@ void showMotorStatus(struct acServo motor)
 //show the target of the all the motors every so often
 void ping( TimerHandle_t xTimer )
 { 
-    for(int i=0;i<6;i++)    
-      showMotorStatus(motors[i]);
+    //Resets the watchdog timer in the ESP32/rtos
+    TIMERG0.wdt_wprotect=TIMG_WDT_WKEY_VALUE;
+    TIMERG0.wdt_feed=1;
+    TIMERG0.wdt_wprotect=0;
+      
+ //   for(int i=0;i<6;i++)    
+  //    showMotorStatus(motors[i]);
 
-    Serial.println("");
+  //  Serial.println("");
 
     xTimerStart(tmr, 0);
 }
 
 void setup(){
    Serial.begin(115200);  
+
+
+  xTaskCreatePinnedToCore(
+                    Task1code,   /* Task function. */
+                    "Task1",     /* name of task. */
+                    10000,       /* Stack size of task */
+                    NULL,        /* parameter of the task */
+                    1,           /* priority of the task */
+                    &Task1,      /* Task handle to keep track of created task */
+                    0);          /* pin task to core 0 */                  
+
+  xTaskCreatePinnedToCore(
+                    Task2code,   /* Task function. */
+                    "Task2",     /* name of task. */
+                    10000,       /* Stack size of task */
+                    NULL,        /* parameter of the task */
+                    1,           /* priority of the task */
+                    &Task2,      /* Task handle to keep track of created task */
+                    1);          /* pin task to core 1 */
+
    
    inputBank.begin();
    outputBank.begin();
 
    //setup the outputs for the AC servo controllers
    setupPWMpins();
+
+   //use during debugging, this will output every one second the position the motors are trying to achive
    tmr = xTimerCreate("tmr", pdMS_TO_TICKS(1000), pdFALSE, (void*)0, reinterpret_cast<TimerCallbackFunction_t>(ping));// pos serial output every 1 second
-  
    xTimerStart(tmr, 0);
 }
 
@@ -252,12 +269,7 @@ void setupPWMpins() {
         motors[i].pinState = false;
         motors[i].currentpos = 0;
         motors[i].targetpos = 0;
-        motors[i].needsHomed = false;
-        motors[i].num = i;
-        motors[i].currentDirection = 0;
-        motors[i].limitHighValue = 0;
-       //motors[i].limitLowValue = 0;
-        
+
         outputBank.pinMode( motors[i].stepPin, OUTPUT );
         outputBank.pinMode( motors[i].dirPin, OUTPUT );
 
@@ -334,11 +346,7 @@ void handlePWM() {
 }
 
 void loop()
-{    
- while (Serial.available () > 0)
-        processIncomingByte (Serial.read ());
-  
-     handlePWM();  
+{      
 }
 
 float average (int * array, int len)  // assuming array is int.
@@ -372,3 +380,20 @@ void processIncomingByte (const byte inByte)
           break;
     } 
 } 
+
+
+void Task1code( void * pvParameters ){
+  
+  for(;;){
+
+   while (Serial.available () > 0)
+        processIncomingByte (Serial.read ());
+  } 
+}
+
+void Task2code( void * pvParameters ){
+  
+  for(;;){
+      handlePWM();   
+  }
+}

@@ -39,6 +39,8 @@ Main components on the PCB
 * [ESP32 Dev board](https://amzn.to/2OkGpuj) - ESP32 Dev kit
 * [MCP23S17](https://amzn.to/32UCSsQ) -
 * [3.3V to 5V TTL Shifter Module](https://amzn.to/2VRh3sA) -
+* [NJK-5002C NPN NO（Normally Open)Hall Effect Sensor Switch](https://amzn.to/2vSzzX8) -
+
 
 ## Base
 - Steel plate ½ inch thick 31” diameter

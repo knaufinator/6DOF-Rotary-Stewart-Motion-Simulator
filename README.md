@@ -53,8 +53,8 @@ Main components on the PCB
 
 ## Connecting Arms
 
-* [12 - 1/2 X 1/2-20 Economy Panhard Bar Kit with Bung .065, Rod End, Heim Joint](https://amzn.to/2FQffak) - words
-* [12 - 1/2-3/8 High Misalignment Spacers, Rod End Spacers](https://amzn.to/2tm1jlF) - words
+* [12 - 1/2 X 1/2-20 Economy Panhard Bar Kit with Bung .065, Rod End, Heim Joint](https://amzn.to/2FQffak)
+* [12 - 1/2-3/8 High Misalignment Spacers, Rod End Spacers](https://amzn.to/2tm1jlF)
 * [6 - 24" long 1" OD X .870 ID X .065 Wall Steel tubing]()
 
 ## Swing Arms

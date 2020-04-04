@@ -47,14 +47,15 @@ Main components on the PCB
 - 6 - Coupler https://amzn.to/2slOiIa
 
 ## Drive
-- 6 - 750w AC servo Motors: https://www.aliexpress.com/item/32844239563.html?spm=a2g0s.9042311.0.0.5c3e4c4dQCTg33
-- 6 - 50:1 Planetary Gears: https://www.aliexpress.com/item/32967571001.html?spm=a2g0s.9042311.0.0.5c3e4c4dQCTg33
+* [6 - 750w AC servo Motors](https://www.aliexpress.com/item/32844239563.html)
+* [6 - 50:1 Planetary Gears](https://www.aliexpress.com/item/32967571001.html)
 *Note ensure planetary gear input diameter matches up to both the motor as well with the coupler output diameter when ordering from Aliexpress
 
 ## Connecting Arms
-- 6 - 24" long 1" OD X .870 ID X .065 Wall Steel tubing
-- 12 - 1/2 X 1/2-20 Economy Panhard Bar Kit with Bung .065, Rod End, Heim Joint https://amzn.to/2FQffak
-- 12 - 1/2-3/8 High Misalignment Spacers, Rod End Spacers https://amzn.to/2tm1jlF
+
+* [12 - 1/2 X 1/2-20 Economy Panhard Bar Kit with Bung .065, Rod End, Heim Joint](https://amzn.to/2FQffak) - words
+* [12 - 1/2-3/8 High Misalignment Spacers, Rod End Spacers](https://amzn.to/2tm1jlF) - words
+* [6 - 24" long 1" OD X .870 ID X .065 Wall Steel tubing]()
 
 ## Swing Arms
 - 6 - 8" long 1" OD X .870 ID X .065 Wall Steel tubing

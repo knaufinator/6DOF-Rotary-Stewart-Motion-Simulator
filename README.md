@@ -8,8 +8,8 @@ This platform is scalable, and most dimensions are changeable within reason. Cer
 ## Disclaimer 
 This is a DANGEROUS project, and if absolute care is not taken you will be injured or killed.
 
-<a align="center" href="http://www.youtube.com/watch?feature=player_embedded&v=mN0IrtdKdVY
-" target="_blank"><img align="center" src="http://img.youtube.com/vi/mN0IrtdKdVY/0.jpg" 
+<a align="center" href="http://www.youtube.com/watch?feature=player_embedded&v=xYQOFhglxkg
+" target="_blank"><img align="center" src="http://img.youtube.com/vi/xYQOFhglxkg/0.jpg" 
 alt="Motion Sim Example" height="340" width="auto" border="5" /></a>
 
 # Projects Included

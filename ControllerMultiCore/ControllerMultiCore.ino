@@ -13,6 +13,8 @@ extern "C" {
 
 using namespace std;
 
+SemaphoreHandle_t xMutex;
+
 TaskHandle_t Task1;
 TaskHandle_t Task2;
 
@@ -57,7 +59,7 @@ struct acServo {
   long targetpos;  
 };
 
-struct acServo motors[6];
+volatile struct acServo motors[6];
 
 //helpers
 #define DEG_TO_RAD 0.017453292519943295769236907684886
@@ -172,10 +174,18 @@ void setPos(){
           }     
     }
 
+    //lock access to motor array
+    xSemaphoreTake( xMutex, portMAX_DELAY );
+    
     for(int i = 0; i < 6; i++)
     {
           motors[i].targetpos = servo_pos[i];
-    }    
+    }   
+    
+    //give up lock
+    xSemaphoreGive( xMutex );
+
+     
 }
 
 //parses the data packet from the pc => x,y,z,RX,RY,RZ
@@ -203,12 +213,6 @@ void process_data ( char * data)
     setPos();
 } 
 
-//for debugging motor position
-void showMotorStatus(struct acServo motor)
-{
-    Serial.print(motor.currentpos);
-    Serial.print(",");
-}
 
 //show the target of the all the motors every so often
 void ping( TimerHandle_t xTimer )
@@ -217,20 +221,30 @@ void ping( TimerHandle_t xTimer )
     TIMERG0.wdt_wprotect=TIMG_WDT_WKEY_VALUE;
     TIMERG0.wdt_feed=1;
     TIMERG0.wdt_wprotect=0;
+
+      //lock access to motor array
+    //  xSemaphoreTake( xMutex, portMAX_DELAY );
+
+    //disable when not debugging so it no waste time
+      for(int i=0;i<6;i++)    
+      {
+        //Serial.print(motors[i].currentpos);
+        //Serial.print(",");
+      }
+        
+      //Serial.println("");
+
+  //    xSemaphoreGive( xMutex );
       
- //   for(int i=0;i<6;i++)    
-  //    showMotorStatus(motors[i]);
-
-  //  Serial.println("");
-
     xTimerStart(tmr, 0);
 }
 
 void setup(){
    Serial.begin(115200);  
-
-
-  xTaskCreatePinnedToCore(
+   
+   xMutex = xSemaphoreCreateMutex();
+   
+   xTaskCreatePinnedToCore(
                     Task1code,   /* Task function. */
                     "Task1",     /* name of task. */
                     10000,       /* Stack size of task */
@@ -239,7 +253,7 @@ void setup(){
                     &Task1,      /* Task handle to keep track of created task */
                     0);          /* pin task to core 0 */                  
 
-  xTaskCreatePinnedToCore(
+   xTaskCreatePinnedToCore(
                     Task2code,   /* Task function. */
                     "Task2",     /* name of task. */
                     10000,       /* Stack size of task */
@@ -280,10 +294,13 @@ void setupPWMpins() {
 }
 
 boolean pinState = false;
-uint16_t motorStepDirValue = 0;        
-
+     
+uint16_t motorStepDirValue = 0;   
+uint16_t motorStepDirValue2 = 0;   
+  
 //pulse train for step and direction, builds output to multiplexer
 void handlePWM() {
+
   currentMicros = esp_timer_get_time();
   int dif = currentMicros - previousMicros;
   
@@ -295,17 +312,25 @@ void handlePWM() {
           //keep the direction the same, 
           pinState = false;
 
+          //lock access to motor array
+          xSemaphoreTake( xMutex, portMAX_DELAY );
+
           for(int i =0;i<6;i++)
           {
             motorStepDirValue = BIT_CLEAR(motorStepDirValue,stepPins[i]);
+            motorStepDirValue2 = BIT_CLEAR(motorStepDirValue2,stepPins[i]);//bad things happen if you leave this out....
           }
+          
+           //give access back up
+           xSemaphoreGive( xMutex );
         
           outputBank.digitalWrite(motorStepDirValue);      
         
         } else { 
-            //direction can chage here, so we need to change the output of the dir only first
-            
-            pinState = true;          
+            pinState = true;
+
+            //lock access to motor array
+            xSemaphoreTake( xMutex, portMAX_DELAY );
 
             //set direction pins first
             for(int i =0;i<6;i++)
@@ -313,32 +338,36 @@ void handlePWM() {
               if(motors[i].currentpos > motors[i].targetpos)
               {
                  motorStepDirValue = BIT_CLEAR(motorStepDirValue,dirPins[i]);
+                 motorStepDirValue2 = BIT_CLEAR(motorStepDirValue2,dirPins[i]);
               }
               else if(motors[i].currentpos < motors[i].targetpos)
               { 
                 motorStepDirValue = BIT_SET(motorStepDirValue,dirPins[i]);
+                motorStepDirValue2 = BIT_SET(motorStepDirValue2,dirPins[i]);
               }
             }
-
-            outputBank.digitalWrite(motorStepDirValue);      
-
+            
             //Next, set the step pins
             for(int i =0;i<6;i++)
             {
               if(motors[i].currentpos > motors[i].targetpos)
               {
                   motors[i].currentpos--;
-                  motorStepDirValue = BIT_SET(motorStepDirValue,stepPins[i]);
+                  motorStepDirValue2 = BIT_SET(motorStepDirValue2,stepPins[i]);
               }
               else if(motors[i].currentpos < motors[i].targetpos)
               { 
                   motors[i].currentpos++;
-                  motorStepDirValue = BIT_SET(motorStepDirValue,stepPins[i]);
+                  motorStepDirValue2 = BIT_SET(motorStepDirValue2,stepPins[i]);
               }
-
             }
-            
+
+            //give access back up
+            xSemaphoreGive( xMutex );
+
+            //two outputs, one to set direction, one to then( reafirm direction + step)
             outputBank.digitalWrite(motorStepDirValue);     
+            outputBank.digitalWrite(motorStepDirValue2);      
         }
         
         previousMicros = currentMicros;         

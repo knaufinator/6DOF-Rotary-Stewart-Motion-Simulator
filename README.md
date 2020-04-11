@@ -8,8 +8,8 @@ This platform is scalable, and most dimensions are changeable within reason. Cer
 ## Disclaimer 
 This is a DANGEROUS project, and if absolute care is not taken you will be injured or killed.
 
-<a align="center" href="http://www.youtube.com/watch?feature=player_embedded&v=mN0IrtdKdVY
-" target="_blank"><img align="center" src="http://img.youtube.com/vi/mN0IrtdKdVY/0.jpg" 
+<a align="center" href="http://www.youtube.com/watch?feature=player_embedded&v=xYQOFhglxkg
+" target="_blank"><img align="center" src="http://img.youtube.com/vi/xYQOFhglxkg/0.jpg" 
 alt="Motion Sim Example" height="340" width="auto" border="5" /></a>
 
 # Projects Included
@@ -39,20 +39,23 @@ Main components on the PCB
 * [ESP32 Dev board](https://amzn.to/2OkGpuj) - ESP32 Dev kit
 * [MCP23S17](https://amzn.to/32UCSsQ) -
 * [3.3V to 5V TTL Shifter Module](https://amzn.to/2VRh3sA) -
+* [NJK-5002C NPN NO（Normally Open)Hall Effect Sensor Switch](https://amzn.to/2vSzzX8) -
+
 
 ## Base
 - Steel plate ½ inch thick 31” diameter
 - 6 - Coupler https://amzn.to/2slOiIa
 
 ## Drive
-- 6 - 750w AC servo Motors: https://www.aliexpress.com/item/32844239563.html?spm=a2g0s.9042311.0.0.5c3e4c4dQCTg33
-- 6 - 50:1 Planetary Gears: https://www.aliexpress.com/item/32967571001.html?spm=a2g0s.9042311.0.0.5c3e4c4dQCTg33
+* [6 - 750w AC servo Motors](https://www.aliexpress.com/item/32844239563.html)
+* [6 - 50:1 Planetary Gears](https://www.aliexpress.com/item/32967571001.html)
 *Note ensure planetary gear input diameter matches up to both the motor as well with the coupler output diameter when ordering from Aliexpress
 
 ## Connecting Arms
-- 6 - 24" long 1" OD X .870 ID X .065 Wall Steel tubing
-- 12 - 1/2 X 1/2-20 Economy Panhard Bar Kit with Bung .065, Rod End, Heim Joint https://amzn.to/2FQffak
-- 12 - 1/2-3/8 High Misalignment Spacers, Rod End Spacers https://amzn.to/2tm1jlF
+
+* [12 - 1/2 X 1/2-20 Economy Panhard Bar Kit with Bung .065, Rod End, Heim Joint](https://amzn.to/2FQffak)
+* [12 - 1/2-3/8 High Misalignment Spacers, Rod End Spacers](https://amzn.to/2tm1jlF)
+* [6 - 24" long 1" OD X .870 ID X .065 Wall Steel tubing]()
 
 ## Swing Arms
 - 6 - 8" long 1" OD X .870 ID X .065 Wall Steel tubing

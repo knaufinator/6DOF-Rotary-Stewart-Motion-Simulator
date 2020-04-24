@@ -136,9 +136,9 @@ float getAlpha(int i){
         baseCoordsy[i] = basePDy[i] * sin(baseAngle[i]);
         
         //Platform pivots
-        platformPivotx[i] = platformCoordsx[i]*cos(arr[4])*cos(arr[5])+platformCoordsy[i]*(sin(arr[3])*sin(arr[4])*cos(arr[4])-cos(arr[4])*sin(arr[4]))+arr[0]; 
+        platformPivotx[i] = platformCoordsx[i]*cos(arr[3])*cos(arr[5])+platformCoordsy[i]*(sin(arr[4])*sin(arr[3])*cos(arr[3])-cos(arr[4])*sin(arr[5]))+arr[0]; 
         platformPivoty[i] = platformCoordsx[i]*cos(arr[4])*sin(arr[5])+platformCoordsy[i]*(cos(arr[3])*cos(arr[5])+sin(arr[3])*sin(arr[4])*sin(arr[5]))+arr[1];
-        platformPivotz[i] = -platformCoordsx[i]*sin(arr[4])+platformCoordsy[i]*sin(arr[3])*cos(arr[4])+platformHeight+arr[2];
+        platformPivotz[i] = -platformCoordsx[i]*sin(arr[3])+platformCoordsy[i]*sin(arr[4])*cos(arr[3])+platformHeight+arr[2];
         
         deltaLx[i] = baseCoordsx[i] - platformPivotx[i];
         deltaLy[i] = baseCoordsy[i] - platformPivoty[i];
@@ -188,7 +188,7 @@ void setPos(){
      
 }
 
-//parses the data packet from the pc => x,y,z,RX,RY,RZ
+//parses the data packet from the pc => x,y,z,Ry,Rx,RZ
 void process_data ( char * data)
 { 
     int i = 0; 
@@ -201,7 +201,7 @@ void process_data ( char * data)
         if(i == 2)
           temp =mapfloat(value, 0, 4094, -7, 7);//hieve 
         else if(i > 2)//rotations, pitch,roll,yaw
-          temp = mapfloat(value, 0, 4094, -20, 20) *(pi/180.0);
+          temp = mapfloat(value, 0, 4094, -30, 30) *(pi/180.0);
         else//sway,surge
           temp = mapfloat(value, 0, 4094, -8, 8); 
           

@@ -16,10 +16,7 @@ alt="Motion Sim Example" height="340" width="auto" border="5" /></a>
 These are the components of the project that are included in this repository
 
 ## Controller
-This is an ESP32 Arduino project. This interfaces with the PC through software like simtools, after correctly configuring.  You will need the custom MCP23S17 library in order to compile the project.
-
-## ControllerMultiCore
-This is a test version of the controller that makes use of both cores on the ESP32, this is in testing stage. This primarily is designed for getting the update rate to 1ms. where the standard controller only could get to 3ms update rate reliably.
+This is an ESP32 Arduino project. This interfaces with the PC through software like simtools, after correctly configuring.  You will need the custom MCP23S17 library in order to compile the project. This project utilizes both ESP32 cores in order to maximize refresh rates to 1000Hz, or 1ms interval.
 
 ## MCP23S17
 A Custom MCP23S17 library, modified so the outputs of all 6 motors can be set at one time instead of setting them individually, this saves time and allows for more pulses per second. This increase allows for higher movement precision on the rotational arm. 

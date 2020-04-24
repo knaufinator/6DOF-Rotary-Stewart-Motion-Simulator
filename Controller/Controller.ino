@@ -3,6 +3,9 @@
 #include <SPI.h>
 #include <MCP23S17.h> 
 
+#include "soc/timer_group_struct.h"
+#include "soc/timer_group_reg.h"
+
 extern "C" {
   #include "freertos/FreeRTOS.h"
   #include "freertos/timers.h"
@@ -10,16 +13,19 @@ extern "C" {
 
 using namespace std;
 
-//multiplexers for communicating with all 6 AC Servo controllers. 
+SemaphoreHandle_t xMutex;
+
+TaskHandle_t Task1;
+TaskHandle_t Task2;
+
+//multiplexers for communicating with all 6 servo controllers. 
 SPIClass hspi( HSPI );
 MCP23S17 outputBank( &hspi, 15, 0 );
 MCP23S17 inputBank( &hspi, 15, 1 );
 
-//what motors to run in reverse
 #define INV1 0
 #define INV2 2
 #define INV3 4
-
 #define BIT_SET(a,b) ((a) |= (1ULL<<(b)))
 #define BIT_CLEAR(a,b) ((a) &= ~(1ULL<<(b)))
 
@@ -46,19 +52,14 @@ int  microInterval = 10;
 const unsigned int MAX_INPUT = 60;
 
 struct acServo {
-  int limitHighValue;
   int stepPin;
   int dirPin;
   bool pinState;
   long currentpos;
   long targetpos;  
-  bool limitActive;
-  bool needsHomed;
-  int num;
-  int currentDirection;
 };
 
-struct acServo motors[6];
+volatile struct acServo motors[6];
 
 //helpers
 #define DEG_TO_RAD 0.017453292519943295769236907684886
@@ -77,11 +78,11 @@ static float ServoArmLengthL1 = 7.4;
 static float ConnectingArmLengthL2 = 28.5;
 static float platformHeight = 25.546;
 
-//how many pulses per radians of arm movement
+//how many pulses per radians of arm movement, tuned untill actual degrees matched expected output
 static float servoPulseMultiplierPerRadian =  800/(pi/4);
 
-//current target from pc
-static float arr[6]={0,0,0, 0,0,0};
+//current target from pc, modified from 2 seperate tasks/cores
+static volatile float arr[6]={0,0,0, 0,0,0};
 
 // for Platform Coord algorithm
 float platformPDx[6]={0,0,0, 0,0,0};
@@ -135,9 +136,9 @@ float getAlpha(int i){
         baseCoordsy[i] = basePDy[i] * sin(baseAngle[i]);
         
         //Platform pivots
-        platformPivotx[i] = platformCoordsx[i]*cos(arr[4])*cos(arr[5])+platformCoordsy[i]*(sin(arr[3])*sin(arr[4])*cos(arr[4])-cos(arr[4])*sin(arr[4]))+arr[0]; 
+        platformPivotx[i] = platformCoordsx[i]*cos(arr[3])*cos(arr[5])+platformCoordsy[i]*(sin(arr[4])*sin(arr[3])*cos(arr[3])-cos(arr[4])*sin(arr[5]))+arr[0]; 
         platformPivoty[i] = platformCoordsx[i]*cos(arr[4])*sin(arr[5])+platformCoordsy[i]*(cos(arr[3])*cos(arr[5])+sin(arr[3])*sin(arr[4])*sin(arr[5]))+arr[1];
-        platformPivotz[i] = -platformCoordsx[i]*sin(arr[4])+platformCoordsy[i]*sin(arr[3])*cos(arr[4])+platformHeight+arr[2];
+        platformPivotz[i] = -platformCoordsx[i]*sin(arr[3])+platformCoordsy[i]*sin(arr[4])*cos(arr[3])+platformHeight+arr[2];
         
         deltaLx[i] = baseCoordsx[i] - platformPivotx[i];
         deltaLy[i] = baseCoordsy[i] - platformPivoty[i];
@@ -152,12 +153,8 @@ float getAlpha(int i){
         return asin(l[i]/(sqrt(pow(m[i], 2.0)+pow(n[i], 2.0))))-atan(n[i]/m[i]);
 }
 
-unsigned char setPos(float pe[]){  
-    unsigned char errorcount;
-    errorcount=0;
-    
-    printf("Alpha\n");
-    
+void setPos(){  
+  
     //Platform and Base Coords
     for(int i = 0; i < 6; i++)
     {    
@@ -166,8 +163,6 @@ unsigned char setPos(float pe[]){
 
           if(alpha >= servo_min && alpha <= servo_max)
           {
-             Serial.print(alpha);
-              Serial.print(",");
               if(i==INV1||i==INV2||i==INV3){
                   x = -(alpha)*servoPulseMultiplierPerRadian;
               }
@@ -178,18 +173,22 @@ unsigned char setPos(float pe[]){
               servo_pos[i] = x;            
           }     
     }
-    
-    Serial.println("");
 
+    //lock access to motor array
+    xSemaphoreTake( xMutex, portMAX_DELAY );
+    
     for(int i = 0; i < 6; i++)
     {
           motors[i].targetpos = servo_pos[i];
-    }    
+    }   
     
-    return errorcount;
+    //give up lock
+    xSemaphoreGive( xMutex );
+
+     
 }
 
-//parses the data packet from the pc => x,y,z,RX,RY,RZ
+//parses the data packet from the pc => x,y,z,Ry,Rx,RZ
 void process_data ( char * data)
 { 
     int i = 0; 
@@ -202,7 +201,7 @@ void process_data ( char * data)
         if(i == 2)
           temp =mapfloat(value, 0, 4094, -7, 7);//hieve 
         else if(i > 2)//rotations, pitch,roll,yaw
-          temp = mapfloat(value, 0, 4094, -20, 20) *(pi/180.0);
+          temp = mapfloat(value, 0, 4094, -30, 30) *(pi/180.0);
         else//sway,surge
           temp = mapfloat(value, 0, 4094, -8, 8); 
           
@@ -211,37 +210,67 @@ void process_data ( char * data)
           tok = strtok(NULL, ",");
     }   
     
-    setPos(arr);
+    setPos();
 } 
 
-//for debugging motor position
-void showMotorStatus(struct acServo motor)
-{
-    Serial.print(motor.currentpos);
-    Serial.print(",");
-}
 
 //show the target of the all the motors every so often
 void ping( TimerHandle_t xTimer )
 { 
-    for(int i=0;i<6;i++)    
-      showMotorStatus(motors[i]);
+    //Resets the watchdog timer in the ESP32/rtos
+    TIMERG0.wdt_wprotect=TIMG_WDT_WKEY_VALUE;
+    TIMERG0.wdt_feed=1;
+    TIMERG0.wdt_wprotect=0;
 
-    Serial.println("");
+      //lock access to motor array
+    //  xSemaphoreTake( xMutex, portMAX_DELAY );
 
+    //disable when not debugging so it no waste time
+      for(int i=0;i<6;i++)    
+      {
+        //Serial.print(motors[i].currentpos);
+        //Serial.print(",");
+      }
+        
+      //Serial.println("");
+
+  //    xSemaphoreGive( xMutex );
+      
     xTimerStart(tmr, 0);
 }
 
 void setup(){
    Serial.begin(115200);  
    
+   xMutex = xSemaphoreCreateMutex();
+   
+   xTaskCreatePinnedToCore(
+                    Task1code,   /* Task function. */
+                    "Task1",     /* name of task. */
+                    10000,       /* Stack size of task */
+                    NULL,        /* parameter of the task */
+                    1,           /* priority of the task */
+                    &Task1,      /* Task handle to keep track of created task */
+                    0);          /* pin task to core 0 */                  
+
+   xTaskCreatePinnedToCore(
+                    Task2code,   /* Task function. */
+                    "Task2",     /* name of task. */
+                    10000,       /* Stack size of task */
+                    NULL,        /* parameter of the task */
+                    1,           /* priority of the task */
+                    &Task2,      /* Task handle to keep track of created task */
+                    1);          /* pin task to core 1 */
+
+   
    inputBank.begin();
    outputBank.begin();
 
    //setup the outputs for the AC servo controllers
    setupPWMpins();
+
+   //use during debugging, this will output every one second the position the motors are trying to achive
    tmr = xTimerCreate("tmr", pdMS_TO_TICKS(1000), pdFALSE, (void*)0, reinterpret_cast<TimerCallbackFunction_t>(ping));// pos serial output every 1 second
-  
    xTimerStart(tmr, 0);
 }
 
@@ -254,12 +283,7 @@ void setupPWMpins() {
         motors[i].pinState = false;
         motors[i].currentpos = 0;
         motors[i].targetpos = 0;
-        motors[i].needsHomed = false;
-        motors[i].num = i;
-        motors[i].currentDirection = 0;
-        motors[i].limitHighValue = 0;
-       //motors[i].limitLowValue = 0;
-        
+
         outputBank.pinMode( motors[i].stepPin, OUTPUT );
         outputBank.pinMode( motors[i].dirPin, OUTPUT );
 
@@ -270,10 +294,13 @@ void setupPWMpins() {
 }
 
 boolean pinState = false;
-uint16_t motorStepDirValue = 0;        
-
+     
+uint16_t motorStepDirValue = 0;   
+uint16_t motorStepDirValue2 = 0;   
+  
 //pulse train for step and direction, builds output to multiplexer
 void handlePWM() {
+
   currentMicros = esp_timer_get_time();
   int dif = currentMicros - previousMicros;
   
@@ -285,17 +312,25 @@ void handlePWM() {
           //keep the direction the same, 
           pinState = false;
 
+          //lock access to motor array
+          xSemaphoreTake( xMutex, portMAX_DELAY );
+
           for(int i =0;i<6;i++)
           {
             motorStepDirValue = BIT_CLEAR(motorStepDirValue,stepPins[i]);
+            motorStepDirValue2 = BIT_CLEAR(motorStepDirValue2,stepPins[i]);//bad things happen if you leave this out....
           }
+          
+           //give access back up
+           xSemaphoreGive( xMutex );
         
           outputBank.digitalWrite(motorStepDirValue);      
         
         } else { 
-            //direction can chage here, so we need to change the output of the dir only first
-            
-            pinState = true;          
+            pinState = true;
+
+            //lock access to motor array
+            xSemaphoreTake( xMutex, portMAX_DELAY );
 
             //set direction pins first
             for(int i =0;i<6;i++)
@@ -303,32 +338,36 @@ void handlePWM() {
               if(motors[i].currentpos > motors[i].targetpos)
               {
                  motorStepDirValue = BIT_CLEAR(motorStepDirValue,dirPins[i]);
+                 motorStepDirValue2 = BIT_CLEAR(motorStepDirValue2,dirPins[i]);
               }
               else if(motors[i].currentpos < motors[i].targetpos)
               { 
                 motorStepDirValue = BIT_SET(motorStepDirValue,dirPins[i]);
+                motorStepDirValue2 = BIT_SET(motorStepDirValue2,dirPins[i]);
               }
             }
-
-            outputBank.digitalWrite(motorStepDirValue);      
-
+            
             //Next, set the step pins
             for(int i =0;i<6;i++)
             {
               if(motors[i].currentpos > motors[i].targetpos)
               {
                   motors[i].currentpos--;
-                  motorStepDirValue = BIT_SET(motorStepDirValue,stepPins[i]);
+                  motorStepDirValue2 = BIT_SET(motorStepDirValue2,stepPins[i]);
               }
               else if(motors[i].currentpos < motors[i].targetpos)
               { 
                   motors[i].currentpos++;
-                  motorStepDirValue = BIT_SET(motorStepDirValue,stepPins[i]);
+                  motorStepDirValue2 = BIT_SET(motorStepDirValue2,stepPins[i]);
               }
-
             }
-            
+
+            //give access back up
+            xSemaphoreGive( xMutex );
+
+            //two outputs, one to set direction, one to then( reafirm direction + step)
             outputBank.digitalWrite(motorStepDirValue);     
+            outputBank.digitalWrite(motorStepDirValue2);      
         }
         
         previousMicros = currentMicros;         
@@ -336,11 +375,7 @@ void handlePWM() {
 }
 
 void loop()
-{    
- while (Serial.available () > 0)
-        processIncomingByte (Serial.read ());
-  
-     handlePWM();  
+{      
 }
 
 float average (int * array, int len)  // assuming array is int.
@@ -374,3 +409,20 @@ void processIncomingByte (const byte inByte)
           break;
     } 
 } 
+
+
+void Task1code( void * pvParameters ){
+  
+  for(;;){
+
+   while (Serial.available () > 0)
+        processIncomingByte (Serial.read ());
+  } 
+}
+
+void Task2code( void * pvParameters ){
+  
+  for(;;){
+      handlePWM();   
+  }
+}

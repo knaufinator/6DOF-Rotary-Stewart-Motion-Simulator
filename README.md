@@ -75,7 +75,7 @@ Main components on the PCB
 * [Wire Wrap](https://amzn.to/2u3jiNu)
 
 ## AC Servo motor settings
-These are my settings on the Servo Driver aasd-15a these both enable specific modes as well define the time it should take to accelerate and decelerate the platform before it hits max speed. This is useful for when you want to protect the platform from self destruction due to to fast of movements. Make them to large and the platform will feel slugish.
+These are my settings on the Servo Driver aasd-15a these both enable specific modes as well define the time it should take to accelerate and decelerate the platform before it hits max speed. This is useful for when you want to protect the platform from self destruction due to the fast movements. Make them to large and the platform will feel slugish.
 - pn002 - Control Mode - "002"
 - pn003 - Servo enable - "001"
 - pn098 - Gear - "80"

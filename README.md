@@ -81,6 +81,6 @@ These are my settings on the Servo Driver aasd-15a these both enable specific mo
 - pn098 - Gear - "80"
 - pn109 - Position command deceleration mode- "002"
 - pn110 - Position command a filtering time constant - "050"
-- pn111 - S-shaped filtering time constant Ta position instruction - "300"
+- pn111 - S-shaped filtering time constant Ta position instruction - "50"
 - pn112 - position instruction Ts S-shaped filtering
-time constant Ts - "150"
+time constant Ts - "50"

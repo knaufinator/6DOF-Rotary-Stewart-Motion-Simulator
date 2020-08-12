@@ -253,7 +253,9 @@ void MCP23S17::pinMode(uint8_t pin, uint8_t mode) {
 #define    ADDR_ENABLE   (0b00001000)  // Configuration register for MCP23S17, the only thing we change is enabling hardware addressing
 
 void MCP23S17::digitalWrite(unsigned int value) { 
+  _spi->beginTransaction(SPISettings(10000000UL, SPI_MSBFIRST, SPI_MODE0));
   wordWrite(GPIOA, value);
+  _spi->endTransaction();
 }
 
 void MCP23S17::wordWrite(uint8_t reg, unsigned int word) {  // Accept the start register and word 

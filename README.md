@@ -3,14 +3,16 @@ Compact yet powerful motion simulator platform utilizing 6 AC servo motors. High
 
 This platform is scalable, and most dimensions are changeable within reason. Certain general design rules will need to be followed, in order for the platform to function correctly. This should not be considered a tutorial, but more of a general guide and conceptual starting point for this platform design
 
-
-
 ## Disclaimer 
 This is a DANGEROUS project, and if absolute care is not taken you will be injured or killed.
 
 <a align="center" href="http://www.youtube.com/watch?feature=player_embedded&v=_NR_MUGvmUo
 " target="_blank"><img align="center" src="http://img.youtube.com/vi/_NR_MUGvmUo/0.jpg" 
-alt="Motion Sim Example" height="340" width="auto" border="5" /></a>
+alt="Motion Sim Example" height="340" width="auto" border="0" /></a>
+
+<a align="center" href="http://www.youtube.com/watch?feature=player_embedded&v=CdDkL8X6qOE
+" target="_blank"><img align="center" src="http://img.youtube.com/vi/CdDkL8X6qOE/0.jpg" 
+alt="Motion Sim Example 2" height="340" width="auto" border="0" /></a>
 
 # Projects Included
 These are the components of the project that are included in this repository
@@ -30,6 +32,8 @@ Gerber files for ordering current PCB
 ## Platform Test Application
 .Net Application for testing position limits and speed of platform. Allows for manual setting of each DOF / Axis. As well works with XBOX360 controller through the PC USB wireless adapter.
 
+## PCB Debugger
+This is a Arduino program that you can use on the main PCB to test to make sure that the GPIO - motor outputs are working correctly using a multimeter. This will turn all ports on and off at a 5 second interval. slow enough for the multimeter to pick up the switch. Useful when you are debugging non moving motors, cold solder joints. 
 
 # Parts
 These are some key parts I used, others can be used in their place, but variations of the AC Servo motor may not be compadible with the PCB, and may require a modified PCB schematic. 

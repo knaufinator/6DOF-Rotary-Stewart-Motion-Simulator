@@ -29,6 +29,10 @@ This is a test application that will connect to the ESP32 microcontroller drivin
 ## Controller and Sensor Array Schematics
 Schematic of the current Controller and Sensor array PCB
 
+<img src="images/Schematic_Controller.png" width="480">
+<img src="images/Schematic_Sensor array.png" width="480">
+
+
 ## Controller PCB
 Gerber files for ordering current Controller and Sensor Array PCB
 

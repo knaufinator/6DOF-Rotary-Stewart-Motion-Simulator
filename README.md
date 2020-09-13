@@ -18,16 +18,15 @@ alt="Motion Sim Example 2" height="340" width="auto" border="0" /></a>
 These are the components of the project that are included in this repository
 
 ## Controller
-This is an ESP32 Arduino project. This interfaces with the PC through software like simtools, after correctly configuring.  You will need the custom MCP23S17 library in order to compile the project. This project utilizes both ESP32 cores in order to maximize refresh rates to 1000Hz, or 1ms interval.
+This is an ESP32 Arduino project. This interfaces with the PC through software like simtools, after correctly configuring.  You will need the custom MCP23S17 library in order to compile the project. This project utilizes both ESP32 cores in order to maximize refresh rates to 1000Hz, or 1ms interval. A custom MCP23S17 library is included so the outputs of all 6 motors can be set at one time instead of setting them individually, this saves time and allows for more pulses per second. This increase allows for higher movement precision on the rotational arm. There is also a filter library included, this is still in early testing.
 
-## MCP23S17
-A Custom MCP23S17 library, modified so the outputs of all 6 motors can be set at one time instead of setting them individually, this saves time and allows for more pulses per second. This increase allows for higher movement precision on the rotational arm. 
-
-## Controller Schematic
-Schematic of the current Controller PCB
+## Controller and Sensor Array Schematics
+Schematic of the current Controller and Sensor array PCB
 
 ## Controller PCB
-Gerber files for ordering current PCB
+Gerber files for ordering current Controller and Sensor Array PCB 
+![IDC Image](images/PCB_Controller.png | width=400)
+![IDC Image](images/PCB_Sensor_Array.png | width=400)
 
 ## Platform Test Application
 .Net Application for testing position limits and speed of platform. Allows for manual setting of each DOF / Axis. As well works with XBOX360 controller through the PC USB wireless adapter.
@@ -47,7 +46,7 @@ Main components on the PCB
 * [ESP32 Dev board](https://amzn.to/2OkGpuj) - ESP32 Dev kit
 * [MCP23S17](https://amzn.to/32UCSsQ) -
 * [3.3V to 5V TTL Shifter Module](https://amzn.to/2VRh3sA) -
-* [NJK-5002C NPN NO（Normally Open)Hall Effect Sensor Switch](https://amzn.to/2vSzzX8) -
+* [NJK-5002C NPN NO（Normally Open)Hall Effect Sensor Switch](https://amzn.to/2vSzzX8)
 
 
 ## Base

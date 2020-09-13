@@ -20,8 +20,18 @@ These are the components of the project that are included in this repository
 ## Controller
 This is an ESP32 Arduino project. This interfaces with the PC through software like simtools, after correctly configuring.  You will need the custom MCP23S17 library in order to compile the project. This project utilizes both ESP32 cores in order to maximize refresh rates to 1000Hz, or 1ms interval. A custom MCP23S17 library is included so the outputs of all 6 motors can be set at one time instead of setting them individually, this saves time and allows for more pulses per second. This increase allows for higher movement precision on the rotational arm. There is also a filter library included, this is still in early testing.
 
+## Android App
+This is a test application that will connect to the ESP32 microcontroller driving the AC servos, currently can stop/resume movement, and early filter adjustments. further functionality will be added to this as time progresses.
+
+<img src="images/Screenshot_20200907-141046.jpg" width="480">
+
+
 ## Controller and Sensor Array Schematics
 Schematic of the current Controller and Sensor array PCB
+
+<img src="Controller Schematic/Schematic_Controller.png" width="480">
+<img src="Controller Schematic/Schematic_Sensor array.png" width="480">
+
 
 ## Controller PCB
 Gerber files for ordering current Controller and Sensor Array PCB

@@ -1,7 +1,7 @@
 # 6DOF Rotary Stewart Motion Simulator Platform
 Compact yet powerful motion simulator platform utilizing 6 AC servo motors. High presicion planetary gears used to multiply the torque. Custom PCB using a ESP32 microcontroller to process the platform position. The ESP32 Controller base has a Bluetooth capability that is being used by a custom Android app using Ble standards to Configure platform parameters. Also featuring a soft pause/estop button, this will prevent position updates from the pc. This project contains 2 custom PCB's one main controller board that contains the ESP32 microcontroller, as well interfaces with the 6 AC Servo drivers, and 1 sensor array PCB that takes the 6 magnetic arm limit switches, conbines the signals into 1 ethernet cable that is then connected to the main PCB.
 
-This platform is scalable, and most dimensions are changeable within reason. Certain general design rules will need to be followed, in order for the platform to function correctly. This should not be considered a tutorial, but more of a general guide and conceptual starting point for this platform design
+This platform is scalable, and most dimensions are changeable within reason. Certain general design rules will need to be followed, in order for the platform to function correctly.
 
 ## Disclaimer 
 This is a DANGEROUS project, and if absolute care is not taken you will be injured or killed.

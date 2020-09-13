@@ -24,9 +24,9 @@ This is an ESP32 Arduino project. This interfaces with the PC through software l
 Schematic of the current Controller and Sensor array PCB
 
 ## Controller PCB
-Gerber files for ordering current Controller and Sensor Array PCB 
-![IDC Image](images/PCB_Controller.png | width=400)
-![IDC Image](images/PCB_Sensor_Array.png | width=400)
+Gerber files for ordering current Controller and Sensor Array PCB
+<img src="images/PCB_Controller.png" width="480">
+<img src="images/PCB_Sensor_Array.png" width="480">
 
 ## Platform Test Application
 .Net Application for testing position limits and speed of platform. Allows for manual setting of each DOF / Axis. As well works with XBOX360 controller through the PC USB wireless adapter.

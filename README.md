@@ -35,6 +35,10 @@ Gerber files for ordering current PCB
 ## PCB Debugger
 This is a Arduino program that you can use on the main PCB to test to make sure that the GPIO - motor outputs are working correctly using a multimeter. This will turn all ports on and off at a 5 second interval. slow enough for the multimeter to pick up the switch. Useful when you are debugging non moving motors, cold solder joints. 
 
+To test, check the voltage at pin 2 (step), and pin 9 (dir) w/ground on the ESP32.  Voltages should swing between 5v and 0, for about 5 seconds each. test each IDC26 connector to ensure all outputs are working. if you notice non functional, futhur troubleshooting is needed. often this is a bad solder joint.
+
+![IDC Image](images/idc-26-pin-male1.png)
+
 # Parts
 These are some key parts I used, others can be used in their place, but variations of the AC Servo motor may not be compadible with the PCB, and may require a modified PCB schematic. 
 

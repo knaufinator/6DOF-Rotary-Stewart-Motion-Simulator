@@ -12,15 +12,22 @@
 #include "soc/timer_group_reg.h"
 #include <BLE2902.h>
 #include <cstring>
-#include "gbj_filter_exponential.h"
+
 #include "freertos/FreeRTOS.h"
 #include "freertos/timers.h"
+#include "DigitalFilters.h"
 
 using namespace std;
 
+
+//Filter test
+constexpr float dtUsed = 0.001;//time between incoming PC packet used in filter calc
+std::vector<LowPassFilter> lpfVec;
+
 //uncomment to see de bug datas, this mode will also slow down motor rate so you can visually 
 //see the incrementing of the motor positions in real time. 
-//#define DEBUGMOTORS 1
+//#define DEBUG_MOTORS 1
+//#define DEBUG_NO_ESTOP 1
 
 //for saving of filter parameters
 Preferences preferences;
@@ -31,9 +38,6 @@ Preferences preferences;
 #define AXIS4_KEY "Axis4"
 #define AXIS5_KEY "Axis5"
 #define AXIS6_KEY "Axis6"
-
-//DOF Filters - Dynamic with Bluetooth App/save to EEProm
-gbj_filter_exponential FilterAxisList[6];
 
 //special pins
 #define ESTOPPIN 22
@@ -78,8 +82,8 @@ SemaphoreHandle_t xMutex;
 //CPU tasks, all GPIO for motors is on 2nd CPU, this frees main CPU to process position data and talk to PC and BLE client
 TaskHandle_t InterfaceMonitorTask;
 TaskHandle_t GPIOLoopTask;
-
 TimerHandle_t wtmr;
+TimerHandle_t eStopResumeFilterTmr;
 
 //multiplexers for communicating with all 6 servo controllers. 
 SPIClass hspi( HSPI );
@@ -90,6 +94,7 @@ MCP23S17 inputBank( &hspi, 15, 1 );
 //todo: add abiliy to softly move back to home when paused. perhapse smoothing filter with overridden high filter value.
 volatile bool isPausedEStop = false;
 volatile bool isPausedBle = false;
+volatile bool isRateLimiting = false;
 
 //max angle to allow the platform arms travel in degrees ie +-60 degrees. 
 const float servo_min=radians(-60),servo_max=radians(60);
@@ -103,12 +108,15 @@ int64_t currentMicrosBle = esp_timer_get_time();
 int64_t  previousMicrosBle = 0;
 
 //pulse width minimum length
-int  microInterval = 10;
+int microInterval = 10;
 int microIntervalBle  = 100000;
 
 // how much serial data we expect before a newline
 const unsigned int MAX_INPUT = 60;
 
+//this should be refactored out?
+static long servo_pos[6];
+   
 //used to hold current status of a motor
 struct acServo {
   int stepPin;
@@ -145,38 +153,12 @@ uint16_t motorStepDirValue2 = 0;
 //current target from pc, modified from 2 seperate tasks/cores
 static volatile float arr[6]={0,0,0, 0,0,0};
 
-// for Platform Coord algorithm
-float platformPDx[6]={0,0,0, 0,0,0};
-float platformPDy[6]={0,0,0, 0,0,0};
-float platformAngle[6]={0,0,0,0,0,0};
-float platformCoordsx[6]={0,0,0, 0,0,0};
-float platformCoordsy[6]={0,0,0, 0,0,0};
-float basePDx[6]={0,0,0, 0,0,0};
-float basePDy[6]={0,0,0, 0,0,0};
-float baseAngle[6]={0,0,0,0,0,0};
-float baseCoordsx[6]={0,0,0, 0,0,0};
-float baseCoordsy[6]={0,0,0, 0,0,0};
-float DxMultiplier[6]={1,1,1, -1,-1,-1};
-float AngleMultiplier[6]={1,-1,1,1,-1,1};
-float OffsetAngle[6]={pi/6,pi/6,-pi/2, -pi/2,pi/6,pi/6};
 
-//base rotation values
-float platformPivotx[6]={0,0,0, 0,0,0};
-float platformPivoty[6]={0,0,0, 0,0,0};
-float platformPivotz[6]={0,0,0, 0,0,0};
-
-float deltaLx[6] = {0,0,0, 0,0,0};
-float deltaLy[6] = {0,0,0, 0,0,0};
-float deltaLz[6] = {0,0,0, 0,0,0};
-float deltaL2Virtual[6] = {0,0,0, 0,0,0};
-
-float l[6] = {0,0,0, 0,0,0};
-float m[6] = {0,0,0, 0,0,0};
-float n[6] = {0,0,0, 0,0,0};
-float alpha[6] = {0,0,0, 0,0,0};
-
-//this should be refactored out?
-static long servo_pos[6];
+void removeRateLimit( TimerHandle_t xTimer )
+{
+  Serial.println("Remove Rate Limit");
+  isRateLimiting = false;
+}
 
 //map a float value of known range to a value of another range of values
 float mapfloat(double x, double in_min, double in_max, double out_min, double out_max)
@@ -186,6 +168,38 @@ float mapfloat(double x, double in_min, double in_max, double out_min, double ou
 
 //function calculating needed servo rotation value
 float getAlpha(int i){
+            
+    // for Platform Coord algorithm
+    float platformPDx[6]={0,0,0, 0,0,0};
+    float platformPDy[6]={0,0,0, 0,0,0};
+    float platformAngle[6]={0,0,0,0,0,0};
+    float platformCoordsx[6]={0,0,0, 0,0,0};
+    float platformCoordsy[6]={0,0,0, 0,0,0};
+    float basePDx[6]={0,0,0, 0,0,0};
+    float basePDy[6]={0,0,0, 0,0,0};
+    float baseAngle[6]={0,0,0,0,0,0};
+    float baseCoordsx[6]={0,0,0, 0,0,0};
+    float baseCoordsy[6]={0,0,0, 0,0,0};
+    float DxMultiplier[6]={1,1,1, -1,-1,-1};
+    float AngleMultiplier[6]={1,-1,1,1,-1,1};
+    float OffsetAngle[6]={pi/6,pi/6,-pi/2, -pi/2,pi/6,pi/6};
+    
+    //base rotation values
+    float platformPivotx[6]={0,0,0, 0,0,0};
+    float platformPivoty[6]={0,0,0, 0,0,0};
+    float platformPivotz[6]={0,0,0, 0,0,0};
+    
+    float deltaLx[6] = {0,0,0, 0,0,0};
+    float deltaLy[6] = {0,0,0, 0,0,0};
+    float deltaLz[6] = {0,0,0, 0,0,0};
+    float deltaL2Virtual[6] = {0,0,0, 0,0,0};
+    
+    float l[6] = {0,0,0, 0,0,0};
+    float m[6] = {0,0,0, 0,0,0};
+    float n[6] = {0,0,0, 0,0,0};
+    float alpha[6] = {0,0,0, 0,0,0};
+       
+        
         platformPDx[i] = DxMultiplier[i] * RD;
         platformPDy[i] = RD;
         platformAngle[i] = OffsetAngle[i] + AngleMultiplier[i]* radians(theta_r);
@@ -270,10 +284,9 @@ void process_data ( char * data)
         else//sway,surge
           temp = mapfloat(value, 0, 4094, -8, 8); 
 
-          //place filters in array?
-          float filteredTemp = FilterAxisList[i].getValue(temp);  
-          arr[i++] = filteredTemp;
-          tok = strtok(NULL, ",");
+        arr[i++] = lpfVec[i].update(temp);
+
+        tok = strtok(NULL, ",");
     }   
 
     //if we are not paused, allow setting position from PC.
@@ -383,7 +396,6 @@ class BleFilterCallback: public BLECharacteristicCallbacks {
 //loads the EEPROM values for each axis
 void loadFilterAxis(){
 
-
   Serial.println("Load");
   Serial.print("Axis 1: ");
   Serial.println(getAxis1Filter());
@@ -398,12 +410,22 @@ void loadFilterAxis(){
   Serial.print("Axis 6: ");
   Serial.println(getAxis6Filter());
   
-  FilterAxisList[0] = gbj_filter_exponential(getAxis1Filter());
-  FilterAxisList[1] = gbj_filter_exponential(getAxis2Filter());
-  FilterAxisList[2] = gbj_filter_exponential(getAxis3Filter());
-  FilterAxisList[3] = gbj_filter_exponential(getAxis4Filter());
-  FilterAxisList[4] = gbj_filter_exponential(getAxis5Filter());
-  FilterAxisList[5] = gbj_filter_exponential(getAxis6Filter());
+  LowPassFilter lpf1(dtUsed, 2 * M_PI * getAxis1Filter());
+  LowPassFilter lpf2(dtUsed, 2 * M_PI * getAxis2Filter());
+  LowPassFilter lpf3(dtUsed, 2 * M_PI * getAxis3Filter());
+  LowPassFilter lpf4(dtUsed, 2 * M_PI * getAxis4Filter());
+  LowPassFilter lpf5(dtUsed, 2 * M_PI * getAxis5Filter());
+  LowPassFilter lpf6(dtUsed, 2 * M_PI * getAxis6Filter());
+  
+  lpfVec.clear();
+  lpfVec.push_back(lpf1);
+  lpfVec.push_back(lpf2);
+  lpfVec.push_back(lpf3);
+  lpfVec.push_back(lpf4);
+  lpfVec.push_back(lpf5);
+  lpfVec.push_back(lpf6);
+  
+  Serial.print("lpfVec vector loaded");
 }
 
 class ServerCallbacks: public BLEServerCallbacks {
@@ -474,14 +496,17 @@ void setup(){
   debouncedEStop.attach(ESTOPPIN);
   debouncedEStop.interval(5); 
 
-  //check if we already do have the estop depressed, so we do not take in data when we should not.
-  isPausedEStop = !debouncedEStop.read();
+ //check if we already do have the estop depressed, so we do not take in data when we should not.
+  //uncomment  debugnoestop during bench debugging 
+  #ifdef DEBUG_NO_ESTOP 
+    isPausedEStop = !debouncedEStop.read();
+  #endif
   Serial.print("Estop:");
   Serial.println(isPausedEStop);
          
   //if debugging make the pulse train very slow, so we can visually see the incrementing values in output
-  #ifdef DEBUGMOTORS
-    microInterval = 10000;
+  #ifdef DEBUG_MOTORS
+    microInterval = 20000;
     Serial.println("Motor debug mode active!");
   #endif
   
@@ -513,7 +538,10 @@ void setup(){
 
   //Timer for watchdog reset
   wtmr = xTimerCreate("wtmr", pdMS_TO_TICKS(1000), pdFALSE, (void*)0, reinterpret_cast<TimerCallbackFunction_t>(ping));
-  xTimerStart(wtmr, 0); 
+  xTimerStart(wtmr, 0);
+ 
+  eStopResumeFilterTmr = xTimerCreate("eStopResumeFilterTmr", pdMS_TO_TICKS(3000), pdFALSE, (void*)0, reinterpret_cast<TimerCallbackFunction_t>(removeRateLimit));
+ 
 }
 
 void setupPWMpins() {
@@ -597,7 +625,7 @@ void handleStepDirection() {
             }
 
             //print motor positions, and GPIO request bit array 
-            #ifdef DEBUGMOTORS
+            #ifdef DEBUG_MOTORS
    
               for(int i=0;i<6;i++)   
               {
@@ -661,14 +689,22 @@ void checkEStop(){
 
   if ( debouncedEStop.fell() ) {  // Call code if button transitions from HIGH to LOW
      isPausedEStop = true;
+     isRateLimiting = false;
+    
      Serial.print("Estop:");
      Serial.println(isPausedEStop);
    }
 
    if ( debouncedEStop.rose() ) {  // Call code if button transitions from HIGH to LOW
      isPausedEStop = false;
+     isRateLimiting = true;
+    
      Serial.print("Estop:");
      Serial.println(isPausedEStop);
+   
+    //timer will kill rate limiting after 3 seconds
+    xTimerStart(eStopResumeFilterTmr, 0);
+   
    } 
 }
 

@@ -12,13 +12,12 @@
 #include "soc/timer_group_reg.h"
 #include <BLE2902.h>
 #include <cstring>
-
 #include "freertos/FreeRTOS.h"
 #include "freertos/timers.h"
 #include "DigitalFilters.h"
+#include "helpers.h"
 
 using namespace std;
-
 
 //Filter test
 constexpr float dtUsed = 0.001;//time between incoming PC packet used in filter calc
@@ -26,42 +25,12 @@ std::vector<LowPassFilter> lpfVec;
 
 //uncomment to see de bug datas, this mode will also slow down motor rate so you can visually 
 //see the incrementing of the motor positions in real time. 
-//#define DEBUG_MOTORS 1
-//#define DEBUG_NO_ESTOP 1
+#define DEBUG_MOTORS 1
+#define DEBUG_NO_ESTOP 1
 
 //for saving of filter parameters
 Preferences preferences;
-#define NAMESPACE "6dofPrefv1"
-#define AXIS1_KEY "Axis1"
-#define AXIS2_KEY "Axis2"
-#define AXIS3_KEY "Axis3"
-#define AXIS4_KEY "Axis4"
-#define AXIS5_KEY "Axis5"
-#define AXIS6_KEY "Axis6"
-
-//special pins
-#define ESTOPPIN 22
-#define ESTOPDEBOUNCETIME 10
-
-//Ble 
-#define SERVICE_UUID        "4fafc201-1fb5-459e-8fcc-c5c9c331914b"
-#define PAUSECHARACTERISTIC_UUID "beb5483e-36e1-4688-b7f5-ea07361b26a8"
-#define FILTERCHARACTERISTIC_UUID "aeb5483e-36e1-4688-b7f5-ea07361b26a9"
-#define POSITIONCHARACTERISTIC_UUID "aeb5483e-36e1-4688-b7f5-ea07361b26a4"
-
-//calculation helpers
-#define DEG_TO_RAD 0.017453292519943295769236907684886
-#define RAD_TO_DEG 57.295779513082320876798154814105
-#define pi  3.14159265359
-#define radians(deg) ((deg)*DEG_TO_RAD)
-#define degrees(rad) ((rad)*RAD_TO_DEG)
-#define BIT_SET(a,b) ((a) |= (1ULL<<(b)))
-#define BIT_CLEAR(a,b) ((a) &= ~(1ULL<<(b)))
-
-//Deine the 3 motors that are running counter clockwise
-#define INV1 0
-#define INV2 2
-#define INV3 4
+int microInterval = MICRO_INTERVAL_FAST;
 
 BLEServer* pServer = NULL;
 BLECharacteristic* pPostionCharacteristic = NULL;
@@ -107,40 +76,11 @@ int64_t  previousMicros = 0;
 int64_t currentMicrosBle = esp_timer_get_time();
 int64_t  previousMicrosBle = 0;
 
-//pulse width minimum length
-int microInterval = 10;
-int microIntervalBle  = 100000;
-
-// how much serial data we expect before a newline
-const unsigned int MAX_INPUT = 60;
-
 //this should be refactored out?
 static long servo_pos[6];
-   
-//used to hold current status of a motor
-struct acServo {
-  int stepPin;
-  int dirPin;
-  bool pinState;
-  long currentpos;
-  long targetpos;  
-};
 
 //Access to each of the 6 ac motor current status.
 volatile struct acServo motors[6];
-
-//variables for platform positions
-static float theta_r = 10;
-static float theta_s[6]={150,-90,30, 150,-90,30};
-static float theta_p = 30;
-static float RD = 15.75;
-static float PD = 16;
-static float ServoArmLengthL1 = 7.25;
-static float ConnectingArmLengthL2 = 28.5;
-static float platformHeight = 25.5170749;
-
-//how many pulses per radian of arm movement this value is calibrated to my setup
-static float servoPulseMultiplierPerRadian =  800/(pi/4);
 
 //helper for pulses sent to GPIO, when false, means that the next pulse will be logical 0. 
 boolean pinState = false;
@@ -153,81 +93,10 @@ uint16_t motorStepDirValue2 = 0;
 //current target from pc, modified from 2 seperate tasks/cores
 static volatile float arr[6]={0,0,0, 0,0,0};
 
-
 void removeRateLimit( TimerHandle_t xTimer )
 {
   Serial.println("Remove Rate Limit");
   isRateLimiting = false;
-}
-
-//map a float value of known range to a value of another range of values
-float mapfloat(double x, double in_min, double in_max, double out_min, double out_max)
-{
-    return (float)(x - in_min) * (out_max - out_min) / (float)(in_max - in_min) + out_min;
-}
-
-//function calculating needed servo rotation value
-float getAlpha(int i){
-            
-    // for Platform Coord algorithm
-    float platformPDx[6]={0,0,0, 0,0,0};
-    float platformPDy[6]={0,0,0, 0,0,0};
-    float platformAngle[6]={0,0,0,0,0,0};
-    float platformCoordsx[6]={0,0,0, 0,0,0};
-    float platformCoordsy[6]={0,0,0, 0,0,0};
-    float basePDx[6]={0,0,0, 0,0,0};
-    float basePDy[6]={0,0,0, 0,0,0};
-    float baseAngle[6]={0,0,0,0,0,0};
-    float baseCoordsx[6]={0,0,0, 0,0,0};
-    float baseCoordsy[6]={0,0,0, 0,0,0};
-    float DxMultiplier[6]={1,1,1, -1,-1,-1};
-    float AngleMultiplier[6]={1,-1,1,1,-1,1};
-    float OffsetAngle[6]={pi/6,pi/6,-pi/2, -pi/2,pi/6,pi/6};
-    
-    //base rotation values
-    float platformPivotx[6]={0,0,0, 0,0,0};
-    float platformPivoty[6]={0,0,0, 0,0,0};
-    float platformPivotz[6]={0,0,0, 0,0,0};
-    
-    float deltaLx[6] = {0,0,0, 0,0,0};
-    float deltaLy[6] = {0,0,0, 0,0,0};
-    float deltaLz[6] = {0,0,0, 0,0,0};
-    float deltaL2Virtual[6] = {0,0,0, 0,0,0};
-    
-    float l[6] = {0,0,0, 0,0,0};
-    float m[6] = {0,0,0, 0,0,0};
-    float n[6] = {0,0,0, 0,0,0};
-    float alpha[6] = {0,0,0, 0,0,0};
-       
-        
-        platformPDx[i] = DxMultiplier[i] * RD;
-        platformPDy[i] = RD;
-        platformAngle[i] = OffsetAngle[i] + AngleMultiplier[i]* radians(theta_r);
-        platformCoordsx[i] = platformPDx[i] * cos(platformAngle[i]);
-        platformCoordsy[i] = platformPDy[i] * sin(platformAngle[i]);
-        
-        basePDx[i] = DxMultiplier[i] * PD;
-        basePDy[i] = PD;
-        baseAngle[i] = OffsetAngle[i] + AngleMultiplier[i]* radians(theta_p);
-        baseCoordsx[i] = basePDx[i] * cos(baseAngle[i]);
-        baseCoordsy[i] = basePDy[i] * sin(baseAngle[i]);
-        
-        //Platform pivots
-        platformPivotx[i] = platformCoordsx[i]*cos(arr[3])*cos(arr[5])+platformCoordsy[i]*(sin(arr[4])*sin(arr[3])*cos(arr[3])-cos(arr[4])*sin(arr[5]))+arr[0]; 
-        platformPivoty[i] = platformCoordsx[i]*cos(arr[4])*sin(arr[5])+platformCoordsy[i]*(cos(arr[3])*cos(arr[5])+sin(arr[3])*sin(arr[4])*sin(arr[5]))+arr[1];
-        platformPivotz[i] = -platformCoordsx[i]*sin(arr[3])+platformCoordsy[i]*sin(arr[4])*cos(arr[3])+platformHeight+arr[2];
-        
-        deltaLx[i] = baseCoordsx[i] - platformPivotx[i];
-        deltaLy[i] = baseCoordsy[i] - platformPivoty[i];
-        deltaLz[i] = -platformPivotz[i];
-        
-        deltaL2Virtual[i] = sqrt(pow(deltaLx[i], 2.0) + pow(deltaLy[i], 2.0) +pow(deltaLz[i], 2.0));
-    
-        l[i] = pow(deltaL2Virtual[i], 2.0)-(pow(ConnectingArmLengthL2, 2.0)-pow(ServoArmLengthL1, 2.0));
-        m[i] = 2*ServoArmLengthL1*(platformPivotz[i]);
-        n[i] = 2*ServoArmLengthL1*(cos(theta_s[i]*pi/180)*(platformPivotx[i] -  baseCoordsx[i])+sin(theta_s[i]*pi/180)*(platformPivoty[i]- baseCoordsy[i]));
-
-        return asin(l[i]/(sqrt(pow(m[i], 2.0)+pow(n[i], 2.0))))-atan(n[i]/m[i]);
 }
 
 void setPos(){  
@@ -236,7 +105,7 @@ void setPos(){
     for(int i = 0; i < 6; i++)
     {    
         long x = 0;
-        float alpha = getAlpha(i);
+        float alpha = getAlpha(i,arr);
 
           if(alpha >= servo_min && alpha <= servo_max)
           {
@@ -272,6 +141,7 @@ void process_data ( char * data)
     char *tok = strtok(data, ",");
 
     while (tok != NULL) {
+        float arrTemp;
         double value = (float)atof(tok);
         float temp = 0.0;
         
@@ -284,11 +154,19 @@ void process_data ( char * data)
         else//sway,surge
           temp = mapfloat(value, 0, 4094, -8, 8); 
 
-        arr[i++] = lpfVec[i].update(temp);
+        arrTemp = lpfVec[i].update(temp);
 
+        //after Estop, for a few seconds, we will ratelimit, this overrides the value produced by the PC
+        if(isRateLimiting)
+        {
+          arrTemp = rateLimit(arrTemp,arr[i]);
+        }
+
+        arr[i++] = arrTemp;
+       
         tok = strtok(NULL, ",");
     }   
-
+    
     //if we are not paused, allow setting position from PC.
     if(!isPausedBle && !isPausedEStop)
       setPos();
@@ -506,7 +384,7 @@ void setup(){
          
   //if debugging make the pulse train very slow, so we can visually see the incrementing values in output
   #ifdef DEBUG_MOTORS
-    microInterval = 20000;
+    microInterval = MICRO_INTERVAL_SLOW;
     Serial.println("Motor debug mode active!");
   #endif
   
@@ -540,8 +418,7 @@ void setup(){
   wtmr = xTimerCreate("wtmr", pdMS_TO_TICKS(1000), pdFALSE, (void*)0, reinterpret_cast<TimerCallbackFunction_t>(ping));
   xTimerStart(wtmr, 0);
  
-  eStopResumeFilterTmr = xTimerCreate("eStopResumeFilterTmr", pdMS_TO_TICKS(3000), pdFALSE, (void*)0, reinterpret_cast<TimerCallbackFunction_t>(removeRateLimit));
- 
+  eStopResumeFilterTmr = xTimerCreate("eStopResumeFilterTmr", pdMS_TO_TICKS(ESTOP_RATE_LIMIT_TIME), pdFALSE, (void*)0, reinterpret_cast<TimerCallbackFunction_t>(removeRateLimit));
 }
 
 void setupPWMpins() {
@@ -702,9 +579,8 @@ void checkEStop(){
      Serial.print("Estop:");
      Serial.println(isPausedEStop);
    
-    //timer will kill rate limiting after 3 seconds
-    xTimerStart(eStopResumeFilterTmr, 0);
-   
+     //timer will kill rate limiting after 3 seconds
+     xTimerStart(eStopResumeFilterTmr, 0);
    } 
 }
 
@@ -715,7 +591,7 @@ void checkBleNotify(){
   int dif = currentMicrosBle  - previousMicrosBle ;
 
   //creates the pulses in realtime, if enough time has passed.
-  if (dif >= microIntervalBle ) {
+  if (dif >= MICRO_INTERVAL_BLE_SEND ) {
     
     if (deviceConnected) {
         

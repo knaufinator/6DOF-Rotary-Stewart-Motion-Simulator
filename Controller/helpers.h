@@ -1,7 +1,5 @@
 #include <math.h>
 
-
-
 //calculation helpers
 #define DEG_TO_RAD 0.017453292519943295769236907684886
 #define RAD_TO_DEG 57.295779513082320876798154814105
@@ -10,8 +8,6 @@
 #define degrees(rad) ((rad)*RAD_TO_DEG)
 #define BIT_SET(a,b) ((a) |= (1ULL<<(b)))
 #define BIT_CLEAR(a,b) ((a) &= ~(1ULL<<(b)))
-
-
 
 //variables for platform positions
 static float theta_r = 10;

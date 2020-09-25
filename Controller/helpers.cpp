@@ -80,8 +80,8 @@ float rateLimit(float currentSample,float lastSample)
 {
   float output;
   float dif = currentSample - lastSample;
-  float maxRate = 0.01;
- 
+  float maxRate = .01;
+    
   if (dif > 0)
   {
     output = lastSample + maxRate;
@@ -90,4 +90,6 @@ float rateLimit(float currentSample,float lastSample)
   {
     output = lastSample - maxRate;
   }
+
+  return output;
 }

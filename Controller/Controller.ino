@@ -23,10 +23,11 @@ using namespace std;
 constexpr float dtUsed = 0.001;//time between incoming PC packet used in filter calc
 std::vector<LowPassFilter> lpfVec;
 
-//uncomment to see de bug datas, this mode will also slow down motor rate so you can visually 
-//see the incrementing of the motor positions in real time. 
-#define DEBUG_MOTORS 1
-#define DEBUG_NO_ESTOP 1
+//uncomment this to slow down motor rate so you can visually see the incrementing of the motor positions in real time. 
+//#define DEBUG_MOTORS 1
+
+//when bench testing the esp32, and have no estop connected to PCB, uncomment to allow system to activate motors anyway.
+//#define DEBUG_NO_ESTOP 1
 
 //for saving of filter parameters
 Preferences preferences;
@@ -52,7 +53,6 @@ SemaphoreHandle_t xMutex;
 TaskHandle_t InterfaceMonitorTask;
 TaskHandle_t GPIOLoopTask;
 TimerHandle_t wtmr;
-TimerHandle_t eStopResumeFilterTmr;
 
 //multiplexers for communicating with all 6 servo controllers. 
 SPIClass hspi( HSPI );
@@ -62,7 +62,6 @@ MCP23S17 inputBank( &hspi, 15, 1 );
 //soft estop, you should have a power kill near by as well, this will prevent changes of position from pc to be applied.
 //todo: add abiliy to softly move back to home when paused. perhapse smoothing filter with overridden high filter value.
 volatile bool isPausedEStop = false;
-volatile bool isPausedBle = false;
 volatile bool isRateLimiting = false;
 
 //max angle to allow the platform arms travel in degrees ie +-60 degrees. 
@@ -93,12 +92,6 @@ uint16_t motorStepDirValue2 = 0;
 //current target from pc, modified from 2 seperate tasks/cores
 static volatile float arr[6]={0,0,0, 0,0,0};
 
-void removeRateLimit( TimerHandle_t xTimer )
-{
-  Serial.println("Remove Rate Limit");
-  isRateLimiting = false;
-}
-
 void setPos(){  
   
     //Platform and Base Coords
@@ -107,19 +100,19 @@ void setPos(){
         long x = 0;
         float alpha = getAlpha(i,arr);
 
-          if(alpha >= servo_min && alpha <= servo_max)
-          {
-              //this takes the Radian angle, and scales that value to pulse position.
-              //This is calibrated to the real world. with a 50:1 gear, and instructed to move +-60 degrees and finding a servoPulseMultiplierPerRadian that makes that happen.
-              if(i==INV1||i==INV2||i==INV3){
-                  x = -(alpha)*servoPulseMultiplierPerRadian;
-              }
-              else{
-                  x = (alpha)*servoPulseMultiplierPerRadian;
-              }
-      
-              servo_pos[i] = x;            
-          }     
+        if(alpha >= servo_min && alpha <= servo_max)
+        {
+            //this takes the Radian angle, and scales that value to pulse position.
+            //This is calibrated to the real world. with a 50:1 gear, and instructed to move +-60 degrees and finding a servoPulseMultiplierPerRadian that makes that happen.
+            if(i==INV1||i==INV2||i==INV3){
+                x = -(alpha)*servoPulseMultiplierPerRadian;
+            }
+            else{
+                x = (alpha)*servoPulseMultiplierPerRadian;
+            }
+    
+            servo_pos[i] = x;            
+        }     
     }
 
     //lock access to motor array
@@ -139,14 +132,17 @@ void process_data ( char * data)
 { 
     int i = 0; 
     char *tok = strtok(data, ",");
-
+    
+    float arrRaw[]={0,0,0,0,0,0};\
+    float arrRateLimited[]={0,0,0,0,0,0};
+    
     while (tok != NULL) {
-        float arrTemp;
+    
         double value = (float)atof(tok);
         float temp = 0.0;
         
         //these are tuned to my specific platform,.. to ensure a value does not get to high and break something  
-        //*****modify to a switch,and just cover all independantly, this is so we can apply each multiplier we will be getting from ble service.
+        //todo, make this dynamic and locked in from the android app
         if(i == 2)
           temp =mapfloat(value, 0, 4094, -7, 7);//hieve 
         else if(i > 2)//rotations, pitch,roll,yaw
@@ -154,22 +150,64 @@ void process_data ( char * data)
         else//sway,surge
           temp = mapfloat(value, 0, 4094, -8, 8); 
 
-        arrTemp = lpfVec[i].update(temp);
+          arrRaw[i++] = temp;
+        
+          tok = strtok(NULL, ",");
+    }   
+      
+    //Serial.println("");
+    //TODo make this a function call, add ability to stack filters?
+    //Apply filter to raw PC Data
+   // for(int i=0;i<6;i++)
+   // {
+    //  arrTemp[i] = lpfVec[i].update(arrTemp[i]);
+   // }
 
-        //after Estop, for a few seconds, we will ratelimit, this overrides the value produced by the PC
-        if(isRateLimiting)
+
+  //if we are not in an estop pause, allow setting of the current position
+  if(!isPausedEStop)
+  {
+
+    //if we are just after resetting estop, we will be in a ratelimited mode until the ratelimited position is within close proximity of the actual last stored location.
+    if(isRateLimiting)
+    {    
+        bool isNotWithinLimit = false;
+        for(int i=0;i<6;i++)
         {
-          arrTemp = rateLimit(arrTemp,arr[i]);
+          arrRateLimited[i] = rateLimit(arrRaw[i],arr[i]);
+        
+          //close proximity detector, if we are within tolerance, we will set a flag so we break out of the rate limited mode
+          float diff = arr[i] - arrRaw[i];
+          if (diff > .1 || diff < -.1) {
+            isNotWithinLimit = true;
+          }  
+
         }
 
-        arr[i++] = arrTemp;
-       
-        tok = strtok(NULL, ",");
-    }   
+        //when all are within tolerance, flip ratelimit... rider Go Fast now...
+        if(!isNotWithinLimit)
+        {
+          isRateLimiting = false;
+        }
+
+          for(int i=0;i<6;i++)
+          {
+              arr[i] = arrRateLimited[i];
+          }
+    }
+    else
+    {
+          for(int i=0;i<6;i++)
+          {
+              arr[i] = arrRaw[i];
+          }
+    }
+
+    //Computes the next position of each of the arms based on the values sent.
+    setPos();
+  
+  }
     
-    //if we are not paused, allow setting position from PC.
-    if(!isPausedBle && !isPausedEStop)
-      setPos();
 } 
 
 //reset timer
@@ -198,14 +236,12 @@ class BlePauseCallback: public BLECharacteristicCallbacks {
       int i = atoi(pCharacteristic->getValue().c_str());
     
       if(i == 0)
-      {
-        Serial.println("Stop");
-        isPausedBle = true;   
+      {  
+        pauseEStop();
       }
       else if(i == 1)
       {
-        Serial.println("Start");
-        isPausedBle = false;    
+        resumeEStop();
       }
     }    
 };
@@ -374,12 +410,12 @@ void setup(){
   debouncedEStop.attach(ESTOPPIN);
   debouncedEStop.interval(5); 
 
- //check if we already do have the estop depressed, so we do not take in data when we should not.
+  //check if we already do have the estop depressed, so we do not take in data when we should not.
   //uncomment  debugnoestop during bench debugging 
   #ifdef DEBUG_NO_ESTOP 
     isPausedEStop = !debouncedEStop.read();
   #endif
-  Serial.print("Estop:");
+  Serial.print("init Estop check:");
   Serial.println(isPausedEStop);
          
   //if debugging make the pulse train very slow, so we can visually see the incrementing values in output
@@ -417,8 +453,6 @@ void setup(){
   //Timer for watchdog reset
   wtmr = xTimerCreate("wtmr", pdMS_TO_TICKS(1000), pdFALSE, (void*)0, reinterpret_cast<TimerCallbackFunction_t>(ping));
   xTimerStart(wtmr, 0);
- 
-  eStopResumeFilterTmr = xTimerCreate("eStopResumeFilterTmr", pdMS_TO_TICKS(ESTOP_RATE_LIMIT_TIME), pdFALSE, (void*)0, reinterpret_cast<TimerCallbackFunction_t>(removeRateLimit));
 }
 
 void setupPWMpins() {
@@ -461,7 +495,7 @@ void handleStepDirection() {
           }
           
            //give access back up
-           xSemaphoreGive( xMutex );
+          xSemaphoreGive( xMutex );
 
           outputBank.digitalWrite(motorStepDirValue);      
         
@@ -565,23 +599,29 @@ void checkEStop(){
   int value = debouncedEStop.read();
 
   if ( debouncedEStop.fell() ) {  // Call code if button transitions from HIGH to LOW
+     pauseEStop();
+  }
+
+   if ( debouncedEStop.rose() ) {  // Call code if button transitions from HIGH to LOW
+      resumeEStop();
+   } 
+}
+
+void resumeEStop(){
+    isPausedEStop = false;
+    isRateLimiting = true;
+    
+    Serial.print("Estop:");
+    Serial.println(isPausedEStop);
+}
+
+void pauseEStop(){ 
      isPausedEStop = true;
      isRateLimiting = false;
     
      Serial.print("Estop:");
      Serial.println(isPausedEStop);
-   }
 
-   if ( debouncedEStop.rose() ) {  // Call code if button transitions from HIGH to LOW
-     isPausedEStop = false;
-     isRateLimiting = true;
-    
-     Serial.print("Estop:");
-     Serial.println(isPausedEStop);
-   
-     //timer will kill rate limiting after 3 seconds
-     xTimerStart(eStopResumeFilterTmr, 0);
-   } 
 }
 
 //notify method for Ble service, if a device is connected will send periodic motor position data,
@@ -621,8 +661,10 @@ void checkBleNotify(){
 //Thread that handles reading from PC uart
 void InterfaceMonitorCode( void * pvParameters ){
   for(;;){
+    
     while (Serial.available () > 0)
       processIncomingByte (Serial.read ());
+   
     checkEStop();
     checkBleNotify();
   } 

@@ -59,8 +59,8 @@ SPIClass hspi( HSPI );
 MCP23S17 outputBank( &hspi, 15, 0 );
 MCP23S17 inputBank( &hspi, 15, 1 );
 
-//soft estop, you should have a power kill near by as well, this will prevent changes of position from pc to be applied.
-//todo: add abiliy to softly move back to home when paused. perhapse smoothing filter with overridden high filter value.
+//soft estop,  this will prevent changes of position from pc to be applied.
+//you should have a power kill near by as well,
 volatile bool isPausedEStop = false;
 volatile bool isRateLimiting = false;
 

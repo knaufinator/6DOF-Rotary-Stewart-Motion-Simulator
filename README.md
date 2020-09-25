@@ -39,6 +39,7 @@ Schematic of the current Controller and Sensor array PCB
 
 ## Controller PCB
 Gerber files for ordering current Controller and Sensor Array PCB
+
 <img src="images/IMG_20200911_210004.jpg" width="480">
 <img src="images/PCB_Controller.png" width="480">
 <img src="images/PCB_Sensor_Array.png" width="480">

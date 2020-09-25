@@ -133,41 +133,38 @@ void process_data ( char * data)
     int i = 0; 
     char *tok = strtok(data, ",");
     
-    float arrRaw[]={0,0,0,0,0,0};\
+    float arrRaw[]={0,0,0,0,0,0};
     float arrRateLimited[]={0,0,0,0,0,0};
     
     while (tok != NULL) {
-    
-        double value = (float)atof(tok);
-        float temp = 0.0;
-        
-        //these are tuned to my specific platform,.. to ensure a value does not get to high and break something  
-        //todo, make this dynamic and locked in from the android app
-        if(i == 2)
-          temp =mapfloat(value, 0, 4094, -7, 7);//hieve 
-        else if(i > 2)//rotations, pitch,roll,yaw
-          temp = mapfloat(value, 0, 4094, -30, 30) *(pi/180.0);
-        else//sway,surge
-          temp = mapfloat(value, 0, 4094, -8, 8); 
+      double value = (float)atof(tok);
+      float temp = 0.0;
+      
+      //these are tuned to my specific platform,.. to ensure a value does not get to high and break something  
+      //todo, make this dynamic and locked in from the android app
+      if(i == 2)
+        temp =mapfloat(value, 0, 4094, -7, 7);//hieve 
+      else if(i > 2)//rotations, pitch,roll,yaw
+        temp = mapfloat(value, 0, 4094, -30, 30) *(pi/180.0);
+      else//sway,surge
+        temp = mapfloat(value, 0, 4094, -8, 8); 
 
-          arrRaw[i++] = temp;
-        
-          tok = strtok(NULL, ",");
+        arrRaw[i++] = temp;
+      
+        tok = strtok(NULL, ",");
     }   
       
-    //Serial.println("");
-    //TODo make this a function call, add ability to stack filters?
-    //Apply filter to raw PC Data
-   // for(int i=0;i<6;i++)
-   // {
-    //  arrTemp[i] = lpfVec[i].update(arrTemp[i]);
-   // }
-
+  //filter 
+  //TODo make this a function call, add ability to stack filters?
+  //Apply filter to raw PC Data
+  //for(int i=0;i<6;i++)
+  //{
+  //  arrTemp[i] = lpfVec[i].update(arrTemp[i]);
+  //}
 
   //if we are not in an estop pause, allow setting of the current position
   if(!isPausedEStop)
   {
-
     //if we are just after resetting estop, we will be in a ratelimited mode until the ratelimited position is within close proximity of the actual last stored location.
     if(isRateLimiting)
     {    
@@ -181,7 +178,6 @@ void process_data ( char * data)
           if (diff > .1 || diff < -.1) {
             isNotWithinLimit = true;
           }  
-
         }
 
         //when all are within tolerance, flip ratelimit... rider Go Fast now...
@@ -190,22 +186,21 @@ void process_data ( char * data)
           isRateLimiting = false;
         }
 
-          for(int i=0;i<6;i++)
-          {
-              arr[i] = arrRateLimited[i];
-          }
+        for(int i=0;i<6;i++)
+        {
+          arr[i] = arrRateLimited[i];
+        }
     }
     else
     {
-          for(int i=0;i<6;i++)
-          {
-              arr[i] = arrRaw[i];
-          }
+        for(int i=0;i<6;i++)
+        {
+          arr[i] = arrRaw[i];
+        }
     }
 
     //Computes the next position of each of the arms based on the values sent.
     setPos();
-  
   }
     
 } 

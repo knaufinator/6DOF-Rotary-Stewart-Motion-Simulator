@@ -624,8 +624,8 @@ void checkBleNotify(){
 
   currentMicrosBle  = esp_timer_get_time();
   int dif = currentMicrosBle  - previousMicrosBle ;
-
-  //creates the pulses in realtime, if enough time has passed.
+  
+  //If enough time elapsed, send BLE packet
   if (dif >= MICRO_INTERVAL_BLE_SEND ) {
     
     if (deviceConnected) {

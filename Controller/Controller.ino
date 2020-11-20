@@ -395,7 +395,7 @@ void setupBle(){
 //start here
 void setup(){
  
-  Serial.begin(250000); 
+  Serial.begin(115200); 
   initConfigStorage();
   loadFilterAxis();
   setupBle();

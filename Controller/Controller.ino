@@ -35,6 +35,8 @@ int microInterval = MICRO_INTERVAL_FAST;
 
 BLEServer* pServer = NULL;
 BLECharacteristic* pPostionCharacteristic = NULL;
+BLECharacteristic* pPauseCharacteristic = NULL;
+
 bool deviceConnected = false;
 bool oldDeviceConnected = false;
 uint32_t value = 0;
@@ -352,15 +354,17 @@ void setupBle(){
   
   Serial.println("Starting BLE init!");
 
-  BLEDevice::init("Open 6DOF");
+  BLEDevice::init("Open 6DOF Services");
   BLEServer *pServer = BLEDevice::createServer();
   pServer->setCallbacks(new ServerCallbacks());
   BLEService *pService = pServer->createService(SERVICE_UUID);
   
-  BLECharacteristic *pPauseCharacteristic = pService->createCharacteristic(
+  pPauseCharacteristic = pService->createCharacteristic(
                                          PAUSECHARACTERISTIC_UUID,
                                          BLECharacteristic::PROPERTY_READ |
-                                         BLECharacteristic::PROPERTY_WRITE
+                                         BLECharacteristic::PROPERTY_WRITE |
+                                         BLECharacteristic::PROPERTY_NOTIFY |
+                                         BLECharacteristic::PROPERTY_INDICATE
                                        );
 
   BLECharacteristic *pFilterCharacteristic = pService->createCharacteristic(
@@ -378,6 +382,7 @@ void setupBle(){
                     );
                                        
   pPostionCharacteristic->addDescriptor(new BLE2902());
+  pPauseCharacteristic->addDescriptor(new BLE2902());
 
    
   pPauseCharacteristic->setCallbacks(new BlePauseCallback());
@@ -387,7 +392,6 @@ void setupBle(){
   BLEAdvertising *pAdvertising = BLEDevice::getAdvertising();
   pAdvertising->addServiceUUID(SERVICE_UUID);
   pAdvertising->setScanResponse(true);
-  pAdvertising->setMinPreferred(0x06);  
   pAdvertising->setMinPreferred(0x12);
   BLEDevice::startAdvertising(); 
 }
@@ -605,7 +609,9 @@ void checkEStop(){
 void resumeEStop(){
     isPausedEStop = false;
     isRateLimiting = true;
-    
+
+    notifyPausedStatus();
+     
     Serial.print("Estop:");
     Serial.println(isPausedEStop);
 }
@@ -613,10 +619,21 @@ void resumeEStop(){
 void pauseEStop(){ 
      isPausedEStop = true;
      isRateLimiting = false;
-    
+     
+     notifyPausedStatus();
+      
      Serial.print("Estop:");
      Serial.println(isPausedEStop);
+}
 
+//notify method for ble service, if a device is connected will send paused status as a string
+void notifyPausedStatus()
+{
+    if(deviceConnected)
+    {
+        pPauseCharacteristic->setValue(BoolToString(isPausedEStop));
+        pPauseCharacteristic->notify(); 
+    }
 }
 
 //notify method for Ble service, if a device is connected will send periodic motor position data,
@@ -646,11 +663,16 @@ void checkBleNotify(){
         xSemaphoreGive( xMutex );
             
         pPostionCharacteristic->setValue(output.c_str());
-        pPostionCharacteristic->notify();
+        pPostionCharacteristic->notify();   
     }
 
     previousMicrosBle  = currentMicrosBle;         
   }
+}
+
+inline const char * const BoolToString(bool b)
+{
+  return b ? "true" : "false";
 }
 
 //Thread that handles reading from PC uart

@@ -10,6 +10,10 @@ This is a DANGEROUS project, and if absolute care is not taken you will be injur
 " target="_blank"><img align="center" src="http://img.youtube.com/vi/fEcdGIq_Jzc/0.jpg" 
 alt="Motion Sim Example" height="340" width="auto" border="0" /></a>
 
+<a align="center" href="http://www.youtube.com/watch?feature=player_embedded&v=1WXx59tWYc4
+" target="_blank"><img align="center" src="http://img.youtube.com/vi/1WXx59tWYc4/0.jpg" 
+alt="Motion Sim Example" height="340" width="auto" border="0" /></a>
+
 <a align="center" href="http://www.youtube.com/watch?feature=player_embedded&v=_NR_MUGvmUo
 " target="_blank"><img align="center" src="http://img.youtube.com/vi/_NR_MUGvmUo/0.jpg" 
 alt="Motion Sim Example" height="340" width="auto" border="0" /></a>

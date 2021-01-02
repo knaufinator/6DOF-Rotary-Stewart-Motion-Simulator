@@ -409,11 +409,16 @@ void setup(){
   debouncedEStop.attach(ESTOPPIN);
   debouncedEStop.interval(5); 
 
-  //check if we already do have the estop depressed, so we do not take in data when we should not.
-  //uncomment  debugnoestop during bench debugging 
+  //poll estop now directly to get a base value, after this the debouncer will catch rise/fall events of estop/pause button.
+  isPausedEStop = !digitalRead(ESTOPPIN);
+ 
+  //uncomment debugnoestop during bench debugging so you dont need to have a estop on the PCB/... or then .. no PCB... and just an ESP32
   #ifdef DEBUG_NO_ESTOP 
-    isPausedEStop = !debouncedEStop.read();
+    isPausedEStop = 0;
   #endif
+
+  
+  
   Serial.print("init Estop check:");
   Serial.println(isPausedEStop);
          

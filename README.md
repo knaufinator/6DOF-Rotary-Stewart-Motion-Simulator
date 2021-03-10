@@ -123,15 +123,15 @@ These are my settings on the Servo Driver aasd-15a these both enable specific mo
 - pn112 - position instruction Ts S-shaped filtering time constant Ts - "50"
 
 Input Designation
--pn52 - 23 Sigin 1 - homing trigger
+- pn52 - 23 Sigin 1 - homing trigger
 
 Home location after sensor is activated
--pn36 - +/-11 X1000 pulses to get you in the ballpark area after home trigger
--pn37 - ~ +/-5000 as needed for precision to finish off where you want the arm to land after home trigger
--pn38 - 100 init speed
--pn39 - 100 back home speed
+- pn36 - +/-11 X1000 pulses to get you in the ballpark area after home trigger
+- pn37 - ~ +/-5000 as needed for precision to finish off where you want the arm to land after home trigger
+- pn38 - 100 init speed
+- pn39 - 100 back home speed
 
 homing rotation direction settings
--pn033 -3 power on homing 
--pn034 - 0 clockwise
--pn034 - 1 counter clockwise
+- pn033 -3 power on homing 
+- pn034 - 0 clockwise
+- pn034 - 1 counter clockwise

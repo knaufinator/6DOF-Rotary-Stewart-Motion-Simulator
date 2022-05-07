@@ -52,7 +52,7 @@ static float servoPulseMultiplierPerRadian =  800/(pi/4);
 #define ESTOP_RATE_LIMIT_TIME 3000
 
 // how much serial data we expect before a newline
-#define MAX_INPUT 60
+#define MAX_SERIAL_INPUT 60
    
 //used to hold current status of a motor
 struct acServo {

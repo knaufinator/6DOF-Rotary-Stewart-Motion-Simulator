@@ -568,11 +568,11 @@ void loop()
 {      
 }
 
-//reads the serial line,  x,y,z,RX,RY,RZX, Where X is used to indicate end of line. 
+//reads the serial line: x,y,z,RX,RY,RZX, Where X is used to indicate end of line. 
 //else data will buffer and parsed once a full line is available.
 void processIncomingByte (const byte inByte)
 {
-    static char input_line [MAX_INPUT];
+    static char input_line [MAX_SERIAL_INPUT];
     static unsigned int input_pos = 0;
   
     switch (inByte)

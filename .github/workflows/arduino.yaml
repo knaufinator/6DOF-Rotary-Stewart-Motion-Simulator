@@ -8,9 +8,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: arduino/compile-sketches@v1
+        fqbn: 'esp32:esp32:esp32da'
         with:
           platforms: |
-            - name: 'esp32:esp32:esp32da'
+            - name: 'esp32:esp32'
               source-url: https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
           sketch-paths: |
             - ./Controller

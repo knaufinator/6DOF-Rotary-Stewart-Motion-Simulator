@@ -587,7 +587,7 @@ void processIncomingByte (const byte inByte)
         
         default:
           //buffer data
-          if (input_pos < (MAX_INPUT - 1))
+          if (input_pos < (MAX_SERIAL_INPUT - 1))
             input_line [input_pos++] = inByte;
           break;
     } 

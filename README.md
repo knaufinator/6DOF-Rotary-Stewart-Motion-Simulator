@@ -74,10 +74,10 @@ These are some key parts I used, others can be used in their place, but variatio
 
 ## Controller 
 Main components on the PCB
-* [ESP32 Dev board](https://amzn.to/2OkGpuj) - ESP32 Dev kit
-* [MCP23S17](https://amzn.to/32UCSsQ) -
-* [3.3V to 5V TTL Shifter Module](https://amzn.to/2VRh3sA) -
-* [NJK-5002C NPN NO（Normally Open)Hall Effect Sensor Switch](https://amzn.to/2vSzzX8)
+* [30p ESP32 Dev board](https://www.amazon.com/dp/B08246MCL5/ref=dp_iou_view_item?ie=UTF8&th=1) - ESP32 Dev kit
+* [MCP23S17](https://www.digikey.com/en/products/detail/microchip-technology/MCP23S17-E-SP/894276) -
+* [3.3V to 5V TTL Shifter Module](https://www.amazon.com/Cylewet-Channel-Converter-Bi-Directional-Shifter/dp/B075PSB71D/ref=sr_1_2?crid=2W5LRR087NTTU) -
+* [NJK-5002C NPN NO（Normally Open)Hall Effect Sensor Switch](https://www.amazon.com/Twidec-Proximity-Inductive-NO%EF%BC%88Normally-NJK-5002C/dp/B07P1GKQRM/ref=sr_1_1?crid=WEBAJTJVM0NM)
 
 
 ## Base

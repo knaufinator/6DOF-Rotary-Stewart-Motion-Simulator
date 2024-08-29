@@ -1,27 +1,17 @@
 #include <sstream>
-#include <Preferences.h>
 #include "Bounce2.h"
-#include <BLEDevice.h>
-#include <BLEUtils.h>
-#include <BLEServer.h>  
 #include <Wire.h>
 #include <SPI.h>
 #include "MCP23S17.h"
 #include <EEPROM.h>
 #include "soc/timer_group_struct.h"
 #include "soc/timer_group_reg.h"
-#include "BLE/BLE2902.h"
 #include <cstring>
 #include "freertos/FreeRTOS.h"
 #include "freertos/timers.h"
-#include "DigitalFilters.h"
 #include "helpers.h"
 
 using namespace std;
-
-//Filter test
-constexpr float dtUsed = 0.001;//time between incoming PC packet used in filter calc
-std::vector<LowPassFilter> lpfVec;
 
 //uncomment this to slow down motor rate so you can visually see the incrementing of the motor positions in real time. 
 //#define DEBUG_MOTORS 1
@@ -30,17 +20,8 @@ std::vector<LowPassFilter> lpfVec;
 //#define DEBUG_NO_ESTOP 1
 
 //for saving of filter parameters
-Preferences preferences;
 int microInterval = MICRO_INTERVAL_FAST;
-
-BLEServer* pServer = NULL;
-BLECharacteristic* pPostionCharacteristic = NULL;
-BLECharacteristic* pPauseCharacteristic = NULL;
-
-bool deviceConnected = false;
-bool oldDeviceConnected = false;
-uint32_t value = 0;
-
+ 
 //Debouncer for Estop/Pause button
 Bounce debouncedEStop = Bounce(); 
 
@@ -91,7 +72,7 @@ boolean pinState = false;
 uint16_t motorStepDirValue = 0;   
 uint16_t motorStepDirValue2 = 0;   
 
-//current target from pc, modified from 2 seperate tasks/cores
+//current target from pc, modified/read from 2 seperate tasks/cores
 static volatile float arr[6]={0,0,0, 0,0,0};
 
 void setPos(){  
@@ -155,15 +136,7 @@ void process_data ( char * data)
       
         tok = strtok(NULL, ",");
     }   
-      
-  //filter 
-  //TODo make this a function call, add ability to stack filters?
-  //Apply filter to raw PC Data
-  //for(int i=0;i<6;i++)
-  //{
-  //  arrTemp[i] = lpfVec[i].update(arrTemp[i]);
-  //}
-
+       
   //if we are not in an estop pause, allow setting of the current position
   if(!isPausedEStop)
   {
@@ -208,202 +181,27 @@ void process_data ( char * data)
 } 
 
 //reset timer
-void ping( TimerHandle_t xTimer )
-{ 
-    //Resets the watchdog timer in the ESP32/rtos
-    //this is needed in order not have the thing reset every few seconds.
-    TIMERG0.wdt_wprotect=TIMG_WDT_WKEY_VALUE;
-    TIMERG0.wdt_feed=1;
-    TIMERG0.wdt_wprotect=0;
+void ping(TimerHandle_t xTimer) {
+    // Unlock the watchdog timer
+    TIMERG0.wdtwprotect.wdt_wkey = TIMG_WDT_WKEY_VALUE;
 
-    //Restart timer for this method
+    // Feed the watchdog timer
+    TIMERG0.wdtfeed.wdt_feed = 1;
+
+    // Lock the watchdog timer again
+    TIMERG0.wdtwprotect.wdt_wkey = 0;
+
+    // Restart the timer
     xTimerStart(wtmr, 0);
 }
 
-//to pause platform, send "1", to start send "0" string
-class BlePauseCallback: public BLECharacteristicCallbacks {
 
-    void onWrite(BLECharacteristic *pCharacteristic) {
-   
-      string result = pCharacteristic->getValue().c_str();
-      
-      Serial.println("BlePauseCallback");
-      Serial.println(pCharacteristic->getValue().c_str());
-    
-      int i = atoi(pCharacteristic->getValue().c_str());
-    
-      if(i == 0)
-      {  
-        pauseEStop();
-      }
-      else if(i == 1)
-      {
-        resumeEStop();
-      }
-    }    
-};
-
-//Filter saving from Ble, expecting array of Doubles, 0-100 for each axis comma delimeted.
-//i.e. 14.2,16.3,55.6,54.3,34.9
-class BleFilterCallback: public BLECharacteristicCallbacks {
-
-    //read filter parameters into Android App
-    void onRead(BLECharacteristic *pCharacteristic) {
-            
-      std::ostringstream os;
-      os << getAxis1Filter() << "," << getAxis2Filter() << "," << getAxis3Filter() << "," << getAxis4Filter() << "," << getAxis5Filter() << "," << getAxis6Filter();
-  
-      pCharacteristic->setValue(os.str());
-    }
-
-    //Android app sent new parameters, lets save them to eeprom and reload current filter
-    void onWrite(BLECharacteristic *pCharacteristic) {
-      
-      std::string value = pCharacteristic->getValue();
-      Serial.println("Filter settings BLE");
-      Serial.println(value.c_str());
-      if (value.length() > 0) {
-          int arr[6]={0,0,0, 0,0,0};
-          int i = 0; 
-          char *tok;
-          char *rawTokens = new char[value.size()+1];
-          strcpy(rawTokens, value.c_str());
-       
-          tok = strtok(rawTokens, ",");
-      
-          while (tok != NULL) {
-              int value = (int)atoi(tok);
-                arr[i++] = value;
-                tok = strtok(NULL, ",");
-          }   
-          
-          Serial.println("Save");
-          Serial.print("Axis 1: ");
-          Serial.println(arr[0]);
-          Serial.print("Axis 2: ");
-          Serial.println(arr[1]);
-          Serial.print("Axis 3: ");
-          Serial.println(arr[2]);
-          Serial.print("Axis 4: ");
-          Serial.println(arr[3]);
-          Serial.print("Axis 5: ");
-          Serial.println(arr[4]);
-          Serial.print("Axis 6: ");
-          Serial.println(arr[5]);
-
-          setAxis1(arr[0]);
-          setAxis2(arr[1]);
-          setAxis3(arr[2]);
-          setAxis4(arr[3]);
-          setAxis5(arr[4]);
-          setAxis6(arr[5]);
-
-          //After saving to EEPROM, load to current running filter
-          loadFilterAxis();
-      }
-    }
-};
-
-//loads the EEPROM values for each axis
-void loadFilterAxis(){
-
-  Serial.println("Load");
-  Serial.print("Axis 1: ");
-  Serial.println(getAxis1Filter());
-  Serial.print("Axis 2: ");
-  Serial.println(getAxis2Filter());
-  Serial.print("Axis 3: ");
-  Serial.println(getAxis3Filter());
-  Serial.print("Axis 4: ");
-  Serial.println(getAxis4Filter());
-  Serial.print("Axis 5: ");
-  Serial.println(getAxis5Filter());
-  Serial.print("Axis 6: ");
-  Serial.println(getAxis6Filter());
-  
-  LowPassFilter lpf1(dtUsed, 2 * M_PI * getAxis1Filter());
-  LowPassFilter lpf2(dtUsed, 2 * M_PI * getAxis2Filter());
-  LowPassFilter lpf3(dtUsed, 2 * M_PI * getAxis3Filter());
-  LowPassFilter lpf4(dtUsed, 2 * M_PI * getAxis4Filter());
-  LowPassFilter lpf5(dtUsed, 2 * M_PI * getAxis5Filter());
-  LowPassFilter lpf6(dtUsed, 2 * M_PI * getAxis6Filter());
-  
-  lpfVec.clear();
-  lpfVec.push_back(lpf1);
-  lpfVec.push_back(lpf2);
-  lpfVec.push_back(lpf3);
-  lpfVec.push_back(lpf4);
-  lpfVec.push_back(lpf5);
-  lpfVec.push_back(lpf6);
-  
-  Serial.print("lpfVec vector loaded");
-}
-
-class ServerCallbacks: public BLEServerCallbacks {
-    void onConnect(BLEServer* pServer) {
-      deviceConnected = true;
-    };
-
-    void onDisconnect(BLEServer* pServer) {
-      deviceConnected = false;
-    }
-};
-
-//setup BLE access notify service and configuration characteristics 
-void setupBle(){
-  
-  Serial.println("Starting BLE init!");
-
-  BLEDevice::init("Open 6DOF Services");
-  BLEServer *pServer = BLEDevice::createServer();
-  pServer->setCallbacks(new ServerCallbacks());
-  BLEService *pService = pServer->createService(SERVICE_UUID);
-  
-  pPauseCharacteristic = pService->createCharacteristic(
-                                         PAUSECHARACTERISTIC_UUID,
-                                         BLECharacteristic::PROPERTY_READ |
-                                         BLECharacteristic::PROPERTY_WRITE |
-                                         BLECharacteristic::PROPERTY_NOTIFY |
-                                         BLECharacteristic::PROPERTY_INDICATE
-                                       );
-
-  BLECharacteristic *pFilterCharacteristic = pService->createCharacteristic(
-                                         FILTERCHARACTERISTIC_UUID,
-                                         BLECharacteristic::PROPERTY_READ |
-                                         BLECharacteristic::PROPERTY_WRITE
-                                       );
-
-  pPostionCharacteristic  = pService->createCharacteristic(
-                      POSITIONCHARACTERISTIC_UUID,
-                      BLECharacteristic::PROPERTY_READ   |
-                      BLECharacteristic::PROPERTY_WRITE  |
-                      BLECharacteristic::PROPERTY_NOTIFY |
-                      BLECharacteristic::PROPERTY_INDICATE
-                    );
-                                       
-  pPostionCharacteristic->addDescriptor(new BLE2902());
-  pPauseCharacteristic->addDescriptor(new BLE2902());
-
-   
-  pPauseCharacteristic->setCallbacks(new BlePauseCallback());
-  pFilterCharacteristic->setCallbacks(new BleFilterCallback());  
-  pService->start();
-
-  BLEAdvertising *pAdvertising = BLEDevice::getAdvertising();
-  pAdvertising->addServiceUUID(SERVICE_UUID);
-  pAdvertising->setScanResponse(true);
-  pAdvertising->setMinPreferred(0x12);
-  BLEDevice::startAdvertising(); 
-}
 
 //start here
 void setup(){
  
   Serial.begin(115200); 
-  initConfigStorage();
-  loadFilterAxis();
-  setupBle();
-
+ 
   //setup estop/pause button 
   pinMode(ESTOPPIN, INPUT_PULLUP);
   debouncedEStop.attach(ESTOPPIN);
@@ -570,7 +368,7 @@ void loop()
 
 //reads the serial line: x,y,z,RX,RY,RZX, Where X is used to indicate end of line. 
 //else data will buffer and parsed once a full line is available.
-void processIncomingByte (const byte inByte)
+void processIncomingByte (const uint8_t inByte)
 {
     static char input_line [MAX_SERIAL_INPUT];
     static unsigned int input_pos = 0;
@@ -614,9 +412,7 @@ void checkEStop(){
 void resumeEStop(){
     isPausedEStop = false;
     isRateLimiting = true;
-
-    notifyPausedStatus();
-     
+ 
     Serial.print("Estop:");
     Serial.println(isPausedEStop);
 }
@@ -624,56 +420,11 @@ void resumeEStop(){
 void pauseEStop(){ 
      isPausedEStop = true;
      isRateLimiting = false;
-     
-     notifyPausedStatus();
-      
+ 
      Serial.print("Estop:");
      Serial.println(isPausedEStop);
 }
 
-//notify method for ble service, if a device is connected will send paused status as a string
-void notifyPausedStatus()
-{
-    if(deviceConnected)
-    {
-        pPauseCharacteristic->setValue(BoolToString(isPausedEStop));
-        pPauseCharacteristic->notify(); 
-    }
-}
-
-//notify method for Ble service, if a device is connected will send periodic motor position data,
-void checkBleNotify(){
-
-  currentMicrosBle  = esp_timer_get_time();
-  int dif = currentMicrosBle  - previousMicrosBle ;
-  
-  //If enough time elapsed, send BLE packet
-  if (dif >= MICRO_INTERVAL_BLE_SEND ) {
-    
-    if (deviceConnected) {
-        
-        //lock access to motor array
-        xSemaphoreTake( xMutex, portMAX_DELAY );
-            
-        String output;
-        for(int i=0;i<6;i++)   
-        {
-          output +=  String(motors[i].currentpos);
-        
-          if(i<5)
-            output +=",";
-        }
-               
-        //give access back up
-        xSemaphoreGive( xMutex );
-            
-        pPostionCharacteristic->setValue(output.c_str());
-        pPostionCharacteristic->notify();   
-    }
-
-    previousMicrosBle  = currentMicrosBle;         
-  }
-}
 
 inline const char * const BoolToString(bool b)
 {
@@ -688,7 +439,7 @@ void InterfaceMonitorCode( void * pvParameters ){
       processIncomingByte (Serial.read ());
    
     checkEStop();
-    checkBleNotify();
+ 
   } 
 }
 
@@ -697,56 +448,4 @@ void GPIOLoop( void * pvParameters ){
   for(;;){
       handleStepDirection();   
   }
-}
-
-bool initConfigStorage() {
-  return preferences.begin(NAMESPACE, false);
-}
-
-int getAxis1Filter() {
-  return preferences.getInt(AXIS1_KEY, 100);
-}
-
-void setAxis1(int value) {
-  preferences.putInt(AXIS1_KEY, value);
-}
-
-int getAxis2Filter() {
-  return preferences.getInt(AXIS2_KEY, 100);
-}
-
-void setAxis2(int value) {
-  preferences.putInt(AXIS2_KEY, value);
-}
-
-int getAxis3Filter() {
-  return preferences.getInt(AXIS3_KEY, 100);
-}
-
-void setAxis3(int value) {
-  preferences.putInt(AXIS3_KEY, value);
-}
-
-int getAxis4Filter() {
-  return preferences.getInt(AXIS4_KEY, 100);
-}
-
-void setAxis4(int value) {
-  preferences.putInt(AXIS4_KEY, value);
-}
-
-int getAxis5Filter() {
-  return preferences.getInt(AXIS5_KEY, 100);
-}
-
-void setAxis5(int value) {
-  preferences.putInt(AXIS5_KEY, value);
-}
-
-int getAxis6Filter() {
-  return preferences.getInt(AXIS6_KEY, 100);
-}
-
-void setAxis6(int value) {
-  preferences.putInt(AXIS6_KEY, value);
 }

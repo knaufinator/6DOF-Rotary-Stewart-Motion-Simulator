@@ -1,84 +1,32 @@
 #include <Arduino.h>
 #include <Wire.h>
 #include <SPI.h>
-#include <Adafruit_MCP23X17.h>
+#include <MCP23S17.h>
 #include <Bounce2.h>
 #include <EEPROM.h>
 #include <Preferences.h>
 #include "helpers.h"
+#include "RMTMotorControl.h"
 
 using namespace std;
 
-// Constants
-#ifndef MICRO_INTERVAL_FAST
-#define MICRO_INTERVAL_FAST 100
-#endif
-
-#ifndef MICRO_INTERVAL_SLOW
-#define MICRO_INTERVAL_SLOW 10000
-#endif
-
-#ifndef TIMER_INTERVAL
-#define TIMER_INTERVAL 1000
-#endif
-
-#ifndef ESTOPPIN
-#define ESTOPPIN 4
-#endif
-
-#ifndef MAX_SERIAL_INPUT
-#define MAX_SERIAL_INPUT 60
-#endif
-
-#ifndef EEPROM_SIZE
-#define EEPROM_SIZE 512
-#endif
-
-#ifndef ESTOPDEBOUNCETIME
-#define ESTOPDEBOUNCETIME 5
-#endif
-
-#ifndef INV1
-#define INV1 0
-#endif
-
-#ifndef INV2
-#define INV2 1
-#endif
-
-#ifndef INV3
-#define INV3 2
-#endif
-
-#ifndef servo_min
-#define servo_min -60
-#endif
-
-#ifndef servo_max
-#define servo_max 60
-#endif
-
-#ifndef servoPulseMultiplierPerRadian
-#define servoPulseMultiplierPerRadian 1
-#endif
-
-#ifndef PI
-#define PI 3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679
-#endif
-
 // Global variables
-Adafruit_MCP23X17 outputBank;
+MCP23S17 outputBank(MCP_CS_PIN);  // Using hardware SPI with default address 0
 Bounce2::Button debouncedEStop = Bounce2::Button();
 Preferences preferences;
 
 // Motor control variables
-acServo motors[6];
+RMTMotorControl* motors[6];
 volatile float arr[6] = {0, 0, 0, 0, 0, 0};
 static long servo_pos[6] = {0, 0, 0, 0, 0, 0};
-int stepPins[6] = {8, 9, 10, 11, 12, 13};
-int dirPins[6] = {0, 1, 2, 3, 4, 5};
-uint16_t motorStepDirValue = 0;
-uint16_t motorStepDirValue2 = 0;
+
+// GPIO pins for motors (using direct ESP32 GPIO numbers)
+const gpio_num_t stepPins[6] = {GPIO_NUM_13, GPIO_NUM_12, GPIO_NUM_14, GPIO_NUM_27, GPIO_NUM_26, GPIO_NUM_25};
+const gpio_num_t stepPinsComplement[6] = {GPIO_NUM_15, GPIO_NUM_16, GPIO_NUM_17, GPIO_NUM_28, GPIO_NUM_29, GPIO_NUM_30};
+const gpio_num_t dirPins[6] = {GPIO_NUM_23, GPIO_NUM_22, GPIO_NUM_21, GPIO_NUM_19, GPIO_NUM_18, GPIO_NUM_17};
+const gpio_num_t dirPinsComplement[6] = {GPIO_NUM_32, GPIO_NUM_33, GPIO_NUM_34, GPIO_NUM_35, GPIO_NUM_36, GPIO_NUM_39};
+const rmt_channel_t channels[6] = {RMT_CHANNEL_0, RMT_CHANNEL_1, RMT_CHANNEL_2, 
+                                  RMT_CHANNEL_3, RMT_CHANNEL_4, RMT_CHANNEL_5};
 
 // Timing variables
 unsigned long currentMicros = 0;
@@ -100,90 +48,57 @@ void InterfaceMonitorCode(void * pvParameters);
 void GPIOLoop(void * pvParameters);
 
 void setPos(){  
-  
     //Platform and Base Coords
-    for(int i = 0; i < 6; i++)
-    {    
+    for(int i = 0; i < 6; i++) {    
         long x = 0;
         float alpha = getAlpha(i,arr);
-
-        if(alpha >= servo_min && alpha <= servo_max)
-        {
-            //this takes the Radian angle, and scales that value to pulse position.
-            //This is calibrated to the real world. with a 50:1 gear, and instructed to move +-60 degrees and finding a servoPulseMultiplierPerRadian that makes that happen.
-            if(i==INV1||i==INV2||i==INV3){
-                x = -(alpha)*servoPulseMultiplierPerRadian;
-            }
-            else{
-                x = (alpha)*servoPulseMultiplierPerRadian;
-            }
-    
-            servo_pos[i] = x;            
-        }     
+        
+        //convert to steps
+        x = alpha * STEPS_PER_DEGREE;
+        
+        //set motor target position
+        xSemaphoreTake(xMutex, portMAX_DELAY);
+        if (!motors[i]->setTargetPosition(x)) {
+            Serial.printf("Motor %d position error: %d\n", i, motors[i]->getLastError());
+        }
+        xSemaphoreGive(xMutex);
     }
-
-    //lock access to motor array
-    xSemaphoreTake( xMutex, portMAX_DELAY );
-    
-    for(int i = 0; i < 6; i++)
-    {
-        motors[i].targetpos = servo_pos[i];
-    }   
-    
-    //give up lock
-    xSemaphoreGive( xMutex );     
 }
 
 void setupPWMpins() {
-    // Set up the pins for step and direction control
-    for (int i = 0; i < 6; i++) {
-        outputBank.pinMode(stepPins[i], OUTPUT);
-        outputBank.pinMode(dirPins[i], OUTPUT);
+    // Configure motor settings
+    RMTMotorControl::Config motorConfig;
+    motorConfig.stepPulseWidth_us = 1;      // 1µs pulse width
+    motorConfig.dirSetupTime_us = 1;        // 1µs direction setup time
+    motorConfig.minStepInterval_us = 2;     // 2µs minimum between steps (500kHz max)
+    motorConfig.maxStepRate = 400000;       // 400kHz max step rate
+    motorConfig.maxAcceleration = 50000;    // 50k steps/sec^2 acceleration
+    motorConfig.enableSoftLimits = true;
+    motorConfig.softLimitMin = -100000;     // Adjust these limits based on your setup
+    motorConfig.softLimitMax = 100000;
+
+    // Initialize RMT motor controls
+    for(int i = 0; i < 6; i++) {
+        motors[i] = new RMTMotorControl(stepPins[i], stepPinsComplement[i], dirPins[i], dirPinsComplement[i], channels[i]);
+        if (!motors[i]->begin(motorConfig)) {
+            Serial.printf("Failed to initialize motor %d, error: %d\n", i, motors[i]->getLastError());
+        }
     }
 }
 
 void handleStepDirection() {
-    currentMicros = micros();
-    int dif = currentMicros - previousMicros;
+    //lock access to motor array
+    xSemaphoreTake(xMutex, portMAX_DELAY);
     
-    if (dif >= microInterval) {
-        //lock access to motor array
-        xSemaphoreTake(xMutex, portMAX_DELAY);
-        
-        //clear output values
-        motorStepDirValue = 0;
-        motorStepDirValue2 = 0;
-        
-        //build output values for each motor
-        for (int i = 0; i < 6; i++) {
-            //check if we need to move motor
-            if (motors[i].currentpos != motors[i].targetpos) {
-                //set direction pin based on if we need to move up or down
-                if (motors[i].currentpos < motors[i].targetpos) {
-                    motorStepDirValue |= (1 << dirPins[i]);
-                    motors[i].currentpos++;
-                } else {
-                    motors[i].currentpos--;
-                }
-                //set step pin
-                motorStepDirValue2 |= (1 << stepPins[i]);
-            }
+    // Update each motor
+    for (int i = 0; i < 6; i++) {
+        if (!motors[i]->update()) {
+            Serial.printf("Motor %d update error: %d\n", i, motors[i]->getLastError());
         }
-        
-        //give up lock
-        xSemaphoreGive(xMutex);
-        
-        //output direction pins first
-        outputBank.writeGPIOAB(motorStepDirValue);
-        
-        //wait a bit
-        delayMicroseconds(2);
-        
-        //output step pins
-        outputBank.writeGPIOAB(motorStepDirValue2);
-        
-        previousMicros = currentMicros;
     }
+    
+    //give up lock
+    xSemaphoreGive(xMutex);
 }
 
 void loop() {
@@ -307,10 +222,13 @@ void setup() {
   SPI.begin();
 
   // Initialize MCP23S17 chips
-  if (!outputBank.begin_I2C()) {
-    Serial.println("Error initializing MCP23017.");
+  if (!outputBank.begin()) {
+    Serial.println("Error initializing MCP23S17.");
     while (1);
   }
+  
+  // Configure all pins as outputs
+  outputBank.pinMode16(0x0000);  // Set all pins to OUTPUT mode
   
   // Configure E-Stop button with debouncing
   pinMode(ESTOPPIN, INPUT_PULLUP);

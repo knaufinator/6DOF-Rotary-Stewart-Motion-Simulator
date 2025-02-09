@@ -68,3 +68,75 @@ The controller accepts commands via serial (USB) at 115200 baud. Each command pa
 - Format: \<x>,\<y>,\<z>,\<rx>,\<ry>,\<rz>X
 
 Example: "2047,2047,2047,2047,2047,2047X" (neutral position)
+
+## SimTools Integration
+
+### Communication Protocol
+
+The controller uses a high-performance binary protocol for motion data transfer:
+
+**Packet Specification**
+```cpp
+#pragma pack(push, 1)
+struct MotionData {
+    float surge;    // X-axis translation (mm)
+    float sway;     // Y-axis translation (mm)
+    float heave;    // Z-axis translation (mm)
+    float roll;     // X-axis rotation (degrees)
+    float pitch;    // Y-axis rotation (degrees)
+    float yaw;      // Z-axis rotation (degrees)
+};
+#pragma pack(pop)
+```
+
+**Technical Requirements**
+| Parameter          | Value                  |
+|---------------------|------------------------|
+| Baud Rate           | 115200                 |
+| Data Bits           | 8                      |
+| Parity              | None                   |
+| Stop Bits           | 1                      |
+| Packet Size         | 24 bytes (6×4-byte floats) |
+| Byte Order          | Little-endian          |
+| Update Rate         | 100-500 Hz             |
+| Value Ranges        | -1000.0 to +1000.0     |
+
+### SimTools Configuration
+
+1. **Output Settings**
+   - Protocol Type: `Binary (32-bit Float)`
+   - Serial Port: `COMx` (Match ESP32 connection)
+   - Baud Rate: `115200`
+   - Packet Frequency: `250 Hz` (Recommended)
+
+2. **Axis Mapping**
+   ```ini
+   ; SimTools.ini
+   [Output]
+   Channel1=Surge
+   Channel2=Sway
+   Channel3=Heave
+   Channel4=Roll
+   Channel5=Pitch
+   Channel6=Yaw
+   ```
+
+3. **Calibration**
+   - Set maximum travel limits in SimTools to ±1000 units
+   - Ensure all axes show zero position when centered
+   - Verify direction consistency using the test mode
+
+### Troubleshooting
+
+**Common Issues**
+- **Garbled Data**: Verify baud rate matches in SimTools and PlatformIO
+- **Partial Movements**: Check value ranges in received packets
+- **Latency**: Ensure USB cable is USB 2.0+ and <3m length
+
+**Diagnostic Commands**
+```bash
+# Monitor raw serial output
+pio device monitor --echo --filter colorize
+
+# Packet debug mode (enable in SerialInterface.h)
+#define SERIAL_DEBUG 1

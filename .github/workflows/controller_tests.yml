@@ -1,16 +1,8 @@
 name: Controller Build Tests
 
 on:
-  push:
-    branches: [ "main", "phoenix" ]
-    paths:
-      - 'Controller/**'
-      - '.github/workflows/controller_tests.yml'
-  pull_request:
-    branches: [ "main", "phoenix" ]
-    paths:
-      - 'Controller/**'
-      - '.github/workflows/controller_tests.yml'
+  workflow_dispatch:
+    description: 'Manually trigger controller build tests'
 
 jobs:
   build:

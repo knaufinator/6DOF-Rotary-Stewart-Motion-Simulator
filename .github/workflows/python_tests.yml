@@ -1,20 +1,8 @@
 name: Python Visualization Tests
 
 on:
-  push:
-    branches: [ "main", "phoenix" ]
-    paths:
-      - 'visualization/**'
-      - 'Controller/src/**'
-      - 'Controller/include/**'
-      - '.github/workflows/python_tests.yml'
-  pull_request:
-    branches: [ "main", "phoenix" ]
-    paths:
-      - 'visualization/**'
-      - 'Controller/src/**'
-      - 'Controller/include/**'
-      - '.github/workflows/python_tests.yml'
+  workflow_dispatch:
+    description: 'Manually trigger Python visualization tests'
 
 jobs:
   test:

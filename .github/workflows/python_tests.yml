@@ -2,7 +2,10 @@ name: Python Visualization Tests
 
 on:
   workflow_dispatch:
-    description: 'Manually trigger Python visualization tests'
+    inputs:
+      description:
+        description: 'Manually trigger Python visualization tests'
+        required: false
 
 jobs:
   test:

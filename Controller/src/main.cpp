@@ -22,9 +22,9 @@ static long servo_pos[6] = {0, 0, 0, 0, 0, 0};
 
 // GPIO pins for motors (using direct ESP32 GPIO numbers)
 const gpio_num_t stepPins[6] = {GPIO_NUM_13, GPIO_NUM_12, GPIO_NUM_14, GPIO_NUM_27, GPIO_NUM_26, GPIO_NUM_25};
-const gpio_num_t stepPinsComplement[6] = {GPIO_NUM_15, GPIO_NUM_16, GPIO_NUM_17, GPIO_NUM_28, GPIO_NUM_29, GPIO_NUM_30};
+const gpio_num_t stepPinsComplement[6] = {GPIO_NUM_2, GPIO_NUM_4, GPIO_NUM_5, GPIO_NUM_18, GPIO_NUM_19, GPIO_NUM_21};
 const gpio_num_t dirPins[6] = {GPIO_NUM_23, GPIO_NUM_22, GPIO_NUM_21, GPIO_NUM_19, GPIO_NUM_18, GPIO_NUM_17};
-const gpio_num_t dirPinsComplement[6] = {GPIO_NUM_32, GPIO_NUM_33, GPIO_NUM_34, GPIO_NUM_35, GPIO_NUM_36, GPIO_NUM_39};
+const gpio_num_t dirPinsComplement[6] = {GPIO_NUM_22, GPIO_NUM_23, GPIO_NUM_25, GPIO_NUM_26, GPIO_NUM_27, GPIO_NUM_32};
 const rmt_channel_t channels[6] = {RMT_CHANNEL_0, RMT_CHANNEL_1, RMT_CHANNEL_2, 
                                   RMT_CHANNEL_3, RMT_CHANNEL_4, RMT_CHANNEL_5};
 
@@ -111,12 +111,14 @@ void InterfaceMonitorCode(void * pvParameters) {
             processIncomingByte(Serial.read());
         
         checkEStop();
+        vTaskDelay(pdMS_TO_TICKS(1));
     }
 }
 
 void GPIOLoop(void * pvParameters) {
     for(;;) {
         handleStepDirection();
+        vTaskDelay(pdMS_TO_TICKS(1));
     }
 }
 
@@ -141,6 +143,10 @@ void process_data(char * data) {
     float arrRaw[6] = {0,0,0, 0,0,0};
     float arrRateLimited[6] = {0,0,0, 0,0,0};
     
+    // Debug output - show received data
+    Serial.print("Received data: ");
+    Serial.println(data);
+    
     tok = strtok(data, ",");
     
     while (tok != NULL && i < 6) {
@@ -153,7 +159,17 @@ void process_data(char * data) {
         else//sway,surge
             temp = mapfloat(value, 0, 4094, -8, 8); 
         
-        arrRaw[i++] = temp;
+        arrRaw[i] = temp;
+        
+        // Debug output - show parsed values
+        Serial.print("Axis ");
+        Serial.print(i);
+        Serial.print(": Raw=");
+        Serial.print(value);
+        Serial.print(" Mapped=");
+        Serial.println(temp);
+        
+        i++;
         tok = strtok(NULL, ",");
     }   
     
@@ -174,36 +190,48 @@ void process_data(char * data) {
             //if we are within limits, stop rate limiting.
             if(!isNotWithinLimit) {
                 isRateLimiting = false;
+                Serial.println("Rate limiting disabled - within limits");
             }
             
             //set position
             memcpy((void*)arr, arrRateLimited, sizeof(arr));
+            Serial.println("Using rate-limited values");
         } else {
             //set position directly
             memcpy((void*)arr, arrRaw, sizeof(arr));
+            Serial.println("Using direct values");
         }
         
         //calculate and set new position
         setPos();
+    } else {
+        Serial.println("Motion paused - E-Stop active");
     }
 }
 
 void processIncomingByte(const byte inByte) {
     static char input_line[MAX_SERIAL_INPUT];
     static unsigned int input_pos = 0;
+    static unsigned long lastMessageTime = 0;
+    unsigned long currentTime;
+    unsigned long timeSinceLastMessage;
     
     switch (inByte) {
         case 'X':   // end of text
             input_line[input_pos] = 0;  // terminating null byte
+            
+            currentTime = millis();
+            timeSinceLastMessage = currentTime - lastMessageTime;
+            Serial.print("Message interval: ");
+            Serial.print(timeSinceLastMessage);
+            Serial.println("ms");
+            lastMessageTime = currentTime;
+            
             process_data(input_line);          
             input_pos = 0;  
             break;
             
-        case '\r':   // discard carriage return
-            break;
-            
         default:
-            //buffer data
             if (input_pos < (MAX_SERIAL_INPUT - 1))
                 input_line[input_pos++] = inByte;
             break;

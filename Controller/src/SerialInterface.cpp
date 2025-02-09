@@ -36,12 +36,19 @@ void SerialInterface::processData(char* data) {
     char* token = strtok(data, ",");
     int index = 0;
     
+    Serial.println("Received data:");  // Debug print
+    
     while (token != NULL && index < 6) {
-        positions[index++] = atof(token);
+        positions[index] = atof(token);
+        Serial.print(positions[index]); // Debug print
+        Serial.print(" ");  // Debug print
+        index++;
         token = strtok(NULL, ",");
     }
+    Serial.println();  // Debug print
     
     if (index == 6) {
+        Serial.println("Setting target positions"); // Debug print
         motorController.setTargetPositions(positions);
     }
 }

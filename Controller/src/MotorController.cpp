@@ -81,26 +81,19 @@ void MotorController::handleStepDirection() {
 }
 
 void MotorController::setTargetPositions(volatile float positions[6]) {
-    for(int i = 0; i < 6; i++) {    
-        long x = 0;
-        float alpha = getAlpha(i, positions);
-
-        if(alpha >= servo_min_rad && alpha <= servo_max_rad) {
-            //this takes the Radian angle, and scales that value to pulse position.
-            if(i==INV1 || i==INV2 || i==INV3) {
-                x = -(alpha)*servoPulseMultiplierPerRadian;
-            } else {
-                x = (alpha)*servoPulseMultiplierPerRadian;
-            }
-            servo_pos[i] = x;            
-        }     
-    }
-
     xSemaphoreTake(xMutex, portMAX_DELAY);
-    for(int i = 0; i < 6; i++) {
-        motors[i].targetpos = servo_pos[i];
-    }   
-    xSemaphoreGive(xMutex);     
+    
+    Serial.println("Current positions:"); 
+    for (int i = 0; i < 6; i++) {
+        motors[i].targetpos = positions[i];
+        Serial.print(motors[i].currentpos); 
+        Serial.print(" -> "); 
+        Serial.print(motors[i].targetpos); 
+        Serial.print("  "); 
+    }
+    Serial.println(); 
+    
+    xSemaphoreGive(xMutex);
 }
 
 void MotorController::initializePins() {

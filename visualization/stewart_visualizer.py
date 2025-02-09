@@ -3,12 +3,21 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.animation as animation
 import time
+import serial
 from inverse_kinematics import InverseKinematics
 
 class StewartVisualizer:
-    def __init__(self):
+    def __init__(self, port='COM3', baudrate=115200):
         """Initialize the Stewart Platform visualizer"""
         self.ik = InverseKinematics()
+        
+        # Initialize serial connection
+        try:
+            self.serial = serial.Serial(port=port, baudrate=baudrate, timeout=0.1)
+            print(f"Connected to {port} at {baudrate} baud")
+        except serial.SerialException as e:
+            print(f"Failed to connect to {port}: {e}")
+            self.serial = None
         
         # Create figure
         self.fig = plt.figure(figsize=(12, 8))
@@ -91,6 +100,36 @@ class StewartVisualizer:
                               horizontalalignment='center', size=8)
             self.angle_texts.append(text)
     
+    def send_to_esp32(self):
+        """Send current motor positions to ESP32"""
+        if not self.serial:
+            return
+            
+        # Convert motor positions to ESP32 format (0-4094 range)
+        # Order: sway, surge, heave, pitch, roll, yaw
+        values = []
+        
+        # Map motor positions to appropriate ranges
+        # First 3 are translations (sway, surge, heave)
+        for i in range(3):
+            if i == 2:  # heave
+                val = np.interp(self.motor_positions[i], [-7, 7], [0, 4094])
+            else:  # sway, surge
+                val = np.interp(self.motor_positions[i], [-8, 8], [0, 4094])
+            values.append(int(val))
+            
+        # Last 3 are rotations (pitch, roll, yaw)
+        for i in range(3, 6):
+            val = np.interp(self.motor_positions[i], [-30, 30], [0, 4094])
+            values.append(int(val))
+            
+        # Format data as comma-separated values with X terminator
+        data = ','.join(map(str, values)) + 'X'
+        try:
+            self.serial.write(data.encode())
+        except serial.SerialException as e:
+            print(f"Failed to send data: {e}")
+            
     def set_motor_position(self, motor_index, angle_degrees):
         """Set the position of a motor"""
         point = self.servo_points[motor_index]
@@ -153,6 +192,9 @@ class StewartVisualizer:
             line, _, _ = self.servo_arms[i]
             artists.append(line)
             artists.append(self.angle_texts[i])
+            
+        # Send current positions to ESP32
+        self.send_to_esp32()
         
         # Return all artists that were modified
         return artists
@@ -176,6 +218,8 @@ def main():
         platform = StewartVisualizer()
         platform.run()
     except KeyboardInterrupt:
+        if platform.serial:
+            platform.serial.close()
         plt.close('all')
 
 if __name__ == "__main__":

@@ -111,7 +111,7 @@ Contributions are welcome! Please read our contributing guidelines and submit pu
 
 ## ⚖️ License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details. The license includes a specific disclaimer about the dangerous nature of this project. By using any part of this project, you acknowledge that you are doing so at your own risk.
 
 ## 🔗 Links
 

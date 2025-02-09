@@ -1,5 +1,7 @@
 # 6DOF Motion Simulator Controller
 
+> ⚠️ **WARNING**: This Phoenix branch is currently a Work In Progress (WIP) and is NOT functional yet. Please use the main branch for a working version.
+
 This is the controller code for a 6-DOF (Degrees of Freedom) Stewart Platform Motion Simulator. The project uses PlatformIO for better dependency management and development experience.
 
 ## Project Structure

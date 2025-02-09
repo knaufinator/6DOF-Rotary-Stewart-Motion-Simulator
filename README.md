@@ -32,7 +32,6 @@
 
 - 6 AC servo motors with AASD15A Servo Drivers
 - High-precision planetary gears for torque multiplication
-- Custom PCB with ESP32 microcontroller
 - Real-time position processing at 1000Hz
 - Soft pause/emergency stop functionality
 - SimTools compatibility
@@ -54,15 +53,6 @@
 - Interactive view controls (zoom, rotate, pan)
 
 ### Hardware Components
-
-#### Controller PCB
-<img src="documentation/images/PCB_Controller.png" width="480" alt="Controller PCB">
-
-Main Components:
-- ESP32 Dev board
-- MCP23S17
-- 3.3V to 5V TTL Shifter Module
-- NJK-5002C NPN NO Hall Effect Sensors
 
 #### Base Assembly
 - 31" diameter steel plate (½ inch thick)
@@ -106,14 +96,6 @@ pn038 - Initial speed: 100
 pn039 - Return speed: 100
 ```
 
-## 📝 Documentation
-
-### Schematics
-<div align="center">
-  <img src="documentation/Controller Schematic/Schematic_Controller.png" width="400" alt="Controller Schematic">
-  <img src="documentation/Controller Schematic/Schematic_Sensor array.png" width="400" alt="Sensor Array Schematic">
-</div>
-
 ## 🚀 Getting Started
 
 1. Review all safety documentation thoroughly
@@ -135,7 +117,6 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 - [SimTools Configuration Guide](documentation/images/simtools.png)
 - [Build Documentation](documentation/)
-- [PCB Design Files](documentation/Controller%20Schematic/)
 
 ---
 *This project is part of the Phoenix branch, representing a complete modernization of the original implementation.*

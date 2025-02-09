@@ -1,0 +1,4 @@
+numpy>=1.21.0
+pyserial>=3.5
+pyvista>=0.34.0
+matplotlib>=3.5.0

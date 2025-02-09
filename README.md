@@ -1,7 +1,19 @@
 # 6DOF Rotary Stewart Motion Simulator Platform
-Compact yet powerful motion simulator platform utilizing 6 AC servo motors with AASD15A Servo Drivers. High presicion planetary gears used to multiply the torque. Custom PCB using a ESP32 microcontroller to process the platform position. The ESP32 Controller base has a Bluetooth capability that is being used by a custom Android app using Ble standards to Configure platform parameters. Also featuring a soft pause/estop button, this will prevent position updates from the pc. This project contains 2 custom PCB's one main controller board that contains the ESP32 microcontroller, as well interfaces with the 6 AC Servo drivers, and 1 sensor array PCB that takes the 6 magnetic arm limit switches, combines the signals into 1 ethernet cable that is then connected to the main PCB.
+Compact yet powerful motion simulator platform utilizing 6 AC servo motors with AASD15A Servo Drivers. High precision planetary gears used to multiply the torque. Custom PCB using an ESP32 microcontroller to process the platform position. Features a soft pause/estop button to prevent position updates from the PC.
 
-This platform is scalable, and most dimensions are changeable within reason. Certain general design rules will need to be followed, in order for the platform to function correctly.
+## Phoenix Branch - Work in Progress
+This branch (Phoenix) represents a complete overhaul and modernization of the original project. It's an experimental branch where I'm exploring the capabilities of modern AI tools while reorganizing and optimizing every aspect of the codebase. This serves as both a learning exercise and an opportunity to improve the project's structure, documentation, and overall maintainability.
+
+Key focus areas:
+- Reorganizing the codebase for better clarity and maintainability
+- Optimizing code and configurations
+- Improving documentation and project structure
+- Exploring modern development practices and tools
+- Using this as a personal learning experience in AI-assisted development
+
+**Note**: This branch is actively being developed and may contain significant changes from the original implementation.
+
+This platform is scalable, and most dimensions are changeable within reason. Certain general design rules will need to be followed for the platform to function correctly.
 
 ## Disclaimer 
 This is a DANGEROUS project, and if absolute care is not taken you will be injured or killed.
@@ -22,54 +34,56 @@ alt="Motion Sim Example" height="340" width="auto" border="0" /></a>
 " target="_blank"><img align="center" src="http://img.youtube.com/vi/CdDkL8X6qOE/0.jpg" 
 alt="Motion Sim Example 2" height="340" width="auto" border="0" /></a>
 
-# Projects Included
-These are the components of the project that are included in this repository
+# Project Components
 
 ## Controller
-This is an ESP32 Arduino project. This interfaces with the PC through software like Simtools to AASD15A AC Servo Drivers, after correctly configuring. This project utilizes both ESP32 cores in order to maximize refresh rates to 1000Hz, or 1ms interval. A custom MCP23S17 library is included so the outputs of all 6 motors can be set at one time instead of setting them individually, this saves time and allows for more pulses per second. This increase allows for higher movement precision on the rotational arm. There is also a filter library included, this is still in early testing.
+This is an ESP32 PlatformIO project that interfaces with the PC through software like SimTools to control AASD15A AC Servo Drivers. The project utilizes both ESP32 cores to maximize refresh rates to 1000Hz (1ms interval). A custom MCP23S17 library is included so the outputs of all 6 motors can be set simultaneously instead of individually, improving efficiency and allowing for higher movement precision.
 
+### Python Visualizer
+A 3D visualization tool built with PyVista that allows you to:
+- View the platform's motion in real-time
+- Test different motion patterns (sine wave, circular, figure-eight)
+- Connect to SimTools for live visualization
+- Interact with the view (zoom, rotate, pan)
 
-## Simtools interface setup
-Config for PC to ESP32 USB-> Serial connection within simtools, simtools will be configured to send the 6 axis parameters over to the ESP32 every 1 ms. Over a 115200 baud connection. The packet consists of 6 - 12 bit values, delimited by comma and ended by a "X" Character to signal the ESP32 that the packet is done. 
+## SimTools Interface Setup
+Config for PC to ESP32 USB->Serial connection within SimTools. SimTools is configured to send 6 axis parameters to the ESP32 every 1ms over a 115200 baud connection. The packet consists of 6 12-bit values (0-4094), delimited by commas and ended by an "X" character.
 
-For simtools you encode the axis representations of x,y,z,Ry,Rx,RZ  with the configuration"Interface - Output" = \<Axis1a>,\<Axis2a>,\<Axis3a>,\<Axis4a>,\<Axis5a>,\<Axis6a>X   
+SimTools Configuration:
+- "Interface - Output" = \<Axis1a>,\<Axis2a>,\<Axis3a>,\<Axis4a>,\<Axis5a>,\<Axis6a>X
+- Axis representations: x, y, z, Ry, Rx, RZ
 
-With these settings the software package Simtools or any other custom application may communicate and command the simulator platform to move.
-
-<img src="images/simtools.png" width="480">
-
-
-## Android App
-This is a test application that will connect to the ESP32 microcontroller driving the AC servos, currently can stop/resume movement, and early filter adjustments. further functionality will be added to this as time progresses.
-
-<img src="images/Screenshot_20200907-141046.jpg" width="480">
-
+<img src="documentation/images/simtools.png" width="480">
 
 ## Controller and Sensor Array Schematics
 Schematic of the current Controller and Sensor array PCB
 
-<img src="Controller Schematic/Schematic_Controller.png" width="480">
-<img src="Controller Schematic/Schematic_Sensor array.png" width="480">
-
+<img src="documentation/Controller Schematic/Schematic_Controller.png" width="480">
+<img src="documentation/Controller Schematic/Schematic_Sensor array.png" width="480">
 
 ## Controller PCB
 Gerber files for ordering current Controller and Sensor Array PCB
 
-<img src="images/IMG_20200911_210004.jpg" width="480">
-<img src="images/PCB_Controller.png" width="480">
-<img src="images/PCB_Sensor_Array.png" width="480">
+<img src="documentation/images/IMG_20200911_210004.jpg" width="480">
+<img src="documentation/images/PCB_Controller.png" width="480">
+<img src="documentation/images/PCB_Sensor_Array.png" width="480">
+
+## PCB Debugger
+Arduino program for testing GPIO-motor outputs using a multimeter. Toggles all ports on/off at 5-second intervals for debugging non-moving motors and cold solder joints.
+
+Test points:
+- Pin 2 (step) vs ground
+- Pin 9 (dir) vs ground
+
+## Android App
+This is a test application that will connect to the ESP32 microcontroller driving the AC servos, currently can stop/resume movement, and early filter adjustments. further functionality will be added to this as time progresses.
+
+<img src="documentation/images/Screenshot_20200907-141046.jpg" width="480">
 
 ## Platform Test Application
 .Net Application for testing position limits and speed of platform. Allows for manual setting of each DOF / Axis. As well works with XBOX360 controller through the PC USB wireless adapter.
 
-## PCB Debugger
-This is a Arduino program that you can use on the main PCB to test to make sure that the GPIO - motor outputs are working correctly using a multimeter. This will turn all ports on and off at a 5 second interval. slow enough for the multimeter to pick up the switch. Useful when you are debugging non moving motors, cold solder joints. 
-
-To test, check the voltage at pin 2 (step), and pin 9 (dir) w/ground on the ESP32.  Voltages should swing between 5v and 0, for about 5 seconds each. test each IDC26 connector to ensure all outputs are working. if you notice non functional, futhur troubleshooting is needed. often this is a bad solder joint.
-
-![IDC Image](images/idc-26-pin-male1.png)
-
-# Parts
+## Parts
 These are some key parts I used, others can be used in their place, but variations of the AC Servo motor may not be compadible with the PCB, and may require a modified PCB schematic. 
 
 ## Controller 

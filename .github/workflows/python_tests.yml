@@ -1,0 +1,53 @@
+name: Python Visualization Tests
+
+on:
+  push:
+    branches: [ "main", "phoenix" ]
+    paths:
+      - 'visualization/**'
+      - 'Controller/src/**'
+      - 'Controller/include/**'
+      - '.github/workflows/python_tests.yml'
+  pull_request:
+    branches: [ "main", "phoenix" ]
+    paths:
+      - 'visualization/**'
+      - 'Controller/src/**'
+      - 'Controller/include/**'
+      - '.github/workflows/python_tests.yml'
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python-version: ['3.8', '3.9', '3.10']
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+        
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r visualization/requirements.txt
+        
+    - name: Build C extension
+      run: |
+        cd Controller
+        python setup.py build_ext --inplace
+        
+    - name: Run Python tests
+      run: |
+        cd visualization
+        python -m pytest tests/
+        
+    - name: Test visualization imports
+      run: |
+        cd visualization
+        python -c "from stewart_visualizer import StewartPlatform; from inverse_kinematics import InverseKinematics"

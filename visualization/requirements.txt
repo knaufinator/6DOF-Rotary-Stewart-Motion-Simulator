@@ -1,4 +1,6 @@
-numpy>=1.21.0
-pyserial>=3.5
+numpy>=1.19.0
 pyvista>=0.34.0
-matplotlib>=3.5.0
+pyserial>=3.5
+setuptools>=49.0.0
+wheel>=0.37.0
+pytest>=7.0.0

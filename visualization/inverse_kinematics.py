@@ -3,15 +3,40 @@ from typing import List
 
 class InverseKinematics:
     def __init__(self):
-        # Platform parameters from helpers.h
-        self.theta_r = 10  # degrees
-        self.theta_s = [150, -90, 30, 150, -90, 30]  # degrees
-        self.theta_p = 30  # degrees
-        self.RD = 15.75  # radius of the base platform
-        self.PD = 16  # radius of the top platform
-        self.servo_arm_length = 7.25  # L1
-        self.connecting_arm_length = 28.5  # L2
-        self.platform_height = 25.5170749
+        # Try to import C implementation
+        try:
+            import stewart_core
+            self.c_implementation = stewart_core
+            self.using_c = True
+            print("Using C implementation for inverse kinematics")
+            
+            # Get all parameters from C code
+            params = stewart_core.get_platform_params()
+            self.theta_r = params['theta_r']
+            self.theta_s = params['theta_s']
+            self.theta_p = params['theta_p']
+            self.RD = params['RD']
+            self.PD = params['PD']
+            self.servo_arm_length = params['servo_arm_length']
+            self.connecting_arm_length = params['connecting_arm_length']
+            self.platform_height = params['platform_height']
+            self.servo_min = params['servo_min']
+            self.servo_max = params['servo_max']
+            
+        except ImportError:
+            self.using_c = False
+            print("WARNING: Using Python implementation with hardcoded parameters")
+            # Fallback parameters (only used if C implementation is not available)
+            self.theta_r = 10  # degrees
+            self.theta_s = [30, -150, 150, -30, -90, 90]  # degrees - Paired arms: (0,2), (1,3), (4,5)
+            self.theta_p = 30  # degrees
+            self.RD = 15.75  # radius of the base platform
+            self.PD = 16  # radius of the top platform
+            self.servo_arm_length = 7.25  # L1
+            self.connecting_arm_length = 28.5  # L2
+            self.platform_height = 25.5170749
+            self.servo_min = -60 * np.pi / 180  # -60 degrees in radians
+            self.servo_max = 60 * np.pi / 180   # 60 degrees in radians
         
         # Constants
         self.DEG_TO_RAD = np.pi / 180.0
@@ -22,10 +47,17 @@ class InverseKinematics:
         self.angle_multiplier = [1, -1, 1, 1, -1, 1]
         self.offset_angle = [np.pi/6, np.pi/6, -np.pi/2, -np.pi/2, np.pi/6, np.pi/6]
         
+        # Platform dimensions
+        self.base_radius = 0.1  # meters
+        self.platform_radius = 0.08  # meters
+        self.arm_servo_arm_length = 0.05  # meters
+        
+        # Calculate mount points
+        self.base_angles = np.array([60, 120, 180, 240, 300, 360]) * np.pi / 180  # Convert to radians
+    
     def get_alpha(self, i: int, arr: List[float]) -> float:
         """
         Calculate servo angle for motor i given platform position/orientation
-        This is a direct port of the getAlpha function from helpers.cpp
         
         Args:
             i: Motor index (0-5)
@@ -34,6 +66,9 @@ class InverseKinematics:
         Returns:
             float: Servo angle in radians
         """
+        if self.using_c:
+            return self.c_implementation.get_alpha(i, arr)
+            
         # Platform coordinates calculation
         platform_pdx = self.dx_multiplier[i] * self.RD
         platform_pdy = self.RD
@@ -120,3 +155,47 @@ class InverseKinematics:
             self.connecting_arm_length = params['connecting_arm_length']
         if 'platform_height' in params:
             self.platform_height = params['platform_height']
+
+    def get_base_points(self):
+        """Get the base mounting points for servos"""
+        points = []
+        for angle in self.base_angles:
+            x = self.base_radius * np.cos(angle)
+            y = self.base_radius * np.sin(angle)
+            points.append([x, y, 0])
+        return np.array(points)
+    
+    def get_arm_points(self, servo_index):
+        """Get the initial arm points for a given servo"""
+        base_point = self.get_base_points()[servo_index]
+        mount_angle = self.base_angles[servo_index]
+        
+        # Initial arm direction (perpendicular to mounting angle, pointing outward)
+        arm_dir = np.array([-np.sin(mount_angle), np.cos(mount_angle), 0])
+        
+        # Calculate arm end point
+        arm_end = base_point + self.arm_servo_arm_length * arm_dir
+        
+        return np.array([base_point, arm_end])
+    
+    def rotate_arm(self, arm_points, angle_rad):
+        """Rotate an arm by the given angle in radians"""
+        base_point = arm_points[0]
+        arm_vector = arm_points[1] - base_point
+        
+        # Create rotation matrix around Z axis
+        c = np.cos(angle_rad)
+        s = np.sin(angle_rad)
+        rotation_matrix = np.array([
+            [c, -s, 0],
+            [s, c, 0],
+            [0, 0, 1]
+        ])
+        
+        # Rotate the arm vector
+        rotated_vector = rotation_matrix @ arm_vector
+        
+        # Calculate new end point
+        new_end = base_point + rotated_vector
+        
+        return np.array([base_point, new_end])

@@ -3,7 +3,6 @@
 #include <SPI.h>
 #include <MCP23S17.h>
 #include <Bounce2.h>
-#include <EEPROM.h>
 #include <Preferences.h>
 #include "helpers.h"
 #include "RMTMotorControl.h"
@@ -243,9 +242,6 @@ void setup() {
   Serial.begin(115200); 
   Wire.begin();
   
-  // Initialize EEPROM with predefined size
-  EEPROM.begin(EEPROM_SIZE);
-
   // Initialize SPI
   SPI.begin();
 

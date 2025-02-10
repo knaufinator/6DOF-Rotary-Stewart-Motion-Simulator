@@ -19,10 +19,9 @@
 #define MICRO_INTERVAL_FAST 100
 #define MICRO_INTERVAL_SLOW 10000
 #define TIMER_INTERVAL 1000
-#define ESTOPPIN 4
+#define ESTOPPIN 34
 #define MAX_SERIAL_INPUT 60
-#define EEPROM_SIZE 512
-#define ESTOPDEBOUNCETIME 5
+#define ESTOPDEBOUNCETIME 50
 
 // Motor and Hardware Configuration
 #define MCP_CS_PIN 5  // Chip select pin for MCP23S17

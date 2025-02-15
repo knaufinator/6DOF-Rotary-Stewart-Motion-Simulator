@@ -123,7 +123,7 @@ public:
         _stepItem[0].duration1 = _config.stepPulseWidth_us;
     }
 
-    bool setTargetPosition(long target) {
+    bool setTargetPosition(int32_t target) {
         if (!_initialized) {
             _error = ERROR_NOT_INITIALIZED;
             return false;
@@ -205,9 +205,21 @@ public:
         return true;
     }
 
+    void emergencyStop() {
+        // Immediately stop all motion
+        _targetPos = _currentPos;  // Set target to current to stop motion
+        _currentVelocity = 0;      // Zero velocity
+        
+        // Ensure step output is in safe state
+        gpio_set_level(_stepPin, 0);
+        if (_stepPinComplement != GPIO_NUM_NC) {
+            gpio_set_level(_stepPinComplement, 1);
+        }
+    }
+
+    int32_t getCurrentPosition() const { return _currentPos; }
+    int32_t getTargetPosition() const { return _targetPos; }
     Error getLastError() const { return _error; }
-    long getCurrentPosition() const { return _currentPos; }
-    long getTargetPosition() const { return _targetPos; }
     float getCurrentVelocity() const { return _currentVelocity; }
     bool isAtTarget() const { return _currentPos == _targetPos; }
 
@@ -217,8 +229,8 @@ private:
     gpio_num_t _dirPin;
     gpio_num_t _dirPinComplement;
     rmt_channel_t _channel;
-    volatile long _currentPos;
-    volatile long _targetPos;
+    volatile int32_t _currentPos;
+    volatile int32_t _targetPos;
     rmt_item32_t _stepItem[1];
     Config _config;
     Error _error;

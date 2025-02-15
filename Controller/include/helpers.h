@@ -23,6 +23,11 @@
 #define MAX_SERIAL_INPUT 60
 #define ESTOPDEBOUNCETIME 50
 
+// E-stop Configuration
+#define ESTOP_ACTIVE_STATE LOW
+#define ESTOP_CHECK_INTERVAL_MS 1  // Check E-stop every 1ms
+#define ESTOP_WATCHDOG_TIMEOUT_MS 100  // Watchdog timeout if E-stop task fails
+
 // Motor and Hardware Configuration
 #define MCP_CS_PIN 5  // Chip select pin for MCP23S17
 #define INV1 0  // Counter-clockwise motors

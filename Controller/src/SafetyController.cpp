@@ -11,7 +11,8 @@ void SafetyController::begin() {
 }
 
 void SafetyController::setupEStop() {
-    debouncedEStop.attach(ESTOPPIN, INPUT_PULLUP);
+    // Initialize debounced E-Stop button
+    debouncedEStop.attach(ESTOP_PIN, INPUT_PULLUP);
     debouncedEStop.interval(ESTOPDEBOUNCETIME);
     debouncedEStop.setPressedState(LOW);
 }

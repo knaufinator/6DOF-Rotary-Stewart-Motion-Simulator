@@ -63,6 +63,83 @@ The Python visualizer allows you to view the platform's motion in real-time:
    python stewart_visualizer.py --mode serial --port COM3
    ```
 
+## Debug API for Visualization
+The controller outputs debug data over serial at 10Hz (every 100ms) in CSV format. This data can be used to visualize the platform's state in real-time.
+
+### Debug Control
+Debug output can be enabled/disabled using serial commands:
+- Enable debug: Send `DBG:1`
+- Disable debug: Send `DBG:0`
+
+The controller will respond with "Debug output enabled" or "Debug output disabled" to confirm the change.
+Debug output is enabled by default on startup.
+
+### Data Format
+```
+DEBUG,timestamp,angle1,angle2,angle3,angle4,angle5,angle6,targetX,targetY,targetZ,rotX,rotY,rotZ
+```
+
+Field descriptions:
+- `timestamp`: Microseconds since startup
+- `angle1-6`: Current angle of each motor in degrees (-0.00 format)
+- `targetX,Y,Z`: Target platform position in mm
+- `rotX,Y,Z`: Target platform rotation in degrees
+
+### Example Python Parser
+```python
+import serial
+import numpy as np
+
+def parse_debug_line(line):
+    if not line.startswith('DEBUG'):
+        return None
+        
+    try:
+        parts = line.strip().split(',')
+        return {
+            'timestamp': int(parts[1]),
+            'angles': [float(x) for x in parts[2:8]],
+            'position': [float(x) for x in parts[8:11]],
+            'rotation': [float(x) for x in parts[11:14]]
+        }
+    except:
+        return None
+
+def connect_to_platform(port='COM3', baudrate=115200):
+    ser = serial.Serial(port, baudrate)
+    while True:
+        try:
+            line = ser.readline().decode('utf-8')
+            data = parse_debug_line(line)
+            if data:
+                yield data
+        except KeyboardInterrupt:
+            break
+        except:
+            continue
+    ser.close()
+
+# Example usage:
+for data in connect_to_platform():
+    print(f"Platform angles: {data['angles']}")
+    print(f"Target position: {data['position']}")
+    print(f"Target rotation: {data['rotation']}")
+```
+
+### Visualization Tips
+1. The debug data is output at 10Hz, suitable for real-time visualization
+2. All angles are in degrees for easy conversion to 3D rotations
+3. Position values are in millimeters for direct scaling
+4. Use the timestamp for smooth animation interpolation
+5. The data format is consistent and comma-separated for easy parsing
+
+### Error States
+- E-stop activation is indicated by "E-STOP ACTIVATED" message
+- Motor initialization errors include error codes
+- Watchdog resets are preceded by system messages
+
+See the `/visualizer` directory for a complete Python-based 3D visualization implementation.
+
 ## Communication Protocol
 The controller accepts commands via serial (USB) at 115200 baud. Each command packet contains 6 values (0-4094) representing the platform's position and orientation:
 - Values are comma-separated

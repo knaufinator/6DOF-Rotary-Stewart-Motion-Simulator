@@ -1,5 +1,31 @@
 # 6DOF Rotary Stewart Motion Simulator Platform
 
+## ⚠️ Current Status - Work In Progress
+
+This branch is currently a work in progress and does not yet have full functionality. It is being actively developed and updated regularly as development continues.
+
+### 🎯 Development Goals
+
+1. 3D Visualization and ESP32 Integration
+   - Implement working 3D visualization system
+   - Establish ESP32 interface in debug mode
+   - Create integration tests for position acceptance and verification
+   - Develop real-time position feedback visualization
+
+2. Hardware Improvements
+   - Design and implement new PCB with differential output capabilities
+   - Enhance position update speed and resolution
+   - Implement robust noise rejection for more precise measurements
+
+3. Additional Development Tasks
+   - Implement comprehensive error handling and safety checks
+   - Create calibration routines for improved accuracy
+   - Develop diagnostic tools for system monitoring
+   - Add configuration profiles for different use cases
+   - Implement data logging and analysis features
+
+Please note that features and functionality may be incomplete or change as development progresses.
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Platform: ESP32](https://img.shields.io/badge/Platform-ESP32-blue.svg)](https://www.espressif.com/en/products/socs/esp32)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
@@ -95,6 +121,67 @@ pn037 - Fine position: +/-5000 (adjustable)
 pn038 - Initial speed: 100
 pn039 - Return speed: 100
 ```
+
+## Platform Geometry
+
+### Key Angular Parameters
+
+#### THETA_P (θP) - Base Servo Pair Separation
+- Value: 30 degrees
+- Purpose: Defines the angular separation between servo motors within each pair on the base
+- Each pair of servos (0-1, 2-3, 4-5) is mounted with this 30° separation
+- Used to calculate the precise mounting positions of the servos on the base platform
+
+#### THETA_R (θR) - Platform Connection Separation
+- Value: 10 degrees
+- Purpose: Defines the angular separation between connection points within each pair on the top platform
+- Each pair of connection points is separated by this 10° angle
+- Used to calculate the exact positions where the connecting rods (L2) attach to the moving platform
+
+### Base Configuration
+- Base Radius (RD): 15.75 inches
+- Servo pairs are mounted at 120° intervals around the base (0°, 120°, 240°)
+- Within each pair, servos are separated by THETA_P (30°)
+- Individual servo angles: [150°, -90°, 30°, 150°, -90°, 30°]
+
+### Platform Configuration
+- Platform Radius (PD): 16 inches
+- Connection points are arranged in pairs at 120° intervals
+- Within each pair, points are separated by THETA_R (10°)
+- Platform operates at a default height of 25.52 inches
+
+### Arm Lengths
+- Servo Arm Length (L1): 7.25 inches
+- Connecting Arm Length (L2): 28.5 inches
+
+### Motor Orientations (theta_s)
+The servo motors are arranged in a specific pattern to optimize the platform's motion capabilities:
+
+```
+theta_s = [150°, -90°, 30°, 150°, -90°, 30°]
+```
+
+To understand theta_s:
+1. The motors are numbered 0-5 around the hexagon
+2. Each motor's shaft rotation axis points towards the center of the hexagon
+3. The servo arms rotate in a plane perpendicular to this shaft axis
+4. theta_s defines the angle of the servo arm relative to a perpendicular reference:
+   - Motors 0 and 3: Arms rotate 150° from perpendicular
+   - Motors 1 and 4: Arms rotate -90° from perpendicular
+   - Motors 2 and 5: Arms rotate 30° from perpendicular
+5. Motors are arranged in pairs (0-3, 1-4, 2-5) with matching theta_s values
+
+This arrangement creates three "virtual pivot points" where pairs of motors work together to control the platform's motion. When viewed from above:
+- Each motor's shaft rotation axis points directly to the hexagon's center
+- The servo arms rotate in planes perpendicular to these shaft axes
+- The theta_s angles determine the neutral position of each arm
+- This configuration allows for optimal force distribution and motion range
+
+### Motion Range
+- Servo range: ±60 degrees from their theta_s position
+- Platform can move in all 6 degrees of freedom:
+  - Translation: X, Y, Z
+  - Rotation: Roll, Pitch, Yaw
 
 ## 🚀 Getting Started
 

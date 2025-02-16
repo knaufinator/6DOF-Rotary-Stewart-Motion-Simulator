@@ -14,7 +14,7 @@ public:
 
 private:
     MotorController& motorController;
-    char inputBuffer[MAX_SERIAL_INPUT];
+    char inputBuffer[MAX_SERIAL_INPUT];  // Using MAX_SERIAL_INPUT from helpers.h
     byte inputPos;
     
     void processData(char* data);

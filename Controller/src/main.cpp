@@ -27,8 +27,8 @@ const gpio_num_t dirPins[6] = {
     (gpio_num_t)DIR_PIN_4, (gpio_num_t)DIR_PIN_5, (gpio_num_t)DIR_PIN_6
 };
 const rmt_channel_t channels[6] = {
-    RMT_CHANNEL_0, RMT_CHANNEL_1, RMT_CHANNEL_2, 
-    RMT_CHANNEL_3, RMT_CHANNEL_4, RMT_CHANNEL_5
+    RMT_CHANNEL_0, RMT_CHANNEL_1, RMT_CHANNEL_2,
+    RMT_CHANNEL_0, RMT_CHANNEL_1, RMT_CHANNEL_2  // Sharing channels since we have limited RMT channels
 };
 
 // Timing variables

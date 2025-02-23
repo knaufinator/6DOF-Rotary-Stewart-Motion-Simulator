@@ -12,42 +12,21 @@
 #define BIT_SET(a,b) ((a) |= (1ULL<<(b)))
 #define BIT_CLEAR(a,b) ((a) &= ~(1ULL<<(b)))
 
-// Board-specific GPIO pin definitions
-#ifdef BOARD_ESP32DEV
-    // ESP32 Dev Kit 1 pin configuration
-    #define STEP_PIN_1 32
-    #define STEP_PIN_2 33
-    #define STEP_PIN_3 25
-    #define STEP_PIN_4 26
-    #define STEP_PIN_5 27
-    #define STEP_PIN_6 14
-    #define DIR_PIN_1 23
-    #define DIR_PIN_2 22
-    #define DIR_PIN_3 21
-    #define DIR_PIN_4 19
-    #define DIR_PIN_5 18
-    #define DIR_PIN_6 5
-    #define MCP_CS_PIN 15
-    #define ESTOP_PIN 34
-#elif defined(BOARD_ESP32S3)
-    // ESP32-S3 pin configuration (using safe pins that don't interfere with boot/flash)
-    #define STEP_PIN_1 4
-    #define STEP_PIN_2 5
-    #define STEP_PIN_3 6
-    #define STEP_PIN_4 7
-    #define STEP_PIN_5 8
-    #define STEP_PIN_6 9
-    #define DIR_PIN_1 10
-    #define DIR_PIN_2 11
-    #define DIR_PIN_3 12
-    #define DIR_PIN_4 13
-    #define DIR_PIN_5 14
-    #define DIR_PIN_6 17
-    #define MCP_CS_PIN 5
-    #define ESTOP_PIN 34
-#else
-    #error "No board type defined. Please define either BOARD_ESP32DEV or BOARD_ESP32S3"
-#endif
+// Board-specific GPIO pin definitions for ESP32-S3
+#define STEP_PIN_1 4
+#define STEP_PIN_2 5
+#define STEP_PIN_3 6
+#define STEP_PIN_4 7
+#define STEP_PIN_5 8
+#define STEP_PIN_6 9
+#define DIR_PIN_1 10
+#define DIR_PIN_2 11
+#define DIR_PIN_3 12
+#define DIR_PIN_4 13
+#define DIR_PIN_5 14
+#define DIR_PIN_6 17
+#define MCP_CS_PIN 5
+#define ESTOP_PIN 34
 
 // Timing constants
 #define MICRO_INTERVAL_FAST 100    // 100 microseconds = 10kHz update rate
@@ -67,9 +46,6 @@
 #define ESTOP_ACTIVE_STATE LOW     // E-stop is active when pin is LOW (normally closed)
 
 // Motor Constants
-#define STEPS_PER_DEGREE 100      // Motor steps per degree of arm movement
-
-// Motor and Hardware Configuration
 #define INV1 0  // Counter-clockwise motors
 #define INV2 2
 #define INV3 4

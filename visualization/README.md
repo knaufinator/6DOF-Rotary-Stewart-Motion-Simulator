@@ -1,61 +1,84 @@
-# Stewart Platform Visualization
+# 6DOF Rotary Stewart Platform Visualizer
 
-3D visualization of a 6-DOF Stewart Platform Motion Simulator using PyVista.
+A professional-grade visualization tool for simulating a 6-DOF Stewart Platform based on the C++ implementation from the physical controller.
+
+![6DOF Visualizer](../docs/images/visualizer_preview.png)
 
 ## Features
 
-- Accurate geometric representation based on physical platform dimensions
-- Interactive 3D visualization with proper perspective and shadows
-- Hexagonal base arrangement with 6 servo motors
-- Motor direction indicators showing orientation angles
-- Motor position labels for easy reference
+- **Accurate Inverse Kinematics**: Precise implementation matching the C++ controller, ensuring the visualization behaves exactly like the physical platform
+- **Real-time Interactive Controls**: Adjust position (X, Y, Z) and orientation (Roll, Pitch, Yaw) with immediate visual feedback
+- **Constraint Visualization**: Clear indication when physical limits are reached, showing exactly which servo or rod is at its limit
+- **Detailed Motion Analytics**: Real-time display of all servo angles and platform position
+- **Configurable Arm Lengths**: Easily adjust L1 (servo arm) and L2 (connecting rod) parameters to test different platform geometries
+- **Physical Limit Testing**: Explore the maximum range of motion for any platform configuration
 
-## Configuration
+## Purpose
 
-The platform geometry is defined in `stewart_config.py` with the following key parameters:
+This visualizer serves both as a development tool and an educational reference:
 
-- Base Radius (RD): 15.75 inches
-- Platform Radius (PD): 16 inches
-- Servo Arm Length (L1): 7.25 inches
-- Connecting Arm Length (L2): 28.5 inches
-- Platform Height: 25.52 inches
+1. **Platform Design**: Virtually test different geometries before physical construction
+2. **Motion Planning**: Develop and validate motion sequences in a safe environment
+3. **Kinematics Education**: Understand the geometric principles of Stewart platforms
+4. **Limit Testing**: Determine the maximum range of motion for various configurations
 
-### Motor Configuration
+## Configuration Parameters
 
-Motors are arranged in a hexagonal pattern with 60-degree spacing:
-- Motor positions: 0°, 60°, 120°, 180°, 240°, 300°
-- Motor orientation angles:
-  - Motors 0,3: 150 degrees
-  - Motors 1,4: -90 degrees
-  - Motors 2,5: 30 degrees
+The platform's physical parameters are defined in `stewart_config.py` and can be modified at the top of `6dof_visualizer.py`:
 
-## Files
+```python
+# Adjustable parameters
+L1 = SERVO_ARM_LENGTH  # Servo arm length (mm)
+L2 = CONNECTING_ARM_LENGTH  # Connecting arm length (mm)
+```
 
-- `stewart_config.py`: Platform geometry and configuration parameters
-- `stewart_vis.py`: PyVista-based 3D visualization
-- `requirements.txt`: Python package dependencies
+Default values (matching the C++ implementation):
+- **Base Radius (RD)**: 15.75 inches
+- **Platform Radius (PD)**: 16 inches
+- **Servo Arm Length (L1)**: 7.25 inches
+- **Connecting Arm Length (L2)**: 28.5 inches
+- **Platform Height**: 25.52 inches
 
-## Usage
+## Using the Visualizer
 
-1. Install dependencies:
+1. **Position Control**: Use the X, Y, Z sliders to move the platform in 3D space
+2. **Orientation Control**: Use Roll, Pitch, Yaw sliders to rotate the platform
+3. **Information Panel**: View real-time servo angles and platform position
+4. **Constraint Feedback**: Yellow highlighted messages appear when you reach physical limits
+
+## Understanding Constraint Messages
+
+When you try to move the platform beyond its physical capabilities, you'll see feedback on what limit is being hit:
+
+- **Servo Angle Limits**: Indicates which servo (1-6) is hitting its ±60° angular limit
+- **Rod Length Limits**: Shows when a connecting rod would need to stretch beyond L2
+- **Mathematical Constraints**: Appears when a position is physically impossible to achieve
+
+## Installation
+
 ```bash
+# Install required packages
 pip install -r requirements.txt
+
+# Run the visualizer
+python 6dof_visualizer.py
 ```
 
-2. Run the visualization:
-```bash
-python stewart_vis.py
-```
+## Required Packages
 
-## Controls
+- matplotlib
+- numpy
 
-- Left mouse: Rotate camera
-- Middle mouse: Pan
-- Right mouse: Zoom
-- R: Reset camera to default position
+## Comparison with Physical Platform
 
-## Dependencies
+This visualizer exactly reproduces the inverse kinematics from the C++ controller code, ensuring that what you see in the simulation accurately reflects how the physical platform would behave with the same inputs.
 
-- Python 3.11+
-- PyVista
-- NumPy
+Key aspects that match the physical implementation:
+- Servo angle calculations
+- Platform geometry
+- Motion constraints
+- Base and platform connection points
+
+## Advanced Usage
+
+To test different platform geometries, modify the L1 and L2 parameters at the top of `6dof_visualizer.py`. This allows you to explore how different arm lengths affect the platform's range of motion and stability without physical hardware changes.

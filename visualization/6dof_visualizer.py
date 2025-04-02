@@ -18,13 +18,26 @@ for understanding the geometric principles of Stewart platforms.
 
 import numpy as np
 import matplotlib.pyplot as plt
-from matplotlib.widgets import Slider, TextBox
+from matplotlib.widgets import Slider, TextBox, Button, AxesWidget
+from matplotlib.widgets import RadioButtons
 from mpl_toolkits.mplot3d import Axes3D
 from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 import matplotlib.patches as mpatches
 from math import pi, sin, cos, tan, asin, acos, atan2, sqrt, radians, degrees
 import matplotlib.animation as animation
 from matplotlib.lines import Line2D
+import threading
+import time
+import struct
+
+# Optional import of serial - won't crash if not available
+HAS_SERIAL = False
+try:
+    import serial
+    import serial.tools.list_ports  # For enumerating available COM ports
+    HAS_SERIAL = True
+except ImportError:
+    print("PySerial not found. Install with 'pip install pyserial' for ESP32 communication.")
 
 # Import configuration from stewart_config.py
 from stewart_config import (
@@ -42,6 +55,158 @@ L1 = SERVO_ARM_LENGTH  # Default is imported from config, change this value as n
 L2 = CONNECTING_ARM_LENGTH  # Default is imported from config, change this value as needed
 # ======================================================================
 
+# Simple port selector using RadioButtons
+class PortSelector:
+    def __init__(self, ax, labels, title="COM Port", initial=0, callback=None):
+        self.labels = labels if labels else ['None']
+        self.callback = callback
+        self.index = initial if initial < len(self.labels) else 0
+        
+        # Title for the selector
+        if title:
+            ax.text(0.5, 1.2, title, ha='center', va='center', transform=ax.transAxes)
+        
+        # Create the radio buttons
+        self.radio = RadioButtons(ax, self.labels, active=self.index)
+        
+        # Connect callback if provided
+        if callback:
+            self.radio.on_clicked(callback)
+        
+    def set_labels(self, labels):
+        """Update the available options"""
+        if not labels:
+            labels = ['None']
+        
+        # Store the active selection index for new list
+        curr_selection = self.get_value()
+        new_index = 0
+        if curr_selection in labels:
+            new_index = labels.index(curr_selection)
+        
+        # Update the labels and recreate the radio buttons
+        self.labels = labels
+        self.radio.labels = labels
+        self.radio.circles = [plt.Circle((0.15, y), 0.05) for y in np.linspace(0.8, 0.2, len(self.labels))]
+        
+        # Set the active selection
+        self.index = new_index
+        self.radio.activeindex = new_index
+        
+        # Redraw
+        self.radio.ax.figure.canvas.draw_idle()
+    
+    def get_value(self):
+        """Get the currently selected value"""
+        if self.radio.value_selected:
+            return self.radio.value_selected
+        return self.labels[self.index] if self.labels else 'None'
+        
+
+class SerialThread(threading.Thread):
+    """Thread to send platform position data to ESP32 over serial"""
+    def __init__(self):
+        threading.Thread.__init__(self)
+        self.port = None
+        self.baud_rate = 115200
+        self.running = True
+        self.ser = None
+        self.daemon = True  # Thread will exit when main program exits
+        self.connected = False
+        self.lock = threading.Lock()  # Thread safety for serial operations
+        
+        # Check if PySerial is actually available
+        if not HAS_SERIAL:
+            raise ImportError("PySerial module not available")
+
+    def connect(self, port):
+        """Connect to the specified port"""
+        with self.lock:
+            try:
+                if self.connected:
+                    self.disconnect()
+                
+                self.port = port
+                self.ser = serial.Serial(self.port, self.baud_rate, timeout=1)
+                self.connected = True
+                print(f"Connected to {self.port} at {self.baud_rate} baud")
+                return True
+            except Exception as e:
+                print(f"Failed to connect to {port}: {e}")
+                self.connected = False
+                return False
+                
+    def disconnect(self):
+        """Disconnect from the current port"""
+        with self.lock:
+            try:
+                if self.ser and self.ser.is_open:
+                    self.ser.close()
+                    print(f"Disconnected from {self.port}")
+                self.connected = False
+                return True
+            except Exception as e:
+                print(f"Error disconnecting: {e}")
+                return False
+
+    def run(self):
+        try:
+            # Main loop - keep sending data while running
+            while self.running:
+                try:
+                    # Only send data if connected
+                    if self.connected and self.ser and self.ser.is_open:
+                        # For now, just send fixed values (2047) for all 6 axes
+                        # 2047 is the middle of the 12-bit range (0-4094)
+                        data = [2047] * 6
+                        
+                        # Pack data into bytes (6 unsigned shorts, 2 bytes each)
+                        # Format: >6H means big-endian, 6 unsigned shorts
+                        packed_data = struct.pack('>6H', *data)
+                        
+                        with self.lock:
+                            self.ser.write(packed_data)
+                    
+                    # Sleep to maintain desired frequency
+                    time.sleep(0.02)  # Send at ~50Hz
+                    
+                except serial.SerialException as e:
+                    print(f"Serial error: {e}")
+                    with self.lock:
+                        self.connected = False
+                    time.sleep(1)  # Wait before retrying
+                    
+                except Exception as e:
+                    print(f"Error in serial thread loop: {e}")
+                    time.sleep(1)  # Wait before retrying
+                    
+        except Exception as e:
+            print(f"Unexpected error in serial thread: {e}")
+        finally:
+            # Always ensure the serial port is closed
+            self.disconnect()
+
+    def is_connected(self):
+        """Check if currently connected"""
+        return self.connected
+
+    def get_available_ports(self):
+        """Get a list of available serial ports"""
+        if not HAS_SERIAL:
+            return []
+            
+        ports = []
+        try:
+            ports = [p.device for p in serial.tools.list_ports.comports()]
+        except Exception as e:
+            print(f"Error listing serial ports: {e}")
+        return ports
+
+    def stop(self):
+        """Stop the thread and close the serial connection"""
+        self.running = False
+        self.disconnect()
+
 class StewartPlatformVisualizer:
     def __init__(self):
         # Constants from config file - same as C code
@@ -49,6 +214,27 @@ class StewartPlatformVisualizer:
         self.PD = PLATFORM_RADIUS
         self.L1 = L1  # Use the adjustable parameter
         self.L2 = L2  # Use the adjustable parameter
+        
+        # Initialize serial communication thread if PySerial is available
+        self.serial_thread = None
+        self.port_list = ['None']
+        
+        if HAS_SERIAL:
+            try:
+                # Create the serial thread but don't connect automatically
+                self.serial_thread = SerialThread()
+                self.serial_thread.start()
+                print("Serial thread started - waiting for connection")
+                
+                # Get available COM ports
+                self.port_list = self.serial_thread.get_available_ports()
+                if not self.port_list:
+                    self.port_list = ['None']
+            except Exception as e:
+                print(f"Could not initialize serial thread: {e}")
+                print("Visualizer will run without serial capability")
+        else:
+            print("PySerial not available - install with 'pip install pyserial' to enable ESP32 communication")
         self.platform_height = PLATFORM_HEIGHT
         self.theta_s = np.array(THETA_S)  # Servo angles in degrees
         self.theta_r = THETA_R  # Base rotation angle
@@ -101,23 +287,30 @@ class StewartPlatformVisualizer:
         # Create controls for position and orientation with more info display
         self.create_controls()
         
+        # Create serial controls
+        self.create_serial_controls()
+        
         # Initial plot
         self.update(None)
     
     def setup_layout(self):
         """Create a professional layout with main view and info panels"""
-        # Create grid for layout
-        grid = plt.GridSpec(3, 4, height_ratios=[5, 0.5, 1], width_ratios=[0.25, 0.25, 0.25, 0.25])
+        # Create grid for layout - added space for serial controls
+        grid = plt.GridSpec(4, 4, height_ratios=[5, 0.5, 0.5, 1], width_ratios=[0.25, 0.25, 0.25, 0.25])
         
         # Main 3D view
         self.ax = self.fig.add_subplot(grid[0, :], projection='3d')
         
+        # Serial controls area
+        self.serial_controls_ax = self.fig.add_subplot(grid[1, :])
+        self.serial_controls_ax.axis('off')
+        
         # Info display area
-        self.info_ax = self.fig.add_subplot(grid[2, :])
+        self.info_ax = self.fig.add_subplot(grid[3, :])
         self.info_ax.axis('off')
         
         # Adjust spacing for better header layout - increase top margin
-        self.fig.subplots_adjust(left=0.05, right=0.95, top=0.88, bottom=0.25)
+        self.fig.subplots_adjust(left=0.05, right=0.95, top=0.88, bottom=0.30)
         
         # Title with version info - position them with better spacing
         self.fig.suptitle('6DOF Rotary Stewart Platform Visualizer', 
@@ -131,6 +324,90 @@ class StewartPlatformVisualizer:
         config_text = f"Configuration: Base Radius: {self.RD} mm | Platform Radius: {self.PD} mm | " + \
                       f"L1: {self.L1} mm | L2: {self.L2} mm | Platform Height: {self.platform_height:.1f} mm"
         self.fig.text(0.5, 0.90, config_text, ha='center', fontsize=9)
+    
+    def create_serial_controls(self):
+        """Create controls for serial port connection"""
+        # Only create serial controls if PySerial is available
+        if not HAS_SERIAL or not self.serial_thread:
+            self.serial_controls_ax.text(0.5, 0.5, "PySerial not available - install with 'pip install pyserial'\nfor ESP32 communication", 
+                                     ha='center', va='center', color='red')
+            return
+        
+        # Title for serial controls
+        self.serial_controls_ax.text(0.5, 0.8, "Serial Controls - ESP32 Communication", 
+                                    ha='center', va='center', fontweight='bold')
+        
+        # Status indicator (initially not connected)
+        self.status_text = self.serial_controls_ax.text(0.5, 0.5, "Not connected", 
+                                                      ha='center', va='center', color='red')
+        
+        # Create combo box for port selection
+        self.port_combo_ax = self.fig.add_axes([0.15, 0.25, 0.2, 0.04])
+        self.port_combo_ax.set_title("Port")
+        if not self.port_list or len(self.port_list) == 0:
+            self.port_list = ['None']
+        self.port_combo = RadioButtons(self.port_combo_ax, self.port_list)
+        
+        # Create refresh button
+        self.refresh_button_ax = self.fig.add_axes([0.4, 0.25, 0.15, 0.04])
+        self.refresh_button = Button(self.refresh_button_ax, 'Refresh')
+        self.refresh_button.on_clicked(self.refresh_ports)
+        
+        # Create connect/disconnect button
+        self.connect_button_ax = self.fig.add_axes([0.6, 0.25, 0.25, 0.04])
+        self.connect_button = Button(self.connect_button_ax, 'Connect')
+        self.connect_button.on_clicked(self.toggle_connection)
+    
+    def refresh_ports(self, event=None):
+        """Refresh the list of available COM ports"""
+        if self.serial_thread:
+            # Get available ports
+            ports = self.serial_thread.get_available_ports()
+            if not ports:
+                ports = ['None']
+            
+            # Save the current port list
+            self.port_list = ports
+            
+            # Rebuild the RadioButtons widget with new ports
+            self.port_combo_ax.clear()
+            self.port_combo_ax.set_title("Port")
+            self.port_combo = RadioButtons(self.port_combo_ax, ports)
+            
+            # Redraw
+            self.fig.canvas.draw_idle()
+            
+    def toggle_connection(self, event=None):
+        """Toggle connection to the selected COM port"""
+        if not self.serial_thread:
+            return
+            
+        if self.serial_thread.is_connected():
+            # Disconnect
+            self.serial_thread.disconnect()
+            self.connect_button.label.set_text('Connect')
+            self.status_text.set_text("Disconnected")
+            self.status_text.set_color('red')
+        else:
+            # Connect to selected port
+            port = self.port_combo.value_selected
+            if not port and len(self.port_list) > 0:
+                port = self.port_list[0]  # Default to first port if none selected
+                
+            if port and port != 'None':
+                if self.serial_thread.connect(port):
+                    self.connect_button.label.set_text('Disconnect')
+                    self.status_text.set_text(f"Connected to {port}")
+                    self.status_text.set_color('green')
+                else:
+                    self.status_text.set_text(f"Failed to connect to {port}")
+                    self.status_text.set_color('red')
+            else:
+                self.status_text.set_text("Please select a COM port")
+                self.status_text.set_color('red')
+                
+        # Redraw the canvas
+        self.fig.canvas.draw_idle()
     
     def create_controls(self):
         """Create sliders for controlling the platform position and orientation."""
@@ -597,6 +874,10 @@ class StewartPlatformVisualizer:
         geometry_text = f"Geometry: L1 (Servo Arm): {self.L1} mm  L2 (Connecting Rod): {self.L2} mm"
         self.info_ax.text(0.5, 0.4, geometry_text, fontsize=10, ha='center')
         
+        # Initialize constraint variables with default values
+        constraint_text = ""
+        constraint_color = 'green'
+        
         # Add constraint information if a constraint was hit
         if self.constraint_info['active']:
             constraint_type = self.constraint_info['type']
@@ -616,13 +897,24 @@ class StewartPlatformVisualizer:
                 else:
                     constraint_text = "CONSTRAINT HIT: No valid mathematical solution exists"
                 constraint_color = 'red'
-                
+        
+        # Only display constraint text if there is a constraint
+        if constraint_text:
             self.info_ax.text(0.5, 0.1, constraint_text, fontsize=10, ha='center', color=constraint_color, 
-                           weight='bold', bbox=dict(facecolor='yellow', alpha=0.3))
-    
+                             weight='bold', bbox=dict(facecolor='yellow', alpha=0.3))
+
+    def cleanup(self):
+        """Stop the serial thread and cleanup resources."""
+        if hasattr(self, 'serial_thread') and self.serial_thread is not None:
+            print("Stopping serial thread...")
+            self.serial_thread.stop()
+            
     def show(self):
-        """Display the visualization."""
-        plt.show()
+        """Show the visualizer and start the interaction."""
+        try:
+            plt.show()
+        finally:
+            self.cleanup()
 
 if __name__ == "__main__":
     # Create and show the 6DOF Stewart Platform visualizer

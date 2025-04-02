@@ -65,6 +65,9 @@ static const float servo_min_rad = radians(-60);  // -60 degrees
 static const float servo_max_rad = radians(60);   // +60 degrees
 static float servoPulseMultiplierPerRadian = 800/(pi/4);  // Calibrated pulses per radian
 
+// Motor step configuration
+#define STEPS_PER_DEGREE 100.0f    // Number of motor steps per degree of rotation
+
 // Helper function declarations
 float mapfloat(float x, float in_min, float in_max, float out_min, float out_max);
 float rateLimit(float target, float current);

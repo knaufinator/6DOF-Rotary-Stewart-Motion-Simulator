@@ -73,10 +73,17 @@ Please note that features and functionality may be incomplete or change as devel
 - USB-Serial communication with SimTools
 
 ### Python Visualizer
-- Real-time 3D visualization using PyVista
-- Test patterns: sine wave, circular, figure-eight
-- SimTools live visualization support
-- Interactive view controls (zoom, rotate, pan)
+
+<div align="center">
+  <img src="documentation/images/vis.png" alt="6DOF Stewart Platform Visualizer" width="800"/>
+  <p><i>Visualizer showing the platform with control panel for position, orientation, and ESP32 communication</i></p>
+</div>
+
+- Accurate 3D visualization of the Stewart platform with real-time servo angles and connecting rod geometry
+- Interactive position and orientation controls for X, Y, Z, Roll, Pitch, and Yaw
+- COM port selection and ESP32 integration for physical platform control
+- Constraint visualization showing geometric limitations and motion boundaries
+- Clean, professional interface for testing control algorithms and verifying movement
 
 ### Hardware Components
 

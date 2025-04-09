@@ -5,9 +5,12 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "esp_timer.h"
+#include "soc/rmt_reg.h"   // For RMT register access
+#include "esp_task_wdt.h"  // For watchdog timer
 
 class RMTMotorControl {
 public:
+    // Configuration structure for motor parameters
     struct Config {
         uint32_t stepPulseWidth_us;     // Step pulse width in microseconds
         uint32_t dirSetupTime_us;       // Setup time before step after direction change
@@ -15,9 +18,9 @@ public:
         uint32_t maxStepRate;           // Maximum steps per second
         int32_t maxAcceleration;        // Maximum acceleration in steps/sec^2
         bool invertDirection;           // Invert direction signal
-        bool enableSoftLimits;         // Enable software position limits
-        int32_t softLimitMin;          // Minimum position in steps
-        int32_t softLimitMax;          // Maximum position in steps
+        bool enableSoftLimits;          // Enable software position limits
+        int32_t softLimitMin;           // Minimum position in steps
+        int32_t softLimitMax;           // Maximum position in steps
 
         Config() :
             stepPulseWidth_us(2),       // Increased to 2µs for better reliability
@@ -32,17 +35,7 @@ public:
         {}
     };
 
-    RMTMotorControl(gpio_num_t stepPin, gpio_num_t dirPin, rmt_channel_t channel) 
-        : _stepPin(stepPin), _dirPin(dirPin), _channel(channel) {
-        _currentPos = 0;
-        _targetPos = 0;
-        _lastStepTime = 0;
-        _currentVelocity = 0;
-        _error = ERROR_NONE;
-        _initialized = false;
-        _lastDirection = false;
-    }
-
+    // Error codes for motor control operations
     enum Error {
         ERROR_NONE = 0,
         ERROR_SOFT_LIMIT_MIN,
@@ -52,9 +45,35 @@ public:
         ERROR_INVALID_CONFIG,
         ERROR_GPIO_CONFIG,
         ERROR_RMT_CONFIG,
-        ERROR_RMT_INSTALL
+        ERROR_RMT_INSTALL,
+        ERROR_CHANNEL_IN_USE
+    };
+    
+    // Motor control mode
+    enum Mode {
+        MODE_UNINITIALIZED = 0,
+        MODE_RMT,            // Using RMT peripheral for hardware timing
+        MODE_GPIO_ONLY       // Fallback to direct GPIO control
     };
 
+    // Constructor - initializes motor pins and default state
+    RMTMotorControl(gpio_num_t stepPin, gpio_num_t dirPin, rmt_channel_t channel) :
+        _stepPin(stepPin),
+        _dirPin(dirPin),
+        _channel(channel),
+        _currentPos(0),
+        _targetPos(0),
+        _lastStepTime(0),
+        _currentVelocity(0),
+        _error(ERROR_NONE),
+        _initialized(false),
+        _lastDirection(false),
+        _mode(MODE_UNINITIALIZED) {
+    }
+
+
+
+        // Initialize motor control using RMT peripheral
     bool begin(const Config& config = Config()) {
         _config = config;
         
@@ -107,6 +126,9 @@ public:
         gpio_set_level(_dirPin, 0);
         gpio_set_level(_stepPin, 0);
 
+        // First, make sure channel isn't already in use by trying to uninstall any existing driver
+        rmt_driver_uninstall(_channel);
+        
         // Configure RMT
         rmt_config_t rmt_cfg;
         rmt_cfg.rmt_mode = RMT_MODE_TX;
@@ -126,22 +148,39 @@ public:
         }
         
         if (rmt_driver_install(_channel, 0, 0) != ESP_OK) {
-            Serial.printf("Failed to install RMT driver for channel %d\n", _channel);
-            _error = ERROR_RMT_INSTALL;
+            Serial.printf("RMT driver installation failed for channel %d - channel may be in use\n", _channel);
+            _error = ERROR_CHANNEL_IN_USE;
             return false;
         }
 
         Serial.printf("Successfully initialized motor on step pin %d, dir pin %d, channel %d\n", 
                      _stepPin, _dirPin, _channel);
         _initialized = true;
+        _mode = MODE_RMT;
+        return true;
+    }
+    
+        // Fallback initialization for motors when no RMT channel is available
+    bool beginGPIOOnly() {
+        // Configure pins using Arduino pinMode for simplicity
+        pinMode(_stepPin, OUTPUT);
+        pinMode(_dirPin, OUTPUT);
+        digitalWrite(_stepPin, LOW);
+        digitalWrite(_dirPin, LOW);
+        
+        Serial.printf("Initialized GPIO-only motor on step pin %d, dir pin %d\n", _stepPin, _dirPin);
+        _initialized = true;
+        _mode = MODE_GPIO_ONLY;
         return true;
     }
 
+        // Accessor methods
     Error getLastError() const { return _error; }
     int32_t getCurrentPosition() const { return _currentPos; }
     int32_t getTargetPosition() const { return _targetPos; }
     float getCurrentVelocity() const { return _currentVelocity; }
 
+        // Set the target position for the motor in steps
     bool setTargetPosition(int32_t position) {
         if (!_initialized) {
             _error = ERROR_NOT_INITIALIZED;
@@ -163,6 +202,7 @@ public:
         return true;
     }
 
+        // Update motor position - generates step pulses as needed
     bool update() {
         if (!_initialized) {
             _error = ERROR_NOT_INITIALIZED;
@@ -183,21 +223,42 @@ public:
 
         // Set direction and wait for setup time if direction changed
         if (direction != _lastDirection) {
-            gpio_set_level(_dirPin, _config.invertDirection ? !direction : direction);
+            if (_mode == MODE_RMT) {
+                gpio_set_level(_dirPin, _config.invertDirection ? !direction : direction);
+            } else {
+                // For GPIO mode, use Arduino digitalWrite
+                digitalWrite(_dirPin, _config.invertDirection ? !direction : direction);
+            }
             _lastDirection = direction;
+            
             if (timeSinceLastStep < _config.dirSetupTime_us) {
                 ets_delay_us(_config.dirSetupTime_us - timeSinceLastStep);
             }
         }
 
-        // Generate step pulse using RMT
-        rmt_item32_t items[1];
-        items[0].duration0 = _config.stepPulseWidth_us;
-        items[0].level0 = 1;
-        items[0].duration1 = _config.stepPulseWidth_us;
-        items[0].level1 = 0;
-        
-        if (rmt_write_items(_channel, items, 1, false) == ESP_OK) {
+        if (_mode == MODE_RMT) {
+            // Generate step pulse using RMT (hardware timer)
+            rmt_item32_t items[1];
+            items[0].duration0 = _config.stepPulseWidth_us;
+            items[0].level0 = 1;
+            items[0].duration1 = _config.stepPulseWidth_us;
+            items[0].level1 = 0;
+            
+            // Standard RMT API works for all channels on ESP32-S3
+            if (rmt_write_items(_channel, items, 1, false) == ESP_OK) {
+                _currentPos += direction ? 1 : -1;
+                _lastStepTime = now;
+                return true;
+            }
+            return false;
+        } 
+        else if (_mode == MODE_GPIO_ONLY) {
+            // Generate step pulse using direct GPIO control
+            digitalWrite(_stepPin, HIGH);
+            delayMicroseconds(_config.stepPulseWidth_us);
+            digitalWrite(_stepPin, LOW);
+            delayMicroseconds(_config.stepPulseWidth_us);
+            
             _currentPos += direction ? 1 : -1;
             _lastStepTime = now;
             return true;
@@ -206,14 +267,22 @@ public:
         return false;
     }
 
+    // Emergency stop - immediately halts motor motion
     void emergencyStop() {
         // Immediately stop all motion
         _targetPos = _currentPos;  // Set target to current to stop motion
         _currentVelocity = 0;      // Zero velocity
-        gpio_set_level(_stepPin, 0); // Ensure step pin is low
+        
+        // Ensure step pin is low using appropriate method for the mode
+        if (_mode == MODE_RMT) {
+            gpio_set_level(_stepPin, 0);
+        } else {
+            digitalWrite(_stepPin, LOW);
+        }
     }
 
 private:
+    // Private member variables
     gpio_num_t _stepPin;
     gpio_num_t _dirPin;
     rmt_channel_t _channel;
@@ -225,4 +294,5 @@ private:
     Error _error;
     bool _initialized;
     bool _lastDirection;
+    Mode _mode;
 };

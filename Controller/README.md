@@ -14,12 +14,50 @@ This is the controller code for a 6-DOF (Degrees of Freedom) Stewart Platform Mo
 - `platformio.ini` - Project configuration
 
 ## Hardware Requirements
-- ESP32 Development Board
+- ESP32-S3 Development Board
 - AASD15A AC Servo Drivers (6x)
 - AC Servo Motors with Planetary Gears (6x)
 - Custom Controller PCB
 - Custom Sensor Array PCB
 - Magnetic Limit Switches (6x)
+
+## ESP32-S3 Pinout Diagram
+
+> ⚠️ **IMPORTANT DISCLAIMER**: This pinout diagram is UNTESTED and purely THEORETICAL at this stage. DO NOT run this configuration on your actual rig until thorough testing has been performed. This is a code-only implementation that needs verification before deployment on physical hardware.
+
+```
+┌───────────────────────────────────────────────────────────────────┐
+│                         ESP32-S3 PINOUT                           │
+└───────────────────────────────────────────────────────────────────┘
+
+┌──────────┬─────────────┬─────────────┬────────────────────────────┐
+│  MOTOR   │   STEP PIN  │   DIR PIN   │         RMT CHANNEL        │
+├──────────┼─────────────┼─────────────┼────────────────────────────┤
+│ Motor 1  │  GPIO 4     │  GPIO 10    │  RMT_CHANNEL_0 (TX)        │
+├──────────┼─────────────┼─────────────┼────────────────────────────┤
+│ Motor 2  │  GPIO 5     │  GPIO 11    │  RMT_CHANNEL_1 (TX)        │
+├──────────┼─────────────┼─────────────┼────────────────────────────┤
+│ Motor 3  │  GPIO 6     │  GPIO 12    │  RMT_CHANNEL_2 (TX)        │
+├──────────┼─────────────┼─────────────┼────────────────────────────┤
+│ Motor 4  │  GPIO 7     │  GPIO 13    │  RMT_CHANNEL_3 (TX)        │
+├──────────┼─────────────┼─────────────┼────────────────────────────┤
+│ Motor 5  │  GPIO 8     │  GPIO 14    │  RMT_CHANNEL_0 (RX as TX)  │
+├──────────┼─────────────┼─────────────┼────────────────────────────┤
+│ Motor 6  │  GPIO 9     │  GPIO 17    │  RMT_CHANNEL_1 (RX as TX)  │
+└──────────┴─────────────┴─────────────┴────────────────────────────┘
+
+┌──────────────────────────────────────────────────────────────────┐
+│ ADDITIONAL CONNECTIONS                                           │
+├──────────────────┬───────────────────────────────────────────────┤
+│ E-Stop Button    │  GPIO 34 (Active LOW with internal pull-up)   │
+└──────────────────┴───────────────────────────────────────────────┘
+```
+
+### Key Notes About This Implementation:
+- The modification leverages ALL available RMT channels on the ESP32-S3
+- Motors 5-6 use RX channels repurposed as TX channels
+- This is a code-only implementation and must be thoroughly tested before deployment
+- Actual signal integrity and timing need verification with an oscilloscope
 
 ## Software Requirements
 - PlatformIO IDE (or VSCode with PlatformIO extension)

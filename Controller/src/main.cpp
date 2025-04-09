@@ -1,5 +1,4 @@
 #include <Arduino.h>
-#include <Wire.h>
 #include <Bounce2.h>
 #include <Preferences.h>
 #include "helpers.h"
@@ -26,9 +25,11 @@ const gpio_num_t dirPins[6] = {
     (gpio_num_t)DIR_PIN_1, (gpio_num_t)DIR_PIN_2, (gpio_num_t)DIR_PIN_3,
     (gpio_num_t)DIR_PIN_4, (gpio_num_t)DIR_PIN_5, (gpio_num_t)DIR_PIN_6
 };
+// ESP32-S3 has 4 TX channels (0-3) available for RMT
+// We'll use these for motors 0-3, and use direct GPIO for motors 4-5
 const rmt_channel_t channels[6] = {
-    RMT_CHANNEL_0, RMT_CHANNEL_1, RMT_CHANNEL_2,
-    RMT_CHANNEL_0, RMT_CHANNEL_1, RMT_CHANNEL_2  // Sharing channels since we have limited RMT channels
+    RMT_CHANNEL_0, RMT_CHANNEL_1, RMT_CHANNEL_2, RMT_CHANNEL_3,
+    RMT_CHANNEL_0, RMT_CHANNEL_1  // Channel values for motors 4-5 not actually used
 };
 
 // Timing variables
@@ -85,14 +86,29 @@ void setupPWMpins() {
     motorConfig.softLimitMin = -100000;     // Adjust these limits based on your setup
     motorConfig.softLimitMax = 100000;
 
-    // Initialize RMT motor controls with single-ended outputs
-    for(int i = 0; i < 6; i++) {
+    // Initialize first 4 motors with RMT (unique channels 0-3)
+    for(int i = 0; i < 4; i++) {
         motors[i] = new RMTMotorControl(stepPins[i], dirPins[i], channels[i]);
         if (!motors[i]->begin(motorConfig)) {
-            Serial.printf("Failed to initialize motor %d, error: %d\n", i, motors[i]->getLastError());
+            Serial.printf("Failed to initialize motor %d with RMT, error: %d\n", i, motors[i]->getLastError());
         } else {
-            Serial.printf("Successfully initialized motor %d\n", i);
+            Serial.printf("Successfully initialized motor %d with RMT channel %d\n", i, channels[i]);
         }
+    }
+    
+    // For motors 4 & 5, configure GPIO pins directly for step/direction
+    for(int i = 4; i < 6; i++) {
+        // Configure GPIO pins for direct control
+        pinMode(stepPins[i], OUTPUT);
+        pinMode(dirPins[i], OUTPUT);
+        digitalWrite(stepPins[i], LOW);
+        digitalWrite(dirPins[i], LOW);
+        
+        // Create motor objects but mark them as special GPIO-only motors
+        motors[i] = new RMTMotorControl(stepPins[i], dirPins[i], RMT_CHANNEL_0); // Channel won't be used
+        motors[i]->beginGPIOOnly(); // Custom initialization for GPIO-only operation
+        
+        Serial.printf("Initialized motor %d with direct GPIO control\n", i);
     }
 }
 
@@ -321,13 +337,7 @@ void setup() {
   // Initialize watchdog first
   esp_task_wdt_init(WDT_TIMEOUT_MS / 1000.0, true); // 3 second timeout, panic on timeout
   
-  // Initialize Wire (I2C) with timeout
-  Wire.begin();
-  Wire.setTimeOut(1000); // 1 second timeout
-  
-  // Skip MCP23S17 initialization since it's not connected
-  Serial.println("Skipping MCP23S17 initialization - not connected");
-  
+
   // Configure E-Stop button with debouncing
   pinMode(ESTOP_PIN, INPUT_PULLUP);
   debouncedEStop.attach(ESTOP_PIN);

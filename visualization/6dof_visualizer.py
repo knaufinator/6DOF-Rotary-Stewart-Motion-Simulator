@@ -104,7 +104,7 @@ class PortSelector:
         
 
 class SerialThread(threading.Thread):
-    """Thread to send platform position data to ESP32 over serial"""
+    """Thread to send/receive platform position data to/from ESP32 over serial"""
     def __init__(self):
         threading.Thread.__init__(self)
         self.port = None
@@ -114,6 +114,11 @@ class SerialThread(threading.Thread):
         self.daemon = True  # Thread will exit when main program exits
         self.connected = False
         self.lock = threading.Lock()  # Thread safety for serial operations
+        
+        # Data to be received from ESP debug output
+        self.debug_data = None
+        self.new_data_available = False
+        self.data_callback = None  # Callback for when new data is received
         
         # Check if PySerial is actually available
         if not HAS_SERIAL:
@@ -127,9 +132,22 @@ class SerialThread(threading.Thread):
                     self.disconnect()
                 
                 self.port = port
-                self.ser = serial.Serial(self.port, self.baud_rate, timeout=1)
+                # Configure serial port
+                # - timeout=0: non-blocking read
+                # - rtscts=True: hardware flow control if available
+                # - dsrdtr=True: hardware flow control if available
+                self.ser = serial.Serial(
+                    port=self.port, 
+                    baudrate=self.baud_rate, 
+                    timeout=0,  # Non-blocking read
+                    write_timeout=1  # 1 second write timeout
+                )
+                # Clear any existing data in the buffer
+                self.ser.reset_input_buffer()
+                self.ser.reset_output_buffer()
                 self.connected = True
                 print(f"Connected to {self.port} at {self.baud_rate} baud")
+                print("Waiting for ESP debug data...")
                 return True
             except Exception as e:
                 print(f"Failed to connect to {port}: {e}")
@@ -149,26 +167,91 @@ class SerialThread(threading.Thread):
                 print(f"Error disconnecting: {e}")
                 return False
 
+    def set_data_callback(self, callback):
+        """Set a callback function to be called when new data is received"""
+        self.data_callback = callback
+        
+    def parse_debug_data(self, line):
+        """Parse ESP debug output format
+        Example: DEBUG,2678438784,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00
+        """
+        try:
+            line = line.strip()
+            if line.startswith('DEBUG'):
+                parts = line.split(',')
+                print(f"DEBUG parts count: {len(parts)}")
+                if len(parts) >= 13:  # DEBUG + timestamp + at least 12 values
+                    # Extract timestamp and values
+                    timestamp = parts[1]
+                    
+                    # Parse all available values and log them individually
+                    values = []
+                    for i, val in enumerate(parts[2:14]):
+                        try:
+                            fval = float(val)
+                            values.append(fval)
+                            print(f"Value[{i}] = {fval}")
+                        except ValueError as ve:
+                            print(f"Could not parse value at index {i}: '{val}', error: {ve}")
+                            values.append(0.0)
+                    
+                    # Make sure we have 12 values
+                    while len(values) < 12:
+                        values.append(0.0)
+                    
+                    # Store the parsed data
+                    self.debug_data = {
+                        'timestamp': timestamp,
+                        'values': values,
+                        'received_time': time.time()
+                    }
+                    self.new_data_available = True
+                    
+                    # Call the callback if set, but only store the data
+                    # Don't manipulate UI from here - we're in a non-main thread
+                    if self.data_callback:
+                        self.data_callback(self.debug_data)
+                    
+                    return True
+                else:
+                    print(f"Not enough parts in DEBUG message: {line}")
+            return False
+        except Exception as e:
+            print(f"Error parsing debug data: {e}")
+            return False
+            
+    def get_latest_data(self):
+        """Get the latest data received from ESP"""
+        self.new_data_available = False
+        return self.debug_data
+            
     def run(self):
         try:
-            # Main loop - keep sending data while running
+            # Main loop - keep sending/receiving data while running
             while self.running:
                 try:
-                    # Only send data if connected
+                    # Check for incoming data if connected
                     if self.connected and self.ser and self.ser.is_open:
-                        # For now, just send fixed values (2047) for all 6 axes
-                        # 2047 is the middle of the 12-bit range (0-4094)
+                        # Check if data is available to read
+                        with self.lock:
+                            if self.ser.in_waiting > 0:
+                                # Read a line from the serial port
+                                line = self.ser.readline().decode('utf-8', errors='ignore')
+                                if line:
+                                    # Print the raw line to see what we're getting
+                                    print(f"RAW DATA: {line.strip()}")
+                                    # Parse the debug data
+                                    if self.parse_debug_data(line):
+                                        print(f"PARSED: Timestamp={self.debug_data['timestamp']}, Values={self.debug_data['values']}")
+                                    
+                        # Send data (same as before)
                         data = [2047] * 6
-                        
-                        # Pack data into bytes (6 unsigned shorts, 2 bytes each)
-                        # Format: >6H means big-endian, 6 unsigned shorts
                         packed_data = struct.pack('>6H', *data)
-                        
                         with self.lock:
                             self.ser.write(packed_data)
                     
                     # Sleep to maintain desired frequency
-                    time.sleep(0.02)  # Send at ~50Hz
+                    time.sleep(0.02)  # ~50Hz
                     
                 except serial.SerialException as e:
                     print(f"Serial error: {e}")
@@ -219,10 +302,19 @@ class StewartPlatformVisualizer:
         self.serial_thread = None
         self.port_list = ['None']
         
+        # Flag to indicate if we're in ESP debug data mode
+        self.esp_data_mode = False
+        # Last received ESP debug data
+        self.last_esp_data = None
+        # Flag to indicate new ESP data is available
+        self.new_esp_data = False
+        
         if HAS_SERIAL:
             try:
                 # Create the serial thread but don't connect automatically
                 self.serial_thread = SerialThread()
+                # Set callback to update visualization when new data is received
+                self.serial_thread.set_data_callback(self.on_esp_data_received)
                 self.serial_thread.start()
                 print("Serial thread started - waiting for connection")
                 
@@ -330,16 +422,16 @@ class StewartPlatformVisualizer:
         # Only create serial controls if PySerial is available
         if not HAS_SERIAL or not self.serial_thread:
             self.serial_controls_ax.text(0.5, 0.5, "PySerial not available - install with 'pip install pyserial'\nfor ESP32 communication", 
-                                     ha='center', va='center', color='red')
+                                      ha='center', va='center', color='red')
             return
         
         # Title for serial controls
-        self.serial_controls_ax.text(0.5, 0.8, "Serial Controls - ESP32 Communication", 
-                                    ha='center', va='center', fontweight='bold')
+        self.serial_controls_ax.text(0.5, 0.8, "Serial Controls - ESP32 Debug Mode", 
+                                     ha='center', va='center', fontweight='bold')
         
         # Status indicator (initially not connected)
         self.status_text = self.serial_controls_ax.text(0.5, 0.5, "Not connected", 
-                                                      ha='center', va='center', color='red')
+                                                       ha='center', va='center', color='red')
         
         # Create combo box for port selection
         self.port_combo_ax = self.fig.add_axes([0.15, 0.25, 0.2, 0.04])
@@ -357,6 +449,10 @@ class StewartPlatformVisualizer:
         self.connect_button_ax = self.fig.add_axes([0.6, 0.25, 0.25, 0.04])
         self.connect_button = Button(self.connect_button_ax, 'Connect')
         self.connect_button.on_clicked(self.toggle_connection)
+        
+        # Add info about ESP debug mode
+        self.serial_controls_ax.text(0.8, 0.5, "ESP Debug Mode: Visualizer will react to ESP debug output", 
+                                    ha='right', va='center', fontsize=8, fontstyle='italic')
     
     def refresh_ports(self, event=None):
         """Refresh the list of available COM ports"""
@@ -388,6 +484,8 @@ class StewartPlatformVisualizer:
             self.connect_button.label.set_text('Connect')
             self.status_text.set_text("Disconnected")
             self.status_text.set_color('red')
+            # Disable ESP data mode when disconnected
+            self.esp_data_mode = False
         else:
             # Connect to selected port
             port = self.port_combo.value_selected
@@ -397,8 +495,16 @@ class StewartPlatformVisualizer:
             if port and port != 'None':
                 if self.serial_thread.connect(port):
                     self.connect_button.label.set_text('Disconnect')
-                    self.status_text.set_text(f"Connected to {port}")
+                    self.status_text.set_text(f"Connected to {port} - Reading data (see console)")
                     self.status_text.set_color('green')
+                    # Enable ESP data mode when connected
+                    self.esp_data_mode = True
+                    
+                    # Special message to help user
+                    print("\n" + "-"*50)
+                    print("ESP DEBUG MODE ACTIVE: Logging incoming messages to console")
+                    print("Values will be displayed but not used to update visualization yet")
+                    print("-"*50 + "\n")
                 else:
                     self.status_text.set_text(f"Failed to connect to {port}")
                     self.status_text.set_color('red')
@@ -674,14 +780,71 @@ class StewartPlatformVisualizer:
         if max_angle > self.motion_limits['max_angle']:
             self.motion_limits['max_angle'] = max_angle
     
+    def on_esp_data_received(self, data):
+        """Callback when new ESP debug data is received"""
+        if data and self.esp_data_mode:
+            # Just store the data - we'll use it in the animation loop
+            # which runs in the main thread
+            self.last_esp_data = data
+            # Flag that new data is available
+            self.new_esp_data = True
+            
+    def update_from_esp_data(self):
+        """Update the visualization based on ESP debug data"""
+        if not self.last_esp_data:
+            return False
+            
+        # Get the 12 values from ESP debug data
+        # Format expected: DEBUG,timestamp,x,y,z,roll,pitch,yaw,s1,s2,s3,s4,s5,s6
+        esp_values = self.last_esp_data['values']
+        if len(esp_values) < 12:
+            return False
+            
+        # First 6 values are position and rotation
+        # Extract x, y, z, roll, pitch, yaw from ESP data
+        pos = esp_values[0:3]  # First 3 values: x, y, z
+        rot_deg = esp_values[3:6]  # Next 3 values: roll, pitch, yaw (in degrees)
+        
+        # Convert rotation from degrees to radians
+        rot = [angle * pi/180 for angle in rot_deg]
+        
+        # Update sliders to match ESP values without triggering update cycle
+        old_updating = self.is_updating
+        self.is_updating = True
+        self.sliders['x'].set_val(pos[0])
+        self.sliders['y'].set_val(pos[1])
+        self.sliders['z'].set_val(pos[2])
+        self.sliders['roll'].set_val(rot_deg[0])
+        self.sliders['pitch'].set_val(rot_deg[1])
+        self.sliders['yaw'].set_val(rot_deg[2])
+        self.is_updating = old_updating
+        
+        # Mark that data was used
+        self.last_valid_pos = pos.copy()
+        self.last_valid_rot = rot.copy()
+        
+        # Return success
+        return True
+
     def update(self, val):
-        """Update the visualization based on slider values."""
+        """Update the visualization based on slider values or ESP data."""
         # Check if we're already in an update cycle to prevent recursion
         if self.is_updating:
             return
             
         # Set the update flag
         self.is_updating = True
+        
+        # If in ESP data mode, try to update from ESP data first
+        if self.esp_data_mode and self.serial_thread and self.serial_thread.is_connected():
+            esp_update_success = self.update_from_esp_data()
+            # Only proceed with slider-based update if ESP update failed
+            if esp_update_success:
+                # Skip the rest of the update process
+                result = self.calculate_servo_angles(self.last_valid_pos, self.last_valid_rot)
+                # Reset the update flag at the end
+                self.is_updating = False
+                return
         
         # Get position and orientation values from sliders
         pos = [
@@ -855,6 +1018,14 @@ class StewartPlatformVisualizer:
             if i == 2:  # Add a line break in the middle
                 angle_text += "\n              "
                 
+        # Add ESP data status if in ESP mode
+        if self.esp_data_mode and self.serial_thread and self.serial_thread.is_connected():
+            # Add a marker to show we're in ESP debug mode
+            if self.last_esp_data:
+                time_diff = time.time() - self.last_esp_data['received_time']
+                if time_diff < 1.0:  # Data received within the last second
+                    angle_text = "[ESP DATA] " + angle_text
+                
         # Draw in the info panel
         self.info_ax.text(0.01, 0.7, angle_text, fontsize=10)
         
@@ -912,9 +1083,23 @@ class StewartPlatformVisualizer:
     def show(self):
         """Show the visualizer and start the interaction."""
         try:
+            # Set up animation to allow dynamic updates from ESP
+            # This will create a smooth animation even when receiving data from ESP
+            # Fix the warning by setting cache_frame_data=False and frames=None
+            self.ani = animation.FuncAnimation(self.fig, self.animation_update, 
+                                             frames=None, interval=50, blit=False,
+                                             cache_frame_data=False)
             plt.show()
         finally:
             self.cleanup()
+            
+    def animation_update(self, frame):
+        """Update function for animation - checks for new ESP data"""
+        if self.esp_data_mode and self.serial_thread and self.serial_thread.is_connected():
+            # Only trigger update if not already updating and we have new data
+            if not self.is_updating and self.new_esp_data:
+                self.new_esp_data = False  # Reset the flag
+                self.update(None)
 
 if __name__ == "__main__":
     # Create and show the 6DOF Stewart Platform visualizer

@@ -31,18 +31,28 @@ jobs:
             IS_RELEASE=true
           else
             # Auto-increment version based on commit count since last tag
-            LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
-            COMMIT_COUNT=$(git rev-list --count ${LAST_TAG}..HEAD)
+            LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
             
-            # Parse last tag (expecting vMAJOR.MINOR.PATCH)
-            if [[ $LAST_TAG =~ ^v([0-9]+)\.([0-9]+)\.([0-9]+) ]]; then
-              MAJOR=${BASH_REMATCH[1]}
-              MINOR=${BASH_REMATCH[2]}
-              PATCH=${BASH_REMATCH[3]}
-            else
+            if [ -z "$LAST_TAG" ]; then
+              # No tags exist yet, use total commit count
+              COMMIT_COUNT=$(git rev-list --count HEAD)
               MAJOR=0
-              MINOR=0
+              MINOR=1
               PATCH=0
+            else
+              # Count commits since last tag
+              COMMIT_COUNT=$(git rev-list --count ${LAST_TAG}..HEAD)
+              
+              # Parse last tag (expecting vMAJOR.MINOR.PATCH)
+              if [[ $LAST_TAG =~ ^v([0-9]+)\.([0-9]+)\.([0-9]+) ]]; then
+                MAJOR=${BASH_REMATCH[1]}
+                MINOR=${BASH_REMATCH[2]}
+                PATCH=${BASH_REMATCH[3]}
+              else
+                MAJOR=0
+                MINOR=1
+                PATCH=0
+              fi
             fi
             
             # Auto-increment patch version

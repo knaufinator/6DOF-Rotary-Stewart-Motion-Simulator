@@ -25,8 +25,7 @@
 #define DIR_PIN_4 13
 #define DIR_PIN_5 14
 #define DIR_PIN_6 17
-#define MCP_CS_PIN 5
-#define ESTOP_PIN 34
+#define ESTOP_PIN 20
 
 // Timing constants
 #define MICRO_INTERVAL_FAST 100    // 100 microseconds = 10kHz update rate

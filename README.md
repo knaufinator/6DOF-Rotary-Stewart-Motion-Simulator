@@ -69,8 +69,10 @@ Please note that features and functionality may be incomplete or change as devel
 ### Controller (ESP32)
 - PlatformIO-based project
 - Dual-core utilization for 1000Hz refresh rate
-- Custom MCP23S17 library for simultaneous motor control
+- UART output gated behind compile-time `ENABLE_DEBUG_UART` for production safety
 - USB-Serial communication with SimTools
+- External differential driver interface board for AASD-15A command lines ([docs/hardware/servo_driver_interface.md](docs/hardware/servo_driver_interface.md))
+- Step/Dir optimisation roadmap maintained in [docs/firmware/esp32s3_step_dir_roadmap.md](docs/firmware/esp32s3_step_dir_roadmap.md)
 
 ### Python Visualizer
 
@@ -86,6 +88,11 @@ Please note that features and functionality may be incomplete or change as devel
 - Clean, professional interface for testing control algorithms and verifying movement
 
 ### Hardware Components
+
+#### Servo Driver Interface PCB
+- Dedicated board translating ESP32 GPIO to 5 V differential STEP/DIR pairs using SN74LVCH16T245 + AM26C31 line drivers
+- Galvanically isolated emergency-stop feedback tied to ESP32 GPIO20
+- Assembly, BOM, and verification steps documented in [docs/hardware/servo_driver_interface.md](docs/hardware/servo_driver_interface.md)
 
 #### Base Assembly
 - 31" diameter steel plate (½ inch thick)
@@ -118,6 +125,16 @@ pn110 - Position command filtering time constant: "050"
 pn111 - S-shaped filtering time constant Ta: "50"
 pn112 - Position instruction Ts S-shaped filtering: "50"
 ```
+
+### Firmware Debugging
+- Serial output is disabled by default for safety. Enable it by adding `-DENABLE_DEBUG_UART=1` to the `build_flags` section in `platformio.ini`.
+- At runtime send the command `DBG:1X` to turn on verbose logs, or `DBG:0X` to silence them (`X` terminator matches the existing SimTools packet framing).
+- Debug traces cover motor initialisation, rate limiting events, message intervals, and the `DEBUG,...` telemetry stream.
+
+### Testing & CI
+- **Firmware build check**: `pio run -d Controller`
+- **Python unit tests**: `pip install -r visualization/requirements.txt` then `pytest visualization/tests`
+- GitHub Actions workflow (`.github/workflows/ci.yml`) runs both jobs on every push/PR to `phoenix` and `main`.
 
 #### Homing Configuration
 ```

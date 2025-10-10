@@ -7,6 +7,7 @@
 #include "esp_timer.h"
 #include "soc/rmt_reg.h"   // For RMT register access
 #include "esp_task_wdt.h"  // For watchdog timer
+#include "debug_uart.h"     // Debug logging macros
 
 class RMTMotorControl {
 public:
@@ -79,17 +80,17 @@ public:
         
         // Validate configuration with detailed error reporting
         if (_config.stepPulseWidth_us < 1) {
-            Serial.println("Invalid step pulse width (must be >= 1µs)");
+            DEBUG_PRINTLN("Invalid step pulse width (must be >= 1µs)");
             _error = ERROR_INVALID_CONFIG;
             return false;
         }
         if (_config.maxStepRate > 250000) {  // Reduced max rate
-            Serial.println("Invalid max step rate (must be <= 250kHz)");
+            DEBUG_PRINTLN("Invalid max step rate (must be <= 250kHz)");
             _error = ERROR_INVALID_CONFIG;
             return false;
         }
         if (_config.minStepInterval_us < 2) {
-            Serial.println("Invalid min step interval (must be >= 2µs)");
+            DEBUG_PRINTLN("Invalid min step interval (must be >= 2µs)");
             _error = ERROR_INVALID_CONFIG;
             return false;
         }
@@ -103,7 +104,7 @@ public:
             .intr_type = GPIO_INTR_DISABLE
         };
         if (gpio_config(&dir_pin_config) != ESP_OK) {
-            Serial.printf("Failed to configure direction pin %d\n", _dirPin);
+            DEBUG_PRINTF("Failed to configure direction pin %d\n", _dirPin);
             _error = ERROR_GPIO_CONFIG;
             return false;
         }
@@ -117,7 +118,7 @@ public:
             .intr_type = GPIO_INTR_DISABLE
         };
         if (gpio_config(&step_pin_config) != ESP_OK) {
-            Serial.printf("Failed to configure step pin %d\n", _stepPin);
+            DEBUG_PRINTF("Failed to configure step pin %d\n", _stepPin);
             _error = ERROR_GPIO_CONFIG;
             return false;
         }
@@ -142,18 +143,18 @@ public:
         rmt_cfg.tx_config.idle_level = RMT_IDLE_LEVEL_LOW;
         
         if (rmt_config(&rmt_cfg) != ESP_OK) {
-            Serial.printf("Failed to configure RMT for channel %d\n", _channel);
+            DEBUG_PRINTF("Failed to configure RMT for channel %d\n", _channel);
             _error = ERROR_RMT_CONFIG;
             return false;
         }
         
         if (rmt_driver_install(_channel, 0, 0) != ESP_OK) {
-            Serial.printf("RMT driver installation failed for channel %d - channel may be in use\n", _channel);
+            DEBUG_PRINTF("RMT driver installation failed for channel %d - channel may be in use\n", _channel);
             _error = ERROR_CHANNEL_IN_USE;
             return false;
         }
 
-        Serial.printf("Successfully initialized motor on step pin %d, dir pin %d, channel %d\n", 
+        DEBUG_PRINTF("Successfully initialized motor on step pin %d, dir pin %d, channel %d\n",
                      _stepPin, _dirPin, _channel);
         _initialized = true;
         _mode = MODE_RMT;
@@ -168,7 +169,7 @@ public:
         digitalWrite(_stepPin, LOW);
         digitalWrite(_dirPin, LOW);
         
-        Serial.printf("Initialized GPIO-only motor on step pin %d, dir pin %d\n", _stepPin, _dirPin);
+    DEBUG_PRINTF("Initialized GPIO-only motor on step pin %d, dir pin %d\n", _stepPin, _dirPin);
         _initialized = true;
         _mode = MODE_GPIO_ONLY;
         return true;

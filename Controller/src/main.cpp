@@ -2,6 +2,7 @@
 #include <Bounce2.h>
 #include <Preferences.h>
 #include "helpers.h"
+#include "debug_uart.h"
 #include <RMTMotorControl.h>
 #include <esp_task_wdt.h>
 
@@ -42,7 +43,7 @@ const unsigned long DEBUG_OUTPUT_INTERVAL = 100000; // 100ms = 10Hz debug output
 // State variables
 bool isPausedEStop = false;
 bool isRateLimiting = false;
-bool debugEnabled = true;  // Debug output state
+bool debugEnabled = false;  // Debug output state, default disabled for safety
 SemaphoreHandle_t xMutex = NULL;
 
 // Function declarations
@@ -68,7 +69,7 @@ void setPos(){
         //set motor target position
         xSemaphoreTake(xMutex, portMAX_DELAY);
         if (!motors[i]->setTargetPosition(x)) {
-            Serial.printf("Motor %d position error: %d\n", i, motors[i]->getLastError());
+            DEBUG_PRINTF("Motor %d position error: %d\n", i, motors[i]->getLastError());
         }
         xSemaphoreGive(xMutex);
     }
@@ -90,9 +91,9 @@ void setupPWMpins() {
     for(int i = 0; i < 4; i++) {
         motors[i] = new RMTMotorControl(stepPins[i], dirPins[i], channels[i]);
         if (!motors[i]->begin(motorConfig)) {
-            Serial.printf("Failed to initialize motor %d with RMT, error: %d\n", i, motors[i]->getLastError());
+            DEBUG_PRINTF("Failed to initialize motor %d with RMT, error: %d\n", i, motors[i]->getLastError());
         } else {
-            Serial.printf("Successfully initialized motor %d with RMT channel %d\n", i, channels[i]);
+            DEBUG_PRINTF("Successfully initialized motor %d with RMT channel %d\n", i, channels[i]);
         }
     }
     
@@ -107,8 +108,8 @@ void setupPWMpins() {
         // Create motor objects but mark them as special GPIO-only motors
         motors[i] = new RMTMotorControl(stepPins[i], dirPins[i], RMT_CHANNEL_0); // Channel won't be used
         motors[i]->beginGPIOOnly(); // Custom initialization for GPIO-only operation
-        
-        Serial.printf("Initialized motor %d with direct GPIO control\n", i);
+
+        DEBUG_PRINTF("Initialized motor %d with direct GPIO control\n", i);
     }
 }
 
@@ -119,7 +120,7 @@ void handleStepDirection() {
     // Update each motor
     for (int i = 0; i < 6; i++) {
         if (motors[i] && !motors[i]->update()) {
-            Serial.printf("Motor %d update error: %d\n", i, motors[i]->getLastError());
+            DEBUG_PRINTF("Motor %d update error: %d\n", i, motors[i]->getLastError());
         }
     }
     
@@ -188,13 +189,13 @@ void EStopMonitorCode(void * pvParameters) {
             isPausedEStop = true;
             
             // Log E-stop activation
-            Serial.println("E-STOP ACTIVATED");
+            DEBUG_PRINTLN("E-STOP ACTIVATED");
         }
         
         if (debouncedEStop.rose()) {  // Button released
             // Don't automatically resume - require explicit reset
             isRateLimiting = true;
-            Serial.println("E-STOP RELEASED - Reset required");
+            DEBUG_PRINTLN("E-STOP RELEASED - Reset required");
         }
         
         // Check E-stop state more frequently than debounce time
@@ -220,11 +221,11 @@ void process_data(char * data) {
     // Check for debug control commands
     if (strcmp(data, DEBUG_ENABLE_CMD) == 0) {
         debugEnabled = true;
-        Serial.println("Debug output enabled");
+        DEBUG_PRINTLN("Debug output enabled");
         return;
     } else if (strcmp(data, DEBUG_DISABLE_CMD) == 0) {
         debugEnabled = false;
-        Serial.println("Debug output disabled");
+        DEBUG_PRINTLN("Debug output disabled");
         return;
     }
 
@@ -235,8 +236,7 @@ void process_data(char * data) {
     float arrRateLimited[6] = {0,0,0, 0,0,0};
     
     // Debug output - show received data
-    Serial.print("Received data: ");
-    Serial.println(data);
+    DEBUG_PRINTF("Received data: %s\n", data);
     
     tok = strtok(data, ",");
     
@@ -253,12 +253,7 @@ void process_data(char * data) {
         arrRaw[i] = temp;
         
         // Debug output - show parsed values
-        Serial.print("Axis ");
-        Serial.print(i);
-        Serial.print(": Raw=");
-        Serial.print(value);
-        Serial.print(" Mapped=");
-        Serial.println(temp);
+        DEBUG_PRINTF("Axis %d: Raw=%0.3f Mapped=%0.3f\n", i, value, temp);
         
         i++;
         tok = strtok(NULL, ",");
@@ -281,22 +276,22 @@ void process_data(char * data) {
             //if we are within limits, stop rate limiting.
             if(!isNotWithinLimit) {
                 isRateLimiting = false;
-                Serial.println("Rate limiting disabled - within limits");
+                DEBUG_PRINTLN("Rate limiting disabled - within limits");
             }
             
             //set position
             memcpy((void*)arr, arrRateLimited, sizeof(arr));
-            Serial.println("Using rate-limited values");
+            DEBUG_PRINTLN("Using rate-limited values");
         } else {
             //set position directly
             memcpy((void*)arr, arrRaw, sizeof(arr));
-            Serial.println("Using direct values");
+            DEBUG_PRINTLN("Using direct values");
         }
         
         //calculate and set new position
         setPos();
     } else {
-        Serial.println("Motion paused - E-Stop active");
+        DEBUG_PRINTLN("Motion paused - E-Stop active");
     }
 }
 
@@ -313,9 +308,7 @@ void processIncomingByte(const byte inByte) {
             
             currentTime = millis();
             timeSinceLastMessage = currentTime - lastMessageTime;
-            Serial.print("Message interval: ");
-            Serial.print(timeSinceLastMessage);
-            Serial.println("ms");
+            DEBUG_PRINTF("Message interval: %lums\n", timeSinceLastMessage);
             lastMessageTime = currentTime;
             
             process_data(input_line);          
@@ -331,8 +324,8 @@ void processIncomingByte(const byte inByte) {
 
 void setup() {
  
-  Serial.begin(115200); 
-  Serial.println("Starting up...");
+    Serial.begin(115200);
+    DEBUG_PRINTLN("Starting up...");
   
   // Initialize watchdog first
   esp_task_wdt_init(WDT_TIMEOUT_MS / 1000.0, true); // 3 second timeout, panic on timeout
@@ -379,7 +372,7 @@ void setup() {
                     NULL,                  /* Task handle */
                     1);                    /* pin task to core 1 */
   
-  Serial.println("Setup Complete!");
+    DEBUG_PRINTLN("Setup Complete!");
 }
 
 void outputDebugData() {
@@ -392,16 +385,16 @@ void outputDebugData() {
         lastDebugOutput = now;
         
         // Output format: DEBUG,timestamp,angles[6],targetX,targetY,targetZ,rotX,rotY,rotZ
-        Serial.printf("DEBUG,%lu,", now);
+        DEBUG_PRINTF("DEBUG,%lu,", now);
         
         // Output current angles
         for(int i = 0; i < 6; i++) {
-            Serial.printf("%.2f,", arr[i]);
+            DEBUG_PRINTF("%.2f,", arr[i]);
         }
         
         // Output target position and rotation (placeholder values for now)
-        Serial.printf("%.2f,%.2f,%.2f,%.2f,%.2f,%.2f\n",
-                     0.0f, 0.0f, 0.0f,  // X, Y, Z
-                     0.0f, 0.0f, 0.0f); // rotX, rotY, rotZ
+    DEBUG_PRINTF("%.2f,%.2f,%.2f,%.2f,%.2f,%.2f\n",
+             0.0f, 0.0f, 0.0f,  // X, Y, Z
+             0.0f, 0.0f, 0.0f); // rotX, rotY, rotZ
     }
 }

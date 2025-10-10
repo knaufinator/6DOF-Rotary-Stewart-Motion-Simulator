@@ -26,7 +26,7 @@ This document defines the dedicated interface board that sits between the ESP32-
 | 5 | 1 | U6 | Buck regulator, 24 V → 5 V @ 3 A | Texas Instruments LMR33630ADDA | Optional if cabinet only offers 24 V |
 | 6 | 12 | R1–R12 | 33 Ω 0603 resistors | Vishay CRCW060333R0FKEA | Series damping at differential outputs |
 | 7 | 6 | R13–R18 | 120 Ω 0603 resistors | Vishay CRCW0603120RFKEA | Populate only if termination done on PCB |
-| 8 | 1 | R19 | 2.2 kΩ 0805 resistor | Vishay CRCW08052K20FKEA | Limits ESTOP opto LED current at 24 V |
+| 8 | 1 | R19 | 2.4 kΩ 0805 resistor | Vishay CRCW08052K40FKEA | Limits ESTOP opto LED current at 24 V (9.5mA) |
 | 9 | 6 | C1–C6 | 0.1 µF 0603 decoupling capacitors | Murata GRM188R71C104KA01 | Place adjacent to AM26C31 VCC pins |
 | 10 | 2 | C7–C8 | 10 µF 1206 bulk capacitors | Murata GRM31CR71A106KA01 | Input/output bulk for 5 V rail |
 | 11 | 7 | J1–J7 | 6-pin pluggable terminal (3.81 mm) | Phoenix Contact 1803577 | One per axis, plus one for ESTOP/5 V input |

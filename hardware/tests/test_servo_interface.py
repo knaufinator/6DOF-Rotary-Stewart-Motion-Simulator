@@ -56,10 +56,10 @@ class ServoInterfaceSpecTests(unittest.TestCase):
     def test_estop_opto_current_limit(self):
         """Verify E-stop opto LED current is within safe limits."""
         # TLP2361 LED: 5mA typical, 10mA max forward current
-        # Input: 24V ESTOP loop, R19 = 2.2kΩ
+        # Input: 24V ESTOP loop, R19 = 2.4kΩ
         v_estop = 24.0
         v_led_forward = 1.2  # Typical LED forward voltage
-        r_current_limit = 2200  # R19 in BOM
+        r_current_limit = 2400  # R19 in BOM (updated to 2.4kΩ for margin)
         
         i_led = (v_estop - v_led_forward) / r_current_limit * 1000  # mA
         

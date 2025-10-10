@@ -66,31 +66,43 @@ jobs:
           echo "Calculated version: $VERSION (Release: $IS_RELEASE)"
 
   firmware-build:
-    name: Build ESP32 Firmware
+    name: Build ESP32-S3 Firmware (ESP-IDF)
     needs: version
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          submodules: 'recursive'
 
-      - name: Install PlatformIO
-        run: pip install -U platformio
+      - name: Install ESP-IDF prerequisites
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y git wget flex bison gperf python3 python3-pip python3-venv \
+            cmake ninja-build ccache libffi-dev libssl-dev dfu-util libusb-1.0-0
 
-      - name: Build controller firmware
+      - name: Set up ESP-IDF v5.2.0
+        uses: espressif/esp-idf-ci-action@v1
+        with:
+          esp_idf_version: v5.2.0
+          target: esp32s3
+          path: 'Controller'
+
+      - name: Build firmware with ESP-IDF
         working-directory: Controller
-        run: pio run
+        run: |
+          . $IDF_PATH/export.sh
+          idf.py set-target esp32s3
+          idf.py build
 
       - name: Package firmware with version
         run: |
           VERSION="${{ needs.version.outputs.version }}"
-          cp Controller/.pio/build/esp32s3/firmware.bin "firmware-${VERSION}.bin"
-          cp Controller/.pio/build/esp32s3/firmware.elf "firmware-${VERSION}.elf"
+          cp Controller/build/stewart_platform.bin "firmware-${VERSION}.bin"
+          cp Controller/build/stewart_platform.elf "firmware-${VERSION}.elf"
+          cp Controller/build/bootloader/bootloader.bin "bootloader-${VERSION}.bin"
+          cp Controller/build/partition_table/partition-table.bin "partition-table-${VERSION}.bin"
 
       - name: Upload firmware artifacts
         uses: actions/upload-artifact@v4
@@ -99,6 +111,8 @@ jobs:
           path: |
             firmware-*.bin
             firmware-*.elf
+            bootloader-*.bin
+            partition-table-*.bin
           retention-days: 90
 
   python-tests:
@@ -179,12 +193,25 @@ jobs:
           $CHANGELOG
           
           ## Firmware Files
-          - \`firmware-${VERSION}.bin\`: Flash to ESP32-S3 via esptool
+          - \`firmware-${VERSION}.bin\`: Main application binary
+          - \`bootloader-${VERSION}.bin\`: ESP32-S3 bootloader
+          - \`partition-table-${VERSION}.bin\`: Partition table
           - \`firmware-${VERSION}.elf\`: Debug symbols for GDB
           
           ## Installation
+          Flash all components to ESP32-S3:
           \`\`\`bash
-          esptool.py --chip esp32s3 --port /dev/ttyUSB0 write_flash 0x0 firmware-${VERSION}.bin
+          esptool.py --chip esp32s3 --port COM3 --baud 460800 \\
+            --before default_reset --after hard_reset write_flash \\
+            --flash_mode dio --flash_freq 80m --flash_size 8MB \\
+            0x0 bootloader-${VERSION}.bin \\
+            0x8000 partition-table-${VERSION}.bin \\
+            0x10000 firmware-${VERSION}.bin
+          \`\`\`
+          
+          Or use ESP-IDF tooling:
+          \`\`\`bash
+          idf.py -p COM3 flash monitor
           \`\`\`
           
           ## Safety Notice
@@ -206,5 +233,7 @@ jobs:
           files: |
             firmware-*.bin
             firmware-*.elf
+            bootloader-*.bin
+            partition-table-*.bin
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

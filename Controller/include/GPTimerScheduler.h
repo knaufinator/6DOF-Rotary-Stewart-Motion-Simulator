@@ -167,27 +167,27 @@ public:
     static uint32_t getMissedNotifications() { return _missed_notifications; }
 
 private:
-    // Timer ISR callback - must be IRAM_ATTR for speed
-    static bool IRAM_ATTR _timerCallback(gptimer_handle_t timer, 
-                                         const gptimer_alarm_event_data_t *edata, 
-                                         void *user_ctx) {
+    // Timer ISR callback
+    // Note: CONFIG_GPTIMER_ISR_IRAM_SAFE=y ensures timer can run from ISR context
+    // We don't use IRAM_ATTR here to avoid literal pool placement issues
+    static bool _timerCallback(gptimer_handle_t timer, 
+                              const gptimer_alarm_event_data_t *edata, 
+                              void *user_ctx) {
         BaseType_t xHigherPriorityTaskWoken = pdFALSE;
         
         _tick_count++;
-
+        
         // Notify the GPIO task to wake up
         if (_taskToNotify != nullptr) {
             BaseType_t result = xTaskNotifyFromISR(_taskToNotify, 
-                                                   0,  // Notification value (not used)
-                                                   eNoAction,  // Don't modify notification value
+                                                   0,
+                                                   eNoAction,
                                                    &xHigherPriorityTaskWoken);
-            
             if (result != pdPASS) {
                 _missed_notifications++;
             }
         }
-
-        // Return whether we need to yield to higher priority task
+        
         return xHigherPriorityTaskWoken == pdTRUE;
     }
 

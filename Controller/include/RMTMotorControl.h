@@ -5,8 +5,9 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "esp_timer.h"
-#include "soc/rmt_reg.h"   // For RMT register access
-#include "esp_task_wdt.h"  // For watchdog timer
+#include "esp_rom_sys.h"    // For esp_rom_delay_us
+#include "soc/rmt_reg.h"    // For RMT register access
+#include "esp_task_wdt.h"   // For watchdog timer
 #include "debug_uart.h"     // Debug logging macros
 
 class RMTMotorControl {
@@ -163,11 +164,17 @@ public:
     
         // Fallback initialization for motors when no RMT channel is available
     bool beginGPIOOnly() {
-        // Configure pins using Arduino pinMode for simplicity
-        pinMode(_stepPin, OUTPUT);
-        pinMode(_dirPin, OUTPUT);
-        digitalWrite(_stepPin, LOW);
-        digitalWrite(_dirPin, LOW);
+        // Configure pins using ESP-IDF GPIO API
+        gpio_config_t pin_config = {
+            .pin_bit_mask = (1ULL << _stepPin) | (1ULL << _dirPin),
+            .mode = GPIO_MODE_OUTPUT,
+            .pull_up_en = GPIO_PULLUP_DISABLE,
+            .pull_down_en = GPIO_PULLDOWN_DISABLE,
+            .intr_type = GPIO_INTR_DISABLE
+        };
+        gpio_config(&pin_config);
+        gpio_set_level(_stepPin, 0);
+        gpio_set_level(_dirPin, 0);
         
     DEBUG_PRINTF("Initialized GPIO-only motor on step pin %d, dir pin %d\n", _stepPin, _dirPin);
         _initialized = true;
@@ -224,16 +231,11 @@ public:
 
         // Set direction and wait for setup time if direction changed
         if (direction != _lastDirection) {
-            if (_mode == MODE_RMT) {
-                gpio_set_level(_dirPin, _config.invertDirection ? !direction : direction);
-            } else {
-                // For GPIO mode, use Arduino digitalWrite
-                digitalWrite(_dirPin, _config.invertDirection ? !direction : direction);
-            }
+            gpio_set_level(_dirPin, _config.invertDirection ? !direction : direction);
             _lastDirection = direction;
             
             if (timeSinceLastStep < _config.dirSetupTime_us) {
-                ets_delay_us(_config.dirSetupTime_us - timeSinceLastStep);
+                esp_rom_delay_us(_config.dirSetupTime_us - timeSinceLastStep);
             }
         }
 
@@ -255,10 +257,10 @@ public:
         } 
         else if (_mode == MODE_GPIO_ONLY) {
             // Generate step pulse using direct GPIO control
-            digitalWrite(_stepPin, HIGH);
-            delayMicroseconds(_config.stepPulseWidth_us);
-            digitalWrite(_stepPin, LOW);
-            delayMicroseconds(_config.stepPulseWidth_us);
+            gpio_set_level(_stepPin, 1);
+            esp_rom_delay_us(_config.stepPulseWidth_us);
+            gpio_set_level(_stepPin, 0);
+            esp_rom_delay_us(_config.stepPulseWidth_us);
             
             _currentPos += direction ? 1 : -1;
             _lastStepTime = now;
@@ -274,12 +276,8 @@ public:
         _targetPos = _currentPos;  // Set target to current to stop motion
         _currentVelocity = 0;      // Zero velocity
         
-        // Ensure step pin is low using appropriate method for the mode
-        if (_mode == MODE_RMT) {
-            gpio_set_level(_stepPin, 0);
-        } else {
-            digitalWrite(_stepPin, LOW);
-        }
+        // Ensure step pin is low
+        gpio_set_level(_stepPin, 0);
     }
 
 private:

@@ -42,7 +42,7 @@
 #define MAX_SERIAL_INPUT 60        // Maximum length of serial input buffer
 
 // E-stop configuration
-#define ESTOP_ACTIVE_STATE LOW     // E-stop is active when pin is LOW (normally closed)
+#define ESTOP_ACTIVE_STATE 0       // E-stop is active when pin is LOW (normally closed)
 
 // Motor Constants
 #define INV1 0  // Counter-clockwise motors

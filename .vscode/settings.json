@@ -1,3 +1,6 @@
 {
-    "cmake.ignoreCMakeListsMissing": true
+    "cmake.ignoreCMakeListsMissing": true,
+    "idf.espIdfPathWin": "C:\\Users\\Chris\\esp\\v5.2\\esp-idf",
+    "idf.toolsPathWin": "C:\\Users\\Chris\\.espressif",
+    "idf.pythonInstallPath": "C:\\Users\\Chris\\.espressif\\tools\\idf-python\\3.11.2\\python.exe"
 }

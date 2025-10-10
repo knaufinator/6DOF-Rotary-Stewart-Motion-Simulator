@@ -1,0 +1,10 @@
+{
+    "idf.espIdfPath": "C:\\users\\Chris\\esp\\v5.2\\esp-idf",
+    "idf.toolsPath": "C:\\Users\\Chris\\.espressif",
+    "idf.port": "COM3",
+    "idf.adapterTargetName": "esp32s3",
+    "idf.openOcdConfigs": [
+        "board/esp32s3-builtin.cfg"
+    ],
+    "idf.flashType": "UART"
+}

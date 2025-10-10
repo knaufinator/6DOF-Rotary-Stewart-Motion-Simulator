@@ -82,10 +82,10 @@ jobs:
           sudo apt-get install -y git wget flex bison gperf python3 python3-pip python3-venv \
             cmake ninja-build ccache libffi-dev libssl-dev dfu-util libusb-1.0-0
 
-      - name: Set up ESP-IDF v5.2.0
+      - name: Set up ESP-IDF v5.2
         uses: espressif/esp-idf-ci-action@v1
         with:
-          esp_idf_version: v5.2.0
+          esp_idf_version: release-v5.2
           target: esp32s3
           path: 'Controller'
 

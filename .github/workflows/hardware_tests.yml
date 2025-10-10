@@ -1,0 +1,146 @@
+name: Hardware Tests
+
+on:
+  push:
+    branches: [ phoenix, main ]
+    paths:
+      - 'hardware/**'
+      - 'docs/hardware/**'
+      - '.github/workflows/hardware_tests.yml'
+  pull_request:
+    branches: [ phoenix, main ]
+    paths:
+      - 'hardware/**'
+      - 'docs/hardware/**'
+
+jobs:
+  electrical-validation:
+    name: Validate Electrical Specifications
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install test dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest pytest-cov numpy
+
+      - name: Run electrical specification tests
+        run: |
+          pytest hardware/tests/test_servo_interface.py -v --cov=hardware --cov-report=term --cov-report=html
+
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: hardware-test-coverage
+          path: htmlcov/
+          retention-days: 30
+
+      - name: Check test coverage
+        run: |
+          coverage report --fail-under=80
+
+  bom-validation:
+    name: Validate Bill of Materials
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check BOM completeness
+        run: |
+          # Verify all components in servo_driver_interface.md have specifications
+          if ! grep -q "Texas Instruments AM26C31IDWR" docs/hardware/servo_driver_interface.md; then
+            echo "ERROR: Missing differential driver specification in BOM"
+            exit 1
+          fi
+          
+          if ! grep -q "Omron G7L-2A-BUBJ-CB" docs/hardware/servo_driver_interface.md; then
+            echo "ERROR: Missing safety relay specification in BOM"
+            exit 1
+          fi
+          
+          echo "✓ BOM validation passed"
+
+      - name: Safety checklist validation
+        run: |
+          # Ensure commissioning checklist exists and is complete
+          CHECKLIST_ITEMS=$(grep -c "\[ \]" docs/hardware/servo_driver_interface.md || true)
+          
+          if [ "$CHECKLIST_ITEMS" -lt 5 ]; then
+            echo "ERROR: Commissioning checklist appears incomplete"
+            exit 1
+          fi
+          
+          echo "✓ Found $CHECKLIST_ITEMS checklist items"
+          echo "✓ Safety checklist validation passed"
+
+  documentation-check:
+    name: Hardware Documentation Review
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check for required safety warnings
+        run: |
+          # Verify safety notices are present
+          if ! grep -i "safety" docs/hardware/servo_driver_interface.md > /dev/null; then
+            echo "ERROR: Missing safety warnings in hardware documentation"
+            exit 1
+          fi
+          
+          if ! grep -i "e-stop\|emergency" docs/hardware/servo_driver_interface.md > /dev/null; then
+            echo "ERROR: Missing E-stop documentation"
+            exit 1
+          fi
+          
+          echo "✓ Safety documentation validated"
+
+      - name: Validate electrical specifications
+        run: |
+          # Check that key specifications are documented
+          REQUIRED_SPECS=(
+            "RS-422"
+            "120.*Ω"
+            "differential"
+            "5 V"
+            "24 V"
+          )
+          
+          for SPEC in "${REQUIRED_SPECS[@]}"; do
+            if ! grep -E "$SPEC" docs/hardware/servo_driver_interface.md > /dev/null; then
+              echo "ERROR: Missing specification: $SPEC"
+              exit 1
+            fi
+          done
+          
+          echo "✓ All critical specifications documented"
+
+  test-summary:
+    name: Hardware Test Summary
+    needs: [electrical-validation, bom-validation, documentation-check]
+    runs-on: ubuntu-latest
+    if: always()
+
+    steps:
+      - name: Check all tests passed
+        run: |
+          if [ "${{ needs.electrical-validation.result }}" != "success" ] || \
+             [ "${{ needs.bom-validation.result }}" != "success" ] || \
+             [ "${{ needs.documentation-check.result }}" != "success" ]; then
+            echo "❌ Some hardware tests failed"
+            exit 1
+          fi
+          
+          echo "✅ All hardware validation tests passed"

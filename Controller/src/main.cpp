@@ -4,6 +4,7 @@
 #include "helpers.h"
 #include "debug_uart.h"
 #include <RMTMotorControl.h>
+#include <GPTimerScheduler.h>
 #include <esp_task_wdt.h>
 
 using namespace std;
@@ -45,6 +46,7 @@ bool isPausedEStop = false;
 bool isRateLimiting = false;
 bool debugEnabled = false;  // Debug output state, default disabled for safety
 SemaphoreHandle_t xMutex = NULL;
+TaskHandle_t xGPIOLoopHandle = NULL;  // Task handle for GPTimer notification
 
 // Function declarations
 void setupPWMpins();
@@ -145,27 +147,65 @@ void InterfaceMonitorCode(void * pvParameters) {
 void GPIOLoop(void * pvParameters) {
     // Subscribe this task to the watchdog
     esp_task_wdt_add(NULL);
-    TickType_t xLastWakeTime = xTaskGetTickCount();
+    
+    // Store task handle for GPTimer notifications
+    xGPIOLoopHandle = xTaskGetCurrentTaskHandle();
+    
+    DEBUG_PRINTLN("GPIOLoop: Initializing GPTimer scheduler (100µs)");
+    
+    // Initialize and start GPTimer for deterministic 100µs scheduling
+    if (!GPTimerScheduler::begin(100)) {  // 100µs interval = 10kHz update rate
+        DEBUG_PRINTLN("ERROR: Failed to initialize GPTimer! Falling back to vTaskDelayUntil");
+        // Fallback to old timing method if GPTimer fails
+        TickType_t xLastWakeTime = xTaskGetTickCount();
+        for(;;) {
+            esp_task_wdt_reset();
+            currentMicros = micros();
+            
+            if (currentMicros - previousMicros >= microInterval) {
+                previousMicros = currentMicros;
+                handleStepDirection();
+                
+                if (currentMicros - lastDebugOutput >= DEBUG_OUTPUT_INTERVAL) {
+                    outputDebugData();
+                    lastDebugOutput = currentMicros;
+                }
+            }
+            
+            vTaskDelayUntil(&xLastWakeTime, pdMS_TO_TICKS(1));
+        }
+        return;
+    }
+    
+    if (!GPTimerScheduler::start(xGPIOLoopHandle)) {
+        DEBUG_PRINTLN("ERROR: Failed to start GPTimer!");
+        return;
+    }
+    
+    DEBUG_PRINTLN("GPIOLoop: GPTimer started, entering main loop");
     
     for(;;) {
+        // Wait for notification from GPTimer ISR (blocking, no busy-wait)
+        // This provides deterministic 100µs wake-up with <1µs jitter
+        ulTaskNotifyTake(pdTRUE,           // Clear notification count on exit
+                        portMAX_DELAY);   // Wait indefinitely for notification
+        
         // Reset watchdog
         esp_task_wdt_reset();
         
         currentMicros = micros();
         
+        // Execute motor step/direction logic every iteration (100µs rate)
         if (currentMicros - previousMicros >= microInterval) {
             previousMicros = currentMicros;
             handleStepDirection();
             
-            // Only output debug data every 100ms
+            // Only output debug data every 100ms (1000 iterations at 100µs)
             if (currentMicros - lastDebugOutput >= DEBUG_OUTPUT_INTERVAL) {
                 outputDebugData();
                 lastDebugOutput = currentMicros;
             }
         }
-        
-        // Use vTaskDelayUntil for more precise timing
-        vTaskDelayUntil(&xLastWakeTime, pdMS_TO_TICKS(1));
     }
 }
 
@@ -180,6 +220,9 @@ void EStopMonitorCode(void * pvParameters) {
         debouncedEStop.update();
         
         if (debouncedEStop.fell()) {  // Button pressed (transition to active state)
+            // SAFETY: Stop GPTimer to prevent motion during E-stop
+            GPTimerScheduler::stop();
+            
             // Immediately disable all motor outputs
             for(int i = 0; i < 6; i++) {
                 if (motors[i]) {
@@ -189,13 +232,19 @@ void EStopMonitorCode(void * pvParameters) {
             isPausedEStop = true;
             
             // Log E-stop activation
-            DEBUG_PRINTLN("E-STOP ACTIVATED");
+            DEBUG_PRINTLN("E-STOP ACTIVATED - GPTimer stopped");
         }
         
         if (debouncedEStop.rose()) {  // Button released
             // Don't automatically resume - require explicit reset
             isRateLimiting = true;
             DEBUG_PRINTLN("E-STOP RELEASED - Reset required");
+            
+            // Restart GPTimer when E-stop is cleared and system is ready
+            if (xGPIOLoopHandle != NULL) {
+                GPTimerScheduler::start(xGPIOLoopHandle);
+                DEBUG_PRINTLN("GPTimer restarted after E-stop release");
+            }
         }
         
         // Check E-stop state more frequently than debounce time

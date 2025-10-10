@@ -1,14 +1,63 @@
-name: CI
+name: CI/CD
 
 on:
   push:
     branches: [ phoenix, main ]
+    tags:
+      - 'v*.*.*'
   pull_request:
     branches: [ phoenix, main ]
 
 jobs:
+  version:
+    name: Determine Version
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+      is_release: ${{ steps.version.outputs.is_release }}
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Calculate version
+        id: version
+        run: |
+          # Check if this is a tag push
+          if [[ $GITHUB_REF == refs/tags/* ]]; then
+            VERSION=${GITHUB_REF#refs/tags/}
+            IS_RELEASE=true
+          else
+            # Auto-increment version based on commit count since last tag
+            LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+            COMMIT_COUNT=$(git rev-list --count ${LAST_TAG}..HEAD)
+            
+            # Parse last tag (expecting vMAJOR.MINOR.PATCH)
+            if [[ $LAST_TAG =~ ^v([0-9]+)\.([0-9]+)\.([0-9]+) ]]; then
+              MAJOR=${BASH_REMATCH[1]}
+              MINOR=${BASH_REMATCH[2]}
+              PATCH=${BASH_REMATCH[3]}
+            else
+              MAJOR=0
+              MINOR=0
+              PATCH=0
+            fi
+            
+            # Auto-increment patch version
+            NEW_PATCH=$((PATCH + 1))
+            VERSION="v${MAJOR}.${MINOR}.${NEW_PATCH}-dev.${COMMIT_COUNT}+${GITHUB_SHA:0:7}"
+            IS_RELEASE=false
+          fi
+          
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "is_release=$IS_RELEASE" >> $GITHUB_OUTPUT
+          echo "Calculated version: $VERSION (Release: $IS_RELEASE)"
+
   firmware-build:
     name: Build ESP32 Firmware
+    needs: version
     runs-on: ubuntu-latest
 
     steps:
@@ -26,6 +75,21 @@ jobs:
       - name: Build controller firmware
         working-directory: Controller
         run: pio run
+
+      - name: Package firmware with version
+        run: |
+          VERSION="${{ needs.version.outputs.version }}"
+          cp Controller/.pio/build/esp32s3/firmware.bin "firmware-${VERSION}.bin"
+          cp Controller/.pio/build/esp32s3/firmware.elf "firmware-${VERSION}.elf"
+
+      - name: Upload firmware artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: firmware-${{ needs.version.outputs.version }}
+          path: |
+            firmware-*.bin
+            firmware-*.elf
+          retention-days: 90
 
   python-tests:
     name: Run Visualization Tests
@@ -47,3 +111,72 @@ jobs:
 
       - name: Run pytest suite
         run: pytest visualization/tests
+
+  create-release:
+    name: Create GitHub Release
+    needs: [version, firmware-build, python-tests]
+    if: needs.version.outputs.is_release == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Download firmware artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: firmware-${{ needs.version.outputs.version }}
+
+      - name: Generate changelog
+        id: changelog
+        run: |
+          VERSION="${{ needs.version.outputs.version }}"
+          LAST_TAG=$(git describe --tags --abbrev=0 HEAD^ 2>/dev/null || echo "")
+          
+          if [ -n "$LAST_TAG" ]; then
+            CHANGELOG=$(git log ${LAST_TAG}..HEAD --pretty=format:"- %s (%h)" --no-merges)
+          else
+            CHANGELOG=$(git log --pretty=format:"- %s (%h)" --no-merges -n 20)
+          fi
+          
+          # Write changelog to file
+          cat > CHANGELOG.txt <<EOF
+          # Release $VERSION
+          
+          ## Changes
+          $CHANGELOG
+          
+          ## Firmware Files
+          - \`firmware-${VERSION}.bin\`: Flash to ESP32-S3 via esptool
+          - \`firmware-${VERSION}.elf\`: Debug symbols for GDB
+          
+          ## Installation
+          \`\`\`bash
+          esptool.py --chip esp32s3 --port /dev/ttyUSB0 write_flash 0x0 firmware-${VERSION}.bin
+          \`\`\`
+          
+          ## Safety Notice
+          ⚠️ This firmware controls a motion platform capable of causing serious injury. Verify E-stop functionality before energizing actuators. See docs/hardware/servo_driver_interface.md for safety checklist.
+          EOF
+          
+          echo "changelog<<EOF" >> $GITHUB_OUTPUT
+          cat CHANGELOG.txt >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ needs.version.outputs.version }}
+          name: Release ${{ needs.version.outputs.version }}
+          body: ${{ steps.changelog.outputs.changelog }}
+          draft: false
+          prerelease: false
+          files: |
+            firmware-*.bin
+            firmware-*.elf
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

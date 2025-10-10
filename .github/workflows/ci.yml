@@ -125,7 +125,6 @@ jobs:
   create-release:
     name: Create GitHub Release
     needs: [version, firmware-build, python-tests]
-    if: needs.version.outputs.is_release == 'true'
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -145,6 +144,7 @@ jobs:
         id: changelog
         run: |
           VERSION="${{ needs.version.outputs.version }}"
+          IS_RELEASE="${{ needs.version.outputs.is_release }}"
           LAST_TAG=$(git describe --tags --abbrev=0 HEAD^ 2>/dev/null || echo "")
           
           if [ -n "$LAST_TAG" ]; then
@@ -153,9 +153,27 @@ jobs:
             CHANGELOG=$(git log --pretty=format:"- %s (%h)" --no-merges -n 20)
           fi
           
+          # Determine release type messaging
+          if [ "$IS_RELEASE" = "true" ]; then
+            RELEASE_TYPE="## 🎯 Official Release"
+            RELEASE_WARNING=""
+          else
+            RELEASE_TYPE="## 🚧 Development Build (Pre-Release)"
+            RELEASE_WARNING="
+          **⚠️ NOT AN OFFICIAL RELEASE**
+          This is an automated development build from commit ${GITHUB_SHA:0:7}.
+          - Use for testing and development only
+          - May contain unstable or incomplete features
+          - Official releases use version tags without '-dev' suffix
+          "
+          fi
+          
           # Write changelog to file
           cat > CHANGELOG.txt <<EOF
-          # Release $VERSION
+          # $VERSION
+          
+          $RELEASE_TYPE
+          $RELEASE_WARNING
           
           ## Changes
           $CHANGELOG
@@ -181,10 +199,10 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ needs.version.outputs.version }}
-          name: Release ${{ needs.version.outputs.version }}
+          name: ${{ needs.version.outputs.is_release == 'true' && format('Release {0}', needs.version.outputs.version) || format('Development Build {0}', needs.version.outputs.version) }}
           body: ${{ steps.changelog.outputs.changelog }}
           draft: false
-          prerelease: false
+          prerelease: ${{ needs.version.outputs.is_release != 'true' }}
           files: |
             firmware-*.bin
             firmware-*.elf

@@ -1,6 +1,6 @@
 import pytest
 import numpy as np
-from inverse_kinematics import InverseKinematics
+from visualization.inverse_kinematics import InverseKinematics
 
 @pytest.fixture
 def ik():

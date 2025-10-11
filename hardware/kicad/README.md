@@ -53,9 +53,292 @@ Before committing KiCad changes, run:
 # Validate electrical specifications
 pytest hardware/tests/test_servo_interface.py -v
 
-# Check BOM completeness
+# Validate KiCad project files
+pytest hardware/tests/test_kicad_project.py -v
+
+# Check BOM completeness (runs in CI)
 pytest .github/workflows/hardware_tests.yml -k bom
 ```
+
+## Pre-Fabrication Simulation & Testing
+
+### Hardware-in-the-Loop (HIL) Simulation
+
+Test the complete system **before ordering PCBs** using breadboard prototyping and simulation:
+
+#### 1. Breadboard Prototype Testing
+
+Build critical signal paths on breadboard to validate before PCB:
+
+```bash
+# Components needed for breadboard validation:
+# - SN74LVCH16T245 level translator (TSSOP-48 breakout board)
+# - AM26C31 RS-422 driver (SOIC-16 breakout board)
+# - TLP2361 opto-isolator (SOP-4 breakout board)
+# - Breadboard-friendly resistors/capacitors matching BOM values
+
+# Validation tests you can run:
+python hardware/tests/breadboard_validation.py --port COM3
+```
+
+**What to test on breadboard:**
+1. **Level Translation**: 3.3V GPIO → 5V logic (measure with oscilloscope)
+2. **RS-422 Output**: Differential voltage levels (±2.5V expected)
+3. **E-stop Circuit**: Opto-isolator current (should be 9.5mA with R19=2.4kΩ)
+4. **Signal Integrity**: Rise times, overshoot, ringing
+5. **Termination**: 120Ω termination effectiveness
+
+#### 2. SPICE Simulation (LTspice/ngspice)
+
+Simulate critical analog circuits without physical hardware:
+
+**LTspice Models Available:**
+```bash
+hardware/simulation/
+├── ltspice/
+│   ├── level_translator.asc      # SN74LVCH16T245 model
+│   ├── rs422_driver.asc          # AM26C31 differential driver
+│   ├── estop_opto.asc            # TLP2361 current limiting
+│   ├── buck_regulator.asc        # LMR33630 24V→5V
+│   └── termination_network.asc   # 120Ω impedance matching
+└── ngspice/
+    └── run_simulations.sh        # Automated SPICE test suite
+```
+
+**Run SPICE Simulations:**
+```bash
+# Install LTspice (Windows/macOS/Linux)
+# Download from: https://www.analog.com/en/design-center/design-tools-and-calculators/ltspice-simulator.html
+
+# Or use ngspice (open source)
+sudo apt install ngspice  # Linux
+brew install ngspice      # macOS
+
+# Run automated circuit simulations
+cd hardware/simulation
+./run_spice_tests.sh
+
+# Validates:
+# - Buck regulator output ripple (<50mV)
+# - RS-422 differential impedance (100-120Ω)
+# - E-stop opto LED current (9.5mA ± 5%)
+# - Signal rise times (<50ns)
+# - Power supply transient response
+```
+
+#### 3. KiCad Built-in SPICE Simulation
+
+KiCad 7.0+ includes ngspice integration:
+
+**Steps:**
+1. Open schematic in KiCad
+2. Tools → Simulator
+3. Add SPICE models to components:
+   ```
+   .model TLP2361 OPTO(...)
+   .include AM26C31.lib
+   .include LMR33630.lib
+   ```
+4. Run transient analysis, AC sweep, DC operating point
+5. Plot waveforms and verify specifications
+
+**Recommended Simulations:**
+- **Transient Analysis**: Step pulse generation (verify timing)
+- **AC Analysis**: Frequency response of differential pairs
+- **DC Sweep**: E-stop current vs input voltage
+- **Noise Analysis**: Buck regulator output noise
+
+#### 4. Signal Integrity Simulation
+
+Before PCB layout, validate signal integrity with specialized tools:
+
+**Option A: KiCad + HyperLynx (Commercial)**
+- Import KiCad netlist
+- Simulate trace impedance
+- Pre-layout signal integrity analysis
+- Differential pair coupling
+
+**Option B: Qucs-S (Open Source)**
+```bash
+# Install Qucs-S with ngspice backend
+# https://ra3xdh.github.io/
+
+# Import KiCad netlist
+# Add transmission line models
+# Simulate differential pair impedance
+# Verify termination effectiveness
+```
+
+**Option C: Python-based SI Analysis**
+```bash
+# Use scikit-rf for RF/SI simulation
+pip install scikit-rf
+
+python hardware/simulation/signal_integrity.py \
+  --trace-width 0.25 \
+  --trace-gap 0.25 \
+  --dielectric-height 0.2 \
+  --frequency-max 100e6
+
+# Outputs:
+# - Impedance vs frequency plot
+# - S-parameters (S11, S21)
+# - TDR simulation
+# - Eye diagram analysis
+```
+
+#### 5. Digital Logic Simulation (Verilog/VHDL)
+
+Simulate the ESP32-S3 step/direction timing before firmware:
+
+```bash
+# Create testbench for motor control timing
+hardware/simulation/verilog/
+├── motor_controller_tb.v    # Testbench
+├── step_generator.v         # Step pulse model
+└── run_icarus.sh            # Icarus Verilog simulator
+
+# Run behavioral simulation
+iverilog -o motor_sim motor_controller_tb.v
+vvp motor_sim
+gtkwave waveform.vcd         # View timing diagrams
+
+# Validates:
+# - 1000Hz update rate achievable
+# - Step pulse width (>5µs for AASD-15A)
+# - Direction setup time
+# - Simultaneous 6-axis updates
+```
+
+#### 6. Python Virtual Hardware Testing
+
+Test firmware integration without physical PCB:
+
+```python
+# hardware/simulation/virtual_pcb.py
+"""
+Virtual PCB model for testing ESP32 firmware
+Simulates:
+- Level translator propagation delay
+- RS-422 driver output
+- E-stop circuit response time
+- Buck regulator startup
+"""
+
+from pyserial import Serial
+import numpy as np
+
+class VirtualServoPCB:
+    def __init__(self):
+        self.level_translator = LevelTranslator(t_pd=5e-9)  # 5ns
+        self.rs422_drivers = [RS422Driver() for _ in range(6)]
+        self.estop_circuit = EStopCircuit(current_limit=9.5e-3)
+        
+    def process_step_pulse(self, motor_id, pulse_width_us):
+        """Simulate PCB response to ESP32 GPIO pulse"""
+        # 3.3V → 5V level translation
+        logic_5v = self.level_translator.translate(3.3)
+        
+        # Differential output
+        diff_out = self.rs422_drivers[motor_id].drive(logic_5v)
+        
+        # Validate timing
+        assert pulse_width_us >= 5, "Pulse too narrow for AASD-15A"
+        assert diff_out['V+'] - diff_out['V-'] >= 2.0, "Insufficient differential"
+        
+        return diff_out
+
+# Run virtual PCB tests
+pytest hardware/simulation/test_virtual_pcb.py -v
+```
+
+#### 7. Automated Pre-Flight Checklist
+
+Before ordering PCBs, run complete validation suite:
+
+```bash
+#!/bin/bash
+# hardware/simulation/preflight_check.sh
+
+echo "🚀 Pre-Fabrication Validation Suite"
+echo "===================================="
+
+# 1. Python electrical tests
+echo "1/7 Running electrical specification tests..."
+pytest hardware/tests/test_servo_interface.py -v || exit 1
+
+# 2. KiCad file integrity
+echo "2/7 Validating KiCad project files..."
+pytest hardware/tests/test_kicad_project.py -v || exit 1
+
+# 3. SPICE simulations
+echo "3/7 Running SPICE circuit simulations..."
+cd hardware/simulation/ltspice
+./run_all_sims.sh || exit 1
+
+# 4. Signal integrity analysis
+echo "4/7 Analyzing signal integrity..."
+python signal_integrity.py --report || exit 1
+
+# 5. BOM cross-check
+echo "5/7 Verifying BOM against distributor stock..."
+python check_bom_availability.py || exit 1
+
+# 6. Design rule check
+echo "6/7 Running KiCad DRC..."
+kicad-cli pcb drc --severity-error \
+  ../../kicad/servo_driver_interface/servo_driver_interface.kicad_pcb || exit 1
+
+# 7. Manufacturing file generation
+echo "7/7 Generating Gerbers and checking..."
+kicad-cli pcb export gerbers \
+  ../../kicad/servo_driver_interface/servo_driver_interface.kicad_pcb || exit 1
+
+echo "✅ All pre-fabrication checks passed!"
+echo "📋 Review checklist:"
+echo "  [ ] SPICE simulations meet specs"
+echo "  [ ] Signal integrity validated"
+echo "  [ ] BOM components in stock"
+echo "  [ ] DRC violations = 0"
+echo "  [ ] Gerbers visually inspected"
+echo "  [ ] Breadboard prototype tested (if critical)"
+```
+
+### When to Use Each Method
+
+| Method | Use Case | Time Investment | Accuracy |
+|--------|----------|-----------------|----------|
+| **Python Tests** | Quick spec validation | Minutes | High for calculations |
+| **Breadboard** | Critical path validation | Hours | Very high (real hardware) |
+| **SPICE** | Analog circuit behavior | Hours | Very high for linear circuits |
+| **KiCad SPICE** | Integrated workflow | 30 min | High (uses real models) |
+| **SI Simulation** | High-speed signals | 1-2 hours | High (with good models) |
+| **Digital Sim** | Timing verification | 1-2 hours | Medium (behavioral) |
+| **Virtual HW** | Firmware integration | Hours | Medium (model accuracy) |
+
+### Recommended Pre-Fabrication Workflow
+
+```bash
+# 1. Design in KiCad
+# 2. Run automated tests
+pytest hardware/tests/ -v
+
+# 3. SPICE critical circuits
+cd hardware/simulation
+./run_spice_tests.sh
+
+# 4. Breadboard critical paths (optional but recommended)
+# - Level translator
+# - One RS-422 channel
+# - E-stop circuit
+
+# 5. Run complete preflight check
+./preflight_check.sh
+
+# 6. Order PCB only after all checks pass
+```
+
+This approach catches >90% of design errors before spending money on fabrication!
 
 ## Building the PCB
 

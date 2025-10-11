@@ -1,6 +1,6 @@
 # 6DOF Motion Simulator Controller
 
-> ⚠️ **STATUS UPDATE**: Phoenix branch has been fully migrated to **ESP-IDF v5.2.0**! The firmware is now production-ready with native ESP-IDF development.
+> ⚠️ **STATUS UPDATE**: Phoenix branch has been fully migrated to **ESP-IDF v5.2.0**. Native ESP-IDF development is now active.
 
 This is the controller firmware for a 6-DOF (Degrees of Freedom) Stewart Platform Motion Simulator built with **Espressif ESP-IDF v5.2.0** for the ESP32-S3.
 

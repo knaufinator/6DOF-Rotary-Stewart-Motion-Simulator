@@ -66,13 +66,14 @@ Please note that features and functionality may be incomplete or change as devel
 
 ## 🛠️ Components
 
-### Controller (ESP32)
-- PlatformIO-based project
-- Dual-core utilization for 1000Hz refresh rate
+### Controller (ESP32-S3)
+- **ESP-IDF v5.2.0** native development (migrated from Arduino/PlatformIO)
+- Dual-core FreeRTOS tasks for 1000Hz refresh rate
 - UART output gated behind compile-time `ENABLE_DEBUG_UART` for production safety
 - USB-Serial communication with SimTools
+- RMT (Remote Control) peripheral for hardware-accelerated step pulse generation
 - External differential driver interface board for AASD-15A command lines ([docs/hardware/servo_driver_interface.md](docs/hardware/servo_driver_interface.md))
-- Step/Dir optimisation roadmap maintained in [docs/firmware/esp32s3_step_dir_roadmap.md](docs/firmware/esp32s3_step_dir_roadmap.md)
+- Step/Dir optimization roadmap maintained in [docs/firmware/esp32s3_step_dir_roadmap.md](docs/firmware/esp32s3_step_dir_roadmap.md)
 
 ### Python Visualizer
 
@@ -127,14 +128,52 @@ pn112 - Position instruction Ts S-shaped filtering: "50"
 ```
 
 ### Firmware Debugging
-- Serial output is disabled by default for safety. Enable it by adding `-DENABLE_DEBUG_UART=1` to the `build_flags` section in `platformio.ini`.
+- Serial output is disabled by default for safety. Enable at compile-time with `-DENABLE_DEBUG_UART=1` in CMakeLists.txt or via menuconfig.
 - At runtime send the command `DBG:1X` to turn on verbose logs, or `DBG:0X` to silence them (`X` terminator matches the existing SimTools packet framing).
-- Debug traces cover motor initialisation, rate limiting events, message intervals, and the `DEBUG,...` telemetry stream.
+- Debug traces cover motor initialization, rate limiting events, message intervals, and the `DEBUG,...` telemetry stream.
+
+### Building & Flashing
+
+#### Prerequisites
+- **ESP-IDF v5.2.0** - Install from [Espressif's official guide](https://docs.espressif.com/projects/esp-idf/en/v5.2/esp32s3/get-started/index.html)
+- **ESP32-S3** development board with USB-Serial support
+- **Git** for repository management
+
+#### Build Commands
+```bash
+# Navigate to Controller directory
+cd Controller
+
+# Configure project (first time only)
+idf.py set-target esp32s3
+idf.py menuconfig  # Optional: customize settings
+
+# Build firmware
+idf.py build
+
+# Flash to ESP32-S3 (detects port automatically)
+idf.py flash
+
+# Monitor serial output
+idf.py monitor
+
+# Or combine flash + monitor
+idf.py flash monitor
+```
+
+#### Build Options
+- **Debug UART**: Enable in `sdkconfig` or add to CMakeLists.txt:
+  ```cmake
+  target_compile_definitions(${COMPONENT_LIB} PRIVATE ENABLE_DEBUG_UART=1)
+  ```
+- **Optimization**: Release builds use `-O2`, configurable via menuconfig
 
 ### Testing & CI
-- **Firmware build check**: `pio run -d Controller`
-- **Python unit tests**: `pip install -r visualization/requirements.txt` then `pytest visualization/tests`
-- GitHub Actions workflow (`.github/workflows/ci.yml`) runs both jobs on every push/PR to `phoenix` and `main`.
+- **Firmware build check**: `cd Controller && idf.py build`
+- **Hardware electrical tests**: `pytest hardware/tests/test_servo_interface.py -v`
+- **KiCad project validation**: `pytest hardware/tests/test_kicad_project.py -v`
+- **Python visualization tests**: `pip install -r visualization/requirements.txt && pytest visualization/tests`
+- GitHub Actions workflow (`.github/workflows/ci.yml`) builds firmware and runs all tests on every push/PR to `phoenix` and `main`
 
 #### Homing Configuration
 ```
@@ -209,12 +248,50 @@ This arrangement creates three "virtual pivot points" where pairs of motors work
 
 ## 🚀 Getting Started
 
-1. Review all safety documentation thoroughly
-2. Assemble the hardware according to schematics
-3. Flash the ESP32 with the controller firmware
-4. Configure SimTools with the provided settings
-5. Perform initial calibration and homing
-6. Start with slow movements and gradually increase intensity
+### Quick Start Guide
+
+1. **Review Safety Documentation**
+   - ⚠️ Read all safety warnings thoroughly
+   - Ensure emergency stop systems are in place
+   - Never operate without proper safety enclosures
+
+2. **Install ESP-IDF**
+   ```bash
+   # Windows (PowerShell)
+   # Follow: https://docs.espressif.com/projects/esp-idf/en/v5.2/esp32s3/get-started/windows-setup.html
+   
+   # Linux/macOS
+   # Follow: https://docs.espressif.com/projects/esp-idf/en/v5.2/esp32s3/get-started/linux-macos-setup.html
+   ```
+
+3. **Clone & Build Firmware**
+   ```bash
+   git clone https://github.com/knaufinator/6DOF-Rotary-Stewart-Motion-Simulator.git
+   cd 6DOF-Rotary-Stewart-Motion-Simulator/Controller
+   idf.py set-target esp32s3
+   idf.py build
+   idf.py flash monitor
+   ```
+
+4. **Assemble Hardware**
+   - Follow servo driver interface board assembly guide: [docs/hardware/servo_driver_interface.md](docs/hardware/servo_driver_interface.md)
+   - PCB designs available in [hardware/kicad/](hardware/kicad/)
+   - Verify all electrical connections match specifications in hardware tests
+
+5. **Configure Servo Drivers**
+   - Set AASD-15A parameters as documented above
+   - Perform homing sequence
+   - Verify direction and limit settings
+
+6. **Setup SimTools**
+   - Configure with provided settings
+   - Test communication with ESP32-S3
+   - Verify position commands are received
+
+7. **Calibration & Testing**
+   - Start with slow movements
+   - Gradually increase intensity
+   - Monitor for any mechanical binding or electrical issues
 
 ## 🤝 Contributing
 

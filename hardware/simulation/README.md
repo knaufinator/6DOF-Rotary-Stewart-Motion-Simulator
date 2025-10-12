@@ -7,6 +7,11 @@ This directory contains simulation models and scripts for validating the PCB des
 ```
 simulation/
 ├── README.md                  # This file
+├── esp32_emulation/           # ESP32-S3 firmware emulation
+│   ├── qemu_esp32s3/          # QEMU-based ESP32-S3 emulator
+│   ├── renode/                # Renode multi-core emulation
+│   ├── wokwi/                 # Wokwi online simulator
+│   └── unit_tests/            # ESP-IDF unit tests (host)
 ├── ltspice/                   # LTspice circuit simulations
 │   ├── level_translator.asc   # SN74LVCH16T245 model
 │   ├── rs422_driver.asc       # AM26C31 differential driver
@@ -83,6 +88,161 @@ pytest test_virtual_pcb.py -v
 # - Step pulse timing validation
 ```
 
+### 5. ESP32-S3 Firmware Emulation
+
+Test firmware **without physical ESP32-S3 hardware** for faster iteration and CI/CD integration.
+
+#### Option 1: QEMU (ESP32-S3 Support)
+
+```bash
+# Install QEMU with ESP32 support
+git clone https://github.com/espressif/qemu.git
+cd qemu
+./configure --target-list=xtensa-softmmu \
+  --enable-gcrypt \
+  --enable-slirp \
+  --disable-xen
+make -j$(nproc)
+sudo make install
+
+# Run firmware in emulator
+cd esp32_emulation/qemu_esp32s3
+qemu-system-xtensa \
+  -nographic \
+  -machine esp32s3 \
+  -drive file=firmware.bin,if=mtd,format=raw
+```
+
+**Limitations**: Peripheral emulation incomplete (RMT, UART timing may differ)
+
+#### Option 2: Renode (Full SoC Simulation)
+
+```bash
+# Install Renode
+# See: https://renode.io/
+
+# Create ESP32-S3 platform file
+renode esp32s3_stewart.repl
+
+# Run firmware
+(monitor) machine LoadPlatformDescription @esp32s3_stewart.repl
+(monitor) sysbus LoadELF @firmware.elf
+(monitor) start
+```
+
+**Advantages**:
+- Full peripheral modeling (GPIO, UART, SPI, I2C)
+- Multi-core support (ESP32-S3 dual-core)
+- Can connect virtual hardware models
+- CI/CD friendly (scriptable)
+
+#### Option 3: Wokwi (Online Simulator)
+
+**Quick prototyping**: https://wokwi.com/
+
+```bash
+# Create diagram.json for ESP32-S3
+{
+  "parts": [
+    { "type": "wokwi-esp32-s3-devkitc-1", "id": "esp" },
+    { "type": "wokwi-led", "id": "led1" }
+  ],
+  "connections": [
+    [ "esp:GPIO2", "led1:A", "green", [] ]
+  ]
+}
+```
+
+**Limitations**: Cloud-based, limited peripheral set
+
+#### Option 4: ESP-IDF Unit Tests (Host-Based)
+
+**Best for algorithm testing** (no hardware dependencies):
+
+```bash
+# In Controller/
+idf.py create-unit-test inverse_kinematics_test
+
+# main/inverse_kinematics_test.c
+#include "unity.h"
+#include "InverseKinematics.h"
+
+TEST_CASE("IK solver: surge motion", "[kinematics]") {
+    Platform platform;
+    platformInit(&platform);
+    
+    Pose pose = {.surge = 10.0, .sway = 0, .heave = 0};
+    calculateIK(&platform, &pose);
+    
+    TEST_ASSERT_FLOAT_WITHIN(0.1, expected_L1, platform.legLengths[0]);
+}
+
+# Run on host (no ESP32 required)
+idf.py test
+```
+
+**Integration with Virtual PCB**:
+
+```python
+# virtual_pcb/test_firmware_integration.py
+import subprocess
+import serial
+import pytest
+
+def test_step_pulse_width_emulated():
+    """Verify step pulses meet 5µs minimum using QEMU"""
+    # Start QEMU with firmware
+    qemu = subprocess.Popen([
+        "qemu-system-xtensa",
+        "-machine", "esp32s3",
+        "-serial", "pty",  # Create virtual serial port
+        "-drive", "file=firmware.bin,if=mtd,format=raw"
+    ], stdout=subprocess.PIPE)
+    
+    # Parse QEMU output for serial port
+    pty_line = qemu.stdout.readline().decode()
+    pty_path = pty_line.split()[-1]  # e.g., /dev/pts/3
+    
+    # Connect to virtual UART
+    ser = serial.Serial(pty_path, 115200, timeout=1)
+    
+    # Send command to firmware
+    ser.write(b"STEP_TEST\n")
+    
+    # Virtual PCB measures pulse width
+    response = ser.readline().decode()
+    pulse_width_us = float(response.split(":")[-1])
+    
+    assert pulse_width_us >= 5.0, f"Pulse too short: {pulse_width_us}µs"
+    
+    qemu.terminate()
+```
+
+#### ESP32 Emulation Workflow
+
+```mermaid
+graph LR
+    A[Write Firmware] --> B{Need Hardware?}
+    B -->|No| C[ESP-IDF Unit Tests]
+    B -->|GPIO Logic| D[Wokwi/QEMU]
+    B -->|Full System| E[Renode + Virtual PCB]
+    C --> F[idf.py test]
+    D --> G[Emulator]
+    E --> H[pytest test_virtual_pcb.py]
+    F --> I[CI/CD]
+    G --> I
+    H --> I
+```
+
+**When to Use Each Tool**:
+
+| Tool | Best For | Limitations |
+|------|----------|-------------|
+| **ESP-IDF Unit Tests** | Algorithm logic, math functions | No GPIO, no timing |
+| **Wokwi** | Quick prototyping, demos | Cloud-based, limited peripherals |
+| **QEMU** | Basic firmware testing | Incomplete peripheral models |
+| **Renode** | Full system simulation, CI/CD | Complex setup, learning curve |
+
 ## Simulation Goals
 
 ### What We Validate
@@ -106,11 +266,13 @@ pytest test_virtual_pcb.py -v
 - Crosstalk between adjacent pairs
 - Termination effectiveness
 
-✅ **Firmware Integration** (via Virtual PCB)
+✅ **Firmware Integration** (via Virtual PCB + Emulation)
 - 1000Hz update rate achievable
 - Step pulse width meets AASD-15A requirements (≥5µs)
 - Direction setup and hold times
 - E-stop detection latency
+- Inverse kinematics accuracy (host unit tests)
+- RMT timing precision (QEMU/Renode)
 
 ### What We DON'T Simulate (Yet)
 
@@ -267,6 +429,8 @@ When adding new simulations:
 
 ## Future Enhancements
 
+- [ ] **ESP32 Emulation in CI/CD** - Automated firmware testing with Renode
+- [ ] **Hardware-in-Loop (HIL)** - Real ESP32-S3 + Virtual PCB Python model
 - [ ] Thermal simulation (FEA)
 - [ ] EMI pre-compliance testing
 - [ ] PCB capacitance extraction
@@ -277,10 +441,18 @@ When adding new simulations:
 
 ## Resources
 
+### Hardware Simulation
 - **LTspice Tutorial**: https://www.analog.com/en/design-center/design-tools-and-calculators/ltspice-simulator.html
 - **KiCad SPICE Guide**: https://docs.kicad.org/7.0/en/eeschema/eeschema.html#spice-simulation
 - **Transmission Line Calculator**: https://www.eeweb.com/tools/microstrip-impedance/
 - **Signal Integrity**: "High-Speed Digital Design" by Howard Johnson
+
+### ESP32 Emulation
+- **QEMU ESP32**: https://github.com/espressif/qemu
+- **Renode**: https://renode.io/ (full SoC simulation)
+- **Wokwi**: https://wokwi.com/ (online ESP32-S3 simulator)
+- **ESP-IDF Unit Testing**: https://docs.espressif.com/projects/esp-idf/en/latest/esp32s3/api-guides/unit-tests.html
+- **Renode ESP32 Tutorial**: https://renode.readthedocs.io/en/latest/tutorials/esp32-demo.html
 
 ---
 

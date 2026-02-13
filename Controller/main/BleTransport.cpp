@@ -42,7 +42,7 @@ static uint16_t s_conn_id = 0;
 static uint16_t s_service_handle = 0;
 static uint16_t s_char_motion_handle = 0;   // writable: receives motion packets
 static uint16_t s_char_status_handle = 0;   // notify: sends status/telemetry
-static uint16_t s_char_status_cccd = 0;     // CCCD for notifications
+// (CCCD handle tracked implicitly by Bluedroid stack)
 static bool s_notify_enabled = false;
 
 // Service UUID: 42100001-0001-1000-8000-00805f9b34fb
@@ -143,15 +143,10 @@ static void gatts_event_handler(esp_gatts_cb_event_t event, esp_gatt_if_t gatts_
             esp_ble_gap_config_adv_data(&s_adv_data);
 
             // Create service
-            esp_gatt_srvc_id_t service_id = {
-                .is_primary = true,
-                .id = {
-                    .inst_id = 0,
-                    .uuid = {
-                        .len = ESP_UUID_LEN_128,
-                    },
-                },
-            };
+            esp_gatt_srvc_id_t service_id = {};
+            service_id.is_primary = true;
+            service_id.id.inst_id = 0;
+            service_id.id.uuid.len = ESP_UUID_LEN_128;
             memcpy(service_id.id.uuid.uuid.uuid128, s_service_uuid, 16);
             esp_ble_gatts_create_service(gatts_if, &service_id, GATTS_NUM_HANDLE);
             break;

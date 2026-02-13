@@ -21,9 +21,83 @@
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 
+#ifdef _WIN32
+#define GLFW_EXPOSE_NATIVE_WIN32
+#include <GLFW/glfw3native.h>
+#endif
+
 // Application
 #include "app.h"
 #include "ui_panels.h"
+
+// ── Globals for modal-loop rendering ────────────────────────────────
+static GLFWwindow* g_window = nullptr;
+static int         g_frame_counter = 0;
+static double      g_fps_timer = 0.0;
+
+// Full update + render frame (called from main loop AND modal-loop timer)
+static void doFrame() {
+    double now = glfwGetTime();
+    g_app.frame_time = now;
+    g_app.frame_count++;
+
+    g_frame_counter++;
+    if (now - g_fps_timer >= 1.0) {
+        g_app.fps = g_frame_counter / (now - g_fps_timer);
+        g_frame_counter = 0;
+        g_fps_timer = now;
+    }
+
+    g_app.update();
+
+    ImGui_ImplOpenGL3_NewFrame();
+    ImGui_ImplGlfw_NewFrame();
+    ImGui::NewFrame();
+    DrawUI();
+    ImGui::Render();
+
+    int display_w, display_h;
+    glfwGetFramebufferSize(g_window, &display_w, &display_h);
+    glViewport(0, 0, display_w, display_h);
+    glClearColor(0.06f, 0.06f, 0.08f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
+    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+    ImGuiIO& io = ImGui::GetIO();
+    if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable) {
+        GLFWwindow* backup = glfwGetCurrentContext();
+        ImGui::UpdatePlatformWindows();
+        ImGui::RenderPlatformWindowsDefault();
+        glfwMakeContextCurrent(backup);
+    }
+
+    glfwSwapBuffers(g_window);
+}
+
+// ── Win32: keep rendering during window move/resize modal loops ─────
+#ifdef _WIN32
+#define MODAL_TIMER_ID 1
+#define MODAL_TIMER_MS 16   // ~60fps
+static WNDPROC g_original_wndproc = nullptr;
+
+static LRESULT CALLBACK modalLoopWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
+    switch (msg) {
+        case WM_ENTERSIZEMOVE:
+            SetTimer(hwnd, MODAL_TIMER_ID, MODAL_TIMER_MS, nullptr);
+            break;
+        case WM_EXITSIZEMOVE:
+            KillTimer(hwnd, MODAL_TIMER_ID);
+            break;
+        case WM_TIMER:
+            if (wParam == MODAL_TIMER_ID) {
+                doFrame();
+                return 0;
+            }
+            break;
+    }
+    return CallWindowProcW(g_original_wndproc, hwnd, msg, wParam, lParam);
+}
+#endif
 
 static void glfw_error_callback(int error, const char* description) {
     fprintf(stderr, "GLFW Error %d: %s\n", error, description);
@@ -228,61 +302,23 @@ int main(int, char**) {
     printf("  OpenGL: %s\n", (const char*)glGetString(GL_VERSION));
     printf("  Renderer: %s\n", (const char*)glGetString(GL_RENDERER));
 
-    double last_time = glfwGetTime();
-    int frame_counter = 0;
-    double fps_timer = glfwGetTime();
+    // Store window globally for doFrame() and modal-loop timer
+    g_window = window;
+    g_fps_timer = glfwGetTime();
 
-    // Keep updating during window drag/resize (Windows modal message loop)
-    glfwSetWindowRefreshCallback(window, [](GLFWwindow*) {
-        g_app.frame_time = glfwGetTime();
-        g_app.update();
-    });
+#ifdef _WIN32
+    // Subclass the native HWND to intercept WM_ENTERSIZEMOVE/WM_EXITSIZEMOVE
+    // This keeps full update+render running during window drag/resize modal loops
+    {
+        HWND hwnd = glfwGetWin32Window(window);
+        g_original_wndproc = (WNDPROC)SetWindowLongPtrW(hwnd, GWLP_WNDPROC, (LONG_PTR)modalLoopWndProc);
+    }
+#endif
 
     // ── Main Loop ───────────────────────────────────────────────────
     while (!glfwWindowShouldClose(window) && g_app.running) {
         glfwPollEvents();
-
-        double now = glfwGetTime();
-        g_app.frame_time = now;
-        g_app.frame_count++;
-
-        // FPS tracking
-        frame_counter++;
-        if (now - fps_timer >= 1.0) {
-            g_app.fps = frame_counter / (now - fps_timer);
-            frame_counter = 0;
-            fps_timer = now;
-        }
-
-        // ── Pipeline Update (all entities) ──────────────────────────
-        g_app.update();
-
-        // ── Render Frame ────────────────────────────────────────────
-        ImGui_ImplOpenGL3_NewFrame();
-        ImGui_ImplGlfw_NewFrame();
-        ImGui::NewFrame();
-
-        // Draw all UI panels
-        DrawUI();
-
-        // Render
-        ImGui::Render();
-        int display_w, display_h;
-        glfwGetFramebufferSize(window, &display_w, &display_h);
-        glViewport(0, 0, display_w, display_h);
-        glClearColor(0.06f, 0.06f, 0.08f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
-        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
-        // Multi-viewport support
-        if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable) {
-            GLFWwindow* backup = glfwGetCurrentContext();
-            ImGui::UpdatePlatformWindows();
-            ImGui::RenderPlatformWindowsDefault();
-            glfwMakeContextCurrent(backup);
-        }
-
-        glfwSwapBuffers(window);
+        doFrame();
     }
 
     // ── Cleanup ─────────────────────────────────────────────────────

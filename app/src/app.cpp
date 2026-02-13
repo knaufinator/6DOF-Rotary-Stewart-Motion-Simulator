@@ -15,6 +15,7 @@
 #else
 #include <sys/socket.h>
 #include <netinet/in.h>
+#include <sys/stat.h>
 #include <unistd.h>
 #include <fcntl.h>
 #define INVALID_SOCKET -1
@@ -84,8 +85,11 @@ App::App()
     , capture_playing(false)
     , capture_play_cursor(0)
     , capture_start_time(0.0)
-    , capture_loop(true)
+    , capture_loop(false)
     , capture_speed(1.0f)
+    , capture_ramp_phase(CaptureRampPhase::Playing)
+    , capture_ramp_start(0.0)
+    , capture_stop_requested(false)
     , record_rate_hz(200)
     , test_signal_start_time(0.0)
     , input_history_head(0)
@@ -95,6 +99,7 @@ App::App()
     , settings_dirty(false)
 {
     memset(shared_input, 0, sizeof(shared_input));
+    memset(capture_last_vals, 0, sizeof(capture_last_vals));
     memset(input_history, 0, sizeof(input_history));
     memset(input_history_time, 0, sizeof(input_history_time));
     memset(input_spectrum, 0, sizeof(input_spectrum));
@@ -588,7 +593,13 @@ void App::startCapturePlayback(int idx) {
     capture_playing = true;
     capture_play_cursor = 0;
     capture_start_time = frame_time;
+    capture_stop_requested = false;
     input_source = InputSource::CapturePlayback;
+
+    // Start with ramp-in phase
+    capture_ramp_phase = CaptureRampPhase::RampIn;
+    capture_ramp_start = frame_time;
+    memset(capture_last_vals, 0, sizeof(capture_last_vals));
 
     // Diagnostic: compute data range to detect flat recordings
     auto& sr = saved_recordings[idx];
@@ -616,60 +627,174 @@ void App::startCapturePlayback(int idx) {
 }
 
 void App::stopCapturePlayback() {
+    if (!capture_playing) return;
+    // If currently playing data, initiate ramp-out instead of instant stop
+    if (capture_ramp_phase == CaptureRampPhase::RampIn ||
+        capture_ramp_phase == CaptureRampPhase::Playing) {
+        capture_stop_requested = true;
+        capture_ramp_phase = CaptureRampPhase::RampOut;
+        capture_ramp_start = frame_time;
+        // Snapshot current values for smooth blend to home
+        if (!entities.empty())
+            memcpy(capture_last_vals, entities[0].state.input_pct, sizeof(capture_last_vals));
+        log(-1, "capture", "Ramping down to home...");
+        return;
+    }
+    // Already ramping out or at home — force stop
     capture_playing = false;
+    // Zero all entities to home
+    for (auto& e : entities)
+        memset(e.state.input_pct, 0, sizeof(e.state.input_pct));
+    {
+        std::lock_guard<std::mutex> lock(input_mutex);
+        memset(shared_input, 0, sizeof(shared_input));
+    }
     log(-1, "capture", "Playback stopped");
 }
 
-void App::updateCapturePlayback() {
-    if (!capture_playing) return;
-    if (capture_playback_idx < 0 || capture_playback_idx >= (int)saved_recordings.size()) {
-        stopCapturePlayback();
-        return;
-    }
+// Smoothstep: 0→1 for t in [0,1]
+static float smoothstep01(float t) {
+    if (t <= 0.0f) return 0.0f;
+    if (t >= 1.0f) return 1.0f;
+    return t * t * (3.0f - 2.0f * t);
+}
 
-    auto& sr = saved_recordings[capture_playback_idx];
-    if (sr.samples.empty()) { stopCapturePlayback(); return; }
-
-    double elapsed = (frame_time - capture_start_time) * (double)capture_speed;
-    double dur = sr.duration();
-
-    if (elapsed >= dur) {
-        if (capture_loop) {
-            capture_start_time = frame_time;
-            elapsed = 0.0;
-            capture_play_cursor = 0;
-        } else {
-            stopCapturePlayback();
-            return;
-        }
-    }
-
-    // Advance cursor
+// Sample the recording at a given elapsed time, interpolating between samples
+static void sampleRecording(SavedRecording& sr, double elapsed, int& cursor, float out[6]) {
     auto& samples = sr.samples;
-    while (capture_play_cursor < (int)samples.size() - 1 &&
-           samples[capture_play_cursor + 1].time <= elapsed) {
-        capture_play_cursor++;
+    if (samples.empty()) { memset(out, 0, 6 * sizeof(float)); return; }
+
+    // Clamp elapsed to recording duration
+    double dur = sr.duration();
+    if (elapsed < 0.0) elapsed = 0.0;
+    if (elapsed > dur) elapsed = dur;
+
+    // Advance cursor forward
+    while (cursor < (int)samples.size() - 1 &&
+           samples[cursor + 1].time <= elapsed) {
+        cursor++;
     }
 
-    // Interpolate and write to all entities
-    int idx = capture_play_cursor;
-    float vals[6];
+    int idx = cursor;
     if (idx < (int)samples.size() - 1) {
         double t0 = samples[idx].time;
         double t1 = samples[idx + 1].time;
         float alpha = (t1 > t0) ? (float)((elapsed - t0) / (t1 - t0)) : 0.0f;
         if (alpha > 1.0f) alpha = 1.0f;
         for (int i = 0; i < 6; i++) {
-            vals[i] = samples[idx].input[i] * (1.0f - alpha) +
-                      samples[idx + 1].input[i] * alpha;
+            out[i] = samples[idx].input[i] * (1.0f - alpha) +
+                     samples[idx + 1].input[i] * alpha;
         }
     } else {
-        memcpy(vals, samples[idx].input, sizeof(vals));
+        memcpy(out, samples[idx].input, 6 * sizeof(float));
+    }
+}
+
+void App::updateCapturePlayback() {
+    if (!capture_playing) return;
+    if (capture_playback_idx < 0 || capture_playback_idx >= (int)saved_recordings.size()) {
+        capture_playing = false;
+        return;
     }
 
-    // Feed into all entities
+    auto& sr = saved_recordings[capture_playback_idx];
+    if (sr.samples.empty()) { capture_playing = false; return; }
+
+    float output[6] = {};
+    double phase_elapsed = frame_time - capture_ramp_start;
+
+    switch (capture_ramp_phase) {
+        case CaptureRampPhase::RampIn: {
+            // Ramp envelope from 0→1 over CAPTURE_RAMP_IN_S
+            float env = smoothstep01((float)(phase_elapsed / CAPTURE_RAMP_IN_S));
+
+            // Sample recording data (data clock runs during ramp-in)
+            double data_elapsed = (frame_time - capture_start_time) * (double)capture_speed;
+            float data[6];
+            sampleRecording(sr, data_elapsed, capture_play_cursor, data);
+
+            for (int i = 0; i < 6; i++)
+                output[i] = data[i] * env;
+
+            // Transition to Playing when ramp complete
+            if (phase_elapsed >= CAPTURE_RAMP_IN_S)
+                capture_ramp_phase = CaptureRampPhase::Playing;
+            break;
+        }
+
+        case CaptureRampPhase::Playing: {
+            double data_elapsed = (frame_time - capture_start_time) * (double)capture_speed;
+            double dur = sr.duration();
+
+            if (data_elapsed >= dur) {
+                // End of data — start ramp-out
+                // Snapshot last values for smooth blend
+                if (!entities.empty())
+                    memcpy(capture_last_vals, entities[0].state.input_pct, sizeof(capture_last_vals));
+                capture_ramp_phase = CaptureRampPhase::RampOut;
+                capture_ramp_start = frame_time;
+                capture_stop_requested = !capture_loop;
+                // Output the last values this frame
+                memcpy(output, capture_last_vals, sizeof(output));
+            } else {
+                sampleRecording(sr, data_elapsed, capture_play_cursor, output);
+            }
+            break;
+        }
+
+        case CaptureRampPhase::RampOut: {
+            // Ramp envelope from 1→0 over CAPTURE_RAMP_OUT_S
+            float env = 1.0f - smoothstep01((float)(phase_elapsed / CAPTURE_RAMP_OUT_S));
+
+            // Blend last data values toward home (0)
+            for (int i = 0; i < 6; i++)
+                output[i] = capture_last_vals[i] * env;
+
+            if (phase_elapsed >= CAPTURE_RAMP_OUT_S) {
+                if (capture_stop_requested) {
+                    // Done — full stop
+                    capture_playing = false;
+                    for (auto& e : entities)
+                        memset(e.state.input_pct, 0, sizeof(e.state.input_pct));
+                    {
+                        std::lock_guard<std::mutex> lock(input_mutex);
+                        memset(shared_input, 0, sizeof(shared_input));
+                    }
+                    log(-1, "capture", "Playback stopped");
+                    return;
+                } else {
+                    // Loop: hold at home briefly
+                    capture_ramp_phase = CaptureRampPhase::HomeHold;
+                    capture_ramp_start = frame_time;
+                    memset(output, 0, sizeof(output));
+                }
+            }
+            break;
+        }
+
+        case CaptureRampPhase::HomeHold: {
+            // Hold at home for CAPTURE_HOME_HOLD_S
+            memset(output, 0, sizeof(output));
+
+            if (phase_elapsed >= CAPTURE_HOME_HOLD_S) {
+                // Restart: reset data clock and cursor, ramp back in
+                capture_start_time = frame_time;
+                capture_play_cursor = 0;
+                capture_ramp_phase = CaptureRampPhase::RampIn;
+                capture_ramp_start = frame_time;
+                log(-1, "capture", "Looping playback...");
+            }
+            break;
+        }
+    }
+
+    // Feed into all entities and shared_input
     for (auto& e : entities) {
-        memcpy(e.state.input_pct, vals, sizeof(vals));
+        memcpy(e.state.input_pct, output, sizeof(output));
+    }
+    {
+        std::lock_guard<std::mutex> lock(input_mutex);
+        memcpy(shared_input, output, sizeof(output));
     }
 }
 

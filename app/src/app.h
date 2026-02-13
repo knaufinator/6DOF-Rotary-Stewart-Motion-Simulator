@@ -292,6 +292,16 @@ struct App {
     bool                  capture_loop;
     float                 capture_speed;           // playback speed multiplier (0.1 = 10%, 2.0 = 200%)
 
+    // Capture ramp state machine (prevents jarring starts/stops/loops)
+    enum class CaptureRampPhase { RampIn, Playing, RampOut, HomeHold };
+    CaptureRampPhase      capture_ramp_phase;
+    double                capture_ramp_start;      // frame_time when current ramp phase started
+    bool                  capture_stop_requested;  // true = ramp out then stop (don't loop)
+    float                 capture_last_vals[6];    // last data values before ramp-out (for smooth blend)
+    static constexpr float CAPTURE_RAMP_IN_S  = 2.0f;
+    static constexpr float CAPTURE_RAMP_OUT_S = 2.0f;
+    static constexpr float CAPTURE_HOME_HOLD_S = 1.0f;
+
     // Configurable record/playback rate
     int                   record_rate_hz;          // default 200
 

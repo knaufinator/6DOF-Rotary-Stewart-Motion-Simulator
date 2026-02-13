@@ -1122,6 +1122,7 @@ static void DrawInputPanel() {
                 double elapsed = (g_app.frame_time - g_app.capture_start_time) * (double)g_app.capture_speed;
                 double dur = sr.duration();
                 float progress = dur > 0 ? (float)(elapsed / dur) : 0.0f;
+                if (progress < 0.0f) progress = 0.0f;
                 if (progress > 1.0f) progress = 1.0f;
 
                 const char* src_icon; const char* src_label; ImVec4 src_color;
@@ -1133,8 +1134,25 @@ static void DrawInputPanel() {
                 ImGui::SetCursorScreenPos(ImVec2(cpos.x + bw + 6.0f, cpos.y));
                 ImGui::TextColored(ImVec4(0.95f, 0.75f, 0.2f, 1.0f), "Playing: %s", sr.name);
 
+                // Ramp phase indicator
+                {
+                    const char* phase_str = "";
+                    ImVec4 phase_col = ImVec4(0.5f, 0.5f, 0.5f, 1.0f);
+                    switch (g_app.capture_ramp_phase) {
+                        case App::CaptureRampPhase::RampIn:
+                            phase_str = "RAMPING IN"; phase_col = ImVec4(0.3f, 0.85f, 0.5f, 1.0f); break;
+                        case App::CaptureRampPhase::Playing:
+                            phase_str = "PLAYING"; phase_col = ImVec4(0.95f, 0.75f, 0.2f, 1.0f); break;
+                        case App::CaptureRampPhase::RampOut:
+                            phase_str = "RAMPING OUT"; phase_col = ImVec4(0.95f, 0.5f, 0.2f, 1.0f); break;
+                        case App::CaptureRampPhase::HomeHold:
+                            phase_str = "HOME (waiting)"; phase_col = ImVec4(0.5f, 0.5f, 0.8f, 1.0f); break;
+                    }
+                    ImGui::TextColored(phase_col, "%s", phase_str);
+                }
+
                 ImGui::ProgressBar(progress, ImVec2(-1, 0));
-                ImGui::Text("%.1f / %.1fs  %s", elapsed, dur, g_app.capture_loop ? "(loop)" : "");
+                ImGui::Text("%.1f / %.1fs  %s", elapsed < 0 ? 0.0 : elapsed, dur, g_app.capture_loop ? "(loop)" : "");
 
                 // Speed controls
                 ImGui::Text("Speed: %.0f%%", g_app.capture_speed * 100.0f);

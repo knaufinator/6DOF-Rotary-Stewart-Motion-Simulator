@@ -16,7 +16,7 @@ This document captures the validation status and work plan for achieving determi
 |------|--------|--------------|
 | UART hygiene | Added `debug_uart.h` macros and defaulted `debugEnabled` to `false` | `phoenix` HEAD |
 | Legacy cleanup | Removed MCP23S17 dependency and code references | `phoenix` HEAD |
-| Hardware planning | Authored servo driver interface PCB BOM & build steps | `docs/hardware/servo_driver_interface.md` |
+| Hardware planning | Single motor test plan with SN75174N RS-422 line driver | [`docs/hardware/single_motor_test_plan.md`](../hardware/single_motor_test_plan.md) |
 | **Deterministic scheduler** | **Replaced `vTaskDelayUntil(1ms)` with GPTimer 100µs ISR + task notifications** | **`phoenix` HEAD** |
 
 ## Optimization Status
@@ -62,7 +62,7 @@ This document captures the validation status and work plan for achieving determi
 
 1. **Timer upgrade smoke test** – Instrument toggled GPIO to confirm 100 µs cadence before engaging motors.
 2. **RMT stress test** – Drive synthetic trapezoidal profiles at 150 kHz step rate, log missed-step counters.
-3. **Differential interface** – Validate amplitude and common-mode baseline on all 12 lines with board connected but motors disabled.
+3. **Differential interface** – Validate SN75174N RS-422 output per [single motor test plan](../hardware/single_motor_test_plan.md). Check amplitude and common-mode baseline with motor disabled.
 4. **System-in-loop** – Replay recorded SimTools trajectory, monitor servo fault registers and watchdog timers.
 
 Maintain this roadmap alongside firmware releases. Each optimisation must include pass/fail evidence in the safety file set before promoting to production use.

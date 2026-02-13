@@ -1,0 +1,55 @@
+{
+	"simtools_port":	4123,
+	"simtools_bit_depth":	18,
+	"console_log_rate":	5,
+	"console_max":	500,
+	"console_auto_scroll":	true,
+	"record_rate_hz":	200,
+	"input_source":	2,
+	"entities":	[{
+			"name":	"SIL Default",
+			"type":	0,
+			"enabled":	true,
+			"intensity":	100,
+			"bit_depth":	12,
+			"color":	[0.37999999523162842, 0.649999976158142, 0.959999978542328, 1],
+			"axis_gain":	[100, 100, 100, 100, 100, 100],
+			"geometry":	{
+				"RD":	400.04998779296875,
+				"PD":	406.39999389648438,
+				"L1":	184.14999389648438,
+				"L2":	723.9000244140625,
+				"z_home":	648.13397216796875,
+				"theta_r":	10,
+				"theta_p":	30,
+				"encoder_ppr":	2500,
+				"virtual_gear":	80,
+				"planetary_ratio":	50
+			}
+		}, {
+			"name":	"HIL #1",
+			"type":	1,
+			"enabled":	true,
+			"intensity":	100,
+			"bit_depth":	12,
+			"color":	[0.20000000298023224, 0.82999998331069946, 0.600000023841858, 1],
+			"axis_gain":	[100, 100, 100, 100, 100, 100],
+			"geometry":	{
+				"RD":	400.04998779296875,
+				"PD":	406.39999389648438,
+				"L1":	184.14999389648438,
+				"L2":	723.9000244140625,
+				"z_home":	648.13397216796875,
+				"theta_r":	10,
+				"theta_p":	30,
+				"encoder_ppr":	2500,
+				"virtual_gear":	80,
+				"planetary_ratio":	50
+			},
+			"hil":	{
+				"port":	"COM3",
+				"tx_hz":	60,
+				"auto_connect":	true
+			}
+		}]
+}

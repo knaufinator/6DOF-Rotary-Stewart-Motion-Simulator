@@ -71,6 +71,34 @@ jobs:
           fi
           echo "✓ KiCad schematic file is valid S-expression format"
 
+  signal-integrity-validation:
+    name: Validate Signal Integrity Calculations
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install test dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest numpy
+
+      - name: Run signal integrity tests
+        run: |
+          pytest hardware/tests/test_signal_integrity.py -v
+
+      - name: Validate RS-422 differential impedance
+        run: |
+          # Run the calculator and check it passes for 120Ω ±10%
+          python hardware/simulation/signal_integrity/differential_pair.py --width 0.25 --gap 0.25 --target 120
+          echo "✓ RS-422 differential impedance within specification"
+
   bom-validation:
     name: Validate Bill of Materials
     runs-on: ubuntu-latest

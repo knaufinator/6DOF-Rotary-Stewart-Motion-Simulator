@@ -27,8 +27,23 @@
 #define DIR_PIN_6 17
 #define ESTOP_PIN 20
 
+// W5500 SPI Ethernet pins (active when ENABLE_ETHERNET is defined)
+#ifdef SPI3_HOST
+#define ETH_SPI_HOST   SPI3_HOST
+#endif
+#ifndef ETH_SPI_HOST
+#define ETH_SPI_HOST   2
+#endif
+#define ETH_SPI_MOSI   35
+#define ETH_SPI_MISO   37
+#define ETH_SPI_SCLK   36
+#define ETH_SPI_CS     38
+#define ETH_SPI_INT    39
+#define ETH_SPI_CLOCK_MHZ 20
+#define ETH_UDP_PORT   4210
+
 // Timing constants
-#define MICRO_INTERVAL_FAST 100    // 100 microseconds = 10kHz update rate
+#define MICRO_INTERVAL_FAST 50     // 50 microseconds = 20kHz update rate
 #define MICRO_INTERVAL_SLOW 1000   // 1ms = 1kHz update rate
 #define ESTOPDEBOUNCETIME 50       // 50ms debounce time
 #define ESTOP_CHECK_INTERVAL_MS 10 // Check E-stop every 10ms
@@ -44,41 +59,8 @@
 // E-stop configuration
 #define ESTOP_ACTIVE_STATE 0       // E-stop is active when pin is LOW (normally closed)
 
-// Motor Constants
-#define INV1 0  // Counter-clockwise motors
-#define INV2 2
-#define INV3 4
-
-// Platform Configuration
-static float theta_r = 10;
-static float theta_s[6]={150,-90,30, 150,-90,30};
-static float theta_p = 30;
-static float RD = 15.75;
-static float PD = 16;
-static float ServoArmLengthL1 = 7.25;
-static float ConnectingArmLengthL2 = 28.5;
-static float platformHeight = 25.5170749;
-
-// Servo Configuration
-static const float servo_min_rad = radians(-60);  // -60 degrees
-static const float servo_max_rad = radians(60);   // +60 degrees
-static float servoPulseMultiplierPerRadian = 800/(pi/4);  // Calibrated pulses per radian
-
-// Motor step configuration
-#define STEPS_PER_DEGREE 100.0f    // Number of motor steps per degree of rotation
-
 // Helper function declarations
 float mapfloat(float x, float in_min, float in_max, float out_min, float out_max);
 float rateLimit(float target, float current);
-float getAlpha(int i, volatile float arr[]);
-
-//used to hold current status of a motor
-struct acServo {
-    int stepPin;
-    int dirPin;
-    bool pinState;
-    long currentpos;
-    long targetpos;  
-};
 
 #endif // HELPERS_H

@@ -1,0 +1,11 @@
+[{
+		"name":	"Capture",
+		"sample_rate_hz":	200,
+		"created_time":	1770929722,
+		"source":	"capture"
+	}, {
+		"name":	"Capture",
+		"sample_rate_hz":	200,
+		"created_time":	1770938251,
+		"source":	"manual"
+	}]

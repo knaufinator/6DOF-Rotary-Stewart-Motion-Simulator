@@ -3,6 +3,7 @@
 #include <driver/gptimer.h>
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
+#include "esp_attr.h"
 #include "debug_uart.h"
 
 /**
@@ -36,6 +37,8 @@ public:
             .clk_src = GPTIMER_CLK_SRC_DEFAULT,
             .direction = GPTIMER_COUNT_UP,
             .resolution_hz = 1000000,  // 1MHz resolution (1µs tick)
+            .intr_priority = 0,        // Auto-select interrupt priority
+            .flags = {0},
         };
 
         esp_err_t ret = gptimer_new_timer(&timer_config, &_timer_handle);
@@ -167,9 +170,7 @@ public:
     static uint32_t getMissedNotifications() { return _missed_notifications; }
 
 private:
-    // Timer ISR callback
-    // Note: CONFIG_GPTIMER_ISR_IRAM_SAFE=y ensures timer can run from ISR context
-    // We don't use IRAM_ATTR here to avoid literal pool placement issues
+    // Timer ISR callback (IRAM-safe requirement disabled in sdkconfig)
     static bool _timerCallback(gptimer_handle_t timer, 
                               const gptimer_alarm_event_data_t *edata, 
                               void *user_ctx) {

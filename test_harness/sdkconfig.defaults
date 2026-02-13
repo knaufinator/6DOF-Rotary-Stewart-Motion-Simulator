@@ -1,0 +1,19 @@
+# Step/Dir Analyzer — ESP32-S3 sdkconfig defaults
+CONFIG_IDF_TARGET="esp32s3"
+
+# Console: UART primary + USB secondary (same approach as controller firmware)
+CONFIG_ESP_CONSOLE_UART_DEFAULT=y
+CONFIG_ESP_CONSOLE_SECONDARY_USB_SERIAL_JTAG=y
+
+# CPU: 240 MHz for fast ISR response
+CONFIG_ESP_DEFAULT_CPU_FREQ_MHZ_240=y
+
+# FreeRTOS tick rate
+CONFIG_FREERTOS_HZ=1000
+
+# Larger main task stack for printf
+CONFIG_ESP_MAIN_TASK_STACK_SIZE=8192
+
+# Disable watchdog on idle tasks (ISR-heavy workload)
+CONFIG_ESP_TASK_WDT_CHECK_IDLE_TASK_CPU0=n
+CONFIG_ESP_TASK_WDT_CHECK_IDLE_TASK_CPU1=n

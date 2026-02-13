@@ -232,6 +232,12 @@ int main(int, char**) {
     int frame_counter = 0;
     double fps_timer = glfwGetTime();
 
+    // Keep updating during window drag/resize (Windows modal message loop)
+    glfwSetWindowRefreshCallback(window, [](GLFWwindow*) {
+        g_app.frame_time = glfwGetTime();
+        g_app.update();
+    });
+
     // ── Main Loop ───────────────────────────────────────────────────
     while (!glfwWindowShouldClose(window) && g_app.running) {
         glfwPollEvents();

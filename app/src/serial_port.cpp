@@ -142,13 +142,14 @@ bool SerialPort::open(const char* port, int baud) {
         return false;
     }
 
-    // Set timeouts: short read timeout so reader thread stays responsive
+    // Set timeouts: very short read timeout so writer thread can interleave
+    // (synchronous handle — read and write serialize, so read must release fast)
     COMMTIMEOUTS timeouts = {};
-    timeouts.ReadIntervalTimeout = 10;
+    timeouts.ReadIntervalTimeout = MAXDWORD;
     timeouts.ReadTotalTimeoutMultiplier = 0;
-    timeouts.ReadTotalTimeoutConstant = 50;
-    timeouts.WriteTotalTimeoutMultiplier = 10;
-    timeouts.WriteTotalTimeoutConstant = 100;
+    timeouts.ReadTotalTimeoutConstant = 1;
+    timeouts.WriteTotalTimeoutMultiplier = 0;
+    timeouts.WriteTotalTimeoutConstant = 50;
     SetCommTimeouts(H(), &timeouts);
 
     // Purge buffers
@@ -165,6 +166,12 @@ bool SerialPort::open(const char* port, int baud) {
     m_reader_stop.store(false);
     m_reader = std::thread(&SerialPort::readerThread, this);
 
+    // Start writer thread
+    m_writer_stop.store(false);
+    m_write_pending.clear();
+    m_write_pending.reserve(256);
+    m_writer = std::thread(&SerialPort::writerThread, this);
+
     return true;
 #else
     return false;
@@ -174,7 +181,10 @@ bool SerialPort::open(const char* port, int baud) {
 void SerialPort::close() {
     m_open.store(false);
     m_reader_stop.store(true);
+    m_writer_stop.store(true);
+    m_write_cv.notify_all();
     if (m_reader.joinable()) m_reader.join();
+    if (m_writer.joinable()) m_writer.join();
 
 #ifdef _WIN32
     if (H() != INVALID_HANDLE_VALUE) {
@@ -184,16 +194,25 @@ void SerialPort::close() {
 #endif
 }
 
-// ── Write ────────────────────────────────────────────────────────────
+// ── Write (async queue — never blocks caller) ─────────────────────────────────
 
 bool SerialPort::write(const uint8_t* data, int len) {
     if (!m_open.load()) return false;
+    {
+        std::lock_guard<std::mutex> lock(m_write_mutex);
+        m_write_pending.insert(m_write_pending.end(), data, data + len);
+    }
+    m_write_cv.notify_one();
+    return true;
+}
 
+bool SerialPort::rawWrite(const uint8_t* data, int len) {
+    if (!m_open.load()) return false;
 #ifdef _WIN32
     if (H() == INVALID_HANDLE_VALUE) { m_open.store(false); return false; }
     DWORD written = 0;
     if (!WriteFile(H(), data, len, &written, nullptr)) {
-        m_open.store(false);  // signal connection lost
+        m_open.store(false);
         return false;
     }
     m_tx_bytes.fetch_add((int)written);
@@ -201,6 +220,24 @@ bool SerialPort::write(const uint8_t* data, int len) {
 #else
     return false;
 #endif
+}
+
+void SerialPort::writerThread() {
+    std::vector<uint8_t> buf;
+    buf.reserve(256);
+    while (!m_writer_stop.load()) {
+        {
+            std::unique_lock<std::mutex> lock(m_write_mutex);
+            m_write_cv.wait_for(lock, std::chrono::milliseconds(50),
+                [this]{ return !m_write_pending.empty() || m_writer_stop.load(); });
+            if (m_writer_stop.load()) break;
+            buf.swap(m_write_pending);
+        }
+        if (!buf.empty()) {
+            rawWrite(buf.data(), (int)buf.size());
+            buf.clear();
+        }
+    }
 }
 
 bool SerialPort::sendMotionPacket(const uint16_t raw[6]) {
@@ -219,6 +256,14 @@ bool SerialPort::sendMotionPacket(const uint16_t raw[6]) {
     pkt[14] = xor_check;
 
     return write(pkt, 15);
+}
+
+bool SerialPort::sendMotionCSV(const uint16_t raw[6]) {
+    // CSV protocol: "<v0>,<v1>,<v2>,<v3>,<v4>,<v5>X" (Mini-6DOF / legacy)
+    char buf[64];
+    int n = snprintf(buf, sizeof(buf), "%u,%u,%u,%u,%u,%uX",
+                     raw[0], raw[1], raw[2], raw[3], raw[4], raw[5]);
+    return write((const uint8_t*)buf, n);
 }
 
 bool SerialPort::sendCommand(const char* cmd) {
@@ -259,7 +304,10 @@ void SerialPort::readerThread() {
             continue;
         }
 
-        if (bytesRead == 0) continue;
+        if (bytesRead == 0) {
+            Sleep(1);  // yield CPU when no data available
+            continue;
+        }
         m_rx_bytes.fetch_add((int)bytesRead);
 
         // Parse incoming bytes into lines
@@ -269,7 +317,19 @@ void SerialPort::readerThread() {
                 if (line_pos > 0) {
                     line_buf[line_pos] = '\0';
                     parseLine(line_buf);
-                    if (m_line_cb) m_line_cb(line_buf);
+                    if (m_line_cb) {
+                        // Rate-limit non-telemetry line callback to avoid flooding console
+                        bool is_tel = (strncmp(line_buf, "TEL,", 4) == 0);
+                        if (is_tel) {
+                            m_line_cb(line_buf);
+                        } else {
+                            double t = now_seconds();
+                            if (t - m_last_line_cb_time >= 0.1) {  // max 10 lines/sec
+                                m_last_line_cb_time = t;
+                                m_line_cb(line_buf);
+                            }
+                        }
+                    }
                     line_pos = 0;
                 }
             } else {

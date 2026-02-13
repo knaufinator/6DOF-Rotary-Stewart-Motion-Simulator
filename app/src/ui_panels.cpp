@@ -252,6 +252,16 @@ static void DrawEntityCard(Entity& e) {
 
         DrawPlatformViz(dl, p, ImVec2(avail.x, viz_h), e, e.viz_cam, viz_hovered, viz_active);
 
+        // Telemetry override indicator
+        if (e.type == EntityType::HIL && e.hil_tel_active) {
+            const char* label = "TELEMETRY OVERRIDE";
+            ImVec2 ts = ImGui::CalcTextSize(label);
+            ImVec2 tp(p.x + avail.x - ts.x - 6.0f, p.y + 4.0f);
+            dl->AddRectFilled(ImVec2(tp.x - 3, tp.y - 1), ImVec2(tp.x + ts.x + 3, tp.y + ts.y + 1),
+                              IM_COL32(0, 0, 0, 160), 3.0f);
+            dl->AddText(tp, IM_COL32(255, 60, 60, 255), label);
+        }
+
         // Entity color border
         dl->AddRect(p, ImVec2(p.x + avail.x, p.y + viz_h),
                     IM_COL32((int)(col.x*255), (int)(col.y*255), (int)(col.z*255), 80));
@@ -600,7 +610,8 @@ static void DrawEntitySettings(Entity& e) {
 
                 // Read-only transport settings (locked while connected)
                 ImGui::Spacing();
-                ImGui::TextDisabled("TX Rate: %d Hz  |  Bit Depth: %d", e.hil_tx_hz, e.config.bit_depth);
+                ImGui::TextDisabled("TX Rate: %d Hz  |  Bit Depth: %d  |  %s", e.hil_tx_hz, e.config.bit_depth,
+                    e.hil_protocol == HilProtocol::CSV ? "CSV" : "Binary");
                 if (ImGui::IsItemHovered()) {
                     ImGui::SetTooltip("Disconnect to change TX rate or bit depth.\n"
                         "These are locked during an active session to\n"
@@ -680,6 +691,17 @@ static void DrawEntitySettings(Entity& e) {
 
                     ImGui::Spacing();
                     ImGui::Text("Transport Settings");
+
+                    const char* proto_labels[] = { "Binary (15-byte)", "CSV (legacy)" };
+                    int proto_idx = (int)e.hil_protocol;
+                    if (ImGui::Combo("Protocol##dc", &proto_idx, proto_labels, 2)) {
+                        e.hil_protocol = (HilProtocol)proto_idx;
+                    }
+                    if (ImGui::IsItemHovered()) {
+                        ImGui::SetTooltip("Binary: 15-byte framed packet (big platform Controller firmware)\n"
+                            "CSV: comma-separated values + 'X' terminator (Mini-6DOF / legacy)");
+                    }
+
                     ImGui::SliderInt("TX Rate (Hz)##dc", &e.hil_tx_hz, 10, 1000);
                     if (ImGui::IsItemHovered()) {
                         ImGui::SetTooltip("How often motion packets are sent to the ESP32.\n"
@@ -818,6 +840,9 @@ static void DrawDynamics(Entity& e) {
     ImGui::PopID();
 }
 
+// ── Manual slider state (file-scope so GetSourceStatus can read it) ───
+static float s_manual_input[6] = {};
+
 // ── Input Source Card Definitions ─────────────────────────────────────
 
 struct InputSourceDef {
@@ -845,13 +870,10 @@ static int InputSourceIndex(InputSource s) {
 // Build a one-line status string for a given source
 static void GetSourceStatus(InputSource id, char* buf, int buf_sz) {
     switch (id) {
-        case InputSource::Manual:
-            if (!g_app.entities.empty()) {
+        case InputSource::Manual: {
                 float mx = 0;
-                for (int i = 0; i < 6; i++) mx = fmaxf(mx, fabsf(g_app.entities[0].state.input_pct[i]));
+                for (int i = 0; i < 6; i++) mx = fmaxf(mx, fabsf(s_manual_input[i]));
                 snprintf(buf, buf_sz, "6 axes  |  peak %.0f%%", mx);
-            } else {
-                snprintf(buf, buf_sz, "6 axes  |  no entity");
             }
             break;
         case InputSource::SimToolsUDP:
@@ -1017,18 +1039,17 @@ static void DrawInputPanel() {
 
         // ── Manual ──
         if (g_app.input_source == InputSource::Manual) {
-            static float manual_input[6] = {};
             bool changed = false;
             for (int i = 0; i < 6; i++) {
-                changed |= ImGui::SliderFloat(axis_labels[i], &manual_input[i], -100.0f, 100.0f, "%.0f%%");
+                changed |= ImGui::SliderFloat(axis_labels[i], &s_manual_input[i], -100.0f, 100.0f, "%.0f%%");
             }
             if (ImGui::Button("Home All")) {
-                memset(manual_input, 0, sizeof(manual_input));
+                memset(s_manual_input, 0, sizeof(s_manual_input));
                 changed = true;
             }
             if (changed && !g_app.capture_playing) {
                 for (auto& e : g_app.entities) {
-                    memcpy(e.state.input_pct, manual_input, sizeof(manual_input));
+                    memcpy(e.state.input_pct, s_manual_input, sizeof(s_manual_input));
                 }
             }
 
@@ -1338,25 +1359,41 @@ static void DrawInputPanel() {
             ImGui::Spacing();
             ImGui::Separator();
 
-            // Quick presets
+            // Staged editing buffer — sliders/presets never touch live config directly
+            static float s_freq[6]  = {1,1,1,1,1,1};
+            static float s_amp[6]   = {50,50,50,50,50,50};
+            static float s_phase[6] = {};
+            static bool  s_axis_en[6] = {true,true,true,true,true,true};
+            static bool  s_synced = false;
+
+            // Sync staging from live config on first frame
+            if (!s_synced) {
+                memcpy(s_freq,    ts.frequency,    sizeof(s_freq));
+                memcpy(s_amp,     ts.amplitude,    sizeof(s_amp));
+                memcpy(s_phase,   ts.phase_offset, sizeof(s_phase));
+                memcpy(s_axis_en, ts.axis_enabled, sizeof(s_axis_en));
+                s_synced = true;
+            }
+
+            // Quick presets (write to staging)
             ImGui::Text("Quick:");
             ImGui::SameLine();
             if (ImGui::SmallButton("All 1 Hz")) {
-                for (int i = 0; i < 6; i++) { ts.frequency[i] = 1.0f; ts.amplitude[i] = 50.0f; ts.phase_offset[i] = 0.0f; ts.axis_enabled[i] = true; }
+                for (int i = 0; i < 6; i++) { s_freq[i] = 1.0f; s_amp[i] = 50.0f; s_phase[i] = 0.0f; s_axis_en[i] = true; }
             }
             ImGui::SameLine();
             if (ImGui::SmallButton("Sweep")) {
-                float freqs[] = {0.5f, 1.0f, 2.0f, 3.0f, 5.0f, 8.0f};
-                for (int i = 0; i < 6; i++) { ts.frequency[i] = freqs[i]; ts.amplitude[i] = 50.0f; ts.phase_offset[i] = 0.0f; ts.axis_enabled[i] = true; }
+                float freqs[] = {0.5f, 0.75f, 1.0f, 1.25f, 1.5f, 2.0f};
+                for (int i = 0; i < 6; i++) { s_freq[i] = freqs[i]; s_amp[i] = 50.0f; s_phase[i] = 0.0f; s_axis_en[i] = true; }
             }
             ImGui::SameLine();
             if (ImGui::SmallButton("Heave Only")) {
-                for (int i = 0; i < 6; i++) { ts.axis_enabled[i] = false; ts.phase_offset[i] = 0.0f; }
-                ts.axis_enabled[2] = true; ts.frequency[2] = 1.0f; ts.amplitude[2] = 80.0f;
+                for (int i = 0; i < 6; i++) { s_axis_en[i] = false; s_phase[i] = 0.0f; }
+                s_axis_en[2] = true; s_freq[2] = 1.0f; s_amp[2] = 80.0f;
             }
             ImGui::SameLine();
             if (ImGui::SmallButton("Phased")) {
-                for (int i = 0; i < 6; i++) { ts.frequency[i] = 1.0f; ts.amplitude[i] = 50.0f; ts.phase_offset[i] = i * 60.0f; ts.axis_enabled[i] = true; }
+                for (int i = 0; i < 6; i++) { s_freq[i] = 1.0f; s_amp[i] = 50.0f; s_phase[i] = i * 60.0f; s_axis_en[i] = true; }
             }
 
             // Saved presets
@@ -1370,12 +1407,10 @@ static void DrawInputPanel() {
                     auto& p = g_app.test_signal_presets[pi];
                     if (pi > 0) ImGui::SameLine();
                     if (ImGui::SmallButton(p.name)) {
-                        ts.frequency[0] = p.config.frequency[0]; ts.frequency[1] = p.config.frequency[1];
-                        ts.frequency[2] = p.config.frequency[2]; ts.frequency[3] = p.config.frequency[3];
-                        ts.frequency[4] = p.config.frequency[4]; ts.frequency[5] = p.config.frequency[5];
-                        memcpy(ts.amplitude, p.config.amplitude, sizeof(ts.amplitude));
-                        memcpy(ts.phase_offset, p.config.phase_offset, sizeof(ts.phase_offset));
-                        memcpy(ts.axis_enabled, p.config.axis_enabled, sizeof(ts.axis_enabled));
+                        memcpy(s_freq,    p.config.frequency,    sizeof(s_freq));
+                        memcpy(s_amp,     p.config.amplitude,    sizeof(s_amp));
+                        memcpy(s_phase,   p.config.phase_offset, sizeof(s_phase));
+                        memcpy(s_axis_en, p.config.axis_enabled, sizeof(s_axis_en));
                         ts.ramp_up = p.config.ramp_up;
                         ts.ramp_duration = p.config.ramp_duration;
                     }
@@ -1417,6 +1452,29 @@ static void DrawInputPanel() {
 
             ImGui::Spacing();
 
+            // Detect if staged differs from live
+            bool pending = false;
+            for (int i = 0; i < 6; i++) {
+                if (s_freq[i] != ts.frequency[i] || s_amp[i] != ts.amplitude[i]
+                    || s_phase[i] != ts.phase_offset[i] || s_axis_en[i] != ts.axis_enabled[i])
+                { pending = true; break; }
+            }
+
+            // SET button — applies staged values to live config
+            if (pending) {
+                ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.2f, 0.7f, 0.3f, 1.0f));
+                ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.3f, 0.85f, 0.4f, 1.0f));
+            }
+            if (ImGui::Button(pending ? "SET *" : "SET", ImVec2(-1, 0))) {
+                memcpy(ts.frequency,    s_freq,    sizeof(ts.frequency));
+                memcpy(ts.amplitude,    s_amp,     sizeof(ts.amplitude));
+                memcpy(ts.phase_offset, s_phase,   sizeof(ts.phase_offset));
+                memcpy(ts.axis_enabled, s_axis_en, sizeof(ts.axis_enabled));
+            }
+            if (pending) ImGui::PopStyleColor(2);
+
+            ImGui::Spacing();
+
             // Per-axis table
             if (ImGui::BeginTable("##ts_axes", 5, ImGuiTableFlags_Borders | ImGuiTableFlags_RowBg | ImGuiTableFlags_SizingStretchProp)) {
                 ImGui::TableSetupColumn("Axis",       ImGuiTableColumnFlags_WidthFixed, 60);
@@ -1434,28 +1492,27 @@ static void DrawInputPanel() {
                     ImGui::TableNextRow();
                     ImGui::PushID(i);
                     ImGui::TableNextColumn(); ImGui::Text("%s", axis_labels[i]);
-                    ImGui::TableNextColumn(); ImGui::SetNextItemWidth(-1); ImGui::DragFloat("##freq", &ts.frequency[i], 0.1f, 0.01f, 100.0f, "%.2f");
-                    ImGui::TableNextColumn(); ImGui::SetNextItemWidth(-1); ImGui::DragFloat("##amp", &ts.amplitude[i], 1.0f, 0.0f, 100.0f, "%.0f");
+                    ImGui::TableNextColumn(); ImGui::SetNextItemWidth(-1); ImGui::DragFloat("##freq", &s_freq[i], 0.01f, 0.01f, 2.0f, "%.2f");
+                    ImGui::TableNextColumn(); ImGui::SetNextItemWidth(-1); ImGui::DragFloat("##amp", &s_amp[i], 1.0f, 0.0f, 100.0f, "%.0f");
                     ImGui::TableNextColumn();
                     {
-                        // Phase dropdown
                         int sel = -1;
                         for (int p = 0; p < n_phases; p++) {
-                            if (fabsf(ts.phase_offset[i] - phase_values[p]) < 0.5f) { sel = p; break; }
+                            if (fabsf(s_phase[i] - phase_values[p]) < 0.5f) { sel = p; break; }
                         }
                         char preview[16];
-                        snprintf(preview, sizeof(preview), "%.0f\xc2\xb0", ts.phase_offset[i]);
+                        snprintf(preview, sizeof(preview), "%.0f\xc2\xb0", s_phase[i]);
                         ImGui::SetNextItemWidth(-1);
                         if (ImGui::BeginCombo("##phase", preview, ImGuiComboFlags_NoArrowButton)) {
                             for (int p = 0; p < n_phases; p++) {
                                 char lbl[16];
                                 snprintf(lbl, sizeof(lbl), "%s\xc2\xb0", phase_presets[p]);
-                                if (ImGui::Selectable(lbl, p == sel)) ts.phase_offset[i] = phase_values[p];
+                                if (ImGui::Selectable(lbl, p == sel)) s_phase[i] = phase_values[p];
                             }
                             ImGui::EndCombo();
                         }
                     }
-                    ImGui::TableNextColumn(); ImGui::Checkbox("##en", &ts.axis_enabled[i]);
+                    ImGui::TableNextColumn(); ImGui::Checkbox("##en", &s_axis_en[i]);
                     ImGui::PopID();
                 }
                 ImGui::EndTable();

@@ -15,6 +15,7 @@
 #include <thread>
 #include <mutex>
 #include <atomic>
+#include <condition_variable>
 
 // Parsed telemetry from ESP32
 struct ESP32Telemetry {
@@ -49,6 +50,9 @@ public:
     // Send a binary motion packet (0xAA 0x55 framing, 6 × uint16 LE + XOR checksum)
     bool sendMotionPacket(const uint16_t raw[6]);
 
+    // Send a CSV motion packet: "<v0>,<v1>,<v2>,<v3>,<v4>,<v5>X" (Mini-6DOF / legacy)
+    bool sendMotionCSV(const uint16_t raw[6]);
+
     // Send a text command (appends 'X' terminator for ESP32 ASCII protocol)
     bool sendCommand(const char* cmd);
 
@@ -68,13 +72,22 @@ public:
 
 private:
     void readerThread();
+    void writerThread();
     void parseLine(const char* line);
+    bool rawWrite(const uint8_t* data, int len);  // actual blocking WriteFile
 
     void* m_handle;  // HANDLE on Windows (INVALID_HANDLE_VALUE = -1)
     char m_port_name[32] = {};
     std::atomic<bool> m_open{false};
     std::thread m_reader;
+    std::thread m_writer;
     std::atomic<bool> m_reader_stop{false};
+    std::atomic<bool> m_writer_stop{false};
+
+    // Async write queue
+    std::mutex m_write_mutex;
+    std::condition_variable m_write_cv;
+    std::vector<uint8_t> m_write_pending;  // main thread appends here
 
     mutable std::mutex m_tel_mutex;
     ESP32Telemetry m_telemetry = {};
@@ -88,4 +101,5 @@ private:
     int m_tel_time_idx = 0;
 
     LineCallback m_line_cb;
+    double m_last_line_cb_time = 0.0;
 };

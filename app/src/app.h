@@ -84,6 +84,10 @@ struct VizCamera {
     float distance;     // distance from target (mm), 0 = auto
 };
 
+// ── HIL Protocol ────────────────────────────────────────────────────
+
+enum class HilProtocol { Binary, CSV };
+
 // ── Entity ──────────────────────────────────────────────────────────
 
 struct Entity {
@@ -110,9 +114,12 @@ struct Entity {
     int             hil_tx_hz;           // target motion packet send rate
     double          hil_last_tx_time;    // last binary packet send time
     int             hil_tel_seq;         // last processed telemetry seq
+    bool            hil_tel_active;      // true when ESP32 telemetry is overriding local IK
     char            hil_port[32];        // selected COM port name
     bool            hil_auto_connect;    // try to reconnect if disconnected
     double          hil_last_reconnect;  // last reconnect attempt time
+    HilProtocol     hil_protocol;        // Binary (big platform) or CSV (Mini-6DOF)
+    uint16_t        hil_tx_raw[6];       // latest raw packet for background TX thread
 
     // Time-series history ring buffers (for comparison charts)
     float           history_angles[6][HISTORY_LEN];   // servo angles over time (deg)
@@ -347,6 +354,11 @@ struct App {
     void    saveSettings();
     void    loadSettings();
     bool    settings_dirty;    // set true when any setting changes, checked each frame
+
+    // Background HIL TX thread (runs independently of UI frame rate)
+    std::thread       hil_tx_thread;
+    std::atomic<bool> hil_tx_stop{false};
+    void              hilTxLoop();
 };
 
 // Global app instance

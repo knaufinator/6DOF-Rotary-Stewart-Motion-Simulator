@@ -99,6 +99,10 @@ App::App()
     memset(input_history_time, 0, sizeof(input_history_time));
     memset(input_spectrum, 0, sizeof(input_spectrum));
 
+    // Start background HIL TX thread
+    hil_tx_stop.store(false);
+    hil_tx_thread = std::thread(&App::hilTxLoop, this);
+
 #ifdef _WIN32
     WSADATA wsa;
     WSAStartup(MAKEWORD(2, 2), &wsa);
@@ -106,10 +110,100 @@ App::App()
 }
 
 App::~App() {
+    hil_tx_stop.store(true);
+    if (hil_tx_thread.joinable()) hil_tx_thread.join();
     stopUdpListener();
 #ifdef _WIN32
     WSACleanup();
 #endif
+}
+
+void App::hilTxLoop() {
+    using clock = std::chrono::steady_clock;
+    double last_send[8] = {};
+    double ts_start = 0.0;        // steady_clock time when test signal started
+    double ts_last_tick = 0.0;    // last tick time for phase accumulation
+    double phase_accum[6] = {};   // accumulated phase per axis (radians)
+    bool   ts_was_on = false;
+    auto now_sec = []() -> double {
+        return std::chrono::duration<double>(clock::now().time_since_epoch()).count();
+    };
+
+    while (!hil_tx_stop.load()) {
+        bool ts_on = (input_source == InputSource::TestSignal && test_signal.enabled);
+        double now = now_sec();
+        if (ts_on && !ts_was_on) {
+            ts_start = now;
+            ts_last_tick = now;
+            for (int i = 0; i < 6; i++) phase_accum[i] = 0.0;
+        }
+        ts_was_on = ts_on;
+
+        int ei = 0;
+        for (auto& e : entities) {
+            if (ei >= 8) break;
+            if (e.type != EntityType::HIL || !e.serial || !e.serial->isOpen()) { ei++; continue; }
+
+            double interval = 1.0 / (double)e.hil_tx_hz;
+            now = now_sec();
+            if (now - last_send[ei] >= interval) {
+                last_send[ei] = now;
+                uint16_t raw[6];
+
+                if (ts_on) {
+                    // Phase accumulation: advance phase by freq*dt each tick
+                    // This ensures frequency changes cause smooth transitions
+                    double dt = now - ts_last_tick;
+                    ts_last_tick = now;
+                    double t = now - ts_start;
+
+                    float envelope = 1.0f;
+                    if (test_signal.ramp_up && test_signal.ramp_duration > 0.0f) {
+                        float r = (float)(t / (double)test_signal.ramp_duration);
+                        if (r < 1.0f) envelope = r * r * (3.0f - 2.0f * r);
+                    }
+                    float pct[6] = {};
+                    for (int i = 0; i < 6; i++) {
+                        if (!test_signal.axis_enabled[i]) continue;
+                        float freq  = test_signal.active_freq[i];
+                        float amp   = test_signal.active_amp[i];
+                        float phase = test_signal.active_phase[i] * (float)(M_PI / 180.0);
+                        // Accumulate phase: smooth when freq changes
+                        phase_accum[i] += 2.0 * M_PI * freq * dt;
+                        double angle = phase_accum[i] + phase;
+                        float v = 0.0f;
+                        switch (test_signal.waveform) {
+                            case WaveformType::Sine:     v = (float)sin(angle); break;
+                            case WaveformType::Square:   v = (float)(fmod(angle, 2.0*M_PI) < M_PI ? 1.0 : -1.0); break;
+                            case WaveformType::Triangle: v = (float)(2.0/M_PI * asin(sin(angle))); break;
+                            case WaveformType::Sawtooth: v = (float)(2.0*(angle/(2.0*M_PI) - floor(0.5 + angle/(2.0*M_PI)))); break;
+                        }
+                        pct[i] = v * amp * envelope;
+                    }
+                    // Apply entity scaling and convert to raw
+                    float max_raw = (float)((1 << e.config.bit_depth) - 2);
+                    float home = max_raw * 0.5f;
+                    float intens = e.config.intensity / 100.0f;
+                    for (int i = 0; i < 6; i++) {
+                        float scaled = pct[i] * intens * (e.config.axis_gain[i] / 100.0f);
+                        float r = (scaled / 100.0f) * home + home;
+                        if (r < 0.0f) r = 0.0f;
+                        if (r > max_raw) r = max_raw;
+                        raw[i] = (uint16_t)(r + 0.5f);
+                    }
+                } else {
+                    memcpy(raw, e.hil_tx_raw, sizeof(raw));
+                }
+
+                if (e.hil_protocol == HilProtocol::CSV)
+                    e.serial->sendMotionCSV(raw);
+                else
+                    e.serial->sendMotionPacket(raw);
+            }
+            ei++;
+        }
+        std::this_thread::sleep_for(std::chrono::microseconds(500));
+    }
 }
 
 static const char* SETTINGS_FILE = "stewart_settings.json";
@@ -148,6 +242,7 @@ static void saveEntityToJSON(cJSON* ej, const Entity& e) {
         cJSON_AddStringToObject(hil, "port", e.hil_port);
         cJSON_AddNumberToObject(hil, "tx_hz", e.hil_tx_hz);
         cJSON_AddBoolToObject(hil, "auto_connect", e.hil_auto_connect);
+        cJSON_AddNumberToObject(hil, "protocol", (int)e.hil_protocol);
     }
 }
 
@@ -194,6 +289,7 @@ static void loadEntityFromJSON(Entity& e, cJSON* ej) {
         if ((val = cJSON_GetObjectItem(hil, "port")))  snprintf(e.hil_port, sizeof(e.hil_port), "%s", val->valuestring);
         if ((val = cJSON_GetObjectItem(hil, "tx_hz"))) e.hil_tx_hz = val->valueint;
         if ((val = cJSON_GetObjectItem(hil, "auto_connect"))) e.hil_auto_connect = cJSON_IsTrue(val);
+        if ((val = cJSON_GetObjectItem(hil, "protocol"))) e.hil_protocol = (HilProtocol)val->valueint;
     }
 }
 
@@ -214,6 +310,26 @@ void App::saveSettings() {
 
     // Input source
     cJSON_AddNumberToObject(root, "input_source", (int)input_source);
+
+    // Test signal
+    {
+        cJSON* ts = cJSON_AddObjectToObject(root, "test_signal");
+        cJSON_AddNumberToObject(ts, "waveform", (int)test_signal.waveform);
+        cJSON_AddBoolToObject(ts, "ramp_up", test_signal.ramp_up);
+        cJSON_AddNumberToObject(ts, "ramp_duration", test_signal.ramp_duration);
+        cJSON_AddBoolToObject(ts, "smooth_changes", test_signal.smooth_changes);
+        cJSON_AddNumberToObject(ts, "smooth_rate", test_signal.smooth_rate);
+        cJSON* freq = cJSON_AddArrayToObject(ts, "frequency");
+        cJSON* amp  = cJSON_AddArrayToObject(ts, "amplitude");
+        cJSON* phase = cJSON_AddArrayToObject(ts, "phase_offset");
+        cJSON* aen  = cJSON_AddArrayToObject(ts, "axis_enabled");
+        for (int i = 0; i < 6; i++) {
+            cJSON_AddItemToArray(freq, cJSON_CreateNumber(test_signal.frequency[i]));
+            cJSON_AddItemToArray(amp, cJSON_CreateNumber(test_signal.amplitude[i]));
+            cJSON_AddItemToArray(phase, cJSON_CreateNumber(test_signal.phase_offset[i]));
+            cJSON_AddItemToArray(aen, cJSON_CreateBool(test_signal.axis_enabled[i]));
+        }
+    }
 
     // Entities — full serialization
     cJSON* ents = cJSON_AddArrayToObject(root, "entities");
@@ -274,6 +390,26 @@ void App::loadSettings() {
             input_source = (InputSource)src;
     }
 
+    // Test signal
+    cJSON* ts = cJSON_GetObjectItem(root, "test_signal");
+    if (ts) {
+        if ((val = cJSON_GetObjectItem(ts, "waveform")))       test_signal.waveform = (WaveformType)val->valueint;
+        if ((val = cJSON_GetObjectItem(ts, "ramp_up")))        test_signal.ramp_up = cJSON_IsTrue(val);
+        if ((val = cJSON_GetObjectItem(ts, "ramp_duration")))  test_signal.ramp_duration = (float)val->valuedouble;
+        if ((val = cJSON_GetObjectItem(ts, "smooth_changes"))) test_signal.smooth_changes = cJSON_IsTrue(val);
+        if ((val = cJSON_GetObjectItem(ts, "smooth_rate")))    test_signal.smooth_rate = (float)val->valuedouble;
+        cJSON* freq = cJSON_GetObjectItem(ts, "frequency");
+        cJSON* amp  = cJSON_GetObjectItem(ts, "amplitude");
+        cJSON* phase = cJSON_GetObjectItem(ts, "phase_offset");
+        cJSON* aen  = cJSON_GetObjectItem(ts, "axis_enabled");
+        for (int i = 0; i < 6; i++) {
+            if (freq && i < cJSON_GetArraySize(freq)) test_signal.frequency[i] = (float)cJSON_GetArrayItem(freq, i)->valuedouble;
+            if (amp && i < cJSON_GetArraySize(amp))   test_signal.amplitude[i] = (float)cJSON_GetArrayItem(amp, i)->valuedouble;
+            if (phase && i < cJSON_GetArraySize(phase)) test_signal.phase_offset[i] = (float)cJSON_GetArrayItem(phase, i)->valuedouble;
+            if (aen && i < cJSON_GetArraySize(aen))   test_signal.axis_enabled[i] = cJSON_IsTrue(cJSON_GetArrayItem(aen, i));
+        }
+    }
+
     // Entities — clear and recreate from saved data
     cJSON* ents = cJSON_GetObjectItem(root, "entities");
     if (ents && cJSON_IsArray(ents) && cJSON_GetArraySize(ents) > 0) {
@@ -329,6 +465,9 @@ Entity& App::addEntity(const char* name, EntityType type) {
     memset(e.hil_port, 0, sizeof(e.hil_port));
     e.hil_auto_connect = true;
     e.hil_last_reconnect = 0.0;
+    e.hil_protocol = HilProtocol::Binary;
+    // Init TX raw to center (home) so platform doesn't jerk on connect
+    for (int i = 0; i < 6; i++) e.hil_tx_raw[i] = (uint16_t)(((1 << e.config.bit_depth) - 2) / 2);
     // Init history ring buffers
     memset(e.history_angles, 0, sizeof(e.history_angles));
     memset(e.history_input, 0, sizeof(e.history_input));
@@ -978,64 +1117,76 @@ void App::update() {
     }
 
     // Handle test signal generator — writes to entity input_pct
-    if (input_source == InputSource::TestSignal && test_signal.enabled) {
-        double t = frame_time - test_signal_start_time;
-
-        // S-curve ramp envelope: smoothstep (3t^2 - 2t^3) over ramp_duration
-        float envelope = 1.0f;
-        if (test_signal.ramp_up && test_signal.ramp_duration > 0.0f) {
-            float r = (float)(t / (double)test_signal.ramp_duration);
-            if (r < 1.0f) { envelope = r * r * (3.0f - 2.0f * r); }
+    {
+        static double ui_phase_accum[6] = {};
+        static double ui_last_frame = 0.0;
+        static bool   ui_ts_was_on = false;
+        bool ts_active = (input_source == InputSource::TestSignal && test_signal.enabled);
+        if (ts_active && !ui_ts_was_on) {
+            for (int i = 0; i < 6; i++) ui_phase_accum[i] = 0.0;
+            ui_last_frame = frame_time;
         }
+        ui_ts_was_on = ts_active;
+        if (ts_active) {
+            double t = frame_time - test_signal_start_time;
+            double dt = (ui_last_frame > 0.0) ? (frame_time - ui_last_frame) : 0.0;
+            if (dt < 0.0 || dt > 0.1) dt = 0.0;
+            ui_last_frame = frame_time;
 
-        // Smooth interpolation of parameters toward targets
-        if (test_signal.smooth_changes) {
-            float dt_f = (fps > 0.0) ? (float)(1.0 / fps) : (1.0f / 60.0f);
-            float alpha = 1.0f - expf(-test_signal.smooth_rate * dt_f);
+            float envelope = 1.0f;
+            if (test_signal.ramp_up && test_signal.ramp_duration > 0.0f) {
+                float r = (float)(t / (double)test_signal.ramp_duration);
+                if (r < 1.0f) { envelope = r * r * (3.0f - 2.0f * r); }
+            }
+
+            if (test_signal.smooth_changes) {
+                float dt_f = (fps > 0.0) ? (float)(1.0 / fps) : (1.0f / 60.0f);
+                float alpha = 1.0f - expf(-test_signal.smooth_rate * dt_f);
+                for (int i = 0; i < 6; i++) {
+                    test_signal.active_freq[i]  += (test_signal.frequency[i]     - test_signal.active_freq[i])  * alpha;
+                    test_signal.active_amp[i]   += (test_signal.amplitude[i]     - test_signal.active_amp[i])   * alpha;
+                    test_signal.active_phase[i] += (test_signal.phase_offset[i]  - test_signal.active_phase[i]) * alpha;
+                }
+            } else {
+                for (int i = 0; i < 6; i++) {
+                    test_signal.active_freq[i]  = test_signal.frequency[i];
+                    test_signal.active_amp[i]   = test_signal.amplitude[i];
+                    test_signal.active_phase[i] = test_signal.phase_offset[i];
+                }
+            }
+
+            float sig[6] = {};
             for (int i = 0; i < 6; i++) {
-                test_signal.active_freq[i]  += (test_signal.frequency[i]     - test_signal.active_freq[i])  * alpha;
-                test_signal.active_amp[i]   += (test_signal.amplitude[i]     - test_signal.active_amp[i])   * alpha;
-                test_signal.active_phase[i] += (test_signal.phase_offset[i]  - test_signal.active_phase[i]) * alpha;
+                if (!test_signal.axis_enabled[i]) continue;
+                float freq = test_signal.active_freq[i];
+                float amp  = test_signal.active_amp[i];
+                float phase = test_signal.active_phase[i] * (float)(M_PI / 180.0);
+                ui_phase_accum[i] += 2.0 * M_PI * freq * dt;
+                double angle = ui_phase_accum[i] + phase;
+                float v = 0.0f;
+                switch (test_signal.waveform) {
+                    case WaveformType::Sine:
+                        v = (float)sin(angle);
+                        break;
+                    case WaveformType::Square:
+                        v = (float)(fmod(angle, 2.0 * M_PI) < M_PI ? 1.0 : -1.0);
+                        break;
+                    case WaveformType::Triangle:
+                        v = (float)(2.0 / M_PI * asin(sin(angle)));
+                        break;
+                    case WaveformType::Sawtooth:
+                        v = (float)(2.0 * (angle / (2.0 * M_PI) - floor(0.5 + angle / (2.0 * M_PI))));
+                        break;
+                }
+                sig[i] = v * amp * envelope;
             }
-        } else {
-            for (int i = 0; i < 6; i++) {
-                test_signal.active_freq[i]  = test_signal.frequency[i];
-                test_signal.active_amp[i]   = test_signal.amplitude[i];
-                test_signal.active_phase[i] = test_signal.phase_offset[i];
+            for (auto& e : entities) {
+                memcpy(e.state.input_pct, sig, sizeof(sig));
             }
-        }
-
-        float sig[6] = {};
-        for (int i = 0; i < 6; i++) {
-            if (!test_signal.axis_enabled[i]) continue;
-            float freq = test_signal.active_freq[i];
-            float amp  = test_signal.active_amp[i];
-            float phase = test_signal.active_phase[i] * (float)(M_PI / 180.0);
-            double angle = 2.0 * M_PI * freq * t + phase;
-            float v = 0.0f;
-            switch (test_signal.waveform) {
-                case WaveformType::Sine:
-                    v = (float)sin(angle);
-                    break;
-                case WaveformType::Square:
-                    v = (float)(fmod(angle, 2.0 * M_PI) < M_PI ? 1.0 : -1.0);
-                    break;
-                case WaveformType::Triangle:
-                    v = (float)(2.0 / M_PI * asin(sin(angle)));
-                    break;
-                case WaveformType::Sawtooth:
-                    v = (float)(2.0 * (angle / (2.0 * M_PI) - floor(0.5 + angle / (2.0 * M_PI))));
-                    break;
+            {
+                std::lock_guard<std::mutex> lock(input_mutex);
+                memcpy(shared_input, sig, sizeof(sig));
             }
-            sig[i] = v * amp * envelope;
-        }
-        // Write to all entities and shared_input
-        for (auto& e : entities) {
-            memcpy(e.state.input_pct, sig, sizeof(sig));
-        }
-        {
-            std::lock_guard<std::mutex> lock(input_mutex);
-            memcpy(shared_input, sig, sizeof(sig));
         }
     }
 
@@ -1249,14 +1400,8 @@ void App::update() {
 
             // ── HIL Pipeline: send to ESP32, use telemetry for angles ──
             if (e.serial && e.serial->isOpen()) {
-                // Send binary motion packet at configured rate
-                double tx_interval = 1.0 / (double)e.hil_tx_hz;
-                if (frame_time - e.hil_last_tx_time >= tx_interval) {
-                    e.hil_last_tx_time = frame_time;
-
-                    // Convert scaled_pct (-100..+100) to raw uint16 for ESP32
-                    // ESP32 mapRawToPosition: pos = (raw - home) * (scale / home)
-                    // So: raw = scaled_pct/100 * home + home
+                // Update raw packet every frame — background TX thread sends at hil_tx_hz
+                {
                     float max_raw = (float)((1 << e.config.bit_depth) - 2);
                     float home = max_raw * 0.5f;
                     uint16_t raw[6];
@@ -1266,23 +1411,45 @@ void App::update() {
                         if (r > max_raw) r = max_raw;
                         raw[i] = (uint16_t)(r + 0.5f);
                     }
-                    e.serial->sendMotionPacket(raw);
+                    memcpy(e.hil_tx_raw, raw, sizeof(raw));
                 }
 
-                // Compute input_physical so viz platform top matches what we sent
-                for (int i = 0; i < 6; i++) {
-                    float p = (scaled_pct[i] / 100.0f) * e.config.axis_scales.scale[i];
-                    if (e.config.axis_scales.is_angle[i])
-                        p *= (float)(M_PI / 180.0);
-                    e.state.input_physical[i] = p;
+                // Compute input_physical and local IK for visualization
+                {
+                    float physical[6];
+                    for (int i = 0; i < 6; i++) {
+                        physical[i] = (scaled_pct[i] / 100.0f) * e.config.axis_scales.scale[i];
+                        if (e.config.axis_scales.is_angle[i])
+                            physical[i] *= (float)(M_PI / 180.0);
+                    }
+                    memcpy(e.state.input_physical, physical, sizeof(physical));
+
+                    // Local IK — always compute as baseline for arm visualization
+                    float angles[6];
+                    calcAllActuatorAngles(physical, &e.config.platform, angles);
+                    int valid_mask = validatePositionV2(physical, &e.config.platform);
+                    memcpy(e.state.output_angles, angles, sizeof(angles));
+
+                    float max_util = 0.0f;
+                    float range = e.config.platform.servo_max_rad - e.config.platform.servo_min_rad;
+                    for (int i = 0; i < 6; i++) {
+                        e.state.output_angles_deg[i] = angles[i] * (180.0f / (float)M_PI);
+                        e.state.output_steps[i] = e.state.output_angles_deg[i] * e.config.platform.steps_per_degree;
+                        float util = fabsf(angles[i]) / (range * 0.5f) * 100.0f;
+                        if (util > 100.0f) util = 100.0f;
+                        e.state.servo_util[i] = util;
+                        if (util > max_util) max_util = util;
+                    }
+                    e.state.max_util = max_util;
+                    e.state.valid_mask = valid_mask;
+                    e.state.ik_seq++;
                 }
 
-                // Read telemetry from ESP32
+                // If ESP32 sends telemetry, override local IK with real angles
                 ESP32Telemetry tel = e.serial->getLatestTelemetry();
+                e.hil_tel_active = (tel.seq != 0 && e.rate_tel_hz > 0.0f);
                 if (tel.seq != e.hil_tel_seq) {
                     e.hil_tel_seq = tel.seq;
-
-                    // Use ESP32's computed angles for visualization
                     memcpy(e.state.output_angles, tel.angles, sizeof(tel.angles));
 
                     float max_util = 0.0f;
@@ -1357,6 +1524,16 @@ void App::update() {
         static char   s_hil_port[8][32] = {};
         static int    s_hil_tx_hz[8] = {};
         static bool   s_hil_auto[8] = {};
+        static int    s_hil_proto[8] = {};
+        static int    s_ts_waveform = -1;
+        static float  s_ts_freq[6] = {};
+        static float  s_ts_amp[6] = {};
+        static float  s_ts_phase[6] = {};
+        static bool   s_ts_axis_en[6] = {};
+        static bool   s_ts_ramp = false;
+        static float  s_ts_ramp_dur = 0;
+        static bool   s_ts_smooth = false;
+        static float  s_ts_smooth_rate = 0;
         static bool   s_inited = false;
 
         auto snapshot_matches = [&]() -> bool {
@@ -1368,6 +1545,17 @@ void App::update() {
             if (s_rec_rate != record_rate_hz) return false;
             if (s_input_source != (int)input_source) return false;
             if (s_entity_count != (int)entities.size()) return false;
+            if (s_ts_waveform != (int)test_signal.waveform) return false;
+            if (s_ts_ramp != test_signal.ramp_up) return false;
+            if (s_ts_ramp_dur != test_signal.ramp_duration) return false;
+            if (s_ts_smooth != test_signal.smooth_changes) return false;
+            if (s_ts_smooth_rate != test_signal.smooth_rate) return false;
+            for (int i = 0; i < 6; i++) {
+                if (s_ts_freq[i] != test_signal.frequency[i]) return false;
+                if (s_ts_amp[i] != test_signal.amplitude[i]) return false;
+                if (s_ts_phase[i] != test_signal.phase_offset[i]) return false;
+                if (s_ts_axis_en[i] != test_signal.axis_enabled[i]) return false;
+            }
             for (int ei = 0; ei < (int)entities.size() && ei < 8; ei++) {
                 if (s_intensity[ei] != entities[ei].config.intensity) return false;
                 if (s_bit_depth[ei] != entities[ei].config.bit_depth) return false;
@@ -1378,6 +1566,7 @@ void App::update() {
                     if (strcmp(s_hil_port[ei], entities[ei].hil_port) != 0) return false;
                     if (s_hil_tx_hz[ei] != entities[ei].hil_tx_hz) return false;
                     if (s_hil_auto[ei] != entities[ei].hil_auto_connect) return false;
+                    if (s_hil_proto[ei] != (int)entities[ei].hil_protocol) return false;
                 }
             }
             return true;
@@ -1391,6 +1580,17 @@ void App::update() {
             s_autoscroll = console_auto_scroll;
             s_rec_rate = record_rate_hz;
             s_input_source = (int)input_source;
+            s_ts_waveform = (int)test_signal.waveform;
+            s_ts_ramp = test_signal.ramp_up;
+            s_ts_ramp_dur = test_signal.ramp_duration;
+            s_ts_smooth = test_signal.smooth_changes;
+            s_ts_smooth_rate = test_signal.smooth_rate;
+            for (int i = 0; i < 6; i++) {
+                s_ts_freq[i] = test_signal.frequency[i];
+                s_ts_amp[i] = test_signal.amplitude[i];
+                s_ts_phase[i] = test_signal.phase_offset[i];
+                s_ts_axis_en[i] = test_signal.axis_enabled[i];
+            }
             s_entity_count = (int)entities.size();
             for (int ei = 0; ei < (int)entities.size() && ei < 8; ei++) {
                 s_intensity[ei] = entities[ei].config.intensity;
@@ -1401,6 +1601,7 @@ void App::update() {
                     snprintf(s_hil_port[ei], sizeof(s_hil_port[ei]), "%s", entities[ei].hil_port);
                     s_hil_tx_hz[ei] = entities[ei].hil_tx_hz;
                     s_hil_auto[ei] = entities[ei].hil_auto_connect;
+                    s_hil_proto[ei] = (int)entities[ei].hil_protocol;
                 }
             }
         };

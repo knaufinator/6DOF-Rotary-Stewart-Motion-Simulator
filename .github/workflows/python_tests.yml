@@ -1,44 +1,31 @@
-name: Python Visualization Tests
+name: Desktop App Build Test
 
 on:
   workflow_dispatch:
-    inputs:
-      description:
-        description: 'Manually trigger Python visualization tests'
-        required: false
 
 jobs:
-  test:
+  build:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest]
-        python-version: ['3.8', '3.9', '3.10']
 
     steps:
-    - uses: actions/checkout@v3
-    
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v4
-      with:
-        python-version: ${{ matrix.python-version }}
-        
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r visualization/requirements.txt
-        
-    - name: Build C extension
-      run: |
-        cd Controller
-        python setup.py build_ext --inplace
-        
-    - name: Run Python tests
-      run: |
-        cd visualization
-        python -m pytest tests/
-        
-    - name: Test visualization imports
-      run: |
-        cd visualization
-        python -c "from stewart_visualizer import StewartPlatform; from inverse_kinematics import InverseKinematics"
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: 'recursive'
+
+      - name: Install Linux dependencies
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake build-essential libgl1-mesa-dev \
+            libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev \
+            libxext-dev libwayland-dev libxkbcommon-dev
+
+      - name: Configure CMake
+        run: cmake -S app -B app/build -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build
+        run: cmake --build app/build --config Release

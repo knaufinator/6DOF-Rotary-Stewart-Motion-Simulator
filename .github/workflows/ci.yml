@@ -109,30 +109,45 @@ jobs:
             partition-table-*.bin
           retention-days: 90
 
-  python-tests:
-    name: Run Visualization Tests
-    runs-on: ubuntu-latest
+  desktop-app-build:
+    name: Build Desktop App (CMake)
+    needs: version
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          submodules: 'recursive'
 
-      - name: Install dependencies
+      - name: Install Linux dependencies
+        if: runner.os == 'Linux'
         run: |
-          python -m pip install --upgrade pip
-          pip install numpy pytest
+          sudo apt-get update
+          sudo apt-get install -y cmake build-essential libgl1-mesa-dev \
+            libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev \
+            libxext-dev libwayland-dev libxkbcommon-dev
 
-      - name: Run pytest suite
-        run: pytest visualization/tests
+      - name: Configure CMake
+        run: cmake -S app -B app/build -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build
+        run: cmake --build app/build --config Release
+
+      - name: Upload desktop app artifact (Windows)
+        if: runner.os == 'Windows'
+        uses: actions/upload-artifact@v4
+        with:
+          name: desktop-app-windows-${{ needs.version.outputs.version }}
+          path: app/build/Release/stewart-platform.exe
+          retention-days: 90
 
   create-release:
     name: Create GitHub Release
-    needs: [version, firmware-build, python-tests]
+    needs: [version, firmware-build, desktop-app-build]
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -147,6 +162,12 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: firmware-${{ needs.version.outputs.version }}
+
+      - name: Download desktop app artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: desktop-app-windows-${{ needs.version.outputs.version }}
+        continue-on-error: true
 
       - name: Generate changelog
         id: changelog
@@ -229,5 +250,6 @@ jobs:
             firmware-*.elf
             bootloader-*.bin
             partition-table-*.bin
+            stewart-platform.exe
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

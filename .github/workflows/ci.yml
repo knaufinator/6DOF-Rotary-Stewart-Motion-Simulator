@@ -112,10 +112,7 @@ jobs:
   desktop-app-build:
     name: Build Desktop App (CMake)
     needs: version
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest]
+    runs-on: windows-latest
 
     steps:
       - name: Checkout repository
@@ -123,22 +120,13 @@ jobs:
         with:
           submodules: 'recursive'
 
-      - name: Install Linux dependencies
-        if: runner.os == 'Linux'
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y cmake build-essential libgl1-mesa-dev \
-            libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev \
-            libxext-dev libwayland-dev libxkbcommon-dev
-
       - name: Configure CMake
         run: cmake -S app -B app/build -DCMAKE_BUILD_TYPE=Release
 
       - name: Build
         run: cmake --build app/build --config Release
 
-      - name: Upload desktop app artifact (Windows)
-        if: runner.os == 'Windows'
+      - name: Upload desktop app artifact
         uses: actions/upload-artifact@v4
         with:
           name: desktop-app-windows-${{ needs.version.outputs.version }}

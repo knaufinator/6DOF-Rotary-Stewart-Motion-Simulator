@@ -1994,6 +1994,7 @@ void App::stopUdpListener() {
 
 // ── Assetto Corsa Shared Memory ──────────────────────────────────────
 
+#ifdef _WIN32
 static const char* AC_SHARED_MEM_PHYSICS = "Local\\acpmf_physics";
 
 static void ACListenerThread(App* app) {
@@ -2207,6 +2208,14 @@ void App::stopAssettoCorsaListener() {
     memset(shared_input, 0, sizeof(shared_input));
     log(-1, "ac", "Assetto Corsa listener stopped (rx: %d)", ac.packets_received.load());
 }
+#else
+// Assetto Corsa shared memory is Windows-only
+bool App::startAssettoCorsaListener() {
+    log(-1, "ac", "Assetto Corsa shared memory not available on this platform");
+    return false;
+}
+void App::stopAssettoCorsaListener() {}
+#endif
 
 // ── Source Switch Ramp-to-Home ───────────────────────────────────────
 
@@ -2468,6 +2477,8 @@ void App::update() {
         memcpy(current_input, shared_input, sizeof(current_input));
     }
 
+    // Block scope: everything here can be safely skipped by goto skip_input_processing
+    {
     // Console input logging (user-controlled rate via console_log_rate)
     // Only log when the selected source is actually active/connected
     bool source_active = true;
@@ -2544,6 +2555,7 @@ void App::update() {
             }
         }
     }
+    } // end block scope (skippable by goto)
 
 skip_input_processing:
     // Run pipeline for each enabled entity

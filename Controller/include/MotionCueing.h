@@ -8,7 +8,7 @@ extern "C" {
 #endif
 
 /* ── Schema version — bump when struct layout changes ────────────── */
-#define MCA_SCHEMA_VERSION  2
+#define MCA_SCHEMA_VERSION  5
 #define MCA_NVS_KEY         "mca_cfg"
 #define MCA_NVS_NAMESPACE   "mca"
 
@@ -37,16 +37,42 @@ typedef struct {
     int   lp_enabled;         /* 1 = LP active                            */
 } AxisChannelFilter;
 
+/* ── Pre-MCA Input Filter (per-axis LP + notch) ───────────────────── */
+
+typedef struct {
+    BiquadFilter lp;          /* low-pass: remove high-freq noise/jitter  */
+    BiquadFilter notch;       /* notch: remove specific resonance freq    */
+    int   lp_enabled;         /* 1 = LP active                            */
+    int   notch_enabled;      /* 1 = notch active                         */
+} InputAxisFilter;
+
+typedef struct {
+    InputAxisFilter axes[6];
+    int   enabled;            /* master enable for input filtering         */
+    float sample_rate;        /* Hz — kept in sync with MCA sample rate    */
+} InputFilterConfig;
+
 /* ── Tilt Coordination ─────────────────────────────────────────────── */
 
 typedef struct {
     BiquadFilter surge_lp;    /* LP filter: sustained surge -> pitch      */
     BiquadFilter sway_lp;     /* LP filter: sustained sway  -> roll       */
+    BiquadFilter surge_hp;    /* HP washout: tilt pitch returns to center */
+    BiquadFilter sway_hp;     /* HP washout: tilt roll returns to center  */
     float surge_gain;         /* rad per unit of sustained surge          */
     float sway_gain;          /* rad per unit of sustained sway           */
     float fc;                 /* LP cutoff for tilt filters               */
     float Q;                  /* LP Q for tilt filters                    */
+    float hp_fc;              /* surge HP washout cutoff (Hz)             */
+    float hp_Q;               /* surge HP washout Q                       */
+    int   hp_enabled;         /* legacy: 1 = both active (compat)         */
     int   enabled;
+    /* Independent per-channel HP washout (v5) */
+    int   surge_hp_enabled;   /* 1 = surge->pitch HP washout active       */
+    int   sway_hp_enabled;    /* 1 = sway->roll HP washout active         */
+    float sway_hp_fc;         /* sway HP washout cutoff (Hz)              */
+    float sway_hp_Q;          /* sway HP washout Q                        */
+    int   hp_linked;          /* 1 = sway mirrors surge fc/Q              */
 } TiltCoordination;
 
 /* ── Motion Cueing Presets ─────────────────────────────────────────── */
@@ -84,6 +110,16 @@ void initMotionCueing(MotionCueingConfig* cfg, float sample_rate);
 void setMotionCueingPreset(MotionCueingConfig* cfg, int preset);
 void resetMotionCueing(MotionCueingConfig* cfg);
 void processMotionCueing(MotionCueingConfig* cfg, const float in[6], float out[6]);
+
+/* ── Input Filter API ─────────────────────────────────────────────── */
+
+void initInputFilter(InputFilterConfig* cfg, float sample_rate);
+void resetInputFilter(InputFilterConfig* cfg);
+void processInputFilter(InputFilterConfig* cfg, const float in[6], float out[6]);
+void inputFilterUpdateSampleRate(InputFilterConfig* cfg, float new_sr);
+
+/* Biquad notch filter design */
+void biquadSetNotch(BiquadFilter* f, float fc, float fs, float Q);
 
 /* Preset name lookup (returns static string) */
 const char* mcaPresetName(int preset);

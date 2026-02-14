@@ -15,6 +15,7 @@
 #include "freertos/task.h"
 #include "freertos/semphr.h"
 #include "esp_system.h"
+#include "esp_mac.h"
 #include "esp_log.h"
 #include "esp_timer.h"
 #include "driver/gpio.h"
@@ -457,21 +458,14 @@ void applyMotionValues(float values[6]) {
 //         filter chain, applyMotionValues() rate limiter → setPos() pipeline,
 //         full data path from USB RX → IK → MCPWM at ~30-60 Hz packet rate
 void send_telemetry(const float angles[6]) {
-    // ASCII telemetry — binary 0xBB/0xCC sync desynchronizes when float
-    // bytes collide with sync pattern. Text is robust over USB Serial JTAG.
+    // ASCII telemetry over USB Serial JTAG.
     // Format: TEL,a1..a6,p1..p6  (angles in radians, then input positions)
-    // Positions allow the dashboard to verify ESP32 IK input→output correctness.
-    char buf[256];
-    int n = snprintf(buf, sizeof(buf),
-        "TEL,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f\n",
+    // Uses serial_printf (printf + fflush) which is proven reliable on VFS.
+    serial_printf("TEL,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f\r\n",
         (double)angles[0], (double)angles[1], (double)angles[2],
         (double)angles[3], (double)angles[4], (double)angles[5],
         (double)arr[0], (double)arr[1], (double)arr[2],
         (double)arr[3], (double)arr[4], (double)arr[5]);
-    if (n > 0)
-        fwrite(buf, 1, n < (int)sizeof(buf) ? n : (int)sizeof(buf) - 1, stdout);
-    // No fflush here — the periodic outputDebugData() flush at 10Hz
-    // will push telemetry out. Avoids blocking on USB FIFO.
 }
 
 void process_binary_packet(const uint8_t *payload) {
@@ -787,10 +781,23 @@ void process_data(char * data) {
         return;
     }
 
-    // ── VERSION? — Report firmware version ────────────────────────────
+    // ── VERSION? — Report firmware version + protocol version ─────────
     if (strcmp(data, "VERSION?") == 0) {
-        serial_printf("VERSION:%s,date=%s,time=%s\r\n",
-            FW_VERSION_STRING, FW_BUILD_DATE, FW_BUILD_TIME);
+        serial_printf("VERSION:%s,proto=%d,date=%s,time=%s\r\n",
+            FW_VERSION_STRING, FW_PROTOCOL_VERSION, FW_BUILD_DATE, FW_BUILD_TIME);
+        return;
+    }
+
+    // ── FINGERPRINT? — Unique device identity for handshake ──────────
+    // Returns MAC-based device fingerprint + firmware/protocol versions.
+    // The app stores this on first connect and verifies on reconnect to
+    // prevent accidentally sending settings meant for a different ESP32.
+    if (strcmp(data, "FINGERPRINT?") == 0) {
+        uint8_t mac[6];
+        esp_efuse_mac_get_default(mac);
+        serial_printf("FINGERPRINT:%02X%02X%02X%02X%02X%02X,fw=%s,proto=%d\r\n",
+            mac[0], mac[1], mac[2], mac[3], mac[4], mac[5],
+            FW_VERSION_STRING, FW_PROTOCOL_VERSION);
         return;
     }
 
@@ -1192,23 +1199,17 @@ void outputDebugData() {
     // Caller (InterfaceMonitorTask) already throttles at DEBUG_OUTPUT_INTERVAL (10Hz).
     // Telemetry is always sent (dashboard needs ESP32's IK angles for arm viz).
     // Debug text is only sent when debugEnabled.
-    // Single fflush at the end pushes everything in one go.
 
-    // Binary telemetry: 27-byte packet with servo angles (always)
+    // ASCII telemetry with servo angles (always, uses serial_printf which flushes)
     send_telemetry((const float*)lastServoAngles);
 
     // Text debug line (only when enabled)
     if (debugEnabled) {
-        char buf[256];
-        int n = snprintf(buf, sizeof(buf), "DEBUG,%lld,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f\n",
+        serial_printf("DEBUG,%lld,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f\r\n",
             (long long)micros(),
             (double)arr[0], (double)arr[1], (double)arr[2],
             (double)arr[3], (double)arr[4], (double)arr[5]);
-        if (n > 0)
-            fwrite(buf, 1, n < (int)sizeof(buf) ? n : (int)sizeof(buf) - 1, stdout);
     }
-
-    fflush(stdout);  // single flush pushes telemetry + debug text
 }
 
 // ESP-IDF entry point (replaces Arduino setup/loop)

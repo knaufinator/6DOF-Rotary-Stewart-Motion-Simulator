@@ -319,8 +319,14 @@ void SerialPort::readerThread() {
                     parseLine(line_buf);
                     if (m_line_cb) {
                         // Rate-limit non-telemetry line callback to avoid flooding console
+                        // but ALWAYS forward handshake-critical lines immediately
                         bool is_tel = (strncmp(line_buf, "TEL,", 4) == 0);
-                        if (is_tel) {
+                        bool is_handshake = (strncmp(line_buf, "FINGERPRINT:", 12) == 0 ||
+                                             strncmp(line_buf, "CONFIG:", 7) == 0 ||
+                                             strncmp(line_buf, "SERVO:", 6) == 0 ||
+                                             strncmp(line_buf, "BITS:", 5) == 0 ||
+                                             strncmp(line_buf, "VERSION:", 8) == 0);
+                        if (is_tel || is_handshake) {
                             m_line_cb(line_buf);
                         } else {
                             double t = now_seconds();

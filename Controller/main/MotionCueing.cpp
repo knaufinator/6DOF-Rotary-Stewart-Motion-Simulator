@@ -70,6 +70,76 @@ void biquadSetLowpass(BiquadFilter* f, float fc, float fs, float Q) {
     f->a2 = (1.0f - alpha)         / a0;
 }
 
+void biquadSetNotch(BiquadFilter* f, float fc, float fs, float Q) {
+    f->fc = fc;
+    f->Q  = Q;
+    if (fc <= 0.0f || fs <= 0.0f || fc >= fs * 0.499f || Q <= 0.0f) {
+        f->b0 = 1.0f; f->b1 = 0.0f; f->b2 = 0.0f;
+        f->a1 = 0.0f; f->a2 = 0.0f;
+        return;
+    }
+    float omega = 2.0f * (float)M_PI * fc / fs;
+    float sinw  = sinf(omega);
+    float cosw  = cosf(omega);
+    float alpha = sinw / (2.0f * Q);
+    float a0    = 1.0f + alpha;
+    f->b0 = 1.0f             / a0;
+    f->b1 = (-2.0f * cosw)   / a0;
+    f->b2 = 1.0f             / a0;
+    f->a1 = (-2.0f * cosw)   / a0;
+    f->a2 = (1.0f - alpha)   / a0;
+}
+
+/* ── Input Filter (pre-MCA signal conditioning) ──────────────────── */
+
+void initInputFilter(InputFilterConfig* cfg, float sample_rate) {
+    memset(cfg, 0, sizeof(*cfg));
+    cfg->sample_rate = sample_rate;
+    cfg->enabled = 0;
+    for (int i = 0; i < 6; i++) {
+        cfg->axes[i].lp_enabled = 0;
+        cfg->axes[i].notch_enabled = 0;
+        cfg->axes[i].lp.fc = 20.0f;
+        cfg->axes[i].lp.Q  = 0.707f;
+        cfg->axes[i].notch.fc = 0.0f;
+        cfg->axes[i].notch.Q  = 5.0f;
+    }
+}
+
+void resetInputFilter(InputFilterConfig* cfg) {
+    for (int i = 0; i < 6; i++) {
+        biquadReset(&cfg->axes[i].lp);
+        biquadReset(&cfg->axes[i].notch);
+    }
+}
+
+void processInputFilter(InputFilterConfig* cfg, const float in[6], float out[6]) {
+    if (!cfg->enabled) {
+        for (int i = 0; i < 6; i++)
+            out[i] = in[i];
+        return;
+    }
+    for (int i = 0; i < 6; i++) {
+        float y = in[i];
+        if (cfg->axes[i].lp_enabled)
+            y = biquadProcess(&cfg->axes[i].lp, y);
+        if (cfg->axes[i].notch_enabled)
+            y = biquadProcess(&cfg->axes[i].notch, y);
+        out[i] = y;
+    }
+}
+
+void inputFilterUpdateSampleRate(InputFilterConfig* cfg, float new_sr) {
+    cfg->sample_rate = new_sr;
+    for (int i = 0; i < 6; i++) {
+        InputAxisFilter* ax = &cfg->axes[i];
+        if (ax->lp_enabled && ax->lp.fc > 0)
+            biquadSetLowpass(&ax->lp, ax->lp.fc, new_sr, ax->lp.Q > 0 ? ax->lp.Q : 0.707f);
+        if (ax->notch_enabled && ax->notch.fc > 0)
+            biquadSetNotch(&ax->notch, ax->notch.fc, new_sr, ax->notch.Q > 0 ? ax->notch.Q : 5.0f);
+    }
+}
+
 /* ── Axis channel processing ───────────────────────────────────────── */
 
 static float processAxisChannel(AxisChannelFilter* ch, float x) {
@@ -123,7 +193,7 @@ static const PresetDef PRESET_TABLE[MCA_PRESET_COUNT] = {
       {1.0f,1.0f,1.0f, 1.0f,1.0f,1.0f},
       {0.5f,0.5f,0.5f, 0.5f,0.5f,0.5f},
       {0.707f,0.707f,0.707f,0.707f,0.707f,0.707f},
-      1, 0.3f, 0.707f, 0.003f, 0.003f },
+      1, 0.3f, 0.707f, 0.08f, 0.08f },
 
     /* MCA_MODERATE — balanced washout (general racing/driving) */
     { "moderate",
@@ -132,7 +202,7 @@ static const PresetDef PRESET_TABLE[MCA_PRESET_COUNT] = {
       {1.0f,1.0f,1.2f, 1.0f,1.0f,0.8f},
       {0.6f,0.6f,0.6f, 0.5f,0.5f,0.6f},
       {0.707f,0.707f,0.707f,0.707f,0.707f,0.707f},
-      1, 0.5f, 0.707f, 0.005f, 0.005f },
+      1, 0.5f, 0.707f, 0.15f, 0.15f },
 
     /* MCA_AGGRESSIVE — tight washout, fast return (high-speed racing) */
     { "aggressive",
@@ -141,7 +211,7 @@ static const PresetDef PRESET_TABLE[MCA_PRESET_COUNT] = {
       {1.2f,1.2f,1.5f, 1.0f,1.0f,0.7f},
       {0.707f,0.707f,0.707f,0.707f,0.707f,0.707f},
       {0.707f,0.707f,0.707f,0.707f,0.707f,0.707f},
-      1, 0.8f, 0.707f, 0.008f, 0.008f },
+      1, 0.8f, 0.707f, 0.25f, 0.25f },
 
     /* MCA_RACE_PRO — strong onset, aggressive washout */
     { "race_pro",
@@ -150,7 +220,7 @@ static const PresetDef PRESET_TABLE[MCA_PRESET_COUNT] = {
       {1.5f,1.5f,1.8f, 1.2f,1.2f,0.6f},
       {0.8f,0.8f,0.8f, 0.707f,0.707f,0.8f},
       {0.6f,0.6f,0.6f, 0.707f,0.707f,0.6f},
-      1, 1.0f, 0.6f, 0.012f, 0.012f },
+      1, 1.0f, 0.6f, 0.35f, 0.35f },
 };
 
 /* ── Core API ──────────────────────────────────────────────────────── */
@@ -174,6 +244,14 @@ void initMotionCueing(MotionCueingConfig* cfg, float sample_rate) {
     }
     cfg->tilt.fc = 0.5f;
     cfg->tilt.Q  = 0.707f;
+    cfg->tilt.hp_fc = 0.3f;
+    cfg->tilt.hp_Q  = 0.707f;
+    cfg->tilt.hp_enabled = 1;
+    cfg->tilt.surge_hp_enabled = 1;
+    cfg->tilt.sway_hp_enabled = 1;
+    cfg->tilt.sway_hp_fc = 0.3f;
+    cfg->tilt.sway_hp_Q  = 0.707f;
+    cfg->tilt.hp_linked = 1;
 }
 
 void setMotionCueingPreset(MotionCueingConfig* cfg, int preset) {
@@ -215,6 +293,19 @@ void setMotionCueingPreset(MotionCueingConfig* cfg, int preset) {
         biquadSetLowpass(&cfg->tilt.surge_lp, p->tilt_fc, fs, p->tilt_Q);
         biquadSetLowpass(&cfg->tilt.sway_lp,  p->tilt_fc, fs, p->tilt_Q);
     }
+    /* Tilt HP washout defaults for presets with tilt enabled */
+    if (p->tilt_enabled) {
+        if (cfg->tilt.hp_fc <= 0.0f) cfg->tilt.hp_fc = 0.3f;
+        if (cfg->tilt.hp_Q  <= 0.0f) cfg->tilt.hp_Q  = 0.707f;
+        cfg->tilt.hp_enabled = 1;
+        cfg->tilt.surge_hp_enabled = 1;
+        cfg->tilt.sway_hp_enabled = 1;
+        cfg->tilt.sway_hp_fc = cfg->tilt.hp_fc;
+        cfg->tilt.sway_hp_Q  = cfg->tilt.hp_Q;
+        cfg->tilt.hp_linked = 1;
+        biquadSetHighpass(&cfg->tilt.surge_hp, cfg->tilt.hp_fc, fs, cfg->tilt.hp_Q);
+        biquadSetHighpass(&cfg->tilt.sway_hp,  cfg->tilt.sway_hp_fc, fs, cfg->tilt.sway_hp_Q);
+    }
 
     cfg->enabled = (preset != MCA_OFF) ? 1 : 0;
 }
@@ -227,6 +318,8 @@ void resetMotionCueing(MotionCueingConfig* cfg) {
     }
     biquadReset(&cfg->tilt.surge_lp);
     biquadReset(&cfg->tilt.sway_lp);
+    biquadReset(&cfg->tilt.surge_hp);
+    biquadReset(&cfg->tilt.sway_hp);
 }
 
 void processMotionCueing(MotionCueingConfig* cfg, const float in[6], float out[6]) {
@@ -243,6 +336,11 @@ void processMotionCueing(MotionCueingConfig* cfg, const float in[6], float out[6
     if (cfg->tilt.enabled) {
         float pitch_add = biquadProcess(&cfg->tilt.surge_lp, in[0]) * cfg->tilt.surge_gain;
         float roll_add  = biquadProcess(&cfg->tilt.sway_lp,  in[1]) * cfg->tilt.sway_gain;
+        /* HP washout on tilt output: tilt returns to center over time */
+        if (cfg->tilt.surge_hp_enabled)
+            pitch_add = biquadProcess(&cfg->tilt.surge_hp, pitch_add);
+        if (cfg->tilt.sway_hp_enabled)
+            roll_add  = biquadProcess(&cfg->tilt.sway_hp,  roll_add);
         out[4] += pitch_add;   /* pitch = index 4 */
         out[3] += roll_add;    /* roll  = index 3 */
     }
@@ -264,6 +362,14 @@ void mcaUpdateSampleRate(MotionCueingConfig* cfg, float new_sr) {
         float q = cfg->tilt.Q > 0 ? cfg->tilt.Q : 0.707f;
         biquadSetLowpass(&cfg->tilt.surge_lp, cfg->tilt.fc, new_sr, q);
         biquadSetLowpass(&cfg->tilt.sway_lp,  cfg->tilt.fc, new_sr, q);
+    }
+    if (cfg->tilt.surge_hp_enabled && cfg->tilt.hp_fc > 0.0f) {
+        float q = cfg->tilt.hp_Q > 0 ? cfg->tilt.hp_Q : 0.707f;
+        biquadSetHighpass(&cfg->tilt.surge_hp, cfg->tilt.hp_fc, new_sr, q);
+    }
+    if (cfg->tilt.sway_hp_enabled && cfg->tilt.sway_hp_fc > 0.0f) {
+        float q = cfg->tilt.sway_hp_Q > 0 ? cfg->tilt.sway_hp_Q : 0.707f;
+        biquadSetHighpass(&cfg->tilt.sway_hp, cfg->tilt.sway_hp_fc, new_sr, q);
     }
 }
 

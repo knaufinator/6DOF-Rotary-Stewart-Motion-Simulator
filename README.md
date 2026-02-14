@@ -68,7 +68,9 @@ idf.py build
 idf.py flash monitor
 ```
 
-See [Controller/README.md](Controller/README.md) for prerequisites, debug UART, and build options.
+See **[BUILD.md](BUILD.md)** for detailed step-by-step build instructions for both the firmware and desktop app, including prerequisites, troubleshooting, and build options.
+
+See [Controller/README.md](Controller/README.md) for firmware architecture, pin mappings, and communication protocol.
 
 ## Desktop App
 
@@ -82,7 +84,7 @@ cmake --build build --config Release
 .\build\Release\stewart-platform.exe  # Windows
 ```
 
-**Requires**: CMake 3.16+, C++17 compiler (MSVC, GCC, or Clang), OpenGL 3.3+
+**Requires**: CMake 3.20+, C++17 compiler (MSVC, GCC, or Clang), OpenGL 3.3+
 
 ### App Features
 
@@ -146,6 +148,117 @@ pn037 - Fine position: +/-5000
 pn038 - Initial speed: 100
 pn039 - Return speed: 100
 ```
+
+## Geometry Calibration & Home Height
+
+Getting the platform geometry right is one of the most important — and most commonly overlooked — steps when setting up a Stewart platform. If the dimensions entered in the app don't match the physical hardware, the inverse kinematics (IK) will produce incorrect servo angles. The most critical parameter is **Home Height**, and this section explains why.
+
+### What is Home Height?
+
+Home Height (`z_home`) is the vertical distance from the base plate to the platform plate when all six servo arms are at **0 degrees** (perfectly horizontal) and the platform is **level and parallel** to the base. It is not an arbitrary number — it is a direct consequence of the other geometry parameters.
+
+<!-- IMAGE: Annotated side-view diagram of a Stewart platform at home position, showing z_home as the vertical distance between base and platform plates, with servo arms horizontal and connecting rods at an angle. -->
+<!-- File: documentation/images/home_height_diagram.png -->
+
+### How Home Height is Determined
+
+For a given set of geometry parameters (base radius, platform radius, servo arm length, connecting rod length, and joint angles), there is exactly **one** correct home height. It is derived from the physical constraint that the connecting rod (L2) must reach from the servo arm tip to the platform joint:
+
+```
+At home (servo angle = 0°):
+  arm_tip  = base_joint + L1 × [cos(β), sin(β), 0]     (arm horizontal)
+  plat_joint = platform_joint_pos + [0, 0, z_home]       (platform level)
+
+  |arm_tip − plat_joint| = L2                             (rod length constraint)
+
+Solving for z_home:
+  z_home = √( L2² − horizontal_distance² )
+
+where horizontal_distance is the XY distance between the arm tip and platform joint.
+```
+
+For a symmetric 3-pair Stewart platform, all six actuators yield the **same** z_home. If your geometry is truly symmetric, this value is unique and exact.
+
+<!-- IMAGE: Top-down 2D schematic showing base joints (B_k), arm tips at 0°, and platform joints (P_k), with horizontal_distance labeled between arm tip and platform joint for one actuator. -->
+<!-- File: documentation/images/home_height_topdown.png -->
+
+### What Happens When Home Height is Wrong
+
+When z_home doesn't match the geometry, the IK must compensate by computing **non-zero** servo angles just to keep the platform at its "home" position. Because the platform has 3-pair symmetry (not 6-fold symmetry), these compensation angles are **different** for each actuator pair. This causes several visible problems:
+
+1. **Platform not level at home** — Even with zero input, the platform tilts slightly because the six servos are at different angles.
+
+2. **Cross-axis coupling** — A pure surge (forward/backward) input produces unwanted roll or pitch motion. The asymmetric home offsets bias the geometry so that linear translation creates rotational side effects.
+
+3. **Asymmetric workspace** — The platform can travel further in one direction than another because some servos start closer to their limits.
+
+4. **Visual distortion in 3D view** — The connecting rods in the visualization appear to stretch or compress because the geometric constraints can't be satisfied with the wrong z_home.
+
+<!-- IMAGE: Side-by-side comparison of the 3D platform visualization: left shows distorted/stretched rods with wrong z_home (92mm), right shows correct geometry with computed z_home (~99mm). Both at the same input pose. -->
+<!-- File: documentation/images/home_height_comparison.png -->
+
+### Example: Mini-6DOF with Wrong Home Height
+
+The Mini-6DOF platform has the following approximate geometry:
+
+| Parameter | Value |
+|-----------|-------|
+| RD (base radius) | 74 mm |
+| PD (platform radius) | 74 mm |
+| L1 (servo arm) | 31 mm |
+| L2 (connecting rod) | 116 mm |
+| Theta R | 7° |
+| Theta P | 30° |
+
+With these dimensions, the **correct** home height is approximately **99.2 mm**. If you enter 92 mm (a 7% error), the IK produces home angles ranging from -4° to +6° across the six servos instead of all zeros. During a pure surge test signal, this manifests as a visible rocking/wobbling of the platform — the pure linear input couples into rotational motion.
+
+<!-- IMAGE: Screenshot of the app running a pure surge sine test signal with the wrong z_home, showing the platform rocking in the 3D view or the output angles being unequal at home. -->
+<!-- File: documentation/images/home_height_wrong_surge.png -->
+
+### Using the Auto-Compute Button
+
+The app includes an **Auto** button next to the Home Height field in the Geometry tab. This button computes the mathematically correct z_home from the current geometry parameters.
+
+**How to use it:**
+
+1. Open the entity's **Geometry** tab
+2. Enter your measured values for RD, PD, L1, L2, Theta R, and Theta P
+3. Look at the **Auto** button next to Home Height — if it's **orange**, your current z_home is off by more than 0.5 mm
+4. Hover over the Auto button to see the computed value and the difference
+5. Click **Auto** to set the correct home height
+
+<!-- IMAGE: Screenshot of the Geometry tab showing the Home Height field with the orange Auto button, and the tooltip showing "Computed: 99.2 mm (current: 92.0 mm, diff: 7.2 mm)". -->
+<!-- File: documentation/images/auto_home_height_button.png -->
+
+After clicking Auto, the 3D visualization should show a level platform at home with no rod stretching, and pure single-axis test signals should produce motion in only that axis.
+
+<!-- IMAGE: Screenshot of the Geometry tab after clicking Auto, showing the corrected Home Height value and the 3D view with a level, non-distorted platform. -->
+<!-- File: documentation/images/auto_home_height_result.png -->
+
+### When to Re-Compute Home Height
+
+You should click **Auto** (or manually verify z_home) any time you change:
+
+- **RD** or **PD** (base or platform radius)
+- **L1** or **L2** (servo arm or connecting rod length)
+- **Theta R** or **Theta P** (joint angles)
+
+These parameters all feed into the z_home calculation. Changing any of them without updating z_home will reintroduce the asymmetry.
+
+### Measuring Your Physical Geometry
+
+If you're setting up a new platform or calibrating an existing one, measure each parameter as follows:
+
+- **RD (base radius)** — Distance from the center of the base plate to the center of a base joint (servo shaft). Measure at least two opposing pairs and average.
+- **PD (platform radius)** — Same measurement on the platform plate to the center of a platform ball joint.
+- **L1 (servo arm)** — Center-to-center distance from the servo shaft to the rod end at the tip of the servo arm.
+- **L2 (connecting rod)** — Center-to-center distance between the two rod end ball joints on the connecting rod (Panhard bar).
+- **Theta R / Theta P** — Angular spread of the joint pairs. See [docs/platform_geometry.md](docs/platform_geometry.md) for details.
+
+<!-- IMAGE: Photo or annotated diagram of a real platform with measurement callouts for RD, PD, L1, L2, showing where to measure each dimension. -->
+<!-- File: documentation/images/geometry_measurement_guide.png -->
+
+> **Tip**: It's better to let the app compute z_home from your other measurements than to try to measure the home height directly. Direct measurement of the vertical gap is prone to error because the platform must be perfectly level and all servos must be exactly at 0° — which is the very state you're trying to calibrate.
 
 ## Hardware
 

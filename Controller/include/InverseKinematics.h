@@ -126,6 +126,14 @@ IK_API int validatePosition(const float position[6], const StewartConfig* config
 IK_API void buildPlatformFromConfig(const StewartConfig* config, PlatformDef* platform);
 
 /**
+ * Compute the correct home height for a PlatformDef so that all servo
+ * angles are 0 when the platform is level (all inputs zero).
+ * Returns the averaged z_home across all 6 actuators.
+ * If the geometry is truly symmetric the values will be identical.
+ */
+IK_API float computeHomeHeight(const PlatformDef* platform);
+
+/**
  * Generalized IK: calculate servo angle for one actuator.
  * Uses per-actuator beta_k parameterization — supports arbitrary motor placement.
  *

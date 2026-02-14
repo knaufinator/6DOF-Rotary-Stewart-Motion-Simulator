@@ -11,6 +11,10 @@
 #define FW_VERSION_MINOR  0
 #define FW_VERSION_PATCH  0
 
+// Protocol version — bump when wire format changes (binary packet, telemetry, commands)
+// App checks this on connect to ensure compatibility
+#define FW_PROTOCOL_VERSION  1
+
 #define FW_BUILD_DATE     __DATE__
 #define FW_BUILD_TIME     __TIME__
 

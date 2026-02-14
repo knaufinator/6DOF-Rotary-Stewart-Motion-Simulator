@@ -1,0 +1,39 @@
+name: Unit Tests
+
+on:
+  push:
+    branches: [ phoenix, main ]
+  pull_request:
+    branches: [ phoenix, main ]
+
+jobs:
+  unit-tests:
+    name: C Math Module Tests
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Linux dependencies
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake build-essential
+
+      - name: Configure CMake
+        run: cmake -S tests -B tests/build -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build tests
+        run: cmake --build tests/build --config Release
+
+      - name: Run tests (Linux)
+        if: runner.os == 'Linux'
+        run: ./tests/build/stewart-tests
+
+      - name: Run tests (Windows)
+        if: runner.os == 'Windows'
+        run: .\tests\build\Release\stewart-tests.exe

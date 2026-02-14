@@ -259,6 +259,35 @@ void calcAllActuatorAngles(const float position[6], const PlatformDef* platform,
     }
 }
 
+float computeHomeHeight(const PlatformDef* platform) {
+    if (!platform) return 0.0f;
+
+    // At home (servo angle = 0, platform level, no translation):
+    //   arm_tip_k = base_pos_k + L1 * [cos(beta_k), sin(beta_k), 0]
+    //   plat_joint_k = plat_pos_k + [0, 0, z_home]
+    //   |arm_tip_k - plat_joint_k| = L2
+    //
+    // Solve: z_home² = L2² - (arm_tip_x - plat_x)² - (arm_tip_y - plat_y)²
+    // Average across all 6 actuators (should be identical for symmetric geometry).
+
+    float sum = 0.0f;
+    int   count = 0;
+    for (int k = 0; k < 6; k++) {
+        const ActuatorDef* a = &platform->actuators[k];
+        float atx = a->base_pos[0] + a->L1 * cosf(a->beta);
+        float aty = a->base_pos[1] + a->L1 * sinf(a->beta);
+
+        float dx = atx - a->plat_pos[0];
+        float dy = aty - a->plat_pos[1];
+        float horiz2 = dx * dx + dy * dy;
+        float vert2 = a->L2 * a->L2 - horiz2;
+        if (vert2 < 0.0f) vert2 = 0.0f;   // geometry can't reach — clamp
+        sum += sqrtf(vert2);
+        count++;
+    }
+    return (count > 0) ? (sum / (float)count) : 0.0f;
+}
+
 int validatePositionV2(const float position[6], const PlatformDef* platform) {
     if (!platform) return 0x3F;
     int result = 0;

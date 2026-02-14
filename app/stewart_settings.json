@@ -1,16 +1,59 @@
 {
 	"simtools_port":	4123,
 	"simtools_bit_depth":	18,
+	"ac_port":	9996,
+	"ac_axis_map":	[{
+			"channel":	1,
+			"min_val":	-2,
+			"max_val":	2,
+			"invert":	false
+		}, {
+			"channel":	2,
+			"min_val":	-2.5,
+			"max_val":	2.5,
+			"invert":	false
+		}, {
+			"channel":	3,
+			"min_val":	-1.5,
+			"max_val":	1.5,
+			"invert":	false
+		}, {
+			"channel":	4,
+			"min_val":	-0.5,
+			"max_val":	0.5,
+			"invert":	false
+		}, {
+			"channel":	5,
+			"min_val":	-0.300000011920929,
+			"max_val":	0.300000011920929,
+			"invert":	false
+		}, {
+			"channel":	0,
+			"min_val":	-2,
+			"max_val":	2,
+			"invert":	false
+		}],
 	"console_log_rate":	5,
 	"console_max":	500,
 	"console_auto_scroll":	true,
-	"record_rate_hz":	200,
-	"input_source":	2,
+	"record_rate_hz":	1000,
+	"input_source":	0,
+	"test_signal":	{
+		"waveform":	0,
+		"ramp_up":	true,
+		"ramp_duration":	2,
+		"smooth_changes":	true,
+		"smooth_rate":	2,
+		"frequency":	[0.51999998092651367, 0.62000000476837158, 2, 2, 1, 1.1200000047683716],
+		"amplitude":	[76, 81, 12, 50, 50, 100],
+		"phase_offset":	[0, 0, 0, 0, 0, 0],
+		"axis_enabled":	[false, true, false, false, false, false]
+	},
 	"entities":	[{
 			"name":	"SIL Default",
 			"type":	0,
 			"enabled":	true,
-			"intensity":	100,
+			"intensity":	107,
 			"bit_depth":	12,
 			"color":	[0.37999999523162842, 0.649999976158142, 0.959999978542328, 1],
 			"axis_gain":	[100, 100, 100, 100, 100, 100],
@@ -25,7 +68,131 @@
 				"encoder_ppr":	2500,
 				"virtual_gear":	80,
 				"planetary_ratio":	50
-			}
+			},
+			"mca_config":	{
+				"enabled":	0,
+				"preset":	1,
+				"intensity":	107,
+				"axis_gain":	[100, 100, 100, 100, 100, 100],
+				"channels":	[{
+						"hp_enabled":	1,
+						"hp_fc":	0.300000011920929,
+						"hp_Q":	0.5,
+						"lp_enabled":	1,
+						"lp_fc":	8,
+						"lp_Q":	0.7070000171661377,
+						"gain":	1,
+						"rate_limit":	0
+					}, {
+						"hp_enabled":	1,
+						"hp_fc":	0.300000011920929,
+						"hp_Q":	0.5,
+						"lp_enabled":	1,
+						"lp_fc":	8,
+						"lp_Q":	0.7070000171661377,
+						"gain":	1,
+						"rate_limit":	0
+					}, {
+						"hp_enabled":	1,
+						"hp_fc":	0.40000000596046448,
+						"hp_Q":	0.5,
+						"lp_enabled":	1,
+						"lp_fc":	8,
+						"lp_Q":	0.7070000171661377,
+						"gain":	1,
+						"rate_limit":	0
+					}, {
+						"hp_enabled":	1,
+						"hp_fc":	0.300000011920929,
+						"hp_Q":	0.5,
+						"lp_enabled":	1,
+						"lp_fc":	6,
+						"lp_Q":	0.7070000171661377,
+						"gain":	1,
+						"rate_limit":	0
+					}, {
+						"hp_enabled":	1,
+						"hp_fc":	0.300000011920929,
+						"hp_Q":	0.5,
+						"lp_enabled":	1,
+						"lp_fc":	6,
+						"lp_Q":	0.7070000171661377,
+						"gain":	1,
+						"rate_limit":	0
+					}, {
+						"hp_enabled":	1,
+						"hp_fc":	0.300000011920929,
+						"hp_Q":	0.5,
+						"lp_enabled":	1,
+						"lp_fc":	6,
+						"lp_Q":	0.7070000171661377,
+						"gain":	1,
+						"rate_limit":	0
+					}],
+				"tilt":	{
+					"enabled":	1,
+					"surge_gain":	0.079999998211860657,
+					"sway_gain":	0.079999998211860657,
+					"fc":	0.300000011920929,
+					"Q":	0.7070000171661377,
+					"hp_enabled":	1,
+					"hp_fc":	0.300000011920929,
+					"hp_Q":	0.7070000171661377,
+					"surge_hp_enabled":	1,
+					"sway_hp_enabled":	1,
+					"sway_hp_fc":	0.300000011920929,
+					"sway_hp_Q":	0.7070000171661377,
+					"hp_linked":	1
+				}
+			},
+			"input_filter":	{
+				"enabled":	false,
+				"axes":	[{
+						"lp_on":	false,
+						"lp_fc":	20,
+						"lp_Q":	0.7070000171661377,
+						"notch_on":	false,
+						"notch_fc":	0,
+						"notch_Q":	5
+					}, {
+						"lp_on":	false,
+						"lp_fc":	20,
+						"lp_Q":	0.7070000171661377,
+						"notch_on":	false,
+						"notch_fc":	0,
+						"notch_Q":	5
+					}, {
+						"lp_on":	false,
+						"lp_fc":	20,
+						"lp_Q":	0.7070000171661377,
+						"notch_on":	false,
+						"notch_fc":	0,
+						"notch_Q":	5
+					}, {
+						"lp_on":	false,
+						"lp_fc":	20,
+						"lp_Q":	0.7070000171661377,
+						"notch_on":	false,
+						"notch_fc":	0,
+						"notch_Q":	5
+					}, {
+						"lp_on":	false,
+						"lp_fc":	20,
+						"lp_Q":	0.7070000171661377,
+						"notch_on":	false,
+						"notch_fc":	0,
+						"notch_Q":	5
+					}, {
+						"lp_on":	false,
+						"lp_fc":	20,
+						"lp_Q":	0.7070000171661377,
+						"notch_on":	false,
+						"notch_fc":	0,
+						"notch_Q":	5
+					}]
+			},
+			"occupant":	[0, 0, 800],
+			"platform_type":	0
 		}, {
 			"name":	"HIL #1",
 			"type":	1,
@@ -35,21 +202,155 @@
 			"color":	[0.20000000298023224, 0.82999998331069946, 0.600000023841858, 1],
 			"axis_gain":	[100, 100, 100, 100, 100, 100],
 			"geometry":	{
-				"RD":	400.04998779296875,
-				"PD":	406.39999389648438,
-				"L1":	184.14999389648438,
-				"L2":	723.9000244140625,
-				"z_home":	648.13397216796875,
-				"theta_r":	10,
+				"RD":	66,
+				"PD":	74,
+				"L1":	31,
+				"L2":	116,
+				"z_home":	100.2777099609375,
+				"theta_r":	7,
 				"theta_p":	30,
 				"encoder_ppr":	2500,
 				"virtual_gear":	80,
 				"planetary_ratio":	50
 			},
+			"mca_config":	{
+				"enabled":	0,
+				"preset":	4,
+				"intensity":	100,
+				"axis_gain":	[100, 100, 100, 100, 100, 100],
+				"channels":	[{
+						"hp_enabled":	1,
+						"hp_fc":	0.05000000074505806,
+						"hp_Q":	0.800000011920929,
+						"lp_enabled":	1,
+						"lp_fc":	20,
+						"lp_Q":	0.600000023841858,
+						"gain":	1.5,
+						"rate_limit":	0
+					}, {
+						"hp_enabled":	1,
+						"hp_fc":	0.0900000035762787,
+						"hp_Q":	0.649999976158142,
+						"lp_enabled":	1,
+						"lp_fc":	20,
+						"lp_Q":	0.600000023841858,
+						"gain":	1.5,
+						"rate_limit":	0
+					}, {
+						"hp_enabled":	1,
+						"hp_fc":	1.0900000333786011,
+						"hp_Q":	0.800000011920929,
+						"lp_enabled":	1,
+						"lp_fc":	15,
+						"lp_Q":	0.600000023841858,
+						"gain":	1.7999999523162842,
+						"rate_limit":	0
+					}, {
+						"hp_enabled":	1,
+						"hp_fc":	1.5,
+						"hp_Q":	0.7070000171661377,
+						"lp_enabled":	1,
+						"lp_fc":	12,
+						"lp_Q":	0.7070000171661377,
+						"gain":	1.2000000476837158,
+						"rate_limit":	0
+					}, {
+						"hp_enabled":	1,
+						"hp_fc":	1.5,
+						"hp_Q":	0.7070000171661377,
+						"lp_enabled":	1,
+						"lp_fc":	12,
+						"lp_Q":	0.7070000171661377,
+						"gain":	1.2000000476837158,
+						"rate_limit":	0
+					}, {
+						"hp_enabled":	1,
+						"hp_fc":	2,
+						"hp_Q":	0.800000011920929,
+						"lp_enabled":	1,
+						"lp_fc":	15,
+						"lp_Q":	0.600000023841858,
+						"gain":	0.600000023841858,
+						"rate_limit":	0
+					}],
+				"tilt":	{
+					"enabled":	0,
+					"surge_gain":	0.76499998569488525,
+					"sway_gain":	0.54500001668930054,
+					"fc":	4.3600001335144043,
+					"Q":	0.600000023841858,
+					"hp_enabled":	1,
+					"hp_fc":	0.079999998211860657,
+					"hp_Q":	1.7599999904632568,
+					"surge_hp_enabled":	0,
+					"sway_hp_enabled":	0,
+					"sway_hp_fc":	0.079999998211860657,
+					"sway_hp_Q":	1.7599999904632568,
+					"hp_linked":	0
+				}
+			},
+			"input_filter":	{
+				"enabled":	true,
+				"axes":	[{
+						"lp_on":	true,
+						"lp_fc":	20,
+						"lp_Q":	0.7070000171661377,
+						"notch_on":	false,
+						"notch_fc":	0,
+						"notch_Q":	5
+					}, {
+						"lp_on":	true,
+						"lp_fc":	20,
+						"lp_Q":	0.7070000171661377,
+						"notch_on":	false,
+						"notch_fc":	0,
+						"notch_Q":	5
+					}, {
+						"lp_on":	true,
+						"lp_fc":	20,
+						"lp_Q":	0.7070000171661377,
+						"notch_on":	false,
+						"notch_fc":	0,
+						"notch_Q":	5
+					}, {
+						"lp_on":	true,
+						"lp_fc":	20,
+						"lp_Q":	0.7070000171661377,
+						"notch_on":	false,
+						"notch_fc":	0,
+						"notch_Q":	5
+					}, {
+						"lp_on":	true,
+						"lp_fc":	20,
+						"lp_Q":	0.7070000171661377,
+						"notch_on":	false,
+						"notch_fc":	0,
+						"notch_Q":	5
+					}, {
+						"lp_on":	true,
+						"lp_fc":	20,
+						"lp_Q":	0.7070000171661377,
+						"notch_on":	false,
+						"notch_fc":	0,
+						"notch_Q":	5
+					}]
+			},
+			"occupant":	[0, 0, 800],
+			"platform_type":	1,
+			"servo":	{
+				"center_us":	[1500, 1500, 1500, 1500, 1500, 1500],
+				"pulse_per_rad":	1018.5999755859375,
+				"min_pulse_us":	800,
+				"max_pulse_us":	2200,
+				"pwm_freq_hz":	50,
+				"inverted":	[true, false, true, false, true, false]
+			},
 			"hil":	{
-				"port":	"COM3",
+				"port":	"COM6",
 				"tx_hz":	60,
-				"auto_connect":	true
+				"auto_connect":	true,
+				"protocol":	0,
+				"fingerprint":	"84CCA87AED50"
 			}
 		}]
 }

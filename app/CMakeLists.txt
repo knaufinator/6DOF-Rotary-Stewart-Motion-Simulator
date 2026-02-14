@@ -93,6 +93,7 @@ add_executable(stewart-platform WIN32
     src/ui_panels.cpp
     src/platform_viz.cpp
     src/serial_port.cpp
+    src/plugin_manager.cpp
 )
 target_include_directories(stewart-platform PRIVATE
     src

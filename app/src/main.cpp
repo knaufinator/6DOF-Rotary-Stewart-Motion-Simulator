@@ -294,7 +294,6 @@ int main(int, char**) {
         g_app.addEntity("SIL Default", EntityType::SIL);
     }
     g_app.loadRecordingsFromDisk();
-    g_app.loadTestSignalPresetsFromDisk();
     g_app.loadMcaPresetsFromDisk();
     g_app.log(-1, "system", "Stewart Platform Controller started");
     g_app.log(-1, "system", "Add entities via Entity menu or [+ Add SIL/HIL]");
@@ -323,7 +322,6 @@ int main(int, char**) {
     }
 
     // ── Cleanup ─────────────────────────────────────────────────────
-    g_app.stopUdpListener();
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
     ImPlot::DestroyContext();

@@ -50,6 +50,7 @@ void PipelineConfig::initDefaults() {
     // Phase D: default intensity and per-axis gains
     intensity = 100.0f;
     for (int i = 0; i < 6; i++) axis_gain[i] = 100.0f;
+    for (int i = 0; i < 6; i++) axis_invert[i] = false;
 }
 
 void PipelineConfig::rebuildPlatform() {
@@ -71,10 +72,6 @@ static const int g_num_colors = sizeof(g_entity_colors) / sizeof(g_entity_colors
 App::App()
     : next_entity_id(0)
     , input_source(InputSource::Manual)
-    , simtools_active(false)
-    , simtools_port(4123)
-    , simtools_bit_depth(12)
-    , simtools_rate(0.0f)
     , console_max(500)
     , console_auto_scroll(true)
     , console_paused(false)
@@ -98,7 +95,6 @@ App::App()
     , capture_ramp_start(0.0)
     , capture_stop_requested(false)
     , record_rate_hz(200)
-    , test_signal_start_time(0.0)
     , input_history_head(0)
     , input_history_count(0)
     , input_history_last_push(0.0)
@@ -107,20 +103,8 @@ App::App()
     , source_switch_active(false)
     , source_switch_target(InputSource::Manual)
     , source_switch_start(0.0)
-    , ac_active(false)
-    , ac_port(9996)
     , active_plugin_idx(-1)
 {
-    // Assetto Corsa axis mapping defaults (channel, min_val→-100%, max_val→+100%, invert)
-    ac_axis_map[0] = { AC_CH_SURGE_G,      -2.0f,  2.0f, false };  // surge: -2G..-100%, +2G..+100%
-    ac_axis_map[1] = { AC_CH_SWAY_G,       -2.5f,  2.5f, false };  // sway
-    ac_axis_map[2] = { AC_CH_HEAVE_G,      -1.5f,  1.5f, false };  // heave
-    ac_axis_map[3] = { AC_CH_ROLL,          -0.5f,  0.5f, false };  // roll: ±0.5 rad (~28°)
-    ac_axis_map[4] = { AC_CH_PITCH,         -0.3f,  0.3f, false };  // pitch: ±0.3 rad (~17°)
-    ac_axis_map[5] = { AC_CH_NONE,          -2.0f,  2.0f, false };  // yaw: disabled
-    memset(ac.raw_channels, 0, sizeof(ac.raw_channels));
-    ac.last_packet_time = 0.0;
-    ac.yaw_rate_filtered = 0.0f;
     memset(shared_input, 0, sizeof(shared_input));
     memset(capture_last_vals, 0, sizeof(capture_last_vals));
     memset(input_history, 0, sizeof(input_history));
@@ -145,8 +129,6 @@ App::~App() {
     plugin_mgr.unloadAll();
     hil_tx_stop.store(true);
     if (hil_tx_thread.joinable()) hil_tx_thread.join();
-    stopUdpListener();
-    stopAssettoCorsaListener();
 #ifdef _WIN32
     WSACleanup();
 #endif
@@ -206,9 +188,11 @@ static void saveEntityToJSON(cJSON* ej, const Entity& e) {
     cJSON* col = cJSON_AddArrayToObject(ej, "color");
     for (int i = 0; i < 4; i++) cJSON_AddItemToArray(col, cJSON_CreateNumber(e.color[i]));
 
-    // Per-axis gain
+    // Per-axis gain + inversion
     cJSON* gains = cJSON_AddArrayToObject(ej, "axis_gain");
     for (int i = 0; i < 6; i++) cJSON_AddItemToArray(gains, cJSON_CreateNumber(e.config.axis_gain[i]));
+    cJSON* inverts = cJSON_AddArrayToObject(ej, "axis_invert");
+    for (int i = 0; i < 6; i++) cJSON_AddItemToArray(inverts, cJSON_CreateBool(e.config.axis_invert[i]));
 
     // Geometry
     cJSON* geo = cJSON_AddObjectToObject(ej, "geometry");
@@ -287,11 +271,16 @@ static void loadEntityFromJSON(Entity& e, cJSON* ej) {
             e.color[i] = (float)cJSON_GetArrayItem(col, i)->valuedouble;
     }
 
-    // Per-axis gain
+    // Per-axis gain + inversion
     cJSON* gains = cJSON_GetObjectItem(ej, "axis_gain");
     if (gains && cJSON_IsArray(gains)) {
         for (int i = 0; i < 6 && i < cJSON_GetArraySize(gains); i++)
             e.config.axis_gain[i] = (float)cJSON_GetArrayItem(gains, i)->valuedouble;
+    }
+    cJSON* inverts = cJSON_GetObjectItem(ej, "axis_invert");
+    if (inverts && cJSON_IsArray(inverts)) {
+        for (int i = 0; i < 6 && i < cJSON_GetArraySize(inverts); i++)
+            e.config.axis_invert[i] = cJSON_IsTrue(cJSON_GetArrayItem(inverts, i));
     }
 
     // Geometry
@@ -411,24 +400,6 @@ static void loadEntityFromJSON(Entity& e, cJSON* ej) {
 void App::saveSettings() {
     cJSON* root = cJSON_CreateObject();
 
-    // SimTools
-    cJSON_AddNumberToObject(root, "simtools_port", simtools_port);
-    cJSON_AddNumberToObject(root, "simtools_bit_depth", simtools_bit_depth);
-
-    // Assetto Corsa
-    cJSON_AddNumberToObject(root, "ac_port", ac_port);
-    {
-        cJSON* am = cJSON_AddArrayToObject(root, "ac_axis_map");
-        for (int i = 0; i < 6; i++) {
-            cJSON* m = cJSON_CreateObject();
-            cJSON_AddNumberToObject(m, "channel", ac_axis_map[i].channel);
-            cJSON_AddNumberToObject(m, "min_val", ac_axis_map[i].min_val);
-            cJSON_AddNumberToObject(m, "max_val", ac_axis_map[i].max_val);
-            cJSON_AddBoolToObject(m, "invert", ac_axis_map[i].invert);
-            cJSON_AddItemToArray(am, m);
-        }
-    }
-
     // Console
     cJSON_AddNumberToObject(root, "console_log_rate", console_log_rate);
     cJSON_AddNumberToObject(root, "console_max", console_max);
@@ -439,26 +410,6 @@ void App::saveSettings() {
 
     // Input source
     cJSON_AddNumberToObject(root, "input_source", (int)input_source);
-
-    // Test signal
-    {
-        cJSON* ts = cJSON_AddObjectToObject(root, "test_signal");
-        cJSON_AddNumberToObject(ts, "waveform", (int)test_signal.waveform);
-        cJSON_AddBoolToObject(ts, "ramp_up", test_signal.ramp_up);
-        cJSON_AddNumberToObject(ts, "ramp_duration", test_signal.ramp_duration);
-        cJSON_AddBoolToObject(ts, "smooth_changes", test_signal.smooth_changes);
-        cJSON_AddNumberToObject(ts, "smooth_rate", test_signal.smooth_rate);
-        cJSON* freq = cJSON_AddArrayToObject(ts, "frequency");
-        cJSON* amp  = cJSON_AddArrayToObject(ts, "amplitude");
-        cJSON* phase = cJSON_AddArrayToObject(ts, "phase_offset");
-        cJSON* aen  = cJSON_AddArrayToObject(ts, "axis_enabled");
-        for (int i = 0; i < 6; i++) {
-            cJSON_AddItemToArray(freq, cJSON_CreateNumber(test_signal.frequency[i]));
-            cJSON_AddItemToArray(amp, cJSON_CreateNumber(test_signal.amplitude[i]));
-            cJSON_AddItemToArray(phase, cJSON_CreateNumber(test_signal.phase_offset[i]));
-            cJSON_AddItemToArray(aen, cJSON_CreateBool(test_signal.axis_enabled[i]));
-        }
-    }
 
     // Entities — full serialization
     cJSON* ents = cJSON_AddArrayToObject(root, "entities");
@@ -499,10 +450,7 @@ void App::loadSettings() {
     free(buf);
     if (!root) return;
 
-    // SimTools
     cJSON* val;
-    if ((val = cJSON_GetObjectItem(root, "simtools_port")))      simtools_port = val->valueint;
-    if ((val = cJSON_GetObjectItem(root, "simtools_bit_depth")))  simtools_bit_depth = val->valueint;
 
     // Console
     if ((val = cJSON_GetObjectItem(root, "console_log_rate")))    console_log_rate = val->valueint;
@@ -512,58 +460,15 @@ void App::loadSettings() {
     // Recording
     if ((val = cJSON_GetObjectItem(root, "record_rate_hz")))    record_rate_hz = val->valueint;
 
-    // Input source
+    // Input source (legacy values map to Manual; only Manual/CapturePlayback/Plugin are valid now)
     if ((val = cJSON_GetObjectItem(root, "input_source"))) {
         int src = val->valueint;
-        if (src >= 0 && src <= (int)InputSource::AssettoCorsa)
-            input_source = (InputSource)src;
-    }
-
-    // Assetto Corsa
-    if ((val = cJSON_GetObjectItem(root, "ac_port")))  ac_port = val->valueint;
-    {
-        // New format: ac_axis_map array of objects
-        cJSON* am = cJSON_GetObjectItem(root, "ac_axis_map");
-        if (am && cJSON_IsArray(am)) {
-            for (int i = 0; i < 6 && i < cJSON_GetArraySize(am); i++) {
-                cJSON* m = cJSON_GetArrayItem(am, i);
-                if (m && cJSON_IsObject(m)) {
-                    if ((val = cJSON_GetObjectItem(m, "channel")))  ac_axis_map[i].channel = val->valueint;
-                    if ((val = cJSON_GetObjectItem(m, "min_val")))  ac_axis_map[i].min_val = (float)val->valuedouble;
-                    if ((val = cJSON_GetObjectItem(m, "max_val")))  ac_axis_map[i].max_val = (float)val->valuedouble;
-                    if ((val = cJSON_GetObjectItem(m, "invert")))   ac_axis_map[i].invert = cJSON_IsTrue(val);
-                }
-            }
-        }
-        // Legacy compat: load old ac_axis_max as symmetric ±max_val
-        cJSON* old_am = cJSON_GetObjectItem(root, "ac_axis_max");
-        if (old_am && cJSON_IsArray(old_am) && !am) {
-            for (int i = 0; i < 6 && i < cJSON_GetArraySize(old_am); i++) {
-                float v = (float)cJSON_GetArrayItem(old_am, i)->valuedouble;
-                ac_axis_map[i].max_val = v;
-                ac_axis_map[i].min_val = -v;
-            }
-        }
-    }
-
-    // Test signal
-    cJSON* ts = cJSON_GetObjectItem(root, "test_signal");
-    if (ts) {
-        if ((val = cJSON_GetObjectItem(ts, "waveform")))       test_signal.waveform = (WaveformType)val->valueint;
-        if ((val = cJSON_GetObjectItem(ts, "ramp_up")))        test_signal.ramp_up = cJSON_IsTrue(val);
-        if ((val = cJSON_GetObjectItem(ts, "ramp_duration")))  test_signal.ramp_duration = (float)val->valuedouble;
-        if ((val = cJSON_GetObjectItem(ts, "smooth_changes"))) test_signal.smooth_changes = cJSON_IsTrue(val);
-        if ((val = cJSON_GetObjectItem(ts, "smooth_rate")))    test_signal.smooth_rate = (float)val->valuedouble;
-        cJSON* freq = cJSON_GetObjectItem(ts, "frequency");
-        cJSON* amp  = cJSON_GetObjectItem(ts, "amplitude");
-        cJSON* phase = cJSON_GetObjectItem(ts, "phase_offset");
-        cJSON* aen  = cJSON_GetObjectItem(ts, "axis_enabled");
-        for (int i = 0; i < 6; i++) {
-            if (freq && i < cJSON_GetArraySize(freq)) test_signal.frequency[i] = (float)cJSON_GetArrayItem(freq, i)->valuedouble;
-            if (amp && i < cJSON_GetArraySize(amp))   test_signal.amplitude[i] = (float)cJSON_GetArrayItem(amp, i)->valuedouble;
-            if (phase && i < cJSON_GetArraySize(phase)) test_signal.phase_offset[i] = (float)cJSON_GetArrayItem(phase, i)->valuedouble;
-            if (aen && i < cJSON_GetArraySize(aen))   test_signal.axis_enabled[i] = cJSON_IsTrue(cJSON_GetArrayItem(aen, i));
-        }
+        if (src == (int)InputSource::CapturePlayback)
+            input_source = InputSource::CapturePlayback;
+        else if (src == (int)InputSource::Plugin)
+            input_source = InputSource::Plugin;
+        else
+            input_source = InputSource::Manual;
     }
 
     // Entities — clear and recreate from saved data
@@ -606,6 +511,7 @@ Entity& App::addEntity(const char* name, EntityType type) {
     memset(&e.transport, 0, sizeof(e.transport));
     int ci = e.id % g_num_colors;
     memcpy(e.color, g_entity_colors[ci], sizeof(e.color));
+    e.show_card = true;
     e.show_settings = false;
     e.show_platform = false;
     e.show_dynamics = false;
@@ -1023,9 +929,8 @@ void App::startRecording() {
     recording.start_time = frame_time;
     recording.mode = RecordMode::Recording;
     const char* src = "manual";
-    if (input_source == InputSource::SimToolsUDP) src = "udp";
-    else if (input_source == InputSource::CapturePlayback) src = "capture";
-    else if (input_source == InputSource::TestSignal) src = "test_signal";
+    if (input_source == InputSource::CapturePlayback) src = "capture";
+    else if (input_source == InputSource::Plugin) src = "plugin";
     log(-1, "record", "Recording started (source: %s, rate: %d Hz)", src, record_rate_hz);
 }
 
@@ -1058,8 +963,8 @@ void App::saveRecordingToLibrary(const char* name) {
     sr.sample_rate_hz = (double)record_rate_hz;
     sr.created_time = (double)time(nullptr);
     const char* src = "manual";
-    if (input_source == InputSource::SimToolsUDP) src = "udp";
-    else if (input_source == InputSource::CapturePlayback) src = "capture";
+    if (input_source == InputSource::CapturePlayback) src = "capture";
+    else if (input_source == InputSource::Plugin) src = "plugin";
     snprintf(sr.source, sizeof(sr.source), "%s", src);
     sr.samples = recording.samples;
     saved_recordings.push_back(std::move(sr));
@@ -1447,119 +1352,6 @@ void App::loadRecordingsFromDisk() {
     }
 }
 
-// ── Test Signal Presets ──────────────────────────────────────────────
-
-static const char* TS_PRESETS_FILE = "test_signal_presets.json";
-
-void App::saveTestSignalPreset(const char* name) {
-    // Check if preset with same name exists — overwrite it
-    for (auto& p : test_signal_presets) {
-        if (strcmp(p.name, name) == 0) {
-            p.config = test_signal;
-            p.config.enabled = false;  // don't persist running state
-            saveTestSignalPresetsToDisk();
-            log(-1, "test_signal", "Preset '%s' updated", name);
-            return;
-        }
-    }
-    TestSignalPreset p;
-    snprintf(p.name, sizeof(p.name), "%s", name);
-    p.config = test_signal;
-    p.config.enabled = false;
-    test_signal_presets.push_back(p);
-    saveTestSignalPresetsToDisk();
-    log(-1, "test_signal", "Preset '%s' saved", name);
-}
-
-void App::deleteTestSignalPreset(int idx) {
-    if (idx >= 0 && idx < (int)test_signal_presets.size()) {
-        log(-1, "test_signal", "Preset '%s' deleted", test_signal_presets[idx].name);
-        test_signal_presets.erase(test_signal_presets.begin() + idx);
-        saveTestSignalPresetsToDisk();
-    }
-}
-
-void App::saveTestSignalPresetsToDisk() {
-    cJSON* root = cJSON_CreateArray();
-    for (auto& p : test_signal_presets) {
-        cJSON* pj = cJSON_CreateObject();
-        cJSON_AddStringToObject(pj, "name", p.name);
-
-        cJSON* freq = cJSON_AddArrayToObject(pj, "frequency");
-        cJSON* amp  = cJSON_AddArrayToObject(pj, "amplitude");
-        cJSON* phase = cJSON_AddArrayToObject(pj, "phase_offset");
-        cJSON* en   = cJSON_AddArrayToObject(pj, "axis_enabled");
-        for (int i = 0; i < 6; i++) {
-            cJSON_AddItemToArray(freq, cJSON_CreateNumber(p.config.frequency[i]));
-            cJSON_AddItemToArray(amp, cJSON_CreateNumber(p.config.amplitude[i]));
-            cJSON_AddItemToArray(phase, cJSON_CreateNumber(p.config.phase_offset[i]));
-            cJSON_AddItemToArray(en, cJSON_CreateBool(p.config.axis_enabled[i]));
-        }
-        cJSON_AddBoolToObject(pj, "ramp_up", p.config.ramp_up);
-        cJSON_AddNumberToObject(pj, "ramp_duration", p.config.ramp_duration);
-
-        cJSON_AddItemToArray(root, pj);
-    }
-
-    char* str = cJSON_Print(root);
-    if (str) {
-        FILE* f = fopen(TS_PRESETS_FILE, "w");
-        if (f) { fputs(str, f); fclose(f); }
-        cJSON_free(str);
-    }
-    cJSON_Delete(root);
-}
-
-void App::loadTestSignalPresetsFromDisk() {
-    FILE* f = fopen(TS_PRESETS_FILE, "r");
-    if (!f) return;
-
-    fseek(f, 0, SEEK_END);
-    long sz = ftell(f);
-    fseek(f, 0, SEEK_SET);
-    if (sz <= 0) { fclose(f); return; }
-
-    char* buf = (char*)malloc(sz + 1);
-    fread(buf, 1, sz, f);
-    buf[sz] = 0;
-    fclose(f);
-
-    cJSON* root = cJSON_Parse(buf);
-    free(buf);
-    if (!root || !cJSON_IsArray(root)) { cJSON_Delete(root); return; }
-
-    test_signal_presets.clear();
-    cJSON* pj;
-    cJSON_ArrayForEach(pj, root) {
-        TestSignalPreset p;
-        memset(&p, 0, sizeof(p));
-        p.config = TestSignalConfig();  // defaults
-
-        cJSON* val;
-        if ((val = cJSON_GetObjectItem(pj, "name")))
-            snprintf(p.name, sizeof(p.name), "%s", val->valuestring);
-
-        cJSON* freq = cJSON_GetObjectItem(pj, "frequency");
-        cJSON* amp  = cJSON_GetObjectItem(pj, "amplitude");
-        cJSON* phase = cJSON_GetObjectItem(pj, "phase_offset");
-        cJSON* en   = cJSON_GetObjectItem(pj, "axis_enabled");
-        for (int i = 0; i < 6; i++) {
-            if (freq && i < cJSON_GetArraySize(freq))  p.config.frequency[i] = (float)cJSON_GetArrayItem(freq, i)->valuedouble;
-            if (amp && i < cJSON_GetArraySize(amp))     p.config.amplitude[i] = (float)cJSON_GetArrayItem(amp, i)->valuedouble;
-            if (phase && i < cJSON_GetArraySize(phase)) p.config.phase_offset[i] = (float)cJSON_GetArrayItem(phase, i)->valuedouble;
-            if (en && i < cJSON_GetArraySize(en))       p.config.axis_enabled[i] = cJSON_IsTrue(cJSON_GetArrayItem(en, i));
-        }
-        if ((val = cJSON_GetObjectItem(pj, "ramp_up")))       p.config.ramp_up = cJSON_IsTrue(val);
-        if ((val = cJSON_GetObjectItem(pj, "ramp_duration")))  p.config.ramp_duration = (float)val->valuedouble;
-
-        test_signal_presets.push_back(p);
-    }
-
-    cJSON_Delete(root);
-    if (!test_signal_presets.empty())
-        log(-1, "test_signal", "Loaded %d preset(s)", (int)test_signal_presets.size());
-}
-
 // ── MCA Dynamics Presets ─────────────────────────────────────────────
 
 static const char* MCA_PRESETS_FILE = "mca_dynamics_presets.json";
@@ -1824,398 +1616,6 @@ static double GetTimeSeconds() {
     return duration<double>(steady_clock::now().time_since_epoch()).count();
 }
 
-static void UdpListenerThread(App* app) {
-    SOCKET sock = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-    if (sock == INVALID_SOCKET) {
-        app->udp.running = false;
-        return;
-    }
-
-    // Receive timeout so we can check the running flag
-#ifdef _WIN32
-    DWORD timeout_ms = 100;
-    setsockopt(sock, SOL_SOCKET, SO_RCVTIMEO, (const char*)&timeout_ms, sizeof(timeout_ms));
-#else
-    struct timeval tv;
-    tv.tv_sec = 0;
-    tv.tv_usec = 100000;
-    setsockopt(sock, SOL_SOCKET, SO_RCVTIMEO, &tv, sizeof(tv));
-#endif
-
-    int reuse = 1;
-    setsockopt(sock, SOL_SOCKET, SO_REUSEADDR, (const char*)&reuse, sizeof(reuse));
-
-    struct sockaddr_in addr = {};
-    addr.sin_family = AF_INET;
-    addr.sin_port = htons((unsigned short)app->simtools_port);
-    addr.sin_addr.s_addr = INADDR_ANY;
-
-    if (bind(sock, (struct sockaddr*)&addr, sizeof(addr)) == SOCKET_ERROR) {
-        closesocket(sock);
-        app->udp.running = false;
-        return;
-    }
-
-    app->udp.sock = (int)sock;
-    app->udp.rate_window_start = GetTimeSeconds();
-    app->udp.rate_window_count = 0;
-
-    char buf[256];
-    while (app->udp.running) {
-        struct sockaddr_in from = {};
-#ifdef _WIN32
-        int from_len = sizeof(from);
-#else
-        socklen_t from_len = sizeof(from);
-#endif
-        int n = recvfrom(sock, buf, sizeof(buf) - 1, 0, (struct sockaddr*)&from, &from_len);
-
-        if (n <= 0) continue;  // timeout or error
-
-        double now = GetTimeSeconds();
-        app->udp.last_packet_time = now;
-        app->udp.packets_received++;
-
-        // Rate tracking (1-second window)
-        app->udp.rate_window_count++;
-        double elapsed = now - app->udp.rate_window_start;
-        if (elapsed >= 1.0) {
-            app->udp.rate_hz = (float)(app->udp.rate_window_count / elapsed);
-            app->udp.rate_window_start = now;
-            app->udp.rate_window_count = 0;
-        }
-
-        int bit_depth = app->simtools_bit_depth;
-        float values[6] = {0};
-        bool parsed = false;
-
-        // Try binary parsing first:
-        // 8-bit: 1 byte/axis = 6 bytes, values 0-255, center 128
-        // 10/12/14/16-bit: 2 bytes/axis LE = 12 bytes, center at midpoint
-        if (bit_depth <= 8 && n >= 6 && n < 20) {
-            unsigned char* ub = (unsigned char*)buf;
-            for (int i = 0; i < 6; i++) {
-                float raw = (float)ub[i];
-                values[i] = ((raw - 128.0f) / 128.0f) * 100.0f;
-            }
-            parsed = true;
-        } else if (n >= 12 && n < 20) {
-            // 2 bytes per axis, little-endian
-            unsigned char* ub = (unsigned char*)buf;
-            float max_val = (float)((1 << bit_depth) - 1);
-            float center = max_val * 0.5f;
-            for (int i = 0; i < 6; i++) {
-                unsigned short raw = (unsigned short)(ub[i*2] | (ub[i*2+1] << 8));
-                values[i] = ((raw - center) / center) * 100.0f;
-                if (values[i] > 100.0f) values[i] = 100.0f;
-                if (values[i] < -100.0f) values[i] = -100.0f;
-            }
-            parsed = true;
-        }
-
-        // Fallback: try CSV text parsing ("val,val,val,val,val,val")
-        if (!parsed) {
-            buf[n] = '\0';
-            int count = sscanf(buf, "%f,%f,%f,%f,%f,%f",
-                &values[0], &values[1], &values[2], &values[3], &values[4], &values[5]);
-            if (count >= 6) {
-                parsed = true;
-                // If values look like raw integers (>100), normalize based on bit depth
-                bool needs_normalize = false;
-                for (int i = 0; i < 6; i++) {
-                    if (fabsf(values[i]) > 100.5f) { needs_normalize = true; break; }
-                }
-                if (needs_normalize) {
-                    float max_val = (float)((1 << bit_depth) - 1);
-                    float center = max_val * 0.5f;
-                    for (int i = 0; i < 6; i++) {
-                        values[i] = ((values[i] - center) / center) * 100.0f;
-                        if (values[i] > 100.0f) values[i] = 100.0f;
-                        if (values[i] < -100.0f) values[i] = -100.0f;
-                    }
-                }
-            }
-        }
-
-        if (parsed) {
-            std::lock_guard<std::mutex> lock(app->input_mutex);
-            for (int i = 0; i < 6; i++) {
-                app->shared_input[i] = values[i];
-            }
-        } else {
-            app->udp.packets_bad++;
-        }
-    }
-
-    closesocket(sock);
-    app->udp.sock = -1;
-}
-
-bool App::startUdpListener() {
-    if (udp.running) return true;
-
-    udp.running = true;
-    udp.packets_received = 0;
-    udp.packets_bad = 0;
-    udp.rate_hz = 0.0f;
-    udp.rate_window_count = 0;
-    udp.rate_window_start = 0.0;
-
-    udp.thread = std::thread(UdpListenerThread, this);
-
-    // Wait briefly to see if bind succeeded
-    std::this_thread::sleep_for(std::chrono::milliseconds(50));
-    if (!udp.running) {
-        if (udp.thread.joinable()) udp.thread.join();
-        return false;
-    }
-
-    simtools_active = true;
-    input_source = InputSource::SimToolsUDP;
-    log(-1, "udp", "UDP listener started on port %d (%d-bit)", simtools_port, simtools_bit_depth);
-    return true;
-}
-
-void App::stopUdpListener() {
-    if (!udp.running) return;
-
-    udp.running = false;
-    if (udp.thread.joinable()) {
-        udp.thread.join();
-    }
-
-    simtools_active = false;
-    simtools_rate = 0.0f;
-    input_source = InputSource::Manual;
-    memset(shared_input, 0, sizeof(shared_input));
-    log(-1, "udp", "UDP listener stopped (rx: %d, bad: %d)",
-        udp.packets_received.load(), udp.packets_bad.load());
-}
-
-// ── Assetto Corsa Shared Memory ──────────────────────────────────────
-
-#ifdef _WIN32
-static const char* AC_SHARED_MEM_PHYSICS = "Local\\acpmf_physics";
-
-static void ACListenerThread(App* app) {
-    app->log(-1, "ac", "Opening shared memory: %s", AC_SHARED_MEM_PHYSICS);
-
-    // Try to open the memory-mapped file AC creates
-    HANDLE hMap = OpenFileMappingA(FILE_MAP_READ, FALSE, AC_SHARED_MEM_PHYSICS);
-    if (!hMap) {
-        app->log(-1, "ac", "Shared memory not found — is Assetto Corsa running?");
-        app->ac.running = false;
-        return;
-    }
-
-    const ACPhysics* phys = (const ACPhysics*)MapViewOfFile(hMap, FILE_MAP_READ, 0, 0, sizeof(ACPhysics));
-    if (!phys) {
-        app->log(-1, "ac", "Failed to map view of shared memory");
-        CloseHandle(hMap);
-        app->ac.running = false;
-        return;
-    }
-
-    app->ac.hMapFile = (void*)hMap;
-    app->ac.mapped = phys;
-    app->ac.connected = true;
-    app->ac.rate_window_start = GetTimeSeconds();
-    app->ac.rate_window_count = 0;
-    app->ac.last_packet_id = phys->packetId;
-    app->log(-1, "ac", "Connected to AC shared memory (physics struct: %d bytes)", (int)sizeof(ACPhysics));
-
-    float last_heading = 0.0f;
-    bool heading_init = false;
-    double last_packet_time = 0.0;
-
-    while (app->ac.running) {
-        // Poll at ~100 Hz
-        std::this_thread::sleep_for(std::chrono::milliseconds(10));
-
-        // Check if packet ID changed (AC updates it each physics tick)
-        int32_t pid = phys->packetId;
-        if (pid == app->ac.last_packet_id) continue;
-        app->ac.last_packet_id = pid;
-
-        double now = GetTimeSeconds();
-        app->ac.packets_received++;
-
-        // Rate tracking
-        app->ac.rate_window_count++;
-        double elapsed = now - app->ac.rate_window_start;
-        if (elapsed >= 1.0) {
-            app->ac.rate_hz = (float)(app->ac.rate_window_count / elapsed);
-            app->ac.rate_window_start = now;
-            app->ac.rate_window_count = 0;
-        }
-
-        // Update display telemetry
-        app->ac.speed_kmh = phys->speedKmh;
-        app->ac.rpm = phys->rpms;
-        app->ac.gear = phys->gear;
-
-        // ── Extract all raw channel values ──
-        float ch[AC_CH_COUNT] = {};
-
-        // G-forces: accG x=lateral(sway), y=vertical(heave), z=frontal(surge)
-        // AC accG is already gravity-compensated (0 when stationary)
-        ch[AC_CH_SURGE_G] = phys->accG.z;
-        ch[AC_CH_SWAY_G]  = phys->accG.x;
-        ch[AC_CH_HEAVE_G] = phys->accG.y;
-
-        // Orientation
-        ch[AC_CH_ROLL]  = phys->roll;
-        ch[AC_CH_PITCH] = phys->pitch;
-
-        // Yaw rate from heading delta (with spike rejection + heavy LP filter)
-        {
-            float yaw_rate_raw = 0.0f;
-            if (heading_init && last_packet_time > 0.0) {
-                float dh = phys->heading - last_heading;
-                if (dh > (float)M_PI) dh -= 2.0f * (float)M_PI;
-                if (dh < -(float)M_PI) dh += 2.0f * (float)M_PI;
-                float dt = (float)(now - last_packet_time);
-                if (dt > 0.002f && dt < 0.5f) {
-                    float rate = dh / dt;
-                    // Spike rejection: no car rotates faster than ~10 rad/s (573 deg/s)
-                    if (fabsf(rate) < 10.0f)
-                        yaw_rate_raw = rate;
-                }
-            }
-            last_heading = phys->heading;
-            heading_init = true;
-            last_packet_time = now;
-
-            // Heavy LP filter: alpha=0.05 at 100Hz → ~0.8Hz cutoff
-            // Use Angular Vel Y channel instead for cleaner yaw rate
-            const float alpha = 0.05f;
-            app->ac.yaw_rate_filtered += alpha * (yaw_rate_raw - app->ac.yaw_rate_filtered);
-            ch[AC_CH_YAW_RATE] = app->ac.yaw_rate_filtered;
-        }
-
-        // Local velocities
-        ch[AC_CH_LOCAL_VEL_X] = phys->localVelocity.x;
-        ch[AC_CH_LOCAL_VEL_Z] = phys->localVelocity.z;
-
-        // Angular velocities (direct from physics, cleaner than heading delta)
-        ch[AC_CH_ANG_VEL_X] = phys->localAngularVel.x;
-        ch[AC_CH_ANG_VEL_Y] = phys->localAngularVel.y;
-        ch[AC_CH_ANG_VEL_Z] = phys->localAngularVel.z;
-
-        // Traction loss from wheel slip
-        float max_slip = 0.0f, sum_slip = 0.0f;
-        for (int w = 0; w < 4; w++) {
-            float s = fabsf(phys->wheelSlip[w]);
-            if (s > max_slip) max_slip = s;
-            sum_slip += s;
-        }
-        ch[AC_CH_TRACTION_LOSS]     = max_slip;
-        ch[AC_CH_TRACTION_LOSS_AVG] = sum_slip / 4.0f;
-
-        // Suspension travel
-        ch[AC_CH_SUSP_TRAVEL_FL] = phys->suspensionTravel[0];
-        ch[AC_CH_SUSP_TRAVEL_FR] = phys->suspensionTravel[1];
-        ch[AC_CH_SUSP_TRAVEL_RL] = phys->suspensionTravel[2];
-        ch[AC_CH_SUSP_TRAVEL_RR] = phys->suspensionTravel[3];
-
-        // Absolute G-forces
-        ch[AC_CH_G_FORCE_LAT] = fabsf(phys->accG.x);
-        ch[AC_CH_G_FORCE_LON] = fabsf(phys->accG.z);
-
-        // Store raw channels for UI display
-        app->ac.last_packet_time = now;
-        memcpy(app->ac.raw_channels, ch, sizeof(ch));
-
-        // ── Map channels to platform output axes using asymmetric min/max ──
-        float values[6];
-        for (int i = 0; i < 6; i++) {
-            int src = app->ac_axis_map[i].channel;
-            if (src <= AC_CH_NONE || src >= AC_CH_COUNT) {
-                values[i] = 0.0f;
-                continue;
-            }
-            float raw_val = ch[src];
-            if (app->ac_axis_map[i].invert) raw_val = -raw_val;
-
-            // Asymmetric scaling: min_val → -100%, 0 → 0%, max_val → +100%
-            float min_v = app->ac_axis_map[i].min_val;
-            float max_v = app->ac_axis_map[i].max_val;
-            float pct;
-            if (raw_val < 0.0f) {
-                float denom = (min_v < -0.001f) ? min_v : -1.0f;
-                pct = (raw_val / denom) * -100.0f;  // min_val is negative, so raw/min gives positive ratio
-            } else {
-                float denom = (max_v > 0.001f) ? max_v : 1.0f;
-                pct = (raw_val / denom) * 100.0f;
-            }
-            if (pct > 100.0f) pct = 100.0f;
-            if (pct < -100.0f) pct = -100.0f;
-            values[i] = pct;
-        }
-
-        {
-            std::lock_guard<std::mutex> lock(app->input_mutex);
-            for (int i = 0; i < 6; i++)
-                app->shared_input[i] = values[i];
-        }
-    }
-
-    // Cleanup
-    UnmapViewOfFile(phys);
-    CloseHandle(hMap);
-    app->ac.mapped = nullptr;
-    app->ac.hMapFile = nullptr;
-    app->ac.connected = false;
-}
-
-bool App::startAssettoCorsaListener() {
-    if (ac.running) return true;
-
-    ac.running = true;
-    ac.packets_received = 0;
-    ac.rate_hz = 0.0f;
-    ac.connected = false;
-    ac.rate_window_count = 0;
-    ac.rate_window_start = 0.0;
-    ac.last_packet_id = -1;
-
-    ac.thread = std::thread(ACListenerThread, this);
-
-    // Wait briefly for shared memory open
-    std::this_thread::sleep_for(std::chrono::milliseconds(200));
-    if (!ac.running) {
-        if (ac.thread.joinable()) ac.thread.join();
-        log(-1, "ac", "Failed to connect to Assetto Corsa shared memory");
-        return false;
-    }
-
-    ac_active = true;
-    input_source = InputSource::AssettoCorsa;
-    log(-1, "ac", "Assetto Corsa shared memory listener started");
-    return true;
-}
-
-void App::stopAssettoCorsaListener() {
-    if (!ac.running) return;
-
-    ac.running = false;
-    if (ac.thread.joinable()) {
-        ac.thread.join();
-    }
-
-    ac_active = false;
-    input_source = InputSource::Manual;
-    memset(shared_input, 0, sizeof(shared_input));
-    log(-1, "ac", "Assetto Corsa listener stopped (rx: %d)", ac.packets_received.load());
-}
-#else
-// Assetto Corsa shared memory is Windows-only
-bool App::startAssettoCorsaListener() {
-    log(-1, "ac", "Assetto Corsa shared memory not available on this platform");
-    return false;
-}
-void App::stopAssettoCorsaListener() {}
-#endif
 
 // ── Source Switch Ramp-to-Home ───────────────────────────────────────
 
@@ -2233,10 +1633,7 @@ void App::requestSourceSwitch(InputSource target) {
     source_switch_active = true;
     log(-1, "input", "Ramping to home before switching to %s...",
         target == InputSource::Manual ? "Manual" :
-        target == InputSource::SimToolsUDP ? "SimTools UDP" :
         target == InputSource::CapturePlayback ? "Capture" :
-        target == InputSource::TestSignal ? "Test Signal" :
-        target == InputSource::AssettoCorsa ? "Assetto Corsa" :
         target == InputSource::Plugin ? "Plugin" : "?");
 }
 
@@ -2266,9 +1663,6 @@ void App::update() {
 
         if (t >= 1.0f) {
             // Ramp complete — stop old source, switch to new
-            if (ac_active)              stopAssettoCorsaListener();
-            if (simtools_active)        stopUdpListener();
-            if (test_signal.enabled)    test_signal.enabled = false;
             if (capture_playing)        stopCapturePlayback();
             if (plugin_mgr.activeIndex() >= 0) {
                 plugin_mgr.deactivateActive();
@@ -2335,80 +1729,6 @@ void App::update() {
         updateCapturePlayback();
     }
 
-    // Handle test signal generator — writes to entity input_pct
-    {
-        static double ui_phase_accum[6] = {};
-        static double ui_last_frame = 0.0;
-        static bool   ui_ts_was_on = false;
-        bool ts_active = (input_source == InputSource::TestSignal && test_signal.enabled);
-        if (ts_active && !ui_ts_was_on) {
-            for (int i = 0; i < 6; i++) ui_phase_accum[i] = 0.0;
-            ui_last_frame = frame_time;
-        }
-        ui_ts_was_on = ts_active;
-        if (ts_active) {
-            double t = frame_time - test_signal_start_time;
-            double dt = (ui_last_frame > 0.0) ? (frame_time - ui_last_frame) : 0.0;
-            if (dt < 0.0 || dt > 0.1) dt = 0.0;
-            ui_last_frame = frame_time;
-
-            float envelope = 1.0f;
-            if (test_signal.ramp_up && test_signal.ramp_duration > 0.0f) {
-                float r = (float)(t / (double)test_signal.ramp_duration);
-                if (r < 1.0f) { envelope = r * r * (3.0f - 2.0f * r); }
-            }
-
-            if (test_signal.smooth_changes) {
-                float dt_f = (fps > 0.0) ? (float)(1.0 / fps) : (1.0f / 60.0f);
-                float alpha = 1.0f - expf(-test_signal.smooth_rate * dt_f);
-                for (int i = 0; i < 6; i++) {
-                    test_signal.active_freq[i]  += (test_signal.frequency[i]     - test_signal.active_freq[i])  * alpha;
-                    test_signal.active_amp[i]   += (test_signal.amplitude[i]     - test_signal.active_amp[i])   * alpha;
-                    test_signal.active_phase[i] += (test_signal.phase_offset[i]  - test_signal.active_phase[i]) * alpha;
-                }
-            } else {
-                for (int i = 0; i < 6; i++) {
-                    test_signal.active_freq[i]  = test_signal.frequency[i];
-                    test_signal.active_amp[i]   = test_signal.amplitude[i];
-                    test_signal.active_phase[i] = test_signal.phase_offset[i];
-                }
-            }
-
-            float sig[6] = {};
-            for (int i = 0; i < 6; i++) {
-                if (!test_signal.axis_enabled[i]) continue;
-                float freq = test_signal.active_freq[i];
-                float amp  = test_signal.active_amp[i];
-                float phase = test_signal.active_phase[i] * (float)(M_PI / 180.0);
-                ui_phase_accum[i] += 2.0 * M_PI * freq * dt;
-                double angle = ui_phase_accum[i] + phase;
-                float v = 0.0f;
-                switch (test_signal.waveform) {
-                    case WaveformType::Sine:
-                        v = (float)sin(angle);
-                        break;
-                    case WaveformType::Square:
-                        v = (float)(fmod(angle, 2.0 * M_PI) < M_PI ? 1.0 : -1.0);
-                        break;
-                    case WaveformType::Triangle:
-                        v = (float)(2.0 / M_PI * asin(sin(angle)));
-                        break;
-                    case WaveformType::Sawtooth:
-                        v = (float)(2.0 * (angle / (2.0 * M_PI) - floor(0.5 + angle / (2.0 * M_PI))));
-                        break;
-                }
-                sig[i] = v * amp * envelope;
-            }
-            for (auto& e : entities) {
-                memcpy(e.state.input_pct, sig, sizeof(sig));
-            }
-            {
-                std::lock_guard<std::mutex> lock(input_mutex);
-                memcpy(shared_input, sig, sizeof(sig));
-            }
-        }
-    }
-
     // ── Plugin input processing ─────────────────────────────────────
     if (input_source == InputSource::Plugin && plugin_mgr.activeIndex() >= 0) {
         float plugin_out[6] = {};
@@ -2425,11 +1745,9 @@ void App::update() {
 
     // ── Input bus sync ────────────────────────────────────────────────
     // Ensure shared_input and entity.input_pct are always consistent.
-    // UDP/AC/Plugin write to shared_input → push to entities.
-    // Manual/Capture/TestSignal write to entity.input_pct → push to shared_input.
-    if ((input_source == InputSource::SimToolsUDP && simtools_active) ||
-        (input_source == InputSource::AssettoCorsa && ac_active) ||
-        (input_source == InputSource::Plugin && plugin_mgr.activeIndex() >= 0)) {
+    // Plugin writes to shared_input → push to entities.
+    // Manual/Capture write to entity.input_pct → push to shared_input.
+    if (input_source == InputSource::Plugin && plugin_mgr.activeIndex() >= 0) {
         // External source → entities
         float snap[6];
         {
@@ -2440,7 +1758,7 @@ void App::update() {
             memcpy(e.state.input_pct, snap, sizeof(snap));
         }
     } else {
-        // Manual / Capture / TestSignal → shared_input
+        // Manual / Capture → shared_input
         if (!entities.empty()) {
             std::lock_guard<std::mutex> lock(input_mutex);
             memcpy(shared_input, entities[0].state.input_pct, sizeof(shared_input));
@@ -2465,11 +1783,6 @@ void App::update() {
         }
     }
 
-    // Sync UDP rate for UI display
-    if (simtools_active) {
-        simtools_rate = udp.rate_hz.load();
-    }
-
     // Grab shared input (thread-safe)
     float current_input[6];
     {
@@ -2482,8 +1795,6 @@ void App::update() {
     // Console input logging (user-controlled rate via console_log_rate)
     // Only log when the selected source is actually active/connected
     bool source_active = true;
-    if (input_source == InputSource::SimToolsUDP && !simtools_active) source_active = false;
-    if (input_source == InputSource::AssettoCorsa && !ac_active)      source_active = false;
     if (input_source == InputSource::Plugin && plugin_mgr.activeIndex() < 0) source_active = false;
 
     if (console_log_rate > 0 && source_active) {
@@ -2493,10 +1804,7 @@ void App::update() {
         if (should_log) {
             last_input_log_time = frame_time;
             const char* src_str = "manual";
-            if (input_source == InputSource::SimToolsUDP) src_str = "udp";
-            else if (input_source == InputSource::CapturePlayback) src_str = "capture";
-            else if (input_source == InputSource::TestSignal) src_str = "test";
-            else if (input_source == InputSource::AssettoCorsa) src_str = "ac";
+            if (input_source == InputSource::CapturePlayback) src_str = "capture";
             else if (input_source == InputSource::Plugin) src_str = "plugin";
             log(-1, src_str, "IN: %+.0f %+.0f %+.0f %+.0f %+.0f %+.0f",
                 current_input[0], current_input[1], current_input[2],
@@ -2589,7 +1897,8 @@ skip_input_processing:
 
         float scaled_pct[6];
         for (int i = 0; i < 6; i++) {
-            scaled_pct[i] = pct[i] * (e.config.intensity / 100.0f) * (e.config.axis_gain[i] / 100.0f);
+            float inv = e.config.axis_invert[i] ? -1.0f : 1.0f;
+            scaled_pct[i] = pct[i] * (e.config.intensity / 100.0f) * (e.config.axis_gain[i] / 100.0f) * inv;
         }
 
         // Dynamics apply S-curve transition: blend from old output to new
@@ -2692,8 +2001,10 @@ skip_input_processing:
                 }
             }
 
-            // ── HIL Pipeline: compute local IK (for viz, history, spectrogram) ──
-            {
+            // ── HIL Pipeline: only active when ESP32 is connected ──
+            // When offline, no work — no IK, no animation, no TX.
+            if (e.serial && e.serial->isOpen()) {
+                // Compute physical input for TX and history
                 float physical[6];
                 for (int i = 0; i < 6; i++) {
                     physical[i] = (scaled_pct[i] / 100.0f) * e.config.axis_scales.scale[i];
@@ -2702,38 +2013,7 @@ skip_input_processing:
                 }
                 memcpy(e.state.input_physical, physical, sizeof(physical));
 
-                // Only write local IK to output state when telemetry is NOT active.
-                // When ESP32 sends telemetry, it owns output_angles/servo_util to
-                // prevent flickering between local IK (60Hz) and telemetry (10Hz).
-                if (!e.hil_tel_active) {
-                    // IK X-axis = platform lateral, Y-axis = platform longitudinal
-                    { float tmp = physical[0]; physical[0] = physical[1]; physical[1] = tmp; }
-                    float angles[6];
-                    calcAllActuatorAngles(physical, &e.config.platform, angles);
-                    int valid_mask = validatePositionV2(physical, &e.config.platform);
-                    memcpy(e.state.output_angles, angles, sizeof(angles));
-
-                    float max_util = 0.0f;
-                    float range = e.config.platform.servo_max_rad - e.config.platform.servo_min_rad;
-                    for (int i = 0; i < 6; i++) {
-                        e.state.output_angles_deg[i] = angles[i] * (180.0f / (float)M_PI);
-                        e.state.output_steps[i] = e.state.output_angles_deg[i] * e.config.platform.steps_per_degree;
-                        float util = fabsf(angles[i]) / (range * 0.5f) * 100.0f;
-                        if (util > 100.0f) util = 100.0f;
-                        e.state.servo_util[i] = util;
-                        if (util > max_util) max_util = util;
-                    }
-                    e.state.max_util = max_util;
-                    e.state.valid_mask = valid_mask;
-                    e.state.ik_seq++;
-                }
-                e.rate_ik_hz = (float)fps;
-            }
-
-            // ── HIL serial: TX packets + telemetry override (only when connected) ──
-            if (e.serial && e.serial->isOpen()) {
-                // Drain command queue: one command every 3 frames (~50ms spacing)
-                // gives ESP32 time to process each before the next arrives
+                // Drain command queue (one per 3 frames for ESP32 pacing)
                 if (!e.hil_cmd_queue.empty()) {
                     static int cmd_drain_counter = 0;
                     if (++cmd_drain_counter >= 3) {
@@ -2743,9 +2023,7 @@ skip_input_processing:
                     }
                 }
 
-                // Update raw packet every frame — background TX thread sends at hil_tx_hz
-                // Only prepare motion data after handshake completes; before that,
-                // hil_tx_raw stays at center (home) values set on connect.
+                // Prepare raw TX packet (only after handshake)
                 if (e.hil_handshake_ok) {
                     float max_raw = (float)((1 << e.config.bit_depth) - 2);
                     float home = max_raw * 0.5f;
@@ -2756,7 +2034,6 @@ skip_input_processing:
                         if (r > max_raw) r = max_raw;
                         raw[i] = (uint16_t)(r + 0.5f);
                     }
-                    // IK X-axis = platform lateral, Y-axis = platform longitudinal
                     { uint16_t tmp = raw[0]; raw[0] = raw[1]; raw[1] = tmp; }
                     memcpy(e.hil_tx_raw, raw, sizeof(raw));
                 }
@@ -2773,7 +2050,7 @@ skip_input_processing:
                     }
                 }
 
-                // If ESP32 sends telemetry, override local IK with real angles
+                // Telemetry: ESP32 owns output angles when active
                 ESP32Telemetry tel = e.serial->getLatestTelemetry();
                 e.hil_tel_active = (tel.seq != 0 && e.rate_tel_hz > 0.0f);
                 if (tel.seq != e.hil_tel_seq) {
@@ -2794,12 +2071,15 @@ skip_input_processing:
                     e.state.ik_seq++;
                 }
 
+                e.rate_ik_hz = (float)fps;
                 e.rate_tx_hz = (float)e.hil_tx_hz;
                 e.rate_tel_hz = e.serial->telemetryRate();
             } else {
-                // No ESP32 connected — clear serial rates
+                // Offline — zero everything
+                e.rate_ik_hz = 0.0f;
                 e.rate_tx_hz = 0.0f;
                 e.rate_tel_hz = 0.0f;
+                e.hil_tel_active = false;
             }
         }
 
@@ -2841,53 +2121,33 @@ skip_input_processing:
 
     // Auto-save: compare settings against last-saved snapshot each frame
     {
-        static int    s_port = -1, s_bits = -1, s_lograte = -1, s_max = -1, s_rec_rate = -1;
+        static int    s_lograte = -1, s_max = -1, s_rec_rate = -1;
         static int    s_input_source = -1;
         static bool   s_autoscroll = false;
         static float  s_intensity[8] = {};  // up to 8 entities
         static float  s_gain[8][6] = {};
+        static bool   s_invert[8][6] = {};
         static int    s_bit_depth[8] = {};
         static int    s_entity_count = 0;
         static char   s_hil_port[8][32] = {};
         static int    s_hil_tx_hz[8] = {};
         static bool   s_hil_auto[8] = {};
         static int    s_hil_proto[8] = {};
-        static int    s_ts_waveform = -1;
-        static float  s_ts_freq[6] = {};
-        static float  s_ts_amp[6] = {};
-        static float  s_ts_phase[6] = {};
-        static bool   s_ts_axis_en[6] = {};
-        static bool   s_ts_ramp = false;
-        static float  s_ts_ramp_dur = 0;
-        static bool   s_ts_smooth = false;
-        static float  s_ts_smooth_rate = 0;
         static bool   s_inited = false;
 
         auto snapshot_matches = [&]() -> bool {
-            if (s_port != simtools_port) return false;
-            if (s_bits != simtools_bit_depth) return false;
             if (s_lograte != console_log_rate) return false;
             if (s_max != console_max) return false;
             if (s_autoscroll != console_auto_scroll) return false;
             if (s_rec_rate != record_rate_hz) return false;
             if (s_input_source != (int)input_source) return false;
             if (s_entity_count != (int)entities.size()) return false;
-            if (s_ts_waveform != (int)test_signal.waveform) return false;
-            if (s_ts_ramp != test_signal.ramp_up) return false;
-            if (s_ts_ramp_dur != test_signal.ramp_duration) return false;
-            if (s_ts_smooth != test_signal.smooth_changes) return false;
-            if (s_ts_smooth_rate != test_signal.smooth_rate) return false;
-            for (int i = 0; i < 6; i++) {
-                if (s_ts_freq[i] != test_signal.frequency[i]) return false;
-                if (s_ts_amp[i] != test_signal.amplitude[i]) return false;
-                if (s_ts_phase[i] != test_signal.phase_offset[i]) return false;
-                if (s_ts_axis_en[i] != test_signal.axis_enabled[i]) return false;
-            }
             for (int ei = 0; ei < (int)entities.size() && ei < 8; ei++) {
                 if (s_intensity[ei] != entities[ei].config.intensity) return false;
                 if (s_bit_depth[ei] != entities[ei].config.bit_depth) return false;
                 for (int a = 0; a < 6; a++) {
                     if (s_gain[ei][a] != entities[ei].config.axis_gain[a]) return false;
+                    if (s_invert[ei][a] != entities[ei].config.axis_invert[a]) return false;
                 }
                 if (entities[ei].type == EntityType::HIL) {
                     if (strcmp(s_hil_port[ei], entities[ei].hil_port) != 0) return false;
@@ -2900,30 +2160,19 @@ skip_input_processing:
         };
 
         auto take_snapshot = [&]() {
-            s_port = simtools_port;
-            s_bits = simtools_bit_depth;
             s_lograte = console_log_rate;
             s_max = console_max;
             s_autoscroll = console_auto_scroll;
             s_rec_rate = record_rate_hz;
             s_input_source = (int)input_source;
-            s_ts_waveform = (int)test_signal.waveform;
-            s_ts_ramp = test_signal.ramp_up;
-            s_ts_ramp_dur = test_signal.ramp_duration;
-            s_ts_smooth = test_signal.smooth_changes;
-            s_ts_smooth_rate = test_signal.smooth_rate;
-            for (int i = 0; i < 6; i++) {
-                s_ts_freq[i] = test_signal.frequency[i];
-                s_ts_amp[i] = test_signal.amplitude[i];
-                s_ts_phase[i] = test_signal.phase_offset[i];
-                s_ts_axis_en[i] = test_signal.axis_enabled[i];
-            }
             s_entity_count = (int)entities.size();
             for (int ei = 0; ei < (int)entities.size() && ei < 8; ei++) {
                 s_intensity[ei] = entities[ei].config.intensity;
                 s_bit_depth[ei] = entities[ei].config.bit_depth;
-                for (int a = 0; a < 6; a++)
+                for (int a = 0; a < 6; a++) {
                     s_gain[ei][a] = entities[ei].config.axis_gain[a];
+                    s_invert[ei][a] = entities[ei].config.axis_invert[a];
+                }
                 if (entities[ei].type == EntityType::HIL) {
                     snprintf(s_hil_port[ei], sizeof(s_hil_port[ei]), "%s", entities[ei].hil_port);
                     s_hil_tx_hz[ei] = entities[ei].hil_tx_hz;

@@ -1,6 +1,7 @@
 #include "ui_panels.h"
 #include "serial_port.h"
 #include "platform_viz.h"
+#include "cJSON.h"
 #include "imgui.h"
 #include "imgui_internal.h"
 #include "implot.h"
@@ -99,6 +100,25 @@ static bool s_show_save_popup = false;
 static char s_layout_name_buf[128] = "";
 static bool s_reset_layout = false;
 
+// Panel visibility (toggled from View menu, X button on windows)
+static bool s_show_input       = true;
+static bool s_show_console     = true;
+static bool s_show_data_streams = true;
+static bool s_show_dynamics    = true;
+static int  s_selected_dynamics_id = -1;  // entity ID for global Dynamics panel (-1 = auto-select first)
+static int  s_dyn_preset_idx = -1;       // currently selected dynamics preset index
+
+// Dynamics staging buffer (file-scope so Copy/Paste can access it)
+struct DynStaging {
+    MotionCueingConfig mca;
+    float intensity;
+    float axis_gain[6];
+    bool  axis_invert[6];
+    float occupant[3];
+    bool  initialized;
+};
+static std::map<int, DynStaging> s_dyn_staging;
+
 // ── Toolbar / Menu Bar ──────────────────────────────────────────────
 
 static void DrawMainMenuBar() {
@@ -157,7 +177,34 @@ static void DrawMainMenuBar() {
             ImGui::EndMenu();
         }
         if (ImGui::BeginMenu("View")) {
-            ImGui::MenuItem("ImGui Demo", nullptr, &ImGui::GetIO().ConfigFlags);  // placeholder
+            ImGui::MenuItem("Input",        nullptr, &s_show_input);
+            ImGui::MenuItem("Console",      nullptr, &s_show_console);
+            ImGui::MenuItem("Data Streams", nullptr, &s_show_data_streams);
+            ImGui::MenuItem("Dynamics",     nullptr, &s_show_dynamics);
+            ImGui::Separator();
+            // Per-entity windows
+            for (auto& e : g_app.entities) {
+                char label[96];
+                snprintf(label, sizeof(label), "%s [%s]", e.name, e.type == EntityType::SIL ? "SIL" : "HIL");
+                if (ImGui::BeginMenu(label)) {
+                    ImGui::MenuItem("Card",     nullptr, &e.show_card);
+                    ImGui::MenuItem("Settings", nullptr, &e.show_settings);
+                    ImGui::MenuItem("Platform", nullptr, &e.show_platform);
+                    ImGui::MenuItem("Console",  nullptr, &e.show_console);
+                    if (ImGui::MenuItem("Select in Dynamics")) {
+                        s_show_dynamics = true;
+                        s_selected_dynamics_id = e.id;
+                    }
+                    ImGui::EndMenu();
+                }
+            }
+            ImGui::Separator();
+            if (ImGui::MenuItem("Show All Panels")) {
+                s_show_input = s_show_console = s_show_data_streams = s_show_dynamics = true;
+                for (auto& e : g_app.entities) {
+                    e.show_card = true;
+                }
+            }
             ImGui::EndMenu();
         }
 
@@ -210,9 +257,197 @@ static void DrawMainMenuBar() {
     }
 }
 
+// ── Toolbar (ribbon-style, visual mockup) ────────────────────────────
+
+static void ToolbarSeparator() {
+    ImGui::SameLine(0, 4);
+    float y0 = ImGui::GetCursorScreenPos().y;
+    ImDrawList* dl = ImGui::GetWindowDrawList();
+    dl->AddLine(ImVec2(ImGui::GetCursorScreenPos().x, y0 + 2),
+                ImVec2(ImGui::GetCursorScreenPos().x, y0 + 38),
+                IM_COL32(80, 80, 80, 180), 1.0f);
+    ImGui::SameLine(0, 8);
+}
+
+static void ToolbarGroupLabel(const char* label) {
+    ImVec2 pos = ImGui::GetCursorScreenPos();
+    ImGui::GetWindowDrawList()->AddText(ImVec2(pos.x, pos.y + 28),
+        IM_COL32(120, 120, 120, 200), label);
+}
+
+static void DrawToolbar() {
+    ImGuiViewport* vp = ImGui::GetMainViewport();
+    float menu_h = ImGui::GetFrameHeight();  // main menu bar height
+    float toolbar_h = 52.0f;
+
+    ImGui::SetNextWindowPos(ImVec2(vp->WorkPos.x, vp->WorkPos.y));
+    ImGui::SetNextWindowSize(ImVec2(vp->WorkSize.x, toolbar_h));
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(8, 4));
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
+    ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.14f, 0.14f, 0.16f, 1.0f));
+
+    ImGuiWindowFlags tb_flags = ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize |
+        ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse |
+        ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoSavedSettings;
+
+    if (ImGui::Begin("##Toolbar", nullptr, tb_flags)) {
+
+        // ── SOURCE ──────────────────────────────────────────────
+        ToolbarGroupLabel("Source");
+        {
+            static const char* source_names[] = { "Manual", "Capture", "Plugin" };
+            int src = (int)g_app.input_source;
+            ImGui::PushItemWidth(90);
+            ImGui::Combo("##tb_src", &src, source_names, IM_ARRAYSIZE(source_names));
+            ImGui::PopItemWidth();
+            ImGui::SameLine();
+            // Status dot
+            bool connected = false;
+            switch (g_app.input_source) {
+                case InputSource::Plugin:         connected = g_app.active_plugin_idx >= 0; break;
+                case InputSource::CapturePlayback:connected = g_app.capture_playing; break;
+                default:                          connected = true; break;
+            }
+            ImVec4 dot_col = connected ? ImVec4(0.2f, 0.9f, 0.3f, 1.0f) : ImVec4(0.6f, 0.6f, 0.6f, 0.6f);
+            ImGui::TextColored(dot_col, connected ? "LIVE" : "IDLE");
+        }
+
+        ToolbarSeparator();
+
+        // ── MOTION ──────────────────────────────────────────────
+        ToolbarGroupLabel("Motion");
+        {
+            bool running = g_app.motion_started;
+            if (running) {
+                ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.15f, 0.55f, 0.15f, 1.0f));
+                ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.2f, 0.65f, 0.2f, 1.0f));
+            } else {
+                ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.35f, 0.35f, 0.35f, 1.0f));
+                ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.45f, 0.45f, 0.45f, 1.0f));
+            }
+            ImGui::Button(running ? "STOP" : "START", ImVec2(60, 26));
+            ImGui::PopStyleColor(2);
+
+            ImGui::SameLine();
+
+            // E-stop (bright red)
+            ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.75f, 0.1f, 0.1f, 1.0f));
+            ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.9f, 0.15f, 0.15f, 1.0f));
+            ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(1.0f, 0.0f, 0.0f, 1.0f));
+            ImGui::Button("E-STOP", ImVec2(60, 26));
+            ImGui::PopStyleColor(3);
+
+            ImGui::SameLine();
+
+            // Global intensity mini-slider
+            if (!g_app.entities.empty()) {
+                float intensity = g_app.entities[0].config.intensity;
+                ImGui::PushItemWidth(80);
+                ImGui::VSliderFloat("##tb_int", ImVec2(18, 26), &intensity, 0.0f, 100.0f, "");
+                if (ImGui::IsItemHovered()) ImGui::SetTooltip("Intensity: %.0f%%", intensity);
+                ImGui::PopItemWidth();
+                ImGui::SameLine();
+                ImGui::TextColored(ImVec4(0.7f, 0.85f, 1.0f, 1.0f), "%.0f%%", intensity);
+            }
+        }
+
+        ToolbarSeparator();
+
+        // ── RECORDING ───────────────────────────────────────────
+        ToolbarGroupLabel("Recording");
+        {
+            bool is_recording = (g_app.recording.mode == RecordMode::Recording);
+            bool is_playing   = g_app.capture_playing;
+
+            // Record button (red when recording)
+            if (is_recording) {
+                ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.8f, 0.15f, 0.15f, 1.0f));
+                ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.9f, 0.2f, 0.2f, 1.0f));
+            } else {
+                ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.35f, 0.35f, 0.35f, 1.0f));
+                ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.45f, 0.45f, 0.45f, 1.0f));
+            }
+            ImGui::Button("REC", ImVec2(36, 26));
+            ImGui::PopStyleColor(2);
+
+            ImGui::SameLine();
+
+            // Play button (green when playing)
+            if (is_playing) {
+                ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.15f, 0.55f, 0.15f, 1.0f));
+                ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.2f, 0.65f, 0.2f, 1.0f));
+            } else {
+                ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.35f, 0.35f, 0.35f, 1.0f));
+                ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.45f, 0.45f, 0.45f, 1.0f));
+            }
+            ImGui::Button("PLAY", ImVec2(42, 26));
+            ImGui::PopStyleColor(2);
+
+            ImGui::SameLine();
+
+            ImGui::Button("STOP", ImVec2(42, 26));
+        }
+
+        ToolbarSeparator();
+
+        // ── PLATFORM ────────────────────────────────────────────
+        ToolbarGroupLabel("Platform");
+        {
+            int n_ent = (int)g_app.entities.size();
+            int n_hil = 0, n_sil = 0;
+            for (auto& e : g_app.entities) {
+                if (e.type == EntityType::HIL) n_hil++;
+                else n_sil++;
+            }
+
+            // Entity badges
+            if (n_sil > 0) {
+                ImGui::TextColored(ImVec4(0.4f, 0.7f, 1.0f, 1.0f), "SIL:%d", n_sil);
+                ImGui::SameLine();
+            }
+            if (n_hil > 0) {
+                ImGui::TextColored(ImVec4(0.4f, 1.0f, 0.5f, 1.0f), "HIL:%d", n_hil);
+                ImGui::SameLine();
+            }
+            if (n_ent == 0) {
+                ImGui::TextDisabled("No entities");
+                ImGui::SameLine();
+            }
+
+            ImGui::Button("+SIL", ImVec2(38, 26));
+            ImGui::SameLine();
+            ImGui::Button("+HIL", ImVec2(38, 26));
+        }
+
+        ToolbarSeparator();
+
+        // ── STATUS (right-aligned) ──────────────────────────────
+        {
+            char status_buf[128];
+            float sr = 0;
+            if (!g_app.entities.empty())
+                sr = g_app.entities[0].config.mca.sample_rate;
+
+            snprintf(status_buf, sizeof(status_buf), "%.0f fps  |  MCA %.0f Hz  |  %d ent",
+                     g_app.fps, sr, (int)g_app.entities.size());
+            float status_w = ImGui::CalcTextSize(status_buf).x;
+            float avail = ImGui::GetContentRegionAvail().x;
+            if (avail > status_w + 16) {
+                ImGui::SameLine(ImGui::GetWindowWidth() - status_w - 16);
+                ImGui::TextColored(ImVec4(0.5f, 0.5f, 0.5f, 0.8f), "%s", status_buf);
+            }
+        }
+    }
+    ImGui::End();
+    ImGui::PopStyleColor();
+    ImGui::PopStyleVar(3);
+}
+
 // ── Entity Card (3D viewport placeholder + readout) ─────────────────
 
 static void DrawEntityCard(Entity& e) {
+    if (!e.show_card) return;
     ImGui::PushID(e.id);
     ImVec4 col = ColorFromFloat4(e.color);
 
@@ -223,7 +458,7 @@ static void DrawEntityCard(Entity& e) {
     ImGui::PushStyleColor(ImGuiCol_TitleBg, ImVec4(col.x * 0.3f, col.y * 0.3f, col.z * 0.3f, 1.0f));
     ImGui::PushStyleColor(ImGuiCol_TitleBgActive, ImVec4(col.x * 0.5f, col.y * 0.5f, col.z * 0.5f, 1.0f));
 
-    if (ImGui::Begin(title, nullptr, ImGuiWindowFlags_None)) {
+    if (ImGui::Begin(title, &e.show_card, ImGuiWindowFlags_None)) {
         // Header row: type badge + enable toggle + settings + remove
         ImGui::TextColored(col, "%s", type_str);
         ImGui::SameLine();
@@ -233,7 +468,7 @@ static void DrawEntityCard(Entity& e) {
         ImGui::SameLine();
         if (ImGui::SmallButton("Platform")) e.show_platform = !e.show_platform;
         ImGui::SameLine();
-        if (ImGui::SmallButton("Dynamics")) e.show_dynamics = !e.show_dynamics;
+        if (ImGui::SmallButton("Dynamics")) { s_show_dynamics = true; s_selected_dynamics_id = e.id; }
         ImGui::SameLine();
         if (ImGui::SmallButton("I/O")) e.show_console = !e.show_console;
         ImGui::SameLine();
@@ -282,11 +517,11 @@ static void DrawEntityCard(Entity& e) {
                 label = "ESP32 TELEMETRY";
                 label_col = IM_COL32(60, 200, 120, 255);  // green
             } else if (hil_connected) {
-                label = "LOCAL IK (no telemetry)";
+                label = "CONNECTED (awaiting telemetry)";
                 label_col = IM_COL32(240, 180, 50, 255);  // amber
             } else {
-                label = "LOCAL IK (ESP32 offline)";
-                label_col = IM_COL32(255, 100, 80, 255);  // red-orange
+                label = "OFFLINE";
+                label_col = IM_COL32(120, 120, 130, 200);  // dim grey
             }
             float overlay_y = p.y + 4.0f;
             if (label) {
@@ -1644,17 +1879,281 @@ static void DrawEntitySettings(Entity& e) {
     ImGui::PopID();
 }
 
-// ── Dynamics Window (motion feel parameters) ────────────────────────
+// ── Dynamics Panel (global, single instance with device selector) ────
 
-static void DrawDynamics(Entity& e) {
-    if (!e.show_dynamics) return;
+static void DrawDynamicsPanel() {
+    if (!s_show_dynamics) return;
 
-    ImGui::PushID(e.id + 3000);
-    char title[128];
-    snprintf(title, sizeof(title), "Dynamics: %s###dynamics_%d", e.name, e.id);
+    // Auto-select first entity if none selected or selection invalid
+    if (g_app.entities.empty()) {
+        ImGui::SetNextWindowSize(ImVec2(780, 860), ImGuiCond_FirstUseEver);
+        if (ImGui::Begin("Dynamics###dynamics_global", &s_show_dynamics)) {
+            ImGui::TextDisabled("No entities. Add a SIL or HIL entity first.");
+        }
+        ImGui::End();
+        return;
+    }
+    if (s_selected_dynamics_id < 0 || !g_app.findEntity(s_selected_dynamics_id)) {
+        s_selected_dynamics_id = g_app.entities[0].id;
+    }
+    Entity& e = *g_app.findEntity(s_selected_dynamics_id);
+
+    ImGui::PushID(3000);
 
     ImGui::SetNextWindowSize(ImVec2(780, 860), ImGuiCond_FirstUseEver);
-    if (ImGui::Begin(title, &e.show_dynamics)) {
+    if (ImGui::Begin("Dynamics###dynamics_global", &s_show_dynamics)) {
+
+        // ── Device selector ──
+        {
+            ImGui::TextColored(ImVec4(0.7f, 0.85f, 1.0f, 1.0f), "Device:");
+            ImGui::SameLine();
+            ImGui::PushItemWidth(200);
+            const char* type_str = (e.type == EntityType::SIL) ? "SIL" : "HIL";
+            char combo_preview[96];
+            snprintf(combo_preview, sizeof(combo_preview), "%s [%s]", e.name, type_str);
+            if (ImGui::BeginCombo("##dyn_device", combo_preview)) {
+                for (auto& ent : g_app.entities) {
+                    const char* ts = (ent.type == EntityType::SIL) ? "SIL" : "HIL";
+                    char label[96];
+                    snprintf(label, sizeof(label), "%s [%s]###ddev_%d", ent.name, ts, ent.id);
+                    bool selected = (ent.id == s_selected_dynamics_id);
+                    if (ImGui::Selectable(label, selected)) {
+                        s_selected_dynamics_id = ent.id;
+                    }
+                    if (selected) ImGui::SetItemDefaultFocus();
+                }
+                ImGui::EndCombo();
+            }
+            ImGui::PopItemWidth();
+            ImGui::SameLine();
+            ImVec4 ecol = ColorFromFloat4(e.color);
+            ImGui::TextColored(ecol, "[%s #%d]", type_str, e.id);
+        }
+        ImGui::Separator();
+
+        // ── Active Profile Banner ────────────────────────────────────
+        {
+            bool has_preset = (s_dyn_preset_idx >= 0 && s_dyn_preset_idx < (int)g_app.mca_presets.size());
+            const char* profile_name = has_preset ? g_app.mca_presets[s_dyn_preset_idx].name : "No Profile Selected";
+            bool is_user = has_preset && !g_app.mca_presets[s_dyn_preset_idx].is_builtin;
+
+            // Colored banner
+            ImVec4 banner_col = has_preset ? ImVec4(0.25f, 0.55f, 0.85f, 1.0f) : ImVec4(0.5f, 0.5f, 0.5f, 0.7f);
+            ImGui::TextColored(banner_col, "Profile:");
+            ImGui::SameLine();
+            ImGui::PushStyleColor(ImGuiCol_Text, has_preset ? ImVec4(0.9f, 0.95f, 1.0f, 1.0f) : ImVec4(0.6f, 0.6f, 0.6f, 1.0f));
+            ImGui::Text("%s%s", profile_name, is_user ? " (user)" : "");
+            ImGui::PopStyleColor();
+
+            // Copy / Paste buttons
+            ImGui::SameLine(ImGui::GetContentRegionAvail().x - 130);
+            if (ImGui::SmallButton("Copy")) {
+                // Serialize current staging to JSON string for clipboard
+                cJSON* root = cJSON_CreateObject();
+                cJSON_AddStringToObject(root, "type", "stewart_dynamics");
+                cJSON_AddNumberToObject(root, "intensity", e.config.intensity);
+                cJSON* gains = cJSON_AddArrayToObject(root, "axis_gain");
+                cJSON* inverts = cJSON_AddArrayToObject(root, "axis_invert");
+                for (int i = 0; i < 6; i++) {
+                    cJSON_AddItemToArray(gains, cJSON_CreateNumber(e.config.axis_gain[i]));
+                    cJSON_AddItemToArray(inverts, cJSON_CreateBool(e.config.axis_invert[i]));
+                }
+                // MCA params
+                MotionCueingConfig& mc = e.config.mca;
+                cJSON_AddNumberToObject(root, "mca_enabled", mc.enabled);
+                cJSON* chs = cJSON_AddArrayToObject(root, "channels");
+                for (int i = 0; i < 6; i++) {
+                    cJSON* ch = cJSON_CreateObject();
+                    cJSON_AddNumberToObject(ch, "hp_enabled", mc.channels[i].hp_enabled);
+                    cJSON_AddNumberToObject(ch, "hp_fc", mc.channels[i].hp.fc);
+                    cJSON_AddNumberToObject(ch, "hp_Q", mc.channels[i].hp.Q);
+                    cJSON_AddNumberToObject(ch, "lp_enabled", mc.channels[i].lp_enabled);
+                    cJSON_AddNumberToObject(ch, "lp_fc", mc.channels[i].lp.fc);
+                    cJSON_AddNumberToObject(ch, "lp_Q", mc.channels[i].lp.Q);
+                    cJSON_AddNumberToObject(ch, "gain", mc.channels[i].gain);
+                    cJSON_AddNumberToObject(ch, "rate_limit", mc.channels[i].rate_limit);
+                    cJSON_AddItemToArray(chs, ch);
+                }
+                cJSON* tilt = cJSON_AddObjectToObject(root, "tilt");
+                cJSON_AddNumberToObject(tilt, "enabled", mc.tilt.enabled);
+                cJSON_AddNumberToObject(tilt, "surge_gain", mc.tilt.surge_gain);
+                cJSON_AddNumberToObject(tilt, "sway_gain", mc.tilt.sway_gain);
+                cJSON_AddNumberToObject(tilt, "fc", mc.tilt.fc);
+                cJSON_AddNumberToObject(tilt, "Q", mc.tilt.Q);
+                cJSON_AddNumberToObject(tilt, "hp_enabled", mc.tilt.hp_enabled);
+                cJSON_AddNumberToObject(tilt, "hp_fc", mc.tilt.hp_fc);
+                cJSON_AddNumberToObject(tilt, "hp_Q", mc.tilt.hp_Q);
+                cJSON_AddNumberToObject(tilt, "surge_hp_enabled", mc.tilt.surge_hp_enabled);
+                cJSON_AddNumberToObject(tilt, "sway_hp_enabled", mc.tilt.sway_hp_enabled);
+                cJSON_AddNumberToObject(tilt, "sway_hp_fc", mc.tilt.sway_hp_fc);
+                cJSON_AddNumberToObject(tilt, "sway_hp_Q", mc.tilt.sway_hp_Q);
+                cJSON_AddNumberToObject(tilt, "hp_linked", mc.tilt.hp_linked);
+                if (has_preset) cJSON_AddStringToObject(root, "profile_name", profile_name);
+
+                char* str = cJSON_Print(root);
+                if (str) {
+                    ImGui::SetClipboardText(str);
+                    g_app.log(e.id, "dynamics", "Dynamics copied to clipboard");
+                    cJSON_free(str);
+                }
+                cJSON_Delete(root);
+            }
+            if (ImGui::IsItemHovered()) ImGui::SetTooltip("Copy all dynamics settings to clipboard as JSON.\nPaste into another entity or share with others.");
+
+            ImGui::SameLine();
+            if (ImGui::SmallButton("Paste")) {
+                const char* clip = ImGui::GetClipboardText();
+                if (clip && clip[0]) {
+                    cJSON* root = cJSON_Parse(clip);
+                    if (root) {
+                        cJSON* type_val = cJSON_GetObjectItem(root, "type");
+                        if (type_val && type_val->valuestring && strcmp(type_val->valuestring, "stewart_dynamics") == 0) {
+                            // Parse into staging
+                            auto& st = s_dyn_staging[e.id];
+                            cJSON* v;
+                            if ((v = cJSON_GetObjectItem(root, "intensity"))) st.intensity = (float)v->valuedouble;
+                            cJSON* gains_arr = cJSON_GetObjectItem(root, "axis_gain");
+                            if (gains_arr && cJSON_IsArray(gains_arr)) {
+                                for (int i = 0; i < 6 && i < cJSON_GetArraySize(gains_arr); i++)
+                                    st.axis_gain[i] = (float)cJSON_GetArrayItem(gains_arr, i)->valuedouble;
+                            }
+                            cJSON* inv_arr = cJSON_GetObjectItem(root, "axis_invert");
+                            if (inv_arr && cJSON_IsArray(inv_arr)) {
+                                for (int i = 0; i < 6 && i < cJSON_GetArraySize(inv_arr); i++)
+                                    st.axis_invert[i] = cJSON_IsTrue(cJSON_GetArrayItem(inv_arr, i));
+                            }
+                            if ((v = cJSON_GetObjectItem(root, "mca_enabled"))) st.mca.enabled = v->valueint;
+                            cJSON* chs_arr = cJSON_GetObjectItem(root, "channels");
+                            if (chs_arr && cJSON_IsArray(chs_arr)) {
+                                for (int i = 0; i < 6 && i < cJSON_GetArraySize(chs_arr); i++) {
+                                    cJSON* ch = cJSON_GetArrayItem(chs_arr, i);
+                                    if ((v = cJSON_GetObjectItem(ch, "hp_enabled"))) st.mca.channels[i].hp_enabled = v->valueint;
+                                    if ((v = cJSON_GetObjectItem(ch, "hp_fc"))) st.mca.channels[i].hp.fc = (float)v->valuedouble;
+                                    if ((v = cJSON_GetObjectItem(ch, "hp_Q"))) st.mca.channels[i].hp.Q = (float)v->valuedouble;
+                                    if ((v = cJSON_GetObjectItem(ch, "lp_enabled"))) st.mca.channels[i].lp_enabled = v->valueint;
+                                    if ((v = cJSON_GetObjectItem(ch, "lp_fc"))) st.mca.channels[i].lp.fc = (float)v->valuedouble;
+                                    if ((v = cJSON_GetObjectItem(ch, "lp_Q"))) st.mca.channels[i].lp.Q = (float)v->valuedouble;
+                                    if ((v = cJSON_GetObjectItem(ch, "gain"))) st.mca.channels[i].gain = (float)v->valuedouble;
+                                    if ((v = cJSON_GetObjectItem(ch, "rate_limit"))) st.mca.channels[i].rate_limit = (float)v->valuedouble;
+                                }
+                            }
+                            cJSON* tilt_obj = cJSON_GetObjectItem(root, "tilt");
+                            if (tilt_obj) {
+                                if ((v = cJSON_GetObjectItem(tilt_obj, "enabled"))) st.mca.tilt.enabled = v->valueint;
+                                if ((v = cJSON_GetObjectItem(tilt_obj, "surge_gain"))) st.mca.tilt.surge_gain = (float)v->valuedouble;
+                                if ((v = cJSON_GetObjectItem(tilt_obj, "sway_gain"))) st.mca.tilt.sway_gain = (float)v->valuedouble;
+                                if ((v = cJSON_GetObjectItem(tilt_obj, "fc"))) st.mca.tilt.fc = (float)v->valuedouble;
+                                if ((v = cJSON_GetObjectItem(tilt_obj, "Q"))) st.mca.tilt.Q = (float)v->valuedouble;
+                                if ((v = cJSON_GetObjectItem(tilt_obj, "hp_enabled"))) st.mca.tilt.hp_enabled = v->valueint;
+                                if ((v = cJSON_GetObjectItem(tilt_obj, "hp_fc"))) st.mca.tilt.hp_fc = (float)v->valuedouble;
+                                if ((v = cJSON_GetObjectItem(tilt_obj, "hp_Q"))) st.mca.tilt.hp_Q = (float)v->valuedouble;
+                                if ((v = cJSON_GetObjectItem(tilt_obj, "surge_hp_enabled"))) st.mca.tilt.surge_hp_enabled = v->valueint;
+                                if ((v = cJSON_GetObjectItem(tilt_obj, "sway_hp_enabled"))) st.mca.tilt.sway_hp_enabled = v->valueint;
+                                if ((v = cJSON_GetObjectItem(tilt_obj, "sway_hp_fc"))) st.mca.tilt.sway_hp_fc = (float)v->valuedouble;
+                                if ((v = cJSON_GetObjectItem(tilt_obj, "sway_hp_Q"))) st.mca.tilt.sway_hp_Q = (float)v->valuedouble;
+                                if ((v = cJSON_GetObjectItem(tilt_obj, "hp_linked"))) st.mca.tilt.hp_linked = v->valueint;
+                            }
+                            cJSON* pname = cJSON_GetObjectItem(root, "profile_name");
+                            g_app.log(e.id, "dynamics", "Dynamics pasted from clipboard%s%s",
+                                pname ? " (from profile: " : "", pname ? pname->valuestring : "");
+                            if (pname && pname->valuestring) {
+                                g_app.log(e.id, "dynamics", ")");
+                            }
+                        } else {
+                            g_app.log(e.id, "dynamics", "Clipboard does not contain dynamics data");
+                        }
+                        cJSON_Delete(root);
+                    } else {
+                        g_app.log(e.id, "dynamics", "Clipboard does not contain valid JSON");
+                    }
+                }
+            }
+            if (ImGui::IsItemHovered()) ImGui::SetTooltip("Paste dynamics settings from clipboard.\nApply button will commit them to the live pipeline.");
+        }
+
+        // ── Signal Flow Diagram ──────────────────────────────────────
+        {
+            MotionCueingConfig& mca_ref = e.config.mca;
+            float diagram_h = 48.0f;
+            ImVec2 cursor = ImGui::GetCursorScreenPos();
+            ImDrawList* dl = ImGui::GetWindowDrawList();
+            float avail_w = ImGui::GetContentRegionAvail().x;
+
+            // Block definitions: label, enabled flag, color
+            struct FlowBlock { const char* label; bool enabled; ImU32 col; };
+            FlowBlock blocks[] = {
+                { "Input",      true,                                      IM_COL32(80,  130, 180, 255) },
+                { "Pre-Filter", e.config.input_filter.enabled != 0,        IM_COL32(100, 140, 100, 255) },
+                { "Washout",    mca_ref.enabled != 0,                      IM_COL32(140, 120, 180, 255) },
+                { "Tilt",       mca_ref.tilt.enabled != 0,                 IM_COL32(180, 140, 80,  255) },
+                { "Gain/Inv",   true,                                      IM_COL32(80,  160, 140, 255) },
+                { "IK",         true,                                      IM_COL32(160, 100, 100, 255) },
+                { "Output",     true,                                      IM_COL32(100, 100, 160, 255) },
+            };
+            int n_blocks = sizeof(blocks) / sizeof(blocks[0]);
+            float gap = 6.0f;
+            float arrow_w = 14.0f;
+            float total_gaps = (float)(n_blocks - 1) * (gap + arrow_w + gap);
+            float block_w = (avail_w - total_gaps) / (float)n_blocks;
+            if (block_w < 40.0f) block_w = 40.0f;
+            float block_h = 28.0f;
+            float y_center = cursor.y + diagram_h * 0.5f;
+            float x = cursor.x;
+
+            for (int i = 0; i < n_blocks; i++) {
+                ImU32 bg = blocks[i].enabled ? blocks[i].col : IM_COL32(50, 50, 50, 200);
+                ImU32 border = blocks[i].enabled ? IM_COL32(200, 200, 200, 180) : IM_COL32(80, 80, 80, 150);
+                ImU32 text_col = blocks[i].enabled ? IM_COL32(255, 255, 255, 255) : IM_COL32(120, 120, 120, 200);
+
+                ImVec2 p0(x, y_center - block_h * 0.5f);
+                ImVec2 p1(x + block_w, y_center + block_h * 0.5f);
+                dl->AddRectFilled(p0, p1, bg, 4.0f);
+                dl->AddRect(p0, p1, border, 4.0f);
+
+                // Centered label
+                ImVec2 ts = ImGui::CalcTextSize(blocks[i].label);
+                dl->AddText(ImVec2(x + (block_w - ts.x) * 0.5f, y_center - ts.y * 0.5f), text_col, blocks[i].label);
+
+                // Live signal level bar (tiny bar under block)
+                if (i == 0 || i == 4 || i == 6) {
+                    float max_sig = 0.0f;
+                    for (int a = 0; a < 6; a++) {
+                        float v = 0;
+                        if (i == 0) v = fabsf(e.state.input_pct[a]);
+                        else if (i == 4) v = fabsf(e.last_scaled_pct[a]);
+                        else if (i == 6) v = e.state.servo_util[a];
+                        if (v > max_sig) max_sig = v;
+                    }
+                    float bar_frac = max_sig / 100.0f;
+                    if (bar_frac > 1.0f) bar_frac = 1.0f;
+                    float bar_y = p1.y + 2.0f;
+                    dl->AddRectFilled(ImVec2(x, bar_y), ImVec2(x + block_w * bar_frac, bar_y + 3.0f),
+                        IM_COL32(100, 200, 100, 180), 1.0f);
+                    dl->AddRect(ImVec2(x, bar_y), ImVec2(x + block_w, bar_y + 3.0f),
+                        IM_COL32(60, 60, 60, 120), 1.0f);
+                }
+
+                x += block_w;
+
+                // Arrow between blocks
+                if (i < n_blocks - 1) {
+                    x += gap;
+                    float ay = y_center;
+                    ImU32 arrow_col = IM_COL32(140, 140, 140, 200);
+                    dl->AddLine(ImVec2(x, ay), ImVec2(x + arrow_w - 4, ay), arrow_col, 1.5f);
+                    // Arrowhead
+                    dl->AddTriangleFilled(
+                        ImVec2(x + arrow_w, ay),
+                        ImVec2(x + arrow_w - 5, ay - 3),
+                        ImVec2(x + arrow_w - 5, ay + 3),
+                        arrow_col);
+                    x += arrow_w + gap;
+                }
+            }
+
+            ImGui::Dummy(ImVec2(avail_w, diagram_h));
+        }
+        ImGui::Separator();
 
         MotionCueingConfig& mca = e.config.mca;
         const char* axis_names[] = {"Surge", "Sway", "Heave", "Roll", "Pitch", "Yaw"};
@@ -1672,19 +2171,12 @@ static void DrawDynamics(Entity& e) {
             initMotionCueing(&mca, 60.0f);
 
         // ── Staging buffer: sliders edit this copy, Apply commits to live ──
-        struct DynStaging {
-            MotionCueingConfig mca;
-            float intensity;
-            float axis_gain[6];
-            float occupant[3];
-            bool  initialized;
-        };
-        static std::map<int, DynStaging> s_dyn_staging;
         auto& stg = s_dyn_staging[e.id];
         if (!stg.initialized) {
             stg.mca = mca;
             stg.intensity = e.config.intensity;
             memcpy(stg.axis_gain, e.config.axis_gain, sizeof(stg.axis_gain));
+            memcpy(stg.axis_invert, e.config.axis_invert, sizeof(stg.axis_invert));
             memcpy(stg.occupant, e.config.occupant, sizeof(stg.occupant));
             stg.initialized = true;
         }
@@ -1693,6 +2185,7 @@ static void DrawDynamics(Entity& e) {
         bool stg_dirty = false;
         if (stg.intensity != e.config.intensity) stg_dirty = true;
         if (memcmp(stg.axis_gain, e.config.axis_gain, sizeof(stg.axis_gain)) != 0) stg_dirty = true;
+        if (memcmp(stg.axis_invert, e.config.axis_invert, sizeof(stg.axis_invert)) != 0) stg_dirty = true;
         if (memcmp(stg.occupant, e.config.occupant, sizeof(stg.occupant)) != 0) stg_dirty = true;
         if (stg.mca.enabled != mca.enabled) stg_dirty = true;
         if (stg.mca.tilt.enabled != mca.tilt.enabled) stg_dirty = true;
@@ -1738,6 +2231,7 @@ static void DrawDynamics(Entity& e) {
                     mca.sample_rate = sr;
                     e.config.intensity = stg.intensity;
                     memcpy(e.config.axis_gain, stg.axis_gain, sizeof(e.config.axis_gain));
+                    memcpy(e.config.axis_invert, stg.axis_invert, sizeof(e.config.axis_invert));
                     memcpy(e.config.occupant, stg.occupant, sizeof(e.config.occupant));
                     // Recalculate all biquad coefficients at current sample rate
                     for (int i = 0; i < 6; i++) {
@@ -1769,6 +2263,7 @@ static void DrawDynamics(Entity& e) {
                     stg.mca = mca;
                     stg.intensity = e.config.intensity;
                     memcpy(stg.axis_gain, e.config.axis_gain, sizeof(stg.axis_gain));
+                    memcpy(stg.axis_invert, e.config.axis_invert, sizeof(stg.axis_invert));
                     memcpy(stg.occupant, e.config.occupant, sizeof(stg.occupant));
                 }
                 if (ImGui::IsItemHovered()) ImGui::SetTooltip("Discard staged changes and reload from live config.");
@@ -1788,7 +2283,7 @@ static void DrawDynamics(Entity& e) {
         // STICKY ROW 2: Preset selector + MCA enable + management
         // ═══════════════════════════════════════════════════════════════
         {
-            static int  selected_preset_idx = -1;
+            int& selected_preset_idx = s_dyn_preset_idx;
             static char new_preset_name[64] = "";
             static bool show_save_popup = false;
 
@@ -1949,13 +2444,16 @@ static void DrawDynamics(Entity& e) {
             "Applied AFTER MCA filtering, BEFORE inverse kinematics.\n"
             "200%% = double strength, 50%% = half strength.");
 
-        // 2 rows of 3 gains: label + slider per cell
-        if (ImGui::BeginTable("##gain_table", 7, ImGuiTableFlags_SizingStretchSame)) {
+        // 2 rows of 3 gains: label + inv checkbox + slider per cell
+        if (ImGui::BeginTable("##gain_table", 10, ImGuiTableFlags_SizingStretchSame)) {
             ImGui::TableSetupColumn("l0", ImGuiTableColumnFlags_WidthFixed, 38.0f);
+            ImGui::TableSetupColumn("i0", ImGuiTableColumnFlags_WidthFixed, 24.0f);
             ImGui::TableSetupColumn("s0", 0, 1.0f);
             ImGui::TableSetupColumn("l1", ImGuiTableColumnFlags_WidthFixed, 38.0f);
+            ImGui::TableSetupColumn("i1", ImGuiTableColumnFlags_WidthFixed, 24.0f);
             ImGui::TableSetupColumn("s1", 0, 1.0f);
             ImGui::TableSetupColumn("l2", ImGuiTableColumnFlags_WidthFixed, 38.0f);
+            ImGui::TableSetupColumn("i2", ImGuiTableColumnFlags_WidthFixed, 24.0f);
             ImGui::TableSetupColumn("s2", 0, 1.0f);
             ImGui::TableSetupColumn("btn", ImGuiTableColumnFlags_WidthFixed, 50.0f);
 
@@ -1963,9 +2461,14 @@ static void DrawDynamics(Entity& e) {
                 ImGui::TableNextRow();
                 for (int col = 0; col < 3; col++) {
                     int i = row * 3 + col;
-                    ImGui::TableSetColumnIndex(col * 2);
+                    ImGui::TableSetColumnIndex(col * 3);
                     ImGui::TextUnformatted(axis_names[i]);
-                    ImGui::TableSetColumnIndex(col * 2 + 1);
+                    ImGui::TableSetColumnIndex(col * 3 + 1);
+                    char inv_lbl[32];
+                    snprintf(inv_lbl, sizeof(inv_lbl), "##inv_%d", i);
+                    ImGui::Checkbox(inv_lbl, &stg.axis_invert[i]);
+                    if (ImGui::IsItemHovered()) ImGui::SetTooltip("Invert %s axis (flip sign)", axis_names[i]);
+                    ImGui::TableSetColumnIndex(col * 3 + 2);
                     ImGui::PushItemWidth(-1);
                     char lbl[32];
                     snprintf(lbl, sizeof(lbl), "##gain_%d", i);
@@ -1974,10 +2477,10 @@ static void DrawDynamics(Entity& e) {
                     ImGui::PopItemWidth();
                 }
                 if (row == 0) {
-                    ImGui::TableSetColumnIndex(6);
+                    ImGui::TableSetColumnIndex(9);
                     if (ImGui::SmallButton("Reset##gains")) {
                         stg.intensity = 100.0f;
-                        for (int j = 0; j < 6; j++) stg.axis_gain[j] = 100.0f;
+                        for (int j = 0; j < 6; j++) { stg.axis_gain[j] = 100.0f; stg.axis_invert[j] = false; }
                     }
                 }
             }
@@ -2989,42 +3492,75 @@ static void DrawDynamics(Entity& e) {
                 ImGui::Unindent(8);
             }
 
-            if (ImGui::BeginTable("##tilt_table", 3, ImGuiTableFlags_SizingStretchSame)) {
+            if (ImGui::BeginTable("##tilt_table", 4, ImGuiTableFlags_SizingStretchSame)) {
                 ImGui::TableSetupColumn("lbl", ImGuiTableColumnFlags_WidthFixed, 100.0f);
+                ImGui::TableSetupColumn("inv", ImGuiTableColumnFlags_WidthFixed, 28.0f);
                 ImGui::TableSetupColumn("slider", 0, 1.0f);
                 ImGui::TableSetupColumn("unit", ImGuiTableColumnFlags_WidthFixed, 1.0f);
 
-                // Surge -> Pitch gain
+                // Surge -> Pitch gain + invert
                 ImGui::TableNextRow();
                 ImGui::TableSetColumnIndex(0);
                 ImGui::TextUnformatted("Surge -> Pitch");
                 ImGui::TableSetColumnIndex(1);
+                {
+                    bool surge_inv = stg.mca.tilt.surge_gain < 0.0f;
+                    if (ImGui::Checkbox("##sg_inv", &surge_inv)) {
+                        float mag = fabsf(stg.mca.tilt.surge_gain);
+                        if (mag < 0.001f) mag = 0.08f;
+                        stg.mca.tilt.surge_gain = surge_inv ? -mag : mag;
+                    }
+                    if (ImGui::IsItemHovered()) ImGui::SetTooltip("Invert surge tilt direction");
+                }
+                ImGui::TableSetColumnIndex(2);
                 ImGui::PushItemWidth(-1);
-                ImGui::DragFloat("##sg", &stg.mca.tilt.surge_gain, 0.005f, 0.0f, 1.0f, "%.3f");
-                if (ImGui::IsItemHovered()) ImGui::SetTooltip(
-                    "Tilt gain: %% of pitch per %% of sustained surge.\n\n"
-                    "Braking tilts the rig forward, acceleration tilts back.\n"
-                    "0.08 = subtle, 0.15 = moderate, 0.25 = strong, 0.35 = aggressive");
+                {
+                    float abs_sg = fabsf(stg.mca.tilt.surge_gain);
+                    if (ImGui::DragFloat("##sg", &abs_sg, 0.005f, 0.0f, 1.0f, "%.3f")) {
+                        stg.mca.tilt.surge_gain = (stg.mca.tilt.surge_gain < 0.0f) ? -abs_sg : abs_sg;
+                    }
+                    if (ImGui::IsItemHovered()) ImGui::SetTooltip(
+                        "Tilt gain: %% of pitch per %% of sustained surge.\n\n"
+                        "Braking tilts the rig forward, acceleration tilts back.\n"
+                        "Use the checkbox to invert direction.\n"
+                        "0.08 = subtle, 0.15 = moderate, 0.25 = strong, 0.35 = aggressive");
+                }
                 ImGui::PopItemWidth();
 
-                // Sway -> Roll gain
+                // Sway -> Roll gain + invert
                 ImGui::TableNextRow();
                 ImGui::TableSetColumnIndex(0);
                 ImGui::TextUnformatted("Sway -> Roll");
                 ImGui::TableSetColumnIndex(1);
+                {
+                    bool sway_inv = stg.mca.tilt.sway_gain < 0.0f;
+                    if (ImGui::Checkbox("##sw_inv", &sway_inv)) {
+                        float mag = fabsf(stg.mca.tilt.sway_gain);
+                        if (mag < 0.001f) mag = 0.08f;
+                        stg.mca.tilt.sway_gain = sway_inv ? -mag : mag;
+                    }
+                    if (ImGui::IsItemHovered()) ImGui::SetTooltip("Invert sway tilt direction");
+                }
+                ImGui::TableSetColumnIndex(2);
                 ImGui::PushItemWidth(-1);
-                ImGui::DragFloat("##sw", &stg.mca.tilt.sway_gain, 0.005f, 0.0f, 1.0f, "%.3f");
-                if (ImGui::IsItemHovered()) ImGui::SetTooltip(
-                    "Tilt gain: %% of roll per %% of sustained sway.\n\n"
-                    "Sustained cornering tilts the rig into the turn,\n"
-                    "letting gravity simulate lateral G-force.");
+                {
+                    float abs_sw = fabsf(stg.mca.tilt.sway_gain);
+                    if (ImGui::DragFloat("##sw", &abs_sw, 0.005f, 0.0f, 1.0f, "%.3f")) {
+                        stg.mca.tilt.sway_gain = (stg.mca.tilt.sway_gain < 0.0f) ? -abs_sw : abs_sw;
+                    }
+                    if (ImGui::IsItemHovered()) ImGui::SetTooltip(
+                        "Tilt gain: %% of roll per %% of sustained sway.\n\n"
+                        "Sustained cornering tilts the rig into the turn,\n"
+                        "letting gravity simulate lateral G-force.\n"
+                        "Use the checkbox to invert direction.");
+                }
                 ImGui::PopItemWidth();
 
                 // LP cutoff
                 ImGui::TableNextRow();
                 ImGui::TableSetColumnIndex(0);
                 ImGui::TextUnformatted("LP Cutoff");
-                ImGui::TableSetColumnIndex(1);
+                ImGui::TableSetColumnIndex(2);
                 ImGui::PushItemWidth(-1);
                 ImGui::DragFloat("##tfc", &stg.mca.tilt.fc, 0.01f, 0.05f, 5.0f, "%.2f Hz");
                 if (ImGui::IsItemHovered()) ImGui::SetTooltip(
@@ -3037,7 +3573,7 @@ static void DrawDynamics(Entity& e) {
                 ImGui::TableNextRow();
                 ImGui::TableSetColumnIndex(0);
                 ImGui::TextUnformatted("LP Q");
-                ImGui::TableSetColumnIndex(1);
+                ImGui::TableSetColumnIndex(2);
                 ImGui::PushItemWidth(-1);
                 ImGui::DragFloat("##tq", &stg.mca.tilt.Q, 0.01f, 0.1f, 5.0f, "%.3f");
                 if (ImGui::IsItemHovered()) ImGui::SetTooltip("LP filter Q for tilt. 0.707 = Butterworth (clean, no overshoot).");
@@ -3230,10 +3766,8 @@ struct InputSourceDef {
 
 static const InputSourceDef g_input_sources[] = {
     { InputSource::Manual,          "Manual Sliders",   "MAN",  {0.60f, 0.70f, 0.80f, 1.0f}, {0.25f, 0.28f, 0.32f, 1.0f} },
-    { InputSource::SimToolsUDP,     "SimTools UDP",     "UDP",  {0.20f, 0.83f, 0.60f, 1.0f}, {0.08f, 0.33f, 0.24f, 1.0f} },
     { InputSource::CapturePlayback, "Capture Playback", "CAP",  {0.95f, 0.75f, 0.20f, 1.0f}, {0.38f, 0.30f, 0.08f, 1.0f} },
-    { InputSource::TestSignal,      "Test Signal",      "TST",  {0.75f, 0.50f, 0.95f, 1.0f}, {0.30f, 0.20f, 0.38f, 1.0f} },
-    { InputSource::AssettoCorsa, "Assetto Corsa",    "AC",   {0.95f, 0.30f, 0.30f, 1.0f}, {0.38f, 0.12f, 0.12f, 1.0f} },
+    { InputSource::Plugin,          "Plugin",           "PLG",  {0.20f, 0.83f, 0.60f, 1.0f}, {0.08f, 0.33f, 0.24f, 1.0f} },
 };
 static const int g_num_input_sources = sizeof(g_input_sources) / sizeof(g_input_sources[0]);
 
@@ -3252,12 +3786,6 @@ static void GetSourceStatus(InputSource id, char* buf, int buf_sz) {
                 snprintf(buf, buf_sz, "6 axes  |  peak %.0f%%", mx);
             }
             break;
-        case InputSource::SimToolsUDP:
-            if (g_app.simtools_active)
-                snprintf(buf, buf_sz, ":%d  %.0f Hz  %d rx", g_app.simtools_port, g_app.simtools_rate, g_app.udp.packets_received.load());
-            else
-                snprintf(buf, buf_sz, ":%d  %d-bit  stopped", g_app.simtools_port, g_app.simtools_bit_depth);
-            break;
         case InputSource::CapturePlayback:
             if (g_app.capture_playing && g_app.capture_playback_idx >= 0 &&
                 g_app.capture_playback_idx < (int)g_app.saved_recordings.size()) {
@@ -3268,21 +3796,6 @@ static void GetSourceStatus(InputSource id, char* buf, int buf_sz) {
                 int n = (int)g_app.saved_recordings.size();
                 snprintf(buf, buf_sz, "%d capture%s  %s", n, n != 1 ? "s" : "", n > 0 ? "ready" : "empty");
             }
-            break;
-        case InputSource::TestSignal: {
-            if (g_app.test_signal.enabled) {
-                double t = g_app.frame_time - g_app.test_signal_start_time;
-                snprintf(buf, buf_sz, "Sine  running %.0fs", t);
-            } else {
-                snprintf(buf, buf_sz, "Sine  stopped");
-            }
-            break;
-        }
-        case InputSource::AssettoCorsa:
-            if (g_app.ac_active)
-                snprintf(buf, buf_sz, "SHM  %.0f Hz  %d rx", g_app.ac.rate_hz.load(), g_app.ac.packets_received.load());
-            else
-                snprintf(buf, buf_sz, "SHM  stopped");
             break;
         case InputSource::Plugin:
             if (g_app.active_plugin_idx >= 0 && g_app.active_plugin_idx < g_app.plugin_mgr.pluginCount()) {
@@ -3315,9 +3828,8 @@ static void DrawBadge(ImDrawList* dl, ImVec2 pos, const char* text, ImVec4 color
 
 // Map saved recording source string to badge icon + color
 static void GetCaptureSourceBadge(const char* source, const char** icon, const char** label, ImVec4* color) {
-    if (strcmp(source, "udp") == 0)           { *icon = "UDP"; *label = "SimTools UDP";     *color = ImVec4(0.20f, 0.83f, 0.60f, 1.0f); }
-    else if (strcmp(source, "capture") == 0)  { *icon = "CAP"; *label = "Capture Playback"; *color = ImVec4(0.95f, 0.75f, 0.20f, 1.0f); }
-    else if (strcmp(source, "test_signal") == 0) { *icon = "TST"; *label = "Test Signal";   *color = ImVec4(0.75f, 0.50f, 0.95f, 1.0f); }
+    if (strcmp(source, "capture") == 0)       { *icon = "CAP"; *label = "Capture Playback"; *color = ImVec4(0.95f, 0.75f, 0.20f, 1.0f); }
+    else if (strcmp(source, "plugin") == 0)  { *icon = "PLG"; *label = "Plugin";            *color = ImVec4(0.20f, 0.83f, 0.60f, 1.0f); }
     else                                     { *icon = "MAN"; *label = "Manual";            *color = ImVec4(0.60f, 0.70f, 0.80f, 1.0f); }
 }
 
@@ -3334,10 +3846,321 @@ static void FormatDateTime(double unix_time, char* buf, int buf_sz) {
     strftime(buf, buf_sz, "%b %d %Y  %I:%M %p", &lt);
 }
 
+// ── Plugin Parameter Auto-Layout Engine ──────────────────────────────
+//
+// Detects per-axis parameter groups by naming convention:
+//   prefix_surge..yaw  (e.g. freq_surge, amp_sway)
+//   surge_suffix..yaw  (e.g. surge_en, sway_en)
+// Groups with 3+ axes → compact table with Axis rows × property columns.
+// Remaining params → responsive 2-column grid (labels left, widgets right).
+// Bool-only axis groups with 1 column → inline checkbox row.
+
+static float* PluginParamPtr(PluginInstance& plug, int pidx) {
+    const char* name = plug.info->params[pidx].name;
+    for (auto& pv : plug.param_values)
+        if (pv.name == name) return &pv.value;
+    return nullptr;
+}
+
+static bool DrawPluginWidget(PluginInstance& plug, int pidx, bool compact) {
+    const StewartParamDef& pd = plug.info->params[pidx];
+    float* val = PluginParamPtr(plug, pidx);
+    if (!val) return false;
+
+    const char* label = compact ? "##v" : (pd.display_name ? pd.display_name : pd.name);
+    if (compact) ImGui::SetNextItemWidth(-1);
+
+    bool changed = false;
+    switch (pd.type) {
+        case STEWART_PARAM_FLOAT: {
+            float range = pd.max_val - pd.min_val;
+            float spd = range >= 100 ? 1.0f : range >= 10 ? 0.1f : 0.01f;
+            const char* fmt = range >= 100 ? "%.0f" : range >= 10 ? "%.1f" : "%.2f";
+            changed = ImGui::DragFloat(label, val, spd, pd.min_val, pd.max_val, fmt);
+            break;
+        }
+        case STEWART_PARAM_INT: {
+            int iv = (int)*val;
+            if (ImGui::DragInt(label, &iv, 1.0f, (int)pd.min_val, (int)pd.max_val)) {
+                *val = (float)iv; changed = true;
+            }
+            break;
+        }
+        case STEWART_PARAM_BOOL: {
+            bool bv = *val != 0.0f;
+            if (ImGui::Checkbox(label, &bv)) {
+                *val = bv ? 1.0f : 0.0f; changed = true;
+            }
+            break;
+        }
+        case STEWART_PARAM_ENUM: {
+            int ev = (int)*val;
+            if (pd.enum_labels && ImGui::Combo(label, &ev, pd.enum_labels)) {
+                *val = (float)ev; changed = true;
+            }
+            break;
+        }
+    }
+    if (changed) g_app.plugin_mgr.setParam(pd.name, *val);
+    if (pd.description && ImGui::IsItemHovered()) ImGui::SetTooltip("%s", pd.description);
+    return changed;
+}
+
+static void DrawPluginParamsLayout(PluginInstance& plug) {
+    if (!plug.info || plug.info->param_count <= 0 || !plug.info->params) return;
+
+    const int N = plug.info->param_count;
+    const StewartParamDef* P = plug.info->params;
+
+    static const char* ax_suf[6] = {"_surge","_sway","_heave","_roll","_pitch","_yaw"};
+    static const char* ax_pre[6] = {"surge_","sway_","heave_","roll_","pitch_","yaw_"};
+    static const char* ax_lbl[6] = {"Surge","Sway","Heave","Roll","Pitch","Yaw"};
+
+    // Per-axis group descriptor
+    struct AxGrp {
+        std::string key, header;
+        int pidx[6];       // param index per axis (-1 = missing)
+        int type;          // StewartParamType
+    };
+
+    std::vector<AxGrp> groups;
+    std::vector<bool> used(N, false);
+
+    // Helper: find or create axis group, record param→axis mapping
+    auto assign = [&](const std::string& key, int p, int axis) {
+        for (auto& g : groups) {
+            if (g.key == key) { g.pidx[axis] = p; used[p] = true; return; }
+        }
+        AxGrp g;
+        g.key = key;
+        g.type = P[p].type;
+        for (int i = 0; i < 6; i++) g.pidx[i] = -1;
+        g.pidx[axis] = p;
+        // Derive column header: strip axis word from display_name
+        std::string dn = P[p].display_name ? P[p].display_name : key;
+        for (int a = 0; a < 6; a++) {
+            std::string ax = ax_lbl[a];
+            if (dn.size() >= ax.size() && dn.substr(0, ax.size()) == ax) {
+                dn = dn.substr(ax.size());
+                while (!dn.empty() && dn[0] == ' ') dn.erase(0, 1);
+                break;
+            }
+            if (dn.size() >= ax.size() && dn.substr(dn.size() - ax.size()) == ax) {
+                dn = dn.substr(0, dn.size() - ax.size());
+                while (!dn.empty() && dn.back() == ' ') dn.pop_back();
+                break;
+            }
+        }
+        g.header = dn.empty() ? key : dn;
+        used[p] = true;
+        groups.push_back(g);
+    };
+
+    // Scan all params for axis naming patterns
+    for (int p = 0; p < N; p++) {
+        const char* nm = P[p].name;
+        if (!nm) continue;
+        size_t len = strlen(nm);
+        bool found = false;
+        // Suffix pattern: freq_surge, amp_sway, etc.
+        for (int a = 0; a < 6 && !found; a++) {
+            size_t sl = strlen(ax_suf[a]);
+            if (len > sl && strcmp(nm + len - sl, ax_suf[a]) == 0) {
+                assign(std::string(nm, len - sl), p, a);
+                found = true;
+            }
+        }
+        // Prefix pattern: surge_en, sway_en, etc.
+        for (int a = 0; a < 6 && !found; a++) {
+            size_t pl = strlen(ax_pre[a]);
+            if (len > pl && strncmp(nm, ax_pre[a], pl) == 0) {
+                assign(std::string(nm + pl), p, a);
+                found = true;
+            }
+        }
+    }
+
+    // Prune groups with < 3 axes (likely coincidental name matches)
+    for (int g = (int)groups.size() - 1; g >= 0; g--) {
+        int cnt = 0;
+        for (int a = 0; a < 6; a++) if (groups[g].pidx[a] >= 0) cnt++;
+        if (cnt < 3) {
+            for (int a = 0; a < 6; a++)
+                if (groups[g].pidx[a] >= 0) used[groups[g].pidx[a]] = false;
+            groups.erase(groups.begin() + g);
+        }
+    }
+
+    // Collect global params (not in any axis group)
+    std::vector<int> globals;
+    for (int p = 0; p < N; p++) if (!used[p]) globals.push_back(p);
+
+    // ═══ RENDER GLOBAL PARAMS ═══
+    if (!globals.empty()) {
+        std::vector<int> bools, others;
+        for (int p : globals) {
+            if (P[p].type == STEWART_PARAM_BOOL) bools.push_back(p);
+            else others.push_back(p);
+        }
+
+        // Non-bool params in a responsive label + widget grid
+        if (!others.empty()) {
+            float avail = ImGui::GetContentRegionAvail().x;
+            int cols = (avail > 450 && (int)others.size() >= 2) ? 2 : 1;
+
+            if (ImGui::BeginTable("##pg", cols * 2, ImGuiTableFlags_SizingFixedFit)) {
+                for (int c = 0; c < cols; c++) {
+                    ImGui::TableSetupColumn("##l", ImGuiTableColumnFlags_WidthFixed, 110);
+                    ImGui::TableSetupColumn("##w", ImGuiTableColumnFlags_WidthStretch);
+                }
+                for (int i = 0; i < (int)others.size(); i++) {
+                    if (i % cols == 0) ImGui::TableNextRow();
+                    int p = others[i];
+                    ImGui::TableNextColumn();
+                    ImGui::AlignTextToFramePadding();
+                    ImGui::TextUnformatted(P[p].display_name ? P[p].display_name : P[p].name);
+                    if (P[p].description && ImGui::IsItemHovered())
+                        ImGui::SetTooltip("%s", P[p].description);
+                    ImGui::TableNextColumn();
+                    ImGui::PushID(p);
+                    DrawPluginWidget(plug, p, true);
+                    ImGui::PopID();
+                }
+                ImGui::EndTable();
+            }
+        }
+
+        // Bool params: inline row with spacing
+        if (!bools.empty()) {
+            if (!others.empty()) ImGui::Spacing();
+            for (int i = 0; i < (int)bools.size(); i++) {
+                if (i > 0) ImGui::SameLine(0, 16);
+                ImGui::PushID(bools[i]);
+                DrawPluginWidget(plug, bools[i], false);
+                ImGui::PopID();
+            }
+        }
+    }
+
+    // ═══ RENDER PER-AXIS TABLE ═══
+    if (!groups.empty()) {
+        if (!globals.empty()) { ImGui::Spacing(); ImGui::Separator(); }
+
+        // Separate value groups from bool (enable) groups
+        std::vector<int> val_gi, bool_gi;
+        for (int g = 0; g < (int)groups.size(); g++) {
+            if (groups[g].type == STEWART_PARAM_BOOL) bool_gi.push_back(g);
+            else val_gi.push_back(g);
+        }
+
+        // Special case: only bool axis groups with 1 column → inline checkbox row
+        if (val_gi.empty() && bool_gi.size() == 1) {
+            auto& bg = groups[bool_gi[0]];
+            ImGui::TextDisabled("%s:", bg.header.c_str());
+            ImGui::SameLine();
+            for (int a = 0; a < 6; a++) {
+                if (a > 0) ImGui::SameLine(0, 12);
+                int pidx = bg.pidx[a];
+                if (pidx >= 0) {
+                    float* val = PluginParamPtr(plug, pidx);
+                    if (val) {
+                        ImGui::PushID(pidx);
+                        bool bv = *val != 0.0f;
+                        if (ImGui::Checkbox(ax_lbl[a], &bv)) {
+                            *val = bv ? 1.0f : 0.0f;
+                            g_app.plugin_mgr.setParam(P[pidx].name, *val);
+                        }
+                        if (P[pidx].description && ImGui::IsItemHovered())
+                            ImGui::SetTooltip("%s", P[pidx].description);
+                        ImGui::PopID();
+                    }
+                }
+            }
+            return;
+        }
+
+        // General case: table with Axis column + value columns + enable columns
+        int n_cols = 1 + (int)val_gi.size() + (int)bool_gi.size();
+        ImGuiTableFlags tf = ImGuiTableFlags_Borders | ImGuiTableFlags_RowBg |
+            ImGuiTableFlags_SizingStretchProp | ImGuiTableFlags_PadOuterX;
+
+        if (ImGui::BeginTable("##axtbl", n_cols, tf)) {
+            ImGui::TableSetupColumn("Axis", ImGuiTableColumnFlags_WidthFixed, 52);
+            for (int g : val_gi)
+                ImGui::TableSetupColumn(groups[g].header.c_str(), ImGuiTableColumnFlags_WidthStretch);
+            for (int g : bool_gi)
+                ImGui::TableSetupColumn(groups[g].header.c_str(), ImGuiTableColumnFlags_WidthFixed, 30);
+            ImGui::TableHeadersRow();
+
+            for (int a = 0; a < 6; a++) {
+                ImGui::TableNextRow();
+                ImGui::PushID(a);
+                ImGui::TableNextColumn();
+                ImGui::AlignTextToFramePadding();
+                ImGui::TextUnformatted(ax_lbl[a]);
+
+                for (int g : val_gi) {
+                    ImGui::TableNextColumn();
+                    int pidx = groups[g].pidx[a];
+                    if (pidx >= 0) {
+                        ImGui::PushID(pidx);
+                        DrawPluginWidget(plug, pidx, true);
+                        ImGui::PopID();
+                    }
+                }
+
+                for (int g : bool_gi) {
+                    ImGui::TableNextColumn();
+                    int pidx = groups[g].pidx[a];
+                    if (pidx >= 0) {
+                        float* val = PluginParamPtr(plug, pidx);
+                        if (val) {
+                            ImGui::PushID(pidx);
+                            bool bv = *val != 0.0f;
+                            if (ImGui::Checkbox("##en", &bv)) {
+                                *val = bv ? 1.0f : 0.0f;
+                                g_app.plugin_mgr.setParam(P[pidx].name, *val);
+                            }
+                            if (P[pidx].description && ImGui::IsItemHovered())
+                                ImGui::SetTooltip("%s", P[pidx].description);
+                            ImGui::PopID();
+                        }
+                    }
+                }
+
+                ImGui::PopID();
+            }
+            ImGui::EndTable();
+        }
+    }
+
+    // ═══ LIVE OUTPUT (when plugin is active) ═══
+    if (plug.active && !g_app.entities.empty()) {
+        ImGui::Spacing();
+        ImGui::Separator();
+        ImGui::TextColored(ImVec4(0.2f, 0.83f, 0.6f, 1.0f), "Live Output");
+        float vals[6];
+        {
+            std::lock_guard<std::mutex> lock(g_app.input_mutex);
+            memcpy(vals, g_app.shared_input, sizeof(vals));
+        }
+        for (int i = 0; i < 6; i++) {
+            float frac = fabsf(vals[i]) / 100.0f;
+            ImGui::PushStyleColor(ImGuiCol_PlotHistogram,
+                vals[i] >= 0 ? ImVec4(0.2f, 0.7f, 0.5f, 0.8f) : ImVec4(0.7f, 0.3f, 0.3f, 0.8f));
+            char overlay[32];
+            snprintf(overlay, sizeof(overlay), "%-6s %+.1f%%", ax_lbl[i], vals[i]);
+            ImGui::ProgressBar(frac, ImVec2(-1, 0), overlay);
+            ImGui::PopStyleColor();
+        }
+    }
+}
+
 // ── Input Panel (combobox card selector + per-source content) ────────
 
 static void DrawInputPanel() {
-    if (ImGui::Begin("Input")) {
+    if (!s_show_input) return;
+    if (ImGui::Begin("Input", &s_show_input)) {
         const char* axis_labels[] = {"Surge", "Sway", "Heave", "Roll", "Pitch", "Yaw"};
 
         // ══════════════════════════════════════════════════════════════
@@ -3539,8 +4362,6 @@ static void DrawInputPanel() {
                     if (g_app.plugin_mgr.activeIndex() >= 0) {
                         g_app.plugin_mgr.deactivateActive();
                     }
-                    // Stop test signal
-                    g_app.test_signal.enabled = false;
                     // Stop capture playback
                     if (g_app.capture_playing) g_app.stopCapturePlayback();
                     g_app.log(-1, "input", "Motion STOPPED");
@@ -3573,11 +4394,6 @@ static void DrawInputPanel() {
                         if (!g_app.plugin_mgr.activatePlugin(g_app.active_plugin_idx, sr)) {
                             g_app.log(-1, "plugin", "Failed to activate plugin");
                         }
-                    }
-                    // Re-enable test signal if Test Signal source is selected
-                    if (g_app.input_source == InputSource::TestSignal) {
-                        g_app.test_signal.enabled = true;
-                        g_app.test_signal_start_time = g_app.frame_time;
                     }
                     g_app.log(-1, "input", "Motion STARTED");
                 }
@@ -3630,67 +4446,6 @@ static void DrawInputPanel() {
 
             ImGui::Spacing();
             ImGui::TextDisabled("Direct control via sliders. Values propagate to all entities.");
-        }
-
-        // ── SimTools UDP ──
-        else if (g_app.input_source == InputSource::SimToolsUDP) {
-            // Editable connection settings
-            ImGui::Text("Connection");
-            ImGui::SetNextItemWidth(100);
-            ImGui::InputInt("Port", &g_app.simtools_port, 0, 0);
-            ImGui::SameLine();
-            ImGui::SetNextItemWidth(80);
-            ImGui::InputInt("Bits", &g_app.simtools_bit_depth, 0, 0);
-            ImGui::SameLine();
-            if (!g_app.simtools_active) {
-                ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.20f, 0.65f, 0.40f, 1.0f));
-                ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.25f, 0.75f, 0.50f, 1.0f));
-                if (ImGui::Button("Start")) {
-                    g_app.startUdpListener();
-                }
-                ImGui::PopStyleColor(2);
-            } else {
-                ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.85f, 0.20f, 0.20f, 1.0f));
-                ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.95f, 0.30f, 0.30f, 1.0f));
-                if (ImGui::Button("Stop")) {
-                    g_app.stopUdpListener();
-                    // Home the platform
-                    {
-                        std::lock_guard<std::mutex> lock(g_app.input_mutex);
-                        memset(g_app.shared_input, 0, sizeof(g_app.shared_input));
-                    }
-                    for (auto& e : g_app.entities)
-                        memset(e.state.input_pct, 0, sizeof(e.state.input_pct));
-                }
-                ImGui::PopStyleColor(2);
-            }
-
-            ImGui::Spacing();
-            ImGui::Separator();
-
-            if (g_app.simtools_active) {
-                ImGui::TextColored(ImVec4(0.2f, 0.83f, 0.6f, 1.0f), "Receiving");
-                ImGui::SameLine();
-                ImGui::Text("%.0f Hz  |  %d packets", g_app.simtools_rate, g_app.udp.packets_received.load());
-
-                ImGui::Spacing();
-                float vals[6];
-                {
-                    std::lock_guard<std::mutex> lock(g_app.input_mutex);
-                    memcpy(vals, g_app.shared_input, sizeof(vals));
-                }
-                for (int i = 0; i < 6; i++) {
-                    float frac = fabsf(vals[i]) / 100.0f;
-                    ImGui::PushStyleColor(ImGuiCol_PlotHistogram,
-                        vals[i] >= 0 ? ImVec4(0.2f, 0.7f, 0.5f, 0.8f) : ImVec4(0.7f, 0.3f, 0.3f, 0.8f));
-                    char overlay[32];
-                    snprintf(overlay, sizeof(overlay), "%-6s %+.1f%%", axis_labels[i], vals[i]);
-                    ImGui::ProgressBar(frac, ImVec2(-1, 0), overlay);
-                    ImGui::PopStyleColor();
-                }
-            } else {
-                ImGui::TextDisabled("Listener stopped. Press Start to receive data.");
-            }
         }
 
         // ── Capture Playback ──
@@ -3913,395 +4668,6 @@ static void DrawInputPanel() {
             }
         }
 
-        // ── Test Signal ──
-        else if (g_app.input_source == InputSource::TestSignal) {
-            auto& ts = g_app.test_signal;
-
-            // Force sine waveform (other waveforms have unsafe discontinuities)
-            ts.waveform = WaveformType::Sine;
-
-            // Start/stop
-            if (ts.enabled) {
-                ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.85f, 0.20f, 0.20f, 1.0f));
-                ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.95f, 0.30f, 0.30f, 1.0f));
-                if (ImGui::Button("Stop", ImVec2(80, 0))) ts.enabled = false;
-                ImGui::PopStyleColor(2);
-            } else {
-                ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.20f, 0.65f, 0.40f, 1.0f));
-                ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.25f, 0.75f, 0.50f, 1.0f));
-                if (ImGui::Button("Start", ImVec2(80, 0))) {
-                    ts.enabled = true;
-                    g_app.test_signal_start_time = g_app.frame_time;
-                    // Sync active values to targets on start
-                    memcpy(ts.active_freq, ts.frequency, sizeof(ts.frequency));
-                    memcpy(ts.active_amp, ts.amplitude, sizeof(ts.amplitude));
-                    memcpy(ts.active_phase, ts.phase_offset, sizeof(ts.phase_offset));
-                }
-                ImGui::PopStyleColor(2);
-            }
-
-            // Ramp-up controls
-            ImGui::Checkbox("S-Curve Ramp", &ts.ramp_up);
-            if (ImGui::IsItemHovered()) {
-                ImGui::SetTooltip("Smoothly ramp amplitude from zero on start\n"
-                    "to prevent jarring motion. Uses a smoothstep\n"
-                    "envelope (3t\xc2\xb2 - 2t\xc2\xb3) over the ramp duration.");
-            }
-            if (ts.ramp_up) {
-                ImGui::SameLine();
-                ImGui::SetNextItemWidth(100);
-                ImGui::DragFloat("##ramp_dur", &ts.ramp_duration, 0.1f, 0.5f, 10.0f, "%.1fs");
-                if (ImGui::IsItemHovered()) ImGui::SetTooltip("Ramp-up duration in seconds");
-            }
-
-            ImGui::Checkbox("Smooth Changes", &ts.smooth_changes);
-            if (ImGui::IsItemHovered()) {
-                ImGui::SetTooltip("Smoothly interpolate parameter changes while running.\n"
-                    "Prevents abrupt jumps when adjusting frequency,\n"
-                    "amplitude, or phase during live output.");
-            }
-            if (ts.smooth_changes) {
-                ImGui::SameLine();
-                ImGui::SetNextItemWidth(100);
-                ImGui::DragFloat("##smooth_spd", &ts.smooth_rate, 0.1f, 0.5f, 20.0f, "%.1f /s");
-                if (ImGui::IsItemHovered()) ImGui::SetTooltip("Interpolation speed (higher = faster transition)");
-            }
-
-            ImGui::Spacing();
-            ImGui::Separator();
-
-            // Staged editing buffer — sliders/presets never touch live config directly
-            static float s_freq[6]  = {1,1,1,1,1,1};
-            static float s_amp[6]   = {50,50,50,50,50,50};
-            static float s_phase[6] = {};
-            static bool  s_axis_en[6] = {true,true,true,true,true,true};
-            static bool  s_synced = false;
-
-            // Sync staging from live config on first frame
-            if (!s_synced) {
-                memcpy(s_freq,    ts.frequency,    sizeof(s_freq));
-                memcpy(s_amp,     ts.amplitude,    sizeof(s_amp));
-                memcpy(s_phase,   ts.phase_offset, sizeof(s_phase));
-                memcpy(s_axis_en, ts.axis_enabled, sizeof(s_axis_en));
-                s_synced = true;
-            }
-
-            // Quick presets (write to staging)
-            ImGui::Text("Quick:");
-            ImGui::SameLine();
-            if (ImGui::SmallButton("All 1 Hz")) {
-                for (int i = 0; i < 6; i++) { s_freq[i] = 1.0f; s_amp[i] = 50.0f; s_phase[i] = 0.0f; s_axis_en[i] = true; }
-            }
-            ImGui::SameLine();
-            if (ImGui::SmallButton("Sweep")) {
-                float freqs[] = {0.5f, 0.75f, 1.0f, 1.25f, 1.5f, 2.0f};
-                for (int i = 0; i < 6; i++) { s_freq[i] = freqs[i]; s_amp[i] = 50.0f; s_phase[i] = 0.0f; s_axis_en[i] = true; }
-            }
-            ImGui::SameLine();
-            if (ImGui::SmallButton("Heave Only")) {
-                for (int i = 0; i < 6; i++) { s_axis_en[i] = false; s_phase[i] = 0.0f; }
-                s_axis_en[2] = true; s_freq[2] = 1.0f; s_amp[2] = 80.0f;
-            }
-            ImGui::SameLine();
-            if (ImGui::SmallButton("Phased")) {
-                for (int i = 0; i < 6; i++) { s_freq[i] = 1.0f; s_amp[i] = 50.0f; s_phase[i] = i * 60.0f; s_axis_en[i] = true; }
-            }
-
-            // Saved presets
-            static char s_preset_name[64] = "";
-            static int s_delete_idx = -1;
-
-            if (!g_app.test_signal_presets.empty()) {
-                ImGui::Text("Saved:");
-                ImGui::SameLine();
-                for (int pi = 0; pi < (int)g_app.test_signal_presets.size(); pi++) {
-                    auto& p = g_app.test_signal_presets[pi];
-                    if (pi > 0) ImGui::SameLine();
-                    if (ImGui::SmallButton(p.name)) {
-                        memcpy(s_freq,    p.config.frequency,    sizeof(s_freq));
-                        memcpy(s_amp,     p.config.amplitude,    sizeof(s_amp));
-                        memcpy(s_phase,   p.config.phase_offset, sizeof(s_phase));
-                        memcpy(s_axis_en, p.config.axis_enabled, sizeof(s_axis_en));
-                        ts.ramp_up = p.config.ramp_up;
-                        ts.ramp_duration = p.config.ramp_duration;
-                    }
-                    if (ImGui::IsItemHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Right))
-                        s_delete_idx = pi;
-                }
-                if (s_delete_idx >= 0) {
-                    ImGui::OpenPopup("##del_preset");
-                }
-                if (ImGui::BeginPopup("##del_preset")) {
-                    if (s_delete_idx >= 0 && s_delete_idx < (int)g_app.test_signal_presets.size()) {
-                        ImGui::Text("Delete '%s'?", g_app.test_signal_presets[s_delete_idx].name);
-                        if (ImGui::Button("Delete", ImVec2(80, 0))) {
-                            g_app.deleteTestSignalPreset(s_delete_idx);
-                            s_delete_idx = -1;
-                            ImGui::CloseCurrentPopup();
-                        }
-                        ImGui::SameLine();
-                        if (ImGui::Button("Cancel", ImVec2(80, 0))) {
-                            s_delete_idx = -1;
-                            ImGui::CloseCurrentPopup();
-                        }
-                    }
-                    ImGui::EndPopup();
-                }
-            }
-
-            // Save current as preset
-            ImGui::SetNextItemWidth(120);
-            ImGui::InputTextWithHint("##preset_name", "Preset name...", s_preset_name, sizeof(s_preset_name));
-            ImGui::SameLine();
-            bool can_save = s_preset_name[0] != '\0';
-            if (!can_save) ImGui::BeginDisabled();
-            if (ImGui::SmallButton("Save Preset")) {
-                g_app.saveTestSignalPreset(s_preset_name);
-                s_preset_name[0] = '\0';
-            }
-            if (!can_save) ImGui::EndDisabled();
-
-            ImGui::Spacing();
-
-            // Detect if staged differs from live
-            bool pending = false;
-            for (int i = 0; i < 6; i++) {
-                if (s_freq[i] != ts.frequency[i] || s_amp[i] != ts.amplitude[i]
-                    || s_phase[i] != ts.phase_offset[i] || s_axis_en[i] != ts.axis_enabled[i])
-                { pending = true; break; }
-            }
-
-            // SET button — applies staged values to live config
-            if (pending) {
-                ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.2f, 0.7f, 0.3f, 1.0f));
-                ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.3f, 0.85f, 0.4f, 1.0f));
-            }
-            if (ImGui::Button(pending ? "SET *" : "SET", ImVec2(-1, 0))) {
-                memcpy(ts.frequency,    s_freq,    sizeof(ts.frequency));
-                memcpy(ts.amplitude,    s_amp,     sizeof(ts.amplitude));
-                memcpy(ts.phase_offset, s_phase,   sizeof(ts.phase_offset));
-                memcpy(ts.axis_enabled, s_axis_en, sizeof(ts.axis_enabled));
-            }
-            if (pending) ImGui::PopStyleColor(2);
-
-            ImGui::Spacing();
-
-            // Per-axis table
-            if (ImGui::BeginTable("##ts_axes", 5, ImGuiTableFlags_Borders | ImGuiTableFlags_RowBg | ImGuiTableFlags_SizingStretchProp)) {
-                ImGui::TableSetupColumn("Axis",       ImGuiTableColumnFlags_WidthFixed, 60);
-                ImGui::TableSetupColumn("Freq (Hz)",  ImGuiTableColumnFlags_WidthStretch);
-                ImGui::TableSetupColumn("Amp (%)",    ImGuiTableColumnFlags_WidthStretch);
-                ImGui::TableSetupColumn("Phase",      ImGuiTableColumnFlags_WidthFixed, 60);
-                ImGui::TableSetupColumn("On",         ImGuiTableColumnFlags_WidthFixed, 30);
-                ImGui::TableHeadersRow();
-
-                const char* phase_presets[] = {"0", "30", "45", "60", "90", "120", "180", "270"};
-                const float phase_values[]  = {0.0f, 30.0f, 45.0f, 60.0f, 90.0f, 120.0f, 180.0f, 270.0f};
-                const int n_phases = 8;
-
-                for (int i = 0; i < 6; i++) {
-                    ImGui::TableNextRow();
-                    ImGui::PushID(i);
-                    ImGui::TableNextColumn(); ImGui::Text("%s", axis_labels[i]);
-                    ImGui::TableNextColumn(); ImGui::SetNextItemWidth(-1); ImGui::DragFloat("##freq", &s_freq[i], 0.01f, 0.01f, 4.0f, "%.2f");
-                    ImGui::TableNextColumn(); ImGui::SetNextItemWidth(-1); ImGui::DragFloat("##amp", &s_amp[i], 1.0f, 0.0f, 100.0f, "%.0f");
-                    ImGui::TableNextColumn();
-                    {
-                        int sel = -1;
-                        for (int p = 0; p < n_phases; p++) {
-                            if (fabsf(s_phase[i] - phase_values[p]) < 0.5f) { sel = p; break; }
-                        }
-                        char preview[16];
-                        snprintf(preview, sizeof(preview), "%.0f\xc2\xb0", s_phase[i]);
-                        ImGui::SetNextItemWidth(-1);
-                        if (ImGui::BeginCombo("##phase", preview, ImGuiComboFlags_NoArrowButton)) {
-                            for (int p = 0; p < n_phases; p++) {
-                                char lbl[16];
-                                snprintf(lbl, sizeof(lbl), "%s\xc2\xb0", phase_presets[p]);
-                                if (ImGui::Selectable(lbl, p == sel)) s_phase[i] = phase_values[p];
-                            }
-                            ImGui::EndCombo();
-                        }
-                    }
-                    ImGui::TableNextColumn(); ImGui::Checkbox("##en", &s_axis_en[i]);
-                    ImGui::PopID();
-                }
-                ImGui::EndTable();
-            }
-            // Live output
-            if (ts.enabled && !g_app.entities.empty()) {
-                ImGui::Spacing();
-                ImGui::Separator();
-                double t = g_app.frame_time - g_app.test_signal_start_time;
-
-                // Show ramp progress if still ramping
-                if (ts.ramp_up && t < (double)ts.ramp_duration) {
-                    float ramp_pct = (float)(t / (double)ts.ramp_duration) * 100.0f;
-                    char ramp_overlay[48];
-                    snprintf(ramp_overlay, sizeof(ramp_overlay), "Ramping: %.0f%%", ramp_pct);
-                    ImGui::PushStyleColor(ImGuiCol_PlotHistogram, ImVec4(0.95f, 0.75f, 0.2f, 0.8f));
-                    ImGui::ProgressBar(ramp_pct / 100.0f, ImVec2(-1, 0), ramp_overlay);
-                    ImGui::PopStyleColor();
-                }
-
-                ImGui::TextColored(ImVec4(0.75f, 0.50f, 0.95f, 1.0f), "Live Output");
-                for (int i = 0; i < 6; i++) {
-                    float v = g_app.entities[0].state.input_pct[i];
-                    float frac = fabsf(v) / 100.0f;
-                    ImGui::PushStyleColor(ImGuiCol_PlotHistogram, ImVec4(0.55f, 0.35f, 0.80f, 0.8f));
-                    char overlay[32];
-                    snprintf(overlay, sizeof(overlay), "%-6s %+.1f%%", axis_labels[i], v);
-                    ImGui::ProgressBar(frac, ImVec2(-1, 0), overlay);
-                    ImGui::PopStyleColor();
-                }
-                ImGui::TextDisabled("Running: %.1fs | Sine", t);
-            } else if (!ts.enabled) {
-                ImGui::Spacing();
-                ImGui::TextDisabled("Configure signal parameters, then press Start.");
-            }
-        }
-
-        // ── Assetto Corsa ──
-        else if (g_app.input_source == InputSource::AssettoCorsa) {
-            ImGui::Text("Shared Memory");
-            ImGui::SameLine();
-            if (!g_app.ac_active) {
-                ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.20f, 0.65f, 0.40f, 1.0f));
-                ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.25f, 0.75f, 0.50f, 1.0f));
-                if (ImGui::Button("Connect")) {
-                    g_app.startAssettoCorsaListener();
-                }
-                ImGui::PopStyleColor(2);
-            } else {
-                ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.85f, 0.20f, 0.20f, 1.0f));
-                ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.95f, 0.30f, 0.30f, 1.0f));
-                if (ImGui::Button("Disconnect")) {
-                    g_app.stopAssettoCorsaListener();
-                    // Home the platform
-                    {
-                        std::lock_guard<std::mutex> lock(g_app.input_mutex);
-                        memset(g_app.shared_input, 0, sizeof(g_app.shared_input));
-                    }
-                    for (auto& e : g_app.entities)
-                        memset(e.state.input_pct, 0, sizeof(e.state.input_pct));
-                }
-                ImGui::PopStyleColor(2);
-            }
-
-            ImGui::Spacing();
-            ImGui::Separator();
-
-            if (g_app.ac_active) {
-                if (g_app.ac.connected) {
-                    ImGui::TextColored(ImVec4(0.2f, 0.83f, 0.6f, 1.0f), "Connected");
-                } else {
-                    ImGui::TextColored(ImVec4(0.95f, 0.75f, 0.2f, 1.0f), "Opening...");
-                }
-                ImGui::SameLine();
-                ImGui::Text("%.0f Hz  |  %d packets", g_app.ac.rate_hz.load(), g_app.ac.packets_received.load());
-
-                // Car telemetry
-                int gear_val = g_app.ac.gear.load();
-                const char* gear_str = gear_val == 0 ? "R" : gear_val == 1 ? "N" : nullptr;
-                char gear_buf[8];
-                if (!gear_str) { snprintf(gear_buf, sizeof(gear_buf), "%d", gear_val - 1); gear_str = gear_buf; }
-                ImGui::Text("%.0f km/h  |  %d RPM  |  Gear: %s",
-                    g_app.ac.speed_kmh.load(), g_app.ac.rpm.load(), gear_str);
-
-                ImGui::Spacing();
-
-                // Live output bars (mapped values going to platform)
-                float vals[6];
-                {
-                    std::lock_guard<std::mutex> lock(g_app.input_mutex);
-                    memcpy(vals, g_app.shared_input, sizeof(vals));
-                }
-                const char* plat_axis_names[] = {"Surge", "Sway", "Heave", "Roll", "Pitch", "Yaw"};
-                for (int i = 0; i < 6; i++) {
-                    int ch = g_app.ac_axis_map[i].channel;
-                    bool disabled = (ch <= AC_CH_NONE || ch >= AC_CH_COUNT);
-                    float frac = disabled ? 0.0f : fabsf(vals[i]) / 100.0f;
-                    if (disabled) {
-                        ImGui::PushStyleColor(ImGuiCol_PlotHistogram, ImVec4(0.3f, 0.3f, 0.3f, 0.5f));
-                    } else {
-                        ImGui::PushStyleColor(ImGuiCol_PlotHistogram,
-                            vals[i] >= 0 ? ImVec4(0.7f, 0.25f, 0.25f, 0.8f) : ImVec4(0.25f, 0.4f, 0.7f, 0.8f));
-                    }
-                    char overlay[48];
-                    if (disabled)
-                        snprintf(overlay, sizeof(overlay), "%-6s  OFF", plat_axis_names[i]);
-                    else
-                        snprintf(overlay, sizeof(overlay), "%-6s %+.1f%%", plat_axis_names[i], vals[i]);
-                    ImGui::ProgressBar(frac, ImVec2(-1, 0), overlay);
-                    ImGui::PopStyleColor();
-                }
-
-                ImGui::Spacing();
-                ImGui::Separator();
-
-                // Axis Channel Mapping (like SimTools axis assignment)
-                ImGui::Text("Axis Channel Mapping");
-                ImGui::TextDisabled("Assign any AC telemetry channel to each platform axis");
-                bool map_changed = false;
-                for (int i = 0; i < 6; i++) {
-                    ImGui::PushID(i + 100);
-                    ImGui::Text("%-6s", plat_axis_names[i]);
-                    ImGui::SameLine(60);
-
-                    // Channel dropdown
-                    ImGui::SetNextItemWidth(200);
-                    if (ImGui::BeginCombo("##ch", AC_CHANNEL_NAMES[g_app.ac_axis_map[i].channel])) {
-                        for (int c = 0; c < AC_CH_COUNT; c++) {
-                            bool selected = (g_app.ac_axis_map[i].channel == c);
-                            if (ImGui::Selectable(AC_CHANNEL_NAMES[c], selected)) {
-                                g_app.ac_axis_map[i].channel = c;
-                                map_changed = true;
-                            }
-                            if (selected) ImGui::SetItemDefaultFocus();
-                        }
-                        ImGui::EndCombo();
-                    }
-
-                    // Only show scale/invert if channel is active
-                    if (g_app.ac_axis_map[i].channel > AC_CH_NONE) {
-                        ImGui::SameLine();
-                        ImGui::SetNextItemWidth(60);
-                        map_changed |= ImGui::DragFloat("##min", &g_app.ac_axis_map[i].min_val, 0.01f, -50.0f, -0.001f, "%.2f");
-                        if (ImGui::IsItemHovered()) ImGui::SetTooltip("Raw value that maps to -100%%");
-                        ImGui::SameLine();
-                        ImGui::SetNextItemWidth(60);
-                        map_changed |= ImGui::DragFloat("##max", &g_app.ac_axis_map[i].max_val, 0.01f, 0.001f, 50.0f, "%.2f");
-                        if (ImGui::IsItemHovered()) ImGui::SetTooltip("Raw value that maps to +100%%");
-                        ImGui::SameLine();
-                        map_changed |= ImGui::Checkbox("Inv", &g_app.ac_axis_map[i].invert);
-
-                        // Show raw channel value
-                        int src = g_app.ac_axis_map[i].channel;
-                        if (src > 0 && src < AC_CH_COUNT) {
-                            ImGui::SameLine();
-                            ImGui::TextDisabled("(%.3f)", g_app.ac.raw_channels[src]);
-                        }
-                    }
-
-                    ImGui::PopID();
-                }
-                if (map_changed) g_app.settings_dirty = true;
-
-                // Collapsible raw channel monitor
-                ImGui::Spacing();
-                if (ImGui::TreeNode("Raw Channels")) {
-                    for (int c = 1; c < AC_CH_COUNT; c++) {
-                        float v = g_app.ac.raw_channels[c];
-                        ImGui::Text("%-30s %+.4f", AC_CHANNEL_NAMES[c], v);
-                    }
-                    ImGui::TreePop();
-                }
-            } else {
-                ImGui::TextDisabled("Press Connect while Assetto Corsa is running.");
-                ImGui::TextWrapped("AC must be running for shared memory to be available.");
-            }
-        }
-
         // ── Plugin ──
         else if (g_app.input_source == InputSource::Plugin) {
             int pi = g_app.active_plugin_idx;
@@ -4323,64 +4689,11 @@ static void DrawInputPanel() {
                         ImGui::TextColored(ImVec4(0.2f, 0.83f, 0.6f, 1.0f), "Active");
                     }
 
-                    // Auto-generated parameter controls
+                    // Auto-generated parameter controls (smart layout)
                     if (plug.info->param_count > 0 && plug.info->params) {
                         ImGui::Spacing();
                         ImGui::Separator();
-                        ImGui::TextDisabled("Plugin Parameters");
-
-                        for (int p = 0; p < plug.info->param_count; p++) {
-                            const StewartParamDef& pd = plug.info->params[p];
-                            float* val = nullptr;
-                            for (auto& pv : plug.param_values) {
-                                if (pv.name == pd.name) { val = &pv.value; break; }
-                            }
-                            if (!val) continue;
-
-                            ImGui::PushID(p);
-                            const char* label = pd.display_name ? pd.display_name : pd.name;
-
-                            bool changed = false;
-                            switch (pd.type) {
-                                case STEWART_PARAM_FLOAT:
-                                    changed = ImGui::DragFloat(label, val, 0.01f, pd.min_val, pd.max_val, "%.3f");
-                                    break;
-                                case STEWART_PARAM_INT: {
-                                    int iv = (int)*val;
-                                    if (ImGui::DragInt(label, &iv, 1.0f, (int)pd.min_val, (int)pd.max_val)) {
-                                        *val = (float)iv;
-                                        changed = true;
-                                    }
-                                    break;
-                                }
-                                case STEWART_PARAM_BOOL: {
-                                    bool bv = *val != 0.0f;
-                                    if (ImGui::Checkbox(label, &bv)) {
-                                        *val = bv ? 1.0f : 0.0f;
-                                        changed = true;
-                                    }
-                                    break;
-                                }
-                                case STEWART_PARAM_ENUM: {
-                                    int ev = (int)*val;
-                                    if (pd.enum_labels && ImGui::Combo(label, &ev, pd.enum_labels)) {
-                                        *val = (float)ev;
-                                        changed = true;
-                                    }
-                                    break;
-                                }
-                            }
-
-                            if (changed) {
-                                g_app.plugin_mgr.setParam(pd.name, *val);
-                            }
-
-                            if (pd.description && ImGui::IsItemHovered()) {
-                                ImGui::SetTooltip("%s", pd.description);
-                            }
-
-                            ImGui::PopID();
-                        }
+                        DrawPluginParamsLayout(plug);
                     }
                 }
             } else {
@@ -4399,7 +4712,8 @@ static void DrawInputPanel() {
 // ── Console Panel ───────────────────────────────────────────────────
 
 static void DrawConsolePanel() {
-    if (ImGui::Begin("Console")) {
+    if (!s_show_console) return;
+    if (ImGui::Begin("Console", &s_show_console)) {
         // Row 1: entity filter buttons + Pause + Copy + Clear
         if (ImGui::SmallButton("All")) g_app.console_filter = -1;
         for (auto& e : g_app.entities) {
@@ -4521,7 +4835,8 @@ static void PlotRingBuffer(const char* label, const float* time_buf, const float
 // ── Data Streams Panel ────────────────────────────────────────────
 
 static void DrawDataStreamsPanel() {
-    if (ImGui::Begin("Data Streams")) {
+    if (!s_show_data_streams) return;
+    if (ImGui::Begin("Data Streams", &s_show_data_streams)) {
 
         // Top-level tab bar so every section is always one click away
         if (ImGui::BeginTabBar("##cmp_main_tabs")) {
@@ -4558,10 +4873,8 @@ static void DrawDataStreamsPanel() {
                     // Show active source being recorded
                     const char* src_name = "Manual";
                     ImVec4 src_color = ImVec4(0.3f, 0.7f, 0.3f, 1.0f);
-                    if (g_app.input_source == InputSource::SimToolsUDP) { src_name = "SimTools UDP"; src_color = ImVec4(0.2f, 0.6f, 0.9f, 1.0f); }
-                    else if (g_app.input_source == InputSource::CapturePlayback) { src_name = "Capture Playback"; src_color = ImVec4(0.9f, 0.7f, 0.2f, 1.0f); }
-                    else if (g_app.input_source == InputSource::TestSignal) { src_name = "Test Signal"; src_color = ImVec4(0.8f, 0.4f, 0.9f, 1.0f); }
-                    else if (g_app.input_source == InputSource::AssettoCorsa) { src_name = "Assetto Corsa"; src_color = ImVec4(0.95f, 0.3f, 0.3f, 1.0f); }
+                    if (g_app.input_source == InputSource::CapturePlayback) { src_name = "Capture Playback"; src_color = ImVec4(0.9f, 0.7f, 0.2f, 1.0f); }
+                    else if (g_app.input_source == InputSource::Plugin) { src_name = "Plugin"; src_color = ImVec4(0.2f, 0.83f, 0.6f, 1.0f); }
                     ImGui::TextColored(src_color, "Recording from: %s", src_name);
                 }
 
@@ -4648,14 +4961,10 @@ static void DrawDataStreamsPanel() {
                 // Active source badge
                 const char* src_name = "Manual";
                 ImVec4 src_color = ImVec4(0.6f, 0.7f, 0.8f, 1.0f);
-                if (g_app.input_source == InputSource::SimToolsUDP) {
-                    src_name = "SimTools UDP"; src_color = ImVec4(0.2f, 0.83f, 0.6f, 1.0f);
-                } else if (g_app.input_source == InputSource::CapturePlayback) {
+                if (g_app.input_source == InputSource::CapturePlayback) {
                     src_name = "Capture Playback"; src_color = ImVec4(0.95f, 0.75f, 0.2f, 1.0f);
-                } else if (g_app.input_source == InputSource::TestSignal) {
-                    src_name = "Test Signal"; src_color = ImVec4(0.75f, 0.50f, 0.95f, 1.0f);
-                } else if (g_app.input_source == InputSource::AssettoCorsa) {
-                    src_name = "Assetto Corsa"; src_color = ImVec4(0.95f, 0.30f, 0.30f, 1.0f);
+                } else if (g_app.input_source == InputSource::Plugin) {
+                    src_name = "Plugin"; src_color = ImVec4(0.20f, 0.83f, 0.6f, 1.0f);
                 }
                 ImGui::TextColored(src_color, "Source: %s", src_name);
                 ImGui::SameLine();
@@ -4862,10 +5171,8 @@ static void DrawDataStreamsPanel() {
 
                 // Source info
                 const char* src_name = "Manual";
-                if (g_app.input_source == InputSource::SimToolsUDP) src_name = "SimTools UDP";
-                else if (g_app.input_source == InputSource::CapturePlayback) src_name = "Capture Playback";
-                else if (g_app.input_source == InputSource::TestSignal) src_name = "Test Signal";
-                else if (g_app.input_source == InputSource::AssettoCorsa) src_name = "Assetto Corsa";
+                if (g_app.input_source == InputSource::CapturePlayback) src_name = "Capture Playback";
+                else if (g_app.input_source == InputSource::Plugin) src_name = "Plugin";
                 ImGui::TextDisabled("Source: %s | History: %d/%d samples @ %d Hz",
                     src_name, g_app.input_history_count, INPUT_HISTORY_LEN, g_app.record_rate_hz);
 
@@ -5088,64 +5395,6 @@ static void DrawDataStreamsPanel() {
     ImGui::End();
 }
 
-// ── SimTools Panel ──────────────────────────────────────────────────
-
-static void DrawSimToolsPanel() {
-    if (ImGui::Begin("SimTools")) {
-        ImGui::Text("SimTools UDP Listener");
-        ImGui::Separator();
-
-        // Config (disabled while running)
-        if (g_app.simtools_active) ImGui::BeginDisabled();
-
-        ImGui::InputInt("Port", &g_app.simtools_port);
-
-        const int bit_opts[] = {8, 10, 12, 14, 16, 18};
-        const char* bit_labels[] = {"8-bit", "10-bit", "12-bit", "14-bit", "16-bit", "18-bit"};
-        int idx = 2;
-        for (int i = 0; i < 6; i++) { if (bit_opts[i] == g_app.simtools_bit_depth) idx = i; }
-        if (ImGui::Combo("Bit Depth", &idx, bit_labels, 6)) {
-            g_app.simtools_bit_depth = bit_opts[idx];
-        }
-
-        if (g_app.simtools_active) ImGui::EndDisabled();
-
-        ImGui::Separator();
-
-        // Start / Stop
-        if (!g_app.simtools_active) {
-            if (ImGui::Button("Start Listening")) {
-                if (!g_app.startUdpListener()) {
-                    g_app.log(-1, "udp", "Failed to bind UDP port %d", g_app.simtools_port);
-                }
-            }
-        } else {
-            ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.6f, 0.15f, 0.15f, 1.0f));
-            if (ImGui::Button("Stop Listening")) {
-                g_app.stopUdpListener();
-            }
-            ImGui::PopStyleColor();
-        }
-
-        // Live stats
-        if (g_app.simtools_active) {
-            ImGui::Separator();
-            ImGui::TextColored(ImVec4(0.2f, 0.83f, 0.6f, 1.0f), "Listening on port %d", g_app.simtools_port);
-            ImGui::Text("Rate: %.0f Hz", g_app.simtools_rate);
-            ImGui::Text("Packets: %d rx, %d bad", g_app.udp.packets_received.load(), g_app.udp.packets_bad.load());
-
-            // Show current values from UDP
-            ImGui::Separator();
-            ImGui::Text("Current Input:");
-            const char* labels[] = {"Surge", "Sway", "Heave", "Roll", "Pitch", "Yaw"};
-            for (int i = 0; i < 6; i++) {
-                ImGui::Text("  %s: %.1f%%", labels[i], g_app.shared_input[i]);
-            }
-        }
-    }
-    ImGui::End();
-}
-
 // ── Default Dock Layout ─────────────────────────────────────────────
 
 static void BuildDefaultLayout(ImGuiID dockspace_id) {
@@ -5163,10 +5412,9 @@ static void BuildDefaultLayout(ImGuiID dockspace_id) {
     ImGuiID center_id, bottom_id;
     ImGui::DockBuilderSplitNode(rest_id, ImGuiDir_Down, 0.45f, &bottom_id, &center_id);
 
-    // Tab Input + Console + SimTools on the left
+    // Tab Input + Console on the left
     ImGui::DockBuilderDockWindow("Input", left_id);
     ImGui::DockBuilderDockWindow("Console", left_id);
-    ImGui::DockBuilderDockWindow("SimTools", left_id);
 
     // Data Streams on the bottom
     ImGui::DockBuilderDockWindow("Data Streams", bottom_id);
@@ -5180,6 +5428,12 @@ static void BuildDefaultLayout(ImGuiID dockspace_id) {
 
 void DrawUI() {
     DrawMainMenuBar();
+    DrawToolbar();
+
+    // Offset viewport work area to account for toolbar height
+    ImGuiViewport* main_vp = ImGui::GetMainViewport();
+    main_vp->WorkPos.y += 52.0f;
+    main_vp->WorkSize.y -= 52.0f;
 
     // Dockspace over entire window
     ImGuiID dockspace_id = ImGui::DockSpaceOverViewport(0, ImGui::GetMainViewport(), ImGuiDockNodeFlags_PassthruCentralNode);
@@ -5201,8 +5455,8 @@ void DrawUI() {
     // Global panels (docked by default layout)
     DrawInputPanel();
     DrawConsolePanel();
-    DrawSimToolsPanel();
     DrawDataStreamsPanel();
+    DrawDynamicsPanel();
 
     // Per-entity panels — float as undocked windows
     // Copy IDs first since DrawEntityCard can remove entities
@@ -5214,7 +5468,6 @@ void DrawUI() {
             DrawEntityCard(*e);
             DrawEntitySettings(*e);
             DrawPlatformSetup(*e);
-            DrawDynamics(*e);
             DrawEntityConsole(*e);
         }
     }

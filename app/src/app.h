@@ -73,6 +73,7 @@ struct PipelineConfig {
     // Phase D: intensity & gain
     float               intensity;      // global motion intensity 0-100%
     float               axis_gain[6];   // per-axis gain multiplier (default 100%)
+    bool                axis_invert[6]; // per-axis sign flip (true = ×-1)
 
     void initDefaults();
     void rebuildPlatform();             // rebuild PlatformDef from geometry
@@ -170,6 +171,7 @@ struct Entity {
     PipelineState   state;
     TransportState  transport;
     float           color[4];       // RGBA for UI identification
+    bool            show_card;      // Entity card window (3D viz + readout)
     bool            show_settings;
     bool            show_platform;  // Platform Setup window
     bool            show_dynamics;  // Dynamics window
@@ -187,7 +189,7 @@ struct Entity {
     int             hil_tx_hz;           // target motion packet send rate
     double          hil_last_tx_time;    // last binary packet send time
     int             hil_tel_seq;         // last processed telemetry seq
-    bool            hil_tel_active;      // true when ESP32 telemetry is overriding local IK
+    bool            hil_tel_active;      // true when ESP32 telemetry is flowing
     float           hil_fk_pose[6];      // FK-solved platform pose [tx,ty,tz,roll,pitch,yaw] in IK frame
     // Telemetry interpolation for smooth viz
     float           hil_tel_prev[6];     // previous telemetry angles
@@ -296,215 +298,8 @@ struct SavedRecording {
 
 // ── Input Source ────────────────────────────────────────────────────
 
-enum class InputSource { Manual, SimToolsUDP, CapturePlayback, TestSignal, AssettoCorsa, Plugin };
+enum class InputSource { Manual, CapturePlayback, Plugin };
 
-// ── Test Signal Generator ──────────────────────────────────────────
-
-enum class WaveformType { Sine, Square, Triangle, Sawtooth };
-
-struct TestSignalConfig {
-    bool          enabled;           // generator active
-    WaveformType  waveform;          // waveform shape
-    float         frequency[6];      // Hz per axis (target)
-    float         amplitude[6];      // % per axis (target, 0-100)
-    float         phase_offset[6];   // degrees per axis (target)
-    bool          axis_enabled[6];   // per-axis on/off
-    bool          ramp_up;           // S-curve ramp envelope on start
-    float         ramp_duration;     // ramp-up time in seconds
-    bool          smooth_changes;    // smoothly interpolate parameter changes
-    float         smooth_rate;       // interpolation speed (units/sec, higher=faster)
-
-    // Active (smoothed) values used by the generator
-    float         active_freq[6];
-    float         active_amp[6];
-    float         active_phase[6];
-
-    TestSignalConfig() : enabled(false), waveform(WaveformType::Sine),
-                         ramp_up(true), ramp_duration(2.0f),
-                         smooth_changes(true), smooth_rate(2.0f) {
-        for (int i = 0; i < 6; i++) {
-            frequency[i] = 1.0f;
-            amplitude[i] = 50.0f;
-            phase_offset[i] = 0.0f;
-            axis_enabled[i] = true;
-            active_freq[i] = 1.0f;
-            active_amp[i] = 50.0f;
-            active_phase[i] = 0.0f;
-        }
-    }
-};
-
-// ── UDP Listener State ──────────────────────────────────────────────
-
-struct UdpListenerState {
-    std::atomic<bool>   running{false};
-    std::thread         thread;
-    int                 sock = -1;          // SOCKET handle (INVALID_SOCKET on Windows)
-
-    // Stats (written by listener thread, read by main thread)
-    std::atomic<int>    packets_received{0};
-    std::atomic<int>    packets_bad{0};
-    std::atomic<double> last_packet_time{0.0};
-    std::atomic<float>  rate_hz{0.0f};
-
-    // Rate tracking internals (listener thread only)
-    double              rate_window_start = 0.0;
-    int                 rate_window_count = 0;
-};
-
-// ── Assetto Corsa Shared Memory ─────────────────────────────────────
-// Struct from decompiled SimTools AC plugin (SPageFilePhysics)
-// AC exposes telemetry via memory-mapped files, not UDP.
-
-#pragma pack(push, 4)
-struct ACVec3 { float x, y, z; };
-
-struct ACPhysics {
-    int32_t   packetId;
-    float     gas;
-    float     brake;
-    float     fuel;
-    int32_t   gear;            // 0=R, 1=N, 2=1st ...
-    int32_t   rpms;
-    float     steerAngle;
-    float     speedKmh;
-    ACVec3    velocity;        // world velocity
-    ACVec3    accG;            // G-forces: x=lateral, y=vertical, z=frontal
-    float     wheelSlip[4];
-    float     wheelLoad[4];
-    float     wheelsPressure[4];
-    float     wheelAngularSpeed[4];
-    float     tyreWear[4];
-    float     tyreDirtyLevel[4];
-    float     tyreCoreTemperature[4];
-    float     camberRAD[4];
-    float     suspensionTravel[4];
-    float     drs;
-    float     tc;
-    float     heading;         // world heading (rad)
-    float     pitch;           // world pitch (rad)
-    float     roll;            // world roll (rad)
-    float     cgHeight;
-    float     carDamage[5];
-    int32_t   numberOfTyresOut;
-    int32_t   pitLimiterOn;
-    float     abs;
-    float     kersCharge;
-    float     kersInput;
-    int32_t   autoShifterOn;
-    float     rideHeight[2];
-    float     turboBoost;
-    float     ballast;
-    float     airDensity;
-    float     airTemp;
-    float     roadTemp;
-    ACVec3    localAngularVel;
-    float     finalFF;
-    float     performanceMeter;
-    int32_t   engineBrake;
-    int32_t   ersRecoveryLevel;
-    int32_t   ersPowerLevel;
-    int32_t   ersHeatCharging;
-    int32_t   ersIsCharging;
-    float     kersCurrentKJ;
-    int32_t   drsAvailable;
-    int32_t   drsEnabled;
-    float     brakeTemp[4];
-    float     clutch;
-    float     tyreTempI[4];
-    float     tyreTempM[4];
-    float     tyreTempO[4];
-    int32_t   isAIControlled;
-    float     tyreContactPoint[12];   // 4 wheels × 3 (XYZ)
-    float     tyreContactNormal[12];
-    float     tyreContactHeading[12];
-    float     brakeBias;
-    ACVec3    localVelocity;
-};
-#pragma pack(pop)
-
-// Available telemetry channels from AC shared memory
-enum ACChannel {
-    AC_CH_NONE = 0,          // disabled (output = 0)
-    AC_CH_SURGE_G,           // accG.z (frontal G)
-    AC_CH_SWAY_G,            // accG.x (lateral G)
-    AC_CH_HEAVE_G,           // accG.y (vertical G, already gravity-compensated)
-    AC_CH_ROLL,              // body roll (rad)
-    AC_CH_PITCH,             // body pitch (rad)
-    AC_CH_YAW_RATE,          // d(heading)/dt (rad/s) — computed, can be noisy
-    AC_CH_LOCAL_VEL_X,       // localVelocity.x (lateral m/s)
-    AC_CH_LOCAL_VEL_Z,       // localVelocity.z (longitudinal m/s)
-    AC_CH_ANG_VEL_X,         // localAngularVel.x (roll rate rad/s)
-    AC_CH_ANG_VEL_Y,         // localAngularVel.y (yaw rate rad/s, direct from physics)
-    AC_CH_ANG_VEL_Z,         // localAngularVel.z (pitch rate rad/s)
-    AC_CH_TRACTION_LOSS,     // max(wheelSlip[0..3])
-    AC_CH_TRACTION_LOSS_AVG, // avg(wheelSlip[0..3])
-    AC_CH_SUSP_TRAVEL_FL,    // suspensionTravel[0]
-    AC_CH_SUSP_TRAVEL_FR,    // suspensionTravel[1]
-    AC_CH_SUSP_TRAVEL_RL,    // suspensionTravel[2]
-    AC_CH_SUSP_TRAVEL_RR,    // suspensionTravel[3]
-    AC_CH_G_FORCE_LAT,       // same as SWAY_G but unsigned (abs)
-    AC_CH_G_FORCE_LON,       // same as SURGE_G but unsigned (abs)
-    AC_CH_COUNT
-};
-
-static const char* const AC_CHANNEL_NAMES[] = {
-    "None (disabled)",
-    "Surge G (accG.z)",
-    "Sway G (accG.x)",
-    "Heave G (accG.y)",
-    "Roll (rad)",
-    "Pitch (rad)",
-    "Yaw Rate (heading delta)",
-    "Local Vel X (lateral)",
-    "Local Vel Z (longitudinal)",
-    "Angular Vel X (roll rate)",
-    "Angular Vel Y (yaw rate)",
-    "Angular Vel Z (pitch rate)",
-    "Traction Loss (max slip)",
-    "Traction Loss (avg slip)",
-    "Susp Travel FL",
-    "Susp Travel FR",
-    "Susp Travel RL",
-    "Susp Travel RR",
-    "G-Force Lateral (abs)",
-    "G-Force Longitudinal (abs)",
-};
-
-// Per-axis channel mapping: which AC channel feeds each platform output axis
-struct ACAxisMapping {
-    int   channel;    // ACChannel enum value
-    float min_val;    // raw value that maps to -100% (typically negative, e.g. -3.0)
-    float max_val;    // raw value that maps to +100% (typically positive, e.g. 1.0)
-    bool  invert;     // flip sign
-};
-
-struct ACState {
-    std::atomic<bool>   running{false};
-    std::thread         thread;
-    void*               hMapFile = nullptr;   // HANDLE to memory-mapped file
-    const ACPhysics*    mapped = nullptr;     // pointer to mapped view
-
-    // Connection state
-    std::atomic<bool>   connected{false};
-
-    // Stats
-    std::atomic<int>    packets_received{0};
-    std::atomic<float>  rate_hz{0.0f};
-    double              rate_window_start = 0.0;
-    int                 rate_window_count = 0;
-    int32_t             last_packet_id = -1;
-
-    // Latest telemetry snapshot (for UI display, written by listener thread)
-    std::atomic<float>  speed_kmh{0.0f};
-    std::atomic<int>    rpm{0};
-    std::atomic<int>    gear{0};
-
-    // Raw channel values (written by listener, read by UI — use mutex)
-    float               raw_channels[AC_CH_COUNT];
-    double              last_packet_time;   // actual timestamp of last packet (for dt)
-    float               yaw_rate_filtered;  // LP-filtered yaw rate
-};
 
 // ── Application State ───────────────────────────────────────────────
 
@@ -525,18 +320,6 @@ struct App {
     static constexpr float SOURCE_RAMP_OUT_S = 1.0f;  // seconds to ramp to home
     void                  requestSourceSwitch(InputSource target);  // initiate ramp-to-home then switch
 
-    // SimTools UDP config
-    bool                  simtools_active;   // is UDP listener running?
-    int                   simtools_port;
-    int                   simtools_bit_depth;
-    float                 simtools_rate;
-    UdpListenerState      udp;
-
-    // Assetto Corsa shared memory config
-    bool                  ac_active;
-    int                   ac_port;           // legacy, kept for settings compat
-    ACAxisMapping         ac_axis_map[6];    // per-axis channel mapping
-    ACState               ac;
 
     // Plugin system
     PluginManager         plugin_mgr;
@@ -586,20 +369,6 @@ struct App {
     // Configurable record/playback rate
     int                   record_rate_hz;          // default 200
 
-    // Test signal generator
-    TestSignalConfig      test_signal;
-    double                test_signal_start_time;  // when generator was started
-
-    // Test signal presets
-    struct TestSignalPreset {
-        char              name[64];
-        TestSignalConfig  config;
-    };
-    std::vector<TestSignalPreset> test_signal_presets;
-    void    saveTestSignalPreset(const char* name);
-    void    deleteTestSignalPreset(int idx);
-    void    saveTestSignalPresetsToDisk();
-    void    loadTestSignalPresetsFromDisk();
 
     // MCA dynamics presets (user-saved, persisted to disk)
     struct McaDynamicsPreset {
@@ -641,13 +410,6 @@ struct App {
     void    handleHilLine(int entity_id, const char* line);  // parse ESP32 serial responses
     void    update();   // called every frame
 
-    // UDP listener
-    bool    startUdpListener();
-    void    stopUdpListener();
-
-    // Assetto Corsa UDP
-    bool    startAssettoCorsaListener();
-    void    stopAssettoCorsaListener();
 
     // Recording
     void    startRecording();

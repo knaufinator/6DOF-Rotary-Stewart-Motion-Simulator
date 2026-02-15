@@ -7,6 +7,24 @@
 
 ⚠️ **SAFETY WARNING**: This is a DANGEROUS project. Improper assembly or operation can result in serious injury or death. Ensure emergency stop systems are in place before any operation.
 
+<div align="center">
+  <img src="documentation/images/stewart_platform_controller.png" alt="Stewart Platform Controller" width="900"/>
+  <br><em>Stewart Platform Controller — native desktop app with real-time 3D visualization, signal processing, and live telemetry</em>
+</div>
+
+### What You're Looking At
+
+The screenshot above shows the full desktop application during a live **Assetto Corsa** session with two entities running side-by-side:
+
+- **Toolbar** (top) — Source selector, motion START/STOP/E-STOP, enlarged REC and PLAY buttons with capture combo, loop, and speed controls, entity count with quick-add buttons
+- **Input Strip** (below toolbar) — Live per-axis channel mapping from Assetto Corsa shared memory with configurable min/max ranges and invert toggles; real-time input bars showing current values
+- **SIL Entity** (left panel) — Software-in-the-Loop simulation with interactive 3D Stewart platform visualization, orbit camera, and servo angle readout
+- **HIL Entity** (center panel) — Hardware-in-the-Loop entity connected to a physical ESP32 controller over USB serial, showing live ESP32 telemetry (firmware version, protocol, link quality, bit depth)
+- **Dynamics Panel** (right) — Per-entity signal processing pipeline: signal flow diagram (Input → Pre-Filter → MCA → Gain/Inv → IK → Output), dynamics profile management with Copy/Paste, MCA washout and smoothing filters, per-axis low-pass and notch filter configuration with live frequency response
+- **Data Streams** (bottom) — Time-series plot with overlay of all six axes (Surge, Sway, Heave, Roll, Pitch, Yaw), plus Recording, Snapshot, and Spectrogram tabs
+
+Everything runs in a single native executable — no browser, no server, no Python runtime. The same C source modules (inverse kinematics, axis scaling, motion cueing) compile into both the desktop app and the ESP32 firmware.
+
 ## Demo Videos
 
 <div align="center">

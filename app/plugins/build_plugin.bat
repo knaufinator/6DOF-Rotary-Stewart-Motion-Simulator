@@ -4,6 +4,7 @@ cl /LD /I ..\src plugin_sine_demo.c /Fe:plugin_sine_demo.dll
 cl /LD /I ..\src plugin_assetto_corsa.c /Fe:plugin_assetto_corsa.dll
 cl /LD /I ..\src plugin_simtools_udp.c /Fe:plugin_simtools_udp.dll ws2_32.lib
 cl /LD /I ..\src plugin_test_signal.c /Fe:plugin_test_signal.dll
+cl /LD /I ..\src plugin_manual_sliders.c /Fe:plugin_manual_sliders.dll
 del *.obj *.exp *.lib 2>nul
 
 REM Copy to build output so the app finds them at runtime

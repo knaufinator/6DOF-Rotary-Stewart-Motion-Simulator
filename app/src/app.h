@@ -298,7 +298,7 @@ struct SavedRecording {
 
 // ── Input Source ────────────────────────────────────────────────────
 
-enum class InputSource { Manual, CapturePlayback, Plugin };
+enum class InputSource { CapturePlayback = 1, Plugin = 2 };
 
 
 // ── Application State ───────────────────────────────────────────────

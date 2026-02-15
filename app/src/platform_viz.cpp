@@ -268,19 +268,21 @@ void DrawPlatformViz(ImDrawList* dl, ImVec2 origin, ImVec2 size,
     dl->AddLine(o2, project(v3(0,0,ax_len), camera, center, half_h), IM_COL32(60,60,200,140), 1.0f);
 
     // ── Compute geometry ──
-    bool hil_online = e.serial && e.serial->isOpen();
-
-    // Angle source: telemetry when active, home position when offline
+    bool hil_online = (e.type == EntityType::HIL) && e.serial && e.serial->isOpen();
     float home_angles[6] = {0, 0, 0, 0, 0, 0};
     const float* viz_angles;
-    if (e.hil_tel_active) {
-        viz_angles = e.state.output_angles;  // ESP32 telemetry angles
-    } else if (hil_online) {
-        // Connected but no telemetry yet — show home position (no local IK)
-        viz_angles = home_angles;
+    if (e.type == EntityType::SIL) {
+        // SIL: always use locally computed IK angles
+        viz_angles = e.state.output_angles;
     } else {
-        // Offline — static home position, no computation
-        viz_angles = home_angles;
+        // HIL: use telemetry angles when active, home position otherwise
+        if (e.hil_tel_active) {
+            viz_angles = e.state.output_angles;  // ESP32 telemetry angles
+        } else if (hil_online) {
+            viz_angles = home_angles;  // connected, awaiting telemetry
+        } else {
+            viz_angles = home_angles;  // offline
+        }
     }
 
     Vec3 base_pts[6], arm_tips[6], plat_pts[6];
@@ -398,7 +400,10 @@ void DrawPlatformViz(ImDrawList* dl, ImVec2 origin, ImVec2 size,
     // Mode label + compact status
     const char* mode_label;
     ImU32 mode_col;
-    if (e.hil_tel_active) {
+    if (e.type == EntityType::SIL) {
+        mode_label = "SIL";
+        mode_col = IM_COL32(80, 180, 220, 200);
+    } else if (e.hil_tel_active) {
         mode_label = "ESP32 Telemetry";
         mode_col = IM_COL32(80, 200, 160, 200);
     } else if (hil_online) {
@@ -410,7 +415,7 @@ void DrawPlatformViz(ImDrawList* dl, ImVec2 origin, ImVec2 size,
     }
     dl->AddText(ImVec2(origin.x + 4, origin.y + 2), mode_col, mode_label);
 
-    if (hil_online || e.hil_tel_active) {
+    if (e.type == EntityType::SIL || hil_online || e.hil_tel_active) {
         char info[64];
         snprintf(info, sizeof(info), "util %.0f%%", e.state.max_util);
         dl->AddText(ImVec2(origin.x + 4, origin.y + 16),

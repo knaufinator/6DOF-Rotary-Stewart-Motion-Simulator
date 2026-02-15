@@ -34,9 +34,14 @@ struct PluginInstance {
     StewartPluginProcessFn      fn_process;
     StewartPluginShutdownFn     fn_shutdown;
     StewartPluginSetParamFn     fn_set_param;   // optional
+    StewartPluginGetToolbarFn   fn_get_toolbar; // optional — plugin provides toolbar items
+    StewartPluginToolbarActionFn fn_toolbar_action; // optional — called on toolbar interaction
 
     // Current parameter values (persisted)
     std::vector<PluginParamValue> param_values;
+
+    // Last raw (pre-scaling) values from plugin — for profiling/auto-cal
+    float                       last_raw_input[6];
 };
 
 class PluginManager {

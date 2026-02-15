@@ -325,18 +325,38 @@ STEWART_EXPORT int stewart_plugin_process(StewartPluginContext* ctx) {
         return -1;
     }
 
-    /* Check for new packet */
-    int pid = s_phys->packetId;
-    if (pid == s_last_pid) {
-        /* No new data — keep previous output (host will use last values) */
-        return 0;
+    /* Snapshot the shared memory struct locally to avoid torn reads.
+     * AC writes the struct non-atomically, so we read packetId before
+     * and after copying. If it changed, a write occurred mid-copy. */
+    static ACPhysicsData s_snapshot;
+    static int s_snapshot_valid = 0;
+
+    volatile const int* pid_ptr = &s_phys->packetId;
+    int pid1 = *pid_ptr;
+
+    if (pid1 == s_last_pid) {
+        /* No new data — return non-zero so host keeps previous output */
+        return 1;
     }
-    s_last_pid = pid;
+
+    /* Copy entire struct to local buffer */
+    memcpy(&s_snapshot, (const void*)s_phys, sizeof(ACPhysicsData));
+
+    /* Re-read packetId — if it changed during our copy, data is torn */
+    int pid2 = *pid_ptr;
+    if (pid1 != pid2) {
+        /* Torn read detected — discard, host keeps previous values */
+        return 1;
+    }
+
+    s_last_pid = pid1;
+    s_snapshot_valid = 1;
+    const ACPhysicsData* p = &s_snapshot;
 
     /* Compute yaw rate from heading delta */
     float yaw_rate = 0.0f;
     {
-        float heading = s_phys->heading;
+        float heading = p->heading;
         if (s_heading_init && s_last_time > 0.0) {
             float dh = heading - s_last_heading;
             if (dh > (float)M_PI) dh -= 2.0f * (float)M_PI;
@@ -361,9 +381,11 @@ STEWART_EXPORT int stewart_plugin_process(StewartPluginContext* ctx) {
         int ch = s_axis_ch[i];
         if (ch <= CH_NONE || ch >= CH_COUNT) {
             ctx->output[i] = 0.0f;
+            ctx->raw_input[i] = 0.0f;
             continue;
         }
-        float raw = extract_channel(s_phys, ch, s_yaw_rate_filtered);
+        float raw = extract_channel(p, ch, s_yaw_rate_filtered);
+        ctx->raw_input[i] = raw;  /* pre-scaling value for profiling */
         if (s_axis_invert[i] != 0.0f) raw = -raw;
         ctx->output[i] = scale_asymmetric(raw, s_axis_min[i], s_axis_max[i]);
     }

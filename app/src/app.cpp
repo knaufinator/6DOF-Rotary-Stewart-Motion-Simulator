@@ -71,7 +71,7 @@ static const int g_num_colors = sizeof(g_entity_colors) / sizeof(g_entity_colors
 
 App::App()
     : next_entity_id(0)
-    , input_source(InputSource::Manual)
+    , input_source(InputSource::Plugin)
     , console_max(500)
     , console_auto_scroll(true)
     , console_paused(false)
@@ -101,7 +101,7 @@ App::App()
     , input_spectrum_freq_max(100.0f)
     , settings_dirty(false)
     , source_switch_active(false)
-    , source_switch_target(InputSource::Manual)
+    , source_switch_target(InputSource::Plugin)
     , source_switch_start(0.0)
     , active_plugin_idx(-1)
 {
@@ -411,6 +411,12 @@ void App::saveSettings() {
     // Input source
     cJSON_AddNumberToObject(root, "input_source", (int)input_source);
 
+    // Active plugin name (saved by name so it survives plugin reorder)
+    if (active_plugin_idx >= 0 && active_plugin_idx < plugin_mgr.pluginCount()) {
+        const char* pname = plugin_mgr.pluginName(active_plugin_idx);
+        if (pname) cJSON_AddStringToObject(root, "active_plugin_name", pname);
+    }
+
     // Entities — full serialization
     cJSON* ents = cJSON_AddArrayToObject(root, "entities");
     for (auto& e : entities) {
@@ -460,15 +466,33 @@ void App::loadSettings() {
     // Recording
     if ((val = cJSON_GetObjectItem(root, "record_rate_hz")))    record_rate_hz = val->valueint;
 
-    // Input source (legacy values map to Manual; only Manual/CapturePlayback/Plugin are valid now)
+    // Input source (old Manual=0 maps to Plugin; only CapturePlayback/Plugin are valid now)
     if ((val = cJSON_GetObjectItem(root, "input_source"))) {
         int src = val->valueint;
         if (src == (int)InputSource::CapturePlayback)
             input_source = InputSource::CapturePlayback;
-        else if (src == (int)InputSource::Plugin)
-            input_source = InputSource::Plugin;
         else
-            input_source = InputSource::Manual;
+            input_source = InputSource::Plugin;
+    }
+
+    // Active plugin name (resolve index after plugins are already scanned)
+    if ((val = cJSON_GetObjectItem(root, "active_plugin_name"))) {
+        const char* pname = val->valuestring;
+        if (pname) {
+            for (int i = 0; i < plugin_mgr.pluginCount(); i++) {
+                const char* n = plugin_mgr.pluginName(i);
+                if (n && strcmp(n, pname) == 0) { active_plugin_idx = i; break; }
+            }
+        }
+    }
+    // Default to Manual Sliders plugin if no plugin was saved or found
+    if (active_plugin_idx < 0 && input_source == InputSource::Plugin) {
+        for (int i = 0; i < plugin_mgr.pluginCount(); i++) {
+            const char* n = plugin_mgr.pluginName(i);
+            if (n && strcmp(n, "Manual Sliders") == 0) { active_plugin_idx = i; break; }
+        }
+        if (active_plugin_idx < 0 && plugin_mgr.pluginCount() > 0)
+            active_plugin_idx = 0;
     }
 
     // Entities — clear and recreate from saved data
@@ -928,9 +952,9 @@ void App::startRecording() {
     recording.samples.clear();
     recording.start_time = frame_time;
     recording.mode = RecordMode::Recording;
-    const char* src = "manual";
+    const char* src = "plugin";
     if (input_source == InputSource::CapturePlayback) src = "capture";
-    else if (input_source == InputSource::Plugin) src = "plugin";
+    else if (active_plugin_idx >= 0) src = plugin_mgr.pluginName(active_plugin_idx);
     log(-1, "record", "Recording started (source: %s, rate: %d Hz)", src, record_rate_hz);
 }
 
@@ -948,6 +972,30 @@ void App::stopRecording() {
     log(-1, "record", "Recording stopped — %d samples (%.1fs) range: %.1f..%.1f%s",
         (int)recording.samples.size(), recording.duration(), rmin, rmax,
         flat ? " [FLAT — input was static during recording]" : "");
+
+    // Auto-save with date/time + source name
+    if (!recording.samples.empty()) {
+        time_t now = time(nullptr);
+        struct tm lt;
+#ifdef _WIN32
+        localtime_s(&lt, &now);
+#else
+        localtime_r(&now, &lt);
+#endif
+        const char* src = "Plugin";
+        if (input_source == InputSource::CapturePlayback) src = "Capture";
+        else if (active_plugin_idx >= 0) {
+            const char* pn = plugin_mgr.pluginName(active_plugin_idx);
+            if (pn) src = pn;
+        }
+        char auto_name[64];
+        snprintf(auto_name, sizeof(auto_name), "%04d-%02d-%02d %02d:%02d:%02d %s",
+                 lt.tm_year + 1900, lt.tm_mon + 1, lt.tm_mday,
+                 lt.tm_hour, lt.tm_min, lt.tm_sec, src);
+        saveRecordingToLibrary(auto_name);
+        // Auto-select the newly saved recording
+        capture_playback_idx = (int)saved_recordings.size() - 1;
+    }
 }
 
 
@@ -962,9 +1010,8 @@ void App::saveRecordingToLibrary(const char* name) {
     snprintf(sr.name, sizeof(sr.name), "%s", name);
     sr.sample_rate_hz = (double)record_rate_hz;
     sr.created_time = (double)time(nullptr);
-    const char* src = "manual";
+    const char* src = "plugin";
     if (input_source == InputSource::CapturePlayback) src = "capture";
-    else if (input_source == InputSource::Plugin) src = "plugin";
     snprintf(sr.source, sizeof(sr.source), "%s", src);
     sr.samples = recording.samples;
     saved_recordings.push_back(std::move(sr));
@@ -1632,7 +1679,6 @@ void App::requestSourceSwitch(InputSource target) {
     source_switch_start = frame_time;
     source_switch_active = true;
     log(-1, "input", "Ramping to home before switching to %s...",
-        target == InputSource::Manual ? "Manual" :
         target == InputSource::CapturePlayback ? "Capture" :
         target == InputSource::Plugin ? "Plugin" : "?");
 }
@@ -1681,8 +1727,7 @@ void App::update() {
             if (motion_started && input_source == InputSource::Plugin && active_plugin_idx >= 0) {
                 float sr = (fps > 1.0) ? (float)fps : 60.0f;
                 if (!plugin_mgr.activatePlugin(active_plugin_idx, sr)) {
-                    log(-1, "plugin", "Failed to activate plugin — falling back to Manual");
-                    input_source = InputSource::Manual;
+                    log(-1, "plugin", "Failed to activate plugin");
                     active_plugin_idx = -1;
                 }
             }
@@ -1695,6 +1740,10 @@ void App::update() {
 
     // ── Motion gate: when stopped, force everything to zero ──
     if (!motion_started) {
+        if (capture_playing) {
+            capture_playing = false;
+            log(-1, "capture", "Playback stopped (motion off)");
+        }
         for (auto& e : entities)
             memset(e.state.input_pct, 0, sizeof(e.state.input_pct));
         {
@@ -1746,7 +1795,7 @@ void App::update() {
     // ── Input bus sync ────────────────────────────────────────────────
     // Ensure shared_input and entity.input_pct are always consistent.
     // Plugin writes to shared_input → push to entities.
-    // Manual/Capture write to entity.input_pct → push to shared_input.
+    // Capture writes to entity.input_pct → push to shared_input.
     if (input_source == InputSource::Plugin && plugin_mgr.activeIndex() >= 0) {
         // External source → entities
         float snap[6];
@@ -1803,9 +1852,8 @@ void App::update() {
         bool should_log = (interval <= 0.0) || (frame_time - last_input_log_time >= interval);
         if (should_log) {
             last_input_log_time = frame_time;
-            const char* src_str = "manual";
+            const char* src_str = "plugin";
             if (input_source == InputSource::CapturePlayback) src_str = "capture";
-            else if (input_source == InputSource::Plugin) src_str = "plugin";
             log(-1, src_str, "IN: %+.0f %+.0f %+.0f %+.0f %+.0f %+.0f",
                 current_input[0], current_input[1], current_input[2],
                 current_input[3], current_input[4], current_input[5]);

@@ -107,6 +107,8 @@ bool PluginManager::loadPlugin(const std::string& path) {
     p.fn_process = nullptr;
     p.fn_shutdown = nullptr;
     p.fn_set_param = nullptr;
+    p.fn_get_toolbar = nullptr;
+    p.fn_toolbar_action = nullptr;
 
     // Load the shared library
     p.handle = plugin_load(path.c_str());
@@ -125,6 +127,8 @@ bool PluginManager::loadPlugin(const std::string& path) {
 
     // Optional
     p.fn_set_param = (StewartPluginSetParamFn)plugin_sym(p.handle, STEWART_SYM_SET_PARAM);
+    p.fn_get_toolbar = (StewartPluginGetToolbarFn)plugin_sym(p.handle, STEWART_SYM_GET_TOOLBAR);
+    p.fn_toolbar_action = (StewartPluginToolbarActionFn)plugin_sym(p.handle, STEWART_SYM_TOOLBAR_ACTION);
 
     if (!p.fn_info || !p.fn_init || !p.fn_process || !p.fn_shutdown) {
         fprintf(stderr, "[PluginManager] '%s' missing required symbols (need: %s, %s, %s, %s)\n",
@@ -256,11 +260,13 @@ bool PluginManager::processActive(double timestamp, double dt, int frame_number,
     ctx.frame_number = frame_number;
     ctx.sample_rate = sample_rate;
     memset(ctx.output, 0, sizeof(ctx.output));
+    memset(ctx.raw_input, 0, sizeof(ctx.raw_input));
 
     int result = p.fn_process(&ctx);
     if (result != 0) return false;
 
     memcpy(output, ctx.output, sizeof(ctx.output));
+    memcpy(p.last_raw_input, ctx.raw_input, sizeof(p.last_raw_input));
     return true;
 }
 

@@ -51,7 +51,7 @@
 | `app/` | Native desktop app (C++/OpenGL/ImGui) — see [Desktop App](#desktop-app) below |
 | `Controller/` | ESP32-S3 firmware (ESP-IDF v5.2) — see [Controller/README.md](Controller/README.md) |
 | `test_harness/` | Step/dir signal analyzer firmware — see [test_harness/README.md](test_harness/README.md) |
-| `docs/` | [Architecture](docs/ARCHITECTURE_ROADMAP.md), [IK research](docs/IK_RESEARCH.md), [Platform geometry](docs/platform_geometry.md) |
+| `docs/` | [App Guide](docs/APP_GUIDE.md), [Architecture](docs/ARCHITECTURE_ROADMAP.md), [IK research](docs/IK_RESEARCH.md), [Platform geometry](docs/platform_geometry.md) |
 | `docs/firmware/` | [Step/Dir optimization roadmap](docs/firmware/esp32s3_step_dir_roadmap.md) |
 | `docs/hardware/` | [Single motor test plan](docs/hardware/single_motor_test_plan.md), [HIL test plan](docs/hardware/hil_test_plan.md) |
 

@@ -94,7 +94,33 @@ typedef struct {
 
     /* Output: plugin fills this with ±100% values */
     float               output[6];
+
+    /* Raw input: plugin optionally fills with pre-scaling values per axis.
+     * Used by the app for min/max profiling and auto-calibration.
+     * Plugins that don't support this leave it zeroed (app zero-inits). */
+    float               raw_input[6];
 } StewartPluginContext;
+
+/* ── Toolbar item types (for optional plugin toolbar) ─────────────── */
+
+enum StewartToolbarItemType {
+    STEWART_TOOLBAR_BUTTON    = 0,   /* Clickable button              */
+    STEWART_TOOLBAR_TOGGLE    = 1,   /* On/off toggle button          */
+    STEWART_TOOLBAR_COMBO     = 2,   /* Dropdown combo box            */
+    STEWART_TOOLBAR_SEPARATOR = 3,   /* Visual separator              */
+};
+
+/* Toolbar item descriptor — plugin returns an array of these.
+ * The app renders them in the main toolbar when this plugin is active. */
+typedef struct {
+    const char*                   id;            /* unique key for callbacks      */
+    const char*                   label;         /* display text / tooltip        */
+    enum StewartToolbarItemType   type;
+    int                           current_value; /* toggle: 0/1, combo: index    */
+    const char*                   options;       /* COMBO: "A\0B\0C\0" (double-null terminated) */
+    int                           option_count;  /* COMBO: number of options      */
+    float                         width;         /* 0 = auto, >0 = fixed width   */
+} StewartToolbarItem;
 
 /* ── Plugin entry points ──────────────────────────────────────────── *
  *
@@ -110,6 +136,11 @@ typedef struct {
  * Parameter changes:
  *   When user adjusts a parameter in the UI, app calls
  *   stewart_plugin_set_param() with the parameter name and new value.
+ *
+ * Toolbar (optional):
+ *   Export stewart_plugin_get_toolbar() to provide custom toolbar items.
+ *   The app calls stewart_plugin_toolbar_action() when the user interacts
+ *   with a toolbar item.
  */
 
 /* Return plugin metadata. Called once at load time.
@@ -132,13 +163,24 @@ typedef void (*StewartPluginShutdownFn)(void);
  * value = new value (float; cast to int/bool as needed by type) */
 typedef void (*StewartPluginSetParamFn)(const char* name, float value);
 
+/* Return an array of toolbar item descriptors.  *out_count receives count.
+ * Optional — return NULL if the plugin has no toolbar items.
+ * Called each frame while plugin is active; items may change dynamically. */
+typedef StewartToolbarItem* (*StewartPluginGetToolbarFn)(int* out_count);
+
+/* Called when the user interacts with a toolbar item.
+ * id = StewartToolbarItem.id, value = new value (button: 1, toggle: 0/1, combo: index). */
+typedef void (*StewartPluginToolbarActionFn)(const char* id, int value);
+
 /* ── Symbol names the app looks for ───────────────────────────────── */
 
-#define STEWART_SYM_INFO       "stewart_plugin_info"
-#define STEWART_SYM_INIT       "stewart_plugin_init"
-#define STEWART_SYM_PROCESS    "stewart_plugin_process"
-#define STEWART_SYM_SHUTDOWN   "stewart_plugin_shutdown"
-#define STEWART_SYM_SET_PARAM  "stewart_plugin_set_param"
+#define STEWART_SYM_INFO            "stewart_plugin_info"
+#define STEWART_SYM_INIT            "stewart_plugin_init"
+#define STEWART_SYM_PROCESS         "stewart_plugin_process"
+#define STEWART_SYM_SHUTDOWN        "stewart_plugin_shutdown"
+#define STEWART_SYM_SET_PARAM       "stewart_plugin_set_param"
+#define STEWART_SYM_GET_TOOLBAR     "stewart_plugin_get_toolbar"
+#define STEWART_SYM_TOOLBAR_ACTION  "stewart_plugin_toolbar_action"
 
 /* ── Convenience macro for plugin authors ─────────────────────────── *
  *

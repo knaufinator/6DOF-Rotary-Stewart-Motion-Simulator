@@ -17,6 +17,8 @@
 #include <atomic>
 #include <condition_variable>
 
+#include "dev_log.h"
+
 // Parsed telemetry from ESP32
 struct ESP32Telemetry {
     float angles[6];     // servo angles (radians) from ESP32 IK
@@ -70,6 +72,10 @@ public:
     using LineCallback = std::function<void(const char* line)>;
     void setLineCallback(LineCallback cb) { m_line_cb = cb; }
 
+    // Thread-safe line queue: reader thread pushes, main thread drains.
+    // This replaces direct callback invocation to avoid data races.
+    std::vector<std::string> drainLines();
+
 private:
     void readerThread();
     void writerThread();
@@ -102,4 +108,8 @@ private:
 
     LineCallback m_line_cb;
     double m_last_line_cb_time = 0.0;
+
+    // Thread-safe line queue (reader pushes, main thread drains)
+    std::mutex m_line_queue_mutex;
+    std::vector<std::string> m_line_queue;
 };

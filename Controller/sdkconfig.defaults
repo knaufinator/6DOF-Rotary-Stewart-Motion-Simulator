@@ -1,16 +1,13 @@
-# ESP32-S3 Configuration for Stewart Platform Motion Controller
-# Native ESP-IDF configuration (no Arduino framework)
-
-# Target configuration
-CONFIG_IDF_TARGET="esp32s3"
-CONFIG_IDF_TARGET_ESP32S3=y
-
-# Serial/Console — UART primary + USB Serial JTAG secondary (output duplicated to USB)
-CONFIG_ESP_CONSOLE_UART_DEFAULT=y
-CONFIG_ESP_CONSOLE_UART_NUM=0
-CONFIG_ESP_CONSOLE_UART_BAUDRATE=115200
-CONFIG_ESP_CONSOLE_SECONDARY_USB_SERIAL_JTAG=y
-CONFIG_ESP_CONSOLE_USB_CDC_SUPPORT_ETS_PRINTF=n
+# Stewart Platform Motion Controller — Common Configuration
+# Shared by both PCBv1 (ESP32) and PCBv2 (ESP32-S3).
+# Target-specific overrides are in:
+#   sdkconfig.defaults.esp32   — PCBv1 (original DevKit + MCP23S17)
+#   sdkconfig.defaults.esp32s3 — PCBv2 (new board, MCPWM + W5500)
+#
+# Build:
+#   idf.py set-target esp32    # PCBv1
+#   idf.py set-target esp32s3  # PCBv2
+#   idf.py build
 
 # FreeRTOS Configuration for real-time performance
 CONFIG_FREERTOS_HZ=1000
@@ -30,15 +27,9 @@ CONFIG_ESP_INT_WDT=y
 CONFIG_ESP_INT_WDT_TIMEOUT_MS=300
 
 # GPTimer Configuration
-# Disabled IRAM placement to avoid linker literal pool issues
-# Will add ~2-3µs latency but ensures reliable builds
 CONFIG_GPTIMER_ENABLE_DEBUG_LOG=n
 CONFIG_GPTIMER_ISR_IRAM_SAFE=n
 CONFIG_GPTIMER_CTRL_FUNC_IN_IRAM=n
-
-# RMT Configuration
-CONFIG_RMT_ISR_IRAM_SAFE=y
-CONFIG_RMT_ENABLE_DEBUG_LOG=n
 
 # Compiler optimization for performance
 CONFIG_COMPILER_OPTIMIZATION_PERF=y
@@ -59,25 +50,11 @@ CONFIG_ESP_TIMER_SUPPORTS_ISR_DISPATCH_METHOD=y
 # NVS (Non-Volatile Storage)
 CONFIG_NVS_ENCRYPTION=n
 
-# GPIO
-CONFIG_GPIO_ESP32_SUPPORT_SWITCH_SLP_PULL=y
-
 # Partition table
 CONFIG_PARTITION_TABLE_SINGLE_APP_LARGE=y
 
 # Bootloader
 CONFIG_BOOTLOADER_LOG_LEVEL_INFO=y
-
-# Flash size
-CONFIG_ESPTOOLPY_FLASHSIZE_8MB=y
-CONFIG_ESPTOOLPY_FLASHSIZE="8MB"
-
-# Bluetooth (BLE) — required for BleTransport (ESP32-S3 is BLE-only)
-CONFIG_BT_ENABLED=y
-CONFIG_BT_BLUEDROID_ENABLED=y
-CONFIG_BT_BLE_ENABLED=y
-CONFIG_BT_BLE_42_FEATURES_SUPPORTED=y
-CONFIG_BT_NIMBLE_ENABLED=n
 
 # Component config
 CONFIG_LOG_DEFAULT_LEVEL_INFO=y

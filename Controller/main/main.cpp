@@ -22,6 +22,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include "nvs_flash.h"
+#include "nvs.h"
 #include "esp_task_wdt.h"
 
 // Project headers
@@ -30,9 +31,17 @@
 #include "InverseKinematics.h"
 #include "AxisScaling.h"
 #include "MotionCueing.h"
-#include "MCPWMMotorControl.h"
-#include "GPTimerScheduler.h"
 #include "version.h"
+
+// ── PCB-version-specific motor control ──────────────────────────────
+#if PCB_VERSION == 1
+#include "MCP23S17.h"        // SPI GPIO expander for step/dir
+#include "GPTimerScheduler.h"
+#else
+#include "MCPWMMotorControl.h"  // Direct GPIO MCPWM step/dir
+#include "GPTimerScheduler.h"
+#endif
+
 #ifdef ENABLE_ETHERNET
 #include "EthernetTransport.h"
 #endif
@@ -60,10 +69,32 @@ static float    maxRawInput   = 4094.0f;  // (1 << 12) - 2 = 4094
 static MotionCueingConfig mcaConfig;
 
 // Motor control variables
-MCPWMMotorControl* motors[6];
 volatile float arr[6] = {0, 0, 0, 0, 0, 0};
 
-// GPIO pins for motors (using board-specific definitions)
+#if PCB_VERSION == 1
+// ── PCBv1: MCP23S17 SPI expander motor control ─────────────────────
+static MCP23S17* outputBank = nullptr;
+static volatile int32_t motorCurrentPos[6] = {0};
+static volatile int32_t motorTargetPos[6] = {0};
+static bool motorInitialized = false;
+static uint16_t motorOutputReg = 0;    // current MCP23S17 output register
+static bool stepPinState = false;       // alternating step HIGH/LOW phases
+
+// MCP23S17 pin assignments (from Dev branch)
+static const int mcpStepPins[6] = {
+    MCP_STEP_PIN_0, MCP_STEP_PIN_1, MCP_STEP_PIN_2,
+    MCP_STEP_PIN_3, MCP_STEP_PIN_4, MCP_STEP_PIN_5
+};
+static const int mcpDirPins[6] = {
+    MCP_DIR_PIN_0, MCP_DIR_PIN_1, MCP_DIR_PIN_2,
+    MCP_DIR_PIN_3, MCP_DIR_PIN_4, MCP_DIR_PIN_5
+};
+// Motors 0, 2, 4 are counter-clockwise (inverted direction)
+static const bool motorInverted[6] = { true, false, true, false, true, false };
+
+#else
+// ── PCBv2: Direct GPIO MCPWM step/dir ──────────────────────────────
+MCPWMMotorControl* motors[6];
 const gpio_num_t stepPins[6] = {
     (gpio_num_t)STEP_PIN_1, (gpio_num_t)STEP_PIN_2, (gpio_num_t)STEP_PIN_3,
     (gpio_num_t)STEP_PIN_4, (gpio_num_t)STEP_PIN_5, (gpio_num_t)STEP_PIN_6
@@ -72,8 +103,25 @@ const gpio_num_t dirPins[6] = {
     (gpio_num_t)DIR_PIN_1, (gpio_num_t)DIR_PIN_2, (gpio_num_t)DIR_PIN_3,
     (gpio_num_t)DIR_PIN_4, (gpio_num_t)DIR_PIN_5, (gpio_num_t)DIR_PIN_6
 };
+#endif
 
-// All 6 motors use MCPWM hardware-timed one-shot pulses (2 groups × 3 timers)
+// ── Motor abstraction layer ─────────────────────────────────────────
+// Unified API that works for both PCB versions, used by command handlers.
+#if PCB_VERSION == 1
+static inline int32_t motor_getPos(int i)  { return motorCurrentPos[i]; }
+static inline int32_t motor_getTarget(int i) { return motorTargetPos[i]; }
+static inline bool motor_setTarget(int i, int32_t pos) { motorTargetPos[i] = pos; return true; }
+static inline void motor_resetPosition(int i) { motorCurrentPos[i] = 0; motorTargetPos[i] = 0; }
+static inline void motor_emergencyStop(int i) { motorTargetPos[i] = motorCurrentPos[i]; }
+static inline bool motor_isInit(int) { return motorInitialized; }
+#else
+static inline int32_t motor_getPos(int i)  { return motors[i] ? motors[i]->getCurrentPosition() : 0; }
+static inline int32_t motor_getTarget(int i) { return motors[i] ? motors[i]->getTargetPosition() : 0; }
+static inline bool motor_setTarget(int i, int32_t pos) { return motors[i] ? motors[i]->setTargetPosition(pos) : false; }
+static inline void motor_resetPosition(int i) { if (motors[i]) motors[i]->resetPosition(); }
+static inline void motor_emergencyStop(int i) { if (motors[i]) motors[i]->emergencyStop(); }
+static inline bool motor_isInit(int i) { return motors[i] && motors[i]->isInitialized(); }
+#endif
 
 // Loop timing instrumentation (updated every GPTimer tick)
 static volatile uint32_t loopCount = 0;
@@ -151,6 +199,49 @@ void serial_println(const char *str) {
     fflush(stdout);
 }
 
+// ── NVS persistence for Stewart platform geometry ───────────────────
+#define CONFIG_NVS_NAMESPACE "stewart_cfg"
+#define CONFIG_NVS_KEY       "geo"
+#define CONFIG_NVS_VERSION   1
+
+struct ConfigNvsBlob {
+    uint8_t version;
+    float RD, PD, L1, L2, height, theta_r, theta_p;
+};
+
+static int configSaveToNVS(const StewartConfig* cfg) {
+    nvs_handle_t handle;
+    esp_err_t err = nvs_open(CONFIG_NVS_NAMESPACE, NVS_READWRITE, &handle);
+    if (err != ESP_OK) return -1;
+    ConfigNvsBlob blob = {};
+    blob.version = CONFIG_NVS_VERSION;
+    blob.RD = cfg->RD; blob.PD = cfg->PD;
+    blob.L1 = cfg->ServoArmLengthL1; blob.L2 = cfg->ConnectingArmLengthL2;
+    blob.height = cfg->platformHeight;
+    blob.theta_r = cfg->theta_r; blob.theta_p = cfg->theta_p;
+    err = nvs_set_blob(handle, CONFIG_NVS_KEY, &blob, sizeof(blob));
+    if (err == ESP_OK) err = nvs_commit(handle);
+    nvs_close(handle);
+    return (err == ESP_OK) ? 0 : -1;
+}
+
+static int configLoadFromNVS(StewartConfig* cfg) {
+    nvs_handle_t handle;
+    esp_err_t err = nvs_open(CONFIG_NVS_NAMESPACE, NVS_READONLY, &handle);
+    if (err != ESP_OK) return -1;
+    ConfigNvsBlob blob = {};
+    size_t len = sizeof(blob);
+    err = nvs_get_blob(handle, CONFIG_NVS_KEY, &blob, &len);
+    nvs_close(handle);
+    if (err != ESP_OK || len != sizeof(blob) || blob.version != CONFIG_NVS_VERSION)
+        return -1;
+    cfg->RD = blob.RD; cfg->PD = blob.PD;
+    cfg->ServoArmLengthL1 = blob.L1; cfg->ConnectingArmLengthL2 = blob.L2;
+    cfg->platformHeight = blob.height;
+    cfg->theta_r = blob.theta_r; cfg->theta_p = blob.theta_p;
+    return 0;
+}
+
 /* ESP-IDF replacements for Arduino timing functions */
 static inline int64_t micros() {
     return esp_timer_get_time();
@@ -216,14 +307,38 @@ void setPos() {
     xSemaphoreTake(xMutex, portMAX_DELAY);
     for (int i = 0; i < 6; i++) {
         long x = (long)(servoAngles[i] * IK_RAD_TO_DEG * stewartConfig.steps_per_degree);
-        if (!motors[i]->setTargetPosition(x)) {
-            DEBUG_PRINTF("Motor %d position error: %d\n", i, motors[i]->getLastError());
+        if (!motor_setTarget(i, x)) {
+            DEBUG_PRINTF("Motor %d position error\n", i);
         }
     }
     xSemaphoreGive(xMutex);
 }
 
+#if PCB_VERSION == 1
 void setupMotorPins() {
+    // PCBv1: Initialize MCP23S17 SPI GPIO expander for step/dir output
+    outputBank = new MCP23S17((spi_host_device_t)MCP_SPI_HOST,
+                              (gpio_num_t)MCP_CS_PIN, 0);
+    if (!outputBank->begin(MCP_SPI_MOSI, MCP_SPI_MISO, MCP_SPI_CLK, 8000000)) {
+        DEBUG_PRINTLN("FATAL: MCP23S17 outputBank init failed");
+        return;
+    }
+    // All 12 pins (6 step + 6 dir) are outputs — set via begin() default
+    outputBank->allOutput();
+    motorOutputReg = 0;
+    outputBank->writeAll(0);  // all LOW
+
+    for (int i = 0; i < 6; i++) {
+        motorCurrentPos[i] = 0;
+        motorTargetPos[i] = 0;
+    }
+    motorInitialized = true;
+    stepPinState = false;
+    DEBUG_PRINTLN("Motors initialized: 6 via MCP23S17 SPI expander (PCBv1)");
+}
+#else
+void setupMotorPins() {
+    // PCBv2: Initialize all 6 motors via MCPWM (2 groups × 3 timers = 6 hw channels)
     MCPWMMotorControl::Config motorConfig;
     motorConfig.stepPulseWidth_us = 2;      // 2µs pulse width (most drivers spec >= 1.5µs)
     motorConfig.dirSetupTime_us = 5;        // 5µs direction setup (driver-safe minimum)
@@ -234,7 +349,6 @@ void setupMotorPins() {
     motorConfig.softLimitMin = -100000;
     motorConfig.softLimitMax = 100000;
 
-    // Initialize all 6 motors via MCPWM (2 groups × 3 timers = 6 hw channels)
     int ok_count = 0;
     for (int i = 0; i < 6; i++) {
         motors[i] = new MCPWMMotorControl(stepPins[i], dirPins[i]);
@@ -244,19 +358,73 @@ void setupMotorPins() {
             ok_count++;
         }
     }
-    DEBUG_PRINTF("Motors initialized: %d/6 MCPWM hardware-timed\n", ok_count);
+    DEBUG_PRINTF("Motors initialized: %d/6 MCPWM hardware-timed (PCBv2)\n", ok_count);
 }
+#endif
 
+#if PCB_VERSION == 1
 void handleStepDirection() {
-    // Burst stepping: fire multiple steps per motor per 50µs tick.
-    // Round-robin cycles through all 6 motors, firing one step each per round.
-    // Each round naturally spaces calls to the same motor by ~6× function overhead,
-    // satisfying minStepInterval_us (4µs) between consecutive steps on the same motor.
-    // MCPWM one-shot pulses are fire-and-forget (hardware-timed), so overlapping
-    // pulses on different motors are fine.
-    //
-    // Effective rate: ~80k–200k steps/sec per motor (vs 20k with single-step),
-    // depending on how many motors are simultaneously active.
+    // PCBv1: Batch step/dir via MCP23S17 SPI GPIO expander.
+    // Alternates between step-HIGH and step-LOW phases each GPTimer tick.
+    // Each motor advances 1 step per 2 ticks = 10kHz max step rate at 50µs interval.
+    // SPI writes are batched: all 6 motors updated in 2-3 SPI transactions per tick.
+    if (!motorInitialized || !outputBank) return;
+
+    xSemaphoreTake(xMutex, portMAX_DELAY);
+
+    if (stepPinState) {
+        // Phase A: Bring all step pins LOW (end of pulse)
+        for (int i = 0; i < 6; i++) {
+            BIT_CLEAR(motorOutputReg, mcpStepPins[i]);
+        }
+        outputBank->writeAll(motorOutputReg);
+        stepPinState = false;
+    } else {
+        // Phase B: Set direction pins, then raise step pins for active motors
+        bool anyActive = false;
+
+        // Set direction bits based on movement direction
+        for (int i = 0; i < 6; i++) {
+            int32_t delta = motorTargetPos[i] - motorCurrentPos[i];
+            if (delta != 0) {
+                bool dir = (delta > 0);
+                if (motorInverted[i]) dir = !dir;
+                if (dir) {
+                    BIT_SET(motorOutputReg, mcpDirPins[i]);
+                } else {
+                    BIT_CLEAR(motorOutputReg, mcpDirPins[i]);
+                }
+            }
+        }
+        // Write direction first (dir setup time provided by SPI transaction gap)
+        outputBank->writeAll(motorOutputReg);
+
+        // Now set step pins HIGH for motors that need to move
+        uint16_t withStep = motorOutputReg;
+        for (int i = 0; i < 6; i++) {
+            if (motorCurrentPos[i] < motorTargetPos[i]) {
+                motorCurrentPos[i]++;
+                BIT_SET(withStep, mcpStepPins[i]);
+                anyActive = true;
+            } else if (motorCurrentPos[i] > motorTargetPos[i]) {
+                motorCurrentPos[i]--;
+                BIT_SET(withStep, mcpStepPins[i]);
+                anyActive = true;
+            }
+        }
+        if (anyActive) {
+            outputBank->writeAll(withStep);
+            stepPinState = true;
+        }
+    }
+
+    xSemaphoreGive(xMutex);
+}
+#else
+void handleStepDirection() {
+    // PCBv2: Burst stepping via MCPWM one-shot pulses (hardware-timed).
+    // Round-robin cycles through all 6 motors within a 45µs budget per 50µs tick.
+    // Effective rate: ~80k–200k steps/sec per motor.
 
     xSemaphoreTake(xMutex, portMAX_DELAY);
 
@@ -277,6 +445,7 @@ void handleStepDirection() {
 
     xSemaphoreGive(xMutex);
 }
+#endif
 
 static uint32_t binPktCount = 0;
 
@@ -393,9 +562,7 @@ void EStopMonitorTask(void * pvParameters) {
                 
                 // Immediately disable all motor outputs
                 for(int i = 0; i < 6; i++) {
-                    if (motors[i]) {
-                        motors[i]->emergencyStop();
-                    }
+                    motor_emergencyStop(i);
                 }
                 isPausedEStop = true;
                 
@@ -513,6 +680,11 @@ void process_data(char * data) {
             cnt, (unsigned long)loopMin_us, avg, (unsigned long)loopMax_us, microInterval);
         // Per-motor stats
         for (int i = 0; i < 6; i++) {
+#if PCB_VERSION == 1
+            serial_printf("  M%d: pos=%ld tgt=%ld init=%d\r\n",
+                i, (long)motor_getPos(i), (long)motor_getTarget(i),
+                motor_isInit(i) ? 1 : 0);
+#else
             if (!motors[i]) continue;
             const MCPWMMotorControl::Stats& s = motors[i]->getStats();
             float savg = s.intervalSamples > 0 ? (float)s.sumInterval_us / s.intervalSamples : 0;
@@ -522,6 +694,7 @@ void process_data(char * data) {
                 (unsigned long)s.totalSteps, (unsigned long)s.stepErrors,
                 (unsigned long)smin, savg, (unsigned long)s.maxInterval_us,
                 motors[i]->isInitialized() ? 1 : 0);
+#endif
         }
         return;
     }
@@ -532,9 +705,11 @@ void process_data(char * data) {
     //         loop timing counters reset cleanly (no stale data in MSTAT)
     if (strcmp(data, "MTEST:RESET") == 0) {
         loopCount = 0; loopMin_us = UINT32_MAX; loopMax_us = 0; loopSum_us = 0;
+#if PCB_VERSION != 1
         for (int i = 0; i < 6; i++) {
             if (motors[i]) motors[i]->resetStats();
         }
+#endif
         serial_printf("MTEST:RESET=OK\r\n");
         return;
     }
@@ -560,18 +735,20 @@ void process_data(char * data) {
         // Save current positions
         int32_t savedPos[6];
         for (int i = 0; i < 6; i++) {
-            savedPos[i] = motors[i] ? motors[i]->getCurrentPosition() : 0;
+            savedPos[i] = motor_getPos(i);
         }
 
         // Set forward targets, THEN reset stats so setup overhead is excluded
         xSemaphoreTake(xMutex, portMAX_DELAY);
         for (int i = 0; i < 6; i++) {
-            if (motors[i]) motors[i]->setTargetPosition(savedPos[i] + TEST_STEPS);
+            motor_setTarget(i, savedPos[i] + TEST_STEPS);
         }
         loopCount = 0; loopMin_us = UINT32_MAX; loopMax_us = 0; loopSum_us = 0;
+#if PCB_VERSION != 1
         for (int i = 0; i < 6; i++) {
             if (motors[i]) motors[i]->resetStats();
         }
+#endif
         xSemaphoreGive(xMutex);
 
         // Wait for forward motion to complete (timeout 2s)
@@ -580,7 +757,7 @@ void process_data(char * data) {
         while (!done && (micros() - t0) < 2000000) {
             done = true;
             for (int i = 0; i < 6; i++) {
-                if (motors[i] && motors[i]->getCurrentPosition() != motors[i]->getTargetPosition())
+                if (motor_getPos(i) != motor_getTarget(i))
                     done = false;
             }
             vTaskDelay(pdMS_TO_TICKS(1));
@@ -595,12 +772,14 @@ void process_data(char * data) {
         // Set back targets, then reset stats for back phase
         xSemaphoreTake(xMutex, portMAX_DELAY);
         for (int i = 0; i < 6; i++) {
-            if (motors[i]) motors[i]->setTargetPosition(savedPos[i]);
+            motor_setTarget(i, savedPos[i]);
         }
         loopCount = 0; loopMin_us = UINT32_MAX; loopMax_us = 0; loopSum_us = 0;
+#if PCB_VERSION != 1
         for (int i = 0; i < 6; i++) {
             if (motors[i]) motors[i]->resetStats();
         }
+#endif
         xSemaphoreGive(xMutex);
 
         t0 = micros();
@@ -608,7 +787,7 @@ void process_data(char * data) {
         while (!done && (micros() - t0) < 2000000) {
             done = true;
             for (int i = 0; i < 6; i++) {
-                if (motors[i] && motors[i]->getCurrentPosition() != motors[i]->getTargetPosition())
+                if (motor_getPos(i) != motor_getTarget(i))
                     done = false;
             }
             vTaskDelay(pdMS_TO_TICKS(1));
@@ -630,8 +809,7 @@ void process_data(char * data) {
         // Check all motors returned to original position
         bool allOk = true;
         for (int i = 0; i < 6; i++) {
-            if (!motors[i]) continue;
-            int32_t diff = motors[i]->getCurrentPosition() - savedPos[i];
+            int32_t diff = motor_getPos(i) - savedPos[i];
             if (diff != 0) {
                 serial_printf("MTEST:M%d POSITION ERROR off=%ld\r\n", i, (long)diff);
                 allOk = false;
@@ -639,6 +817,12 @@ void process_data(char * data) {
         }
 
         // Per-motor step stats (back phase only — most recent clean window)
+#if PCB_VERSION == 1
+        for (int i = 0; i < 6; i++) {
+            serial_printf("  M%d: pos=%ld tgt=%ld\r\n",
+                i, (long)motor_getPos(i), (long)motor_getTarget(i));
+        }
+#else
         for (int i = 0; i < 6; i++) {
             if (!motors[i]) continue;
             const MCPWMMotorControl::Stats& s = motors[i]->getStats();
@@ -648,6 +832,7 @@ void process_data(char * data) {
                 i, (unsigned long)s.totalSteps, (unsigned long)s.stepErrors,
                 (unsigned long)smin, savg, (unsigned long)s.maxInterval_us);
         }
+#endif
 
         serial_printf("MTEST:%s\r\n", allOk ? "PASS" : "FAIL");
         motorTestRunning = false;
@@ -664,9 +849,7 @@ void process_data(char * data) {
         if (xSemaphoreTake(xMutex, pdMS_TO_TICKS(10)) == pdTRUE) {
             for (int i = 0; i < 6; i++) {
                 arr[i] = 0;
-                if (motors[i]) {
-                    motors[i]->setTargetPosition(0);
-                }
+                motor_setTarget(i, 0);
             }
             xSemaphoreGive(xMutex);
         }
@@ -681,9 +864,7 @@ void process_data(char * data) {
     if (strcmp(data, "ESTOP:FULL") == 0) {
         GPTimerScheduler::stop();
         for (int i = 0; i < 6; i++) {
-            if (motors[i]) {
-                motors[i]->emergencyStop();
-            }
+            motor_emergencyStop(i);
         }
         isPausedEStop = true;
         serial_printf("ESTOP:FULL — GPTimer stopped, all motors killed. Send ESTOP:RESET to recover.\r\n");
@@ -722,10 +903,10 @@ void process_data(char * data) {
     if (strcmp(data, "ZERO") == 0) {
         if (xSemaphoreTake(xMutex, pdMS_TO_TICKS(100)) == pdTRUE) {
             for (int i = 0; i < 6; i++) {
-                if (motors[i]) {
-                    motors[i]->resetPosition();
-                    motors[i]->resetStats();
-                }
+                motor_resetPosition(i);
+#if PCB_VERSION != 1
+                if (motors[i]) motors[i]->resetStats();
+#endif
                 arr[i] = 0;
             }
             xSemaphoreGive(xMutex);
@@ -740,9 +921,8 @@ void process_data(char * data) {
     if (strcmp(data, "ZERO?") == 0) {
         bool allZero = true;
         for (int i = 0; i < 6; i++) {
-            if (!motors[i]) continue;
-            int32_t pos = motors[i]->getCurrentPosition();
-            int32_t tgt = motors[i]->getTargetPosition();
+            int32_t pos = motor_getPos(i);
+            int32_t tgt = motor_getTarget(i);
             if (pos != 0 || tgt != 0) allZero = false;
             serial_printf("  M%d: pos=%ld tgt=%ld\r\n", i, (long)pos, (long)tgt);
         }
@@ -835,6 +1015,7 @@ void process_data(char * data) {
             else { changed = false; serial_printf("CONFIG:ERR unknown key '%s'\r\n", param); }
             if (changed) {
                 computeAxisScalesFromGeometry(&axisScales, &stewartConfig, 0.90f);
+                configSaveToNVS(&stewartConfig);
                 serial_printf("CONFIG:OK %s=%.4f (scales recomputed)\r\n", param, val);
             }
         }
@@ -1234,8 +1415,13 @@ extern "C" void app_main(void)
     };
     ESP_ERROR_CHECK(esp_task_wdt_reconfigure(&wdt_config));
   
-    // Initialize Stewart platform configuration
+    // Initialize Stewart platform configuration (NVS overrides defaults)
     initDefaultStewartConfig(&stewartConfig);
+    if (configLoadFromNVS(&stewartConfig) == 0) {
+        ESP_LOGI(TAG, "Geometry: Loaded from NVS (RD=%.2f, PD=%.2f)", stewartConfig.RD, stewartConfig.PD);
+    } else {
+        ESP_LOGI(TAG, "Geometry: Using factory defaults");
+    }
     // Derive axis scales from actual IK workspace (no magic numbers)
     computeAxisScalesFromGeometry(&axisScales, &stewartConfig, 0.90f);
     ESP_LOGI(TAG, "Axis scales (from geometry, 90%% margin): %.2f, %.2f, %.2f, %.2f, %.2f, %.2f",
@@ -1253,10 +1439,16 @@ extern "C" void app_main(void)
         DEBUG_PRINTLN("MCA: Using factory defaults");
     }
 
-    // NOTE: E-Stop disabled — GPIO 20 (ESTOP_PIN) is USB D+ on ESP32-S3,
+    // E-Stop hardware initialization
+#if PCB_VERSION == 1
+    // PCBv1: E-stop on GPIO 22 — safe to use, enable hardware monitoring
+    initDebounceButton(&estop_button, (gpio_num_t)ESTOP_PIN, ESTOPDEBOUNCETIME);
+#else
+    // PCBv2: E-Stop disabled — GPIO 20 (ESTOP_PIN) is USB D+ on ESP32-S3,
     // conflicts with USB Serial JTAG causing false triggers. Move ESTOP_PIN
     // to an unused GPIO before re-enabling.
     // initDebounceButton(&estop_button, (gpio_num_t)ESTOP_PIN, ESTOPDEBOUNCETIME);
+#endif
     
     // Initialize motor control pins
     setupMotorPins();
@@ -1264,10 +1456,12 @@ extern "C" void app_main(void)
     // Create mutex for thread safety
     xMutex = xSemaphoreCreateMutex();
     
-    // E-stop task disabled — see ESTOP_PIN note above.
-    // xTaskCreatePinnedToCore(
-    //     EStopMonitorTask, "EStopMonitor", 10000, NULL,
-    //     configMAX_PRIORITIES-1, NULL, 0);
+#if PCB_VERSION == 1
+    // PCBv1: E-stop task active (GPIO 22 is dedicated)
+    xTaskCreatePinnedToCore(
+        EStopMonitorTask, "EStopMonitor", 4096, NULL,
+        configMAX_PRIORITIES-1, NULL, 0);
+#endif
     
     // Create tasks for interface monitoring and GPIO control with proper stack sizes
     xTaskCreatePinnedToCore(

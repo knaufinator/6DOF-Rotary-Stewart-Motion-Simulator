@@ -240,8 +240,8 @@ bool wifi_transport_init(void (*process_packet)(const uint8_t *payload))
     if (wifi_transport_load_credentials() == 0 && strlen(s_ssid) > 0) {
         ESP_LOGI(TAG, "Auto-connecting to saved SSID: %s", s_ssid);
         wifi_config_t wifi_config = {};
-        strncpy((char*)wifi_config.sta.ssid, s_ssid, sizeof(wifi_config.sta.ssid) - 1);
-        strncpy((char*)wifi_config.sta.password, s_pass, sizeof(wifi_config.sta.password) - 1);
+        memcpy(wifi_config.sta.ssid, s_ssid, strnlen(s_ssid, sizeof(wifi_config.sta.ssid) - 1));
+        memcpy(wifi_config.sta.password, s_pass, strnlen(s_pass, sizeof(wifi_config.sta.password) - 1));
         wifi_config.sta.threshold.authmode = strlen(s_pass) > 0 ? WIFI_AUTH_WPA2_PSK : WIFI_AUTH_OPEN;
         ESP_ERROR_CHECK(esp_wifi_set_config(WIFI_IF_STA, &wifi_config));
         ESP_ERROR_CHECK(esp_wifi_start());
@@ -327,8 +327,8 @@ void wifi_transport_connect(void)
     vTaskDelay(pdMS_TO_TICKS(100));
 
     wifi_config_t wifi_config = {};
-    strncpy((char*)wifi_config.sta.ssid, s_ssid, sizeof(wifi_config.sta.ssid) - 1);
-    strncpy((char*)wifi_config.sta.password, s_pass, sizeof(wifi_config.sta.password) - 1);
+    memcpy(wifi_config.sta.ssid, s_ssid, strnlen(s_ssid, sizeof(wifi_config.sta.ssid) - 1));
+    memcpy(wifi_config.sta.password, s_pass, strnlen(s_pass, sizeof(wifi_config.sta.password) - 1));
     wifi_config.sta.threshold.authmode = strlen(s_pass) > 0 ? WIFI_AUTH_WPA2_PSK : WIFI_AUTH_OPEN;
 
     ESP_ERROR_CHECK(esp_wifi_set_config(WIFI_IF_STA, &wifi_config));

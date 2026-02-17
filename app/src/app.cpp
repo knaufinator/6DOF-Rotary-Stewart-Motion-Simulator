@@ -1,5 +1,6 @@
 #include "app.h"
 #include "serial_port.h"
+#include "dev_log.h"
 #include <cstdarg>
 #include <cstdio>
 #include <cmath>
@@ -906,7 +907,10 @@ void App::handleHilLine(int entity_id, const char* line) {
                 log(e->id, "hil", "Geometry still out of sync after push.");
             }
         }
-        // During handshake, don't advance yet — wait for SERVO line
+        // Advance handshake after CONFIG (stepper platforms don't send SERVO:)
+        if (during_handshake) {
+            advanceHandshake(*this, *e);
+        }
         return;
     }
 
@@ -2023,10 +2027,7 @@ skip_input_processing:
 
                 if (e.hil_port[0] != '\0') {
                     auto sp = std::make_shared<SerialPort>();
-                    int eid = e.id;
-                    sp->setLineCallback([eid](const char* line) {
-                        g_app.handleHilLine(eid, line);
-                    });
+                    DEV_LOG("hil", "Opening serial port %s at 115200 baud", e.hil_port);
                     if (sp->open(e.hil_port, 115200)) {
                         e.serial = sp;
                         e.transport.usb_connected = true;
@@ -2038,14 +2039,25 @@ skip_input_processing:
                         e.hil_device_params.clear();
                         e.hil_handshake_start = frame_time;
                         snprintf(e.hil_handshake_msg, sizeof(e.hil_handshake_msg), "Requesting fingerprint...");
-                        log(e.id, "hil", "Auto-connected to %s — starting handshake...", e.hil_port);
+                        log(e.id, "hil", "Connected to %s - starting handshake...", e.hil_port);
+                        DEV_LOG("hil", "Connected to %s, sending FINGERPRINT?", e.hil_port);
                         // Flush any residual garbage in ESP32 ASCII buffer (e.g. leaked
                         // binary header bytes from a previous session) before handshake.
                         sp->write((const uint8_t*)"X", 1);
                         sp->sendCommand("FINGERPRINT?");
                     } else {
+                        DEV_WARN("hil", "Failed to open %s", e.hil_port);
                         log(e.id, "hil", "Auto-connect failed: %s (retrying...)", e.hil_port);
                     }
+                }
+            }
+
+            // ── Drain serial line queue on main thread (thread-safe) ──
+            if (e.serial && e.serial->isOpen()) {
+                auto lines = e.serial->drainLines();
+                for (const auto& line : lines) {
+                    DEV_LOG("serial", "[E%d] RX: %s", e.id, line.c_str());
+                    handleHilLine(e.id, line.c_str());
                 }
             }
 

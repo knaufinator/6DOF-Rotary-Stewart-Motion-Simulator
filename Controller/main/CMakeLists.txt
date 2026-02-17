@@ -1,33 +1,49 @@
 # Main component for Stewart Platform ESP-IDF project
+#
+# PCB version is auto-detected from the IDF target chip:
+#   ESP32    → PCB_VERSION=1 (original DevKit + MCP23S17 SPI expander)
+#   ESP32-S3 → PCB_VERSION=2 (new board, direct MCPWM GPIO + W5500 Ethernet)
+
+# ── Source files (common to both PCB versions) ──
+set(COMMON_SRCS
+    "main.cpp"
+    "helpers.cpp"
+    "InverseKinematics.cpp"
+    "AxisScaling.cpp"
+    "MotionCueing.cpp"
+    "WifiTransport.cpp"
+    "BleTransport.cpp"
+)
+
+# ── PCB-version-specific sources and dependencies ──
+set(PRIV_REQS
+    driver esp_timer nvs_flash freertos
+    esp_netif esp_event esp_wifi bt
+)
+
+if(IDF_TARGET STREQUAL "esp32")
+    # PCBv1: MCP23S17 SPI expander for step/dir, no W5500 Ethernet
+    set(PCB_SRCS ${COMMON_SRCS} "MCP23S17.cpp")
+    set(PCB_VERSION 1)
+elseif(IDF_TARGET STREQUAL "esp32s3")
+    # PCBv2: Direct GPIO MCPWM + W5500 SPI Ethernet
+    set(PCB_SRCS ${COMMON_SRCS} "EthernetTransport.cpp")
+    list(APPEND PRIV_REQS esp_eth)
+    set(PCB_VERSION 2)
+else()
+    message(FATAL_ERROR "Unsupported target '${IDF_TARGET}': only esp32 (PCBv1) and esp32s3 (PCBv2) are supported")
+endif()
 
 idf_component_register(
-    SRCS 
-        "main.cpp"
-        "helpers.cpp"
-        "InverseKinematics.cpp"
-        "AxisScaling.cpp"
-        "MotionCueing.cpp"
-        "EthernetTransport.cpp"
-        "WifiTransport.cpp"
-        "BleTransport.cpp"
+    SRCS ${PCB_SRCS}
     INCLUDE_DIRS 
         "."
         "../include"
-    PRIV_REQUIRES
-        driver        # For GPIO, RMT, GPTimer, SPI
-        esp_timer     # For high-resolution timing
-        nvs_flash     # For non-volatile storage
-        freertos      # For tasks, semaphores
-        esp_eth       # For W5500 SPI Ethernet
-        esp_netif     # For TCP/IP network interface
-        esp_event     # For Ethernet/IP event handlers
-        esp_wifi      # For WiFi STA transport
-        bt            # For BLE transport
+    PRIV_REQUIRES ${PRIV_REQS}
 )
 
-# Enable C++11 support
-set_source_files_properties(
-    main.cpp helpers.cpp InverseKinematics.cpp AxisScaling.cpp MotionCueing.cpp EthernetTransport.cpp WifiTransport.cpp BleTransport.cpp
+# Enable C++11 support for all source files
+set_source_files_properties(${PCB_SRCS}
     PROPERTIES COMPILE_FLAGS "-std=gnu++11"
 )
 
@@ -39,6 +55,15 @@ target_compile_options(${COMPONENT_LIB} PRIVATE
     -fno-rtti             # Disable RTTI (saves space)
 )
 
-# Enable runtime-toggled debug output (DBG:1 / DBG:0 serial commands)
-# Enable WiFi transport (ESP32 WiFi STA + UDP listener)
-target_compile_definitions(${COMPONENT_LIB} PRIVATE ENABLE_DEBUG_UART=1 ENABLE_WIFI=1 ENABLE_BLE=1)
+# ── Compile definitions ──
+# PCB_VERSION: 1 = original ESP32 DevKit, 2 = ESP32-S3 new board
+# ENABLE_ETHERNET: only on PCBv2 (W5500 SPI wired on that board)
+target_compile_definitions(${COMPONENT_LIB} PRIVATE
+    PCB_VERSION=${PCB_VERSION}
+    ENABLE_DEBUG_UART=1
+    ENABLE_WIFI=1
+    ENABLE_BLE=1
+)
+if(PCB_VERSION EQUAL 2)
+    target_compile_definitions(${COMPONENT_LIB} PRIVATE ENABLE_ETHERNET=1)
+endif()

@@ -130,8 +130,8 @@ bool SerialPort::open(const char* port, int baud) {
     dcb.ByteSize = 8;
     dcb.StopBits = ONESTOPBIT;
     dcb.Parity   = NOPARITY;
-    dcb.fDtrControl = DTR_CONTROL_ENABLE;
-    dcb.fRtsControl = RTS_CONTROL_ENABLE;
+    dcb.fDtrControl = DTR_CONTROL_DISABLE;  // Don't toggle DTR — prevents ESP32 auto-reset on connect
+    dcb.fRtsControl = RTS_CONTROL_DISABLE;
     dcb.fOutxCtsFlow = FALSE;
     dcb.fOutxDsrFlow = FALSE;
     dcb.fBinary = TRUE;
@@ -316,24 +316,28 @@ void SerialPort::readerThread() {
             if (c == '\n' || c == '\r') {
                 if (line_pos > 0) {
                     line_buf[line_pos] = '\0';
+                    // Telemetry parsing is thread-safe (uses m_tel_mutex)
                     parseLine(line_buf);
-                    if (m_line_cb) {
-                        // Rate-limit non-telemetry line callback to avoid flooding console
-                        // but ALWAYS forward handshake-critical lines immediately
-                        bool is_tel = (strncmp(line_buf, "TEL,", 4) == 0);
+                    // Queue non-TEL lines for main-thread processing.
+                    // TEL lines are high-frequency and already handled by parseLine.
+                    bool is_tel = (strncmp(line_buf, "TEL,", 4) == 0);
+                    if (!is_tel) {
                         bool is_handshake = (strncmp(line_buf, "FINGERPRINT:", 12) == 0 ||
                                              strncmp(line_buf, "CONFIG:", 7) == 0 ||
                                              strncmp(line_buf, "SERVO:", 6) == 0 ||
                                              strncmp(line_buf, "BITS:", 5) == 0 ||
                                              strncmp(line_buf, "VERSION:", 8) == 0);
-                        if (is_tel || is_handshake) {
-                            m_line_cb(line_buf);
-                        } else {
+                        bool enqueue = is_handshake;
+                        if (!is_handshake) {
                             double t = now_seconds();
-                            if (t - m_last_line_cb_time >= 0.1) {  // max 10 lines/sec
+                            if (t - m_last_line_cb_time >= 0.1) {
                                 m_last_line_cb_time = t;
-                                m_line_cb(line_buf);
+                                enqueue = true;
                             }
+                        }
+                        if (enqueue) {
+                            std::lock_guard<std::mutex> lock(m_line_queue_mutex);
+                            m_line_queue.emplace_back(line_buf);
                         }
                     }
                     line_pos = 0;
@@ -346,6 +350,13 @@ void SerialPort::readerThread() {
         }
     }
 #endif
+}
+
+std::vector<std::string> SerialPort::drainLines() {
+    std::lock_guard<std::mutex> lock(m_line_queue_mutex);
+    std::vector<std::string> out;
+    out.swap(m_line_queue);
+    return out;
 }
 
 void SerialPort::parseLine(const char* line) {

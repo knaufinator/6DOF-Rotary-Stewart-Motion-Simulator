@@ -1,61 +1,121 @@
 # 6DOF Motion Simulator Controller
 
-ESP-IDF v5.2.0 firmware for the ESP32-S3 driving 6 AASD-15A servo drivers via step/direction signals.
+ESP-IDF v5.5 firmware for the Stewart motion platform. Supports two hardware variants from a single codebase:
+
+| | **PCBv1** (ESP32 DevKit) | **PCBv2** (ESP32-S3 DevKit) |
+|---|---|---|
+| **MCU** | ESP32 (CP2102/CH340 USB-UART) | ESP32-S3 (native USB CDC) |
+| **Motor I/O** | MCP23S17 SPI GPIO expander | Direct GPIO via MCPWM |
+| **Step/Dir** | 6 step + 6 dir on MCP23S17 ports A/B | 6 STEP GPIOs + 6 DIR GPIOs |
+| **E-Stop** | GPIO 22, active LOW | GPIO 20 (disabled — conflicts with USB D+) |
+| **Baud** | 115200 (UART0) | 115200 (USB CDC — nominal) |
+
+The build system auto-detects the target chip and sets `PCB_VERSION` accordingly.
 
 ## Project Structure
 
 ```
 Controller/
 ├── main/
-│   ├── main.cpp              # app_main entry point, FreeRTOS tasks
+│   ├── main.cpp              # app_main, FreeRTOS tasks, command API
+│   ├── MCP23S17.cpp          # SPI GPIO expander driver (PCBv1 only)
 │   ├── InverseKinematics.cpp # Stewart platform IK solver
 │   ├── AxisScaling.cpp       # Per-axis scaling + mapRawToPosition()
+│   ├── MotionCueing.cpp      # MCA washout/smoothing filters
 │   ├── helpers.cpp           # mapfloat, rateLimit utilities
-│   ├── EthernetTransport.cpp # W5500 UDP transport (opt-in)
-│   └── CMakeLists.txt        # Component build config
+│   ├── WifiTransport.cpp     # WiFi STA + UDP transport (opt-in)
+│   ├── EthernetTransport.cpp # W5500 UDP transport (opt-in, PCBv2)
+│   └── CMakeLists.txt        # Component build — auto PCB_VERSION
 ├── include/
-│   ├── InverseKinematics.h   # StewartConfig struct + IK API + drive train params
-│   ├── AxisScaling.h         # AxisScaleConfig struct + scaling API
-│   ├── helpers.h             # Pin defs, timing constants
-│   ├── MCPWMMotorControl.h   # MCPWM hardware-timed motor control (6 channels)
+│   ├── InverseKinematics.h   # StewartConfig + IK API + drive train
+│   ├── AxisScaling.h         # AxisScaleConfig + scaling API
+│   ├── MotionCueing.h        # MCA config + biquad filters
+│   ├── helpers.h             # Conditional pin defs (#if PCB_VERSION)
+│   ├── MCP23S17.h            # SPI GPIO expander (PCBv1)
+│   ├── MCPWMMotorControl.h   # MCPWM motor control (PCBv2)
 │   ├── GPTimerScheduler.h    # 100 µs deterministic timer
-│   ├── EthernetTransport.h   # W5500 SPI + UDP API
+│   ├── version.h             # FW version, build date, platform ID
 │   └── debug_uart.h          # Compile-time debug gating
+├── sdkconfig.defaults        # Common config (both targets)
+├── sdkconfig.defaults.esp32  # PCBv1: BLE-only, IRAM optimizations
+├── sdkconfig.defaults.esp32s3 # PCBv2: USB CDC, full BT stack
 └── CMakeLists.txt            # Top-level ESP-IDF project
 ```
 
 ## Hardware
 
-- **MCU**: ESP32-S3-DevKitC-1
-- **Servo drivers**: 6 × AASD-15A
-- **Interface**: SN75174N quad RS-422 line drivers — see [single motor test plan](../docs/hardware/single_motor_test_plan.md)
-- **E-Stop**: GPIO 20, active LOW with internal pull-up
+### PCBv1 — ESP32 DevKit
 
-### Pinout
+- **MCU**: ESP32 DevKit V1 (CP2102 or CH340 USB-UART)
+- **Motor I/O**: MCP23S17 on HSPI (SPI2_HOST)
+- **Servo drivers**: 6 × AASD-15A
+- **E-Stop**: GPIO 22, active LOW with internal pull-up
+
+#### MCP23S17 SPI Wiring
+
+| MCP23S17 Pin | ESP32 GPIO |
+|---|---|
+| CS | 15 |
+| MOSI (SI) | 13 |
+| MISO (SO) | 12 |
+| SCLK (SCK) | 14 |
+
+#### Motor Pin Map (MCP23S17 ports)
+
+| Motor | STEP (Port A) | DIR (Port B) |
+|---|---|---|
+| 1 | GPA0 (bit 0) | GPB0 (bit 0) |
+| 2 | GPA1 (bit 1) | GPB1 (bit 1) |
+| 3 | GPA2 (bit 2) | GPB2 (bit 2) |
+| 4 | GPA3 (bit 3) | GPB3 (bit 3) |
+| 5 | GPA4 (bit 4) | GPB4 (bit 4) |
+| 6 | GPA5 (bit 5) | GPB5 (bit 5) |
+
+### PCBv2 — ESP32-S3 DevKit
+
+- **MCU**: ESP32-S3-DevKitC-1
+- **Motor I/O**: Direct GPIO via MCPWM
+- **Servo drivers**: 6 × AASD-15A
+- **Interface**: SN75174N quad RS-422 line drivers
+- **E-Stop**: GPIO 20 (currently disabled — conflicts with USB D+)
+
+#### Pinout
 
 > ⚠️ **UNTESTED** — verify with oscilloscope before running on physical hardware.
 
 | Motor | STEP | DIR | Control |
-|-------|------|-----|---------|
+|---|---|---|---|
 | 1 | GPIO 4 | GPIO 10 | RMT CH0 (TX) |
 | 2 | GPIO 5 | GPIO 11 | RMT CH1 (TX) |
 | 3 | GPIO 6 | GPIO 12 | RMT CH2 (TX) |
 | 4 | GPIO 7 | GPIO 13 | RMT CH3 (TX) |
-| 5 | GPIO 8 | GPIO 14 | GPIO (pending RMT migration) |
-| 6 | GPIO 9 | GPIO 17 | GPIO (pending RMT migration) |
-
-Motors 5–6 currently use direct GPIO bit-bang. Migrating to IDF v5 RMT API for all 6 channels is a planned optimization — see [esp32s3_step_dir_roadmap.md](../docs/firmware/esp32s3_step_dir_roadmap.md).
+| 5 | GPIO 8 | GPIO 14 | GPIO (pending RMT) |
+| 6 | GPIO 9 | GPIO 17 | GPIO (pending RMT) |
 
 ## Building
 
-Requires [ESP-IDF v5.2.0](https://docs.espressif.com/projects/esp-idf/en/v5.2/esp32s3/get-started/index.html).
+Requires [ESP-IDF v5.5](https://docs.espressif.com/projects/esp-idf/en/v5.5/get-started/index.html).
 
 ```bash
 cd Controller
-idf.py set-target esp32s3    # first time only
+
+# PCBv1 (ESP32 DevKit):
+idf.py set-target esp32
 idf.py build
-idf.py flash monitor
+idf.py -p COM6 flash monitor
+
+# PCBv2 (ESP32-S3 DevKit):
+idf.py set-target esp32s3
+idf.py build
+idf.py -p COM3 flash monitor
 ```
+
+> **Note**: The ESP32 DevKit may require manual boot mode for flashing (hold BOOT, press EN, release both) if auto-reset via DTR/RTS is unreliable.
+
+The build system automatically:
+- Sets `PCB_VERSION=1` for ESP32, `PCB_VERSION=2` for ESP32-S3
+- Includes MCP23S17 driver only for PCBv1, MCPWM + EthernetTransport only for PCBv2
+- Applies target-specific `sdkconfig.defaults.esp32` or `sdkconfig.defaults.esp32s3`
 
 ### Build Options
 
@@ -64,6 +124,10 @@ idf.py flash monitor
   target_compile_definitions(${COMPONENT_LIB} PRIVATE ENABLE_DEBUG_UART=1)
   ```
 - **Optimization**: `-O2 -ffast-math` set in `main/CMakeLists.txt`
+
+### NVS Geometry Persistence
+
+Platform geometry (`CONFIG:key=value` commands) is automatically saved to NVS flash. On boot, the firmware loads saved geometry if present, otherwise uses factory defaults. This means the desktop app only needs to push geometry once — it persists across reboots and reconnects.
 
 ## Communication Protocol
 
@@ -142,11 +206,16 @@ The firmware supports live axis scale adjustment over serial:
 ## Troubleshooting
 
 ```bash
-idf.py --version              # verify v5.2.0
+idf.py --version              # verify v5.5.x
 idf.py fullclean && idf.py build   # clean rebuild
-idf.py -p COM3 flash          # explicit port (Windows)
+idf.py -p COM6 flash          # explicit port (PCBv1 on COM6)
+idf.py -p COM3 flash          # explicit port (PCBv2 on COM3)
 idf.py monitor --print-filter '*:V'  # verbose log filter
 ```
+
+**ESP32 DevKit flashing issues**: If auto-reset doesn't work, manually enter boot mode (hold BOOT, press EN, release both) before running `idf.py flash`. Use `--before no_reset` with esptool if needed.
+
+**App won't connect**: Check `app_debug.log` next to the executable for serial RX trace. The app disables DTR/RTS to avoid resetting the ESP32 on connect.
 
 ## Links
 
@@ -155,7 +224,7 @@ idf.py monitor --print-filter '*:V'  # verbose log filter
 - [HIL Test Plan](../docs/hardware/hil_test_plan.md)
 - [Platform Geometry](../docs/platform_geometry.md)
 - [Desktop App](../app/)
-- [ESP-IDF v5.2 Docs](https://docs.espressif.com/projects/esp-idf/en/v5.2/esp32s3/)
+- [ESP-IDF v5.5 Docs](https://docs.espressif.com/projects/esp-idf/en/v5.5/)
 
 ## License
 

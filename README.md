@@ -1,7 +1,7 @@
 # 6DOF Rotary Stewart Motion Simulator Platform
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Platform: ESP32](https://img.shields.io/badge/Platform-ESP32-blue.svg)](https://www.espressif.com/en/products/socs/esp32)
+[![Platform: ESP32](https://img.shields.io/badge/Platform-ESP32%20|%20ESP32--S3-blue.svg)](https://www.espressif.com/en/products/socs/esp32)
 
 > A high-performance 6 Degrees of Freedom motion simulator platform powered by AC servo motors with AASD-15A drivers.
 
@@ -48,9 +48,11 @@ Everything runs in a single native executable — no browser, no server, no Pyth
 ## Features
 
 - 6 × 750 W AC servo motors with AASD-15A drivers and 50:1 planetary gears
-- ESP32-S3 controller running native ESP-IDF v5.2.0 with 10 kHz deterministic control loop
-- RMT peripheral for hardware-accelerated step pulse generation
+- Dual hardware support: ESP32 DevKit (PCBv1, MCP23S17 SPI expander) and ESP32-S3 (PCBv2, direct MCPWM)
+- ESP-IDF v5.5 firmware with 10 kHz deterministic control loop
+- RMT peripheral for hardware-accelerated step pulse generation (PCBv2)
 - SN75174N RS-422 differential line drivers for STEP/DIR signaling to AASD-15A servo drivers
+- NVS geometry persistence — pushed platform config survives reboots
 - SimTools compatible via UDP over Ethernet (W5500 SPI module)
 - Native desktop control app (C++/OpenGL/ImGui) — single executable, no server, no browser
   - SIL simulation with real-time 3D visualization and servo readout
@@ -67,7 +69,7 @@ Everything runs in a single native executable — no browser, no server, no Pyth
 | Directory | Contents |
 |-----------|----------|
 | `app/` | Native desktop app (C++/OpenGL/ImGui) — see [Desktop App](#desktop-app) below |
-| `Controller/` | ESP32-S3 firmware (ESP-IDF v5.2) — see [Controller/README.md](Controller/README.md) |
+| `Controller/` | ESP32/ESP32-S3 firmware (ESP-IDF v5.5) — see [Controller/README.md](Controller/README.md) |
 | `test_harness/` | Step/dir signal analyzer firmware — see [test_harness/README.md](test_harness/README.md) |
 | `docs/` | [App Guide](docs/APP_GUIDE.md), [Architecture](docs/ARCHITECTURE_ROADMAP.md), [IK research](docs/IK_RESEARCH.md), [Platform geometry](docs/platform_geometry.md) |
 | `docs/firmware/` | [Step/Dir optimization roadmap](docs/firmware/esp32s3_step_dir_roadmap.md) |
@@ -80,10 +82,16 @@ Everything runs in a single native executable — no browser, no server, no Pyth
 git clone https://github.com/knaufinator/6DOF-Rotary-Stewart-Motion-Simulator.git
 cd 6DOF-Rotary-Stewart-Motion-Simulator/Controller
 
-# 2. Build & flash (requires ESP-IDF v5.2.0)
+# 2. Build & flash (requires ESP-IDF v5.5)
+# For PCBv1 (ESP32 DevKit + MCP23S17):
+idf.py set-target esp32
+idf.py build
+idf.py -p COM6 flash monitor
+
+# For PCBv2 (ESP32-S3 DevKit + MCPWM):
 idf.py set-target esp32s3
 idf.py build
-idf.py flash monitor
+idf.py -p COM3 flash monitor
 ```
 
 See **[BUILD.md](BUILD.md)** for detailed step-by-step build instructions for both the firmware and desktop app, including prerequisites, troubleshooting, and build options.
@@ -289,8 +297,11 @@ If you're setting up a new platform or calibrating an existing one, measure each
 ## Testing
 
 ```bash
-# Firmware build
-cd Controller && idf.py build
+# Firmware build (PCBv1 — ESP32)
+cd Controller && idf.py set-target esp32 && idf.py build
+
+# Firmware build (PCBv2 — ESP32-S3)
+cd Controller && idf.py set-target esp32s3 && idf.py build
 
 # Desktop app
 cd app && cmake -B build -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release

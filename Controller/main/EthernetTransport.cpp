@@ -14,6 +14,7 @@
 #include "esp_event.h"
 #include "esp_netif.h"
 #include "esp_eth.h"
+#include "esp_eth_mac_spi.h"
 
 #include "driver/gpio.h"
 #include "driver/spi_master.h"
@@ -86,11 +87,11 @@ static void udp_listener_task(void *pvParameters)
         return;
     }
 
-    struct sockaddr_in bind_addr = {
-        .sin_family = AF_INET,
-        .sin_port = htons(ETH_UDP_PORT),
-        .sin_addr.s_addr = htonl(INADDR_ANY),
-    };
+    struct sockaddr_in bind_addr;
+    memset(&bind_addr, 0, sizeof(bind_addr));
+    bind_addr.sin_family = AF_INET;
+    bind_addr.sin_port = htons(ETH_UDP_PORT);
+    bind_addr.sin_addr.s_addr = htonl(INADDR_ANY);
 
     if (bind(sock, (struct sockaddr *)&bind_addr, sizeof(bind_addr)) < 0) {
         ESP_LOGE(TAG, "UDP bind failed: errno %d", errno);
@@ -150,27 +151,23 @@ bool ethernet_transport_init(void (*process_packet)(const uint8_t *payload))
     esp_netif_t *eth_netif = esp_netif_new(&netif_cfg);
 
     // ── SPI bus ──
-    spi_bus_config_t buscfg = {
-        .mosi_io_num   = ETH_SPI_MOSI,
-        .miso_io_num   = ETH_SPI_MISO,
-        .sclk_io_num   = ETH_SPI_SCLK,
-        .quadwp_io_num = -1,
-        .quadhd_io_num = -1,
-    };
+    spi_bus_config_t buscfg = {};
+    buscfg.mosi_io_num   = ETH_SPI_MOSI;
+    buscfg.miso_io_num   = ETH_SPI_MISO;
+    buscfg.sclk_io_num   = ETH_SPI_SCLK;
+    buscfg.quadwp_io_num = -1;
+    buscfg.quadhd_io_num = -1;
     ESP_ERROR_CHECK(spi_bus_initialize(ETH_SPI_HOST, &buscfg, SPI_DMA_CH_AUTO));
 
-    // ── SPI device for W5500 ──
-    spi_device_interface_config_t devcfg = {
-        .mode           = 0,
-        .clock_speed_hz = ETH_SPI_CLOCK_MHZ * 1000 * 1000,
-        .spics_io_num   = ETH_SPI_CS,
-        .queue_size     = 20,
-    };
-    spi_device_handle_t spi_handle = NULL;
-    ESP_ERROR_CHECK(spi_bus_add_device(ETH_SPI_HOST, &devcfg, &spi_handle));
+    // ── SPI device config for W5500 (v5.5: no manual spi_bus_add_device) ──
+    spi_device_interface_config_t devcfg = {};
+    devcfg.mode           = 0;
+    devcfg.clock_speed_hz = ETH_SPI_CLOCK_MHZ * 1000 * 1000;
+    devcfg.spics_io_num   = ETH_SPI_CS;
+    devcfg.queue_size     = 20;
 
     // ── W5500 MAC + PHY ──
-    eth_w5500_config_t w5500_config = ETH_W5500_DEFAULT_CONFIG(spi_handle);
+    eth_w5500_config_t w5500_config = ETH_W5500_DEFAULT_CONFIG(ETH_SPI_HOST, &devcfg);
     w5500_config.int_gpio_num = ETH_SPI_INT;
 
     eth_mac_config_t mac_config = ETH_MAC_DEFAULT_CONFIG();

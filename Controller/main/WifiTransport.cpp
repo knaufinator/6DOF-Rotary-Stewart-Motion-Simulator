@@ -118,11 +118,11 @@ static void wifi_udp_listener_task(void *pvParameters)
         return;
     }
 
-    struct sockaddr_in bind_addr = {
-        .sin_family = AF_INET,
-        .sin_port = htons(ETH_UDP_PORT),  // reuse same port as Ethernet
-        .sin_addr = { .s_addr = htonl(INADDR_ANY) },
-    };
+    struct sockaddr_in bind_addr;
+    memset(&bind_addr, 0, sizeof(bind_addr));
+    bind_addr.sin_family = AF_INET;
+    bind_addr.sin_port = htons(ETH_UDP_PORT);  // reuse same port as Ethernet
+    bind_addr.sin_addr.s_addr = htonl(INADDR_ANY);
 
     if (bind(sock, (struct sockaddr *)&bind_addr, sizeof(bind_addr)) < 0) {
         ESP_LOGE(TAG, "UDP bind failed: errno %d", errno);

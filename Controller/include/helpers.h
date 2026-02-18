@@ -73,7 +73,7 @@
 #define ETH_SPI_HOST   SPI3_HOST
 #endif
 #ifndef ETH_SPI_HOST
-#define ETH_SPI_HOST   2
+#define ETH_SPI_HOST   ((spi_host_device_t)2)
 #endif
 #define ETH_SPI_MOSI   35
 #define ETH_SPI_MISO   37

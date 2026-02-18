@@ -85,7 +85,7 @@ jobs:
       - name: Set up ESP-IDF and Build
         uses: espressif/esp-idf-ci-action@v1
         with:
-          esp_idf_version: release-v5.2
+          esp_idf_version: v5.5.2
           target: esp32s3
           path: 'Controller'
           command: idf.py build

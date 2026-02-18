@@ -561,6 +561,23 @@ static void DrawToolbar() {
                 ImGui::PopItemWidth();
                 if (ImGui::IsItemHovered())
                     ImGui::SetTooltip("Playback speed (10%% - 200%%)");
+
+                ImGui::SameLine(0, 8);
+                static const int rate_opts[] = {50, 100, 200, 500, 1000};
+                static const char* rate_labels[] = {"50", "100", "200", "500", "1000"};
+                int rate_idx = 2;
+                for (int i = 0; i < 5; i++) { if (rate_opts[i] == g_app.record_rate_hz) rate_idx = i; }
+                if (is_recording) ImGui::BeginDisabled();
+                ImGui::PushItemWidth(52);
+                if (ImGui::Combo("##rec_rate_tb", &rate_idx, rate_labels, 5)) {
+                    g_app.record_rate_hz = rate_opts[rate_idx];
+                }
+                ImGui::PopItemWidth();
+                if (is_recording) ImGui::EndDisabled();
+                ImGui::SameLine(0, 2);
+                ImGui::TextDisabled("Hz");
+                if (ImGui::IsItemHovered())
+                    ImGui::SetTooltip("Recording sample rate");
             }
 
             ImGui::EndGroup();

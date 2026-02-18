@@ -254,8 +254,16 @@ struct RecordingState {
     double                      start_time;     // wall time when record started
     char                        name[64];       // recording label
 
-    RecordingState() : mode(RecordMode::Idle), start_time(0) {
+    // First-order hold: interpolate between previous and current frame input
+    float                       prev_input[6];  // input at previous frame
+    float                       curr_input[6];  // input at current frame
+    double                      prev_time;      // frame_time of previous update
+    double                      curr_time;      // frame_time of current update
+
+    RecordingState() : mode(RecordMode::Idle), start_time(0), prev_time(0), curr_time(0) {
         snprintf(name, sizeof(name), "Recording");
+        memset(prev_input, 0, sizeof(prev_input));
+        memset(curr_input, 0, sizeof(curr_input));
     }
 
     double duration() const {

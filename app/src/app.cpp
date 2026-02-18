@@ -956,6 +956,14 @@ void App::startRecording() {
     recording.samples.clear();
     recording.start_time = frame_time;
     recording.mode = RecordMode::Recording;
+    // Initialize first-order hold state
+    {
+        std::lock_guard<std::mutex> lock(input_mutex);
+        memcpy(recording.prev_input, shared_input, sizeof(recording.prev_input));
+        memcpy(recording.curr_input, shared_input, sizeof(recording.curr_input));
+    }
+    recording.prev_time = frame_time;
+    recording.curr_time = frame_time;
     const char* src = "plugin";
     if (input_source == InputSource::CapturePlayback) src = "capture";
     else if (active_plugin_idx >= 0) src = plugin_mgr.pluginName(active_plugin_idx);
@@ -1826,21 +1834,37 @@ void App::update() {
 
     // Record at exact configured sample rate via oversampling (audio-style).
     // Each frame, fill ALL samples that should exist up to wall-clock time.
-    // Between input updates, values are sample-and-held (like a DAC zero-order hold).
+    // First-order hold: linearly interpolate between previous and current frame
+    // input values for smooth waveforms (eliminates staircase artifacts).
     // Result: exactly rate × duration samples with perfectly spaced timestamps.
     if (recording.mode == RecordMode::Recording) {
+        // Advance first-order hold: prev ← old curr, curr ← new input
+        memcpy(recording.prev_input, recording.curr_input, sizeof(recording.prev_input));
+        recording.prev_time = recording.curr_time;
+        {
+            std::lock_guard<std::mutex> lock(input_mutex);
+            memcpy(recording.curr_input, shared_input, sizeof(recording.curr_input));
+        }
+        recording.curr_time = frame_time;
+
         double elapsed = frame_time - recording.start_time;
         int target_count = (int)(elapsed * (double)record_rate_hz) + 1;
         if (target_count > (int)recording.samples.size()) {
-            float current[6];
-            {
-                std::lock_guard<std::mutex> lock(input_mutex);
-                memcpy(current, shared_input, sizeof(current));
-            }
+            double frame_dt = recording.curr_time - recording.prev_time;
             while ((int)recording.samples.size() < target_count) {
                 RecordSample s;
                 s.time = (double)recording.samples.size() / (double)record_rate_hz;
-                memcpy(s.input, current, sizeof(s.input));
+                // Interpolate: where does this sample fall between prev and curr frame?
+                double sample_wall = recording.start_time + s.time;
+                float alpha = (frame_dt > 1e-9)
+                    ? (float)((sample_wall - recording.prev_time) / frame_dt)
+                    : 1.0f;
+                if (alpha < 0.0f) alpha = 0.0f;
+                if (alpha > 1.0f) alpha = 1.0f;
+                for (int i = 0; i < 6; i++) {
+                    s.input[i] = recording.prev_input[i] * (1.0f - alpha)
+                               + recording.curr_input[i] * alpha;
+                }
                 recording.samples.push_back(s);
             }
         }

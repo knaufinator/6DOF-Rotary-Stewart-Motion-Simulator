@@ -38,19 +38,37 @@ static void simulateRecording(
 ) {
     samples.clear();
     double frame_dt = 1.0 / frame_rate_hz;
+    double start_time = 0.0;
+
+    // First-order hold state (mirrors production RecordingState)
+    float prev_input[6] = {}, curr_input[6] = {};
+    double prev_time = 0.0, curr_time = 0.0;
+    for (int i = 0; i < 6; i++)
+        prev_input[i] = curr_input[i] = inputFunc(0.0, i);
 
     for (double t = 0.0; t < total_duration_sec; t += frame_dt) {
-        // How many samples should exist at this time?
+        // Advance first-order hold: prev ← old curr, curr ← new input
+        memcpy(prev_input, curr_input, sizeof(prev_input));
+        prev_time = curr_time;
+        for (int i = 0; i < 6; i++)
+            curr_input[i] = inputFunc(t, i);
+        curr_time = t;
+
         int target_count = (int)(t * (double)rate_hz) + 1;
         if (target_count > (int)samples.size()) {
-            float current[6];
-            for (int i = 0; i < 6; i++)
-                current[i] = inputFunc(t, i);
-
+            double dt = curr_time - prev_time;
             while ((int)samples.size() < target_count) {
                 RecordSample s;
                 s.time = (double)samples.size() / (double)rate_hz;
-                memcpy(s.input, current, sizeof(current));
+                // First-order hold: interpolate between prev and curr frame
+                double sample_wall = start_time + s.time;
+                float alpha = (dt > 1e-9)
+                    ? (float)((sample_wall - prev_time) / dt)
+                    : 1.0f;
+                if (alpha < 0.0f) alpha = 0.0f;
+                if (alpha > 1.0f) alpha = 1.0f;
+                for (int i = 0; i < 6; i++)
+                    s.input[i] = prev_input[i] * (1.0f - alpha) + curr_input[i] * alpha;
                 samples.push_back(s);
             }
         }
@@ -334,6 +352,35 @@ TEST(no_timing_drift_long_recording) {
     ASSERT_NEAR(dt_start, dt_end, 1e-12);
 }
 
+// Test: first-order hold produces smooth interpolation (no staircase)
+TEST(first_order_hold_smooth) {
+    std::vector<RecordSample> samples;
+    // Linear ramp: axis 0 goes from 0 to 1 over 1 second
+    // At 60 FPS with 1000 Hz recording, there are ~17 samples per frame
+    // First-order hold should linearly interpolate between frame values
+    simulateRecording(samples, 1000, 1.0, 60.0,
+        [](double t, int axis) -> float {
+            return (axis == 0) ? (float)t : 0.0f;
+        });
+
+    // Check that consecutive samples are NOT identical (no staircase).
+    // With a linear ramp, every sample should differ from the next.
+    int identical_pairs = 0;
+    for (int i = 1; i < (int)samples.size(); i++) {
+        if (fabsf(samples[i].input[0] - samples[i-1].input[0]) < 1e-9f)
+            identical_pairs++;
+    }
+    // With zero-order hold, ~94% of pairs would be identical (16/17 per frame).
+    // With first-order hold, very few (if any) should be identical.
+    // Allow a small tolerance for frame boundary samples.
+    double identical_pct = 100.0 * identical_pairs / (samples.size() - 1);
+    if (identical_pct > 5.0) {
+        printf("FAIL\n    %s:%d: %.1f%% identical pairs (expected <5%% with first-order hold)\n",
+               __FILE__, __LINE__, identical_pct);
+        tests_failed++; return;
+    }
+}
+
 // ── Main ───────────────────────────────────────────────────────────
 
 int main() {
@@ -353,6 +400,7 @@ int main() {
     RUN(recording_at_low_rate);
     RUN(empty_recording_playback);
     RUN(no_timing_drift_long_recording);
+    RUN(first_order_hold_smooth);
 
     printf("\n%d passed, %d failed\n", tests_passed, tests_failed);
     return tests_failed > 0 ? 1 : 0;

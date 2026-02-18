@@ -1012,6 +1012,7 @@ void App::saveRecordingToLibrary(const char* name) {
     }
     SavedRecording sr;
     snprintf(sr.name, sizeof(sr.name), "%s", name);
+    // With fixed-rate oversampling, the configured rate is exact by construction.
     sr.sample_rate_hz = (double)record_rate_hz;
     sr.created_time = (double)time(nullptr);
     const char* src = "plugin";
@@ -1019,8 +1020,9 @@ void App::saveRecordingToLibrary(const char* name) {
     snprintf(sr.source, sizeof(sr.source), "%s", src);
     sr.samples = recording.samples;
     saved_recordings.push_back(std::move(sr));
-    log(-1, "capture", "Saved \"%s\" (%d samples, %.1fs, %d Hz)",
-        name, (int)recording.samples.size(), recording.duration(), record_rate_hz);
+    log(-1, "capture", "Saved \"%s\" (%d samples, %.1fs, %.0f Hz actual)",
+        name, (int)saved_recordings.back().samples.size(),
+        saved_recordings.back().duration(), saved_recordings.back().sample_rate_hz);
     saveRecordingsToDisk();
 }
 
@@ -1106,34 +1108,30 @@ static float smoothstep01(float t) {
     return t * t * (3.0f - 2.0f * t);
 }
 
-// Sample the recording at a given elapsed time, interpolating between samples
+// Sample the recording at a given elapsed time, interpolating between samples.
+// Uses O(1) direct index lookup via sample_rate_hz (audio-style fixed-rate).
+// The cursor parameter is updated for compatibility but not used for lookup.
 static void sampleRecording(SavedRecording& sr, double elapsed, int& cursor, float out[6]) {
     auto& samples = sr.samples;
     if (samples.empty()) { memset(out, 0, 6 * sizeof(float)); return; }
 
-    // Clamp elapsed to recording duration
     double dur = sr.duration();
     if (elapsed < 0.0) elapsed = 0.0;
     if (elapsed > dur) elapsed = dur;
 
-    // Advance cursor forward
-    while (cursor < (int)samples.size() - 1 &&
-           samples[cursor + 1].time <= elapsed) {
-        cursor++;
+    // Direct index from sample rate: O(1) lookup (no linear scan)
+    double fidx = elapsed * sr.sample_rate_hz;
+    int idx = (int)fidx;
+    if (idx >= (int)samples.size() - 1) {
+        memcpy(out, samples.back().input, 6 * sizeof(float));
+        cursor = (int)samples.size() - 1;
+        return;
     }
-
-    int idx = cursor;
-    if (idx < (int)samples.size() - 1) {
-        double t0 = samples[idx].time;
-        double t1 = samples[idx + 1].time;
-        float alpha = (t1 > t0) ? (float)((elapsed - t0) / (t1 - t0)) : 0.0f;
-        if (alpha > 1.0f) alpha = 1.0f;
-        for (int i = 0; i < 6; i++) {
-            out[i] = samples[idx].input[i] * (1.0f - alpha) +
-                     samples[idx + 1].input[i] * alpha;
-        }
-    } else {
-        memcpy(out, samples[idx].input, 6 * sizeof(float));
+    cursor = idx;
+    float alpha = (float)(fidx - (double)idx);
+    for (int i = 0; i < 6; i++) {
+        out[i] = samples[idx].input[i] * (1.0f - alpha) +
+                 samples[idx + 1].input[i] * alpha;
     }
 }
 
@@ -1391,6 +1389,14 @@ void App::loadRecordingsFromDisk() {
                 }
                 fclose(bf);
             }
+        }
+
+        // Recompute actual sample rate from timestamps (fixes stale values
+        // saved when configured rate exceeded achievable frame rate)
+        if (sr.samples.size() > 1) {
+            double dur = sr.samples.back().time;
+            if (dur > 0.0)
+                sr.sample_rate_hz = (double)(sr.samples.size() - 1) / dur;
         }
 
         saved_recordings.push_back(std::move(sr));
@@ -1818,21 +1824,25 @@ void App::update() {
         }
     }
 
-    // Record current input if recording (configurable sample rate)
-    // Source-agnostic: always reads from shared_input which is kept in sync
-    // with the active input source by the bus sync above.
+    // Record at exact configured sample rate via oversampling (audio-style).
+    // Each frame, fill ALL samples that should exist up to wall-clock time.
+    // Between input updates, values are sample-and-held (like a DAC zero-order hold).
+    // Result: exactly rate × duration samples with perfectly spaced timestamps.
     if (recording.mode == RecordMode::Recording) {
-        double RECORD_INTERVAL = 1.0 / (double)record_rate_hz;
         double elapsed = frame_time - recording.start_time;
-        double last_sample_time = recording.samples.empty() ? -RECORD_INTERVAL : recording.samples.back().time;
-        if (elapsed - last_sample_time >= RECORD_INTERVAL) {
-            RecordSample s;
-            s.time = elapsed;
+        int target_count = (int)(elapsed * (double)record_rate_hz) + 1;
+        if (target_count > (int)recording.samples.size()) {
+            float current[6];
             {
                 std::lock_guard<std::mutex> lock(input_mutex);
-                memcpy(s.input, shared_input, sizeof(s.input));
+                memcpy(current, shared_input, sizeof(current));
             }
-            recording.samples.push_back(s);
+            while ((int)recording.samples.size() < target_count) {
+                RecordSample s;
+                s.time = (double)recording.samples.size() / (double)record_rate_hz;
+                memcpy(s.input, current, sizeof(s.input));
+                recording.samples.push_back(s);
+            }
         }
     }
 

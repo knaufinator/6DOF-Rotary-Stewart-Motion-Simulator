@@ -181,13 +181,6 @@ static const char* inputSourceName(InputSource src) {
     }
 }
 
-// Binary protocol constants
-// Input:  [0xAA] [0x55] [uint16_t × 6 little-endian] [XOR checksum] = 15 bytes
-#define BIN_SYNC_0       0xAA
-#define BIN_SYNC_1       0x55
-#define BIN_PAYLOAD_SIZE 12   // 6 × uint16_t
-#define BIN_PACKET_SIZE  15   // 2 sync + 12 payload + 1 checksum
-
 // Telemetry response: [0xBB] [0xCC] [float32 × 6 little-endian] [XOR checksum] = 27 bytes
 // Sends computed servo angles (radians) back to dashboard after each motion packet
 #define TEL_SYNC_0       0xBB
@@ -200,8 +193,7 @@ void setupMotorPins();
 void handleStepDirection();
 void applyMotionValues(float values[6]);
 void process_data(char * data);
-void process_binary_packet(const uint8_t *payload);
-void processIncomingByte(const uint8_t inByte);
+void process_binary_packet(const uint8_t *payload, int len);
 void InterfaceMonitorTask(void * pvParameters);
 void GPIOLoopTask(void * pvParameters);
 void EStopMonitorTask(void * pvParameters);
@@ -220,10 +212,10 @@ static volatile uint32_t pktDrop_wifi = 0;
 static volatile uint32_t pktDrop_ble = 0;
 
 // Per-transport wrappers that gate on activeInputSource
-static void serial_packet_handler(const uint8_t *payload) {
+static void serial_packet_handler(const uint8_t *payload, int len) {
     pktCount_serial++;
     if (activeInputSource == INPUT_SOURCE_SERIAL)
-        process_binary_packet(payload);
+        process_binary_packet(payload, len);
     else
         pktDrop_serial++;
 }
@@ -231,7 +223,7 @@ static void serial_packet_handler(const uint8_t *payload) {
 static void ethernet_packet_handler(const uint8_t *payload) {
     pktCount_eth++;
     if (activeInputSource == INPUT_SOURCE_ETHERNET)
-        process_binary_packet(payload);
+        process_binary_packet(payload, 12);
     else
         pktDrop_eth++;
 }
@@ -240,7 +232,7 @@ static void ethernet_packet_handler(const uint8_t *payload) {
 static void wifi_packet_handler(const uint8_t *payload) {
     pktCount_wifi++;
     if (activeInputSource == INPUT_SOURCE_WIFI)
-        process_binary_packet(payload);
+        process_binary_packet(payload, 12);
     else
         pktDrop_wifi++;
 }
@@ -249,7 +241,7 @@ static void wifi_packet_handler(const uint8_t *payload) {
 static void ble_packet_handler(const uint8_t *payload) {
     pktCount_ble++;
     if (activeInputSource == INPUT_SOURCE_BLE)
-        process_binary_packet(payload);
+        process_binary_packet(payload, 12);
     else
         pktDrop_ble++;
 }
@@ -703,10 +695,9 @@ void applyMotionValues(float values[6]) {
     setPos();
 }
 
-// ── Binary motion packet (0xAA 0x55 + 12-byte payload + XOR checksum) ──
+// ── COBS motion payload decode (CH_DATA18) ──
 // Tests:  High-throughput motion data path from SimTools/dashboard
-// Proves: Binary protocol framing (sync + checksum) validated by
-//         processIncomingByte state machine, uint16 LE decode works,
+// Proves: COBS channel dispatch + payload decode works,
 //         mapRawToPosition() axis scaling, processMotionCueing() biquad
 //         filter chain, applyMotionValues() rate limiter → setPos() pipeline,
 //         full data path from USB RX → IK → MCPWM at ~30-60 Hz packet rate
@@ -716,12 +707,21 @@ void send_telemetry(const float angles[6]) {
     cobs_send_telemetry(angles, (const float*)arr);
 }
 
-void process_binary_packet(const uint8_t *payload) {
+void process_binary_packet(const uint8_t *payload, int len) {
+    if (!payload) return;
+    if (len < 18) return;  // CH_DATA18: 6 x uint24 LE = 18 bytes minimum
+
     binPktCount++;
     float raw[6], mapped[6];
+
+    // COBS DATA18 payload: 6 x uint24 LE (low 18 bits used)
     for (int i = 0; i < 6; i++) {
-        raw[i] = (float)((uint16_t)payload[i * 2] | ((uint16_t)payload[i * 2 + 1] << 8));
+        uint32_t v = (uint32_t)payload[i * 3]
+                   | ((uint32_t)payload[i * 3 + 1] << 8)
+                   | ((uint32_t)payload[i * 3 + 2] << 16);
+        raw[i] = (float)(v & 0x3FFFFu);
     }
+
     mapRawToPosition(raw, &axisScales, maxRawInput, mapped);
     // No MCA here — the SIL server already applies motion cueing before
     // encoding raw values. Applying it again causes double-filtering and
@@ -729,11 +729,11 @@ void process_binary_packet(const uint8_t *payload) {
     applyMotionValues(mapped);
 }
 
-// Legacy CSV parser (kept for debug commands and backward compatibility)
+// ASCII command parser (fed from COBS CH_CMD)
 void process_data(char * data) {
     // ── DBG:1 / DBG:0 — Toggle verbose debug output ──────────────────
     // Tests:  Serial RX command parsing, bidirectional USB Serial JTAG link
-    // Proves: VFS stdin→processIncomingByte pipeline, printf→USB TX path,
+    // Proves: VFS stdin→cobs_read_process pipeline, printf→USB TX path,
     //         debug_uart.h macro gating (DEBUG_PRINTLN only emits when enabled)
     if (strcmp(data, DEBUG_ENABLE_CMD) == 0) {
         debugEnabled = true;
@@ -1423,15 +1423,13 @@ void process_data(char * data) {
     // ── BITS:N — Set input bit depth (determines max_raw for axis scaling) ─
     if (strncmp(data, "BITS:", 5) == 0) {
         int bits = atoi(data + 5);
-        if (bits >= 8 && bits <= 20) {
+        if (bits >= 8 && bits <= 18) {
             inputBitRange = (uint8_t)bits;
             maxRawInput = (float)((1 << bits) - 1);
-            // Binary protocol uses uint16 — cap at 65535
-            if (maxRawInput > 65535.0f) maxRawInput = 65535.0f;
             resetMotionCueing(&mcaConfig);
             serial_printf("BITS:%d,max_raw=%.0f\r\n", inputBitRange, maxRawInput);
         } else {
-            serial_printf("ERR:BITS range 8-20\r\n");
+            serial_printf("ERR:BITS range 8-18\r\n");
         }
         return;
     }
@@ -1735,98 +1733,12 @@ void process_data(char * data) {
         return;
     }
 #endif // ENABLE_BLE
-
-    // ── CSV motion data fallback (legacy SimTools format) ────────────
-    // Tests:  Legacy ASCII comma-separated motion path
-    // Proves: Backward compatibility with older SimTools serial output,
-    //         same mapRawToPosition → MCA → applyMotionValues pipeline
-    //         as binary path, just slower parsing (atof per axis)
-    float raw[6];
-    char *tok = strtok(data, ",");
-    int i = 0;
-    while (tok != NULL && i < 6) {
-        raw[i++] = atof(tok);
-        tok = strtok(NULL, ",");
-    }
-    float mapped[6];
-    mapRawToPosition(raw, &axisScales, maxRawInput, mapped);
-    // Motion cueing filter (washout + tilt coordination)
-    float filtered[6];
-    processMotionCueing(&mcaConfig, mapped, filtered);
-    applyMotionValues(filtered);
-}
-
-// State machine that auto-detects binary (0xAA 0x55 header) vs legacy CSV ('X' terminated)
-void processIncomingByte(const uint8_t inByte) {
-    // Binary packet state
-    static uint8_t bin_buf[BIN_PAYLOAD_SIZE];
-    static uint8_t bin_pos = 0;
-    static uint8_t bin_state = 0;  // 0=idle, 1=got sync0, 2=collecting payload, 3=checksum
-
-    // Legacy ASCII state
-    static char input_line[MAX_SERIAL_INPUT];
-    static unsigned int input_pos = 0;
-
-    // Binary protocol state machine
-    switch (bin_state) {
-        case 0: // Waiting for first byte
-            if (inByte == BIN_SYNC_0) {
-                bin_state = 1;
-                return;
-            }
-            break; // fall through to ASCII handler
-
-        case 1: // Got 0xAA, expecting 0x55
-            if (inByte == BIN_SYNC_1) {
-                bin_state = 2;
-                bin_pos = 0;
-                return;
-            }
-            // Not a binary packet — push both bytes into ASCII buffer
-            bin_state = 0;
-            if (input_pos < (MAX_SERIAL_INPUT - 1))
-                input_line[input_pos++] = BIN_SYNC_0;
-            break; // fall through with current byte
-
-        case 2: // Collecting payload bytes
-            bin_buf[bin_pos++] = inByte;
-            if (bin_pos >= BIN_PAYLOAD_SIZE) {
-                bin_state = 3;
-            }
-            return;
-
-        case 3: { // Checksum byte
-            uint8_t xor_check = 0;
-            for (int i = 0; i < BIN_PAYLOAD_SIZE; i++)
-                xor_check ^= bin_buf[i];
-
-            bin_state = 0;
-            if (xor_check == inByte) {
-                serial_packet_handler(bin_buf);
-            } else {
-                DEBUG_PRINTF("BIN checksum fail: expected 0x%02X got 0x%02X\n", xor_check, inByte);
-            }
-            return;
-        }
-    }
-
-    // Legacy ASCII path: accumulate until 'X' terminator
-    if (inByte == 'X') {
-        input_line[input_pos] = 0;
-        process_data(input_line);
-        input_pos = 0;
-    } else {
-        if (input_pos < (MAX_SERIAL_INPUT - 1))
-            input_line[input_pos++] = inByte;
-    }
 }
 
 void outputDebugData() {
     // Caller (InterfaceMonitorTask) already throttles at DEBUG_OUTPUT_INTERVAL (10Hz).
     // Telemetry is always sent (dashboard needs ESP32's IK angles for arm viz).
     // Debug text is only sent when debugEnabled.
-
-    // ASCII telemetry with servo angles (always, uses serial_printf which flushes)
     send_telemetry((const float*)lastServoAngles);
 
     // Text debug line (only when enabled)
@@ -1852,11 +1764,10 @@ extern "C" void app_main(void)
     // Initialize COBS transport on UART0 — must be before any serial output
     cobs_transport_init(921600);
     // Register COBS channel handlers:
-    //   DATA channel → serial_packet_handler (gates on activeInputSource → IK)
+    //   DATA / DATA18 channels → serial_packet_handler (gates on activeInputSource → IK)
     //   CMD channel  → process_data (ASCII command handler)
     cobs_set_data_handler([](const uint8_t *payload, int len) {
-        (void)len;  // COBS guarantees >= 12 bytes for DATA channel
-        serial_packet_handler(payload);
+        serial_packet_handler(payload, len);
     });
     cobs_set_cmd_handler([](const char *cmd) {
         // process_data takes non-const char* for legacy reasons

@@ -5,7 +5,7 @@ ESP-IDF v5.5 firmware for the Stewart motion platform. Supports two hardware var
 | | **PCBv1** (ESP32 DevKit) | **PCBv2** (ESP32-S3 DevKit) |
 |---|---|---|
 | **MCU** | ESP32 (CP2102/CH340 USB-UART) | ESP32-S3 (native USB CDC) |
-| **Motor I/O** | MCP23S17 SPI GPIO expander | Direct GPIO via MCPWM |
+| **Motor I/O** | MCP23S17 SPI GPIO expander | Direct GPIO (MCPWM + RMT/PCNT hardware counting) |
 | **Step/Dir** | 6 step + 6 dir on MCP23S17 ports A/B | 6 STEP GPIOs + 6 DIR GPIOs |
 | **E-Stop** | GPIO 22, active LOW | GPIO 20 (disabled — conflicts with USB D+) |
 | **Baud** | 115200 (UART0) | 115200 (USB CDC — nominal) |
@@ -76,24 +76,24 @@ Controller/
 ### PCBv2 — ESP32-S3 DevKit
 
 - **MCU**: ESP32-S3-DevKitC-1-N8R2 (8MB flash, 2MB PSRAM)
-- **Motor I/O**: Direct GPIO via MCPWM
+- **Motor I/O**: Direct GPIO (MCPWM pulse generation + hardware counting)
 - **Servo drivers**: 6 × AASD-15A
 - **Interface**: SN75174N quad RS-422 line drivers
 - **E-Stop**: GPIO 20 (currently disabled — conflicts with USB D+)
 - **Status LED**: WS2812 RGB on GPIO 48 (see [LED Status Indicator](#led-status-indicator) below)
 
-#### Pinout (verified via PINTEST — 0% crosstalk from 1Hz to 250kHz)
+#### Pinout (validated with PINTEST)
 
 | Motor | STEP | DIR | Control |
 |---|---|---|---|
-| 1 | GPIO 4 | GPIO 10 | MCPWM |
-| 2 | GPIO 5 | GPIO 11 | MCPWM |
-| 3 | GPIO 6 | GPIO 12 | MCPWM |
-| 4 | GPIO 7 | GPIO 13 | MCPWM |
-| 5 | GPIO 8 | GPIO 14 | MCPWM |
-| 6 | GPIO 9 | GPIO 17 | MCPWM |
+| 1 | GPIO 4 | GPIO 10 | MCPWM + PCNT |
+| 2 | GPIO 5 | GPIO 11 | MCPWM + PCNT |
+| 3 | GPIO 6 | GPIO 12 | MCPWM + PCNT |
+| 4 | GPIO 7 | GPIO 13 | MCPWM + PCNT |
+| 5 | GPIO 8 | GPIO 14 | MCPWM + RMT |
+| 6 | GPIO 9 | GPIO 17 | MCPWM + RMT |
 
-> ⚠️ **GPIO layout warning**: On the DevKitC-1 left header, GPIO 8, 9, 14, and 17 are **not in sequential order**. GPIO 17 is between 16 and 18; GPIO 8 is between 18 and 3; GPIO 9 is between 46 and 10. Always verify silk-screen labels when wiring.
+> ⚠️ **GPIO wiring note**: DevKitC header placement can vary by revision and is not strictly sequential by GPIO number. Always wire by printed GPIO labels (or continuity check), not by assumed physical order.
 
 #### LED Status Indicator
 
@@ -167,18 +167,25 @@ Two transports, both feeding the same binary packet handler:
 
 ### Transport A: Serial (always active)
 
-115200 baud, 8N1 over USB Serial JTAG (native USB CDC — baud rate is nominal).
+921600 baud over USB Serial JTAG / COBS-framed stream (native USB CDC — baud rate is nominal).
 
-**Binary (preferred — 15 bytes):**
+**COBS Binary (preferred):**
 
-| Offset | Size | Field |
-|--------|------|-------|
-| 0 | 1 | `0xAA` sync |
-| 1 | 1 | `0x55` sync |
-| 2 | 12 | 6 × `uint16_t` LE (surge, sway, heave, pitch, roll, yaw) 0–4094 |
-| 14 | 1 | XOR checksum of bytes 2–13 |
+| Channel | Payload | Notes |
+|---|---|---|
+| `CH_DATA18` (`0x06`) | 18 bytes = `6 × uint24` LE (low 18 bits used) | Motion data (all bit depths use this single wire format) |
+| `CH_CMD` (`0x02`) | ASCII command text | Runtime commands (`BITS`, `CONFIG`, etc.) |
 
-**Legacy CSV (backward-compatible):** `<v0>,…,<v5>X` — also handles `DBG:1X` / `DBG:0X`.
+COBS framing adds a `0x00` delimiter between encoded frames and self-recovers after line noise.
+
+All runtime commands (`FINGERPRINT?`, `CONFIG?`, `BITS?`, etc.) are sent on `CH_CMD`.
+
+**COBS metadata diagnostics (visible in app HIL panel):**
+
+- Delimiters seen (`delim`)
+- Decode success/fail counters (`ok`, `fail`)
+- Per-channel receive counters (`tel`, `resp`, `log`)
+- Serial byte totals (`RX`, `TX`) and telemetry quality (`Hz`, `seq`, rejected count)
 
 ### Transport B: UDP over Ethernet (compile-time opt-in)
 
@@ -213,7 +220,7 @@ DEBUG,<timestamp_us>,<a0>,<a1>,<a2>,<a3>,<a4>,<a5>,<tX>,<tY>,<tZ>,<rX>,<rY>,<rZ>
 | Task | Core | Priority | Purpose |
 |------|------|----------|---------|
 | `EStopMonitorTask` | 0 | MAX−1 | Debounced E-stop with GPTimer pause |
-| `InterfaceMonitorTask` | 0 | 2 | UART RX → binary/CSV parser |
+| `InterfaceMonitorTask` | 0 | 2 | UART RX → COBS frame processing |
 | `UDPListenerTask` | 0 | 2 | W5500 UDP RX (when `ENABLE_ETHERNET`) |
 | `GPIOLoopTask` | 1 | 3 | 100 µs deterministic motor update |
 | `LedStatusTask` | 0 | 1 | RGB LED status indicator (PCBv2 only) |

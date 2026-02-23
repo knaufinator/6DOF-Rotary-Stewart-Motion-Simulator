@@ -61,7 +61,7 @@ Everything runs in a single native executable — no browser, no server, no Pyth
   - Test signal generator with per-axis waveforms, smooth parameter interpolation
   - Motion capture recording and playback with speed control
   - Rolling spectrogram heatmap with multi-entity/axis overlay
-  - SimTools UDP input with configurable bit depth
+  - SimTools UDP input with configurable bit depth (8-18 bits)
   - Shared C source with ESP32 firmware (IK, axis scaling, motion cueing)
 
 ## Repository Layout
@@ -127,13 +127,11 @@ cmake --build build --config Release
 
 ## Communication Protocol
 
-Two transports, both feeding the same binary packet handler. See [Controller/README.md](Controller/README.md) for full details.
+Two transports, both feeding the same motion pipeline. See [Controller/README.md](Controller/README.md) for full details.
 
-### Serial (always active) — 115200 baud, 8N1 (USB CDC)
+### Serial (always active) — COBS-framed (USB CDC)
 
-15-byte binary packet: `[0xAA] [0x55] [6 × uint16 LE] [XOR checksum]`
-
-Legacy CSV also supported: `<v0>,…,<v5>X`
+Motion data is sent on `CH_DATA18` (`6 × uint24 LE`, low 18 bits used). All bit depths (8–18) use this single wire format.
 
 ### UDP over Ethernet (opt-in) — W5500 SPI module
 

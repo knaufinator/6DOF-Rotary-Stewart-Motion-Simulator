@@ -32,6 +32,17 @@ typedef int SOCKET;
 // Global instance
 App g_app;
 
+static inline int clampBitDepth(int bits) {
+    if (bits < 8) return 8;
+    if (bits > 18) return 18;
+    return bits;
+}
+
+static inline float txMaxRawForBitDepth(int bits) {
+    bits = clampBitDepth(bits);
+    return (float)((1u << bits) - 2u);
+}
+
 // ── PipelineConfig ──────────────────────────────────────────────────
 
 void PipelineConfig::initDefaults() {
@@ -158,13 +169,9 @@ void App::hilTxLoop() {
                 last_send[ei] = now;
                 // Always use hil_tx_raw from the main pipeline — this includes
                 // MCA dynamics, tilt coordination, intensity, and axis gain.
-                uint16_t raw[6];
+                uint32_t raw[6];
                 memcpy(raw, e.hil_tx_raw, sizeof(raw));
-
-                if (e.hil_protocol == HilProtocol::CSV)
-                    e.serial->sendMotionCSV(raw);
-                else
-                    e.serial->sendCobsData(raw);
+                e.serial->sendCobsData(raw, e.config.bit_depth);
             }
             ei++;
         }
@@ -253,7 +260,6 @@ static void saveEntityToJSON(cJSON* ej, const Entity& e) {
         cJSON_AddNumberToObject(hil, "baud", e.hil_baud);
         cJSON_AddNumberToObject(hil, "tx_hz", e.hil_tx_hz);
         cJSON_AddBoolToObject(hil, "auto_connect", e.hil_auto_connect);
-        cJSON_AddNumberToObject(hil, "protocol", (int)e.hil_protocol);
         if (e.hil_fingerprint[0] != '\0')
             cJSON_AddStringToObject(hil, "fingerprint", e.hil_fingerprint);
     }
@@ -264,7 +270,8 @@ static void loadEntityFromJSON(Entity& e, cJSON* ej) {
     if ((val = cJSON_GetObjectItem(ej, "name")))      snprintf(e.name, sizeof(e.name), "%s", val->valuestring);
     if ((val = cJSON_GetObjectItem(ej, "enabled")))    e.enabled = cJSON_IsTrue(val);
     if ((val = cJSON_GetObjectItem(ej, "intensity")))  e.config.intensity = (float)val->valuedouble;
-    if ((val = cJSON_GetObjectItem(ej, "bit_depth")))  e.config.bit_depth = val->valueint;
+    if ((val = cJSON_GetObjectItem(ej, "bit_depth")))
+        e.config.bit_depth = clampBitDepth(val->valueint);
 
     // Color
     cJSON* col = cJSON_GetObjectItem(ej, "color");
@@ -387,15 +394,12 @@ static void loadEntityFromJSON(Entity& e, cJSON* ej) {
                 e.config.servo.inverted[i] = cJSON_IsTrue(cJSON_GetArrayItem(inv, i));
         }
     }
-
-    // HIL-specific
     cJSON* hil = cJSON_GetObjectItem(ej, "hil");
     if (hil) {
-        if ((val = cJSON_GetObjectItem(hil, "port")))  snprintf(e.hil_port, sizeof(e.hil_port), "%s", val->valuestring);
+        if ((val = cJSON_GetObjectItem(hil, "port"))) snprintf(e.hil_port, sizeof(e.hil_port), "%s", val->valuestring);
         if ((val = cJSON_GetObjectItem(hil, "baud"))) e.hil_baud = val->valueint;
         if ((val = cJSON_GetObjectItem(hil, "tx_hz"))) e.hil_tx_hz = val->valueint;
         if ((val = cJSON_GetObjectItem(hil, "auto_connect"))) e.hil_auto_connect = cJSON_IsTrue(val);
-        if ((val = cJSON_GetObjectItem(hil, "protocol"))) e.hil_protocol = (HilProtocol)val->valueint;
         if ((val = cJSON_GetObjectItem(hil, "fingerprint"))) snprintf(e.hil_fingerprint, sizeof(e.hil_fingerprint), "%s", val->valuestring);
     }
 }
@@ -570,7 +574,6 @@ Entity& App::addEntity(const char* name, EntityType type) {
     e.hil_baud = 921600;
     e.hil_auto_connect = true;
     e.hil_last_reconnect = 0.0;
-    e.hil_protocol = HilProtocol::Binary;
     memset(e.hil_fingerprint, 0, sizeof(e.hil_fingerprint));
     memset(e.hil_fw_version, 0, sizeof(e.hil_fw_version));
     e.hil_proto_ver = 0;
@@ -583,7 +586,10 @@ Entity& App::addEntity(const char* name, EntityType type) {
     e.hil_hs_attempts = 0;
     e.hil_hs_last_send = 0.0;
     // Init TX raw to center (home) so platform doesn't jerk on connect
-    for (int i = 0; i < 6; i++) e.hil_tx_raw[i] = (uint16_t)(((1 << e.config.bit_depth) - 2) / 2);
+    {
+        float max_raw = txMaxRawForBitDepth(e.config.bit_depth);
+        for (int i = 0; i < 6; i++) e.hil_tx_raw[i] = (uint32_t)(max_raw * 0.5f);
+    }
     // Init history ring buffers
     memset(e.history_angles, 0, sizeof(e.history_angles));
     memset(e.history_input, 0, sizeof(e.history_input));
@@ -661,10 +667,7 @@ static void advanceHandshake(App& app, Entity& e) {
             e.hil_hs_last_send = app.frame_time;
             e.hil_hs_attempts = 0;
             snprintf(e.hil_handshake_msg, sizeof(e.hil_handshake_msg), "Querying geometry...");
-            if (e.hil_protocol == HilProtocol::Binary)
-                e.serial->write((const uint8_t*)"\0\0\0\0", 4);
-            else
-                e.serial->write((const uint8_t*)"XXXXXXXXXXXXXXXX", 16);
+            e.serial->write((const uint8_t*)"\0\0\0\0", 4);
             e.serial->sendCommand("CONFIG?");
             break;
 
@@ -674,10 +677,7 @@ static void advanceHandshake(App& app, Entity& e) {
             e.hil_hs_last_send = app.frame_time;
             e.hil_hs_attempts = 0;
             snprintf(e.hil_handshake_msg, sizeof(e.hil_handshake_msg), "Querying bit depth...");
-            if (e.hil_protocol == HilProtocol::Binary)
-                e.serial->write((const uint8_t*)"\0\0\0\0", 4);
-            else
-                e.serial->write((const uint8_t*)"XXXXXXXXXXXXXXXX", 16);
+            e.serial->write((const uint8_t*)"\0\0\0\0", 4);
             e.serial->sendCommand("BITS?");
             break;
 
@@ -748,8 +748,6 @@ static void advanceHandshake(App& app, Entity& e) {
                 // Auto-detect platform type from firmware platform_id
                 if (strstr(dp.platform_id, "mini") != nullptr) {
                     e.config.platform_type = PlatformType::PWMServo;
-                    // Mini-6DOF: use CSV protocol (binary headers corrupt ASCII parser on older firmware)
-                    e.hil_protocol = HilProtocol::CSV;
                     // Import servo params from device if available
                     if (dp.config_received) {
                         for (int i = 0; i < 6; i++)
@@ -757,7 +755,7 @@ static void advanceHandshake(App& app, Entity& e) {
                         if (dp.pulse_per_rad > 0.0f)
                             e.config.servo.pulse_per_rad = dp.pulse_per_rad;
                     }
-                    app.log(e.id, "hil", "Platform type: PWM Servo (Mini-6DOF, CSV protocol)");
+                    app.log(e.id, "hil", "Platform type: PWM Servo (Mini-6DOF)");
                 } else {
                     e.config.platform_type = PlatformType::Stepper;
                     app.log(e.id, "hil", "Platform type: Stepper");
@@ -2121,8 +2119,7 @@ skip_input_processing:
                     auto sp = std::make_shared<SerialPort>();
                     DEV_LOG("hil", "Opening serial port %s at %d baud", e.hil_port, e.hil_baud);
                     if (sp->open(e.hil_port, e.hil_baud)) {
-                        if (e.hil_protocol == HilProtocol::Binary)
-                            sp->setCobsMode(true);
+                        sp->setCobsMode(true);
                         e.serial = sp;
                         e.transport.usb_connected = true;
                         snprintf(e.transport.usb_port, sizeof(e.transport.usb_port), "%s", e.hil_port);
@@ -2138,15 +2135,9 @@ skip_input_processing:
                                  "Requesting fingerprint...");
                         log(e.id, "hil", "Connected to %s — handshaking...", e.hil_port);
                         DEV_LOG("hil", "Connected to %s, sending FINGERPRINT? immediately", e.hil_port);
-                        // Flush any partial binary packet state on ESP32.
-                        // processIncomingByte can be stuck in state 2 (collecting
-                        // payload) from a previous session.  Need up to 13 bytes
-                        // (12 payload + 1 checksum) to drain.  16 X's guarantees
-                        // a clean reset to state 0 before FINGERPRINT? arrives.
-                        if (e.hil_protocol == HilProtocol::Binary)
-                            sp->write((const uint8_t*)"\0\0\0\0", 4);
-                        else
-                            sp->write((const uint8_t*)"XXXXXXXXXXXXXXXX", 16);
+                        // Flush decoder state with COBS delimiters so the next
+                        // command frame starts cleanly.
+                        sp->write((const uint8_t*)"\0\0\0\0", 4);
                         sp->sendCommand("FINGERPRINT?");
                     } else {
                         DEV_WARN("hil", "Failed to open %s", e.hil_port);
@@ -2184,10 +2175,7 @@ skip_input_processing:
                 if (should_try && e.hil_hs_attempts < 10) {
                     e.hil_hs_attempts++;
                     e.hil_hs_last_send = frame_time;
-                    if (e.hil_protocol == HilProtocol::Binary)
-                        e.serial->write((const uint8_t*)"\0\0\0\0", 4);
-                    else
-                        e.serial->write((const uint8_t*)"XXXXXXXXXXXXXXXX", 16);
+                    e.serial->write((const uint8_t*)"\0\0\0\0", 4);
                     e.serial->sendCommand("FINGERPRINT?");
                     DEV_LOG("hil", "Sending FINGERPRINT? (attempt %d/10)", e.hil_hs_attempts);
                     snprintf(e.hil_handshake_msg, sizeof(e.hil_handshake_msg),
@@ -2218,11 +2206,8 @@ skip_input_processing:
                 if (since_last > 0.5 && e.hil_hs_attempts < 5) {
                     e.hil_hs_attempts++;
                     e.hil_hs_last_send = frame_time;
-                    // Full flush to drain any residual state
-                    if (e.hil_protocol == HilProtocol::Binary)
-                        e.serial->write((const uint8_t*)"\0\0\0\0", 4);
-                    else
-                        e.serial->write((const uint8_t*)"XXXXXXXXXXXXXXXX", 16);
+                    // Full flush to drain any residual COBS state
+                    e.serial->write((const uint8_t*)"\0\0\0\0", 4);
                     e.serial->sendCommand(cmd);
                     DEV_LOG("hil", "Retrying %s (attempt %d/5)", cmd, e.hil_hs_attempts);
                     snprintf(e.hil_handshake_msg, sizeof(e.hil_handshake_msg),
@@ -2267,16 +2252,16 @@ skip_input_processing:
 
                 // Prepare raw TX packet (only after handshake)
                 if (e.hil_handshake_ok) {
-                    float max_raw = (float)((1 << e.config.bit_depth) - 2);
+                    float max_raw = txMaxRawForBitDepth(e.config.bit_depth);
                     float home = max_raw * 0.5f;
-                    uint16_t raw[6];
+                    uint32_t raw[6];
                     for (int i = 0; i < 6; i++) {
                         float r = (scaled_pct[i] / 100.0f) * home + home;
                         if (r < 0.0f) r = 0.0f;
                         if (r > max_raw) r = max_raw;
-                        raw[i] = (uint16_t)(r + 0.5f);
+                        raw[i] = (uint32_t)(r + 0.5f);
                     }
-                    { uint16_t tmp = raw[0]; raw[0] = raw[1]; raw[1] = tmp; }
+                    { uint32_t tmp = raw[0]; raw[0] = raw[1]; raw[1] = tmp; }
                     memcpy(e.hil_tx_raw, raw, sizeof(raw));
                 }
 
@@ -2380,7 +2365,6 @@ skip_input_processing:
         static int    s_hil_baud[8] = {};
         static int    s_hil_tx_hz[8] = {};
         static bool   s_hil_auto[8] = {};
-        static int    s_hil_proto[8] = {};
         static int    s_dyn_id = -1;
         static bool   s_inited = false;
 
@@ -2404,7 +2388,6 @@ skip_input_processing:
                     if (s_hil_baud[ei] != entities[ei].hil_baud) return false;
                     if (s_hil_tx_hz[ei] != entities[ei].hil_tx_hz) return false;
                     if (s_hil_auto[ei] != entities[ei].hil_auto_connect) return false;
-                    if (s_hil_proto[ei] != (int)entities[ei].hil_protocol) return false;
                 }
             }
             return true;
@@ -2430,7 +2413,6 @@ skip_input_processing:
                     s_hil_baud[ei] = entities[ei].hil_baud;
                     s_hil_tx_hz[ei] = entities[ei].hil_tx_hz;
                     s_hil_auto[ei] = entities[ei].hil_auto_connect;
-                    s_hil_proto[ei] = (int)entities[ei].hil_protocol;
                 }
             }
         };

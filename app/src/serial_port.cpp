@@ -240,32 +240,6 @@ void SerialPort::writerThread() {
     }
 }
 
-bool SerialPort::sendMotionPacket(const uint16_t raw[6]) {
-    // Binary protocol: [0xAA][0x55][uint16_t × 6 LE][XOR checksum] = 15 bytes
-    uint8_t pkt[15];
-    pkt[0] = 0xAA;
-    pkt[1] = 0x55;
-
-    uint8_t xor_check = 0;
-    for (int i = 0; i < 6; i++) {
-        pkt[2 + i * 2]     = (uint8_t)(raw[i] & 0xFF);
-        pkt[2 + i * 2 + 1] = (uint8_t)((raw[i] >> 8) & 0xFF);
-        xor_check ^= pkt[2 + i * 2];
-        xor_check ^= pkt[2 + i * 2 + 1];
-    }
-    pkt[14] = xor_check;
-
-    return write(pkt, 15);
-}
-
-bool SerialPort::sendMotionCSV(const uint16_t raw[6]) {
-    // CSV protocol: "<v0>,<v1>,<v2>,<v3>,<v4>,<v5>X" (Mini-6DOF / legacy)
-    char buf[64];
-    int n = snprintf(buf, sizeof(buf), "%u,%u,%u,%u,%u,%uX",
-                     raw[0], raw[1], raw[2], raw[3], raw[4], raw[5]);
-    return write((const uint8_t*)buf, n);
-}
-
 bool SerialPort::sendCommand(const char* cmd) {
     if (!m_open.load()) return false;
     if (m_cobs_mode) return sendCobsCommand(cmd);
@@ -278,16 +252,19 @@ bool SerialPort::sendCommand(const char* cmd) {
     return write(buf, len + 1);
 }
 
-bool SerialPort::sendCobsData(const uint16_t raw[6]) {
-    // COBS DATA frame: [CH_DATA] [12 bytes: 6x uint16 LE]
-    uint8_t frame[13];
-    frame[0] = COBS_CH_DATA;
+bool SerialPort::sendCobsData(const uint32_t raw[6], int bit_depth) {
+    (void)bit_depth;  // all depths use the same 18-bit wire format
+    // Frame: [CH_DATA18] + [6 x uint24 LE] = 19 bytes raw
+    uint8_t frame[1 + 18];
+    frame[0] = COBS_CH_DATA18;
     for (int i = 0; i < 6; i++) {
-        frame[1 + i * 2]     = (uint8_t)(raw[i] & 0xFF);
-        frame[1 + i * 2 + 1] = (uint8_t)((raw[i] >> 8) & 0xFF);
+        uint32_t v = raw[i] & 0x3FFFFu;  // mask to 18 bits
+        frame[1 + i * 3]     = (uint8_t)(v & 0xFFu);
+        frame[1 + i * 3 + 1] = (uint8_t)((v >> 8) & 0xFFu);
+        frame[1 + i * 3 + 2] = (uint8_t)((v >> 16) & 0xFFu);
     }
-    uint8_t enc[32];
-    int enc_len = cobs_encode(frame, 13, enc);
+    uint8_t enc[64];
+    int enc_len = cobs_encode(frame, sizeof(frame), enc);
     enc[enc_len++] = 0x00;  // delimiter
     return write(enc, enc_len);
 }

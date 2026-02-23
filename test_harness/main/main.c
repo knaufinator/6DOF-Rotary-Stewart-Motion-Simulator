@@ -24,8 +24,10 @@
 
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
+#include "freertos/queue.h"
 #include "driver/gpio.h"
 #include "driver/pulse_cnt.h"
+#include "driver/rmt_rx.h"
 #include "esp_timer.h"
 #include "esp_log.h"
 #include "led_strip.h"
@@ -39,11 +41,21 @@ static const char *TAG = "ANALYZER";
 
 #define NUM_MOTORS          6
 #define PCNT_MOTORS         4        /* ESP32-S3 has 4 PCNT units (M0-M3) */
+#define RMT_MOTOR_BASE      PCNT_MOTORS
+#define RMT_MOTORS          (NUM_MOTORS - PCNT_MOTORS)
 #define REPORT_INTERVAL_MS  150      /* ~7 Hz streaming rate */
 #define PCNT_POLL_MS        5        /* 200 Hz PCNT polling (prevents 16-bit overflow) */
 #define IDLE_TIMEOUT_MS     1000     /* report idle after 1s of no steps */
 #define MAX_CMD_LEN         64
 #define LED_GPIO            48       /* WS2812 RGB on DevKitC */
+
+/* RMT RX capture for M4-M5 (STEP pulse hardware capture) */
+#define RMT_RX_RESOLUTION_HZ    1000000  /* 1 tick = 1 us */
+#define RMT_RX_MEM_SYMBOLS      256
+#define RMT_RX_BUFFER_SYMBOLS   1024
+#define RMT_RX_QUEUE_LEN        32
+#define RMT_RX_MIN_NS           200
+#define RMT_RX_MAX_NS           1000000000UL
 
 /* GPIO pin assignments — match controller pin numbering for clarity */
 static const gpio_num_t step_pins[NUM_MOTORS] = {
@@ -102,6 +114,152 @@ static volatile uint32_t pcnt_total_steps[PCNT_MOTORS];
 static volatile uint32_t pcnt_steps_in_window[PCNT_MOTORS];
 static volatile uint64_t pcnt_last_active_us[PCNT_MOTORS];
 static int16_t           pcnt_prev_count[PCNT_MOTORS];
+
+/* -------------------------------------------------------------------------- */
+/*  RMT RX hardware pulse capture (M4-M5)                                     */
+/* -------------------------------------------------------------------------- */
+
+typedef struct {
+    uint8_t  motor;             /* absolute motor index: 4 or 5 */
+    uint32_t pulses;            /* number of STEP highs observed */
+    uint32_t min_interval_us;   /* min full-period estimate in this batch */
+    uint32_t max_interval_us;   /* max full-period estimate in this batch */
+    uint64_t sum_interval_us;   /* summed full-period estimates in this batch */
+    uint32_t interval_count;    /* number of full-period estimates */
+} rmt_pulse_evt_t;
+
+static rmt_channel_handle_t rmt_rx_channels[RMT_MOTORS] = {NULL};
+static rmt_symbol_word_t    rmt_rx_symbols[RMT_MOTORS][RMT_RX_BUFFER_SYMBOLS];
+static QueueHandle_t        rmt_evt_queue = NULL;
+static const rmt_receive_config_t rmt_rx_cfg = {
+    .signal_range_min_ns = RMT_RX_MIN_NS,
+    .signal_range_max_ns = RMT_RX_MAX_NS,
+};
+
+static bool IRAM_ATTR rmt_rx_done_cb(rmt_channel_handle_t channel,
+                                     const rmt_rx_done_event_data_t *edata,
+                                     void *user_data)
+{
+    (void)channel;
+
+    rmt_pulse_evt_t evt = {
+        .motor = (uint8_t)(uintptr_t)user_data,
+        .min_interval_us = UINT32_MAX,
+    };
+
+    const rmt_symbol_word_t *syms = edata->received_symbols;
+    size_t n = edata->num_symbols;
+    for (size_t i = 0; i < n; i++) {
+        const rmt_symbol_word_t s = syms[i];
+
+        if (s.level0 == 1 && s.duration0 > 0) evt.pulses++;
+        if (s.level1 == 1 && s.duration1 > 0) evt.pulses++;
+
+        if (s.duration0 > 0 && s.duration1 > 0 && s.level0 != s.level1) {
+            uint32_t interval = s.duration0 + s.duration1;
+            if (interval < evt.min_interval_us) evt.min_interval_us = interval;
+            if (interval > evt.max_interval_us) evt.max_interval_us = interval;
+            evt.sum_interval_us += interval;
+            evt.interval_count++;
+        }
+    }
+
+    if (evt.min_interval_us == UINT32_MAX) evt.min_interval_us = 0;
+
+    BaseType_t hp_task_woken = pdFALSE;
+    if (rmt_evt_queue) {
+        xQueueSendFromISR(rmt_evt_queue, &evt, &hp_task_woken);
+    }
+    return hp_task_woken == pdTRUE;
+}
+
+static void init_rmt_rx(void)
+{
+    rmt_evt_queue = xQueueCreate(RMT_RX_QUEUE_LEN, sizeof(rmt_pulse_evt_t));
+    if (!rmt_evt_queue) {
+        ESP_LOGE(TAG, "Failed to create RMT event queue");
+        abort();
+    }
+
+    for (int i = 0; i < RMT_MOTORS; i++) {
+        int motor = RMT_MOTOR_BASE + i;
+        rmt_rx_channel_config_t cfg = {
+            .gpio_num = step_pins[motor],
+            .clk_src = RMT_CLK_SRC_DEFAULT,
+            .resolution_hz = RMT_RX_RESOLUTION_HZ,
+            .mem_block_symbols = RMT_RX_MEM_SYMBOLS,
+            .flags = {
+                .with_dma = false,
+            },
+        };
+
+        ESP_ERROR_CHECK(rmt_new_rx_channel(&cfg, &rmt_rx_channels[i]));
+
+        rmt_rx_event_callbacks_t cbs = {
+            .on_recv_done = rmt_rx_done_cb,
+        };
+        ESP_ERROR_CHECK(rmt_rx_register_event_callbacks(
+            rmt_rx_channels[i], &cbs, (void *)(uintptr_t)motor));
+        ESP_ERROR_CHECK(rmt_enable(rmt_rx_channels[i]));
+        ESP_ERROR_CHECK(rmt_receive(
+            rmt_rx_channels[i],
+            rmt_rx_symbols[i],
+            sizeof(rmt_rx_symbols[i]),
+            &rmt_rx_cfg));
+
+        ESP_LOGI(TAG, "RMT RX motor %d: STEP=GPIO%d DIR=GPIO%d", motor, step_pins[motor], dir_pins[motor]);
+    }
+}
+
+static void rmt_rx_task(void *arg)
+{
+    (void)arg;
+    rmt_pulse_evt_t evt;
+
+    while (1) {
+        if (xQueueReceive(rmt_evt_queue, &evt, pdMS_TO_TICKS(100)) == pdTRUE) {
+            int motor = (int)evt.motor;
+            if (motor >= RMT_MOTOR_BASE && motor < NUM_MOTORS) {
+                motor_stats_t *s = &stats[motor];
+                bool dir = gpio_get_level(dir_pins[motor]);
+
+                if (evt.pulses > 0) {
+                    if (s->total_steps > 0 && dir != s->last_dir)
+                        s->dir_changes++;
+                    s->last_dir = dir;
+
+                    if (dir) s->position += (int32_t)evt.pulses;
+                    else     s->position -= (int32_t)evt.pulses;
+
+                    s->total_steps += evt.pulses;
+                    s->steps_in_window += evt.pulses;
+                    s->last_step_time_us = esp_timer_get_time();
+                }
+
+                if (evt.interval_count > 0) {
+                    if (evt.min_interval_us > 0 && evt.min_interval_us < s->min_interval_us)
+                        s->min_interval_us = evt.min_interval_us;
+                    if (evt.max_interval_us > s->max_interval_us)
+                        s->max_interval_us = evt.max_interval_us;
+                    s->sum_interval_us += evt.sum_interval_us;
+                    s->interval_count += evt.interval_count;
+                }
+
+                int ridx = motor - RMT_MOTOR_BASE;
+                if (ridx >= 0 && ridx < RMT_MOTORS && rmt_rx_channels[ridx]) {
+                    esp_err_t err = rmt_receive(
+                        rmt_rx_channels[ridx],
+                        rmt_rx_symbols[ridx],
+                        sizeof(rmt_rx_symbols[ridx]),
+                        &rmt_rx_cfg);
+                    if (err != ESP_OK) {
+                        ESP_LOGW(TAG, "rmt_receive restart failed for motor %d: %s", motor, esp_err_to_name(err));
+                    }
+                }
+            }
+        }
+    }
+}
 
 static void init_pcnt(void)
 {
@@ -166,27 +324,6 @@ static void pcnt_poll_task(void *arg)
 }
 
 /* -------------------------------------------------------------------------- */
-/*  ISR — Lightweight step handler for M4-M5 (no PCNT available)              */
-/* -------------------------------------------------------------------------- */
-
-static void IRAM_ATTR step_isr_handler(void *arg)
-{
-    uint32_t idx = (uint32_t)(uintptr_t)arg;
-    motor_stats_t *s = &stats[idx];
-
-    bool dir = gpio_get_level(dir_pins[idx]);
-    if (s->total_steps > 0 && dir != s->last_dir)
-        s->dir_changes++;
-    s->last_dir = dir;
-
-    if (dir) s->position++;
-    else     s->position--;
-    s->total_steps++;
-    s->steps_in_window++;
-    s->last_step_time_us = esp_timer_get_time();
-}
-
-/* -------------------------------------------------------------------------- */
 /*  GPIO Initialization                                                       */
 /* -------------------------------------------------------------------------- */
 
@@ -204,15 +341,14 @@ static void init_gpio(void)
         gpio_config(&dir_cfg);
     }
 
-    /* M4-M5: GPIO ISR (no PCNT units left) */
-    gpio_install_isr_service(ESP_INTR_FLAG_IRAM);
+    /* M4-M5: RMT RX captures STEP pulses; GPIO used for signal sampling only */
     for (int i = PCNT_MOTORS; i < NUM_MOTORS; i++) {
         gpio_config_t step_cfg = {
             .pin_bit_mask  = (1ULL << step_pins[i]),
             .mode          = GPIO_MODE_INPUT,
             .pull_up_en    = GPIO_PULLUP_DISABLE,
             .pull_down_en  = GPIO_PULLDOWN_ENABLE,
-            .intr_type     = GPIO_INTR_POSEDGE
+            .intr_type     = GPIO_INTR_DISABLE
         };
         gpio_config(&step_cfg);
 
@@ -224,8 +360,6 @@ static void init_gpio(void)
             .intr_type     = GPIO_INTR_DISABLE
         };
         gpio_config(&dir_cfg);
-
-        gpio_isr_handler_add(step_pins[i], step_isr_handler, (void *)(uintptr_t)i);
     }
 
     for (int i = 0; i < NUM_MOTORS; i++) {
@@ -233,7 +367,7 @@ static void init_gpio(void)
         stats[i].min_interval_us = UINT32_MAX;
     }
 
-    ESP_LOGI(TAG, "GPIO initialized: M0-M3=PCNT hw, M4-M5=GPIO ISR");
+    ESP_LOGI(TAG, "GPIO initialized: M0-M3=PCNT hw, M4-M5=RMT RX hw capture");
 }
 
 /* -------------------------------------------------------------------------- */
@@ -251,12 +385,11 @@ static void reset_all_stats(void)
         pcnt_steps_in_window[i] = 0;
         pcnt_last_active_us[i] = 0;
     }
-    /* Reset ISR motors (M4-M5) + all stats structs */
+    /* Reset M4-M5 stats + all shared stats structs */
+    if (rmt_evt_queue) xQueueReset(rmt_evt_queue);
     for (int i = 0; i < NUM_MOTORS; i++) {
-        if (i >= PCNT_MOTORS) gpio_intr_disable(step_pins[i]);
         memset((void *)&stats[i], 0, sizeof(motor_stats_t));
         stats[i].min_interval_us = UINT32_MAX;
-        if (i >= PCNT_MOTORS) gpio_intr_enable(step_pins[i]);
     }
 }
 
@@ -610,10 +743,10 @@ void app_main(void)
     printf("╔══════════════════════════════════════════╗\n");
     printf("║   Step/Dir Signal Analyzer v2.0         ║\n");
     printf("║   6DOF Stewart Platform Test Harness    ║\n");
-    printf("║   M0-M3: PCNT hw  |  M4-M5: GPIO ISR   ║\n");
+    printf("║   M0-M3: PCNT hw  |  M4-M5: RMT RX hw  ║\n");
     printf("╚══════════════════════════════════════════╝\n");
     printf("\n");
-    printf("Channels: %d motors (%d PCNT + %d ISR)\n",
+    printf("Channels: %d motors (%d PCNT + %d RMT RX)\n",
            NUM_MOTORS, PCNT_MOTORS, NUM_MOTORS - PCNT_MOTORS);
     printf("STEP pins: GPIO %d, %d, %d, %d, %d, %d\n",
            step_pins[0], step_pins[1], step_pins[2],
@@ -628,10 +761,12 @@ void app_main(void)
 
     init_pcnt();
     init_gpio();
+    init_rmt_rx();
     init_led();
 
     /* Launch tasks */
     xTaskCreatePinnedToCore(pcnt_poll_task, "pcnt_poll", 2048, NULL, 6, NULL, 1);  /* highest prio */
+    xTaskCreatePinnedToCore(rmt_rx_task,    "rmt_rx",    4096, NULL, 6, NULL, 1);
     xTaskCreatePinnedToCore(serial_task,    "serial",    4096, NULL, 5, NULL, 0);
     xTaskCreatePinnedToCore(report_task,    "report",    4096, NULL, 3, NULL, 1);
     xTaskCreatePinnedToCore(activity_task,  "activity",  2048, NULL, 2, NULL, 1);

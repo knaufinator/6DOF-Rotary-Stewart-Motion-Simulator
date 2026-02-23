@@ -120,10 +120,6 @@ struct VizCamera {
     float distance;     // distance from target (mm), 0 = auto
 };
 
-// ── HIL Protocol ────────────────────────────────────────────────────
-
-enum class HilProtocol { Binary, CSV };
-
 // ── Handshake State Machine ─────────────────────────────────────────
 
 enum class HandshakePhase {
@@ -201,8 +197,7 @@ struct Entity {
     int             hil_baud;            // serial baud rate (saved per-device)
     bool            hil_auto_connect;    // try to reconnect if disconnected
     double          hil_last_reconnect;  // last reconnect attempt time
-    HilProtocol     hil_protocol;        // Binary (big platform) or CSV (Mini-6DOF)
-    uint16_t        hil_tx_raw[6];       // latest raw packet for background TX thread
+    uint32_t        hil_tx_raw[6];       // latest raw packet for background TX thread (up to 18-bit)
 
     // Device fingerprint / handshake
     char            hil_fingerprint[16]; // stored MAC fingerprint (12 hex chars + NUL)

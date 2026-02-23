@@ -2,7 +2,7 @@
  * SimTools UDP Plugin
  * ===================
  * Receives 6-axis motion data via UDP from SimTools or compatible software.
- * Supports binary (8/10/12/14/16-bit) and CSV text formats.
+ * Supports binary/CSV normalization for 8/10/12/14/16/18-bit ranges.
  *
  * Build:
  *   Windows:  cl /LD /I ../src plugin_simtools_udp.c ws2_32.lib
@@ -51,7 +51,7 @@ static int   s_packets_bad = 0;
 
 /* ── Parameter declarations ───────────────────────────────────────── */
 
-static const char* s_bit_labels = "8-bit\00010-bit\00012-bit\00014-bit\00016-bit\000";
+static const char* s_bit_labels = "8-bit\00010-bit\00012-bit\00014-bit\00016-bit\00018-bit\000";
 
 static const StewartParamDef s_params[] = {
     {
@@ -60,7 +60,7 @@ static const StewartParamDef s_params[] = {
     },
     {
         "bit_depth", "Bit Depth", "Resolution of incoming data values",
-        STEWART_PARAM_ENUM, 2.0f, 0.0f, 4.0f, NULL  /* index: 0=8, 1=10, 2=12, 3=14, 4=16 */
+        STEWART_PARAM_ENUM, 2.0f, 0.0f, 5.0f, NULL  /* index: 0=8, 1=10, 2=12, 3=14, 4=16, 5=18 */
     },
 };
 
@@ -72,7 +72,7 @@ static const StewartPluginInfo s_info = {
     "Stewart Platform Project",
     "1.0.0",
     "Receives 6-axis motion data via UDP from SimTools or compatible software. "
-    "Supports binary (8-16 bit) and CSV text formats.",
+    "Supports binary/CSV normalization for 8-18 bit ranges.",
     0,   /* preferred_rate_hz */
     6,   /* axis_count */
     { NULL, NULL, NULL, NULL, NULL, NULL },
@@ -83,9 +83,9 @@ static const StewartPluginInfo s_info = {
 /* ── Helpers ──────────────────────────────────────────────────────── */
 
 static int bit_depth_from_index(int idx) {
-    const int opts[] = {8, 10, 12, 14, 16};
+    const int opts[] = {8, 10, 12, 14, 16, 18};
     if (idx < 0) idx = 0;
-    if (idx > 4) idx = 4;
+    if (idx > 5) idx = 5;
     return opts[idx];
 }
 
@@ -171,7 +171,7 @@ static void drain_udp(void) {
         float values[6] = {0};
         int parsed = 0;
 
-        /* Binary parsing: 8-bit = 6 bytes, 10-16 bit = 12 bytes LE */
+        /* Binary parsing: 8-bit = 6 bytes, wider modes use 12-byte uint16 LE lanes */
         if (bd <= 8 && n >= 6 && n < 20) {
             unsigned char* ub = (unsigned char*)buf;
             int i;

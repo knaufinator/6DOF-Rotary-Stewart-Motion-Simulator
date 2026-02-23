@@ -50,17 +50,13 @@ public:
     // Write raw bytes
     bool write(const uint8_t* data, int len);
 
-    // Send a binary motion packet (0xAA 0x55 framing, 6 × uint16 LE + XOR checksum)
-    bool sendMotionPacket(const uint16_t raw[6]);
-
-    // Send a CSV motion packet: "<v0>,<v1>,<v2>,<v3>,<v4>,<v5>X" (Mini-6DOF / legacy)
-    bool sendMotionCSV(const uint16_t raw[6]);
-
-    // Send a text command (appends 'X' terminator for ESP32 ASCII protocol)
+    // Send a text command.
+    // COBS mode: sent on CH_CMD frame. Fallback mode: appends 'X' terminator.
     bool sendCommand(const char* cmd);
 
-    // COBS-framed sends (used when m_cobs_mode is true)
-    bool sendCobsData(const uint16_t raw[6]);    // 12-byte motion data on CH_DATA
+    // COBS-framed motion send — always uses CH_DATA18 (18-byte 6x uint24 LE).
+    // Values are masked to 18 bits on the wire regardless of configured bit depth.
+    bool sendCobsData(const uint32_t raw[6], int bit_depth);
     bool sendCobsCommand(const char* cmd);        // string command on CH_CMD
 
     // Enable COBS framing mode (binary protocol uses this)

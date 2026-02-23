@@ -250,8 +250,25 @@ If the USB cable is unplugged or the ESP32 resets, the app detects the lost conn
 Configurable in Settings (when disconnected):
 
 - **TX Rate**: 10–1000 Hz (how fast motion packets are sent to ESP32)
-- **Bit Depth**: 8, 10, 12, 14, or 16 bits per axis
-- **Protocol**: Binary (default, efficient) or CSV (legacy, for debugging)
+- **Bit Depth**: 8, 10, 12, 14, 16, or 18 bits per axis
+- **Protocol**: COBS-framed serial transport
+  - Motion data: `CH_DATA18` (18 bytes: 6× uint24 LE, low 18 bits used)
+  - Runtime commands: `CH_CMD` (ASCII text)
+
+### COBS Metadata Statistics (HIL panel)
+
+When connected, the HIL panel reports these transport counters:
+
+- `RX bytes` / `TX bytes`: total serial payload bytes seen/sent.
+- `Telemetry Hz`: decoded telemetry update rate.
+- `seq`: latest telemetry sequence index.
+- `rejected`: telemetry frames dropped by sanity checks.
+- `COBS delim`: number of `0x00` frame delimiters observed.
+- `COBS ok`: successfully decoded COBS frames.
+- `COBS fail`: failed COBS decodes (framing/corruption).
+- `COBS tel`: telemetry channel frames (`CH_TEL`).
+- `COBS resp`: response channel frames (`CH_RESP`).
+- `COBS log`: log/debug channel frames (`CH_LOG`).
 
 ---
 

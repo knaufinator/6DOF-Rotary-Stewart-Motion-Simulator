@@ -2412,12 +2412,11 @@ static void DrawEntitySettingsContent(Entity& e) {
 
                 // Read-only transport settings (locked while connected)
                 ImGui::Spacing();
-                ImGui::TextDisabled("TX Rate: %d Hz  |  Bit Depth: %d  |  %s", e.hil_tx_hz, e.config.bit_depth,
-                    e.hil_protocol == HilProtocol::CSV ? "CSV" : "Binary");
+                ImGui::TextDisabled("TX Rate: %d Hz  |  Bit Depth: %d  |  Protocol: COBS", e.hil_tx_hz, e.config.bit_depth);
                 if (ImGui::IsItemHovered()) {
                     ImGui::SetTooltip("Disconnect to change TX rate or bit depth.\n"
-                        "These are locked during an active session to\n"
-                        "prevent protocol mismatches with the ESP32.");
+                        "These are locked during an active session\n"
+                        "for transport stability.");
                 }
 
                 ImGui::Spacing();
@@ -2513,14 +2512,11 @@ static void DrawEntitySettingsContent(Entity& e) {
                         }
                     }
 
-                    const char* proto_labels[] = { "Binary", "CSV (legacy)" };
-                    int proto_idx = (int)e.hil_protocol;
-                    if (ImGui::Combo("Protocol##dc", &proto_idx, proto_labels, 2)) {
-                        e.hil_protocol = (HilProtocol)proto_idx;
-                    }
+                    ImGui::TextDisabled("Protocol: COBS (CH_DATA18 + CH_CMD)");
                     if (ImGui::IsItemHovered()) {
-                        ImGui::SetTooltip("Binary: 15-byte framed packet (big platform Controller firmware)\n"
-                            "CSV: comma-separated values + 'X' terminator (Mini-6DOF / legacy)");
+                        ImGui::SetTooltip("All serial traffic uses COBS framing.\n"
+                            "Motion data: CH_DATA18 (18 bytes: 6x uint24 LE).\n"
+                            "Commands: CH_CMD (ASCII text).");
                     }
 
                     ImGui::SliderInt("TX Rate (Hz)##dc", &e.hil_tx_hz, 10, 1000);
@@ -2528,10 +2524,10 @@ static void DrawEntitySettingsContent(Entity& e) {
                         ImGui::SetTooltip("How often motion packets are sent to the ESP32.\n"
                             "Higher values give smoother motion but more serial traffic.");
                     }
-                    ImGui::SliderInt("Bit Depth##dc", &e.config.bit_depth, 8, 16);
+                    ImGui::SliderInt("Bit Depth##dc", &e.config.bit_depth, 8, 18);
                     if (ImGui::IsItemHovered()) {
                         ImGui::SetTooltip("Resolution of motion values sent to the ESP32.\n"
-                            "Must match the ESP32 firmware's expected bit depth.");
+                            "Must match the ESP32 firmware's expected bit depth (8-18).");
                     }
 
                     ImGui::Checkbox("Auto-reconnect##dc", &e.hil_auto_connect);
@@ -2547,8 +2543,7 @@ static void DrawEntitySettingsContent(Entity& e) {
                     if (ImGui::Button("Connect", ImVec2(-1, 28))) {
                         auto sp = std::make_shared<SerialPort>();
                         if (sp->open(e.hil_port, e.hil_baud)) {
-                            if (e.hil_protocol == HilProtocol::Binary)
-                                sp->setCobsMode(true);
+                            sp->setCobsMode(true);
                             e.serial = sp;
                             e.transport.usb_connected = true;
                             snprintf(e.transport.usb_port, sizeof(e.transport.usb_port), "%s", e.hil_port);
@@ -2564,11 +2559,8 @@ static void DrawEntitySettingsContent(Entity& e) {
                             snprintf(e.hil_handshake_msg, sizeof(e.hil_handshake_msg),
                                      "Requesting fingerprint...");
                             g_app.log(e.id, "hil", "Connected to %s — handshaking...", e.hil_port);
-                            // Flush residual state then send FINGERPRINT? immediately
-                            if (e.hil_protocol == HilProtocol::Binary)
-                                sp->write((const uint8_t*)"\0\0\0\0", 4);
-                            else
-                                sp->write((const uint8_t*)"X", 1);
+                            // Flush residual COBS decoder state then send FINGERPRINT? immediately
+                            sp->write((const uint8_t*)"\0\0\0\0", 4);
                             sp->sendCommand("FINGERPRINT?");
                         } else {
                             g_app.log(e.id, "hil", "Failed to open %s", e.hil_port);
@@ -4953,7 +4945,7 @@ static void DrawEntityConsoleContent(Entity& e) {
                 for (int i = 0; i < 6; i++) {
                     if (i > 0 && i % 3 == 0) {} // new row
                     else if (i % 3 != 0) ImGui::SameLine(col_w * (i % 3) + 8);
-                    ImGui::Text("[%d] %5u", i, e.hil_tx_raw[i]);
+                    ImGui::Text("[%d] %6u", i, (unsigned)e.hil_tx_raw[i]);
                 }
 
                 bool connected = e.serial && e.serial->isOpen();

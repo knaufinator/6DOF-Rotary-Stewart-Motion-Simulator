@@ -135,8 +135,8 @@ static void dispatch_frame(const uint8_t *data, int len) {
     int plen = len - 1;
 
     switch (ch) {
-        case COBS_CH_DATA:
-            if (s_data_handler && plen >= 12)
+        case COBS_CH_DATA18:
+            if (s_data_handler && plen >= 18)
                 s_data_handler(payload, plen);
             break;
         case COBS_CH_CMD:

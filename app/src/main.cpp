@@ -28,6 +28,7 @@
 
 // Application
 #include "app.h"
+#include "test_harness_panel.h"
 #include "ui_panels.h"
 
 // ── Globals for modal-loop rendering ────────────────────────────────
@@ -295,6 +296,7 @@ int main(int, char**) {
     }
     g_app.loadRecordingsFromDisk();
     g_app.loadMcaPresetsFromDisk();
+    TestHarnessInit();
     g_app.log(-1, "system", "Stewart Platform Controller started");
     g_app.log(-1, "system", "Add entities via Entity menu or [+ Add SIL/HIL]");
 

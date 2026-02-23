@@ -268,6 +268,7 @@ bool SerialPort::sendMotionCSV(const uint16_t raw[6]) {
 
 bool SerialPort::sendCommand(const char* cmd) {
     if (!m_open.load()) return false;
+    if (m_cobs_mode) return sendCobsCommand(cmd);
     int len = (int)strlen(cmd);
     // Send command + 'X' terminator (ESP32 ASCII protocol)
     uint8_t buf[256];
@@ -275,6 +276,34 @@ bool SerialPort::sendCommand(const char* cmd) {
     memcpy(buf, cmd, len);
     buf[len] = 'X';
     return write(buf, len + 1);
+}
+
+bool SerialPort::sendCobsData(const uint16_t raw[6]) {
+    // COBS DATA frame: [CH_DATA] [12 bytes: 6x uint16 LE]
+    uint8_t frame[13];
+    frame[0] = COBS_CH_DATA;
+    for (int i = 0; i < 6; i++) {
+        frame[1 + i * 2]     = (uint8_t)(raw[i] & 0xFF);
+        frame[1 + i * 2 + 1] = (uint8_t)((raw[i] >> 8) & 0xFF);
+    }
+    uint8_t enc[32];
+    int enc_len = cobs_encode(frame, 13, enc);
+    enc[enc_len++] = 0x00;  // delimiter
+    return write(enc, enc_len);
+}
+
+bool SerialPort::sendCobsCommand(const char* cmd) {
+    if (!m_open.load()) return false;
+    int slen = (int)strlen(cmd);
+    if (slen <= 0 || slen > 254) return false;
+    // COBS CMD frame: [CH_CMD] [string bytes]
+    uint8_t frame[256];
+    frame[0] = COBS_CH_CMD;
+    memcpy(frame + 1, cmd, slen);
+    uint8_t enc[300];
+    int enc_len = cobs_encode(frame, 1 + slen, enc);
+    enc[enc_len++] = 0x00;  // delimiter
+    return write(enc, enc_len);
 }
 
 // ── Telemetry Access ─────────────────────────────────────────────────
@@ -288,7 +317,7 @@ ESP32Telemetry SerialPort::getLatestTelemetry() const {
 
 void SerialPort::readerThread() {
 #ifdef _WIN32
-    char line_buf[512];
+    char line_buf[2048];
     int line_pos = 0;
 
     while (!m_reader_stop.load()) {
@@ -296,7 +325,6 @@ void SerialPort::readerThread() {
         DWORD bytesRead = 0;
 
         if (!ReadFile(H(), buf, sizeof(buf), &bytesRead, nullptr)) {
-            // Read error — port may have been disconnected
             if (GetLastError() != ERROR_TIMEOUT) {
                 m_open.store(false);
                 break;
@@ -305,46 +333,80 @@ void SerialPort::readerThread() {
         }
 
         if (bytesRead == 0) {
-            Sleep(1);  // yield CPU when no data available
+            Sleep(1);
             continue;
         }
         m_rx_bytes.fetch_add((int)bytesRead);
 
-        // Parse incoming bytes into lines
-        for (DWORD i = 0; i < bytesRead; i++) {
-            char c = (char)buf[i];
-            if (c == '\n' || c == '\r') {
-                if (line_pos > 0) {
-                    line_buf[line_pos] = '\0';
-                    // Telemetry parsing is thread-safe (uses m_tel_mutex)
-                    parseLine(line_buf);
-                    // Queue non-TEL lines for main-thread processing.
-                    // TEL lines are high-frequency and already handled by parseLine.
-                    bool is_tel = (strncmp(line_buf, "TEL,", 4) == 0);
-                    if (!is_tel) {
-                        bool is_handshake = (strncmp(line_buf, "FINGERPRINT:", 12) == 0 ||
-                                             strncmp(line_buf, "CONFIG:", 7) == 0 ||
-                                             strncmp(line_buf, "SERVO:", 6) == 0 ||
-                                             strncmp(line_buf, "BITS:", 5) == 0 ||
-                                             strncmp(line_buf, "VERSION:", 8) == 0);
-                        bool enqueue = is_handshake;
-                        if (!is_handshake) {
-                            double t = now_seconds();
-                            if (t - m_last_line_cb_time >= 0.1) {
-                                m_last_line_cb_time = t;
-                                enqueue = true;
-                            }
-                        }
-                        if (enqueue) {
-                            std::lock_guard<std::mutex> lock(m_line_queue_mutex);
-                            m_line_queue.emplace_back(line_buf);
+        if (m_cobs_mode) {
+            // ── COBS mode: accumulate bytes, split on 0x00, decode frames ──
+            for (DWORD i = 0; i < bytesRead; i++) {
+                if (buf[i] == 0x00) {
+                    m_cobs_delimiters++;
+                    if (m_cobs_pos > 0) {
+                        uint8_t decoded[512];
+                        int dec_len = cobs_decode(m_cobs_acc, m_cobs_pos, decoded);
+                        if (dec_len > 0) {
+                            m_cobs_decode_ok++;
+                            processCobsFrame(decoded, dec_len);
+                        } else {
+                            m_cobs_decode_fail++;
                         }
                     }
-                    line_pos = 0;
+                    m_cobs_pos = 0;
+                } else {
+                    if (m_cobs_pos < (int)sizeof(m_cobs_acc))
+                        m_cobs_acc[m_cobs_pos++] = buf[i];
+                    else
+                        m_cobs_pos = 0;  // overflow — resync on next 0x00
                 }
-            } else {
-                if (line_pos < (int)sizeof(line_buf) - 1) {
-                    line_buf[line_pos++] = c;
+            }
+        } else {
+            // ── Legacy ASCII line mode ──
+            for (DWORD i = 0; i < bytesRead; i++) {
+                char c = (char)buf[i];
+                if (c == '\n' || c == '\r') {
+                    if (line_pos > 0) {
+                        line_buf[line_pos] = '\0';
+                        parseLine(line_buf);
+                        bool is_tel = (strncmp(line_buf, "TEL,", 4) == 0);
+                        if (!is_tel) {
+                            bool enqueue = false;
+                            if (m_enqueue_all.load(std::memory_order_relaxed)) {
+                                enqueue = true;
+                            } else {
+                                bool is_important =
+                                    (strncmp(line_buf, "FINGERPRINT:", 12) == 0) ||
+                                    (strncmp(line_buf, "CONFIG:", 7) == 0) ||
+                                    (strncmp(line_buf, "SERVO:", 6) == 0) ||
+                                    (strncmp(line_buf, "BITS:", 5) == 0) ||
+                                    (strncmp(line_buf, "INPUT:", 6) == 0) ||
+                                    (strncmp(line_buf, "INPUT_STAT:", 11) == 0) ||
+                                    (strncmp(line_buf, "VERSION:", 8) == 0) ||
+                                    (strncmp(line_buf, "RATETEST:", 9) == 0) ||
+                                    (line_buf[0] == '{') ||
+                                    (strstr(line_buf, "error=") != nullptr) ||
+                                    (line_buf[0] == ' ' && line_buf[1] == ' ' && line_buf[2] == 'M');
+                                if (is_important) {
+                                    enqueue = true;
+                                } else {
+                                    double t = now_seconds();
+                                    if (t - m_last_line_cb_time >= 0.1) {
+                                        m_last_line_cb_time = t;
+                                        enqueue = true;
+                                    }
+                                }
+                            }
+                            if (enqueue) {
+                                std::lock_guard<std::mutex> lock(m_line_queue_mutex);
+                                m_line_queue.emplace_back(line_buf);
+                            }
+                        }
+                        line_pos = 0;
+                    }
+                } else {
+                    if (line_pos < (int)sizeof(line_buf) - 1)
+                        line_buf[line_pos++] = c;
                 }
             }
         }
@@ -369,6 +431,18 @@ void SerialPort::parseLine(const char* line) {
             &vals[6], &vals[7], &vals[8], &vals[9], &vals[10], &vals[11]);
 
         if (n >= 6) {
+            // Validate angles: reject obviously corrupt TEL lines.
+            // Servo angles should never exceed ±90° (±π/2 ≈ 1.571 rad).
+            bool valid = true;
+            for (int i = 0; i < 6; i++) {
+                if (vals[i] != vals[i] || fabsf(vals[i]) > 1.571f) { // NaN or out of range
+                    valid = false;
+                    m_tel_rejected++;
+                    break;
+                }
+            }
+            if (!valid) return;  // drop this corrupt TEL line
+
             double t = now_seconds();
             std::lock_guard<std::mutex> lock(m_tel_mutex);
             memcpy(m_telemetry.angles, vals, 6 * sizeof(float));
@@ -387,5 +461,74 @@ void SerialPort::parseLine(const char* line) {
                     m_tel_rate.store((float)((count - 1) / dt));
             }
         }
+    }
+}
+
+// ── COBS Frame Dispatch ─────────────────────────────────────────────
+
+void SerialPort::processCobsFrame(const uint8_t *data, int len) {
+    if (len < 1) return;
+    uint8_t ch = data[0];
+    const uint8_t *payload = data + 1;
+    int plen = len - 1;
+
+    switch (ch) {
+        case COBS_CH_TEL:
+            m_cobs_tel++;
+            parseBinaryTelemetry(payload, plen);
+            break;
+        case COBS_CH_RESP:
+            m_cobs_resp++;
+            // fall through
+        case COBS_CH_LOG: {
+            if (ch == COBS_CH_LOG) m_cobs_log++;
+            // Convert to null-terminated string and enqueue for main thread
+            char str[512];
+            int slen = plen < (int)sizeof(str) - 1 ? plen : (int)sizeof(str) - 1;
+            memcpy(str, payload, slen);
+            str[slen] = '\0';
+            std::lock_guard<std::mutex> lock(m_line_queue_mutex);
+            m_line_queue.emplace_back(str);
+            break;
+        }
+        default:
+            break;  // unknown channel — ignore
+    }
+}
+
+void SerialPort::parseBinaryTelemetry(const uint8_t *payload, int len) {
+    // Binary telemetry: 12 x float32 LE = 48 bytes (angles[6] + positions[6])
+    if (len < 24) return;  // minimum: 6 angles
+
+    float vals[12] = {};
+    memcpy(vals, payload, len < 48 ? len : 48);
+
+    // Validate angles
+    bool valid = true;
+    for (int i = 0; i < 6; i++) {
+        if (vals[i] != vals[i] || fabsf(vals[i]) > 1.571f) {
+            valid = false;
+            m_tel_rejected++;
+            break;
+        }
+    }
+    if (!valid) return;
+
+    double t = now_seconds();
+    std::lock_guard<std::mutex> lock(m_tel_mutex);
+    memcpy(m_telemetry.angles, vals, 6 * sizeof(float));
+    if (len >= 48) memcpy(m_telemetry.positions, vals + 6, 6 * sizeof(float));
+    m_telemetry.timestamp = t;
+    m_telemetry.seq++;
+
+    // Update telemetry rate
+    m_tel_times[m_tel_time_idx % 16] = t;
+    m_tel_time_idx++;
+    if (m_tel_time_idx >= 2) {
+        int oldest = (m_tel_time_idx >= 16) ? m_tel_time_idx - 16 : 0;
+        double dt = t - m_tel_times[oldest % 16];
+        int count = m_tel_time_idx - oldest;
+        if (dt > 0.001 && count > 1)
+            m_tel_rate.store((float)((count - 1) / dt));
     }
 }

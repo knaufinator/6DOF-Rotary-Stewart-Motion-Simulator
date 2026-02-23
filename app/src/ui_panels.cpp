@@ -1,6 +1,7 @@
 #include "ui_panels.h"
 #include "serial_port.h"
 #include "platform_viz.h"
+#include "test_harness_panel.h"
 #include "cJSON.h"
 #include "imgui.h"
 #include "imgui_internal.h"
@@ -112,7 +113,8 @@ static int   s_input_strip_last_plugin = -1; // track plugin changes for auto-fi
 static bool s_show_console     = true;
 static bool s_show_data_streams = true;
 static bool s_show_dynamics    = true;
-static int  s_selected_dynamics_id = -1;  // entity ID for global Dynamics panel (-1 = auto-select first)
+// s_selected_dynamics_id is stored in g_app.selected_dynamics_id (persisted across restarts)
+#define s_selected_dynamics_id g_app.selected_dynamics_id
 static int  s_dyn_preset_idx = -1;       // currently selected dynamics preset index
 
 // Dynamics staging buffer (file-scope so Copy/Paste can access it)
@@ -189,6 +191,7 @@ static void DrawMainMenuBar() {
             ImGui::MenuItem("Console",      nullptr, &s_show_console);
             ImGui::MenuItem("Data Streams", nullptr, &s_show_data_streams);
             ImGui::MenuItem("Dynamics",     nullptr, &s_show_dynamics);
+            ImGui::MenuItem("Test Harness", nullptr, &GetTestHarnessState().show_panel);
             ImGui::Separator();
             // Per-entity windows
             for (auto& e : g_app.entities) {
@@ -209,6 +212,7 @@ static void DrawMainMenuBar() {
             ImGui::Separator();
             if (ImGui::MenuItem("Show All Panels")) {
                 s_show_input = s_show_console = s_show_data_streams = s_show_dynamics = true;
+                GetTestHarnessState().show_panel = true;
                 for (auto& e : g_app.entities) {
                     e.show_card = true;
                 }
@@ -334,6 +338,23 @@ static void DrawToolbar() {
             ImGui::PushItemWidth(220);
             if (ImGui::BeginCombo("##tb_source", preview, ImGuiComboFlags_HeightLarge)) {
 
+                // Helper: force-stop motion and deactivate current source.
+                // Switching input always requires an explicit START.
+                auto forceStopAndSwitch = [&]() {
+                    g_app.motion_started = false;
+                    g_app.source_switch_active = false;
+                    g_app.start_ramp_active = false;
+                    if (g_app.capture_playing) g_app.stopCapturePlayback();
+                    if (g_app.plugin_mgr.activeIndex() >= 0)
+                        g_app.plugin_mgr.deactivateActive();
+                    for (auto& ent : g_app.entities)
+                        memset(ent.state.input_pct, 0, sizeof(ent.state.input_pct));
+                    {
+                        std::lock_guard<std::mutex> lock(g_app.input_mutex);
+                        memset(g_app.shared_input, 0, sizeof(g_app.shared_input));
+                    }
+                };
+
                 // ── All plugins ──
                 for (int pi = 0; pi < g_app.plugin_mgr.pluginCount(); pi++) {
                     auto& plug = g_app.plugin_mgr.plugins()[pi];
@@ -346,8 +367,10 @@ static void DrawToolbar() {
                     ImGui::PushID(pi);
                     if (ImGui::Selectable(pname, is_active)) {
                         if (!is_active) {
+                            forceStopAndSwitch();
+                            g_app.input_source = InputSource::Plugin;
                             g_app.active_plugin_idx = pi;
-                            g_app.requestSourceSwitch(InputSource::Plugin);
+                            g_app.log(-1, "input", "Source changed to '%s' — press START to begin", pname);
                         }
                     }
                     ImGui::PopID();
@@ -359,7 +382,9 @@ static void DrawToolbar() {
                     bool is_cap = (g_app.input_source == InputSource::CapturePlayback);
                     if (ImGui::Selectable("Capture Playback", is_cap)) {
                         if (!is_cap) {
-                            g_app.requestSourceSwitch(InputSource::CapturePlayback);
+                            forceStopAndSwitch();
+                            g_app.input_source = InputSource::CapturePlayback;
+                            g_app.log(-1, "input", "Source changed to Capture Playback — press START to begin");
                         }
                     }
                 }
@@ -371,15 +396,21 @@ static void DrawToolbar() {
             ImGui::PopStyleVar(3);
             ImGui::PopStyleColor(3);
 
-            // Status dot
+            // Status indicator: STOPPED / LIVE / IDLE
             ImGui::SameLine();
-            bool connected = false;
-            if (g_app.input_source == InputSource::Plugin)
-                connected = g_app.active_plugin_idx >= 0 && g_app.plugin_mgr.activeIndex() >= 0;
-            else if (g_app.input_source == InputSource::CapturePlayback)
-                connected = g_app.capture_playing;
-            ImVec4 dot_col = connected ? ImVec4(0.2f, 0.9f, 0.3f, 1.0f) : ImVec4(0.5f, 0.5f, 0.5f, 0.5f);
-            ImGui::TextColored(dot_col, connected ? "LIVE" : "IDLE");
+            if (!g_app.motion_started) {
+                ImGui::TextColored(ImVec4(0.7f, 0.35f, 0.2f, 1.0f), "STOPPED");
+            } else {
+                bool source_active = false;
+                if (g_app.input_source == InputSource::Plugin)
+                    source_active = g_app.plugin_mgr.activeIndex() >= 0;
+                else if (g_app.input_source == InputSource::CapturePlayback)
+                    source_active = g_app.capture_playing;
+                if (source_active)
+                    ImGui::TextColored(ImVec4(0.2f, 0.9f, 0.3f, 1.0f), "LIVE");
+                else
+                    ImGui::TextColored(ImVec4(0.6f, 0.6f, 0.3f, 1.0f), "READY");
+            }
 
             // Collapse/expand toggle for input strip
             ImGui::SameLine(0, 6);
@@ -909,7 +940,7 @@ static void DrawInputStrip() {
         ImGui::BeginChild("##strip_content", ImVec2(-1, content_h), ImGuiChildFlags_None,
                           ImGuiWindowFlags_None);
         {
-            if (g_app.source_switch_active) ImGui::BeginDisabled();
+            if (g_app.source_switch_active || !g_app.motion_started) ImGui::BeginDisabled();
 
             // ── Plugin source ──
             if (g_app.input_source == InputSource::Plugin) {
@@ -1229,7 +1260,7 @@ static void DrawInputStrip() {
                 }
             }
 
-            if (g_app.source_switch_active) ImGui::EndDisabled();
+            if (g_app.source_switch_active || !g_app.motion_started) ImGui::EndDisabled();
 
             // Measure actual content height for auto-fit
             s_input_strip_content_h = ImGui::GetCursorPosY();
@@ -1437,9 +1468,12 @@ static void DrawEntityCard(Entity& e) {
                     }
                 }
 
+                // HIL: don't show telemetry-derived workspace until handshake confirmed
+                bool hil_no_tel = (e.type == EntityType::HIL && !e.hil_handshake_ok);
+
                 // ── Workspace Utilization ──
                 {
-                    float mu = e.state.max_util;
+                    float mu = hil_no_tel ? 0.0f : e.state.max_util;
                     ImVec4 mu_col = mu < 70.0f ? ImVec4(0.2f, 0.83f, 0.6f, 1.0f) :
                                     mu < 90.0f ? ImVec4(0.98f, 0.75f, 0.15f, 1.0f) :
                                                  ImVec4(0.98f, 0.44f, 0.44f, 1.0f);
@@ -1465,13 +1499,14 @@ static void DrawEntityCard(Entity& e) {
 
                 // Per-servo headroom bars
                 for (int i = 0; i < 6; i++) {
-                    float util = e.state.servo_util[i];
+                    float util = hil_no_tel ? 0.0f : e.state.servo_util[i];
+                    float deg  = hil_no_tel ? 0.0f : e.state.output_angles_deg[i];
                     ImVec4 bar_col = util < 70.0f ? ImVec4(0.2f, 0.83f, 0.6f, 1.0f) :
                                      util < 90.0f ? ImVec4(0.98f, 0.75f, 0.15f, 1.0f) :
                                                     ImVec4(0.98f, 0.44f, 0.44f, 1.0f);
                     ImGui::PushStyleColor(ImGuiCol_PlotHistogram, bar_col);
                     char overlay[48];
-                    snprintf(overlay, sizeof(overlay), "S%d  %.1f\xc2\xb0  %.0f%%", i, e.state.output_angles_deg[i], util);
+                    snprintf(overlay, sizeof(overlay), "S%d  %.1f\xc2\xb0  %.0f%%", i, deg, util);
                     ImGui::ProgressBar(util / 100.0f, ImVec2(-1, 0), overlay);
                     ImGui::PopStyleColor();
                 }
@@ -1529,6 +1564,16 @@ static void DrawEntityCard(Entity& e) {
             if (ImGui::BeginTabItem("Platform")) {
                 DrawPlatformSetupContent(e);
                 ImGui::EndTabItem();
+            }
+
+            // ════════════════════════════════════════════════════════════
+            //  Test Harness tab (HIL only)
+            // ════════════════════════════════════════════════════════════
+            if (e.type == EntityType::HIL) {
+                if (ImGui::BeginTabItem("Test Harness")) {
+                    DrawTestHarnessTabContent(e);
+                    ImGui::EndTabItem();
+                }
             }
 
             // ════════════════════════════════════════════════════════════
@@ -2349,7 +2394,21 @@ static void DrawEntitySettingsContent(Entity& e) {
                 // ── Connected state ──
                 ImGui::TextColored(ImVec4(0.2f, 0.83f, 0.6f, 1.0f), "Connected: %s", e.serial->portName());
                 ImGui::Text("RX: %d bytes  TX: %d bytes", e.serial->rxBytes(), e.serial->txBytes());
+                int rej = e.serial ? e.serial->telemetryRejected() : 0;
                 ImGui::Text("Telemetry: %.0f Hz (seq %d)", e.rate_tel_hz, e.hil_tel_seq);
+                if (e.serial) {
+                    ImGui::Text("COBS: delim=%d ok=%d fail=%d tel=%d resp=%d log=%d",
+                        e.serial->m_cobs_delimiters.load(),
+                        e.serial->m_cobs_decode_ok.load(),
+                        e.serial->m_cobs_decode_fail.load(),
+                        e.serial->m_cobs_tel.load(),
+                        e.serial->m_cobs_resp.load(),
+                        e.serial->m_cobs_log.load());
+                }
+                if (rej > 0) {
+                    ImGui::SameLine();
+                    ImGui::TextColored(ImVec4(0.98f, 0.44f, 0.44f, 1.0f), "(%d rejected)", rej);
+                }
 
                 // Read-only transport settings (locked while connected)
                 ImGui::Spacing();
@@ -2437,6 +2496,23 @@ static void DrawEntitySettingsContent(Entity& e) {
                     ImGui::Spacing();
                     ImGui::Text("Transport Settings");
 
+                    // Baud rate selector
+                    {
+                        static const int baud_options[] = { 115200, 230400, 460800, 921600 };
+                        static const char* baud_labels[] = { "115200", "230400", "460800", "921600" };
+                        int baud_idx = 3; // default 921600
+                        for (int i = 0; i < 4; i++) {
+                            if (e.hil_baud == baud_options[i]) { baud_idx = i; break; }
+                        }
+                        if (ImGui::Combo("Baud Rate##dc", &baud_idx, baud_labels, 4)) {
+                            e.hil_baud = baud_options[baud_idx];
+                        }
+                        if (ImGui::IsItemHovered()) {
+                            ImGui::SetTooltip("Serial baud rate. Must match the ESP32 firmware.\n"
+                                "921600 is the default for the Controller firmware.");
+                        }
+                    }
+
                     const char* proto_labels[] = { "Binary", "CSV (legacy)" };
                     int proto_idx = (int)e.hil_protocol;
                     if (ImGui::Combo("Protocol##dc", &proto_idx, proto_labels, 2)) {
@@ -2470,11 +2546,9 @@ static void DrawEntitySettingsContent(Entity& e) {
                     ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.2f, 0.7f, 0.45f, 1.0f));
                     if (ImGui::Button("Connect", ImVec2(-1, 28))) {
                         auto sp = std::make_shared<SerialPort>();
-                        int eid = e.id;
-                        sp->setLineCallback([eid](const char* line) {
-                            g_app.handleHilLine(eid, line);
-                        });
-                        if (sp->open(e.hil_port, 115200)) {
+                        if (sp->open(e.hil_port, e.hil_baud)) {
+                            if (e.hil_protocol == HilProtocol::Binary)
+                                sp->setCobsMode(true);
                             e.serial = sp;
                             e.transport.usb_connected = true;
                             snprintf(e.transport.usb_port, sizeof(e.transport.usb_port), "%s", e.hil_port);
@@ -2485,9 +2559,16 @@ static void DrawEntitySettingsContent(Entity& e) {
                             e.hil_handshake_phase = HandshakePhase::WaitFingerprint;
                             e.hil_device_params.clear();
                             e.hil_handshake_start = g_app.frame_time;
-                            snprintf(e.hil_handshake_msg, sizeof(e.hil_handshake_msg), "Requesting fingerprint...");
-                            g_app.log(e.id, "hil", "Connected to %s — starting handshake...", e.hil_port);
-                            sp->write((const uint8_t*)"X", 1); // flush residual ASCII buffer garbage
+                            e.hil_hs_attempts = 1;
+                            e.hil_hs_last_send = g_app.frame_time;
+                            snprintf(e.hil_handshake_msg, sizeof(e.hil_handshake_msg),
+                                     "Requesting fingerprint...");
+                            g_app.log(e.id, "hil", "Connected to %s — handshaking...", e.hil_port);
+                            // Flush residual state then send FINGERPRINT? immediately
+                            if (e.hil_protocol == HilProtocol::Binary)
+                                sp->write((const uint8_t*)"\0\0\0\0", 4);
+                            else
+                                sp->write((const uint8_t*)"X", 1);
                             sp->sendCommand("FINGERPRINT?");
                         } else {
                             g_app.log(e.id, "hil", "Failed to open %s", e.hil_port);
@@ -2538,10 +2619,20 @@ static void DrawEntitySettingsContent(Entity& e) {
                     ImGui::ProgressBar(progress, ImVec2(-1, 14), e.hil_handshake_msg);
                     ImGui::PopStyleColor();
 
-                    // Timeout check (5s)
-                    if (g_app.frame_time - e.hil_handshake_start > 5.0) {
-                        ImGui::TextColored(ImVec4(0.95f, 0.4f, 0.3f, 1.0f),
-                            "Timeout — device not responding. Check firmware.");
+                    // Status details for waiting phases
+                    if (phase == HandshakePhase::WaitFingerprint) {
+                        bool got_tel = e.serial && e.serial->telemetrySeq() > 0;
+                        if (!got_tel && e.hil_hs_attempts == 0) {
+                            ImGui::TextColored(ImVec4(0.6f, 0.6f, 0.6f, 1.0f),
+                                "Waiting for ESP32 telemetry (proof-of-life)...");
+                        } else if (e.hil_hs_attempts > 1) {
+                            ImGui::TextColored(ImVec4(0.95f, 0.75f, 0.2f, 1.0f),
+                                "Attempt %d/10 — waiting for FINGERPRINT response...",
+                                e.hil_hs_attempts);
+                        }
+                    } else if (phase == HandshakePhase::WaitConfig || phase == HandshakePhase::WaitBits) {
+                        ImGui::TextColored(ImVec4(0.6f, 0.6f, 0.6f, 1.0f),
+                            "Querying device parameters...");
                     }
                 } else {
                     ImGui::TextDisabled("Handshake: idle (not connected)");
@@ -2740,31 +2831,120 @@ static void DrawDynamicsPanel() {
     ImGui::SetNextWindowSize(ImVec2(780, 860), ImGuiCond_FirstUseEver);
     if (ImGui::Begin("Dynamics###dynamics_global", &s_show_dynamics)) {
 
-        // ── Device selector ──
+        // ── Entity Selector Cards ──
+        // Fixed-width cards in a horizontal scrollable strip.
+        // Cards are a nominal size, not stretched to fill the row.
         {
-            ImGui::TextColored(ImVec4(0.7f, 0.85f, 1.0f, 1.0f), "Device:");
-            ImGui::SameLine();
-            ImGui::PushItemWidth(200);
-            const char* type_str = (e.type == EntityType::SIL) ? "SIL" : "HIL";
-            char combo_preview[96];
-            snprintf(combo_preview, sizeof(combo_preview), "%s [%s]", e.name, type_str);
-            if (ImGui::BeginCombo("##dyn_device", combo_preview)) {
-                for (auto& ent : g_app.entities) {
-                    const char* ts = (ent.type == EntityType::SIL) ? "SIL" : "HIL";
-                    char label[96];
-                    snprintf(label, sizeof(label), "%s [%s]###ddev_%d", ent.name, ts, ent.id);
-                    bool selected = (ent.id == s_selected_dynamics_id);
-                    if (ImGui::Selectable(label, selected)) {
-                        s_selected_dynamics_id = ent.id;
-                    }
-                    if (selected) ImGui::SetItemDefaultFocus();
+            const float card_w = 180.0f;
+            const float card_h = 56.0f;
+            const float card_gap = 8.0f;
+            const float accent_w = 5.0f;
+            const float card_pad = 8.0f;   // internal padding
+            int n_ents = (int)g_app.entities.size();
+
+            // Horizontal scrollable child region (shows scrollbar if cards exceed width)
+            float strip_h = card_h + 16.0f; // card + top/bottom padding + triangle
+            ImGui::BeginChild("##dyn_cards_strip", ImVec2(-1, strip_h), false,
+                ImGuiWindowFlags_HorizontalScrollbar | ImGuiWindowFlags_NoBackground);
+            ImDrawList* dl = ImGui::GetWindowDrawList();
+            ImVec2 origin = ImGui::GetCursorScreenPos();
+            origin.y += 2.0f; // small top margin
+
+            for (int i = 0; i < n_ents; i++) {
+                auto& ent = g_app.entities[i];
+                bool is_sel = (ent.id == s_selected_dynamics_id);
+                bool is_hil = (ent.type == EntityType::HIL);
+                ImVec4 ecol = ColorFromFloat4(ent.color);
+
+                float cx = origin.x + (float)i * (card_w + card_gap);
+                float cy = origin.y;
+                ImVec2 p0(cx, cy);
+                ImVec2 p1(cx + card_w, cy + card_h);
+
+                // Theme colors: SIL = blue tones, HIL = green tones
+                ImU32 bg_sel   = is_hil ? IM_COL32(30, 55, 40, 240) : IM_COL32(25, 35, 55, 240);
+                ImU32 bg_idle  = IM_COL32(30, 30, 35, 200);
+                ImU32 bdr_sel  = is_hil ? IM_COL32(100, 200, 120, 255) : IM_COL32(90, 150, 230, 255);
+                ImU32 bdr_idle = IM_COL32(60, 60, 65, 180);
+
+                // Card background
+                dl->AddRectFilled(p0, p1, is_sel ? bg_sel : bg_idle, 6.0f);
+                dl->AddRect(p0, p1, is_sel ? bdr_sel : bdr_idle, 6.0f, 0, is_sel ? 2.0f : 1.0f);
+
+                // Entity color accent bar (left edge)
+                ImU32 accent_col = ImGui::ColorConvertFloat4ToU32(ecol);
+                dl->AddRectFilled(ImVec2(cx + 2, cy + 5), ImVec2(cx + accent_w + 1, cy + card_h - 5),
+                    accent_col, 2.0f);
+
+                // Type badge (SIL / HIL)
+                float badge_x = cx + accent_w + card_pad;
+                float badge_y = cy + card_pad;
+                const char* type_str = is_hil ? "HIL" : "SIL";
+                ImVec2 badge_ts = ImGui::CalcTextSize(type_str);
+                float badge_w = badge_ts.x + 10.0f;
+                float badge_h = badge_ts.y + 4.0f;
+                ImU32 badge_bg = is_hil ? IM_COL32(50, 120, 70, 255) : IM_COL32(50, 80, 140, 255);
+                ImU32 badge_bg_dim = is_hil ? IM_COL32(35, 60, 40, 200) : IM_COL32(35, 50, 75, 200);
+                dl->AddRectFilled(ImVec2(badge_x, badge_y),
+                    ImVec2(badge_x + badge_w, badge_y + badge_h),
+                    is_sel ? badge_bg : badge_bg_dim, 3.0f);
+                dl->AddText(ImVec2(badge_x + 5.0f, badge_y + 2.0f),
+                    is_sel ? IM_COL32(255, 255, 255, 255) : IM_COL32(160, 160, 160, 200),
+                    type_str);
+
+                // Entity name (next to badge)
+                float name_x = badge_x + badge_w + 6.0f;
+                ImU32 name_col = is_sel ? IM_COL32(255, 255, 255, 255) : IM_COL32(140, 140, 140, 200);
+                dl->AddText(ImVec2(name_x, badge_y + 1.0f), name_col, ent.name);
+
+                // Status line (smaller, with breathing room below)
+                float status_y = badge_y + badge_h + 5.0f;
+                char status_buf[64] = "";
+                if (is_hil) {
+                    bool conn = ent.serial && ent.serial->isOpen();
+                    if (conn && ent.hil_handshake_ok)
+                        snprintf(status_buf, sizeof(status_buf), "%s (Ready)", ent.transport.usb_port);
+                    else if (conn)
+                        snprintf(status_buf, sizeof(status_buf), "%s ...", ent.transport.usb_port);
+                    else
+                        snprintf(status_buf, sizeof(status_buf), "Disconnected");
+                } else {
+                    snprintf(status_buf, sizeof(status_buf), "Local Engine");
                 }
-                ImGui::EndCombo();
+                ImU32 stat_col = is_sel ? IM_COL32(180, 180, 180, 200) : IM_COL32(100, 100, 100, 160);
+                ImGui::PushFont(nullptr);
+                dl->AddText(ImGui::GetFont(), ImGui::GetFontSize() * 0.85f,
+                    ImVec2(badge_x, status_y), stat_col, status_buf);
+                ImGui::PopFont();
+
+                // Selected indicator: small triangle at bottom center
+                if (is_sel) {
+                    float tri_cx = cx + card_w * 0.5f;
+                    float tri_y = cy + card_h;
+                    dl->AddTriangleFilled(
+                        ImVec2(tri_cx - 6, tri_y), ImVec2(tri_cx + 6, tri_y),
+                        ImVec2(tri_cx, tri_y + 5), bdr_sel);
+                }
+
+                // Invisible button for click detection
+                ImGui::SetCursorScreenPos(p0);
+                char btn_id[32];
+                snprintf(btn_id, sizeof(btn_id), "##dyn_card_%d", ent.id);
+                if (ImGui::InvisibleButton(btn_id, ImVec2(card_w, card_h))) {
+                    s_selected_dynamics_id = ent.id;
+                }
+                if (ImGui::IsItemHovered()) {
+                    dl->AddRect(p0, p1, IM_COL32(200, 200, 200, 100), 6.0f, 0, 1.5f);
+                    ImGui::SetTooltip("Select %s for dynamics editing", ent.name);
+                }
             }
-            ImGui::PopItemWidth();
-            ImGui::SameLine();
-            ImVec4 ecol = ColorFromFloat4(e.color);
-            ImGui::TextColored(ecol, "[%s #%d]", type_str, e.id);
+
+            // Set content width so horizontal scroll works
+            float total_w = (float)n_ents * (card_w + card_gap) - card_gap;
+            ImGui::SetCursorScreenPos(ImVec2(origin.x + total_w, origin.y));
+            ImGui::Dummy(ImVec2(0, card_h));
+
+            ImGui::EndChild();
         }
         ImGui::Separator();
 
@@ -4944,11 +5124,16 @@ static bool DrawPluginWidget(PluginInstance& plug, int pidx, bool compact) {
         case STEWART_PARAM_FLOAT: {
             float range = pd.max_val - pd.min_val;
             const char* fmt = range >= 100 ? "%.0f" : range >= 10 ? "%.1f" : "%.2f";
-            float step = range >= 100 ? 1.0f : range >= 10 ? 0.1f : 0.01f;
-            changed = ImGui::InputFloat(label, val, step, step * 10.0f, fmt);
-            if (changed) {
-                if (*val < pd.min_val) *val = pd.min_val;
-                if (*val > pd.max_val) *val = pd.max_val;
+            if (range > 0.0f && pd.min_val != pd.max_val) {
+                // Draggable slider for params with a known range
+                changed = ImGui::SliderFloat(label, val, pd.min_val, pd.max_val, fmt);
+            } else {
+                float step = range >= 100 ? 1.0f : range >= 10 ? 0.1f : 0.01f;
+                changed = ImGui::InputFloat(label, val, step, step * 10.0f, fmt);
+                if (changed) {
+                    if (*val < pd.min_val) *val = pd.min_val;
+                    if (*val > pd.max_val) *val = pd.max_val;
+                }
             }
             break;
         }
@@ -6348,6 +6533,7 @@ void DrawUI() {
     DrawConsolePanel();
     DrawDataStreamsPanel();
     DrawDynamicsPanel();
+    DrawTestHarnessPanel();
 
     // Per-entity panels — float as undocked windows
     // Copy IDs first since DrawEntityCard can remove entities

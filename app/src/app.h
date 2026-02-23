@@ -198,6 +198,7 @@ struct Entity {
     double          hil_tel_curr_time;   // timestamp of current telemetry
     int             hil_tel_target_hz;   // requested telemetry rate from ESP32
     char            hil_port[32];        // selected COM port name
+    int             hil_baud;            // serial baud rate (saved per-device)
     bool            hil_auto_connect;    // try to reconnect if disconnected
     double          hil_last_reconnect;  // last reconnect attempt time
     HilProtocol     hil_protocol;        // Binary (big platform) or CSV (Mini-6DOF)
@@ -215,6 +216,8 @@ struct Entity {
     DeviceParams    hil_device_params;   // parameters reported by device during handshake
     double          hil_handshake_start; // frame_time when handshake began (for timeout)
     char            hil_handshake_msg[128]; // status message for UI display
+    int             hil_hs_attempts;        // FINGERPRINT? send count (reset each connect)
+    double          hil_hs_last_send;       // time of last FINGERPRINT? send
     bool            hil_geo_synced;         // true if app geometry matches device after handshake
     std::vector<std::string> hil_cmd_queue; // queued serial commands (sent one per frame)
 
@@ -332,6 +335,9 @@ struct App {
     // Plugin system
     PluginManager         plugin_mgr;
     int                   active_plugin_idx;  // index into plugin_mgr.plugins(), -1 = none
+
+    // Dynamics panel — persisted entity selection
+    int                   selected_dynamics_id = -1;  // entity ID for Dynamics panel, -1 = auto
 
     // Console
     std::vector<LogEntry> console_log;

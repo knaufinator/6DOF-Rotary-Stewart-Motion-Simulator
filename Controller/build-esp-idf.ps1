@@ -5,12 +5,10 @@ Write-Host "Setting up ESP-IDF environment..." -ForegroundColor Cyan
 
 # Try to find ESP-IDF installation
 $possiblePaths = @(
+    "C:\users\Chris\esp\v5.5\esp-idf",
     "C:\users\Chris\esp\v5.2\esp-idf",
     "$env:USERPROFILE\.espressif\esp-idf",
-    "$env:USERPROFILE\.espressif\frameworks\esp-idf-v5.2",
-    "$env:USERPROFILE\.espressif\frameworks\esp-idf-v5.2.0",
-    "C:\esp\esp-idf",
-    "C:\Espressif\frameworks\esp-idf-v5.2"
+    "C:\esp\esp-idf"
 )
 
 $idfPath = $null

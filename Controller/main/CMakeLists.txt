@@ -13,6 +13,7 @@ set(COMMON_SRCS
     "MotionCueing.cpp"
     "WifiTransport.cpp"
     "BleTransport.cpp"
+    "CobsTransport.cpp"
 )
 
 # ── PCB-version-specific sources and dependencies ──
@@ -27,7 +28,7 @@ if(IDF_TARGET STREQUAL "esp32")
     set(PCB_VERSION 1)
 elseif(IDF_TARGET STREQUAL "esp32s3")
     # PCBv2: Direct GPIO MCPWM + W5500 SPI Ethernet
-    set(PCB_SRCS ${COMMON_SRCS} "EthernetTransport.cpp")
+    set(PCB_SRCS ${COMMON_SRCS} "EthernetTransport.cpp" "LedStatus.cpp")
     list(APPEND PRIV_REQS esp_eth)
     set(PCB_VERSION 2)
 else()

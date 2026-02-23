@@ -94,6 +94,7 @@ add_executable(stewart-platform WIN32
     src/platform_viz.cpp
     src/serial_port.cpp
     src/plugin_manager.cpp
+    src/test_harness_panel.cpp
 )
 target_include_directories(stewart-platform PRIVATE
     src

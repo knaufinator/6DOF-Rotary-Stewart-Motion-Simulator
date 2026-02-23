@@ -164,7 +164,7 @@ void App::hilTxLoop() {
                 if (e.hil_protocol == HilProtocol::CSV)
                     e.serial->sendMotionCSV(raw);
                 else
-                    e.serial->sendMotionPacket(raw);
+                    e.serial->sendCobsData(raw);
             }
             ei++;
         }
@@ -250,6 +250,7 @@ static void saveEntityToJSON(cJSON* ej, const Entity& e) {
     if (e.type == EntityType::HIL) {
         cJSON* hil = cJSON_AddObjectToObject(ej, "hil");
         cJSON_AddStringToObject(hil, "port", e.hil_port);
+        cJSON_AddNumberToObject(hil, "baud", e.hil_baud);
         cJSON_AddNumberToObject(hil, "tx_hz", e.hil_tx_hz);
         cJSON_AddBoolToObject(hil, "auto_connect", e.hil_auto_connect);
         cJSON_AddNumberToObject(hil, "protocol", (int)e.hil_protocol);
@@ -391,6 +392,7 @@ static void loadEntityFromJSON(Entity& e, cJSON* ej) {
     cJSON* hil = cJSON_GetObjectItem(ej, "hil");
     if (hil) {
         if ((val = cJSON_GetObjectItem(hil, "port")))  snprintf(e.hil_port, sizeof(e.hil_port), "%s", val->valuestring);
+        if ((val = cJSON_GetObjectItem(hil, "baud"))) e.hil_baud = val->valueint;
         if ((val = cJSON_GetObjectItem(hil, "tx_hz"))) e.hil_tx_hz = val->valueint;
         if ((val = cJSON_GetObjectItem(hil, "auto_connect"))) e.hil_auto_connect = cJSON_IsTrue(val);
         if ((val = cJSON_GetObjectItem(hil, "protocol"))) e.hil_protocol = (HilProtocol)val->valueint;
@@ -417,6 +419,9 @@ void App::saveSettings() {
         const char* pname = plugin_mgr.pluginName(active_plugin_idx);
         if (pname) cJSON_AddStringToObject(root, "active_plugin_name", pname);
     }
+
+    // Dynamics panel selection
+    cJSON_AddNumberToObject(root, "selected_dynamics_id", selected_dynamics_id);
 
     // Entities — full serialization
     cJSON* ents = cJSON_AddArrayToObject(root, "entities");
@@ -496,6 +501,10 @@ void App::loadSettings() {
             active_plugin_idx = 0;
     }
 
+    // Dynamics panel selection
+    if ((val = cJSON_GetObjectItem(root, "selected_dynamics_id")))
+        selected_dynamics_id = val->valueint;
+
     // Entities — clear and recreate from saved data
     cJSON* ents = cJSON_GetObjectItem(root, "entities");
     if (ents && cJSON_IsArray(ents) && cJSON_GetArraySize(ents) > 0) {
@@ -558,6 +567,7 @@ Entity& App::addEntity(const char* name, EntityType type) {
     e.hil_tel_curr_time = 0.0;
     e.hil_tel_target_hz = 30;
     memset(e.hil_port, 0, sizeof(e.hil_port));
+    e.hil_baud = 921600;
     e.hil_auto_connect = true;
     e.hil_last_reconnect = 0.0;
     e.hil_protocol = HilProtocol::Binary;
@@ -570,6 +580,8 @@ Entity& App::addEntity(const char* name, EntityType type) {
     e.hil_device_params.clear();
     e.hil_handshake_start = 0.0;
     memset(e.hil_handshake_msg, 0, sizeof(e.hil_handshake_msg));
+    e.hil_hs_attempts = 0;
+    e.hil_hs_last_send = 0.0;
     // Init TX raw to center (home) so platform doesn't jerk on connect
     for (int i = 0; i < 6; i++) e.hil_tx_raw[i] = (uint16_t)(((1 << e.config.bit_depth) - 2) / 2);
     // Init history ring buffers
@@ -646,14 +658,26 @@ static void advanceHandshake(App& app, Entity& e) {
         case HandshakePhase::WaitFingerprint:
             // Fingerprint received — query geometry next
             e.hil_handshake_phase = HandshakePhase::WaitConfig;
+            e.hil_hs_last_send = app.frame_time;
+            e.hil_hs_attempts = 0;
             snprintf(e.hil_handshake_msg, sizeof(e.hil_handshake_msg), "Querying geometry...");
+            if (e.hil_protocol == HilProtocol::Binary)
+                e.serial->write((const uint8_t*)"\0\0\0\0", 4);
+            else
+                e.serial->write((const uint8_t*)"XXXXXXXXXXXXXXXX", 16);
             e.serial->sendCommand("CONFIG?");
             break;
 
         case HandshakePhase::WaitConfig:
             // Geometry received — query bit depth next
             e.hil_handshake_phase = HandshakePhase::WaitBits;
+            e.hil_hs_last_send = app.frame_time;
+            e.hil_hs_attempts = 0;
             snprintf(e.hil_handshake_msg, sizeof(e.hil_handshake_msg), "Querying bit depth...");
+            if (e.hil_protocol == HilProtocol::Binary)
+                e.serial->write((const uint8_t*)"\0\0\0\0", 4);
+            else
+                e.serial->write((const uint8_t*)"XXXXXXXXXXXXXXXX", 16);
             e.serial->sendCommand("BITS?");
             break;
 
@@ -739,7 +763,19 @@ static void advanceHandshake(App& app, Entity& e) {
                     app.log(e.id, "hil", "Platform type: Stepper");
                 }
 
-                // Set telemetry rate on ESP32
+                // Send entity color to RGB LED on controller
+                {
+                    int r = (int)(e.color[0] * 255.0f);
+                    int g = (int)(e.color[1] * 255.0f);
+                    int b = (int)(e.color[2] * 255.0f);
+                    char ledcmd[32];
+                    snprintf(ledcmd, sizeof(ledcmd), "LED:%d,%d,%d", r, g, b);
+                    e.hil_cmd_queue.push_back(ledcmd);
+                }
+
+                // Lock input source to serial, query stats, set telemetry rate
+                e.hil_cmd_queue.push_back("INPUT:SERIAL");
+                e.hil_cmd_queue.push_back("INPUT_STAT");
                 {
                     char telcmd[32];
                     snprintf(telcmd, sizeof(telcmd), "TELRATE:%d", e.hil_tel_target_hz);
@@ -829,18 +865,24 @@ void App::handleHilLine(int entity_id, const char* line) {
         snprintf(e->hil_fw_version, sizeof(e->hil_fw_version), "%s", fw);
         e->hil_proto_ver = proto;
 
-        // Fingerprint verification
+        // Fingerprint verification — ONLY advance handshake during WaitFingerprint.
+        // Stale FINGERPRINT responses (from manual button clicks or previous sessions)
+        // must not corrupt the state machine when we're at a different phase.
+        bool during_fp_phase = (e->hil_handshake_phase == HandshakePhase::WaitFingerprint);
+
         if (e->hil_fingerprint[0] == '\0') {
             // First connect — store fingerprint
             snprintf(e->hil_fingerprint, sizeof(e->hil_fingerprint), "%s", mac);
             log(e->id, "hil", "Device paired: %s (fw %s, proto %d, platform %s)", mac, fw, proto, plat);
             settings_dirty = true;
-            // Advance to next handshake phase
-            advanceHandshake(*this, *e);
+            if (during_fp_phase) advanceHandshake(*this, *e);
         } else if (strcmp(e->hil_fingerprint, mac) == 0) {
-            // Same device — continue handshake
-            log(e->id, "hil", "Device verified: %s (fw %s, proto %d, platform %s)", mac, fw, proto, plat);
-            advanceHandshake(*this, *e);
+            // Same device
+            if (during_fp_phase) {
+                log(e->id, "hil", "Device verified: %s (fw %s, proto %d, platform %s)", mac, fw, proto, plat);
+                advanceHandshake(*this, *e);
+            }
+            // else: stale duplicate — ignore silently
         } else {
             // DIFFERENT device — reject!
             e->hil_handshake_ok = false;
@@ -1956,49 +1998,65 @@ skip_input_processing:
     for (auto& e : entities) {
         if (!e.enabled) continue;
 
-        // Common: read input, apply input filter, MCA dynamics, then intensity/gain
-        float pct[6];
-        memcpy(pct, e.state.input_pct, sizeof(pct));
+        // HIL entities: block the entire pipeline until handshake completes.
+        // Before Ready, we don't know geometry/bit-depth/scales — all output
+        // would be garbage. Zero everything so the UI shows idle/home state.
+        bool hil_blocked = (e.type == EntityType::HIL && !e.hil_handshake_ok);
 
-        // Pre-MCA input filtering (signal conditioning)
-        if (e.config.input_filter.enabled) {
-            float sr = (fps > 1.0) ? (float)fps : 60.0f;
-            if (fabsf(e.config.input_filter.sample_rate - sr) > 5.0f)
-                inputFilterUpdateSampleRate(&e.config.input_filter, sr);
-            float filt_out[6];
-            processInputFilter(&e.config.input_filter, pct, filt_out);
-            memcpy(pct, filt_out, sizeof(pct));
-        }
+        float scaled_pct[6] = {};
 
-        // MCA: HP washout + LP smoothing (if enabled via Dynamics panel)
-        if (e.config.mca.enabled) {
-            // Keep MCA sample rate in sync with actual frame rate
-            float sr = (fps > 1.0) ? (float)fps : 60.0f;
-            if (fabsf(e.config.mca.sample_rate - sr) > 5.0f)
-                mcaUpdateSampleRate(&e.config.mca, sr);
-            float mca_out[6];
-            processMotionCueing(&e.config.mca, pct, mca_out);
-            memcpy(pct, mca_out, sizeof(pct));
-        }
+        if (!hil_blocked) {
+            // Common: read input, apply input filter, MCA dynamics, then intensity/gain
+            float pct[6];
+            memcpy(pct, e.state.input_pct, sizeof(pct));
 
-        float scaled_pct[6];
-        for (int i = 0; i < 6; i++) {
-            float inv = e.config.axis_invert[i] ? -1.0f : 1.0f;
-            scaled_pct[i] = pct[i] * (e.config.intensity / 100.0f) * (e.config.axis_gain[i] / 100.0f) * inv;
-        }
-
-        // Dynamics apply S-curve transition: blend from old output to new
-        if (e.dyn_transition_active) {
-            float elapsed = (float)(frame_time - e.dyn_transition_start);
-            float dur = e.dyn_transition_duration;
-            if (elapsed >= dur) {
-                e.dyn_transition_active = false;
-            } else {
-                float t = elapsed / dur;
-                t = t * t * (3.0f - 2.0f * t); // smoothstep
-                for (int i = 0; i < 6; i++)
-                    scaled_pct[i] = e.dyn_transition_from[i] + (scaled_pct[i] - e.dyn_transition_from[i]) * t;
+            // Pre-MCA input filtering (signal conditioning)
+            if (e.config.input_filter.enabled) {
+                float sr = (fps > 1.0) ? (float)fps : 60.0f;
+                if (fabsf(e.config.input_filter.sample_rate - sr) > 5.0f)
+                    inputFilterUpdateSampleRate(&e.config.input_filter, sr);
+                float filt_out[6];
+                processInputFilter(&e.config.input_filter, pct, filt_out);
+                memcpy(pct, filt_out, sizeof(pct));
             }
+
+            // MCA: HP washout + LP smoothing (if enabled via Dynamics panel)
+            if (e.config.mca.enabled) {
+                // Keep MCA sample rate in sync with actual frame rate
+                float sr = (fps > 1.0) ? (float)fps : 60.0f;
+                if (fabsf(e.config.mca.sample_rate - sr) > 5.0f)
+                    mcaUpdateSampleRate(&e.config.mca, sr);
+                float mca_out[6];
+                processMotionCueing(&e.config.mca, pct, mca_out);
+                memcpy(pct, mca_out, sizeof(pct));
+            }
+
+            for (int i = 0; i < 6; i++) {
+                float inv = e.config.axis_invert[i] ? -1.0f : 1.0f;
+                scaled_pct[i] = pct[i] * (e.config.intensity / 100.0f) * (e.config.axis_gain[i] / 100.0f) * inv;
+            }
+
+            // Dynamics apply S-curve transition: blend from old output to new
+            if (e.dyn_transition_active) {
+                float elapsed = (float)(frame_time - e.dyn_transition_start);
+                float dur = e.dyn_transition_duration;
+                if (elapsed >= dur) {
+                    e.dyn_transition_active = false;
+                } else {
+                    float t = elapsed / dur;
+                    t = t * t * (3.0f - 2.0f * t); // smoothstep
+                    for (int i = 0; i < 6; i++)
+                        scaled_pct[i] = e.dyn_transition_from[i] + (scaled_pct[i] - e.dyn_transition_from[i]) * t;
+                }
+            }
+        } else {
+            // HIL blocked: zero pipeline INPUT state only.
+            // Do NOT zero output_angles / servo_util / max_util here —
+            // those are owned by the telemetry update section and only
+            // change when a new TEL line arrives.  Zeroing them every
+            // frame causes flicker (zeroed on non-TEL frames, restored
+            // on TEL frames → constant oscillation).
+            memset(e.state.input_physical, 0, sizeof(e.state.input_physical));
         }
         memcpy(e.last_scaled_pct, scaled_pct, sizeof(scaled_pct));
 
@@ -2061,8 +2119,10 @@ skip_input_processing:
 
                 if (e.hil_port[0] != '\0') {
                     auto sp = std::make_shared<SerialPort>();
-                    DEV_LOG("hil", "Opening serial port %s at 115200 baud", e.hil_port);
-                    if (sp->open(e.hil_port, 115200)) {
+                    DEV_LOG("hil", "Opening serial port %s at %d baud", e.hil_port, e.hil_baud);
+                    if (sp->open(e.hil_port, e.hil_baud)) {
+                        if (e.hil_protocol == HilProtocol::Binary)
+                            sp->setCobsMode(true);
                         e.serial = sp;
                         e.transport.usb_connected = true;
                         snprintf(e.transport.usb_port, sizeof(e.transport.usb_port), "%s", e.hil_port);
@@ -2072,12 +2132,21 @@ skip_input_processing:
                         e.hil_handshake_phase = HandshakePhase::WaitFingerprint;
                         e.hil_device_params.clear();
                         e.hil_handshake_start = frame_time;
-                        snprintf(e.hil_handshake_msg, sizeof(e.hil_handshake_msg), "Requesting fingerprint...");
-                        log(e.id, "hil", "Connected to %s - starting handshake...", e.hil_port);
-                        DEV_LOG("hil", "Connected to %s, sending FINGERPRINT?", e.hil_port);
-                        // Flush any residual garbage in ESP32 ASCII buffer (e.g. leaked
-                        // binary header bytes from a previous session) before handshake.
-                        sp->write((const uint8_t*)"X", 1);
+                        e.hil_hs_attempts = 1;
+                        e.hil_hs_last_send = frame_time;
+                        snprintf(e.hil_handshake_msg, sizeof(e.hil_handshake_msg),
+                                 "Requesting fingerprint...");
+                        log(e.id, "hil", "Connected to %s — handshaking...", e.hil_port);
+                        DEV_LOG("hil", "Connected to %s, sending FINGERPRINT? immediately", e.hil_port);
+                        // Flush any partial binary packet state on ESP32.
+                        // processIncomingByte can be stuck in state 2 (collecting
+                        // payload) from a previous session.  Need up to 13 bytes
+                        // (12 payload + 1 checksum) to drain.  16 X's guarantees
+                        // a clean reset to state 0 before FINGERPRINT? arrives.
+                        if (e.hil_protocol == HilProtocol::Binary)
+                            sp->write((const uint8_t*)"\0\0\0\0", 4);
+                        else
+                            sp->write((const uint8_t*)"XXXXXXXXXXXXXXXX", 16);
                         sp->sendCommand("FINGERPRINT?");
                     } else {
                         DEV_WARN("hil", "Failed to open %s", e.hil_port);
@@ -2092,6 +2161,85 @@ skip_input_processing:
                 for (const auto& line : lines) {
                     DEV_LOG("serial", "[E%d] RX: %s", e.id, line.c_str());
                     handleHilLine(e.id, line.c_str());
+                }
+            }
+
+            // ── Proof-of-life handshake ──────────────────────────────────
+            // Instead of blindly sending FINGERPRINT? on connect, we wait
+            // for the first TEL line (proof the ESP32 is alive and its
+            // serial task is running). Then we send FINGERPRINT? and retry
+            // every 1s until we get a response. This is robust against:
+            //   - ESP32 boot delay (DTR/RTS reset or power cycle)
+            //   - Stale ASCII buffer on ESP32 (binary packet residue)
+            //   - OS serial buffer latency
+            if (e.serial && e.serial->isOpen()
+                && e.hil_handshake_phase == HandshakePhase::WaitFingerprint
+                && e.hil_handshake_pending) {
+
+                double since_last = frame_time - e.hil_hs_last_send;
+
+                // Retry every 0.5s — first attempt was sent on connect
+                bool should_try = since_last > 0.5;
+
+                if (should_try && e.hil_hs_attempts < 10) {
+                    e.hil_hs_attempts++;
+                    e.hil_hs_last_send = frame_time;
+                    if (e.hil_protocol == HilProtocol::Binary)
+                        e.serial->write((const uint8_t*)"\0\0\0\0", 4);
+                    else
+                        e.serial->write((const uint8_t*)"XXXXXXXXXXXXXXXX", 16);
+                    e.serial->sendCommand("FINGERPRINT?");
+                    DEV_LOG("hil", "Sending FINGERPRINT? (attempt %d/10)", e.hil_hs_attempts);
+                    snprintf(e.hil_handshake_msg, sizeof(e.hil_handshake_msg),
+                             "Requesting fingerprint...%s",
+                             e.hil_hs_attempts > 1 ? " (retrying)" : "");
+                }
+
+                // Give up after 10 attempts
+                if (e.hil_hs_attempts >= 10 && since_last > 1.0) {
+                    e.hil_handshake_phase = HandshakePhase::Failed;
+                    e.hil_handshake_ok = false;
+                    e.hil_handshake_pending = false;
+                    snprintf(e.hil_handshake_msg, sizeof(e.hil_handshake_msg),
+                             "No response after %d attempts", e.hil_hs_attempts);
+                    log(e.id, "hil", "Handshake failed — no FINGERPRINT response after %d attempts",
+                        e.hil_hs_attempts);
+                }
+            }
+
+            // ── Retry for CONFIG? / BITS? phases ────────────────────────
+            // If the response to CONFIG? or BITS? is lost, resend with flush.
+            if (e.serial && e.serial->isOpen() && e.hil_handshake_pending
+                && (e.hil_handshake_phase == HandshakePhase::WaitConfig
+                 || e.hil_handshake_phase == HandshakePhase::WaitBits)) {
+                bool is_config = (e.hil_handshake_phase == HandshakePhase::WaitConfig);
+                const char* cmd = is_config ? "CONFIG?" : "BITS?";
+                double since_last = frame_time - e.hil_hs_last_send;
+                if (since_last > 0.5 && e.hil_hs_attempts < 5) {
+                    e.hil_hs_attempts++;
+                    e.hil_hs_last_send = frame_time;
+                    // Full flush to drain any residual state
+                    if (e.hil_protocol == HilProtocol::Binary)
+                        e.serial->write((const uint8_t*)"\0\0\0\0", 4);
+                    else
+                        e.serial->write((const uint8_t*)"XXXXXXXXXXXXXXXX", 16);
+                    e.serial->sendCommand(cmd);
+                    DEV_LOG("hil", "Retrying %s (attempt %d/5)", cmd, e.hil_hs_attempts);
+                    snprintf(e.hil_handshake_msg, sizeof(e.hil_handshake_msg),
+                             "%s (retry %d)...",
+                             is_config ? "Querying geometry" : "Querying bit depth",
+                             e.hil_hs_attempts);
+                }
+                if (e.hil_hs_attempts >= 5 && since_last > 2.0) {
+                    // Capture label BEFORE changing phase
+                    char fail_msg[128];
+                    snprintf(fail_msg, sizeof(fail_msg),
+                             "No response to %s after 5 attempts", cmd);
+                    e.hil_handshake_phase = HandshakePhase::Failed;
+                    e.hil_handshake_ok = false;
+                    e.hil_handshake_pending = false;
+                    snprintf(e.hil_handshake_msg, sizeof(e.hil_handshake_msg), "%s", fail_msg);
+                    log(e.id, "hil", "Handshake failed — %s", fail_msg);
                 }
             }
 
@@ -2149,6 +2297,11 @@ skip_input_processing:
                 e.hil_tel_active = (tel.seq != 0 && e.rate_tel_hz > 0.0f);
                 if (tel.seq != e.hil_tel_seq) {
                     e.hil_tel_seq = tel.seq;
+
+                    // NOTE: Spike rejection removed — COBS framing (fail=0) structurally
+                    // prevents the stray-transport corruption this was guarding against.
+                    // The old 15° threshold was rejecting valid high-intensity telemetry.
+
                     memcpy(e.state.output_angles, tel.angles, sizeof(tel.angles));
 
                     float max_util = 0.0f;
@@ -2224,9 +2377,11 @@ skip_input_processing:
         static int    s_bit_depth[8] = {};
         static int    s_entity_count = 0;
         static char   s_hil_port[8][32] = {};
+        static int    s_hil_baud[8] = {};
         static int    s_hil_tx_hz[8] = {};
         static bool   s_hil_auto[8] = {};
         static int    s_hil_proto[8] = {};
+        static int    s_dyn_id = -1;
         static bool   s_inited = false;
 
         auto snapshot_matches = [&]() -> bool {
@@ -2235,6 +2390,7 @@ skip_input_processing:
             if (s_autoscroll != console_auto_scroll) return false;
             if (s_rec_rate != record_rate_hz) return false;
             if (s_input_source != (int)input_source) return false;
+            if (s_dyn_id != selected_dynamics_id) return false;
             if (s_entity_count != (int)entities.size()) return false;
             for (int ei = 0; ei < (int)entities.size() && ei < 8; ei++) {
                 if (s_intensity[ei] != entities[ei].config.intensity) return false;
@@ -2245,6 +2401,7 @@ skip_input_processing:
                 }
                 if (entities[ei].type == EntityType::HIL) {
                     if (strcmp(s_hil_port[ei], entities[ei].hil_port) != 0) return false;
+                    if (s_hil_baud[ei] != entities[ei].hil_baud) return false;
                     if (s_hil_tx_hz[ei] != entities[ei].hil_tx_hz) return false;
                     if (s_hil_auto[ei] != entities[ei].hil_auto_connect) return false;
                     if (s_hil_proto[ei] != (int)entities[ei].hil_protocol) return false;
@@ -2259,6 +2416,7 @@ skip_input_processing:
             s_autoscroll = console_auto_scroll;
             s_rec_rate = record_rate_hz;
             s_input_source = (int)input_source;
+            s_dyn_id = selected_dynamics_id;
             s_entity_count = (int)entities.size();
             for (int ei = 0; ei < (int)entities.size() && ei < 8; ei++) {
                 s_intensity[ei] = entities[ei].config.intensity;
@@ -2269,6 +2427,7 @@ skip_input_processing:
                 }
                 if (entities[ei].type == EntityType::HIL) {
                     snprintf(s_hil_port[ei], sizeof(s_hil_port[ei]), "%s", entities[ei].hil_port);
+                    s_hil_baud[ei] = entities[ei].hil_baud;
                     s_hil_tx_hz[ei] = entities[ei].hil_tx_hz;
                     s_hil_auto[ei] = entities[ei].hil_auto_connect;
                     s_hil_proto[ei] = (int)entities[ei].hil_protocol;

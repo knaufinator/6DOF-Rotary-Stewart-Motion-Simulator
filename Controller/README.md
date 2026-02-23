@@ -25,6 +25,7 @@ Controller/
 │   ├── helpers.cpp           # mapfloat, rateLimit utilities
 │   ├── WifiTransport.cpp     # WiFi STA + UDP transport (opt-in)
 │   ├── EthernetTransport.cpp # W5500 UDP transport (opt-in, PCBv2)
+│   ├── LedStatus.cpp         # RGB LED status indicator (PCBv2)
 │   └── CMakeLists.txt        # Component build — auto PCB_VERSION
 ├── include/
 │   ├── InverseKinematics.h   # StewartConfig + IK API + drive train
@@ -34,6 +35,7 @@ Controller/
 │   ├── MCP23S17.h            # SPI GPIO expander (PCBv1)
 │   ├── MCPWMMotorControl.h   # MCPWM motor control (PCBv2)
 │   ├── GPTimerScheduler.h    # 100 µs deterministic timer
+│   ├── LedStatus.h           # LED status indicator API
 │   ├── version.h             # FW version, build date, platform ID
 │   └── debug_uart.h          # Compile-time debug gating
 ├── sdkconfig.defaults        # Common config (both targets)
@@ -73,24 +75,54 @@ Controller/
 
 ### PCBv2 — ESP32-S3 DevKit
 
-- **MCU**: ESP32-S3-DevKitC-1
+- **MCU**: ESP32-S3-DevKitC-1-N8R2 (8MB flash, 2MB PSRAM)
 - **Motor I/O**: Direct GPIO via MCPWM
 - **Servo drivers**: 6 × AASD-15A
 - **Interface**: SN75174N quad RS-422 line drivers
 - **E-Stop**: GPIO 20 (currently disabled — conflicts with USB D+)
+- **Status LED**: WS2812 RGB on GPIO 48 (see [LED Status Indicator](#led-status-indicator) below)
 
-#### Pinout
-
-> ⚠️ **UNTESTED** — verify with oscilloscope before running on physical hardware.
+#### Pinout (verified via PINTEST — 0% crosstalk from 1Hz to 250kHz)
 
 | Motor | STEP | DIR | Control |
 |---|---|---|---|
-| 1 | GPIO 4 | GPIO 10 | RMT CH0 (TX) |
-| 2 | GPIO 5 | GPIO 11 | RMT CH1 (TX) |
-| 3 | GPIO 6 | GPIO 12 | RMT CH2 (TX) |
-| 4 | GPIO 7 | GPIO 13 | RMT CH3 (TX) |
-| 5 | GPIO 8 | GPIO 14 | GPIO (pending RMT) |
-| 6 | GPIO 9 | GPIO 17 | GPIO (pending RMT) |
+| 1 | GPIO 4 | GPIO 10 | MCPWM |
+| 2 | GPIO 5 | GPIO 11 | MCPWM |
+| 3 | GPIO 6 | GPIO 12 | MCPWM |
+| 4 | GPIO 7 | GPIO 13 | MCPWM |
+| 5 | GPIO 8 | GPIO 14 | MCPWM |
+| 6 | GPIO 9 | GPIO 17 | MCPWM |
+
+> ⚠️ **GPIO layout warning**: On the DevKitC-1 left header, GPIO 8, 9, 14, and 17 are **not in sequential order**. GPIO 17 is between 16 and 18; GPIO 8 is between 18 and 3; GPIO 9 is between 46 and 10. Always verify silk-screen labels when wiring.
+
+#### LED Status Indicator
+
+The onboard WS2812 RGB LED on GPIO 48 provides at-a-glance system status using color and blink patterns. A priority system ensures the most urgent state is always shown.
+
+> ⚠️ **Hardware note**: On the ESP32-S3-DevKitC-1-N8R2, the RGB LED requires a **solder bridge on the RGB junction pad** (located near the LED on the PCB) to connect GPIO 48 to the LED data line. Without this bridge, the LED will not respond even though the driver initializes successfully.
+
+| State | Color | Pattern | Meaning |
+|---|---|---|---|
+| `BOOT` | White | Solid | Initializing |
+| `READY` | Green | Breathe | Idle, waiting for commands |
+| `COMMS_ACTIVE` | Blue | Slow blink (1Hz) | Receiving serial/WiFi/BLE data |
+| `MOTORS_ACTIVE` | Cyan | Solid | Motors stepping |
+| `CONFIG` | Purple | Breathe | Configuration/setup mode |
+| `WARN_POSITION` | Yellow | Double pulse | Position error / missed steps |
+| `WARN_COMMS` | Blue | Fast blink (5Hz) | Communication timeout |
+| `ESTOP` | Red | Fast blink (5Hz) | Emergency stop active |
+| `ERROR` | Red | Triple pulse | Hardware or fatal error |
+
+Multiple states can be active simultaneously — the highest-priority state (lowest in the table) always wins. Use from firmware code:
+
+```cpp
+#include "LedStatus.h"
+
+led_status_set(LED_STATE_MOTORS_ACTIVE);    // cyan solid
+led_status_clear(LED_STATE_MOTORS_ACTIVE);  // revert to next highest
+led_status_set(LED_STATE_ESTOP);            // red fast blink (overrides all)
+led_status_reset();                         // clear all, back to READY
+```
 
 ## Building
 
@@ -184,6 +216,7 @@ DEBUG,<timestamp_us>,<a0>,<a1>,<a2>,<a3>,<a4>,<a5>,<tX>,<tY>,<tZ>,<rX>,<rY>,<rZ>
 | `InterfaceMonitorTask` | 0 | 2 | UART RX → binary/CSV parser |
 | `UDPListenerTask` | 0 | 2 | W5500 UDP RX (when `ENABLE_ETHERNET`) |
 | `GPIOLoopTask` | 1 | 3 | 100 µs deterministic motor update |
+| `LedStatusTask` | 0 | 1 | RGB LED status indicator (PCBv2 only) |
 
 ## Desktop App
 

@@ -14,7 +14,6 @@
 #include "esp_event.h"
 #include "esp_netif.h"
 #include "esp_eth.h"
-#include "esp_eth_mac_spi.h"
 
 #include "driver/gpio.h"
 #include "driver/spi_master.h"
@@ -179,19 +178,29 @@ bool ethernet_transport_init(void (*process_packet)(const uint8_t *payload))
 
     esp_eth_config_t eth_config = ETH_DEFAULT_CONFIG(mac, phy);
     esp_eth_handle_t eth_handle = NULL;
-    ESP_ERROR_CHECK(esp_eth_driver_install(&eth_config, &eth_handle));
+    esp_err_t ret = esp_eth_driver_install(&eth_config, &eth_handle);
+    if (ret != ESP_OK) {
+        ESP_LOGW(TAG, "W5500 driver install failed (0x%x) — no Ethernet hardware?", ret);
+        return false;
+    }
 
     // Attach to netif
-    ESP_ERROR_CHECK(esp_netif_attach(eth_netif, esp_eth_new_netif_glue(eth_handle)));
+    ret = esp_netif_attach(eth_netif, esp_eth_new_netif_glue(eth_handle));
+    if (ret != ESP_OK) {
+        ESP_LOGW(TAG, "netif attach failed (0x%x)", ret);
+        return false;
+    }
 
     // Register event handlers
-    ESP_ERROR_CHECK(esp_event_handler_register(ETH_EVENT, ESP_EVENT_ANY_ID,
-                                               &eth_event_handler, NULL));
-    ESP_ERROR_CHECK(esp_event_handler_register(IP_EVENT, IP_EVENT_ETH_GOT_IP,
-                                               &ip_event_handler, NULL));
+    esp_event_handler_register(ETH_EVENT, ESP_EVENT_ANY_ID, &eth_event_handler, NULL);
+    esp_event_handler_register(IP_EVENT, IP_EVENT_ETH_GOT_IP, &ip_event_handler, NULL);
 
     // Start Ethernet
-    ESP_ERROR_CHECK(esp_eth_start(eth_handle));
+    ret = esp_eth_start(eth_handle);
+    if (ret != ESP_OK) {
+        ESP_LOGW(TAG, "eth start failed (0x%x)", ret);
+        return false;
+    }
 
     ESP_LOGI(TAG, "W5500 Ethernet initialized (SPI CS=%d, INT=%d)",
              ETH_SPI_CS, ETH_SPI_INT);

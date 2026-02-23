@@ -18,6 +18,7 @@
 #include <condition_variable>
 
 #include "dev_log.h"
+#include "cobs.h"
 
 // Parsed telemetry from ESP32
 struct ESP32Telemetry {
@@ -58,6 +59,14 @@ public:
     // Send a text command (appends 'X' terminator for ESP32 ASCII protocol)
     bool sendCommand(const char* cmd);
 
+    // COBS-framed sends (used when m_cobs_mode is true)
+    bool sendCobsData(const uint16_t raw[6]);    // 12-byte motion data on CH_DATA
+    bool sendCobsCommand(const char* cmd);        // string command on CH_CMD
+
+    // Enable COBS framing mode (binary protocol uses this)
+    void setCobsMode(bool v) { m_cobs_mode = v; }
+    bool isCobsMode() const  { return m_cobs_mode; }
+
     // Latest telemetry (thread-safe read)
     ESP32Telemetry getLatestTelemetry() const;
 
@@ -67,10 +76,15 @@ public:
     int txBytes() const { return m_tx_bytes.load(); }
     int telemetrySeq() const { return m_telemetry.seq; }
     float telemetryRate() const { return m_tel_rate.load(); }
+    int telemetryRejected() const { return m_tel_rejected.load(); }
 
     // Line callback (optional — for logging raw lines to console)
     using LineCallback = std::function<void(const char* line)>;
     void setLineCallback(LineCallback cb) { m_line_cb = cb; }
+
+    // When true, ALL non-TEL lines are enqueued (no rate limiting).
+    // Used by test harness serial which needs every JSON response.
+    void setEnqueueAll(bool v) { m_enqueue_all.store(v); }
 
     // Thread-safe line queue: reader thread pushes, main thread drains.
     // This replaces direct callback invocation to avoid data races.
@@ -101,6 +115,7 @@ private:
     std::atomic<int> m_rx_bytes{0};
     std::atomic<int> m_tx_bytes{0};
     std::atomic<float> m_tel_rate{0.0f};
+    std::atomic<int> m_tel_rejected{0};
 
     // Telemetry rate tracking
     double m_tel_times[16] = {};
@@ -108,8 +123,24 @@ private:
 
     LineCallback m_line_cb;
     double m_last_line_cb_time = 0.0;
+    std::atomic<bool> m_enqueue_all{false};
 
     // Thread-safe line queue (reader pushes, main thread drains)
     std::mutex m_line_queue_mutex;
     std::vector<std::string> m_line_queue;
+
+    // COBS mode
+    bool m_cobs_mode = false;
+public:
+    std::atomic<int> m_cobs_delimiters{0};  // 0x00 bytes seen
+    std::atomic<int> m_cobs_decode_ok{0};   // successful decodes
+    std::atomic<int> m_cobs_decode_fail{0}; // failed decodes
+    std::atomic<int> m_cobs_tel{0};         // TEL frames
+    std::atomic<int> m_cobs_resp{0};        // RESP frames
+    std::atomic<int> m_cobs_log{0};         // LOG frames
+private:
+    uint8_t m_cobs_acc[512];  // COBS accumulation buffer
+    int m_cobs_pos = 0;
+    void processCobsFrame(const uint8_t *data, int len);
+    void parseBinaryTelemetry(const uint8_t *payload, int len);
 };

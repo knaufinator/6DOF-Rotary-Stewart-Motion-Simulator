@@ -275,8 +275,8 @@ void DrawPlatformViz(ImDrawList* dl, ImVec2 origin, ImVec2 size,
         // SIL: always use locally computed IK angles
         viz_angles = e.state.output_angles;
     } else {
-        // HIL: use telemetry angles when active, home position otherwise
-        if (e.hil_tel_active) {
+        // HIL: use telemetry angles only when handshake OK + telemetry active
+        if (e.hil_tel_active && e.hil_handshake_ok) {
             viz_angles = e.state.output_angles;  // ESP32 telemetry angles
         } else if (hil_online) {
             viz_angles = home_angles;  // connected, awaiting telemetry
@@ -300,8 +300,17 @@ void DrawPlatformViz(ImDrawList* dl, ImVec2 origin, ImVec2 size,
     }
 
     // FK solver: find rigid platform pose that satisfies L2 constraints.
-    // Uses telemetry angles when active, home angles when offline.
-    solveFK(viz_angles, plat, e.hil_fk_pose);
+    // Only recompute when IK output actually changes (new telemetry or new IK frame).
+    // solveFK is Newton-Raphson iterative — up to 8 iterations × 7 fkError calls,
+    // far too expensive to run every render frame at 60fps.
+    {
+        static int s_fk_seq[8] = {-1,-1,-1,-1,-1,-1,-1,-1};
+        int ei = (e.id >= 0 && e.id < 8) ? e.id : 0;
+        if (e.state.ik_seq != s_fk_seq[ei]) {
+            s_fk_seq[ei] = e.state.ik_seq;
+            solveFK(viz_angles, plat, e.hil_fk_pose);
+        }
+    }
 
     for (int k = 0; k < 6; k++) {
         float j[3];

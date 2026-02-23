@@ -45,12 +45,16 @@
 #ifdef ENABLE_ETHERNET
 #include "EthernetTransport.h"
 #endif
+
+#include "LedStatus.h"
+#define STATUS_LED_GPIO 48
 #ifdef ENABLE_WIFI
 #include "WifiTransport.h"
 #endif
 #ifdef ENABLE_BLE
 #include "BleTransport.h"
 #endif
+#include "CobsTransport.h"
 
 static const char *TAG = "stewart_main";
 
@@ -156,6 +160,26 @@ SemaphoreHandle_t xMutex = NULL;
 TaskHandle_t xGPIOLoopHandle = NULL;  // Task handle for GPTimer notification
 volatile float lastServoAngles[6] = {0};  // Latest IK output (radians) for telemetry
 
+// ── Input source selection ───────────────────────────────────────────
+// Only the active input source is allowed to feed process_binary_packet.
+// Prevents stray packets from other transports corrupting the IK output.
+typedef enum {
+    INPUT_SOURCE_SERIAL = 0,
+    INPUT_SOURCE_ETHERNET = 1,
+    INPUT_SOURCE_WIFI = 2,
+    INPUT_SOURCE_BLE = 3
+} InputSource;
+static volatile InputSource activeInputSource = INPUT_SOURCE_SERIAL;
+
+static const char* inputSourceName(InputSource src) {
+    switch (src) {
+        case INPUT_SOURCE_SERIAL:   return "SERIAL";
+        case INPUT_SOURCE_ETHERNET: return "ETHERNET";
+        case INPUT_SOURCE_WIFI:     return "WIFI";
+        case INPUT_SOURCE_BLE:      return "BLE";
+        default:                    return "UNKNOWN";
+    }
+}
 
 // Binary protocol constants
 // Input:  [0xAA] [0x55] [uint16_t × 6 little-endian] [XOR checksum] = 15 bytes
@@ -185,18 +209,70 @@ void outputDebugData();
 void initDebounceButton(debounce_button_t *btn, gpio_num_t pin, int debounce_ms);
 bool updateDebounceButton(debounce_button_t *btn);
 
-/* ESP-IDF replacement for Arduino Serial.print/println */
+// Per-transport packet counters (for diagnostics via INPUT_STAT command)
+static volatile uint32_t pktCount_serial = 0;
+static volatile uint32_t pktCount_eth = 0;
+static volatile uint32_t pktCount_wifi = 0;
+static volatile uint32_t pktCount_ble = 0;
+static volatile uint32_t pktDrop_serial = 0;
+static volatile uint32_t pktDrop_eth = 0;
+static volatile uint32_t pktDrop_wifi = 0;
+static volatile uint32_t pktDrop_ble = 0;
+
+// Per-transport wrappers that gate on activeInputSource
+static void serial_packet_handler(const uint8_t *payload) {
+    pktCount_serial++;
+    if (activeInputSource == INPUT_SOURCE_SERIAL)
+        process_binary_packet(payload);
+    else
+        pktDrop_serial++;
+}
+#ifdef ENABLE_ETHERNET
+static void ethernet_packet_handler(const uint8_t *payload) {
+    pktCount_eth++;
+    if (activeInputSource == INPUT_SOURCE_ETHERNET)
+        process_binary_packet(payload);
+    else
+        pktDrop_eth++;
+}
+#endif
+#ifdef ENABLE_WIFI
+static void wifi_packet_handler(const uint8_t *payload) {
+    pktCount_wifi++;
+    if (activeInputSource == INPUT_SOURCE_WIFI)
+        process_binary_packet(payload);
+    else
+        pktDrop_wifi++;
+}
+#endif
+#ifdef ENABLE_BLE
+static void ble_packet_handler(const uint8_t *payload) {
+    pktCount_ble++;
+    if (activeInputSource == INPUT_SOURCE_BLE)
+        process_binary_packet(payload);
+    else
+        pktDrop_ble++;
+}
+#endif
+
+/* Serial output routed through COBS RESP channel */
 void serial_printf(const char *format, ...) {
+    char buf[256];
     va_list args;
     va_start(args, format);
-    vprintf(format, args);
+    int len = vsnprintf(buf, sizeof(buf), format, args);
     va_end(args);
-    fflush(stdout);
+    if (len > 0) {
+        if (len >= (int)sizeof(buf)) len = sizeof(buf) - 1;
+        // Strip trailing \r\n — COBS frames don't need line terminators
+        while (len > 0 && (buf[len-1] == '\n' || buf[len-1] == '\r')) len--;
+        if (len > 0)
+            cobs_send(COBS_CH_RESP, (const uint8_t *)buf, len);
+    }
 }
 
 void serial_println(const char *str) {
-    printf("%s\r\n", str);
-    fflush(stdout);
+    cobs_send_str(COBS_CH_RESP, str);
 }
 
 // ── NVS persistence for Stewart platform geometry ───────────────────
@@ -422,49 +498,52 @@ void handleStepDirection() {
 }
 #else
 void handleStepDirection() {
-    // PCBv2: Burst stepping via MCPWM one-shot pulses (hardware-timed).
-    // Round-robin cycles through all 6 motors within a 45µs budget per 50µs tick.
-    // Effective rate: ~80k–200k steps/sec per motor.
+    // PCBv2: Continuous stepping — 6 motors in TRUE PARALLEL.
+    // Motors 0-3: MCPWM + PCNT hardware counting (zero CPU per pulse)
+    // Motors 4-5: RMT TX hardware loop counting (zero CPU per pulse)
+    // All 6 hardware channels free-run simultaneously at 250 kHz.
+    // Result: ~250 kHz/motor × 6 (all hardware-counted, no ISR bottleneck).
+    // ZERO DRIFT. ZERO OVERSHOOT. Every pulse is counted exactly.
 
     xSemaphoreTake(xMutex, portMAX_DELAY);
 
-    const uint64_t BURST_BUDGET_US = 45;  // 45µs of the 50µs tick (5µs headroom)
-    uint64_t tickStart = esp_timer_get_time();
-    bool anyActive = true;
-
-    while (anyActive) {
-        if ((esp_timer_get_time() - tickStart) >= BURST_BUDGET_US) break;
-        anyActive = false;
-        for (int i = 0; i < 6; i++) {
-            if (!motors[i]) continue;
-            if (motors[i]->getTargetPosition() == motors[i]->getCurrentPosition()) continue;
-            anyActive = true;
-            motors[i]->update();  // fires one step if minStepInterval elapsed, else no-op
-        }
+    // Start continuous stepping for all motors with pending moves
+    bool anyStarted = false;
+    for (int i = 0; i < 6; i++) {
+        if (!motors[i]) continue;
+        int32_t delta = motors[i]->getTargetPosition() - motors[i]->getCurrentPosition();
+        if (delta == 0) continue;
+        motors[i]->startContinuousSteps(delta);
+        anyStarted = true;
     }
 
     xSemaphoreGive(xMutex);
+
+    // Wait for all continuous moves to complete (all 6 run in parallel)
+    // NOTE: Mutex released so InterfaceMonitorTask can update targets and
+    // send telemetry while motors are mid-move.
+    if (anyStarted) {
+        bool anyRunning = true;
+        while (anyRunning) {
+            esp_task_wdt_reset();  // GPIOLoopTask is WDT-subscribed
+            anyRunning = false;
+            for (int i = 0; i < 6; i++) {
+                if (!motors[i]) continue;
+                if (!motors[i]->checkContinuousDone()) anyRunning = true;
+            }
+        }
+    }
 }
 #endif
 
 static uint32_t binPktCount = 0;
 
 void InterfaceMonitorTask(void * pvParameters) {
-    uint8_t data[128];
-    
-    // Read from stdin (USB Serial JTAG via secondary console VFS)
-    int fd = fileno(stdin);
-    int flags = fcntl(fd, F_GETFL, 0);
-    fcntl(fd, F_SETFL, flags | O_NONBLOCK);
-    
     int64_t lastDbg = 0;
     for(;;) {
-        int len = read(fd, data, sizeof(data) - 1);
-        if (len > 0) {
-            for (int i = 0; i < len; i++) {
-                processIncomingByte(data[i]);
-            }
-        }
+        // COBS transport: read bytes, decode frames, dispatch to registered handlers
+        // (data_handler → serial_packet_handler, cmd_handler → process_data)
+        int got = cobs_read_process(5);
 
         // Debug output runs here (not in GPIOLoopTask) so fflush can't stall motors
         int64_t now = micros();
@@ -473,13 +552,20 @@ void InterfaceMonitorTask(void * pvParameters) {
             outputDebugData();
         }
 
-        vTaskDelay(pdMS_TO_TICKS(5));
+        // Yield when no data — prevents tight busy-loop from starving core 0
+        if (got == 0)
+            vTaskDelay(1);
     }
 }
 
 void GPIOLoopTask(void * pvParameters) {
     // Subscribe this task to the watchdog
     esp_task_wdt_add(NULL);
+    
+    // Initialize motors HERE on core 1 so MCPWM timer ISRs are allocated
+    // on core 1 — no WiFi/serial/BLE interrupt contention on this core.
+    // Critical for ISR-counted stepping at 6×250kHz (1.5M ISR/s).
+    setupMotorPins();
     
     // Store task handle for GPTimer notifications
     xGPIOLoopHandle = xTaskGetCurrentTaskHandle();
@@ -625,14 +711,9 @@ void applyMotionValues(float values[6]) {
 //         filter chain, applyMotionValues() rate limiter → setPos() pipeline,
 //         full data path from USB RX → IK → MCPWM at ~30-60 Hz packet rate
 void send_telemetry(const float angles[6]) {
-    // ASCII telemetry over USB Serial JTAG.
-    // Format: TEL,a1..a6,p1..p6  (angles in radians, then input positions)
-    // Uses serial_printf (printf + fflush) which is proven reliable on VFS.
-    serial_printf("TEL,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f\r\n",
-        (double)angles[0], (double)angles[1], (double)angles[2],
-        (double)angles[3], (double)angles[4], (double)angles[5],
-        (double)arr[0], (double)arr[1], (double)arr[2],
-        (double)arr[3], (double)arr[4], (double)arr[5]);
+    // Binary telemetry via COBS TEL channel: 12 x float32 LE = 48 bytes
+    // [angles[0..5], positions[0..5]] — no ASCII parsing, no sscanf
+    cobs_send_telemetry(angles, (const float*)arr);
 }
 
 void process_binary_packet(const uint8_t *payload) {
@@ -661,6 +742,82 @@ void process_data(char * data) {
     } else if (strcmp(data, DEBUG_DISABLE_CMD) == 0) {
         debugEnabled = false;
         DEBUG_PRINTLN("Debug output disabled");
+        return;
+    }
+
+    // ── HIGH-PRIORITY: Handshake commands ──────────────────────────────
+    // These must be at the top so the app's handshake completes instantly.
+    // Any delay here blocks motion — the app won't send packets until
+    // the handshake reaches Ready.
+
+    if (strcmp(data, "FINGERPRINT?") == 0) {
+        uint8_t mac[6];
+        esp_efuse_mac_get_default(mac);
+        serial_printf("FINGERPRINT:%02X%02X%02X%02X%02X%02X,fw=%s,proto=%d\r\n",
+            mac[0], mac[1], mac[2], mac[3], mac[4], mac[5],
+            FW_VERSION_STRING, FW_PROTOCOL_VERSION);
+        return;
+    }
+
+    if (strcmp(data, "CONFIG?") == 0) {
+        serial_printf("CONFIG:RD=%.2f,PD=%.2f,L1=%.2f,L2=%.2f,height=%.2f,theta_r=%.2f,theta_p=%.2f\r\n",
+            stewartConfig.RD, stewartConfig.PD,
+            stewartConfig.ServoArmLengthL1, stewartConfig.ConnectingArmLengthL2,
+            stewartConfig.platformHeight, stewartConfig.theta_r, stewartConfig.theta_p);
+        serial_printf("DRIVE:encoder=%d,gear=%.4f,planetary=%.2f,steps_deg=%.4f\r\n",
+            stewartConfig.encoder_ppr, stewartConfig.virtual_gear,
+            stewartConfig.planetary_ratio, stewartConfig.steps_per_degree);
+        return;
+    }
+
+    if (strcmp(data, "BITS?") == 0) {
+        serial_printf("BITS:%d,max_raw=%.0f\r\n", inputBitRange, maxRawInput);
+        return;
+    }
+
+    if (strcmp(data, "VERSION?") == 0) {
+        serial_printf("VERSION:%s,proto=%d,date=%s,time=%s\r\n",
+            FW_VERSION_STRING, FW_PROTOCOL_VERSION, FW_BUILD_DATE, FW_BUILD_TIME);
+        return;
+    }
+
+    // ── Input source selection ───────────────────────────────────────
+    if (strcmp(data, "INPUT?") == 0) {
+        serial_printf("INPUT:%s\r\n", inputSourceName(activeInputSource));
+        return;
+    }
+    if (strcmp(data, "INPUT_STAT") == 0) {
+        serial_printf("INPUT_STAT:active=%s,serial=%lu/%lu,eth=%lu/%lu,wifi=%lu/%lu,ble=%lu/%lu\r\n",
+            inputSourceName(activeInputSource),
+            (unsigned long)pktCount_serial, (unsigned long)pktDrop_serial,
+            (unsigned long)pktCount_eth, (unsigned long)pktDrop_eth,
+            (unsigned long)pktCount_wifi, (unsigned long)pktDrop_wifi,
+            (unsigned long)pktCount_ble, (unsigned long)pktDrop_ble);
+        return;
+    }
+    if (strncmp(data, "INPUT:", 6) == 0) {
+        const char* src = data + 6;
+        InputSource prev = activeInputSource;
+        if (strcmp(src, "SERIAL") == 0)        activeInputSource = INPUT_SOURCE_SERIAL;
+        else if (strcmp(src, "ETHERNET") == 0) activeInputSource = INPUT_SOURCE_ETHERNET;
+        else if (strcmp(src, "WIFI") == 0)     activeInputSource = INPUT_SOURCE_WIFI;
+        else if (strcmp(src, "BLE") == 0)      activeInputSource = INPUT_SOURCE_BLE;
+        else {
+            serial_printf("ERROR:INPUT unknown source '%s'\r\n", src);
+            return;
+        }
+        serial_printf("INPUT:%s\r\n", inputSourceName(activeInputSource));
+        if (activeInputSource != prev) {
+            ESP_LOGI(TAG, "Input source changed: %s -> %s",
+                inputSourceName(prev), inputSourceName(activeInputSource));
+            // Save to NVS
+            nvs_handle_t nvs;
+            if (nvs_open("stewart", NVS_READWRITE, &nvs) == ESP_OK) {
+                nvs_set_u8(nvs, "input_src", (uint8_t)activeInputSource);
+                nvs_commit(nvs);
+                nvs_close(nvs);
+            }
+        }
         return;
     }
 
@@ -699,6 +856,302 @@ void process_data(char * data) {
         return;
     }
 
+    // ── RATETEST:STEPS[:MOTORS] — Measure actual MCPWM stepping rate ──
+    // Two modes: BURST (one-shot round-robin) and CONTINUOUS (hardware free-run).
+    // MOTORS: 1 = single motor, 6 = all (default 6).
+    if (strncmp(data, "RATETEST", 8) == 0) {
+#if PCB_VERSION == 2
+        int test_steps = 50000;
+        int num_motors = 6;
+        if (data[8] == ':') {
+            sscanf(data + 9, "%d:%d", &test_steps, &num_motors);
+        }
+        if (test_steps < 100 || test_steps > 1000000) {
+            serial_printf("RATETEST:ERR steps=100-1000000\r\n");
+            return;
+        }
+        if (num_motors < 1 || num_motors > 6) num_motors = 6;
+
+        uint32_t period_us = motors[0]->getConfig().stepPulseWidth_us * 2;
+        float theoretical_max = 1000000.0f / period_us;
+
+        serial_printf("RATETEST:START steps=%d motors=%d period=%lu us (theoretical_max=%.0f Hz)\r\n",
+            test_steps, num_motors, (unsigned long)period_us, theoretical_max);
+
+        // ── Test 1: Pipeline test (set target → GPTimer → continuous MCPWM) ──
+        // Oscillates within soft limits to accumulate the requested step count.
+        // Queries each motor's limit range, swings between endpoints, stays safe.
+        {
+            int32_t savedPos[6];
+            for (int i = 0; i < 6; i++) {
+                savedPos[i] = motor_getPos(i);
+                motors[i]->resetStats();
+            }
+
+            // Query soft limit range
+            auto& cfg = motors[0]->getConfig();
+            int32_t limit_min = cfg.softLimitMin;
+            int32_t limit_max = cfg.softLimitMax;
+            int32_t swing = (limit_max - limit_min);  // full range per leg
+            if (swing < 1000) swing = 1000;
+
+            int legs = (test_steps + swing - 1) / swing;
+            if (legs < 1) legs = 1;
+
+            serial_printf("RATETEST:PIPELINE range=[%ld,%ld] swing=%ld legs=%d\r\n",
+                (long)limit_min, (long)limit_max, (long)swing, legs);
+
+            // Move to starting end (limit_min) before timing begins
+            xSemaphoreTake(xMutex, portMAX_DELAY);
+            for (int i = 0; i < 6; i++) {
+                if (i >= num_motors) continue;
+                motor_setTarget(i, limit_min);
+            }
+            xSemaphoreGive(xMutex);
+            {
+                bool setup_done = false;
+                while (!setup_done) {
+                    vTaskDelay(pdMS_TO_TICKS(1));
+                    setup_done = true;
+                    for (int i = 0; i < 6; i++) {
+                        if (i >= num_motors) continue;
+                        if (motors[i]->getTargetPosition() != motors[i]->getCurrentPosition())
+                            { setup_done = false; break; }
+                    }
+                }
+            }
+            vTaskDelay(pdMS_TO_TICKS(10)); // brief settle
+
+            // Now oscillate — every leg is a full swing
+            int32_t total_steps_actual = 0;
+            int64_t t_start = esp_timer_get_time();
+            float timeout_sec = (float)test_steps / 1000.0f + 15.0f;
+            bool timed_out = false;
+
+            for (int leg = 0; leg < legs && !timed_out; leg++) {
+                // Alternate: odd legs → max, even legs → min
+                int32_t target = (leg % 2 == 0) ? limit_max : limit_min;
+
+                xSemaphoreTake(xMutex, portMAX_DELAY);
+                for (int i = 0; i < 6; i++) {
+                    if (i >= num_motors) continue;
+                    motor_setTarget(i, target);
+                }
+                xSemaphoreGive(xMutex);
+
+                bool done = false;
+                while (!done) {
+                    vTaskDelay(pdMS_TO_TICKS(1));
+                    done = true;
+                    for (int i = 0; i < 6; i++) {
+                        if (i >= num_motors) continue;
+                        if (motors[i]->getTargetPosition() != motors[i]->getCurrentPosition()) {
+                            done = false; break;
+                        }
+                    }
+                    if ((esp_timer_get_time() - t_start) > (int64_t)(timeout_sec * 1000000.0f)) {
+                        timed_out = true; break;
+                    }
+                }
+                total_steps_actual += swing;
+            }
+
+            int64_t t_pipe = esp_timer_get_time() - t_start;
+            float pipe_rate = (t_pipe > 0)
+                ? (float)total_steps_actual / ((float)t_pipe / 1000000.0f) : 0.0f;
+
+            serial_printf("RATETEST:PIPELINE %d steps in %lld us (%.0f steps/s/motor, %.1f%% of max)%s\r\n",
+                total_steps_actual, t_pipe, pipe_rate, pipe_rate / theoretical_max * 100.0f,
+                timed_out ? " TIMEOUT" : "");
+            for (int i = 0; i < 6; i++) {
+                if (i >= num_motors) continue;
+                serial_printf("  M%d: pos=%ld (target was %ld, error=%ld)\r\n",
+                    i, (long)motors[i]->getCurrentPosition(),
+                    (long)motors[i]->getTargetPosition(),
+                    (long)(motors[i]->getCurrentPosition() - motors[i]->getTargetPosition()));
+            }
+
+            // Return to starting position
+            xSemaphoreTake(xMutex, portMAX_DELAY);
+            for (int i = 0; i < 6; i++) {
+                if (i >= num_motors) continue;
+                motor_setTarget(i, savedPos[i]);
+            }
+            xSemaphoreGive(xMutex);
+            bool done = false;
+            while (!done) {
+                vTaskDelay(pdMS_TO_TICKS(1));
+                done = true;
+                for (int i = 0; i < 6; i++) {
+                    if (i >= num_motors) continue;
+                    if (motors[i]->getTargetPosition() != motors[i]->getCurrentPosition()) {
+                        done = false; break;
+                    }
+                }
+                if ((esp_timer_get_time() - t_start) > (int64_t)(timeout_sec * 2.0f * 1000000.0f)) {
+                    break;
+                }
+            }
+        }
+
+        vTaskDelay(pdMS_TO_TICKS(100)); // settle
+
+        // ── Test 2: Hardware-counted continuous mode (all motors, 250 kHz) ──
+        // Motors 0-3: MCPWM + PCNT, Motors 4-5: RMT TX loop counting.
+        // All hardware-counted, zero CPU per pulse.
+        {
+            // Temporarily remove GPIOLoopTask from WDT — it will be blocked
+            // on the mutex for the duration of this test, unable to feed WDT.
+            if (xGPIOLoopHandle) esp_task_wdt_delete(xGPIOLoopHandle);
+
+            xSemaphoreTake(xMutex, portMAX_DELAY);
+
+            int64_t t_start = esp_timer_get_time();
+            for (int i = 0; i < num_motors; i++) {
+                motors[i]->startContinuousSteps(test_steps);
+            }
+
+            bool anyRunning = true;
+            while (anyRunning) {
+                anyRunning = false;
+                for (int i = 0; i < num_motors; i++) {
+                    if (!motors[i]->checkContinuousDone()) anyRunning = true;
+                }
+            }
+
+            int64_t t_cont = esp_timer_get_time() - t_start;
+            float cont_rate = (float)test_steps / ((float)t_cont / 1000000.0f);
+
+            serial_printf("RATETEST:CONTINUOUS %d steps in %lld us (%.0f steps/s/motor, %.1f%% of max)\r\n",
+                test_steps, t_cont, cont_rate, cont_rate / theoretical_max * 100.0f);
+            for (int i = 0; i < num_motors; i++) {
+                serial_printf("  M%d: error=%ld steps (%s)\r\n",
+                    i, (long)motors[i]->getLastStepError(),
+                    motors[i]->hasPcnt() ? "PCNT" : (motors[i]->hasRmt() ? "RMT" : "ISR"));
+            }
+
+            // Return via continuous mode (reverse)
+            for (int i = 0; i < num_motors; i++) {
+                motors[i]->startContinuousSteps(-test_steps);
+            }
+            anyRunning = true;
+            while (anyRunning) {
+                anyRunning = false;
+                for (int i = 0; i < num_motors; i++) {
+                    if (!motors[i]->checkContinuousDone()) anyRunning = true;
+                }
+            }
+
+            xSemaphoreGive(xMutex);
+
+            // Re-subscribe GPIOLoopTask to WDT now that mutex is released
+            if (xGPIOLoopHandle) esp_task_wdt_add(xGPIOLoopHandle);
+        }
+
+        serial_printf("RATETEST:DONE motors=%d\r\n", num_motors);
+#else
+        serial_printf("RATETEST:NOT_SUPPORTED\r\n");
+#endif
+        return;
+    }
+
+    // ── FREQTEST:M:F:D — Generate step pulses at exact frequency ───────
+    // M=motor(0-5), F=freq_hz, D=duration_ms
+    // Uses direct GPIO toggle for precise frequency control.
+    // NOTE: Takes STEP pin from MCPWM — reboot after.
+    if (strncmp(data, "FREQTEST:", 9) == 0) {
+#if PCB_VERSION == 2
+        int motor = 0, freq_hz = 0, dur_ms = 1000;
+        if (sscanf(data + 9, "%d:%d:%d", &motor, &freq_hz, &dur_ms) < 2) {
+            serial_printf("FREQTEST:ERR usage FREQTEST:M:F[:D]\r\n");
+            return;
+        }
+        if (motor < 0 || motor > 5 || freq_hz < 1 || freq_hz > 300000) {
+            serial_printf("FREQTEST:ERR motor=0-5 freq=1-300000\r\n");
+            return;
+        }
+
+        // Take STEP pin from MCPWM
+        gpio_reset_pin(stepPins[motor]);
+        gpio_set_direction(stepPins[motor], GPIO_MODE_OUTPUT);
+        gpio_set_level(stepPins[motor], 0);
+
+        // Set DIR HIGH so analyzer can distinguish real vs crosstalk
+        gpio_set_level(dirPins[motor], 1);
+
+        int64_t period_us = 1000000LL / freq_hz;
+        int64_t pulse_us = 2; // 2µs pulse width (minimum for stepper drivers)
+        if (period_us < pulse_us * 2) period_us = pulse_us * 2;
+        int64_t low_us = period_us - pulse_us;
+
+        int64_t end_time = esp_timer_get_time() + (int64_t)dur_ms * 1000;
+        int32_t step_count = 0;
+
+        serial_printf("FREQTEST:START motor=%d freq=%d dur=%d period_us=%lld\r\n",
+            motor, freq_hz, dur_ms, period_us);
+
+        // Pulse generation — busy-wait for accuracy at high frequencies
+        while (esp_timer_get_time() < end_time) {
+            gpio_set_level(stepPins[motor], 1);
+            int64_t t0 = esp_timer_get_time();
+            while ((esp_timer_get_time() - t0) < pulse_us) {}
+            gpio_set_level(stepPins[motor], 0);
+            step_count++;
+            int64_t t1 = esp_timer_get_time();
+            int64_t remain = low_us - (t1 - t0 - pulse_us);
+            if (remain > 1000) {
+                vTaskDelay(pdMS_TO_TICKS(remain / 1000));
+            } else if (remain > 0) {
+                while ((esp_timer_get_time() - t1) < remain) {}
+            }
+        }
+
+        gpio_set_level(dirPins[motor], 0);
+
+        int64_t actual_us = dur_ms * 1000LL;
+        float actual_freq = step_count * 1000000.0f / actual_us;
+        serial_printf("FREQTEST:DONE motor=%d steps=%ld actual_freq=%.1f\r\n",
+            motor, (long)step_count, actual_freq);
+#else
+        serial_printf("FREQTEST:NOT_SUPPORTED\r\n");
+#endif
+        return;
+    }
+
+    // ── PINTEST — Static pin-by-pin HIGH/LOW for wiring validation ────
+    // Sets each DIR and STEP pin HIGH individually with 500ms pause,
+    // allowing analyzer PINS command to verify correct mapping.
+    // NOTE: STEP pins are temporarily taken from MCPWM — reboot after.
+    if (strcmp(data, "PINTEST") == 0) {
+#if PCB_VERSION == 2
+        serial_printf("PINTEST:START\r\n");
+        // Test DIR pins (already simple GPIO outputs)
+        for (int i = 0; i < 6; i++) {
+            gpio_set_level(dirPins[i], 1);
+            serial_printf("PINTEST:DIR_%d:GPIO%d:ON\r\n", i, dirPins[i]);
+            vTaskDelay(pdMS_TO_TICKS(500));
+            gpio_set_level(dirPins[i], 0);
+            serial_printf("PINTEST:DIR_%d:OFF\r\n", i);
+            vTaskDelay(pdMS_TO_TICKS(200));
+        }
+        // Test STEP pins (take from MCPWM, use as GPIO)
+        for (int i = 0; i < 6; i++) {
+            gpio_reset_pin(stepPins[i]);
+            gpio_set_direction(stepPins[i], GPIO_MODE_OUTPUT);
+            gpio_set_level(stepPins[i], 1);
+            serial_printf("PINTEST:STEP_%d:GPIO%d:ON\r\n", i, stepPins[i]);
+            vTaskDelay(pdMS_TO_TICKS(500));
+            gpio_set_level(stepPins[i], 0);
+            serial_printf("PINTEST:STEP_%d:OFF\r\n", i);
+            vTaskDelay(pdMS_TO_TICKS(200));
+        }
+        serial_printf("PINTEST:DONE (reboot recommended)\r\n");
+#else
+        serial_printf("PINTEST:NOT_SUPPORTED\r\n");
+#endif
+        return;
+    }
+
     // ── MTEST:RESET — Clear all timing/step statistics ────────────────
     // Tests:  Stats reset path for loop counters and per-motor accumulators
     // Proves: resetStats() zeroes all MCPWMMotorControl::Stats fields,
@@ -714,23 +1167,30 @@ void process_data(char * data) {
         return;
     }
 
-    // ── MTEST — Motor self-test: 200 steps forward, 200 steps back ───
+    // ── MTEST / MTEST:N — Motor self-test: 200 steps forward, 200 back ─
+    // MTEST   = test all 6 motors simultaneously
+    // MTEST:N = test single motor N (0-5) for incremental wiring validation
     // Tests:  Full MCPWM stepper drive pipeline, end-to-end
     // Proves: (1) MCPWM timer→operator→comparator→generator chain fires pulses
     //         (2) setTargetPosition() / getCurrentPosition() track correctly
-    //         (3) All 6 motors return to exact start position (no lost steps)
+    //         (3) Motors return to exact start position (no lost steps)
     //         (4) Step rate throughput (steps/s) meets real-time requirements
     //         (5) Mutex arbitration between InterfaceMonitorTask and GPIOLoopTask
     //         (6) Loop timing during load (MTEST:LOOP min/avg/max)
-    //         (7) PASS/FAIL verdict: position error = 0 for all motors
-    if (strcmp(data, "MTEST") == 0) {
+    //         (7) PASS/FAIL verdict: position error = 0
+    if (strcmp(data, "MTEST") == 0 || (strncmp(data, "MTEST:", 6) == 0 && data[6] >= '0' && data[6] <= '5')) {
+        int testMotor = -1; // -1 = all motors
+        if (data[5] == ':') testMotor = data[6] - '0';
         if (motorTestRunning) {
             serial_printf("MTEST:BUSY\r\n");
             return;
         }
         motorTestRunning = true;
         const int TEST_STEPS = 200;
-        serial_printf("MTEST:START steps=%d\r\n", TEST_STEPS);
+        if (testMotor >= 0)
+            serial_printf("MTEST:START motor=%d steps=%d\r\n", testMotor, TEST_STEPS);
+        else
+            serial_printf("MTEST:START steps=%d\r\n", TEST_STEPS);
 
         // Save current positions
         int32_t savedPos[6];
@@ -741,6 +1201,7 @@ void process_data(char * data) {
         // Set forward targets, THEN reset stats so setup overhead is excluded
         xSemaphoreTake(xMutex, portMAX_DELAY);
         for (int i = 0; i < 6; i++) {
+            if (testMotor >= 0 && i != testMotor) continue;
             motor_setTarget(i, savedPos[i] + TEST_STEPS);
         }
         loopCount = 0; loopMin_us = UINT32_MAX; loopMax_us = 0; loopSum_us = 0;
@@ -757,6 +1218,7 @@ void process_data(char * data) {
         while (!done && (micros() - t0) < 2000000) {
             done = true;
             for (int i = 0; i < 6; i++) {
+                if (testMotor >= 0 && i != testMotor) continue;
                 if (motor_getPos(i) != motor_getTarget(i))
                     done = false;
             }
@@ -772,6 +1234,7 @@ void process_data(char * data) {
         // Set back targets, then reset stats for back phase
         xSemaphoreTake(xMutex, portMAX_DELAY);
         for (int i = 0; i < 6; i++) {
+            if (testMotor >= 0 && i != testMotor) continue;
             motor_setTarget(i, savedPos[i]);
         }
         loopCount = 0; loopMin_us = UINT32_MAX; loopMax_us = 0; loopSum_us = 0;
@@ -787,6 +1250,7 @@ void process_data(char * data) {
         while (!done && (micros() - t0) < 2000000) {
             done = true;
             for (int i = 0; i < 6; i++) {
+                if (testMotor >= 0 && i != testMotor) continue;
                 if (motor_getPos(i) != motor_getTarget(i))
                     done = false;
             }
@@ -806,9 +1270,10 @@ void process_data(char * data) {
         serial_printf("MTEST:BACK_LOOP loops=%lu dur_us(min/avg/max)=%lu/%.1f/%lu\r\n",
             (unsigned long)back_loops, (unsigned long)loopMin_us, back_avg, (unsigned long)loopMax_us);
 
-        // Check all motors returned to original position
+        // Check motors returned to original position
         bool allOk = true;
         for (int i = 0; i < 6; i++) {
+            if (testMotor >= 0 && i != testMotor) continue;
             int32_t diff = motor_getPos(i) - savedPos[i];
             if (diff != 0) {
                 serial_printf("MTEST:M%d POSITION ERROR off=%ld\r\n", i, (long)diff);
@@ -819,11 +1284,13 @@ void process_data(char * data) {
         // Per-motor step stats (back phase only — most recent clean window)
 #if PCB_VERSION == 1
         for (int i = 0; i < 6; i++) {
+            if (testMotor >= 0 && i != testMotor) continue;
             serial_printf("  M%d: pos=%ld tgt=%ld\r\n",
                 i, (long)motor_getPos(i), (long)motor_getTarget(i));
         }
 #else
         for (int i = 0; i < 6; i++) {
+            if (testMotor >= 0 && i != testMotor) continue;
             if (!motors[i]) continue;
             const MCPWMMotorControl::Stats& s = motors[i]->getStats();
             float savg = s.intervalSamples > 0 ? (float)s.sumInterval_us / s.intervalSamples : 0;
@@ -836,6 +1303,20 @@ void process_data(char * data) {
 
         serial_printf("MTEST:%s\r\n", allOk ? "PASS" : "FAIL");
         motorTestRunning = false;
+        return;
+    }
+
+    // ── LED:R,G,B — Set entity RGB color on status LED ─────────────────
+    // App sends this after handshake to show the entity's UI color.
+    // LED breathes in this color until an error/warning overrides it.
+    if (strncmp(data, "LED:", 4) == 0) {
+        int r = 0, g = 0, b = 0;
+        if (sscanf(data + 4, "%d,%d,%d", &r, &g, &b) == 3) {
+            led_status_set_entity_color((uint8_t)r, (uint8_t)g, (uint8_t)b);
+            serial_printf("LED:%d,%d,%d\r\n", r, g, b);
+        } else {
+            serial_printf("ERR:LED format LED:R,G,B (0-255)\r\n");
+        }
         return;
     }
 
@@ -955,45 +1436,9 @@ void process_data(char * data) {
         return;
     }
 
-    // ── BITS? — Query current input bit depth ─────────────────────────
-    if (strcmp(data, "BITS?") == 0) {
-        serial_printf("BITS:%d,max_raw=%.0f\r\n", inputBitRange, maxRawInput);
-        return;
-    }
-
-    // ── VERSION? — Report firmware version + protocol version ─────────
-    if (strcmp(data, "VERSION?") == 0) {
-        serial_printf("VERSION:%s,proto=%d,date=%s,time=%s\r\n",
-            FW_VERSION_STRING, FW_PROTOCOL_VERSION, FW_BUILD_DATE, FW_BUILD_TIME);
-        return;
-    }
-
-    // ── FINGERPRINT? — Unique device identity for handshake ──────────
-    // Returns MAC-based device fingerprint + firmware/protocol versions.
-    // The app stores this on first connect and verifies on reconnect to
-    // prevent accidentally sending settings meant for a different ESP32.
-    if (strcmp(data, "FINGERPRINT?") == 0) {
-        uint8_t mac[6];
-        esp_efuse_mac_get_default(mac);
-        serial_printf("FINGERPRINT:%02X%02X%02X%02X%02X%02X,fw=%s,proto=%d\r\n",
-            mac[0], mac[1], mac[2], mac[3], mac[4], mac[5],
-            FW_VERSION_STRING, FW_PROTOCOL_VERSION);
-        return;
-    }
-
-    // ── Platform configuration serial commands ─────────────────────────
-
-    // ── CONFIG? — Query full platform geometry + drive train ────────────
-    if (strcmp(data, "CONFIG?") == 0) {
-        serial_printf("CONFIG:RD=%.2f,PD=%.2f,L1=%.2f,L2=%.2f,height=%.2f,theta_r=%.2f,theta_p=%.2f\r\n",
-            stewartConfig.RD, stewartConfig.PD,
-            stewartConfig.ServoArmLengthL1, stewartConfig.ConnectingArmLengthL2,
-            stewartConfig.platformHeight, stewartConfig.theta_r, stewartConfig.theta_p);
-        serial_printf("DRIVE:encoder=%d,gear=%.4f,planetary=%.2f,steps_deg=%.4f\r\n",
-            stewartConfig.encoder_ppr, stewartConfig.virtual_gear,
-            stewartConfig.planetary_ratio, stewartConfig.steps_per_degree);
-        return;
-    }
+    // NOTE: FINGERPRINT?, CONFIG?, BITS?, VERSION? are handled at the top
+    // of process_data() for handshake priority. Only CONFIG:key=value (setter)
+    // and SCALE? remain here.
 
     // ── CONFIG:key=value — Set platform geometry parameter ──────────────
     // Recomputes axis scales from geometry after change.
@@ -1357,7 +1802,7 @@ void processIncomingByte(const uint8_t inByte) {
 
             bin_state = 0;
             if (xor_check == inByte) {
-                process_binary_packet(bin_buf);
+                serial_packet_handler(bin_buf);
             } else {
                 DEBUG_PRINTF("BIN checksum fail: expected 0x%02X got 0x%02X\n", xor_check, inByte);
             }
@@ -1404,6 +1849,22 @@ extern "C" void app_main(void)
     }
     ESP_ERROR_CHECK(ret);
 
+    // Initialize COBS transport on UART0 — must be before any serial output
+    cobs_transport_init(921600);
+    // Register COBS channel handlers:
+    //   DATA channel → serial_packet_handler (gates on activeInputSource → IK)
+    //   CMD channel  → process_data (ASCII command handler)
+    cobs_set_data_handler([](const uint8_t *payload, int len) {
+        (void)len;  // COBS guarantees >= 12 bytes for DATA channel
+        serial_packet_handler(payload);
+    });
+    cobs_set_cmd_handler([](const char *cmd) {
+        // process_data takes non-const char* for legacy reasons
+        char buf[256];
+        int n = snprintf(buf, sizeof(buf), "%s", cmd);
+        if (n > 0) process_data(buf);
+    });
+
     ESP_LOGI(TAG, "Stewart Platform Controller v%s (%s %s)",
         FW_VERSION_STRING, FW_BUILD_DATE, FW_BUILD_TIME);
   
@@ -1422,6 +1883,19 @@ extern "C" void app_main(void)
     } else {
         ESP_LOGI(TAG, "Geometry: Using factory defaults");
     }
+    // Load saved input source from NVS
+    {
+        nvs_handle_t nvs;
+        if (nvs_open("stewart", NVS_READONLY, &nvs) == ESP_OK) {
+            uint8_t src = 0;
+            if (nvs_get_u8(nvs, "input_src", &src) == ESP_OK && src <= 3) {
+                activeInputSource = (InputSource)src;
+                ESP_LOGI(TAG, "Input source: %s (from NVS)", inputSourceName(activeInputSource));
+            }
+            nvs_close(nvs);
+        }
+    }
+
     // Derive axis scales from actual IK workspace (no magic numbers)
     computeAxisScalesFromGeometry(&axisScales, &stewartConfig, 0.90f);
     ESP_LOGI(TAG, "Axis scales (from geometry, 90%% margin): %.2f, %.2f, %.2f, %.2f, %.2f, %.2f",
@@ -1450,8 +1924,8 @@ extern "C" void app_main(void)
     // initDebounceButton(&estop_button, (gpio_num_t)ESTOP_PIN, ESTOPDEBOUNCETIME);
 #endif
     
-    // Initialize motor control pins
-    setupMotorPins();
+    // Motor init moved to GPIOLoopTask (core 1) so MCPWM ISRs are pinned
+    // to core 1 — no WiFi/serial/BLE interrupt contention. See GPIOLoopTask().
     
     // Create mutex for thread safety
     xMutex = xSemaphoreCreateMutex();
@@ -1484,8 +1958,8 @@ extern "C" void app_main(void)
     
 #ifdef ENABLE_ETHERNET
     // Initialize W5500 SPI Ethernet + UDP listener
-    // UDP packets feed into the same binary packet handler as serial
-    if (!ethernet_transport_init(process_binary_packet)) {
+    // UDP packets gated by activeInputSource
+    if (!ethernet_transport_init(ethernet_packet_handler)) {
         ESP_LOGW(TAG, "Ethernet init failed — serial-only mode");
     }
 #endif
@@ -1493,8 +1967,8 @@ extern "C" void app_main(void)
 #ifdef ENABLE_WIFI
     // Initialize WiFi STA + UDP listener
     // WiFi credentials loaded from NVS (saved via WIFI:SAVE command)
-    // UDP packets feed into the same binary packet handler as serial
-    if (!wifi_transport_init(process_binary_packet)) {
+    // UDP packets gated by activeInputSource
+    if (!wifi_transport_init(wifi_packet_handler)) {
         ESP_LOGW(TAG, "WiFi init failed — serial-only mode");
     }
 #endif
@@ -1502,11 +1976,17 @@ extern "C" void app_main(void)
 #ifdef ENABLE_BLE
     // Initialize BLE GATT server
     // Advertises as "StewartPlatform", accepts binary motion packets via BLE write
-    if (!ble_transport_init(process_binary_packet)) {
+    // Gated by activeInputSource
+    if (!ble_transport_init(ble_packet_handler)) {
         ESP_LOGW(TAG, "BLE init failed — serial/WiFi only");
     }
 #endif
 
+    // LED status indicator — white solid during boot, green breathe when ready
+    led_status_init(STATUS_LED_GPIO);
+
+    led_status_clear(LED_STATE_BOOT);
+    led_status_set(LED_STATE_READY);
     ESP_LOGI(TAG, "Setup Complete!");
     serial_println("READY");
     

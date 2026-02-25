@@ -58,26 +58,34 @@ Everything runs in a single native executable — no browser, no server, no Pyth
 
 The ESP32-S3 firmware uses a pluggable stepper backend selected at compile time in `Controller/main/CMakeLists.txt`.
 
-### Active: `STEP_DRIVER_MCPWM` — 250 kHz hardware
+### Active: `STEP_DRIVER_SHARED_MCPWM` — 250 kHz hardware-validated
 
 ```
-MCPWM timer → 3 operators → 6 comparator/generator chains
-  Motors 0–3: MCPWM comparator/generator → STEP pin + PCNT hardware counter
-  Motors 4–5: MCPWM comparator/generator → STEP pin + RMT TX loop counter
+1 MCPWM timer (group 0) → 3 operators → 6 comparator/generator chains
+  Each motor: TEZ → HIGH (rising edge), compare match → LOW (falling edge)
+  All pulse edges generated in silicon — zero CPU per pulse
 ```
 
 - Step pulses are generated entirely in silicon — zero CPU per pulse
-- PCNT counts pulses on motors 0–3 with no software overhead
+- ISR only updates comparator register + position counter per step
 - Step rate: up to **250 kHz per motor**, hardware-enforced timing
-- Pulse width: 2 µs (meets AASD-15A ≥1.5 µs minimum)
-- DIR setup time: ≥4 µs before first step (AASD-15A requires ≥2 µs)
+- Pulse width: **2 µs** (meets AASD-15A ≥1.5 µs minimum)
+- DIR setup time: ≥8 µs before first step (AASD-15A requires ≥2 µs)
+
+**Logic analyzer validation — GPIO4 (STEP), 24 MS/s capture:**
+
+<div align="center">
+  <img src="documentation/images/smse_250khz_logic_analyzer.png" alt="250 kHz step pulses captured on logic analyzer" width="900"/>
+  <br><em>SharedMcpwmStepEngine — 250 kHz, 50% duty cycle, 2 µs pulse width. Validated with Saleae Logic 2 at 24 MS/s.<br>SIGTEST: 50,000/50,000 steps, pos_error=0, PASS.</em>
+</div>
 
 ### Other backends (compile-time selectable)
 
 | Define | Engine | Max rate | Notes |
 |--------|--------|----------|-------|
-| `STEP_DRIVER_MCPWM` | MCPWMMotorControl | 250 kHz | **Active.** Hardware pulses + PCNT/RMT counting |
-| `STEP_DRIVER_MCPWM_ISR` | McpwmStepEngine | 125 kHz | Single MCPWM TEZ ISR, all 6 motors. Stable, simple |
+| `STEP_DRIVER_SHARED_MCPWM` | SharedMcpwmStepEngine | 250 kHz | **Active.** 1 timer, 6 hw comparators, fully hardware-driven pulses |
+| `STEP_DRIVER_MCPWM` | MCPWMMotorControl | 250 kHz | Per-motor MCPWM + PCNT/RMT. Complex, legacy |
+| `STEP_DRIVER_MCPWM_ISR` | McpwmStepEngine | 125 kHz | Single MCPWM TEZ ISR, all 6 motors |
 | `STEP_DRIVER_SSE` | SimpleStepEngine | 125 kHz | GPTimer ISR reference implementation |
 
 ## Repository Layout

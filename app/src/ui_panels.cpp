@@ -30,18 +30,33 @@ static ImVec4 ColorFromFloat4(const float c[4]) {
     return ImVec4(c[0], c[1], c[2], c[3]);
 }
 
-// ── Layout Save / Load ──────────────────────────────────────────────
+// ── Workspace Save / Load ───────────────────────────────────────────
+// A "workspace" is a named snapshot of everything:
+//   - Window layout (ImGui .ini)
+//   - All entity configs (HIL port, fingerprint, geometry, dynamics, etc.)
+//   - App state (input source, console settings, recording rate)
+// Stored in workspaces/<name>.ini + workspaces/<name>.json
 
-static const char* LAYOUTS_DIR = "layouts";
+static const char* WORKSPACES_DIR = "workspaces";
 
-static void EnsureLayoutDir() {
-    fs::create_directories(LAYOUTS_DIR);
+// Pending workspace ini load — set by LoadWorkspace, consumed by PreFrameUI()
+static char s_pending_ini_load[512] = "";
+static bool s_pending_first_frame = false;
+
+static void EnsureWorkspacesDir() {
+    // Migrate old "layouts" directory if present
+    std::error_code ec;
+    if (fs::exists("layouts") && !fs::exists(WORKSPACES_DIR)) {
+        fs::rename("layouts", WORKSPACES_DIR, ec);
+    }
+    fs::create_directories(WORKSPACES_DIR, ec);
 }
 
-static std::vector<std::string> EnumerateLayouts() {
+static std::vector<std::string> EnumerateWorkspaces() {
     std::vector<std::string> names;
-    EnsureLayoutDir();
-    for (auto& entry : fs::directory_iterator(LAYOUTS_DIR)) {
+    EnsureWorkspacesDir();
+    std::error_code ec;
+    for (auto& entry : fs::directory_iterator(WORKSPACES_DIR, ec)) {
         if (entry.is_regular_file() && entry.path().extension() == ".ini") {
             names.push_back(entry.path().stem().string());
         }
@@ -50,53 +65,54 @@ static std::vector<std::string> EnumerateLayouts() {
     return names;
 }
 
-static bool SaveLayout(const char* name) {
-    EnsureLayoutDir();
-    // First flush current ImGui ini to disk so it's up to date
+static bool SaveWorkspace(const char* name) {
+    EnsureWorkspacesDir();
+    // Flush current ImGui window layout to disk
     ImGui::SaveIniSettingsToDisk(ImGui::GetIO().IniFilename);
-    // Copy the ini file to layouts/<name>.ini
-    fs::path src(ImGui::GetIO().IniFilename);
-    fs::path dst = fs::path(LAYOUTS_DIR) / (std::string(name) + ".ini");
     std::error_code ec;
-    fs::copy_file(src, dst, fs::copy_options::overwrite_existing, ec);
+    fs::path ini_src(ImGui::GetIO().IniFilename);
+    fs::path ini_dst = fs::path(WORKSPACES_DIR) / (std::string(name) + ".ini");
+    fs::copy_file(ini_src, ini_dst, fs::copy_options::overwrite_existing, ec);
 
-    // Also save current settings (entities + app state) alongside
+    // Save all entity configs + app state alongside
     g_app.saveSettings();
-    fs::path settings_src("stewart_settings.json");
-    fs::path settings_dst = fs::path(LAYOUTS_DIR) / (std::string(name) + ".json");
-    fs::copy_file(settings_src, settings_dst, fs::copy_options::overwrite_existing, ec);
+    fs::path json_src("stewart_settings.json");
+    fs::path json_dst = fs::path(WORKSPACES_DIR) / (std::string(name) + ".json");
+    fs::copy_file(json_src, json_dst, fs::copy_options::overwrite_existing, ec);
 
     return !ec;
 }
 
-static bool LoadLayout(const char* name) {
-    fs::path src = fs::path(LAYOUTS_DIR) / (std::string(name) + ".ini");
-    if (!fs::exists(src)) return false;
-    ImGui::LoadIniSettingsFromDisk(src.string().c_str());
-    // Also copy to the active ini so it persists on next launch
-    std::error_code ec;
-    fs::copy_file(src, fs::path(ImGui::GetIO().IniFilename), fs::copy_options::overwrite_existing, ec);
+static bool LoadWorkspace(const char* name) {
+    fs::path ini_src = fs::path(WORKSPACES_DIR) / (std::string(name) + ".ini");
+    if (!fs::exists(ini_src)) return false;
 
-    // Restore entities + app state from companion JSON
-    fs::path settings_src = fs::path(LAYOUTS_DIR) / (std::string(name) + ".json");
-    if (fs::exists(settings_src)) {
-        fs::path settings_dst("stewart_settings.json");
-        fs::copy_file(settings_src, settings_dst, fs::copy_options::overwrite_existing, ec);
+    // Restore entity configs + app state immediately (no frame dependency)
+    std::error_code ec;
+    fs::path json_src = fs::path(WORKSPACES_DIR) / (std::string(name) + ".json");
+    if (fs::exists(json_src)) {
+        fs::copy_file(json_src, fs::path("stewart_settings.json"), fs::copy_options::overwrite_existing, ec);
         g_app.loadSettings();
     }
 
+    // Copy ini to active file immediately so it persists on next launch
+    fs::copy_file(ini_src, fs::path(ImGui::GetIO().IniFilename), fs::copy_options::overwrite_existing, ec);
+
+    // Defer the actual ImGui ini load to BEFORE the next NewFrame() call.
+    // Loading mid-frame corrupts docking state because the dockspace has
+    // already been rebuilt for the current frame.
+    snprintf(s_pending_ini_load, sizeof(s_pending_ini_load), "%s", ini_src.string().c_str());
+    s_pending_first_frame = true;  // force dockspace re-evaluation after load
     return true;
 }
 
-static bool DeleteLayout(const char* name) {
-    fs::path p = fs::path(LAYOUTS_DIR) / (std::string(name) + ".ini");
-    fs::path pj = fs::path(LAYOUTS_DIR) / (std::string(name) + ".json");
+static bool DeleteWorkspace(const char* name) {
     std::error_code ec;
-    fs::remove(pj, ec);  // remove companion JSON if exists
-    return fs::remove(p, ec);
+    fs::remove(fs::path(WORKSPACES_DIR) / (std::string(name) + ".json"), ec);
+    return fs::remove(fs::path(WORKSPACES_DIR) / (std::string(name) + ".ini"), ec);
 }
 
-// Layout popup / reset state
+// Workspace popup state
 static bool s_show_save_popup = false;
 static char s_layout_name_buf[128] = "";
 static bool s_reset_layout = false;
@@ -110,9 +126,10 @@ static float s_input_strip_content_h = 0.0f; // measured content height from las
 static int   s_input_strip_autofit = 2;      // frames remaining for auto-fit (0 = done)
 static int   s_input_strip_last_source = -1; // track source changes for auto-fit
 static int   s_input_strip_last_plugin = -1; // track plugin changes for auto-fit
-static bool s_show_console     = true;
-static bool s_show_data_streams = true;
-static bool s_show_dynamics    = true;
+// Panel visibility — backed by g_app so they are persisted per workspace via saveSettings/loadSettings
+#define s_show_console      g_app.show_console
+#define s_show_data_streams g_app.show_data_streams
+#define s_show_dynamics     g_app.show_dynamics
 // s_selected_dynamics_id is stored in g_app.selected_dynamics_id (persisted across restarts)
 #define s_selected_dynamics_id g_app.selected_dynamics_id
 static int  s_dyn_preset_idx = -1;       // currently selected dynamics preset index
@@ -134,8 +151,62 @@ static std::map<int, DynStaging> s_dyn_staging;
 static void DrawMainMenuBar() {
     if (ImGui::BeginMainMenuBar()) {
         if (ImGui::BeginMenu("File")) {
-            if (ImGui::MenuItem("Save Config"))   { /* TODO */ }
-            if (ImGui::MenuItem("Load Config"))   { /* TODO */ }
+            // ── Quick save ──
+            if (ImGui::MenuItem("Save", "Ctrl+S")) {
+                g_app.saveSettings();
+                ImGui::SaveIniSettingsToDisk(ImGui::GetIO().IniFilename);
+                g_app.log(-1, "workspace", "Saved current session");
+            }
+            if (ImGui::IsItemHovered())
+                ImGui::SetTooltip("Save current entity configs and window layout to disk.");
+
+            if (ImGui::MenuItem("Save Workspace As...")) {
+                s_show_save_popup = true;
+                s_layout_name_buf[0] = '\0';
+            }
+            if (ImGui::IsItemHovered())
+                ImGui::SetTooltip("Save a named snapshot of all entity configs,\nHIL settings, dynamics presets, and window layout.");
+
+            ImGui::Separator();
+
+            // ── Workspace list ──
+            auto workspaces = EnumerateWorkspaces();
+            if (ImGui::BeginMenu("Open Workspace")) {
+                if (workspaces.empty()) {
+                    ImGui::TextDisabled("(no saved workspaces)");
+                } else {
+                    for (auto& ws : workspaces) {
+                        if (ImGui::MenuItem(ws.c_str())) {
+                            LoadWorkspace(ws.c_str());
+                            g_app.log(-1, "workspace", "Loaded workspace: %s", ws.c_str());
+                        }
+                    }
+                }
+                ImGui::EndMenu();
+            }
+
+            if (ImGui::BeginMenu("Delete Workspace")) {
+                if (workspaces.empty()) {
+                    ImGui::TextDisabled("(no saved workspaces)");
+                } else {
+                    for (auto& ws : workspaces) {
+                        if (ImGui::MenuItem(ws.c_str())) {
+                            DeleteWorkspace(ws.c_str());
+                            g_app.log(-1, "workspace", "Deleted workspace: %s", ws.c_str());
+                        }
+                    }
+                }
+                ImGui::EndMenu();
+            }
+
+            ImGui::Separator();
+            if (ImGui::MenuItem("Reset Window Layout")) {
+                s_reset_layout = true;
+                g_app.log(-1, "workspace", "Window layout reset to default");
+            }
+            if (ImGui::IsItemHovered())
+                ImGui::SetTooltip("Reset all window positions and sizes to defaults.\nEntity configs are NOT changed.");
+
             ImGui::Separator();
             if (ImGui::MenuItem("Exit")) { g_app.running = false; }
             ImGui::EndMenu();
@@ -150,39 +221,6 @@ static void DrawMainMenuBar() {
                 char name[64];
                 snprintf(name, sizeof(name), "HIL #%d", g_app.next_entity_id);
                 g_app.addEntity(name, EntityType::HIL);
-            }
-            ImGui::EndMenu();
-        }
-        if (ImGui::BeginMenu("Layout")) {
-            if (ImGui::MenuItem("Save Layout...")) {
-                s_show_save_popup = true;
-                s_layout_name_buf[0] = '\0';
-            }
-
-            ImGui::Separator();
-            auto layouts = EnumerateLayouts();
-            if (layouts.empty()) {
-                ImGui::TextDisabled("(no saved layouts)");
-            } else {
-                for (auto& ln : layouts) {
-                    if (ImGui::BeginMenu(ln.c_str())) {
-                        if (ImGui::MenuItem("Load")) {
-                            LoadLayout(ln.c_str());
-                            g_app.log(-1, "layout", "Loaded layout: %s", ln.c_str());
-                        }
-                        if (ImGui::MenuItem("Delete")) {
-                            DeleteLayout(ln.c_str());
-                            g_app.log(-1, "layout", "Deleted layout: %s", ln.c_str());
-                        }
-                        ImGui::EndMenu();
-                    }
-                }
-            }
-
-            ImGui::Separator();
-            if (ImGui::MenuItem("Reset to Default")) {
-                s_reset_layout = true;
-                g_app.log(-1, "layout", "Layout reset to default");
             }
             ImGui::EndMenu();
         }
@@ -231,36 +269,41 @@ static void DrawMainMenuBar() {
         ImGui::EndMainMenuBar();
     }
 
-    // ── Save Layout Popup ──
+    // ── Save Workspace Popup ──
     if (s_show_save_popup) {
-        ImGui::OpenPopup("Save Layout");
+        ImGui::OpenPopup("Save Workspace");
         s_show_save_popup = false;
     }
-    if (ImGui::BeginPopupModal("Save Layout", nullptr, ImGuiWindowFlags_AlwaysAutoResize)) {
-        ImGui::Text("Enter a name for this layout:");
-        ImGui::SetNextItemWidth(280);
-        bool enter_pressed = ImGui::InputText("##layout_name", s_layout_name_buf, sizeof(s_layout_name_buf),
+    if (ImGui::BeginPopupModal("Save Workspace", nullptr, ImGuiWindowFlags_AlwaysAutoResize)) {
+        ImGui::TextColored(ImVec4(0.7f, 0.85f, 1.0f, 1.0f), "Save Workspace");
+        ImGui::TextDisabled("Saves all entity configs, HIL settings, dynamics presets,");
+        ImGui::TextDisabled("fingerprints, and window layout as a named snapshot.");
+        ImGui::Spacing();
+        ImGui::Text("Workspace name:");
+        ImGui::SetNextItemWidth(320);
+        bool enter_pressed = ImGui::InputText("##ws_name", s_layout_name_buf, sizeof(s_layout_name_buf),
                                                ImGuiInputTextFlags_EnterReturnsTrue);
-
-        // Auto-focus the input on first frame
         if (ImGui::IsWindowAppearing()) ImGui::SetKeyboardFocusHere(-1);
 
         bool valid = s_layout_name_buf[0] != '\0';
+        ImGui::Spacing();
 
+        ImGui::PushStyleColor(ImGuiCol_Button, valid ? ImVec4(0.15f, 0.5f, 0.8f, 1.0f) : ImVec4(0.3f, 0.3f, 0.3f, 1.0f));
         if (!valid) ImGui::BeginDisabled();
-        bool do_save = ImGui::Button("Save", ImVec2(120, 0)) || (enter_pressed && valid);
+        bool do_save = ImGui::Button("Save Workspace", ImVec2(160, 0)) || (enter_pressed && valid);
         if (!valid) ImGui::EndDisabled();
+        ImGui::PopStyleColor();
 
         ImGui::SameLine();
-        if (ImGui::Button("Cancel", ImVec2(120, 0))) {
+        if (ImGui::Button("Cancel", ImVec2(100, 0))) {
             ImGui::CloseCurrentPopup();
         }
 
         if (do_save) {
-            if (SaveLayout(s_layout_name_buf)) {
-                g_app.log(-1, "layout", "Saved layout: %s", s_layout_name_buf);
+            if (SaveWorkspace(s_layout_name_buf)) {
+                g_app.log(-1, "workspace", "Saved workspace: %s", s_layout_name_buf);
             } else {
-                g_app.log(-1, "layout", "Failed to save layout: %s", s_layout_name_buf);
+                g_app.log(-1, "workspace", "Failed to save workspace: %s", s_layout_name_buf);
             }
             ImGui::CloseCurrentPopup();
         }
@@ -1311,6 +1354,7 @@ static void DrawInputStrip() {
 static void DrawPlatformSetupContent(Entity& e);
 static void DrawEntitySettingsContent(Entity& e);
 static void DrawEntityConsoleContent(Entity& e);
+static void DrawEntityDynamicsContent(Entity& e);
 
 // ── Entity Card (3D viewport placeholder + readout) ─────────────────
 
@@ -1468,6 +1512,96 @@ static void DrawEntityCard(Entity& e) {
                     }
                 }
 
+                // ── HIL Connection Error Banner ──────────────────────────
+                if (e.type == EntityType::HIL && e.hil_last_error[0] != '\0'
+                    && e.hil_handshake_phase != HandshakePhase::Ready) {
+                    ImGui::Spacing();
+                    ImVec2 err_p = ImGui::GetCursorScreenPos();
+                    float err_w = ImGui::GetContentRegionAvail().x;
+
+                    // Determine if it's a fingerprint mismatch for special styling
+                    bool is_mismatch = (strncmp(e.hil_last_error, "FINGERPRINT MISMATCH", 20) == 0);
+                    ImVec4 bg_col = is_mismatch ? ImVec4(0.55f, 0.12f, 0.08f, 0.95f)
+                                                : ImVec4(0.45f, 0.12f, 0.08f, 0.95f);
+                    ImVec4 border_col = is_mismatch ? ImVec4(0.95f, 0.3f, 0.2f, 1.0f)
+                                                    : ImVec4(0.85f, 0.3f, 0.15f, 1.0f);
+
+                    ImGui::PushStyleColor(ImGuiCol_ChildBg, bg_col);
+                    ImGui::PushStyleVar(ImGuiStyleVar_ChildRounding, 4.0f);
+                    if (ImGui::BeginChild("##conn_error_banner", ImVec2(err_w, 0), true,
+                                         ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_AlwaysAutoResize)) {
+                        // Error icon + title
+                        ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 0.35f, 0.25f, 1.0f));
+                        ImGui::Text(is_mismatch ? "  FINGERPRINT MISMATCH" : "  CONNECTION FAILED");
+                        ImGui::PopStyleColor();
+
+                        ImGui::SameLine(err_w - 80.0f);
+                        ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.3f, 0.3f, 0.35f, 0.8f));
+                        if (ImGui::SmallButton("Dismiss")) {
+                            e.hil_last_error[0] = '\0';
+                        }
+                        ImGui::PopStyleColor();
+
+                        ImGui::Separator();
+
+                        // Multi-line error message
+                        ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 0.85f, 0.8f, 1.0f));
+                        ImGui::TextWrapped("%s", e.hil_last_error);
+                        ImGui::PopStyleColor();
+
+                        // Action buttons
+                        ImGui::Spacing();
+                        if (is_mismatch) {
+                            ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.6f, 0.15f, 0.1f, 1.0f));
+                            ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.8f, 0.2f, 0.15f, 1.0f));
+                            if (ImGui::Button("Clear Fingerprint & Reconnect")) {
+                                memset(e.hil_fingerprint, 0, sizeof(e.hil_fingerprint));
+                                memset(e.hil_fw_version, 0, sizeof(e.hil_fw_version));
+                                e.hil_proto_ver = 0;
+                                e.hil_last_error[0] = '\0';
+                                e.hil_handshake_ok = false;
+                                e.hil_handshake_phase = HandshakePhase::Idle;
+                                e.hil_device_params.clear();
+                                g_app.log(e.id, "hil", "Fingerprint cleared — will pair with next device");
+                                g_app.settings_dirty = true;
+                                // Trigger reconnect
+                                if (!e.serial || !e.serial->isOpen()) {
+                                    e.hil_auto_connect = true;
+                                    e.hil_last_reconnect = 0.0;
+                                }
+                            }
+                            ImGui::PopStyleColor(2);
+                        } else {
+                            ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.2f, 0.4f, 0.7f, 1.0f));
+                            if (ImGui::Button("Retry Connection")) {
+                                e.hil_last_error[0] = '\0';
+                                e.hil_handshake_phase = HandshakePhase::WaitFingerprint;
+                                e.hil_handshake_pending = true;
+                                e.hil_hs_attempts = 1;
+                                e.hil_hs_last_send = g_app.frame_time;
+                                if (e.serial && e.serial->isOpen()) {
+                                    e.serial->write((const uint8_t*)"\0\0\0\0\0\0\0\0", 8);
+                                    e.serial->sendCommand("FINGERPRINT?");
+                                } else {
+                                    e.hil_auto_connect = true;
+                                    e.hil_last_reconnect = 0.0;
+                                }
+                            }
+                            ImGui::PopStyleColor();
+                        }
+                        ImGui::SameLine();
+                        ImGui::TextDisabled("(also check the Settings tab)");
+                    }
+                    ImGui::EndChild();
+                    ImGui::PopStyleVar();
+                    ImGui::PopStyleColor();
+
+                    // Draw colored border around error banner
+                    ImVec2 err_end = ImGui::GetCursorScreenPos();
+                    // border is handled by BeginChild with border flag
+                    ImGui::Spacing();
+                }
+
                 // HIL: don't show telemetry-derived workspace until handshake confirmed
                 bool hil_no_tel = (e.type == EntityType::HIL && !e.hil_handshake_ok);
 
@@ -1547,6 +1681,14 @@ static void DrawEntityCard(Entity& e) {
                     }
                 }
 
+                ImGui::EndTabItem();
+            }
+
+            // ════════════════════════════════════════════════════════════
+            //  Dynamics tab
+            // ════════════════════════════════════════════════════════════
+            if (ImGui::BeginTabItem("Dynamics")) {
+                DrawEntityDynamicsContent(e);
                 ImGui::EndTabItem();
             }
 
@@ -2556,6 +2698,7 @@ static void DrawEntitySettingsContent(Entity& e) {
                             e.hil_handshake_start = g_app.frame_time;
                             e.hil_hs_attempts = 1;
                             e.hil_hs_last_send = g_app.frame_time;
+                            e.hil_last_error[0] = '\0';  // clear stale error on new connect
                             snprintf(e.hil_handshake_msg, sizeof(e.hil_handshake_msg),
                                      "Requesting fingerprint...");
                             g_app.log(e.id, "hil", "Connected to %s — handshaking...", e.hil_port);
@@ -2563,6 +2706,9 @@ static void DrawEntitySettingsContent(Entity& e) {
                             sp->write((const uint8_t*)"\0\0\0\0", 4);
                             sp->sendCommand("FINGERPRINT?");
                         } else {
+                            snprintf(e.hil_last_error, sizeof(e.hil_last_error),
+                                     "Failed to open %s\nCheck the port is correct and not in use by another program.",
+                                     e.hil_port);
                             g_app.log(e.id, "hil", "Failed to open %s", e.hil_port);
                         }
                     }
@@ -2594,6 +2740,22 @@ static void DrawEntitySettingsContent(Entity& e) {
                     ImGui::TextColored(ImVec4(0.95f, 0.3f, 0.3f, 1.0f), "HANDSHAKE FAILED");
                     ImGui::SameLine();
                     ImGui::TextDisabled("— motion blocked");
+                    ImGui::TextDisabled("%s", e.hil_handshake_msg);
+                    ImGui::SameLine();
+                    ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.2f, 0.5f, 0.8f, 1.0f));
+                    if (ImGui::SmallButton("Retry Handshake")) {
+                        e.hil_handshake_phase = HandshakePhase::WaitFingerprint;
+                        e.hil_handshake_pending = true;
+                        e.hil_handshake_ok = false;
+                        e.hil_hs_attempts = 1;
+                        e.hil_hs_last_send = g_app.frame_time;
+                        snprintf(e.hil_handshake_msg, sizeof(e.hil_handshake_msg), "Requesting fingerprint...");
+                        if (e.serial && e.serial->isOpen()) {
+                            e.serial->write((const uint8_t*)"\0\0\0\0\0\0\0\0", 8);
+                            e.serial->sendCommand("FINGERPRINT?");
+                        }
+                    }
+                    ImGui::PopStyleColor();
                 } else if (connected && phase != HandshakePhase::Idle) {
                     // In-progress phases
                     ImGui::TextColored(ImVec4(0.95f, 0.75f, 0.2f, 1.0f), "Handshaking...");
@@ -2939,7 +3101,15 @@ static void DrawDynamicsPanel() {
             ImGui::EndChild();
         }
         ImGui::Separator();
+        DrawEntityDynamicsContent(e);
+    }
+    ImGui::End();
+    ImGui::PopID();
+}
 
+// ── Per-Entity Dynamics Content (used in entity card tab + global panel) ─
+
+static void DrawEntityDynamicsContent(Entity& e) {
         // ── Profile Management Row ────────────────────────────────────
         {
             static char new_preset_name_profile[64] = "";
@@ -4888,9 +5058,6 @@ static void DrawDynamicsPanel() {
             mcaPresetName(mca.preset));
 
         ImGui::EndChild(); // end ##dyn_scroll
-    }
-    ImGui::End();
-    ImGui::PopID();
 }
 
 // ── Per-Entity I/O Monitor ──────────────────────────────────────────
@@ -5897,12 +6064,17 @@ static void DrawConsolePanel() {
         for (auto& entry : log_src) {
             if (g_app.console_filter >= 0 && entry.entity_id != g_app.console_filter) continue;
 
-            Entity* ent = g_app.findEntity(entry.entity_id);
-            ImVec4 col = ent ? ColorFromFloat4(ent->color) : ImVec4(0.6f, 0.6f, 0.6f, 1.0f);
+            bool is_global = (entry.entity_id < 0);
+            Entity* ent = is_global ? nullptr : g_app.findEntity(entry.entity_id);
+            ImVec4 col = ent ? ColorFromFloat4(ent->color) : ImVec4(0.55f, 0.55f, 0.60f, 1.0f);
 
             ImGui::PushStyleColor(ImGuiCol_Text, col);
-            const char* lt = (ent && ent->type == EntityType::HIL) ? "HIL" : "SIL";
-            ImGui::Text("[%s #%d/%s]", lt, entry.entity_id, entry.source);
+            if (is_global) {
+                ImGui::Text("[SYS/%s]", entry.source);
+            } else {
+                const char* lt = (ent && ent->type == EntityType::HIL) ? "HIL" : "SIL";
+                ImGui::Text("[%s #%d/%s]", lt, entry.entity_id, entry.source);
+            }
             ImGui::PopStyleColor();
             ImGui::SameLine();
             ImGui::TextUnformatted(entry.message);
@@ -6491,6 +6663,17 @@ static void BuildDefaultLayout(ImGuiID dockspace_id) {
     ImGui::DockBuilderFinish(dockspace_id);
 }
 
+// ── Pre-Frame Hook ──────────────────────────────────────────────────
+// Called BEFORE ImGui::NewFrame() so docking state from a loaded .ini
+// is already present when the dockspace is (re)built this frame.
+
+void PreFrameUI() {
+    if (s_pending_ini_load[0] != '\0') {
+        ImGui::LoadIniSettingsFromDisk(s_pending_ini_load);
+        s_pending_ini_load[0] = '\0';
+    }
+}
+
 // ── Main Draw Function ──────────────────────────────────────────────
 
 void DrawUI() {
@@ -6498,17 +6681,42 @@ void DrawUI() {
     DrawToolbar();
     DrawInputStrip();
 
-    // Offset viewport work area to account for toolbar + input strip height
+    // Explicit full-window dockspace with a FIXED string ID.
+    // DockSpaceOverViewport() derives its ID from viewport WorkPos/WorkSize,
+    // which we modify dynamically — this makes the ID non-deterministic and
+    // breaks save/load because the ID in the .ini never matches at runtime.
+    // Using a named DockSpace with ImGui::DockSpaceOverViewport's window flags
+    // but a fixed ID ensures the Docking [Data] section in the .ini always
+    // resolves to the same node tree.
     ImGuiViewport* main_vp = ImGui::GetMainViewport();
     float top_offset = 82.0f + s_input_strip_h;
-    main_vp->WorkPos.y += top_offset;
-    main_vp->WorkSize.y -= top_offset;
+    ImVec2 ds_pos  = ImVec2(main_vp->WorkPos.x, main_vp->WorkPos.y + top_offset);
+    ImVec2 ds_size = ImVec2(main_vp->WorkSize.x, main_vp->WorkSize.y - top_offset);
 
-    // Dockspace over entire window
-    ImGuiID dockspace_id = ImGui::DockSpaceOverViewport(0, ImGui::GetMainViewport(), ImGuiDockNodeFlags_PassthruCentralNode);
+    ImGui::SetNextWindowPos(ds_pos);
+    ImGui::SetNextWindowSize(ds_size);
+    ImGui::SetNextWindowViewport(main_vp->ID);
+    ImGuiWindowFlags ds_flags =
+        ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse |
+        ImGuiWindowFlags_NoResize   | ImGuiWindowFlags_NoMove |
+        ImGuiWindowFlags_NoNavFocus | ImGuiWindowFlags_NoBackground |
+        ImGuiWindowFlags_NoDocking;
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
+    ImGui::Begin("##MainDockspace", nullptr, ds_flags);
+    ImGui::PopStyleVar(3);
+    ImGuiID dockspace_id = ImGui::GetID("MainDockspace");
+    ImGui::DockSpace(dockspace_id, ImVec2(0, 0), ImGuiDockNodeFlags_PassthruCentralNode);
+    ImGui::End();
 
-    // Build default layout on first run (no saved .ini) or on reset request
+    // Build default layout on first run (no saved .ini), on reset, or after
+    // a workspace ini was loaded (s_pending_first_frame resets this flag).
     static bool first_frame = true;
+    if (s_pending_first_frame) {
+        s_pending_first_frame = false;
+        first_frame = true;  // re-evaluate whether dockspace needs default layout
+    }
     if (first_frame) {
         first_frame = false;
         ImGuiDockNode* node = ImGui::DockBuilderGetNode(dockspace_id);

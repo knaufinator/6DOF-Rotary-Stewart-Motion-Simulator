@@ -412,7 +412,7 @@ void SerialPort::parseLine(const char* line) {
             // Servo angles should never exceed ±90° (±π/2 ≈ 1.571 rad).
             bool valid = true;
             for (int i = 0; i < 6; i++) {
-                if (vals[i] != vals[i] || fabsf(vals[i]) > 1.571f) { // NaN or out of range
+                if (vals[i] != vals[i] || vals[i] > 1e10f || vals[i] < -1e10f) {
                     valid = false;
                     m_tel_rejected++;
                     break;
@@ -480,10 +480,11 @@ void SerialPort::parseBinaryTelemetry(const uint8_t *payload, int len) {
     float vals[12] = {};
     memcpy(vals, payload, len < 48 ? len : 48);
 
-    // Validate angles
+    // Validate angles: reject only NaN/Inf (magnitude limit removed — stepper
+    // platforms produce angles well beyond ±π/2, rejection was causing glitches)
     bool valid = true;
     for (int i = 0; i < 6; i++) {
-        if (vals[i] != vals[i] || fabsf(vals[i]) > 1.571f) {
+        if (vals[i] != vals[i] || vals[i] > 1e10f || vals[i] < -1e10f) {
             valid = false;
             m_tel_rejected++;
             break;

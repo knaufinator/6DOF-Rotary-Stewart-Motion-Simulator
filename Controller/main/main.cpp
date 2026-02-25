@@ -33,13 +33,15 @@
 #include "MotionCueing.h"
 #include "version.h"
 
-// ── PCB-version-specific motor control ──────────────────────────────
+// ── Step driver backend (compile-time selectable) ───────────────────
+// Set STEP_DRIVER_SSE or STEP_DRIVER_MCPWM in main/CMakeLists.txt.
+// Defaults to STEP_DRIVER_SSE (SimpleStepEngine) if neither is defined.
+// PCBv1 (ESP32 + MCP23S17) keeps its own path below; StepDriver is PCBv2-only.
 #if PCB_VERSION == 1
-#include "MCP23S17.h"        // SPI GPIO expander for step/dir
+#include "MCP23S17.h"
 #include "GPTimerScheduler.h"
 #else
-#include "MCPWMMotorControl.h"  // Direct GPIO MCPWM step/dir
-#include "GPTimerScheduler.h"
+#include "StepDriver.h"  // selects SSE or MCPWM backend via define
 #endif
 
 #ifdef ENABLE_ETHERNET
@@ -81,10 +83,8 @@ static MCP23S17* outputBank = nullptr;
 static volatile int32_t motorCurrentPos[6] = {0};
 static volatile int32_t motorTargetPos[6] = {0};
 static bool motorInitialized = false;
-static uint16_t motorOutputReg = 0;    // current MCP23S17 output register
-static bool stepPinState = false;       // alternating step HIGH/LOW phases
-
-// MCP23S17 pin assignments (from Dev branch)
+static uint16_t motorOutputReg = 0;
+static bool stepPinState = false;
 static const int mcpStepPins[6] = {
     MCP_STEP_PIN_0, MCP_STEP_PIN_1, MCP_STEP_PIN_2,
     MCP_STEP_PIN_3, MCP_STEP_PIN_4, MCP_STEP_PIN_5
@@ -93,38 +93,36 @@ static const int mcpDirPins[6] = {
     MCP_DIR_PIN_0, MCP_DIR_PIN_1, MCP_DIR_PIN_2,
     MCP_DIR_PIN_3, MCP_DIR_PIN_4, MCP_DIR_PIN_5
 };
-// Motors 0, 2, 4 are counter-clockwise (inverted direction)
 static const bool motorInverted[6] = { true, false, true, false, true, false };
-
 #else
-// ── PCBv2: Direct GPIO MCPWM step/dir ──────────────────────────────
-MCPWMMotorControl* motors[6];
-const gpio_num_t stepPins[6] = {
+// ── PCBv2: step/dir pins (shared by all StepDriver backends) ────────
+static const gpio_num_t stepPins[6] = {
     (gpio_num_t)STEP_PIN_1, (gpio_num_t)STEP_PIN_2, (gpio_num_t)STEP_PIN_3,
     (gpio_num_t)STEP_PIN_4, (gpio_num_t)STEP_PIN_5, (gpio_num_t)STEP_PIN_6
 };
-const gpio_num_t dirPins[6] = {
+static const gpio_num_t dirPins[6] = {
     (gpio_num_t)DIR_PIN_1, (gpio_num_t)DIR_PIN_2, (gpio_num_t)DIR_PIN_3,
     (gpio_num_t)DIR_PIN_4, (gpio_num_t)DIR_PIN_5, (gpio_num_t)DIR_PIN_6
 };
 #endif
 
 // ── Motor abstraction layer ─────────────────────────────────────────
-// Unified API that works for both PCB versions, used by command handlers.
+// PCBv1: direct MCP23S17 arrays.
+// PCBv2: delegates to whichever StepDriver backend is selected.
 #if PCB_VERSION == 1
-static inline int32_t motor_getPos(int i)  { return motorCurrentPos[i]; }
+static inline int32_t motor_getPos(int i)    { return motorCurrentPos[i]; }
 static inline int32_t motor_getTarget(int i) { return motorTargetPos[i]; }
-static inline bool motor_setTarget(int i, int32_t pos) { motorTargetPos[i] = pos; return true; }
-static inline void motor_resetPosition(int i) { motorCurrentPos[i] = 0; motorTargetPos[i] = 0; }
-static inline void motor_emergencyStop(int i) { motorTargetPos[i] = motorCurrentPos[i]; }
-static inline bool motor_isInit(int) { return motorInitialized; }
+static inline bool    motor_setTarget(int i, int32_t pos) { motorTargetPos[i] = pos; return true; }
+static inline void    motor_resetPosition(int i) { motorCurrentPos[i] = 0; motorTargetPos[i] = 0; }
+static inline void    motor_emergencyStop(int i) { motorTargetPos[i] = motorCurrentPos[i]; }
+static inline bool    motor_isInit(int)      { return motorInitialized; }
 #else
-static inline int32_t motor_getPos(int i)  { return motors[i] ? motors[i]->getCurrentPosition() : 0; }
-static inline int32_t motor_getTarget(int i) { return motors[i] ? motors[i]->getTargetPosition() : 0; }
-static inline bool motor_setTarget(int i, int32_t pos) { return motors[i] ? motors[i]->setTargetPosition(pos) : false; }
-static inline void motor_resetPosition(int i) { if (motors[i]) motors[i]->resetPosition(); }
-static inline void motor_emergencyStop(int i) { if (motors[i]) motors[i]->emergencyStop(); }
-static inline bool motor_isInit(int i) { return motors[i] && motors[i]->isInitialized(); }
+static inline int32_t motor_getPos(int i)    { return StepDriver_getPosition(i); }
+static inline int32_t motor_getTarget(int i) { return StepDriver_getTarget(i); }
+static inline bool    motor_setTarget(int i, int32_t pos) { return StepDriver_setTarget(i, pos); }
+static inline void    motor_resetPosition(int i) { StepDriver_resetPosition(i); }
+static inline void    motor_emergencyStop(int i) { StepDriver_setTarget(i, StepDriver_getPosition(i)); }
+static inline bool    motor_isInit(int)      { return StepDriver_isInitialized(); }
 #endif
 
 // Loop timing instrumentation (updated every GPTimer tick)
@@ -406,27 +404,26 @@ void setupMotorPins() {
 }
 #else
 void setupMotorPins() {
-    // PCBv2: Initialize all 6 motors via MCPWM (2 groups × 3 timers = 6 hw channels)
-    MCPWMMotorControl::Config motorConfig;
-    motorConfig.stepPulseWidth_us = 2;      // 2µs pulse width (most drivers spec >= 1.5µs)
-    motorConfig.dirSetupTime_us = 5;        // 5µs direction setup (driver-safe minimum)
-    motorConfig.minStepInterval_us = 4;     // 4µs minimum between steps (250kHz max)
-    motorConfig.maxStepRate = 250000;       // 250kHz max step rate
-    motorConfig.maxAcceleration = 100000;   // 100k steps/sec² acceleration
-    motorConfig.enableSoftLimits = true;
-    motorConfig.softLimitMin = -100000;
-    motorConfig.softLimitMax = 100000;
-
-    int ok_count = 0;
-    for (int i = 0; i < 6; i++) {
-        motors[i] = new MCPWMMotorControl(stepPins[i], dirPins[i]);
-        if (!motors[i]->begin(motorConfig)) {
-            DEBUG_PRINTF("FATAL: motor %d init failed, error: %d\n", i, motors[i]->getLastError());
-        } else {
-            ok_count++;
-        }
+    // PCBv2: Initialize via whichever StepDriver backend is selected.
+    // Change STEP_DRIVER_SSE / STEP_DRIVER_MCPWM in main/CMakeLists.txt to switch.
+    StepDriverMotorConfig cfg[STEP_DRIVER_NUM_MOTORS];
+    for (int i = 0; i < STEP_DRIVER_NUM_MOTORS; i++) {
+        cfg[i].stepPin          = stepPins[i];
+        cfg[i].dirPin           = dirPins[i];
+        cfg[i].invertDir        = false;
+        cfg[i].softLimitMin     = -100000;
+        cfg[i].softLimitMax     =  100000;
+        cfg[i].enableSoftLimits = true;
     }
-    DEBUG_PRINTF("Motors initialized: %d/6 MCPWM hardware-timed (PCBv2)\n", ok_count);
+    if (!StepDriver_init(cfg)) {
+        DEBUG_PRINTLN("FATAL: StepDriver_init failed");
+        return;
+    }
+    if (!StepDriver_start()) {
+        DEBUG_PRINTLN("FATAL: StepDriver_start failed");
+        return;
+    }
+    StepDriver_report();
 }
 #endif
 
@@ -490,41 +487,12 @@ void handleStepDirection() {
 }
 #else
 void handleStepDirection() {
-    // PCBv2: Continuous stepping — 6 motors in TRUE PARALLEL.
-    // Motors 0-3: MCPWM + PCNT hardware counting (zero CPU per pulse)
-    // Motors 4-5: RMT TX hardware loop counting (zero CPU per pulse)
-    // All 6 hardware channels free-run simultaneously at 250 kHz.
-    // Result: ~250 kHz/motor × 6 (all hardware-counted, no ISR bottleneck).
-    // ZERO DRIFT. ZERO OVERSHOOT. Every pulse is counted exactly.
-
+    // PCBv2: delegate to the active StepDriver backend.
+    // SSE:   no-op here — the ISR drives all motors autonomously.
+    // MCPWM: starts continuous moves + polls completion.
     xSemaphoreTake(xMutex, portMAX_DELAY);
-
-    // Start continuous stepping for all motors with pending moves
-    bool anyStarted = false;
-    for (int i = 0; i < 6; i++) {
-        if (!motors[i]) continue;
-        int32_t delta = motors[i]->getTargetPosition() - motors[i]->getCurrentPosition();
-        if (delta == 0) continue;
-        motors[i]->startContinuousSteps(delta);
-        anyStarted = true;
-    }
-
+    StepDriver_handleStep();
     xSemaphoreGive(xMutex);
-
-    // Wait for all continuous moves to complete (all 6 run in parallel)
-    // NOTE: Mutex released so InterfaceMonitorTask can update targets and
-    // send telemetry while motors are mid-move.
-    if (anyStarted) {
-        bool anyRunning = true;
-        while (anyRunning) {
-            esp_task_wdt_reset();  // GPIOLoopTask is WDT-subscribed
-            anyRunning = false;
-            for (int i = 0; i < 6; i++) {
-                if (!motors[i]) continue;
-                if (!motors[i]->checkContinuousDone()) anyRunning = true;
-            }
-        }
-    }
 }
 #endif
 
@@ -551,71 +519,75 @@ void InterfaceMonitorTask(void * pvParameters) {
 }
 
 void GPIOLoopTask(void * pvParameters) {
-    // Subscribe this task to the watchdog
     esp_task_wdt_add(NULL);
-    
-    // Initialize motors HERE on core 1 so MCPWM timer ISRs are allocated
-    // on core 1 — no WiFi/serial/BLE interrupt contention on this core.
-    // Critical for ISR-counted stepping at 6×250kHz (1.5M ISR/s).
+
+    // Initialize motors on core 1 — keeps motor ISRs away from WiFi/BLE core 0.
     setupMotorPins();
-    
-    // Store task handle for GPTimer notifications
     xGPIOLoopHandle = xTaskGetCurrentTaskHandle();
-    
-    DEBUG_PRINTLN("GPIOLoop: Initializing GPTimer scheduler (50µs)");
-    
-    // Initialize and start GPTimer for deterministic 50µs scheduling
-    if (!GPTimerScheduler::begin(MICRO_INTERVAL_FAST)) {  // 50µs interval = 20kHz update rate
-        DEBUG_PRINTLN("ERROR: Failed to initialize GPTimer! Falling back to vTaskDelayUntil");
-        // Fallback to old timing method if GPTimer fails
+
+#if PCB_VERSION == 1
+    // PCBv1: GPTimerScheduler fires every MICRO_INTERVAL_FAST µs, notifies this task.
+    DEBUG_PRINTLN("GPIOLoop: Initializing GPTimer scheduler");
+    if (!GPTimerScheduler::begin(MICRO_INTERVAL_FAST)) {
+        DEBUG_PRINTLN("ERROR: GPTimer init failed, falling back to vTaskDelayUntil");
         TickType_t xLastWakeTime = xTaskGetTickCount();
-        for(;;) {
+        for (;;) {
             esp_task_wdt_reset();
             currentMicros = micros();
-            
             if (currentMicros - previousMicros >= microInterval) {
                 previousMicros = currentMicros;
                 handleStepDirection();
             }
-            
             vTaskDelayUntil(&xLastWakeTime, pdMS_TO_TICKS(1));
         }
         return;
     }
-    
     if (!GPTimerScheduler::start(xGPIOLoopHandle)) {
-        DEBUG_PRINTLN("ERROR: Failed to start GPTimer!");
+        DEBUG_PRINTLN("ERROR: GPTimer start failed");
         return;
     }
-    
-    DEBUG_PRINTLN("GPIOLoop: GPTimer started, entering main loop");
-    
-    for(;;) {
-        // Wait for notification from GPTimer ISR (blocking, no busy-wait)
-        // This provides deterministic 50µs wake-up with <1µs jitter
-        ulTaskNotifyTake(pdTRUE,           // Clear notification count on exit
-                        portMAX_DELAY);   // Wait indefinitely for notification
-        
-        // Reset watchdog
+    DEBUG_PRINTLN("GPIOLoop: GPTimer started (PCBv1)");
+    for (;;) {
+        ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
         esp_task_wdt_reset();
-        
         currentMicros = micros();
-        
-        // Execute motor step/direction logic every iteration (50µs rate)
         if (currentMicros - previousMicros >= microInterval) {
             int64_t loopStart = currentMicros;
             previousMicros = currentMicros;
             handleStepDirection();
-            
-            // Track loop execution time
             uint32_t dur = (uint32_t)(micros() - loopStart);
             loopCount++;
             loopSum_us += dur;
             if (dur < loopMin_us) loopMin_us = dur;
             if (dur > loopMax_us) loopMax_us = dur;
-            
         }
     }
+
+#else
+    // PCBv2 / StepDriver backend:
+    // SSE:   ISR drives all motors autonomously — this loop just feeds WDT
+    //        and calls handleStepDirection() (no-op for SSE) as a keep-alive.
+    // MCPWM: handleStepDirection() starts continuous moves + polls done.
+    DEBUG_PRINTLN("GPIOLoop: entering StepDriver loop (PCBv2)");
+    TickType_t xLastWakeTime = xTaskGetTickCount();
+    for (;;) {
+        esp_task_wdt_reset();
+        currentMicros = micros();
+        if (currentMicros - previousMicros >= microInterval) {
+            int64_t loopStart = currentMicros;
+            previousMicros = currentMicros;
+            handleStepDirection();
+            uint32_t dur = (uint32_t)(micros() - loopStart);
+            loopCount++;
+            loopSum_us += dur;
+            if (dur < loopMin_us) loopMin_us = dur;
+            if (dur > loopMax_us) loopMax_us = dur;
+        }
+        // Yield 1ms so InterfaceMonitorTask (core 0) can process serial/commands.
+        // SSE ISR continues firing during this yield — zero motion interruption.
+        vTaskDelayUntil(&xLastWakeTime, pdMS_TO_TICKS(1));
+    }
+#endif
 }
 
 void EStopMonitorTask(void * pvParameters) {
@@ -635,30 +607,30 @@ void EStopMonitorTask(void * pvParameters) {
             
             // Check for falling edge (button pressed - E-stop activated)
             if (prev_state == 1 && current_state == ESTOP_ACTIVE_STATE) {
-                // SAFETY: Stop GPTimer to prevent motion during E-stop
+                // SAFETY: stop motor engine immediately
+#if PCB_VERSION == 1
                 GPTimerScheduler::stop();
-                
-                // Immediately disable all motor outputs
-                for(int i = 0; i < 6; i++) {
-                    motor_emergencyStop(i);
-                }
+#else
+                StepDriver_stop();
+#endif
+                for (int i = 0; i < 6; i++) motor_emergencyStop(i);
                 isPausedEStop = true;
-                
-                // Log E-stop activation
-                DEBUG_PRINTLN("E-STOP ACTIVATED - GPTimer stopped");
+                DEBUG_PRINTLN("E-STOP ACTIVATED");
             }
-            
+
             // Check for rising edge (button released)
             if (prev_state == ESTOP_ACTIVE_STATE && current_state == 1) {
-                // Don't automatically resume - require explicit reset
                 isRateLimiting = true;
                 DEBUG_PRINTLN("E-STOP RELEASED - Reset required");
-                
-                // Restart GPTimer when E-stop is cleared and system is ready
+#if PCB_VERSION == 1
                 if (xGPIOLoopHandle != NULL) {
                     GPTimerScheduler::start(xGPIOLoopHandle);
                     DEBUG_PRINTLN("GPTimer restarted after E-stop release");
                 }
+#else
+                StepDriver_resume();
+                DEBUG_PRINTLN("StepDriver resumed after E-stop release");
+#endif
             }
             
             prev_state = current_state;
@@ -760,10 +732,12 @@ void process_data(char * data) {
     }
 
     if (strcmp(data, "CONFIG?") == 0) {
-        serial_printf("CONFIG:RD=%.2f,PD=%.2f,L1=%.2f,L2=%.2f,height=%.2f,theta_r=%.2f,theta_p=%.2f\r\n",
+        serial_printf("CONFIG:RD=%.2f,PD=%.2f,L1=%.2f,L2=%.2f,height=%.2f,theta_r=%.2f,theta_p=%.2f,theta_s=%.2f,%.2f,%.2f,%.2f,%.2f,%.2f\r\n",
             stewartConfig.RD, stewartConfig.PD,
             stewartConfig.ServoArmLengthL1, stewartConfig.ConnectingArmLengthL2,
-            stewartConfig.platformHeight, stewartConfig.theta_r, stewartConfig.theta_p);
+            stewartConfig.platformHeight, stewartConfig.theta_r, stewartConfig.theta_p,
+            stewartConfig.theta_s[0], stewartConfig.theta_s[1], stewartConfig.theta_s[2],
+            stewartConfig.theta_s[3], stewartConfig.theta_s[4], stewartConfig.theta_s[5]);
         serial_printf("DRIVE:encoder=%d,gear=%.4f,planetary=%.2f,steps_deg=%.4f\r\n",
             stewartConfig.encoder_ppr, stewartConfig.virtual_gear,
             stewartConfig.planetary_ratio, stewartConfig.steps_per_degree);
@@ -835,24 +809,15 @@ void process_data(char * data) {
         float avg = cnt > 0 ? (float)loopSum_us / cnt : 0;
         serial_printf("MSTAT:loop_count=%lu,loop_us(min/avg/max)=%lu/%.1f/%lu,interval=%d\r\n",
             cnt, (unsigned long)loopMin_us, avg, (unsigned long)loopMax_us, microInterval);
-        // Per-motor stats
+        // Per-motor stats — backend-specific detail via StepDriver_report()
         for (int i = 0; i < 6; i++) {
-#if PCB_VERSION == 1
             serial_printf("  M%d: pos=%ld tgt=%ld init=%d\r\n",
                 i, (long)motor_getPos(i), (long)motor_getTarget(i),
                 motor_isInit(i) ? 1 : 0);
-#else
-            if (!motors[i]) continue;
-            const MCPWMMotorControl::Stats& s = motors[i]->getStats();
-            float savg = s.intervalSamples > 0 ? (float)s.sumInterval_us / s.intervalSamples : 0;
-            uint32_t smin = s.minInterval_us == UINT32_MAX ? 0 : s.minInterval_us;
-            serial_printf("  M%d: pos=%ld tgt=%ld steps=%lu errs=%lu step_us(min/avg/max)=%lu/%.1f/%lu init=%d\r\n",
-                i, (long)motors[i]->getCurrentPosition(), (long)motors[i]->getTargetPosition(),
-                (unsigned long)s.totalSteps, (unsigned long)s.stepErrors,
-                (unsigned long)smin, savg, (unsigned long)s.maxInterval_us,
-                motors[i]->isInitialized() ? 1 : 0);
-#endif
         }
+#if PCB_VERSION != 1
+        StepDriver_report();
+#endif
         return;
     }
 
@@ -860,7 +825,7 @@ void process_data(char * data) {
     // Two modes: BURST (one-shot round-robin) and CONTINUOUS (hardware free-run).
     // MOTORS: 1 = single motor, 6 = all (default 6).
     if (strncmp(data, "RATETEST", 8) == 0) {
-#if PCB_VERSION == 2
+#if defined(STEP_DRIVER_MCPWM)
         int test_steps = 50000;
         int num_motors = 6;
         if (data[8] == ':') {
@@ -872,7 +837,7 @@ void process_data(char * data) {
         }
         if (num_motors < 1 || num_motors > 6) num_motors = 6;
 
-        uint32_t period_us = motors[0]->getConfig().stepPulseWidth_us * 2;
+        uint32_t period_us = 4;  // SSE tick * 2; MCPWM: stepPulseWidth_us * 2
         float theoretical_max = 1000000.0f / period_us;
 
         serial_printf("RATETEST:START steps=%d motors=%d period=%lu us (theoretical_max=%.0f Hz)\r\n",
@@ -885,13 +850,10 @@ void process_data(char * data) {
             int32_t savedPos[6];
             for (int i = 0; i < 6; i++) {
                 savedPos[i] = motor_getPos(i);
-                motors[i]->resetStats();
             }
 
-            // Query soft limit range
-            auto& cfg = motors[0]->getConfig();
-            int32_t limit_min = cfg.softLimitMin;
-            int32_t limit_max = cfg.softLimitMax;
+            int32_t limit_min = -100000;
+            int32_t limit_max =  100000;
             int32_t swing = (limit_max - limit_min);  // full range per leg
             if (swing < 1000) swing = 1000;
 
@@ -915,7 +877,7 @@ void process_data(char * data) {
                     setup_done = true;
                     for (int i = 0; i < 6; i++) {
                         if (i >= num_motors) continue;
-                        if (motors[i]->getTargetPosition() != motors[i]->getCurrentPosition())
+                        if (motor_getTarget(i) != motor_getPos(i))
                             { setup_done = false; break; }
                     }
                 }
@@ -945,7 +907,7 @@ void process_data(char * data) {
                     done = true;
                     for (int i = 0; i < 6; i++) {
                         if (i >= num_motors) continue;
-                        if (motors[i]->getTargetPosition() != motors[i]->getCurrentPosition()) {
+                        if (motor_getTarget(i) != motor_getPos(i)) {
                             done = false; break;
                         }
                     }
@@ -966,9 +928,9 @@ void process_data(char * data) {
             for (int i = 0; i < 6; i++) {
                 if (i >= num_motors) continue;
                 serial_printf("  M%d: pos=%ld (target was %ld, error=%ld)\r\n",
-                    i, (long)motors[i]->getCurrentPosition(),
-                    (long)motors[i]->getTargetPosition(),
-                    (long)(motors[i]->getCurrentPosition() - motors[i]->getTargetPosition()));
+                    i, (long)motor_getPos(i),
+                    (long)motor_getTarget(i),
+                    (long)(motor_getPos(i) - motor_getTarget(i)));
             }
 
             // Return to starting position
@@ -984,7 +946,7 @@ void process_data(char * data) {
                 done = true;
                 for (int i = 0; i < 6; i++) {
                     if (i >= num_motors) continue;
-                    if (motors[i]->getTargetPosition() != motors[i]->getCurrentPosition()) {
+                    if (motor_getTarget(i) != motor_getPos(i)) {
                         done = false; break;
                     }
                 }
@@ -1008,14 +970,14 @@ void process_data(char * data) {
 
             int64_t t_start = esp_timer_get_time();
             for (int i = 0; i < num_motors; i++) {
-                motors[i]->startContinuousSteps(test_steps);
+                _mcpwm_motors[i]->startContinuousSteps(test_steps);
             }
 
             bool anyRunning = true;
             while (anyRunning) {
                 anyRunning = false;
                 for (int i = 0; i < num_motors; i++) {
-                    if (!motors[i]->checkContinuousDone()) anyRunning = true;
+                    if (!_mcpwm_motors[i]->checkContinuousDone()) anyRunning = true;
                 }
             }
 
@@ -1026,19 +988,19 @@ void process_data(char * data) {
                 test_steps, t_cont, cont_rate, cont_rate / theoretical_max * 100.0f);
             for (int i = 0; i < num_motors; i++) {
                 serial_printf("  M%d: error=%ld steps (%s)\r\n",
-                    i, (long)motors[i]->getLastStepError(),
-                    motors[i]->hasPcnt() ? "PCNT" : (motors[i]->hasRmt() ? "RMT" : "ISR"));
+                    i, (long)_mcpwm_motors[i]->getLastStepError(),
+                    _mcpwm_motors[i]->hasPcnt() ? "PCNT" : (_mcpwm_motors[i]->hasRmt() ? "RMT" : "ISR"));
             }
 
             // Return via continuous mode (reverse)
             for (int i = 0; i < num_motors; i++) {
-                motors[i]->startContinuousSteps(-test_steps);
+                _mcpwm_motors[i]->startContinuousSteps(-test_steps);
             }
             anyRunning = true;
             while (anyRunning) {
                 anyRunning = false;
                 for (int i = 0; i < num_motors; i++) {
-                    if (!motors[i]->checkContinuousDone()) anyRunning = true;
+                    if (!_mcpwm_motors[i]->checkContinuousDone()) anyRunning = true;
                 }
             }
 
@@ -1152,15 +1114,96 @@ void process_data(char * data) {
         return;
     }
 
+    // ── SIGTEST:M:N:R:D — Logic analyzer signal validation ────────────
+    // Fire exactly N steps on motor M at R Hz in direction D (0=neg,1=pos).
+    // Reports: commanded count, hardware-counted result, pulse timing stats.
+    // Designed for logic analyzer capture: probe STEP + DIR pins on motor M.
+    // Usage: SIGTEST:0:1000:250000:1  (motor 0, 1000 steps, 250kHz, forward)
+    //        SIGTEST:0:500:125000:0   (motor 0, 500 steps, 125kHz, reverse)
+    // After SIGTEST:DONE, SIGTEST:RETURN fires the same count in reverse.
+    if (strncmp(data, "SIGTEST:", 8) == 0) {
+#if defined(STEP_DRIVER_MCPWM)
+        int motor = 0, dir = 1;
+        int32_t steps = 1000;
+        int32_t rate_hz = 250000;
+        int parsed = sscanf(data + 8, "%d:%ld:%ld:%d", &motor, &steps, &rate_hz, &dir);
+        if (parsed < 2 || motor < 0 || motor > 5 || steps < 1 || steps > 500000
+                       || rate_hz < 1 || rate_hz > 250000) {
+            serial_printf("SIGTEST:ERR usage SIGTEST:M:N[:R[:D]]  M=0-5 N=steps R=hz D=0/1\r\n");
+            return;
+        }
+
+        if (!_mcpwm_motors[motor]) {
+            serial_printf("SIGTEST:ERR motor %d not initialized\r\n", motor);
+            return;
+        }
+
+        // Reset stats so we get a clean count for this run
+        _mcpwm_motors[motor]->resetStats();
+
+        int32_t start_pos = StepDriver_getPosition(motor);
+        int32_t target    = start_pos + (dir ? steps : -steps);
+
+        // Clamp to soft limits — report if clamped
+        StepDriver_setTarget(motor, target);
+        int32_t actual_target = StepDriver_getTarget(motor);
+        int32_t commanded = abs(actual_target - start_pos);
+
+        serial_printf("SIGTEST:START motor=%d steps=%ld rate=%ld dir=%d gpio_step=%d gpio_dir=%d\r\n",
+            motor, (long)commanded, (long)rate_hz,
+            dir, (int)stepPins[motor], (int)dirPins[motor]);
+
+        // Wait for motor to finish, timeout 2× expected duration
+        int64_t expected_us = (int64_t)commanded * 1000000LL / rate_hz;
+        int64_t timeout_us  = expected_us * 2 + 500000; // +500ms margin
+        int64_t t_start = esp_timer_get_time();
+
+        while (StepDriver_getPosition(motor) != actual_target) {
+            if ((esp_timer_get_time() - t_start) > timeout_us) {
+                serial_printf("SIGTEST:TIMEOUT after %lld us\r\n",
+                    esp_timer_get_time() - t_start);
+                break;
+            }
+            vTaskDelay(pdMS_TO_TICKS(1));
+        }
+
+        int64_t elapsed_us = esp_timer_get_time() - t_start;
+        int32_t hw_steps   = (int32_t)_mcpwm_motors[motor]->getStats().totalSteps;
+        int32_t pos_error  = (int32_t)(StepDriver_getPosition(motor) - actual_target);
+        float   actual_hz  = (elapsed_us > 0)
+                             ? (float)hw_steps * 1000000.0f / (float)elapsed_us
+                             : 0.0f;
+
+        serial_printf("SIGTEST:DONE motor=%d commanded=%ld hw_counted=%ld pos_error=%ld "
+                      "elapsed_us=%lld actual_hz=%.0f %s\r\n",
+            motor, (long)commanded, (long)hw_steps, (long)pos_error,
+            elapsed_us, actual_hz,
+            (pos_error == 0 && hw_steps == commanded) ? "PASS" : "FAIL");
+
+        // Return to start
+        StepDriver_setTarget(motor, start_pos);
+        t_start = esp_timer_get_time();
+        while (StepDriver_getPosition(motor) != start_pos) {
+            if ((esp_timer_get_time() - t_start) > timeout_us) break;
+            vTaskDelay(pdMS_TO_TICKS(1));
+        }
+        serial_printf("SIGTEST:RETURN motor=%d pos=%ld\r\n",
+            motor, (long)StepDriver_getPosition(motor));
+#else
+        serial_printf("SIGTEST:NOT_SUPPORTED (requires STEP_DRIVER_MCPWM)\r\n");
+#endif
+        return;
+    }
+
     // ── MTEST:RESET — Clear all timing/step statistics ────────────────
     // Tests:  Stats reset path for loop counters and per-motor accumulators
     // Proves: resetStats() zeroes all MCPWMMotorControl::Stats fields,
     //         loop timing counters reset cleanly (no stale data in MSTAT)
     if (strcmp(data, "MTEST:RESET") == 0) {
         loopCount = 0; loopMin_us = UINT32_MAX; loopMax_us = 0; loopSum_us = 0;
-#if PCB_VERSION != 1
+#if defined(STEP_DRIVER_MCPWM)
         for (int i = 0; i < 6; i++) {
-            if (motors[i]) motors[i]->resetStats();
+            if (_mcpwm_motors[i]) _mcpwm_motors[i]->resetStats();
         }
 #endif
         serial_printf("MTEST:RESET=OK\r\n");
@@ -1205,9 +1248,9 @@ void process_data(char * data) {
             motor_setTarget(i, savedPos[i] + TEST_STEPS);
         }
         loopCount = 0; loopMin_us = UINT32_MAX; loopMax_us = 0; loopSum_us = 0;
-#if PCB_VERSION != 1
+#if defined(STEP_DRIVER_MCPWM)
         for (int i = 0; i < 6; i++) {
-            if (motors[i]) motors[i]->resetStats();
+            if (_mcpwm_motors[i]) _mcpwm_motors[i]->resetStats();
         }
 #endif
         xSemaphoreGive(xMutex);
@@ -1238,9 +1281,9 @@ void process_data(char * data) {
             motor_setTarget(i, savedPos[i]);
         }
         loopCount = 0; loopMin_us = UINT32_MAX; loopMax_us = 0; loopSum_us = 0;
-#if PCB_VERSION != 1
+#if defined(STEP_DRIVER_MCPWM)
         for (int i = 0; i < 6; i++) {
-            if (motors[i]) motors[i]->resetStats();
+            if (_mcpwm_motors[i]) _mcpwm_motors[i]->resetStats();
         }
 #endif
         xSemaphoreGive(xMutex);
@@ -1288,16 +1331,24 @@ void process_data(char * data) {
             serial_printf("  M%d: pos=%ld tgt=%ld\r\n",
                 i, (long)motor_getPos(i), (long)motor_getTarget(i));
         }
-#else
+#elif defined(STEP_DRIVER_MCPWM)
         for (int i = 0; i < 6; i++) {
             if (testMotor >= 0 && i != testMotor) continue;
-            if (!motors[i]) continue;
-            const MCPWMMotorControl::Stats& s = motors[i]->getStats();
+            if (!_mcpwm_motors[i]) continue;
+            const MCPWMMotorControl::Stats& s = _mcpwm_motors[i]->getStats();
             float savg = s.intervalSamples > 0 ? (float)s.sumInterval_us / s.intervalSamples : 0;
             uint32_t smin = s.minInterval_us == UINT32_MAX ? 0 : s.minInterval_us;
             serial_printf("  M%d: steps=%lu errs=%lu step_us(min/avg/max)=%lu/%.1f/%lu\r\n",
                 i, (unsigned long)s.totalSteps, (unsigned long)s.stepErrors,
                 (unsigned long)smin, savg, (unsigned long)s.maxInterval_us);
+        }
+#else
+        // SSE / MCPWM_ISR: report via StepDriver API (backend-agnostic)
+        for (int i = 0; i < 6; i++) {
+            if (testMotor >= 0 && i != testMotor) continue;
+            serial_printf("  M%d: pos=%ld tgt=%ld steps=%lu\r\n",
+                i, (long)motor_getPos(i), (long)motor_getTarget(i),
+                (unsigned long)StepDriver_getTotalSteps(i));
         }
 #endif
 
@@ -1343,12 +1394,14 @@ void process_data(char * data) {
     // Identical to pressing the physical E-Stop button.
     // Requires ESTOP:RESET to resume operation.
     if (strcmp(data, "ESTOP:FULL") == 0) {
+#if PCB_VERSION == 1
         GPTimerScheduler::stop();
-        for (int i = 0; i < 6; i++) {
-            motor_emergencyStop(i);
-        }
+#else
+        StepDriver_stop();
+#endif
+        for (int i = 0; i < 6; i++) motor_emergencyStop(i);
         isPausedEStop = true;
-        serial_printf("ESTOP:FULL — GPTimer stopped, all motors killed. Send ESTOP:RESET to recover.\r\n");
+        serial_printf("ESTOP:FULL — motor engine stopped, all motors killed. Send ESTOP:RESET to recover.\r\n");
         return;
     }
 
@@ -1361,11 +1414,13 @@ void process_data(char * data) {
             return;
         }
         isPausedEStop = false;
-        isRateLimiting = true;  // safe ramp-up after recovery
-        if (xGPIOLoopHandle != NULL) {
-            GPTimerScheduler::start(xGPIOLoopHandle);
-        }
-        serial_printf("ESTOP:RESET — E-Stop cleared, GPTimer restarted (rate-limited)\r\n");
+        isRateLimiting = true;
+#if PCB_VERSION == 1
+        if (xGPIOLoopHandle != NULL) GPTimerScheduler::start(xGPIOLoopHandle);
+#else
+        StepDriver_resume();
+#endif
+        serial_printf("ESTOP:RESET — E-Stop cleared, motor engine restarted (rate-limited)\r\n");
         return;
     }
 
@@ -1385,8 +1440,8 @@ void process_data(char * data) {
         if (xSemaphoreTake(xMutex, pdMS_TO_TICKS(100)) == pdTRUE) {
             for (int i = 0; i < 6; i++) {
                 motor_resetPosition(i);
-#if PCB_VERSION != 1
-                if (motors[i]) motors[i]->resetStats();
+#if defined(STEP_DRIVER_MCPWM)
+                if (_mcpwm_motors[i]) _mcpwm_motors[i]->resetStats();
 #endif
                 arr[i] = 0;
             }

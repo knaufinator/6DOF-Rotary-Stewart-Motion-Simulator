@@ -53,6 +53,7 @@ static void doFrame() {
 
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
+    PreFrameUI();        // apply pending workspace ini BEFORE NewFrame
     ImGui::NewFrame();
     DrawUI();
     ImGui::Render();

@@ -59,6 +59,13 @@ target_compile_options(${COMPONENT_LIB} PRIVATE
 # ── Compile definitions ──
 # PCB_VERSION: 1 = original ESP32 DevKit, 2 = ESP32-S3 new board
 # ENABLE_ETHERNET: only on PCBv2 (W5500 SPI wired on that board)
+#
+# STEP_DRIVER backend (PCBv2 only) — change this line to switch:
+#   STEP_DRIVER_SSE       = SimpleStepEngine   (1 GPTimer ISR, 125 kHz/motor, needs GPTIMER_ISR_IRAM_SAFE=y)
+#   STEP_DRIVER_MCPWM_ISR = McpwmStepEngine    (1 MCPWM TEZ ISR, 125 kHz/motor, IRAM auto — recommended)
+#   STEP_DRIVER_MCPWM     = MCPWMMotorControl  (4 MCPWM+PCNT + 2 MCPWM+RMT, 250 kHz/motor, complex)
+set(STEP_DRIVER_BACKEND "STEP_DRIVER_MCPWM")
+
 target_compile_definitions(${COMPONENT_LIB} PRIVATE
     PCB_VERSION=${PCB_VERSION}
     ENABLE_DEBUG_UART=1
@@ -66,5 +73,8 @@ target_compile_definitions(${COMPONENT_LIB} PRIVATE
     ENABLE_BLE=1
 )
 if(PCB_VERSION EQUAL 2)
-    target_compile_definitions(${COMPONENT_LIB} PRIVATE ENABLE_ETHERNET=1)
+    target_compile_definitions(${COMPONENT_LIB} PRIVATE
+        ENABLE_ETHERNET=1
+        ${STEP_DRIVER_BACKEND}=1
+    )
 endif()

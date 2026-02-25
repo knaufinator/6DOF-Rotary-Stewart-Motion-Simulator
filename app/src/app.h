@@ -127,6 +127,7 @@ enum class HandshakePhase {
     WaitFingerprint,    // sent FINGERPRINT?, awaiting response
     WaitConfig,         // sent CONFIG?, awaiting response
     WaitBits,           // sent BITS?, awaiting response
+    WaitBitsConfirm,    // sent BITS:N, awaiting firmware echo confirmation
     Validating,         // all responses in — comparing params
     Ready,              // handshake passed — motion enabled
     Failed              // mismatch or timeout — motion blocked
@@ -142,6 +143,7 @@ struct DeviceParams {
 
     // Geometry (from CONFIG response)
     float RD, PD, L1, L2, height, theta_r, theta_p;
+    float theta_s[6];
     int   servo_center[6];
     float pulse_per_rad;
     bool  config_received;
@@ -211,6 +213,7 @@ struct Entity {
     DeviceParams    hil_device_params;   // parameters reported by device during handshake
     double          hil_handshake_start; // frame_time when handshake began (for timeout)
     char            hil_handshake_msg[128]; // status message for UI display
+    char            hil_last_error[192];    // last connection error (persists across disconnect for UI)
     int             hil_hs_attempts;        // FINGERPRINT? send count (reset each connect)
     double          hil_hs_last_send;       // time of last FINGERPRINT? send
     bool            hil_geo_synced;         // true if app geometry matches device after handshake
@@ -331,8 +334,13 @@ struct App {
     PluginManager         plugin_mgr;
     int                   active_plugin_idx;  // index into plugin_mgr.plugins(), -1 = none
 
-    // Dynamics panel — persisted entity selection
+    // Dynamics panel — persisted entity selection and visibility
     int                   selected_dynamics_id = -1;  // entity ID for Dynamics panel, -1 = auto
+
+    // Panel visibility — persisted per workspace
+    bool                  show_dynamics     = true;
+    bool                  show_console      = true;
+    bool                  show_data_streams = true;
 
     // Console
     std::vector<LogEntry> console_log;

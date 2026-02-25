@@ -158,10 +158,6 @@ void App::hilTxLoop() {
         for (auto& e : entities) {
             if (ei >= 8) break;
             if (e.type != EntityType::HIL || !e.serial || !e.serial->isOpen() || !e.hil_handshake_ok) { ei++; continue; }
-            // Pause motion TX while command queue is draining — commands are
-            // critical (geometry push, TELRATE) and must not be interleaved
-            // with motion data on the serial line.
-            if (!e.hil_cmd_queue.empty()) { ei++; continue; }
 
             double interval = 1.0 / (double)e.hil_tx_hz;
             double now = now_sec();
@@ -424,8 +420,11 @@ void App::saveSettings() {
         if (pname) cJSON_AddStringToObject(root, "active_plugin_name", pname);
     }
 
-    // Dynamics panel selection
+    // Dynamics panel selection + panel visibility
     cJSON_AddNumberToObject(root, "selected_dynamics_id", selected_dynamics_id);
+    cJSON_AddBoolToObject(root, "show_dynamics",      show_dynamics);
+    cJSON_AddBoolToObject(root, "show_console",       show_console);
+    cJSON_AddBoolToObject(root, "show_data_streams",  show_data_streams);
 
     // Entities — full serialization
     cJSON* ents = cJSON_AddArrayToObject(root, "entities");
@@ -505,9 +504,15 @@ void App::loadSettings() {
             active_plugin_idx = 0;
     }
 
-    // Dynamics panel selection
+    // Dynamics panel selection + panel visibility
     if ((val = cJSON_GetObjectItem(root, "selected_dynamics_id")))
         selected_dynamics_id = val->valueint;
+    if ((val = cJSON_GetObjectItem(root, "show_dynamics")))
+        show_dynamics = cJSON_IsTrue(val);
+    if ((val = cJSON_GetObjectItem(root, "show_console")))
+        show_console = cJSON_IsTrue(val);
+    if ((val = cJSON_GetObjectItem(root, "show_data_streams")))
+        show_data_streams = cJSON_IsTrue(val);
 
     // Entities — clear and recreate from saved data
     cJSON* ents = cJSON_GetObjectItem(root, "entities");
@@ -682,27 +687,35 @@ static void advanceHandshake(App& app, Entity& e) {
             break;
 
         case HandshakePhase::WaitBits: {
-            // All data collected — validate
-            e.hil_handshake_phase = HandshakePhase::Validating;
-            snprintf(e.hil_handshake_msg, sizeof(e.hil_handshake_msg), "Validating parameters...");
-
+            // BITS? response received — now push our desired bit depth and wait for echo.
+            // Motion stays BLOCKED until firmware confirms the correct BITS:N back.
             auto& dp = e.hil_device_params;
-            bool ok = true;
 
             // Check protocol version compatibility
             if (dp.proto_ver != 1) {
                 app.log(e.id, "hil", "WARNING: Unknown protocol version %d (expected 1)", dp.proto_ver);
-                // Allow but warn — don't block
             }
 
-            // Sync bit depth if device differs from app expectation
-            if (dp.bits_received && dp.bit_depth != e.config.bit_depth) {
-                app.log(e.id, "hil", "Bit depth mismatch: device=%d, app=%d — syncing device to %d",
-                    dp.bit_depth, e.config.bit_depth, e.config.bit_depth);
+            // Send BITS:N immediately — firmware will echo it back as "BITS:N,max_raw=..."
+            {
                 char cmd[32];
                 snprintf(cmd, sizeof(cmd), "BITS:%d", e.config.bit_depth);
                 e.serial->sendCommand(cmd);
+                app.log(e.id, "hil", "BITS:%d sent — waiting for firmware echo...", e.config.bit_depth);
             }
+            e.hil_handshake_phase = HandshakePhase::WaitBitsConfirm;
+            e.hil_hs_last_send = app.frame_time;
+            e.hil_hs_attempts = 0;
+            snprintf(e.hil_handshake_msg, sizeof(e.hil_handshake_msg), "Confirming bit depth...");
+            break;
+        }
+
+        case HandshakePhase::WaitBitsConfirm: {
+            // Firmware echoed BITS:N confirmation — now validate and finalize.
+            e.hil_handshake_phase = HandshakePhase::Validating;
+            snprintf(e.hil_handshake_msg, sizeof(e.hil_handshake_msg), "Validating parameters...");
+
+            auto& dp = e.hil_device_params;
 
             // Check geometry sync between app settings and device
             e.hil_geo_synced = true;
@@ -722,21 +735,50 @@ static void advanceHandshake(App& app, Entity& e) {
                 }
 
                 if (!e.hil_geo_synced) {
-                    app.log(e.id, "hil", "WARNING: Geometry out of sync with device!");
+                    app.log(e.id, "hil", "Geometry out of sync — pushing app settings to device.");
                     app.log(e.id, "hil", "  App:    RD=%.2f PD=%.2f L1=%.2f L2=%.2f H=%.2f theta_r=%.2f theta_p=%.2f",
                         geo.RD, geo.PD, geo.ServoArmLengthL1, geo.ConnectingArmLengthL2,
                         geo.platformHeight, geo.theta_r, geo.theta_p);
                     app.log(e.id, "hil", "  Device: RD=%.2f PD=%.2f L1=%.2f L2=%.2f H=%.2f theta_r=%.2f theta_p=%.2f",
                         dp.RD, dp.PD, dp.L1, dp.L2, dp.height, dp.theta_r, dp.theta_p);
-                    app.log(e.id, "hil", "Open Settings > Geometry Sync to push your settings to the device.");
+                    // Push app geometry to device (app is authoritative)
+                    char cmd[128];
+                    snprintf(cmd, sizeof(cmd), "CONFIG:RD=%.4f", geo.RD);
+                    e.hil_cmd_queue.push_back(cmd);
+                    snprintf(cmd, sizeof(cmd), "CONFIG:PD=%.4f", geo.PD);
+                    e.hil_cmd_queue.push_back(cmd);
+                    snprintf(cmd, sizeof(cmd), "CONFIG:L1=%.4f", geo.ServoArmLengthL1);
+                    e.hil_cmd_queue.push_back(cmd);
+                    snprintf(cmd, sizeof(cmd), "CONFIG:L2=%.4f", geo.ConnectingArmLengthL2);
+                    e.hil_cmd_queue.push_back(cmd);
+                    snprintf(cmd, sizeof(cmd), "CONFIG:height=%.4f", geo.platformHeight);
+                    e.hil_cmd_queue.push_back(cmd);
+                    snprintf(cmd, sizeof(cmd), "CONFIG:theta_r=%.4f", geo.theta_r);
+                    e.hil_cmd_queue.push_back(cmd);
+                    snprintf(cmd, sizeof(cmd), "CONFIG:theta_p=%.4f", geo.theta_p);
+                    e.hil_cmd_queue.push_back(cmd);
                 } else {
                     app.log(e.id, "hil", "Geometry in sync with device.");
                 }
+                // Import theta_s from device (not configurable via app UI, firmware-authoritative)
+                if (dp.config_received) {
+                    bool has_theta_s = false;
+                    for (int i = 0; i < 6; i++) if (dp.theta_s[i] != 0.0f) { has_theta_s = true; break; }
+                    if (has_theta_s) {
+                        for (int i = 0; i < 6; i++) e.config.geometry.theta_s[i] = dp.theta_s[i];
+                        e.config.rebuildPlatform();
+                    }
+                }
             }
 
-            if (ok) {
+            {
                 e.hil_handshake_phase = HandshakePhase::Ready;
                 e.hil_handshake_ok = true;
+                // Reset FK pose so stale pose from prior connection doesn't
+                // corrupt the visualization on the new connection.
+                memset(e.hil_fk_pose, 0, sizeof(e.hil_fk_pose));
+                e.hil_tel_seq = -1;
+                e.state.ik_seq = 0;
                 if (e.hil_geo_synced) {
                     snprintf(e.hil_handshake_msg, sizeof(e.hil_handshake_msg),
                         "Ready — fw %s, proto %d", dp.fw_version, dp.proto_ver);
@@ -784,11 +826,6 @@ static void advanceHandshake(App& app, Entity& e) {
                     dp.fw_version, dp.proto_ver,
                     dp.bits_received ? dp.bit_depth : e.config.bit_depth,
                     e.hil_tel_target_hz);
-            } else {
-                e.hil_handshake_phase = HandshakePhase::Failed;
-                e.hil_handshake_ok = false;
-                snprintf(e.hil_handshake_msg, sizeof(e.hil_handshake_msg), "Handshake FAILED");
-                app.log(e.id, "hil", "Handshake FAILED — motion blocked");
             }
             e.hil_handshake_pending = false;
             break;
@@ -887,6 +924,9 @@ void App::handleHilLine(int entity_id, const char* line) {
             e->hil_handshake_phase = HandshakePhase::Failed;
             snprintf(e->hil_handshake_msg, sizeof(e->hil_handshake_msg),
                 "FINGERPRINT MISMATCH — expected %s", e->hil_fingerprint);
+            snprintf(e->hil_last_error, sizeof(e->hil_last_error),
+                "FINGERPRINT MISMATCH\nConnected device: %s\nExpected: %s\nUse \"Clear Fingerprint\" to pair a new device.",
+                mac, e->hil_fingerprint);
             log(e->id, "hil", "FINGERPRINT MISMATCH! Expected %s, got %s — disconnecting",
                 e->hil_fingerprint, mac);
             log(e->id, "hil", "Clear fingerprint in Settings to pair a new device");
@@ -924,6 +964,11 @@ void App::handleHilLine(int entity_id, const char* line) {
         if ((v = strstr(p, "height="))) dp.height = (float)atof(v + 7);
         if ((v = strstr(p, "theta_r="))) dp.theta_r = (float)atof(v + 8);
         if ((v = strstr(p, "theta_p="))) dp.theta_p = (float)atof(v + 8);
+        if ((v = strstr(p, "theta_s="))) {
+            sscanf(v + 8, "%f,%f,%f,%f,%f,%f",
+                &dp.theta_s[0], &dp.theta_s[1], &dp.theta_s[2],
+                &dp.theta_s[3], &dp.theta_s[4], &dp.theta_s[5]);
+        }
         dp.config_received = true;
 
         // Re-check geometry sync after any CONFIG update
@@ -974,8 +1019,8 @@ void App::handleHilLine(int entity_id, const char* line) {
         return;
     }
 
-    // ── Phase 3: BITS response ───────────────────────────────────────
-    // Format: "BITS:12,max_raw=4095"
+    // ── Phase 3: BITS? response ─────────────────────────────────────
+    // Format: "BITS:12,max_raw=4095" — firmware reports current bit depth
     if (strncmp(line, "BITS:", 5) == 0 &&
         e->hil_handshake_phase == HandshakePhase::WaitBits) {
         auto& dp = e->hil_device_params;
@@ -983,8 +1028,24 @@ void App::handleHilLine(int entity_id, const char* line) {
         const char* mr = strstr(line, "max_raw=");
         if (mr) dp.max_raw = (float)atof(mr + 8);
         dp.bits_received = true;
+        // Sends BITS:N and transitions to WaitBitsConfirm
+        advanceHandshake(*this, *e);
+        return;
+    }
 
-        // All data collected — validate and finalize
+    // ── Phase 3b: BITS:N echo confirmation ──────────────────────────
+    // Firmware echoes "BITS:N,max_raw=..." after we send BITS:N — confirms
+    // the correct bit depth is active before motion TX begins.
+    if (strncmp(line, "BITS:", 5) == 0 &&
+        e->hil_handshake_phase == HandshakePhase::WaitBitsConfirm) {
+        auto& dp = e->hil_device_params;
+        int confirmed = atoi(line + 5);
+        const char* mr = strstr(line, "max_raw=");
+        if (mr) dp.max_raw = (float)atof(mr + 8);
+        dp.bit_depth = confirmed;
+        dp.bits_received = true;
+        log(e->id, "hil", "BITS:%d confirmed by firmware (max_raw=%.0f) — motion enabled",
+            confirmed, dp.max_raw);
         advanceHandshake(*this, *e);
         return;
     }
@@ -2190,18 +2251,25 @@ skip_input_processing:
                     e.hil_handshake_pending = false;
                     snprintf(e.hil_handshake_msg, sizeof(e.hil_handshake_msg),
                              "No response after %d attempts", e.hil_hs_attempts);
+                    snprintf(e.hil_last_error, sizeof(e.hil_last_error),
+                             "No FINGERPRINT response after %d attempts.\nDevice may be offline, crashed, or wrong firmware.",
+                             e.hil_hs_attempts);
                     log(e.id, "hil", "Handshake failed — no FINGERPRINT response after %d attempts",
                         e.hil_hs_attempts);
                 }
             }
 
-            // ── Retry for CONFIG? / BITS? phases ────────────────────────
-            // If the response to CONFIG? or BITS? is lost, resend with flush.
+            // ── Retry for CONFIG? / BITS? / BITS:N confirm phases ───────
+            // If the response is lost, resend with flush.
             if (e.serial && e.serial->isOpen() && e.hil_handshake_pending
                 && (e.hil_handshake_phase == HandshakePhase::WaitConfig
-                 || e.hil_handshake_phase == HandshakePhase::WaitBits)) {
-                bool is_config = (e.hil_handshake_phase == HandshakePhase::WaitConfig);
-                const char* cmd = is_config ? "CONFIG?" : "BITS?";
+                 || e.hil_handshake_phase == HandshakePhase::WaitBits
+                 || e.hil_handshake_phase == HandshakePhase::WaitBitsConfirm)) {
+                bool is_config  = (e.hil_handshake_phase == HandshakePhase::WaitConfig);
+                bool is_confirm = (e.hil_handshake_phase == HandshakePhase::WaitBitsConfirm);
+                char bits_set_cmd[32];
+                snprintf(bits_set_cmd, sizeof(bits_set_cmd), "BITS:%d", e.config.bit_depth);
+                const char* cmd = is_config ? "CONFIG?" : (is_confirm ? bits_set_cmd : "BITS?");
                 double since_last = frame_time - e.hil_hs_last_send;
                 if (since_last > 0.5 && e.hil_hs_attempts < 5) {
                     e.hil_hs_attempts++;
@@ -2224,6 +2292,7 @@ skip_input_processing:
                     e.hil_handshake_ok = false;
                     e.hil_handshake_pending = false;
                     snprintf(e.hil_handshake_msg, sizeof(e.hil_handshake_msg), "%s", fail_msg);
+                    snprintf(e.hil_last_error, sizeof(e.hil_last_error), "%s", fail_msg);
                     log(e.id, "hil", "Handshake failed — %s", fail_msg);
                 }
             }
@@ -2240,14 +2309,10 @@ skip_input_processing:
                 }
                 memcpy(e.state.input_physical, physical, sizeof(physical));
 
-                // Drain command queue (one per 3 frames for ESP32 pacing)
+                // Drain command queue — one per frame, COBS framing handles interleaving
                 if (!e.hil_cmd_queue.empty()) {
-                    static int cmd_drain_counter = 0;
-                    if (++cmd_drain_counter >= 3) {
-                        cmd_drain_counter = 0;
-                        e.serial->sendCommand(e.hil_cmd_queue.front().c_str());
-                        e.hil_cmd_queue.erase(e.hil_cmd_queue.begin());
-                    }
+                    e.serial->sendCommand(e.hil_cmd_queue.front().c_str());
+                    e.hil_cmd_queue.erase(e.hil_cmd_queue.begin());
                 }
 
                 // Prepare raw TX packet (only after handshake)

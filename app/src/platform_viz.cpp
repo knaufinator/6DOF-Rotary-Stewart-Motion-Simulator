@@ -126,7 +126,7 @@ static float fkError(const PlatformDef& plat, const Vec3 arm_tips[6],
 }
 
 static void solveFK(const float angles[6], const PlatformDef& plat,
-                    float pose[6], int max_iter = 8)
+                    float pose[6], int max_iter = 20)
 {
     // Compute arm tip positions from servo angles
     Vec3 arm_tips[6];
@@ -306,9 +306,26 @@ void DrawPlatformViz(ImDrawList* dl, ImVec2 origin, ImVec2 size,
     {
         static int s_fk_seq[8] = {-1,-1,-1,-1,-1,-1,-1,-1};
         int ei = (e.id >= 0 && e.id < 8) ? e.id : 0;
+        // When ik_seq resets to 0 (new handshake), force re-run by invalidating cache
+        if (e.state.ik_seq == 0) s_fk_seq[ei] = -1;
         if (e.state.ik_seq != s_fk_seq[ei]) {
             s_fk_seq[ei] = e.state.ik_seq;
             solveFK(viz_angles, plat, e.hil_fk_pose);
+            // If warm-start diverged, retry from home pose
+            float err_check[6];
+            Vec3 tips_check[6];
+            for (int k = 0; k < 6; k++) {
+                const ActuatorDef& a = plat.actuators[k];
+                float ang = viz_angles[k];
+                tips_check[k] = v3(
+                    a.base_pos[0] + a.L1 * cosf(a.beta) * cosf(ang),
+                    a.base_pos[1] + a.L1 * sinf(a.beta) * cosf(ang),
+                    a.base_pos[2] + a.L1 * sinf(ang));
+            }
+            if (fkError(plat, tips_check, e.hil_fk_pose, err_check) > 1.0f) {
+                memset(e.hil_fk_pose, 0, sizeof(e.hil_fk_pose));
+                solveFK(viz_angles, plat, e.hil_fk_pose);
+            }
         }
     }
 

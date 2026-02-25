@@ -1,154 +1,208 @@
 # HIL Test Plan — ESP32-S3 Hardware-in-the-Loop Validation
 
-Goal: Validate ESP32-S3 connectivity, serial communication, and firmware behavior before attaching servo drivers and motors.
+Validates ESP32-S3 firmware connectivity, signal integrity, and step/dir output before and after connecting servo hardware.
+
+**Current firmware**: `STEP_DRIVER_MCPWM` — hardware-timed MCPWM comparator/generator chains, 250 kHz max, PCNT counting on motors 0–3, RMT on motors 4–5.
 
 ## Prerequisites
 
-- ESP32-S3-DevKitC-1 flashed with current firmware
-- USB cable connected to host PC
-- Desktop app running (`app/build/Release/stewart-platform`)
-- Oscilloscope or logic analyzer (for signal tests)
+- ESP32-S3 PCBv2 flashed with current firmware (`idf.py build flash`)
+- USB cable to host PC (COM7 nominal)
+- `tools/mstat_check.py` — COBS serial validation (`python tools/mstat_check.py`)
+- `tools/sigtest.py` — Step/dir signal validation (`python tools/sigtest.py --help`)
+- Logic analyzer (sigrok/PulseView compatible) for signal tests — pending hardware arrival
+- Desktop app built (`app/build/Release/stewart-platform.exe`)
 
 ---
 
-## Test 1: Serial Baud Rate Validation
+## Test 1: Serial Link + COBS Framing
 
-**Status**: ⬜ Untested
+**Status**: ✅ Passing
 
-The ESP32-S3-DevKitC-1 uses native USB Serial JTAG (USB CDC), so the baud rate setting is nominal — data flows at USB speed. The desktop app opens at 115200. This test confirms reliable bidirectional communication.
+Confirms USB CDC link, COBS framing, and basic command/response pipeline.
 
-### Steps
+### Method
 
-1. Flash firmware to ESP32-S3
-2. Open serial monitor at **115200** baud (e.g., `idf.py monitor` or PuTTY)
-3. Send `DBG:1X` — expect debug output to begin streaming
-4. Send `DBG:0X` — expect debug output to stop
-5. Send `SCALE?X` — expect response `SCALE:8.00,8.00,7.00,30.00,30.00,30.00`
-6. Send `MCA?X` — expect JSON MCA config response
-7. Repeat at **115200** baud to compare behavior
+```bash
+python tools/mstat_check.py
+```
 
 ### Pass Criteria
 
-- [ ] All commands receive correct responses at 115200
-- [ ] No garbled/corrupted characters in either direction
-- [ ] Response latency < 50ms for simple queries
+- [x] `COBS transport initialized` appears within 1s of boot
+- [x] Telemetry frames arrive at ~50ms intervals
+- [x] `READY` response received after handshake
+- [x] `MSTAT` response includes all 6 motors with `init=1`
+- [x] No reboot loop (no repeated `COBS transport initialized` with no `READY`)
 
-### If Communication Fails
+### Typical Output
 
-- Verify USB cable supports data (not charge-only)
-- Check Windows Device Manager for the correct COM port
-- Try a different USB port or cable
+```
+t=0.54 LOG: COBS transport initialized
+t=1.07 RESP: READY
+t=3.07 RESP: MSTAT:loop_count=2644,loop_us(min/avg/max)=5/5.2/84,interval=50
+t=3.07 RESP: M0: pos=0 tgt=0 init=1
+...
+t=3.67 RESP: M5: pos=0 tgt=0 init=1
+```
 
 ---
 
-## Test 2: HIL Connectivity
+## Test 2: HIL Desktop App Connectivity
 
-**Status**: ⬜ Untested
+**Status**: ✅ Passing
 
-Verify the desktop app can connect to the ESP32 in HIL mode and exchange data.
+Verifies the desktop app connects to the ESP32, receives live telemetry, and displays it correctly.
 
 ### Steps
 
-1. Launch the desktop app
-2. Add a HIL entity from Entity settings
-3. Select the ESP32 COM port
-4. Enable auto-connect or click Connect
-6. Verify serial monitor shows ESP32 boot output
-7. Send `SCALE?` from the command input — verify response appears in serial monitor
-8. Send `DBG:1` — verify debug telemetry streams in serial monitor
+1. Launch `stewart-platform.exe`
+2. Add a HIL entity, select COM7
+3. Verify Console panel shows `COBS transport initialized` and `READY`
+4. Verify Data Streams panel shows live telemetry updating at ~50 Hz
+5. Verify HIL entity shows firmware version and protocol version in header
 
 ### Pass Criteria
 
-- [ ] App detects and lists the ESP32 COM port
-- [ ] Connection succeeds on first attempt
-- [ ] Console displays ESP32 output in real-time
-- [ ] Commands sent from app reach ESP32 and responses return
+- [x] App auto-detects COM port and connects
+- [x] Console shows firmware boot messages in real time
+- [x] Telemetry (6-axis floats) updates live in Data Streams
+- [x] Firmware version and protocol visible in entity header
 
 ---
 
-## Test 3: Binary Packet Round-Trip
+## Test 3: Motion Pipeline Round-Trip
 
-**Status**: ⬜ Untested
+**Status**: ✅ Passing
 
-Verify the 15-byte binary packet protocol works end-to-end via HIL.
+Verifies position commands from the app reach the firmware and update motor targets.
 
 ### Steps
 
-1. Connect to ESP32 in HIL mode (from Test 2)
-2. Enable SimTools UDP in the app (pointing to localhost:4123)
-3. Send a test packet from SimTools or the UDP bench tool:
-   ```bash
-   # Use SimTools or a UDP test tool to send packets to the app's SimTools port
-   ```
-4. App should forward packets to ESP32 as binary serial
-5. Enable `DBG:1` and verify ESP32 reports received axis values
-6. Confirm values match what was sent
+1. Connect in HIL mode
+2. Set input source to **Test Signal** (sine wave, 0.1 Hz, low amplitude)
+3. Send `MSTAT` — verify `tgt` values are non-zero and changing
+4. Verify `pos` values track `tgt` values (motor moving)
+5. Set amplitude to 0 — verify all targets and positions return to 0
 
 ### Pass Criteria
 
-- [ ] 100% packet delivery (no dropped packets in 100-packet burst)
-- [ ] Axis values on ESP32 match sent values exactly
-- [ ] No checksum errors reported by firmware
+- [x] `tgt` values change in response to test signal
+- [x] `pos` tracks `tgt` (MCPWM backend executing steps)
+- [x] Motors return to zero when signal removed
+- [x] `loop_us(avg)` stays below 100µs during motion
 
 ---
 
-## Test 4: GPIO Output Verification (ESP32 only, no servos)
+## Test 4: Step/Dir Signal Integrity — GPIO Only (no servo hardware)
 
-**Status**: ⬜ Untested
+**Status**: ⬜ Pending logic analyzer arrival
 
-Verify STEP and DIR GPIO outputs respond to position commands before connecting any line drivers or servos.
+Validates MCPWM hardware pulse generation on GPIO before connecting line drivers.
+
+### Method
+
+```bash
+# Fire 1000 steps on motor 0 at 250kHz
+python tools/sigtest.py --port COM7 --motor 0 --steps 1000 --rate 250000 --dir 1
+```
+
+Probe **GPIO4** (STEP, Motor 0) and **GPIO10** (DIR, Motor 0) on logic analyzer.
+
+### Signal Targets
+
+| Metric | Target | Spec source |
+|--------|--------|-------------|
+| Pulse width | 2µs ± 0.5µs | AASD-15A ≥1.5µs |
+| DIR setup time | ≥4µs before first step after dir change | AASD-15A ≥2µs |
+| Step count accuracy | commanded == measured | Hardware PCNT |
+| Max step rate | ≥200 kHz sustained | MCPWM hardware |
+| Timing jitter | <1µs pk-pk | Logic analyzer |
+
+### Pass Criteria
+
+- [ ] `SIGTEST:DONE ... PASS` from firmware (hw_counted == commanded)
+- [ ] Logic analyzer CSV analysis: pulse count matches, width ≥1.5µs
+- [ ] Step rate within 5% of commanded
+- [ ] DIR stable before first pulse after direction change
+
+### Logic Analyzer Setup (PulseView)
+
+- CH0 → GPIO4 (STEP)
+- CH1 → GPIO10 (DIR)
+- Sample rate: 24 MHz
+- Trigger: rising edge CH0
+- Duration: 50ms
+- Export: `File > Export Samples > CSV`
+
+```bash
+python tools/sigtest.py --motor 0 --steps 1000 --rate 250000 --csv capture.csv --no-send
+```
+
+---
+
+## Test 5: All-Motor Step Count Validation
+
+**Status**: ⬜ Pending logic analyzer arrival
+
+Validates all 6 motors fire correct step counts simultaneously.
+
+### Method
+
+```bash
+# Run RATETEST — exercises all motors at full 250kHz
+# Send via mstat_check.py or desktop app console: RATETEST
+```
+
+Or probe each motor sequentially:
+
+```bash
+for /L %i in (0,1,5) do python tools/sigtest.py --port COM7 --motor %i --steps 500 --rate 250000 --dir 1
+```
+
+### Pass Criteria
+
+- [ ] All 6 motors: `SIGTEST:DONE ... PASS`
+- [ ] Motors 0–3 (PCNT): hw_counted == commanded, pos_error == 0
+- [ ] Motors 4–5 (RMT): hw_counted == commanded, pos_error == 0
+- [ ] No WDT panics or reboots during 6-motor simultaneous run
+
+---
+
+## Test 6: E-Stop Behavior
+
+**Status**: ⬜ Pending
+
+Verifies emergency stop halts all step output immediately.
 
 ### Steps
 
-1. Connect oscilloscope/logic analyzer to GPIO4 (STEP) and GPIO10 (DIR)
-2. Send position command via HIL (desktop app) or serial: `127,127,200,127,127,127X`
-3. Observe STEP pulses on GPIO4
-4. Verify DIR level on GPIO10
-5. Send `127,127,50,127,127,127X` — direction should reverse
-6. Measure pulse width (expect ~2µs) and frequency
+1. Start a slow continuous motion (test signal at 0.2 Hz)
+2. Send `ESTOP` from desktop app or serial console
+3. Verify all STEP pulses stop on logic analyzer / scope
+4. Verify `pos` values freeze immediately in `MSTAT`
+5. Release E-stop — verify system resumes motion normally
 
 ### Pass Criteria
 
-- [ ] Clean 3.3V step pulses on GPIO4
-- [ ] DIR pin changes level when direction reverses
-- [ ] Pulse width: 2µs ± 0.5µs
-- [ ] No pulses when position command = center (127)
-- [ ] GPTimer 100µs cadence confirmed (10kHz update rate)
+- [ ] All STEP pulses stop within one control loop period (≤50µs)
+- [ ] No position drift after E-stop
+- [ ] System resumes cleanly without reboot
 
 ---
 
-## Test 5: E-Stop Behavior (ESP32 only)
+## Test 7: SN75174N Differential Output (with line driver hardware)
 
-**Status**: ⬜ Untested
+**Status**: ⬜ Pending hardware build
 
-Verify emergency stop halts all motor output.
+See [single_motor_test_plan.md](single_motor_test_plan.md) for full wiring details.
 
-### Steps
+Probe SN75174N output pins Y/Z differential pairs. Verify:
 
-1. Connect GPIO20 to GND via a jumper wire (simulates E-stop contact closed = safe)
-2. Send position commands, verify STEP pulses on scope
-3. Remove jumper from GPIO20 (simulates E-stop activation)
-4. Verify all STEP pulses stop immediately
-5. Re-connect jumper — verify system recovers and responds to new commands
-
-### Pass Criteria
-
-- [ ] STEP pulses stop within 5ms of E-stop activation
-- [ ] GPTimer pauses during E-stop
-- [ ] System recovers cleanly when E-stop is released
-- [ ] No phantom steps during E-stop transition
-
----
-
-## Future Tests (after servo connection)
-
-These tests require the SN75174N line driver and AASD-15A to be wired per the [single motor test plan](single_motor_test_plan.md):
-
-- **Test 6**: Differential output integrity (SN75174N)
-- **Test 7**: Single motor spin test
-- **Test 8**: Step rate sweep (50kHz → 100kHz → 200kHz)
-- **Test 9**: Sustained motion profile with SimTools replay
-- **Test 10**: 6-motor simultaneous operation
+- [ ] Differential swing ≥2V (RS-422 spec)
+- [ ] Clean edges on PULS± and DIR± twisted pairs
+- [ ] No ringing on ≤3m cable run
+- [ ] AASD-15A CN2 receives signal without fault indication
 
 ---
 
@@ -156,8 +210,10 @@ These tests require the SN75174N line driver and AASD-15A to be wired per the [s
 
 | Test | Date | Result | Notes |
 |------|------|--------|-------|
-| 1 — Serial baud rate | — | — | — |
-| 2 — HIL connectivity | — | — | — |
-| 3 — Binary packets | — | — | — |
-| 4 — GPIO output | — | — | — |
-| 5 — E-Stop | — | — | — |
+| 1 — Serial / COBS | Feb 2026 | ✅ Pass | 921600 baud, all 6 motors init=1 |
+| 2 — HIL app connectivity | Feb 2026 | ✅ Pass | Auto-connect, live telemetry |
+| 3 — Motion pipeline | Feb 2026 | ✅ Pass | Targets track commands, loop avg 5µs |
+| 4 — GPIO signal integrity | — | ⬜ Pending | Logic analyzer ordered |
+| 5 — All-motor validation | — | ⬜ Pending | After Test 4 |
+| 6 — E-Stop | — | ⬜ Pending | — |
+| 7 — SN75174N differential | — | ⬜ Pending | After PCB/breadboard build |

@@ -282,11 +282,13 @@ def main():
             print(f"ERROR: {e}")
             sys.exit(1)
 
-        time.sleep(0.5)  # let ESP32 settle
+        time.sleep(1.5)  # let firmware fully boot and initialize motors
 
         cmd = f"SIGTEST:{args.motor}:{args.steps}:{args.rate}:{args.dir}"
         print(f"Sending: {cmd}")
-        ser.write(build_cmd_packet(cmd))
+        cobs_frame = cobs_encode(bytes([CH_CMD]) + cmd.encode()) + b'\x00'
+        ser.write(b'\x00' * 8)
+        ser.write(cobs_frame)
 
         expected_duration = args.steps / args.rate
         timeout = expected_duration * 2 + 3.0

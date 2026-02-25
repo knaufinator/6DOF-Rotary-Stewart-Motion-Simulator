@@ -1,0 +1,118 @@
+Executing action: all (aliases: build)
+Running ninja in directory C:\Users\Chris\Documents\GitHub\6DOF-Rotary-Stewart-Motion-Simulator\Controller\build
+Executing "ninja all"...
+[1/9] Performing build step for 'bootloader'
+[1/1] C:\WINDOWS\system32\cmd.exe /C "cd /D C:\Users\Chris\Documents\GitHub\6DOF-Rotary-Stewart-Motion-Simulator\Controller\build\bootloader\esp-idf\esptool_py && C:\Users\Chris\.espressif\python_env\idf5.5_py3.11_env\Scripts\python.exe C:/Users/Chris/esp/v5.5/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 bootloader 0x0 C:/Users/Chris/Documents/GitHub/6DOF-Rotary-Stewart-Motion-Simulator/Controller/build/bootloader/bootloader.bin"
+Bootloader binary size 0x4de0 bytes. 0x3220 bytes (39%) free.
+[2/9] No install step for 'bootloader'
+[3/9] Completed 'bootloader'
+[4/9] Building CXX object esp-idf/main/CMakeFiles/__idf_main.dir/main.cpp.obj
+[5/9] Linking C static library esp-idf\main\libmain.a
+[6/9] Generating esp-idf/esp_system/ld/sections.ld
+[7/9] Linking CXX executable stewart_platform.elf
+[8/9] Generating binary image from built executable
+esptool.py v4.12.dev1
+Creating esp32s3 image...
+Merged 2 ELF sections
+Successfully created esp32s3 image.
+Generated C:/Users/Chris/Documents/GitHub/6DOF-Rotary-Stewart-Motion-Simulator/Controller/build/stewart_platform.bin
+[9/9] C:\WINDOWS\system32\cmd.exe /C "cd /D C:\Users\Chris\Documents\GitHub\6DOF-Rotary-Stewart-Motion-Simulator\Controller\build\esp-idf\esptool_py && C:\Users\Chris\.espressif\python_env\idf5.5_py3.11_env\Scripts\python.exe C:/Users/Chris/esp/v5.5/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 partition --type app C:/Users/Chris/Documents/GitHub/6DOF-Rotary-Stewart-Motion-Simulator/Controller/build/partition_table/partition-table.bin C:/Users/Chris/Documents/GitHub/6DOF-Rotary-Stewart-Motion-Simulator/Controller/build/stewart_platform.bin"
+stewart_platform.bin binary size 0x150340 bytes. Smallest app partition is 0x177000 bytes. 0x26cc0 bytes (10%) free.
+Executing action: flash
+Running ninja in directory C:\Users\Chris\Documents\GitHub\6DOF-Rotary-Stewart-Motion-Simulator\Controller\build
+Executing "ninja flash"...
+[1/5] C:\WINDOWS\system32\cmd.exe /C "cd /D C:\Users\Chris\Documents\GitHub\6DOF-Rotary-Stewart-Motion-Simulator\Controller\build\esp-idf\esptool_py && C:\Users\Chris\.espressif\python_env\idf5.5_py3.11_env\Scripts\python.exe C:/Users/Chris/esp/v5.5/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 partition --type app C:/Users/Chris/Documents/GitHub/6DOF-Rotary-Stewart-Motion-Simulator/Controller/build/partition_table/partition-table.bin C:/Users/Chris/Documents/GitHub/6DOF-Rotary-Stewart-Motion-Simulator/Controller/build/stewart_platform.bin"
+stewart_platform.bin binary size 0x150340 bytes. Smallest app partition is 0x177000 bytes. 0x26cc0 bytes (10%) free.
+[2/5] Performing build step for 'bootloader'
+[1/1] C:\WINDOWS\system32\cmd.exe /C "cd /D C:\Users\Chris\Documents\GitHub\6DOF-Rotary-Stewart-Motion-Simulator\Controller\build\bootloader\esp-idf\esptool_py && C:\Users\Chris\.espressif\python_env\idf5.5_py3.11_env\Scripts\python.exe C:/Users/Chris/esp/v5.5/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 bootloader 0x0 C:/Users/Chris/Documents/GitHub/6DOF-Rotary-Stewart-Motion-Simulator/Controller/build/bootloader/bootloader.bin"
+Bootloader binary size 0x4de0 bytes. 0x3220 bytes (39%) free.
+[3/5] No install step for 'bootloader'
+[4/5] Completed 'bootloader'
+[4/5] C:\WINDOWS\system32\cmd.exe /C "cd /D C:\Users\Chris\esp\v5.5\esp-idf\components\esptool_py && C:\Users\Chris\.espressif\tools\cmake\3.30.2\bin\cmake.exe -D IDF_PATH=C:/Users/Chris/esp/v5.5/esp-idf -D SERIAL_TOOL=C:/Users/Chris/.espressif/python_env/idf5.5_py3.11_env/Scripts/python.exe;;C:/Users/Chris/esp/v5.5/esp-idf/components/esptool_py/esptool/esptool.py;--chip;esp32s3 -D SERIAL_TOOL_ARGS=--before=default_reset;--after=hard_reset;write_flash;@flash_args -D WORKING_DIRECTORY=C:/Users/Chris/Documents/GitHub/6DOF-Rotary-Stewart-Motion-Simulator/Controller/build -P C:/Users/Chris/esp/v5.5/esp-idf/components/esptool_py/run_serial_tool.cmake"
+esptool.py --chip esp32s3 -p COM3 -b 460800 --before=default_reset --after=hard_reset write_flash --flash_mode dio --flash_freq 80m --flash_size 8MB 0x0 bootloader/bootloader.bin 0x10000 stewart_platform.bin 0x8000 partition_table/partition-table.bin
+esptool.py v4.12.dev1
+Serial port COM3
+Connecting....
+Chip is ESP32-S3 (QFN56) (revision v0.2)
+Features: WiFi, BLE, Embedded PSRAM 8MB (AP_3v3)
+Crystal is 40MHz
+MAC: f0:9e:9e:21:75:c8
+Uploading stub...
+Running stub...
+Stub running...
+Changing baud rate to 460800
+Changed.
+Configuring flash size...
+Flash will be erased from 0x00000000 to 0x00004fff...
+Flash will be erased from 0x00010000 to 0x00160fff...
+Flash will be erased from 0x00008000 to 0x00008fff...
+SHA digest in image updated
+Compressed 19936 bytes to 12825...
+Writing at 0x00000000... (100 %)
+Wrote 19936 bytes (12825 compressed) at 0x00000000 in 0.7 seconds (effective 223.3 kbit/s)...
+Hash of data verified.
+Compressed 1377088 bytes to 868461...
+Writing at 0x00010000... (1 %)
+Writing at 0x0001d5ef... (3 %)
+Writing at 0x0002c9fd... (5 %)
+Writing at 0x0003a714... (7 %)
+Writing at 0x000443b9... (9 %)
+Writing at 0x0004ee0d... (11 %)
+Writing at 0x00055b57... (12 %)
+Writing at 0x0005b7eb... (14 %)
+Writing at 0x000617a8... (16 %)
+Writing at 0x0006743f... (18 %)
+Writing at 0x0006d052... (20 %)
+Writing at 0x00072702... (22 %)
+Writing at 0x000780b0... (24 %)
+Writing at 0x0007d930... (25 %)
+Writing at 0x00082fe3... (27 %)
+Writing at 0x00089528... (29 %)
+Writing at 0x0008ee51... (31 %)
+Writing at 0x00094fda... (33 %)
+Writing at 0x0009b0ec... (35 %)
+Writing at 0x000a0f26... (37 %)
+Writing at 0x000a69e5... (38 %)
+Writing at 0x000ac553... (40 %)
+Writing at 0x000b1d37... (42 %)
+Writing at 0x000b77de... (44 %)
+Writing at 0x000bd53a... (46 %)
+Writing at 0x000c2cc1... (48 %)
+Writing at 0x000c7f79... (50 %)
+Writing at 0x000cd17d... (51 %)
+Writing at 0x000d2465... (53 %)
+Writing at 0x000d7c44... (55 %)
+Writing at 0x000dd5ad... (57 %)
+Writing at 0x000e2922... (59 %)
+Writing at 0x000e7da8... (61 %)
+Writing at 0x000ecfc3... (62 %)
+Writing at 0x000f2074... (64 %)
+Writing at 0x000f7bac... (66 %)
+Writing at 0x000fd150... (68 %)
+Writing at 0x001025e1... (70 %)
+Writing at 0x00107b75... (72 %)
+Writing at 0x0010d822... (74 %)
+Writing at 0x00112b03... (75 %)
+Writing at 0x00117ce5... (77 %)
+Writing at 0x0011ce8a... (79 %)
+Writing at 0x00122544... (81 %)
+Writing at 0x00127c4e... (83 %)
+Writing at 0x0012e523... (85 %)
+Writing at 0x001366f5... (87 %)
+Writing at 0x0013c422... (88 %)
+Writing at 0x00143fba... (90 %)
+Writing at 0x00149308... (92 %)
+Writing at 0x0014ec75... (94 %)
+Writing at 0x00154b80... (96 %)
+Writing at 0x0015a7cd... (98 %)
+Writing at 0x00160286... (100 %)
+Wrote 1377088 bytes (868461 compressed) at 0x00010000 in 20.0 seconds (effective 551.2 kbit/s)...
+Hash of data verified.
+Compressed 3072 bytes to 105...
+Writing at 0x00008000... (100 %)
+Wrote 3072 bytes (105 compressed) at 0x00008000 in 0.1 seconds (effective 292.1 kbit/s)...
+Hash of data verified.
+
+Leaving...
+Hard resetting via RTS pin...
+Done

@@ -61,6 +61,7 @@
 #include "esp_attr.h"
 #include "esp_private/periph_ctrl.h"
 #include "soc/mcpwm_periph.h"
+#include "soc/mcpwm_struct.h"
 #include "soc/gpio_struct.h"
 #include "debug_uart.h"
 
@@ -102,6 +103,8 @@ public:
         volatile bool     dirPending;
         volatile uint32_t totalSteps;
         volatile uint32_t dirChanges;
+        uint8_t           opIdx;    // MCPWM operator index (0-2)
+        uint8_t           cmprIdx;  // comparator index within operator (0 or 1)
     };
 
     static SharedMcpwmStepEngine& instance() {
@@ -129,6 +132,8 @@ public:
             gpio_set_level(configs[i].dirPin, 0);
 
             _state[i] = {};
+            _state[i].opIdx   = (uint8_t)(i / 2);  // operator 0,0,1,1,2,2
+            _state[i].cmprIdx = (uint8_t)(i % 2);  // comparator A or B
         }
 
         _initialized = true;
@@ -192,9 +197,11 @@ public:
                 _cleanup();
                 return false;
             }
-            // Idle compare value = _tickUs (= period). The counter reaches this
-            // only at TEP; the generator action is LOW on an already-LOW pin — harmless.
-            mcpwm_comparator_set_compare_value(_cmpr[i], _tickUs);
+            // Idle compare value = 0: LOW-on-compare fires at count=0 (same as TEZ).
+            // Compare actions have higher priority than timer events on ESP32-S3 MCPWM,
+            // so the LOW wins over HIGH-on-TEZ — pin stays LOW when idle.
+            // When stepping, ISR sets compare = SMSE_PULSE_US so LOW fires at 2µs.
+            mcpwm_comparator_set_compare_value(_cmpr[i], 0);
 
             mcpwm_generator_config_t g_cfg = {};
             g_cfg.gen_gpio_num = _cfg[i].stepPin;
@@ -205,20 +212,21 @@ public:
                 return false;
             }
 
-            // LOW on compare match (falling edge of pulse — hardware-timed)
+            // Fully hardware-driven pulse:
+            //   HIGH on TEZ  (timer empty = count wraps to 0) — rising edge
+            //   LOW  on compare match (count == SMSE_PULSE_US) — falling edge
+            // No ISR GPIO write needed — hardware handles both edges.
+            mcpwm_gen_timer_event_action_t tez_act = {};
+            tez_act.direction = MCPWM_TIMER_DIRECTION_UP;
+            tez_act.event     = MCPWM_TIMER_EVENT_EMPTY;
+            tez_act.action    = MCPWM_GEN_ACTION_HIGH;
+            mcpwm_generator_set_action_on_timer_event(_gen[i], tez_act);
+
             mcpwm_gen_compare_event_action_t cmp_act = {};
             cmp_act.direction  = MCPWM_TIMER_DIRECTION_UP;
             cmp_act.comparator = _cmpr[i];
             cmp_act.action     = MCPWM_GEN_ACTION_LOW;
             mcpwm_generator_set_action_on_compare_event(_gen[i], cmp_act);
-
-            // Explicitly ensure no TEZ/TEP timer event actions on this generator
-            // (default is KEEP, but be explicit to avoid leftover state after reset)
-            mcpwm_gen_timer_event_action_t tev = {};
-            tev.direction = MCPWM_TIMER_DIRECTION_UP;
-            tev.event     = MCPWM_TIMER_EVENT_EMPTY;
-            tev.action    = MCPWM_GEN_ACTION_KEEP;
-            mcpwm_generator_set_action_on_timer_event(_gen[i], tev);
         }
 
         // ── Register TEZ (on_full in COUNT_UP = timer wraps to 0) ISR ──
@@ -297,6 +305,12 @@ public:
     uint32_t getTotalSteps(int i) const { return (i >= 0 && i < SMSE_NUM_MOTORS) ? _state[i].totalSteps : 0; }
     uint32_t getDirChanges(int i) const { return (i >= 0 && i < SMSE_NUM_MOTORS) ? _state[i].dirChanges : 0; }
 
+    void resetStats(int i) {
+        if (i < 0 || i >= SMSE_NUM_MOTORS) return;
+        _state[i].totalSteps = 0;
+        _state[i].dirChanges = 0;
+    }
+
     uint32_t getTickUs()    const { return _tickUs; }
     uint32_t getMaxStepHz() const { return 1000000UL / _tickUs; }  // one step per period (hardware falling edge)
     uint32_t getTickHz()    const { return 1000000UL / _tickUs; }
@@ -327,7 +341,7 @@ public:
         // Update idle comparator values for all motors currently at target
         for (int i = 0; i < SMSE_NUM_MOTORS; i++) {
             if (_state[i].targetPos == _state[i].currentPos)
-                mcpwm_comparator_set_compare_value(_cmpr[i], _tickUs);
+                mcpwm_comparator_set_compare_value(_cmpr[i], 0);
         }
         DEBUG_PRINTF("SharedMcpwmStepEngine: tick rate → %lu µs (%lu Hz, %lu Hz max step)\n",
             (unsigned long)_tickUs,
@@ -439,14 +453,10 @@ bool IRAM_ATTR _smse_tez_isr(mcpwm_timer_handle_t /*timer*/,
         }
 
         // ── Fire step pulse ───────────────────────────────────────────
-        // Rising edge: software w1ts (IRAM-safe, immediate)
-        _smse_gpio_set(c.stepPin);
-
-        // Arm hardware comparator: fires LOW at count=SMSE_PULSE_US this period.
-        // Immediate update (no shadow) — takes effect right now in this period.
-        // The next ISR tick will either re-arm (motor still moving) or the
-        // second pass below will reset to SMSE_PERIOD_US (motor reached target).
-        mcpwm_comparator_set_compare_value(self->_cmpr[i], SMSE_PULSE_US);
+        // Hardware generates rising edge at TEZ automatically (HIGH-on-TEZ action).
+        // Arm comparator to fire falling edge at SMSE_PULSE_US via direct register
+        // write (IRAM-safe — avoids driver flash access at 250 kHz ISR rate).
+        MCPWM0.operators[s.opIdx].timestamp[s.cmprIdx].val = SMSE_PULSE_US;
 
         s.currentPos += forward ? 1 : -1;
         s.totalSteps++;
@@ -454,12 +464,12 @@ bool IRAM_ATTR _smse_tez_isr(mcpwm_timer_handle_t /*timer*/,
 
     // Reset comparators for motors that just reached their target this tick
     // (delta became 0 after the position increment above).
-    // Writing _tickUs (= current period) disarms the comparator — fires LOW at TEP,
-    // a harmless no-op on an already-LOW pin.
+    // Setting compare=0: LOW-on-compare fires at count=0 (higher priority than TEZ HIGH)
+    // — pin stays LOW. Zero-width pulse is invisible on the GPIO.
     for (int i = 0; i < SMSE_NUM_MOTORS; i++) {
         SharedMcpwmStepEngine::MotorState& s = self->_state[i];
         if (s.targetPos == s.currentPos) {
-            mcpwm_comparator_set_compare_value(self->_cmpr[i], self->_tickUs);
+            MCPWM0.operators[s.opIdx].timestamp[s.cmprIdx].val = 0;
         }
     }
 

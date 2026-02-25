@@ -61,10 +61,11 @@ target_compile_options(${COMPONENT_LIB} PRIVATE
 # ENABLE_ETHERNET: only on PCBv2 (W5500 SPI wired on that board)
 #
 # STEP_DRIVER backend (PCBv2 only) — change this line to switch:
-#   STEP_DRIVER_SSE       = SimpleStepEngine   (1 GPTimer ISR, 125 kHz/motor, needs GPTIMER_ISR_IRAM_SAFE=y)
-#   STEP_DRIVER_MCPWM_ISR = McpwmStepEngine    (1 MCPWM TEZ ISR, 125 kHz/motor, IRAM auto — recommended)
-#   STEP_DRIVER_MCPWM     = MCPWMMotorControl  (4 MCPWM+PCNT + 2 MCPWM+RMT, 250 kHz/motor, complex)
-set(STEP_DRIVER_BACKEND "STEP_DRIVER_MCPWM")
+#   STEP_DRIVER_SSE           = SimpleStepEngine        (1 GPTimer ISR, 125 kHz/motor, needs GPTIMER_ISR_IRAM_SAFE=y)
+#   STEP_DRIVER_MCPWM_ISR     = McpwmStepEngine          (1 MCPWM TEZ ISR, 125 kHz/motor, IRAM auto)
+#   STEP_DRIVER_SHARED_MCPWM  = SharedMcpwmStepEngine   (1 MCPWM TEZ ISR + hw comparator, 250 kHz/motor — recommended)
+#   STEP_DRIVER_MCPWM         = MCPWMMotorControl        (per-motor MCPWM+PCNT+RMT, 250 kHz/motor, complex)
+set(STEP_DRIVER_BACKEND "STEP_DRIVER_SHARED_MCPWM")
 
 target_compile_definitions(${COMPONENT_LIB} PRIVATE
     PCB_VERSION=${PCB_VERSION}

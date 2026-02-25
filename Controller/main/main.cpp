@@ -34,9 +34,17 @@
 #include "version.h"
 
 // ── Step driver backend (compile-time selectable) ───────────────────
-// Set STEP_DRIVER_SSE or STEP_DRIVER_MCPWM in main/CMakeLists.txt.
-// Defaults to STEP_DRIVER_SSE (SimpleStepEngine) if neither is defined.
+// Set backend in main/CMakeLists.txt (STEP_DRIVER_BACKEND variable).
+// Defaults to STEP_DRIVER_SSE (SimpleStepEngine) if none defined.
 // PCBv1 (ESP32 + MCP23S17) keeps its own path below; StepDriver is PCBv2-only.
+//
+// STEP_DRIVER_ISR_BACKEND = true when using any single-timer ISR backend
+// (STEP_DRIVER_MCPWM_ISR or STEP_DRIVER_SHARED_MCPWM). These backends use
+// StepDriver_getTotalSteps/resetStats/isInitialized via the engine singleton.
+// STEP_DRIVER_MCPWM (MCPWMMotorControl) uses the per-motor _mcpwm_motors[] array.
+#if defined(STEP_DRIVER_MCPWM_ISR) || defined(STEP_DRIVER_SHARED_MCPWM)
+#  define STEP_DRIVER_ISR_BACKEND 1
+#endif
 #if PCB_VERSION == 1
 #include "MCP23S17.h"
 #include "GPTimerScheduler.h"
@@ -1171,7 +1179,7 @@ void process_data(char * data) {
     //        SIGTEST:0:500:125000:0   (motor 0, 500 steps, 125kHz, reverse)
     // After SIGTEST:DONE, SIGTEST:RETURN fires the same count in reverse.
     if (strncmp(data, "SIGTEST:", 8) == 0) {
-#if defined(STEP_DRIVER_MCPWM)
+#if defined(STEP_DRIVER_MCPWM) || defined(STEP_DRIVER_ISR_BACKEND)
         int motor = 0, dir = 1;
         int32_t steps = 1000;
         int32_t rate_hz = 250000;
@@ -1182,13 +1190,14 @@ void process_data(char * data) {
             return;
         }
 
-        if (!_mcpwm_motors[motor]) {
-            serial_printf("SIGTEST:ERR motor %d not initialized\r\n", motor);
+        // Verify backend is initialized
+        if (!StepDriver_isInitialized()) {
+            serial_printf("SIGTEST:ERR stepper backend not initialized\r\n");
             return;
         }
 
         // Reset stats so we get a clean count for this run
-        _mcpwm_motors[motor]->resetStats();
+        StepDriver_resetStats(motor);
 
         int32_t start_pos = StepDriver_getPosition(motor);
         int32_t target    = start_pos + (dir ? steps : -steps);
@@ -1217,7 +1226,7 @@ void process_data(char * data) {
         }
 
         int64_t elapsed_us = esp_timer_get_time() - t_start;
-        int32_t hw_steps   = (int32_t)_mcpwm_motors[motor]->getStats().totalSteps;
+        int32_t hw_steps   = (int32_t)StepDriver_getTotalSteps(motor);
         int32_t pos_error  = (int32_t)(StepDriver_getPosition(motor) - actual_target);
         float   actual_hz  = (elapsed_us > 0)
                              ? (float)hw_steps * 1000000.0f / (float)elapsed_us
@@ -1239,7 +1248,7 @@ void process_data(char * data) {
         serial_printf("SIGTEST:RETURN motor=%d pos=%ld\r\n",
             motor, (long)StepDriver_getPosition(motor));
 #else
-        serial_printf("SIGTEST:NOT_SUPPORTED (requires STEP_DRIVER_MCPWM)\r\n");
+        serial_printf("SIGTEST:NOT_SUPPORTED (requires STEP_DRIVER_MCPWM or STEP_DRIVER_SHARED_MCPWM)\r\n");
 #endif
         return;
     }

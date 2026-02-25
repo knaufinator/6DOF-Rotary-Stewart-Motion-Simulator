@@ -1,0 +1,19 @@
+Executing action: all (aliases: build)
+Running ninja in directory C:\Users\Chris\Documents\GitHub\6DOF-Rotary-Stewart-Motion-Simulator\Controller\build
+Executing "ninja all"...
+[1/4] C:\WINDOWS\system32\cmd.exe /C "cd /D C:\Users\Chris\Documents\GitHub\6DOF-Rotary-Stewart-Motion-Simulator\Controller\build\esp-idf\esptool_py && C:\Users\Chris\.espressif\python_env\idf5.5_py3.11_env\Scripts\python.exe C:/Users/Chris/esp/v5.5/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 partition --type app C:/Users/Chris/Documents/GitHub/6DOF-Rotary-Stewart-Motion-Simulator/Controller/build/partition_table/partition-table.bin C:/Users/Chris/Documents/GitHub/6DOF-Rotary-Stewart-Motion-Simulator/Controller/build/stewart_platform.bin"
+stewart_platform.bin binary size 0x150390 bytes. Smallest app partition is 0x177000 bytes. 0x26c70 bytes (10%) free.
+[2/4] Performing build step for 'bootloader'
+[1/1] C:\WINDOWS\system32\cmd.exe /C "cd /D C:\Users\Chris\Documents\GitHub\6DOF-Rotary-Stewart-Motion-Simulator\Controller\build\bootloader\esp-idf\esptool_py && C:\Users\Chris\.espressif\python_env\idf5.5_py3.11_env\Scripts\python.exe C:/Users/Chris/esp/v5.5/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 bootloader 0x0 C:/Users/Chris/Documents/GitHub/6DOF-Rotary-Stewart-Motion-Simulator/Controller/build/bootloader/bootloader.bin"
+Bootloader binary size 0x4de0 bytes. 0x3220 bytes (39%) free.
+[3/4] No install step for 'bootloader'
+[4/4] Completed 'bootloader'
+
+Project build complete. To flash, run:
+ idf.py flash
+or
+ idf.py -p PORT flash
+or
+ python -m esptool --chip esp32s3 -b 460800 --before default_reset --after hard_reset write_flash --flash_mode dio --flash_size 8MB --flash_freq 80m 0x0 build\bootloader\bootloader.bin 0x8000 build\partition_table\partition-table.bin 0x10000 build\stewart_platform.bin
+or from the "C:\Users\Chris\Documents\GitHub\6DOF-Rotary-Stewart-Motion-Simulator\Controller\build" directory
+ python -m esptool --chip esp32s3 -b 460800 --before default_reset --after hard_reset write_flash "@flash_args"

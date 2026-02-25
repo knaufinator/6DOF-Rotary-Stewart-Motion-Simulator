@@ -72,7 +72,7 @@ float calculateServoAngle(int servoIndex, const float position[6], const Stewart
     if (asinArg > 1.0f) asinArg = 1.0f;
     if (asinArg < -1.0f) asinArg = -1.0f;
 
-    float angle = asinf(asinArg) - atanf(n / m);
+    float angle = asinf(asinArg) - atan2f(n, m);
 
     // Clamp to physical servo limits
     if (angle > IK_SERVO_MAX_RAD) angle = IK_SERVO_MAX_RAD;

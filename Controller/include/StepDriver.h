@@ -325,6 +325,7 @@ static inline void    StepDriver_resetPosition(int i)           { McpwmStepEngin
 static inline bool    StepDriver_isInitialized()                { return McpwmStepEngine::instance().isInitialized(); }
 static inline void    StepDriver_emergencyStop()                { McpwmStepEngine::instance().emergencyStop(); }
 static inline uint32_t StepDriver_getTotalSteps(int i)          { return McpwmStepEngine::instance().getTotalSteps(i); }
+static inline void    StepDriver_resetStats(int i)              { McpwmStepEngine::instance().resetStats(i); }
 static inline void    StepDriver_handleStep()                   { /* ISR-autonomous */ }
 
 static inline bool     StepDriver_setTickRate(uint32_t tick_us) { return McpwmStepEngine::instance().setTickRate(tick_us); }
@@ -381,6 +382,7 @@ static inline void    StepDriver_resetPosition(int i)           { SharedMcpwmSte
 static inline bool    StepDriver_isInitialized()                { return SharedMcpwmStepEngine::instance().isInitialized(); }
 static inline void    StepDriver_emergencyStop()                { SharedMcpwmStepEngine::instance().emergencyStop(); }
 static inline uint32_t StepDriver_getTotalSteps(int i)          { return SharedMcpwmStepEngine::instance().getTotalSteps(i); }
+static inline void    StepDriver_resetStats(int i)              { SharedMcpwmStepEngine::instance().resetStats(i); }
 static inline void    StepDriver_handleStep()                   { /* ISR-autonomous */ }
 
 static inline bool     StepDriver_setTickRate(uint32_t tick_us) { return SharedMcpwmStepEngine::instance().setTickRate(tick_us); }

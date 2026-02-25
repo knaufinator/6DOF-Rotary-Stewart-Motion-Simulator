@@ -1674,6 +1674,31 @@ static void DrawEntityCard(Entity& e) {
                         ImGui::PopItemWidth();
                         if (ImGui::IsItemHovered())
                             ImGui::SetTooltip("ESP32 telemetry send rate.\nHigher = smoother viz, more serial traffic.");
+                        // Tick rate selector
+                        ImGui::SameLine();
+                        ImGui::PushItemWidth(90);
+                        const char* tick_opts[] = {"4µs 250kHz", "8µs 125kHz", "10µs 100kHz", "20µs 50kHz"};
+                        int tick_vals[] = {4, 8, 10, 20};
+                        int tick_sel = 0;
+                        for (int t = 0; t < 4; t++)
+                            if (e.hil_tick_rate_us == tick_vals[t]) tick_sel = t;
+                        char tick_lbl[32];
+                        snprintf(tick_lbl, sizeof(tick_lbl), "##tickrate_%d", e.id);
+                        if (ImGui::Combo(tick_lbl, &tick_sel, tick_opts, 4)) {
+                            e.hil_tick_rate_us = tick_vals[tick_sel];
+                            char tcmd[32];
+                            snprintf(tcmd, sizeof(tcmd), "TICKRATE:%d", e.hil_tick_rate_us);
+                            e.serial->sendCommand(tcmd);
+                            g_app.settings_dirty = true;
+                            g_app.log(e.id, "hil", "Set tick rate to %d µs (%lu Hz max step)",
+                                e.hil_tick_rate_us, 1000000UL / ((unsigned long)e.hil_tick_rate_us * 2));
+                        }
+                        ImGui::PopItemWidth();
+                        if (ImGui::IsItemHovered())
+                            ImGui::SetTooltip("ISR tick period sent to the ESP32 firmware.\n"
+                                "4µs = 250kHz tick, 125kHz max step/motor\n"
+                                "8µs = 125kHz tick, 62.5kHz max step/motor\n"
+                                "Saved to device NVS. Takes effect immediately.");
                     } else if (e.hil_auto_connect && e.hil_port[0] != '\0') {
                         ImGui::TextColored(ImVec4(0.95f, 0.75f, 0.2f, 1.0f), "Searching %s...", e.hil_port);
                     } else {

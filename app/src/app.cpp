@@ -255,6 +255,7 @@ static void saveEntityToJSON(cJSON* ej, const Entity& e) {
         cJSON_AddStringToObject(hil, "port", e.hil_port);
         cJSON_AddNumberToObject(hil, "baud", e.hil_baud);
         cJSON_AddNumberToObject(hil, "tx_hz", e.hil_tx_hz);
+        cJSON_AddNumberToObject(hil, "tick_rate_us", e.hil_tick_rate_us);
         cJSON_AddBoolToObject(hil, "auto_connect", e.hil_auto_connect);
         if (e.hil_fingerprint[0] != '\0')
             cJSON_AddStringToObject(hil, "fingerprint", e.hil_fingerprint);
@@ -395,6 +396,10 @@ static void loadEntityFromJSON(Entity& e, cJSON* ej) {
         if ((val = cJSON_GetObjectItem(hil, "port"))) snprintf(e.hil_port, sizeof(e.hil_port), "%s", val->valuestring);
         if ((val = cJSON_GetObjectItem(hil, "baud"))) e.hil_baud = val->valueint;
         if ((val = cJSON_GetObjectItem(hil, "tx_hz"))) e.hil_tx_hz = val->valueint;
+        if ((val = cJSON_GetObjectItem(hil, "tick_rate_us"))) {
+            int v = val->valueint;
+            if (v >= 4 && v <= 100) e.hil_tick_rate_us = v;
+        }
         if ((val = cJSON_GetObjectItem(hil, "auto_connect"))) e.hil_auto_connect = cJSON_IsTrue(val);
         if ((val = cJSON_GetObjectItem(hil, "fingerprint"))) snprintf(e.hil_fingerprint, sizeof(e.hil_fingerprint), "%s", val->valuestring);
     }
@@ -575,6 +580,7 @@ Entity& App::addEntity(const char* name, EntityType type) {
     e.hil_tel_prev_time = 0.0;
     e.hil_tel_curr_time = 0.0;
     e.hil_tel_target_hz = 30;
+    e.hil_tick_rate_us = 4;
     memset(e.hil_port, 0, sizeof(e.hil_port));
     e.hil_baud = 921600;
     e.hil_auto_connect = true;
@@ -813,7 +819,7 @@ static void advanceHandshake(App& app, Entity& e) {
                     e.hil_cmd_queue.push_back(ledcmd);
                 }
 
-                // Lock input source to serial, query stats, set telemetry rate
+                // Lock input source to serial, query stats, set telemetry rate + tick rate
                 e.hil_cmd_queue.push_back("INPUT:SERIAL");
                 e.hil_cmd_queue.push_back("INPUT_STAT");
                 {
@@ -821,11 +827,16 @@ static void advanceHandshake(App& app, Entity& e) {
                     snprintf(telcmd, sizeof(telcmd), "TELRATE:%d", e.hil_tel_target_hz);
                     e.hil_cmd_queue.push_back(telcmd);
                 }
+                {
+                    char tickcmd[32];
+                    snprintf(tickcmd, sizeof(tickcmd), "TICKRATE:%d", e.hil_tick_rate_us);
+                    e.hil_cmd_queue.push_back(tickcmd);
+                }
 
-                app.log(e.id, "hil", "Handshake complete — motion enabled (fw %s, proto %d, bits %d, tel %dHz)",
+                app.log(e.id, "hil", "Handshake complete — motion enabled (fw %s, proto %d, bits %d, tel %dHz, tick %dµs)",
                     dp.fw_version, dp.proto_ver,
                     dp.bits_received ? dp.bit_depth : e.config.bit_depth,
-                    e.hil_tel_target_hz);
+                    e.hil_tel_target_hz, e.hil_tick_rate_us);
             }
             e.hil_handshake_pending = false;
             break;

@@ -42,8 +42,10 @@
 #include "debug_uart.h"
 #include "soc/gpio_struct.h"
 
-#define MSE_NUM_MOTORS  6
-#define MSE_TICK_US     4    // 4µs tick → 125 kHz max step rate (2µs=500kHz ISR causes WDT panic on ESP32-S3)
+#define MSE_NUM_MOTORS       6
+#define MSE_TICK_US_DEFAULT  4    // 4µs tick → 125 kHz max step rate
+#define MSE_TICK_US_MIN      4    // hard floor: WDT-safe on ESP32-S3 (see SimpleStepEngine.h for rationale)
+#define MSE_TICK_US_MAX      100  // 100µs tick → 5 kHz max step rate
 
 // Forward declaration
 class McpwmStepEngine;
@@ -124,9 +126,9 @@ public:
         timer_cfg.clk_src       = MCPWM_TIMER_CLK_SRC_DEFAULT;
         timer_cfg.resolution_hz = 1000000;          // 1 MHz → 1µs per count
         timer_cfg.count_mode    = MCPWM_TIMER_COUNT_MODE_UP;
-        timer_cfg.period_ticks  = MSE_TICK_US;      // period = 4 ticks = 4µs
+        timer_cfg.period_ticks  = _tickUs;           // period in µs (1 MHz clock → 1 tick = 1µs)
         timer_cfg.intr_priority = 0;
-        // flags.update_period_on_empty not needed — fixed period
+        timer_cfg.flags.update_period_on_empty = true;  // shadow register: new period loads at next TEZ
 
         esp_err_t e = mcpwm_new_timer(&timer_cfg, &_timer);
         if (e != ESP_OK) {
@@ -158,8 +160,10 @@ public:
         }
 
         _running = true;
-        DEBUG_PRINTF("McpwmStepEngine: started — %d µs tick, %lu Hz max step/motor\n",
-            MSE_TICK_US, (unsigned long)(1000000UL / (MSE_TICK_US * 2)));
+        DEBUG_PRINTF("McpwmStepEngine: started — %lu µs tick, %lu Hz tick, %lu Hz max step/motor\n",
+            (unsigned long)_tickUs,
+            (unsigned long)(1000000UL / _tickUs),
+            (unsigned long)(1000000UL / (_tickUs * 2)));
         return true;
     }
 
@@ -204,14 +208,43 @@ public:
     uint32_t getTotalSteps(int i) const { return (i >= 0 && i < MSE_NUM_MOTORS) ? _state[i].totalSteps : 0; }
     uint32_t getDirChanges(int i) const { return (i >= 0 && i < MSE_NUM_MOTORS) ? _state[i].dirChanges : 0; }
 
+    uint32_t getTickUs()    const { return _tickUs; }
+    uint32_t getMaxStepHz() const { return 1000000UL / (_tickUs * 2); }
+    uint32_t getTickHz()    const { return 1000000UL / _tickUs; }
+
+    // Hot-reconfigure tick rate without stopping the timer.
+    // new_tick_us: MSE_TICK_US_MIN–MSE_TICK_US_MAX.
+    // mcpwm_timer_set_period() writes a shadow register that loads at the next TEZ.
+    bool setTickRate(uint32_t new_tick_us) {
+        if (new_tick_us < MSE_TICK_US_MIN || new_tick_us > MSE_TICK_US_MAX) {
+            DEBUG_PRINTF("McpwmStepEngine: setTickRate %lu µs out of range [%d, %d]\n",
+                (unsigned long)new_tick_us, MSE_TICK_US_MIN, MSE_TICK_US_MAX);
+            return false;
+        }
+        _tickUs = new_tick_us;
+        if (!_running) return true;  // takes effect on next start()
+        esp_err_t e = mcpwm_timer_set_period(_timer, _tickUs);
+        if (e != ESP_OK) {
+            DEBUG_PRINTF("McpwmStepEngine: set_period failed: %d\n", e);
+            return false;
+        }
+        DEBUG_PRINTF("McpwmStepEngine: tick rate → %lu µs (%lu Hz, %lu Hz max step)\n",
+            (unsigned long)_tickUs,
+            (unsigned long)(1000000UL / _tickUs),
+            (unsigned long)(1000000UL / (_tickUs * 2)));
+        return true;
+    }
+
 private:
-    McpwmStepEngine() : _initialized(false), _running(false), _timer(nullptr) {}
+    McpwmStepEngine() : _initialized(false), _running(false), _timer(nullptr),
+                        _tickUs(MSE_TICK_US_DEFAULT) {}
 
     MotorConfig       _cfg[MSE_NUM_MOTORS];
     MotorState        _state[MSE_NUM_MOTORS];
     bool              _initialized;
     bool              _running;
     mcpwm_timer_handle_t _timer;
+    uint32_t             _tickUs;
 
     friend bool _mse_tez_isr(mcpwm_timer_handle_t, const mcpwm_timer_event_data_t*, void*);
 };

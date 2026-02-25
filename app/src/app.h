@@ -195,6 +195,7 @@ struct Entity {
     double          hil_tel_prev_time;   // timestamp of previous telemetry
     double          hil_tel_curr_time;   // timestamp of current telemetry
     int             hil_tel_target_hz;   // requested telemetry rate from ESP32
+    int             hil_tick_rate_us;    // ISR tick period sent to firmware (4-100 µs)
     char            hil_port[32];        // selected COM port name
     int             hil_baud;            // serial baud rate (saved per-device)
     bool            hil_auto_connect;    // try to reconnect if disconnected

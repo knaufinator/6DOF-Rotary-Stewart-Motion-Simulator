@@ -58,6 +58,14 @@
  *                                     MCPWM: starts continuous moves, polls done
  *   StepDriver_isInitialized()      — true after successful init
  *   StepDriver_report()             — print backend name + stats to DEBUG_PRINTF
+ *   StepDriver_setTickRate(µs)      — hot-adjust ISR tick period (µs); returns false
+ *                                     if out of per-backend range or not supported.
+ *                                     SSE:  4–100 µs  (250 kHz … 5 kHz tick)
+ *                                     MSE:  4–100 µs  (same, MCPWM timer)
+ *                                     SMSE: 4–100 µs  (must be > SMSE_PULSE_US=2)
+ *                                     MCPWM: always returns false (hardware-fixed)
+ *   StepDriver_getTickUs()          — current tick period in µs
+ *   StepDriver_getMaxStepHz()       — current max step frequency per motor
  *
  * Motor config (common fields used by all backends):
  *   StepDriverMotorConfig { stepPin, dirPin, invertDir, softLimitMin, softLimitMax }
@@ -162,15 +170,12 @@ static inline void StepDriver_report() {
     }
 }
 
-// ── SSE tick rate tuning (SSE-only, not in common API) ───────────────
-// Call StepDriver_setTickRate(2) to attempt 250 kHz ISR (2µs tick → 250 kHz/motor).
-// WARNING: Requires CONFIG_ESP_INT_WDT=n on the motor core. See sdkconfig notes.
-static inline bool StepDriver_setTickRate(uint32_t tick_us) {
-    return SimpleStepEngine::instance().setTickRate(tick_us);
-}
-static inline uint32_t StepDriver_getMaxStepHz() {
-    return SimpleStepEngine::instance().getMaxStepHz();
-}
+// ── Tick rate tuning — common API, all ISR-driven backends ───────────
+// Range: SSE_TICK_US_MIN (4µs) … SSE_TICK_US_MAX (100µs).
+// 4µs is the hard WDT-safe floor on ESP32-S3 — do not go below it.
+static inline bool     StepDriver_setTickRate(uint32_t tick_us) { return SimpleStepEngine::instance().setTickRate(tick_us); }
+static inline uint32_t StepDriver_getTickUs()                   { return SimpleStepEngine::instance().getTickUs(); }
+static inline uint32_t StepDriver_getMaxStepHz()                { return SimpleStepEngine::instance().getMaxStepHz(); }
 
 // ────────────────────────────────────────────────────────────────────
 #elif defined(STEP_DRIVER_MCPWM)
@@ -266,9 +271,16 @@ static inline void StepDriver_handleStep() {
     }
 }
 
+static inline bool     StepDriver_setTickRate(uint32_t tick_us) {
+    DEBUG_PRINTF("[StepDriver] MCPWM backend: tick rate is hardware-fixed at 250 kHz, cannot change (requested %lu µs)\n", (unsigned long)tick_us);
+    return false;
+}
+static inline uint32_t StepDriver_getTickUs()    { return 4; }   // hardware-fixed 4µs pulse period
+static inline uint32_t StepDriver_getMaxStepHz() { return 250000UL; }
+
 static inline void StepDriver_report() {
     DEBUG_PRINTF("[StepDriver] Backend: MCPWMMotorControl (MCPWM)\n");
-    DEBUG_PRINTF("  Max step rate: 250000 Hz/motor (hardware-timed)\n");
+    DEBUG_PRINTF("  Max step rate: 250000 Hz/motor (hardware-timed, fixed rate)\n");
     for (int i = 0; i < STEP_DRIVER_NUM_MOTORS; i++) {
         if (!_mcpwm_motors[i]) continue;
         const auto& st = _mcpwm_motors[i]->getStats();
@@ -315,11 +327,17 @@ static inline void    StepDriver_emergencyStop()                { McpwmStepEngin
 static inline uint32_t StepDriver_getTotalSteps(int i)          { return McpwmStepEngine::instance().getTotalSteps(i); }
 static inline void    StepDriver_handleStep()                   { /* ISR-autonomous */ }
 
+static inline bool     StepDriver_setTickRate(uint32_t tick_us) { return McpwmStepEngine::instance().setTickRate(tick_us); }
+static inline uint32_t StepDriver_getTickUs()                    { return McpwmStepEngine::instance().getTickUs(); }
+static inline uint32_t StepDriver_getMaxStepHz()                 { return McpwmStepEngine::instance().getMaxStepHz(); }
+
 static inline void StepDriver_report() {
     auto& mse = McpwmStepEngine::instance();
     DEBUG_PRINTF("[StepDriver] Backend: McpwmStepEngine (MCPWM_ISR)\n");
-    DEBUG_PRINTF("  Tick: %d µs | Max step rate: %lu Hz/motor\n",
-        MSE_TICK_US, (unsigned long)(1000000UL / (MSE_TICK_US * 2)));
+    DEBUG_PRINTF("  Tick: %lu µs | Tick rate: %lu Hz | Max step rate: %lu Hz/motor\n",
+        (unsigned long)mse.getTickUs(),
+        (unsigned long)mse.getTickHz(),
+        (unsigned long)mse.getMaxStepHz());
     for (int i = 0; i < STEP_DRIVER_NUM_MOTORS; i++) {
         DEBUG_PRINTF("  M%d: pos=%ld  target=%ld  steps=%lu  dirChanges=%lu\n",
             i,
@@ -333,10 +351,11 @@ static inline void StepDriver_report() {
 #elif defined(STEP_DRIVER_SHARED_MCPWM)
 // ════════════════════════════════════════════════════════════════════
 //  SharedMcpwmStepEngine backend
-//  1 MCPWM timer → 3 operators → 6 comparator/generator chains.
-//  Hardware generates step pulses directly — no per-tick ISR.
-//  Comparator ISR fires only when a step occurs, for counting + re-arm.
-//  Max 250 kHz/motor. Zero CPU per pulse.
+//  1 MCPWM timer (group 0) → 3 operators → 6 comparator/generator chains.
+//  Hybrid: TEZ ISR (250 kHz) drives rising edge via w1ts GPIO register write;
+//          hardware comparator/generator drives falling edge (zero CPU).
+//  DIR/STEP sync: dirPending 2-tick guard = 8µs setup (meets AASD-15A ≥2µs).
+//  Max 250 kHz/motor. One ISR per tick (not per pulse-edge).
 // ════════════════════════════════════════════════════════════════════
 
 static inline bool StepDriver_init(const StepDriverMotorConfig configs[STEP_DRIVER_NUM_MOTORS]) {
@@ -362,19 +381,24 @@ static inline void    StepDriver_resetPosition(int i)           { SharedMcpwmSte
 static inline bool    StepDriver_isInitialized()                { return SharedMcpwmStepEngine::instance().isInitialized(); }
 static inline void    StepDriver_emergencyStop()                { SharedMcpwmStepEngine::instance().emergencyStop(); }
 static inline uint32_t StepDriver_getTotalSteps(int i)          { return SharedMcpwmStepEngine::instance().getTotalSteps(i); }
-static inline void    StepDriver_handleStep()                   { /* hardware-autonomous */ }
+static inline void    StepDriver_handleStep()                   { /* ISR-autonomous */ }
+
+static inline bool     StepDriver_setTickRate(uint32_t tick_us) { return SharedMcpwmStepEngine::instance().setTickRate(tick_us); }
+static inline uint32_t StepDriver_getTickUs()                   { return SharedMcpwmStepEngine::instance().getTickUs(); }
+static inline uint32_t StepDriver_getMaxStepHz()                { return SharedMcpwmStepEngine::instance().getMaxStepHz(); }
 
 static inline void StepDriver_report() {
     auto& e = SharedMcpwmStepEngine::instance();
     DEBUG_PRINTF("[StepDriver] Backend: SharedMcpwmStepEngine (SHARED_MCPWM)\n");
-    DEBUG_PRINTF("  Period: %d µs | Max step rate: %lu Hz/motor\n",
-        SMSE_PERIOD_US, (unsigned long)(1000000UL / SMSE_PERIOD_US));
+    DEBUG_PRINTF("  Period: %lu µs | Pulse: %d µs | Max step rate: %lu Hz/motor\n",
+        (unsigned long)e.getTickUs(), SMSE_PULSE_US, (unsigned long)e.getMaxStepHz());
     for (int i = 0; i < STEP_DRIVER_NUM_MOTORS; i++) {
-        DEBUG_PRINTF("  M%d: pos=%ld  target=%ld  steps=%lu\n",
+        DEBUG_PRINTF("  M%d: pos=%ld  target=%ld  steps=%lu  dirChanges=%lu\n",
             i,
             (long)e.getPosition(i),
             (long)e.getTarget(i),
-            (unsigned long)e.getTotalSteps(i));
+            (unsigned long)e.getTotalSteps(i),
+            (unsigned long)e.getDirChanges(i));
     }
 }
 

@@ -797,6 +797,55 @@ void process_data(char * data) {
 
     // ── Motor timing diagnostics ──────────────────────────────────────
 
+    // ── TICKRATE? — Query current ISR tick period and derived rates ────
+    // Response: TICKRATE:<us>,hz=<tick_hz>,max_step=<max_hz>
+    if (strcmp(data, "TICKRATE?") == 0) {
+#if !defined(STEP_DRIVER_MCPWM)
+        serial_printf("TICKRATE:%lu,hz=%lu,max_step=%lu\r\n",
+            (unsigned long)StepDriver_getTickUs(),
+            (unsigned long)(1000000UL / StepDriver_getTickUs()),
+            (unsigned long)StepDriver_getMaxStepHz());
+#else
+        serial_printf("TICKRATE:4,hz=250000,max_step=250000 (hardware-fixed)\r\n");
+#endif
+        return;
+    }
+
+    // ── TICKRATE:N — Set ISR tick period to N microseconds ────────────
+    // Valid range: 4–100 µs (250 kHz … 5 kHz tick rate).
+    // 4µs is the hard WDT-safe floor on ESP32-S3.
+    // Change takes effect immediately (hot-reconfigure, no motor stop needed).
+    // Persisted to NVS — survives reboot.
+    // Response: TICKRATE:<us>,hz=<tick_hz>,max_step=<max_hz>
+    //           TICKRATE:ERR:<reason>
+    if (strncmp(data, "TICKRATE:", 9) == 0 && data[9] != '?') {
+#if !defined(STEP_DRIVER_MCPWM)
+        int us = atoi(data + 9);
+        if (us < 4 || us > 100) {
+            serial_printf("TICKRATE:ERR range 4-100 us (requested %d)\r\n", us);
+            return;
+        }
+        if (!StepDriver_setTickRate((uint32_t)us)) {
+            serial_printf("TICKRATE:ERR setTickRate failed (requested %d)\r\n", us);
+            return;
+        }
+        serial_printf("TICKRATE:%lu,hz=%lu,max_step=%lu\r\n",
+            (unsigned long)StepDriver_getTickUs(),
+            (unsigned long)(1000000UL / StepDriver_getTickUs()),
+            (unsigned long)StepDriver_getMaxStepHz());
+        // Persist to NVS
+        nvs_handle_t nvs;
+        if (nvs_open("stewart", NVS_READWRITE, &nvs) == ESP_OK) {
+            nvs_set_u8(nvs, "tick_us", (uint8_t)us);
+            nvs_commit(nvs);
+            nvs_close(nvs);
+        }
+#else
+        serial_printf("TICKRATE:ERR MCPWM backend uses hardware-fixed 250 kHz rate\r\n");
+#endif
+        return;
+    }
+
     // ── MSTAT — Report loop timing + per-motor step statistics ────────
     // Tests:  GPIOLoopTask scheduling, MCPWM motor driver state
     // Proves: FreeRTOS task is running (loopCount > 0),
@@ -1849,7 +1898,7 @@ extern "C" void app_main(void)
     } else {
         ESP_LOGI(TAG, "Geometry: Using factory defaults");
     }
-    // Load saved input source from NVS
+    // Load saved input source + tick rate from NVS
     {
         nvs_handle_t nvs;
         if (nvs_open("stewart", NVS_READONLY, &nvs) == ESP_OK) {
@@ -1858,6 +1907,13 @@ extern "C" void app_main(void)
                 activeInputSource = (InputSource)src;
                 ESP_LOGI(TAG, "Input source: %s (from NVS)", inputSourceName(activeInputSource));
             }
+#if !defined(STEP_DRIVER_MCPWM)
+            uint8_t tick_us = 0;
+            if (nvs_get_u8(nvs, "tick_us", &tick_us) == ESP_OK && tick_us >= 4 && tick_us <= 100) {
+                StepDriver_setTickRate((uint32_t)tick_us);
+                ESP_LOGI(TAG, "Tick rate: %d µs (from NVS)", (int)tick_us);
+            }
+#endif
             nvs_close(nvs);
         }
     }

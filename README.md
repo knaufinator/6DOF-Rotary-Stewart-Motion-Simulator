@@ -4,6 +4,7 @@
 [![Platform: ESP32-S3](https://img.shields.io/badge/Platform-ESP32--S3-blue.svg)](https://www.espressif.com/en/products/socs/esp32s3)
 [![Firmware: ESP-IDF v5.5](https://img.shields.io/badge/ESP--IDF-v5.5-green.svg)](https://docs.espressif.com/projects/esp-idf/en/v5.5/)
 [![Step Rate: 250 kHz](https://img.shields.io/badge/Step%20Rate-250%20kHz%20hardware-orange.svg)](#stepper-backend)
+[![PayPal](https://img.shields.io/badge/Donate-PayPal-blue.svg)](https://www.paypal.me/knaufinator)
 
 > A full-stack 6DOF motion simulator: ESP32-S3 firmware with 250 kHz hardware-timed step generation, a native C++ desktop control application, and a signal validation toolchain for hardware-in-the-loop development.
 

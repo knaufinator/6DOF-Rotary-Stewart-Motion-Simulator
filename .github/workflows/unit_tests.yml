@@ -3,8 +3,22 @@ name: Unit Tests
 on:
   push:
     branches: [ phoenix, main ]
+    paths:
+      - 'Controller/main/InverseKinematics.cpp'
+      - 'Controller/main/AxisScaling.cpp'
+      - 'Controller/main/MotionCueing.cpp'
+      - 'Controller/include/**'
+      - 'tests/**'
+      - '.github/workflows/unit_tests.yml'
   pull_request:
     branches: [ phoenix, main ]
+    paths:
+      - 'Controller/main/InverseKinematics.cpp'
+      - 'Controller/main/AxisScaling.cpp'
+      - 'Controller/main/MotionCueing.cpp'
+      - 'Controller/include/**'
+      - 'tests/**'
+      - '.github/workflows/unit_tests.yml'
 
 jobs:
   unit-tests:

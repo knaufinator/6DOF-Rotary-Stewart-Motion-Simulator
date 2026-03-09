@@ -5,8 +5,16 @@ on:
     branches: [ phoenix, main ]
     tags:
       - 'v*.*.*'
+    paths:
+      - 'Controller/**'
+      - 'app/**'
+      - '.github/workflows/ci.yml'
   pull_request:
     branches: [ phoenix, main ]
+    paths:
+      - 'Controller/**'
+      - 'app/**'
+      - '.github/workflows/ci.yml'
 
 jobs:
   version:

@@ -1,62 +1,23 @@
 {
-	"simtools_port":	4123,
-	"simtools_bit_depth":	18,
-	"ac_port":	9996,
-	"ac_axis_map":	[{
-			"channel":	1,
-			"min_val":	-2,
-			"max_val":	2,
-			"invert":	false
-		}, {
-			"channel":	2,
-			"min_val":	-2.5,
-			"max_val":	2.5,
-			"invert":	false
-		}, {
-			"channel":	3,
-			"min_val":	-1.5,
-			"max_val":	1.5,
-			"invert":	false
-		}, {
-			"channel":	4,
-			"min_val":	-0.5,
-			"max_val":	0.5,
-			"invert":	false
-		}, {
-			"channel":	5,
-			"min_val":	-0.300000011920929,
-			"max_val":	0.300000011920929,
-			"invert":	false
-		}, {
-			"channel":	0,
-			"min_val":	-2,
-			"max_val":	2,
-			"invert":	false
-		}],
 	"console_log_rate":	5,
 	"console_max":	500,
 	"console_auto_scroll":	true,
 	"record_rate_hz":	1000,
-	"input_source":	0,
-	"test_signal":	{
-		"waveform":	0,
-		"ramp_up":	true,
-		"ramp_duration":	2,
-		"smooth_changes":	true,
-		"smooth_rate":	2,
-		"frequency":	[0.51999998092651367, 0.62000000476837158, 2, 2, 1, 1.1200000047683716],
-		"amplitude":	[76, 81, 12, 50, 50, 100],
-		"phase_offset":	[0, 0, 0, 0, 0, 0],
-		"axis_enabled":	[false, true, false, false, false, false]
-	},
+	"input_source":	1,
+	"active_plugin_name":	"Manual Sliders",
+	"selected_dynamics_id":	0,
+	"show_dynamics":	true,
+	"show_console":	true,
+	"show_data_streams":	true,
 	"entities":	[{
 			"name":	"SIL Default",
 			"type":	0,
 			"enabled":	true,
-			"intensity":	107,
+			"intensity":	100,
 			"bit_depth":	12,
 			"color":	[0.37999999523162842, 0.649999976158142, 0.959999978542328, 1],
 			"axis_gain":	[100, 100, 100, 100, 100, 100],
+			"axis_invert":	[false, false, false, false, false, false],
 			"geometry":	{
 				"RD":	400.04998779296875,
 				"PD":	406.39999389648438,
@@ -70,13 +31,40 @@
 				"planetary_ratio":	50
 			},
 			"mca_config":	{
-				"enabled":	0,
-				"preset":	1,
-				"intensity":	107,
+				"enabled":	1,
+				"preset":	2,
+				"intensity":	100,
 				"axis_gain":	[100, 100, 100, 100, 100, 100],
 				"channels":	[{
 						"hp_enabled":	1,
-						"hp_fc":	0.300000011920929,
+						"hp_fc":	0.800000011920929,
+						"hp_Q":	0.600000023841858,
+						"lp_enabled":	1,
+						"lp_fc":	12,
+						"lp_Q":	0.7070000171661377,
+						"gain":	1,
+						"rate_limit":	0
+					}, {
+						"hp_enabled":	1,
+						"hp_fc":	0.800000011920929,
+						"hp_Q":	0.600000023841858,
+						"lp_enabled":	1,
+						"lp_fc":	12,
+						"lp_Q":	0.7070000171661377,
+						"gain":	1,
+						"rate_limit":	0
+					}, {
+						"hp_enabled":	1,
+						"hp_fc":	1,
+						"hp_Q":	0.600000023841858,
+						"lp_enabled":	1,
+						"lp_fc":	10,
+						"lp_Q":	0.7070000171661377,
+						"gain":	1.2000000476837158,
+						"rate_limit":	0
+					}, {
+						"hp_enabled":	1,
+						"hp_fc":	0.5,
 						"hp_Q":	0.5,
 						"lp_enabled":	1,
 						"lp_fc":	8,
@@ -85,7 +73,7 @@
 						"rate_limit":	0
 					}, {
 						"hp_enabled":	1,
-						"hp_fc":	0.300000011920929,
+						"hp_fc":	0.5,
 						"hp_Q":	0.5,
 						"lp_enabled":	1,
 						"lp_fc":	8,
@@ -94,46 +82,19 @@
 						"rate_limit":	0
 					}, {
 						"hp_enabled":	1,
-						"hp_fc":	0.40000000596046448,
-						"hp_Q":	0.5,
+						"hp_fc":	0.800000011920929,
+						"hp_Q":	0.600000023841858,
 						"lp_enabled":	1,
-						"lp_fc":	8,
+						"lp_fc":	10,
 						"lp_Q":	0.7070000171661377,
-						"gain":	1,
-						"rate_limit":	0
-					}, {
-						"hp_enabled":	1,
-						"hp_fc":	0.300000011920929,
-						"hp_Q":	0.5,
-						"lp_enabled":	1,
-						"lp_fc":	6,
-						"lp_Q":	0.7070000171661377,
-						"gain":	1,
-						"rate_limit":	0
-					}, {
-						"hp_enabled":	1,
-						"hp_fc":	0.300000011920929,
-						"hp_Q":	0.5,
-						"lp_enabled":	1,
-						"lp_fc":	6,
-						"lp_Q":	0.7070000171661377,
-						"gain":	1,
-						"rate_limit":	0
-					}, {
-						"hp_enabled":	1,
-						"hp_fc":	0.300000011920929,
-						"hp_Q":	0.5,
-						"lp_enabled":	1,
-						"lp_fc":	6,
-						"lp_Q":	0.7070000171661377,
-						"gain":	1,
+						"gain":	0.800000011920929,
 						"rate_limit":	0
 					}],
 				"tilt":	{
 					"enabled":	1,
-					"surge_gain":	0.079999998211860657,
-					"sway_gain":	0.079999998211860657,
-					"fc":	0.300000011920929,
+					"surge_gain":	0.15000000596046448,
+					"sway_gain":	0.15000000596046448,
+					"fc":	0.5,
 					"Q":	0.7070000171661377,
 					"hp_enabled":	1,
 					"hp_fc":	0.300000011920929,
@@ -201,6 +162,7 @@
 			"bit_depth":	12,
 			"color":	[0.20000000298023224, 0.82999998331069946, 0.600000023841858, 1],
 			"axis_gain":	[100, 100, 100, 100, 100, 100],
+			"axis_invert":	[false, false, false, false, false, false],
 			"geometry":	{
 				"RD":	66,
 				"PD":	74,
@@ -347,9 +309,10 @@
 			},
 			"hil":	{
 				"port":	"COM6",
+				"baud":	921600,
 				"tx_hz":	60,
+				"tick_rate_us":	4,
 				"auto_connect":	true,
-				"protocol":	0,
 				"fingerprint":	"84CCA87AED50"
 			}
 		}]

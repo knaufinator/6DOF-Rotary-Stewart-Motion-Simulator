@@ -34,3 +34,7 @@ sil_test/mca_config.json
 .vscode/
 *.swp
 *.swo
+
+# runtime log / UI layout state (untracked 2026-07-18)
+app/app_debug.log
+app/stewart_imgui.ini

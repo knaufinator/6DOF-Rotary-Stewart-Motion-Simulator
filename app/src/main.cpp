@@ -30,11 +30,49 @@
 #include "app.h"
 #include "test_harness_panel.h"
 #include "ui_panels.h"
+#include "control_server.h"
+
+#define STB_IMAGE_WRITE_IMPLEMENTATION
+#include "stb_image_write.h"
+#include <vector>
+#include <cstring>
 
 // ── Globals for modal-loop rendering ────────────────────────────────
 static GLFWwindow* g_window = nullptr;
 static int         g_frame_counter = 0;
 static double      g_fps_timer = 0.0;
+
+// ── Framebuffer → PNG (called on render thread by the control server) ─
+#ifndef GL_RGB
+#define GL_RGB 0x1907
+#endif
+#ifndef GL_UNSIGNED_BYTE
+#define GL_UNSIGNED_BYTE 0x1401
+#endif
+#ifndef GL_PACK_ALIGNMENT
+#define GL_PACK_ALIGNMENT 0x0D05
+#endif
+
+bool CaptureWindowPNG(const char* path, int* out_w, int* out_h) {
+    if (!g_window) return false;
+    int w = 0, h = 0;
+    glfwGetFramebufferSize(g_window, &w, &h);
+    if (w <= 0 || h <= 0) return false;
+    std::vector<unsigned char> px((size_t)w * h * 3);
+    glPixelStorei(GL_PACK_ALIGNMENT, 1);
+    // Default read buffer of a double-buffered default FBO is GL_BACK, which
+    // holds the just-rendered frame (drain() runs after RenderDrawData).
+    glReadPixels(0, 0, w, h, GL_RGB, GL_UNSIGNED_BYTE, px.data());
+    // GL origin is bottom-left; flip rows so PNG is top-down.
+    std::vector<unsigned char> flip((size_t)w * h * 3);
+    int stride = w * 3;
+    for (int y = 0; y < h; y++)
+        memcpy(&flip[(size_t)(h - 1 - y) * stride], &px[(size_t)y * stride], stride);
+    int ok = stbi_write_png(path, w, h, 3, flip.data(), stride);
+    if (out_w) *out_w = w;
+    if (out_h) *out_h = h;
+    return ok != 0;
+}
 
 // Full update + render frame (called from main loop AND modal-loop timer)
 static void doFrame() {
@@ -64,6 +102,10 @@ static void doFrame() {
     glClearColor(0.06f, 0.06f, 0.08f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+    // Execute any queued control-API commands on the render thread. Runs after
+    // RenderDrawData so `screenshot` captures the current frame's back buffer.
+    if (g_ctrl.running()) g_ctrl.drain();
 
     ImGuiIO& io = ImGui::GetIO();
     if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable) {
@@ -309,6 +351,15 @@ int main(int, char**) {
     g_window = window;
     g_fps_timer = glfwGetTime();
 
+    // ── Control API (TCP JSON, for programmatic / MCP driving) ──────
+    {
+        int cport = 8770;
+        const char* pe = getenv("STEWART_CTRL_PORT");
+        if (pe) { int p = atoi(pe); if (p > 0) cport = p; }
+        if (!g_ctrl.start(cport))
+            g_app.log(-1, "system", "Control API failed to start on port %d", cport);
+    }
+
 #ifdef _WIN32
     // Subclass the native HWND to intercept WM_ENTERSIZEMOVE/WM_EXITSIZEMOVE
     // This keeps full update+render running during window drag/resize modal loops
@@ -325,6 +376,7 @@ int main(int, char**) {
     }
 
     // ── Cleanup ─────────────────────────────────────────────────────
+    g_ctrl.stop();
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
     ImPlot::DestroyContext();

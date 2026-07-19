@@ -11,6 +11,7 @@
 #include "control_server.h"
 #include "app.h"
 #include "serial_port.h"
+#include "udp_transport.h"
 #include "cJSON.h"
 
 #include <string>
@@ -23,6 +24,8 @@
 #include <cstdio>
 #include <cstdint>
 #include <ctime>
+#include <cmath>
+#include <chrono>
 
 ControlServer g_ctrl;
 
@@ -555,6 +558,118 @@ std::string handle(const std::string& line) {
     else if (!strcmp(cmd, "entity_remove")) {
         g_app.removeEntity((int)num(a, "id", -1));
         RESULT(nullptr);
+    }
+    else if (!strcmp(cmd, "hil_connect")) {
+        // Headless equivalent of the GUI "Connect (Network)" button: attach a
+        // UdpTransport (raw-HIL path) to a HIL entity so motion streams over UDP
+        // to the Linux bridge, with source/control over TCP. Runs on the render
+        // thread (queued) exactly like the GUI, so it's thread-safe.
+        Entity* e = pick_entity(a);
+        if (!e || e->type != EntityType::HIL)
+            e = &g_app.addEntity(strarg(a, "name", "Network HIL"), EntityType::HIL);
+        snprintf(e->hil_host, sizeof(e->hil_host), "%s", strarg(a, "host", "192.168.1.168"));
+        e->hil_udp_port = (int)num(a, "udp_port", 8767);
+        e->hil_tcp_port = (int)num(a, "tcp_port", 8789);
+        auto up = std::make_shared<UdpTransport>(e->hil_host, e->hil_udp_port, e->hil_tcp_port);
+        up->setCobsMode(true);
+        e->serial = up;
+        e->hil_network = true;
+        e->enabled = true;
+        snprintf(e->transport.udp_ip, sizeof(e->transport.udp_ip), "%s", e->hil_host);
+        e->hil_tel_seq = 0;
+        e->hil_cap_raw = true;
+        e->hil_raw_mode = true;
+        e->hil_handshake_ok = true;
+        e->hil_handshake_pending = false;
+        e->hil_handshake_phase = HandshakePhase::Ready;
+        e->hil_last_error[0] = '\0';
+        snprintf(e->hil_handshake_msg, sizeof(e->hil_handshake_msg), "%s",
+                 up->controlConnected() ? "Bridge connected" : "control unreachable");
+        cJSON* r = cJSON_CreateObject();
+        cJSON_AddNumberToObject(r, "id", e->id);
+        cJSON_AddStringToObject(r, "host", e->hil_host);
+        cJSON_AddNumberToObject(r, "udp_port", e->hil_udp_port);
+        cJSON_AddNumberToObject(r, "tcp_port", e->hil_tcp_port);
+        cJSON_AddBoolToObject(r, "open", up->isOpen());
+        cJSON_AddBoolToObject(r, "control_connected", up->controlConnected());
+        RESULT(r);
+    }
+    else if (!strcmp(cmd, "hil_stream_test")) {
+        // Stream a live surge/sway/heave motion sweep straight through a
+        // connected network-HIL entity's transport (app -> UDP -> bridge -> mini).
+        // Values are signed PERCENT (the raw-HIL path). Blocks the render thread
+        // for `secs`, streaming at 50 Hz — proves the app is feeding real motion.
+        Entity* tgt = nullptr;
+        for (auto& e : g_app.entities)
+            if (e.type == EntityType::HIL && e.serial && e.serial->isOpen()) { tgt = &e; break; }
+        if (!tgt) { ERR("no connected HIL entity"); }
+        else {
+            double secs = num(a, "secs", 6.0);
+            double freq = num(a, "freq", 0.35);
+            double amp  = num(a, "amp",  30.0);
+            int total = (int)(secs * 50.0); if (total < 1) total = 1;
+            int seg = total / 3; if (seg < 1) seg = 1;
+            const int axes[3] = { 0, 1, 2 };   // surge, sway, heave
+            int sent = 0;
+            for (int i = 0; i < total; i++) {
+                float raw[6] = { 0, 0, 0, 0, 0, 0 };
+                int aidx = i / seg; if (aidx > 2) aidx = 2;
+                double t = (double)(i % seg) / 50.0;
+                raw[axes[aidx]] = (float)(amp * sin(2.0 * 3.14159265358979 * freq * t));
+                tgt->serial->sendCobsDataRaw(raw);
+                sent++;
+                std::this_thread::sleep_for(std::chrono::milliseconds(20));
+            }
+            float zero[6] = { 0, 0, 0, 0, 0, 0 };
+            tgt->serial->sendCobsDataRaw(zero);
+            cJSON* r = cJSON_CreateObject();
+            cJSON_AddNumberToObject(r, "frames_sent", sent);
+            cJSON_AddNumberToObject(r, "entity", tgt->id);
+            RESULT(r);
+        }
+    }
+    else if (!strcmp(cmd, "plugin")) {
+        // List input plugins, or activate one as the live motion source. The GUI
+        // only activates a plugin on a source *switch*; if the source is already
+        // Plugin at Start, activation never fires -> zero motion. This forces it.
+        const char* action = strarg(a, "action", "list");
+        if (!strcmp(action, "activate")) {
+            int idx = has(a, "index") ? (int)num(a, "index", -1) : -1;
+            if (idx < 0) {
+                const char* nm = strarg(a, "name", nullptr);
+                if (nm) for (int i = 0; i < g_app.plugin_mgr.pluginCount(); i++) {
+                    const char* pn = g_app.plugin_mgr.pluginName(i);
+                    if (pn && strstr(pn, nm)) { idx = i; break; }
+                }
+            }
+            if (idx < 0 || idx >= g_app.plugin_mgr.pluginCount()) { ERR("plugin not found"); }
+            else {
+                float sr = (float)num(a, "rate", 50.0);
+                g_app.active_plugin_idx = idx;
+                g_app.input_source = InputSource::Plugin;
+                g_app.motion_started = true;
+                bool ok = g_app.plugin_mgr.activatePlugin(idx, sr);
+                const char* pn = g_app.plugin_mgr.pluginName(idx);
+                cJSON* r = cJSON_CreateObject();
+                cJSON_AddNumberToObject(r, "active", idx);
+                cJSON_AddStringToObject(r, "name", pn ? pn : "");
+                cJSON_AddBoolToObject(r, "activated", ok);
+                RESULT(r);
+            }
+        } else {
+            cJSON* arr = cJSON_CreateArray();
+            for (int i = 0; i < g_app.plugin_mgr.pluginCount(); i++) {
+                cJSON* o = cJSON_CreateObject();
+                cJSON_AddNumberToObject(o, "index", i);
+                const char* pn = g_app.plugin_mgr.pluginName(i);
+                cJSON_AddStringToObject(o, "name", pn ? pn : "?");
+                cJSON_AddItemToArray(arr, o);
+            }
+            cJSON* r = cJSON_CreateObject();
+            cJSON_AddItemToObject(r, "plugins", arr);
+            cJSON_AddNumberToObject(r, "active", g_app.active_plugin_idx);
+            RESULT(r);
+        }
     }
     else if (!strcmp(cmd, "serial_ports")) {
         cJSON* arr = cJSON_CreateArray();

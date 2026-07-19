@@ -12,6 +12,8 @@
 #define COBS_CH_LOG    0x04  // ESP->App: log/debug text
 #define COBS_CH_RESP   0x05  // ESP->App: command response text
 #define COBS_CH_DATA18 0x06  // App->ESP: motion data (18 bytes: 6x uint24 LE, low 18 bits used)
+#define COBS_CH_DATA_RAW 0x07 // App->ESP: RAW motion telemetry (24 bytes: 6x float32 LE, pre-cueing,
+                              //           app axis order surge=0/sway=1 — device cues + swaps)
 
 // Max COBS overhead: 1 byte per 254 input bytes + 1
 #define COBS_MAX_ENC_SIZE(n) ((n) + ((n) / 254) + 1)

@@ -269,6 +269,19 @@ bool SerialPort::sendCobsData(const uint32_t raw[6], int bit_depth) {
     return write(enc, enc_len);
 }
 
+bool SerialPort::sendCobsDataRaw(const float raw[6]) {
+    // Frame: [CH_DATA_RAW] + [6 x float32 LE] = 25 bytes raw.
+    // RAW = pre-cueing telemetry in app axis order (surge=0, sway=1); the ESP
+    // runs the cue engine and swaps axes after cueing. No swap on the wire.
+    uint8_t frame[1 + 24];
+    frame[0] = COBS_CH_DATA_RAW;
+    memcpy(frame + 1, raw, 24);  // 6 x float32 LE (host is LE on x86/ARM targets)
+    uint8_t enc[64];
+    int enc_len = cobs_encode(frame, sizeof(frame), enc);
+    enc[enc_len++] = 0x00;  // delimiter
+    return write(enc, enc_len);
+}
+
 bool SerialPort::sendCobsCommand(const char* cmd) {
     if (!m_open.load()) return false;
     int slen = (int)strlen(cmd);

@@ -163,11 +163,19 @@ void App::hilTxLoop() {
             double now = now_sec();
             if (now - last_send[ei] >= interval) {
                 last_send[ei] = now;
-                // Always use hil_tx_raw from the main pipeline — this includes
-                // MCA dynamics, tilt coordination, intensity, and axis gain.
-                uint32_t raw[6];
-                memcpy(raw, e.hil_tx_raw, sizeof(raw));
-                e.serial->sendCobsData(raw, e.config.bit_depth);
+                if (e.hil_raw_mode && e.hil_cap_raw) {
+                    // RAW HIL: stream pre-cueing input_pct (app axis order, no swap).
+                    // The ESP runs the single cue engine and swaps axes after cueing.
+                    float f[6];
+                    memcpy(f, e.hil_tx_raw_f, sizeof(f));
+                    e.serial->sendCobsDataRaw(f);
+                } else {
+                    // BAKED: hil_tx_raw already carries MCA dynamics, tilt
+                    // coordination, intensity, axis gain, and the surge<->sway swap.
+                    uint32_t raw[6];
+                    memcpy(raw, e.hil_tx_raw, sizeof(raw));
+                    e.serial->sendCobsData(raw, e.config.bit_depth);
+                }
             }
             ei++;
         }
@@ -257,6 +265,12 @@ static void saveEntityToJSON(cJSON* ej, const Entity& e) {
         cJSON_AddNumberToObject(hil, "tx_hz", e.hil_tx_hz);
         cJSON_AddNumberToObject(hil, "tick_rate_us", e.hil_tick_rate_us);
         cJSON_AddBoolToObject(hil, "auto_connect", e.hil_auto_connect);
+        // Network bridge transport
+        cJSON_AddBoolToObject(hil, "network", e.hil_network);
+        cJSON_AddStringToObject(hil, "host", e.hil_host);
+        cJSON_AddNumberToObject(hil, "udp_port", e.hil_udp_port);
+        cJSON_AddNumberToObject(hil, "tcp_port", e.hil_tcp_port);
+        cJSON_AddBoolToObject(hil, "raw_mode", e.hil_raw_mode);
         if (e.hil_fingerprint[0] != '\0')
             cJSON_AddStringToObject(hil, "fingerprint", e.hil_fingerprint);
     }
@@ -401,6 +415,11 @@ static void loadEntityFromJSON(Entity& e, cJSON* ej) {
             if (v >= 4 && v <= 100) e.hil_tick_rate_us = v;
         }
         if ((val = cJSON_GetObjectItem(hil, "auto_connect"))) e.hil_auto_connect = cJSON_IsTrue(val);
+        if ((val = cJSON_GetObjectItem(hil, "network"))) e.hil_network = cJSON_IsTrue(val);
+        if ((val = cJSON_GetObjectItem(hil, "host")) && cJSON_IsString(val)) snprintf(e.hil_host, sizeof(e.hil_host), "%s", val->valuestring);
+        if ((val = cJSON_GetObjectItem(hil, "udp_port"))) e.hil_udp_port = val->valueint;
+        if ((val = cJSON_GetObjectItem(hil, "tcp_port"))) e.hil_tcp_port = val->valueint;
+        if ((val = cJSON_GetObjectItem(hil, "raw_mode"))) e.hil_raw_mode = cJSON_IsTrue(val);
         if ((val = cJSON_GetObjectItem(hil, "fingerprint"))) snprintf(e.hil_fingerprint, sizeof(e.hil_fingerprint), "%s", val->valuestring);
     }
 }
@@ -585,6 +604,13 @@ Entity& App::addEntity(const char* name, EntityType type) {
     e.hil_baud = 921600;
     e.hil_auto_connect = true;
     e.hil_last_reconnect = 0.0;
+    memset(e.hil_tx_raw_f, 0, sizeof(e.hil_tx_raw_f));
+    e.hil_network = false;
+    snprintf(e.hil_host, sizeof(e.hil_host), "%s", "192.168.1.168");  // Voron default
+    e.hil_udp_port = 8767;
+    e.hil_tcp_port = 8789;
+    e.hil_cap_raw = false;
+    e.hil_raw_mode = false;
     memset(e.hil_fingerprint, 0, sizeof(e.hil_fingerprint));
     memset(e.hil_fw_version, 0, sizeof(e.hil_fw_version));
     e.hil_proto_ver = 0;
@@ -910,6 +936,18 @@ void App::handleHilLine(int entity_id, const char* line) {
         // Also store in legacy fields for UI/save compat
         snprintf(e->hil_fw_version, sizeof(e->hil_fw_version), "%s", fw);
         e->hil_proto_ver = proto;
+
+        // Raw-HIL capability gate: newer firmware advertises "rawhil=1" or a
+        // caps token containing "raw" (e.g. caps=raw). Old firmware omits it →
+        // hil_cap_raw stays false → baked path unchanged.
+        {
+            bool cap = false;
+            if (strstr(payload, "rawhil=1")) cap = true;
+            else { const char* caps = strstr(payload, "caps=");
+                   if (caps && strstr(caps, "raw")) cap = true; }
+            e->hil_cap_raw = cap;
+            if (!cap) e->hil_raw_mode = false;  // can't stream raw to a baked-only device
+        }
 
         // Fingerprint verification — ONLY advance handshake during WaitFingerprint.
         // Stale FINGERPRINT responses (from manual button clicks or previous sessions)
@@ -2173,8 +2211,10 @@ skip_input_processing:
                 e.serial.reset();
                 e.transport.usb_connected = false;
             }
-            // Auto-reconnect: retry every 3 seconds if auto_connect is enabled
-            if (!e.serial && e.hil_auto_connect
+            // Auto-reconnect: retry every 3 seconds if auto_connect is enabled.
+            // Serial-only — the network transport is (re)built from the device
+            // card's Network Connect button, not auto-enumerated here.
+            if (!e.hil_network && !e.serial && e.hil_auto_connect
                 && frame_time - e.hil_last_reconnect >= 3.0) {
                 e.hil_last_reconnect = frame_time;
 
@@ -2339,6 +2379,12 @@ skip_input_processing:
                     }
                     { uint32_t tmp = raw[0]; raw[0] = raw[1]; raw[1] = tmp; }
                     memcpy(e.hil_tx_raw, raw, sizeof(raw));
+
+                    // RAW-HIL snapshot: pre-cueing input_pct in app axis order
+                    // (surge=0, sway=1), NO swap — the ESP cues then swaps.
+                    // Baked applies MCA/intensity/gain here; raw ships the input
+                    // untouched so the device's single cue engine owns the feel.
+                    memcpy(e.hil_tx_raw_f, e.state.input_pct, sizeof(e.hil_tx_raw_f));
                 }
 
                 // Retry TELRATE if telemetry isn't flowing after handshake
@@ -2441,6 +2487,11 @@ skip_input_processing:
         static int    s_hil_baud[8] = {};
         static int    s_hil_tx_hz[8] = {};
         static bool   s_hil_auto[8] = {};
+        static bool   s_hil_net[8] = {};
+        static char   s_hil_host[8][64] = {};
+        static int    s_hil_udp[8] = {};
+        static int    s_hil_tcp[8] = {};
+        static bool   s_hil_raw[8] = {};
         static int    s_dyn_id = -1;
         static bool   s_inited = false;
 
@@ -2464,6 +2515,11 @@ skip_input_processing:
                     if (s_hil_baud[ei] != entities[ei].hil_baud) return false;
                     if (s_hil_tx_hz[ei] != entities[ei].hil_tx_hz) return false;
                     if (s_hil_auto[ei] != entities[ei].hil_auto_connect) return false;
+                    if (s_hil_net[ei] != entities[ei].hil_network) return false;
+                    if (strcmp(s_hil_host[ei], entities[ei].hil_host) != 0) return false;
+                    if (s_hil_udp[ei] != entities[ei].hil_udp_port) return false;
+                    if (s_hil_tcp[ei] != entities[ei].hil_tcp_port) return false;
+                    if (s_hil_raw[ei] != entities[ei].hil_raw_mode) return false;
                 }
             }
             return true;
@@ -2489,6 +2545,11 @@ skip_input_processing:
                     s_hil_baud[ei] = entities[ei].hil_baud;
                     s_hil_tx_hz[ei] = entities[ei].hil_tx_hz;
                     s_hil_auto[ei] = entities[ei].hil_auto_connect;
+                    s_hil_net[ei] = entities[ei].hil_network;
+                    snprintf(s_hil_host[ei], sizeof(s_hil_host[ei]), "%s", entities[ei].hil_host);
+                    s_hil_udp[ei] = entities[ei].hil_udp_port;
+                    s_hil_tcp[ei] = entities[ei].hil_tcp_port;
+                    s_hil_raw[ei] = entities[ei].hil_raw_mode;
                 }
             }
         };

@@ -619,8 +619,65 @@ std::string handle(const std::string& line) {
         double pre = num(a, "preroll_s", 5.0);
         int loop_point = (int)num(a, "loop_point", 0);
         const char* path = strarg(a, "path", "sequence.m6p");
+        bool raw = boolarg(a, "raw", false);   // M6P2 float32 raw (pre-cueing) export
         if (!e) { ERR("no entity"); }
         else if (idx < 0) { ERR("no recording"); }
+        else if (raw) {
+            // ── M6P2 RAW export: 6x float32 LE, PRE-cueing, app axis order (no swap).
+            // The device runs the single cue engine at playback, so this is the
+            // lossless master (change-list (a) / DECISIONS round 3 float32 decision).
+            const SavedRecording& sr = g_app.saved_recordings[idx];
+            double dur = sr.samples.empty() ? 0.0 : sr.samples.back().time;
+            int count = (int)(dur * rate) + 1;
+            std::vector<uint8_t> data((size_t)count * 6 * 4);
+            BakeStats st; for (int i = 0; i < 6; i++) { st.mn[i] = 1e9f; st.mx[i] = -1e9f; st.sat[i] = 0; }
+            for (int k = 0; k < count; k++) {
+                float pct[6]; interp_recording(sr, (double)k / rate, pct);
+                for (int i = 0; i < 6; i++) {
+                    if (pct[i] < st.mn[i]) st.mn[i] = pct[i];
+                    if (pct[i] > st.mx[i]) st.mx[i] = pct[i];
+                    if (pct[i] > 100.0f || pct[i] < -100.0f) st.sat[i] += 1.0;
+                    uint32_t bitsLE; memcpy(&bitsLE, &pct[i], 4);   // host LE
+                    uint8_t* d = &data[((size_t)k * 6 + i) * 4];
+                    d[0] = (uint8_t)(bitsLE & 0xFF);       d[1] = (uint8_t)((bitsLE >> 8) & 0xFF);
+                    d[2] = (uint8_t)((bitsLE >> 16) & 0xFF); d[3] = (uint8_t)((bitsLE >> 24) & 0xFF);
+                }
+            }
+            st.n = count;
+            for (int i = 0; i < 6; i++) st.sat[i] = count ? st.sat[i] / count * 100.0 : 0.0;
+            uint32_t crc = crc32_buf(data.data(), data.size());
+            uint8_t hdr[64] = {0};
+            memcpy(hdr, "M6P2", 4);
+            uint16_t ver = 2, r16 = (uint16_t)rate;
+            memcpy(hdr + 4, &ver, 2);
+            memcpy(hdr + 6, &r16, 2);
+            uint32_t c32 = (uint32_t)count, lp = (uint32_t)loop_point;
+            memcpy(hdr + 8,  &c32, 4);
+            memcpy(hdr + 12, &lp, 4);
+            const char* nm = g_app.saved_recordings[idx].name;
+            strncpy((char*)hdr + 16, nm, 31);
+            hdr[48] = 1;   // format: 1 = float32 (6 channels)
+            hdr[49] = 6;   // channel count
+            memcpy(hdr + 52, &crc, 4);
+            FILE* f = fopen(path, "wb");
+            if (!f) ERR("cannot open output path");
+            else {
+                fwrite(hdr, 1, 64, f);
+                fwrite(data.data(), 1, data.size(), f);
+                fclose(f);
+                cJSON* r = stats_json(st, rate);
+                cJSON_AddStringToObject(r, "path", path);
+                cJSON_AddStringToObject(r, "format", "M6P2-float32");
+                cJSON_AddNumberToObject(r, "bytes", (double)(64 + data.size()));
+                cJSON_AddNumberToObject(r, "loop_point", loop_point);
+                char crchex[16]; snprintf(crchex, sizeof(crchex), "%08X", crc);
+                cJSON_AddStringToObject(r, "crc32", crchex);
+                cJSON_AddStringToObject(r, "name", nm);
+                g_app.log(-1, "system", "Exported RAW %s (%d samples @ %dHz float32, %u B)",
+                          path, count, rate, (unsigned)(64 + data.size()));
+                RESULT(r);
+            }
+        }
         else {
             std::vector<uint16_t> seq; BakeStats st;
             if (!bake_sequence(idx, *e, rate, bits, pre, seq, st)) ERR("bake failed");

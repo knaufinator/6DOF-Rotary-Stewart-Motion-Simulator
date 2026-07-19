@@ -1,5 +1,6 @@
 #include "ui_panels.h"
 #include "serial_port.h"
+#include "udp_transport.h"
 #include "platform_viz.h"
 #include "test_harness_panel.h"
 #include "cJSON.h"
@@ -28,6 +29,152 @@ namespace fs = std::filesystem;
 
 static ImVec4 ColorFromFloat4(const float c[4]) {
     return ImVec4(c[0], c[1], c[2], c[3]);
+}
+
+// ── Network HIL bridge panel (source selector + demo files) ─────────
+// Rendered inside the HIL device card for Network connections only. Drives the
+// bridge line-JSON TCP control plane (set_source / play / list_files / mem /
+// select_demo / upload_file / delete_file). See bridge/PROTOCOL.md.
+static void DrawHilBridgePanel(Entity& e) {
+    UdpTransport* ut = (e.serial && e.serial->kind() == ITransport::Kind::Network)
+                       ? static_cast<UdpTransport*>(e.serial.get()) : nullptr;
+    if (!ut) return;
+
+    ImGui::Separator();
+    ImGui::Text("Bridge Control");
+    bool ctrl = ut->controlConnected();
+    if (ctrl) ImGui::TextColored(ImVec4(0.2f, 0.83f, 0.6f, 1.0f), "Control link: connected");
+    else      ImGui::TextColored(ImVec4(0.98f, 0.6f, 0.2f, 1.0f), "Control link: offline (motion UDP still streams)");
+
+    // Helper: send a verb+field JSON line over the control plane.
+    auto send_verb = [&](const char* verb, const char* field, const char* val) {
+        cJSON* r = cJSON_CreateObject();
+        cJSON_AddStringToObject(r, "verb", verb);
+        if (field && val) cJSON_AddStringToObject(r, field, val);
+        char* s = cJSON_PrintUnformatted(r);
+        if (s) { ut->controlSend(s); cJSON_free(s); }
+        cJSON_Delete(r);
+    };
+
+    // ── Source selector: OFF / DEMO / LIVE ──
+    std::string src = ut->source();
+    ImGui::Spacing();
+    ImGui::Text("Source:");
+    ImGui::SameLine();
+    struct SrcBtn { const char* label; const char* val; ImVec4 col; };
+    const SrcBtn btns[3] = {
+        { "OFF",  "OFF",  ImVec4(0.75f, 0.25f, 0.25f, 1.0f) },
+        { "DEMO", "DEMO", ImVec4(0.25f, 0.45f, 0.75f, 1.0f) },
+        { "LIVE", "LIVE", ImVec4(0.20f, 0.65f, 0.40f, 1.0f) },
+    };
+    for (int i = 0; i < 3; i++) {
+        bool active = (src == btns[i].val);
+        if (active) {
+            ImGui::PushStyleColor(ImGuiCol_Button, btns[i].col);
+            ImGui::PushStyleColor(ImGuiCol_ButtonHovered, btns[i].col);
+        }
+        if (ImGui::Button(btns[i].label, ImVec2(70, 30))) {
+            send_verb("set_source", "source", btns[i].val);
+        }
+        if (active) ImGui::PopStyleColor(2);
+        if (i < 2) ImGui::SameLine();
+    }
+    ImGui::TextDisabled("Current: %s   Play: %s",
+        src.empty() ? "?" : src.c_str(),
+        ut->playState().empty() ? "?" : ut->playState().c_str());
+    if (ImGui::IsItemHovered())
+        ImGui::SetTooltip("OFF homes the platform (kill motion). DEMO plays the\n"
+            "selected on-device .m6p. LIVE opens the UDP motion gate.");
+
+    // Play transport (DEMO)
+    if (ImGui::SmallButton("Play")) send_verb("play", "action", "start");
+    ImGui::SameLine();
+    if (ImGui::SmallButton("Stop")) send_verb("play", "action", "stop");
+    ImGui::SameLine();
+    if (ImGui::SmallButton("Loop")) send_verb("play", "action", "loop");
+    ImGui::SameLine();
+    if (ImGui::SmallButton("Refresh##bridgestatus")) send_verb("status", nullptr, nullptr);
+
+    // ── Demo file panel ──
+    ImGui::Spacing();
+    ImGui::Text("Device Demos");
+    if (ImGui::SmallButton("List##files")) send_verb("list_files", nullptr, nullptr);
+    ImGui::SameLine();
+    if (ImGui::SmallButton("Mem##files")) send_verb("mem", nullptr, nullptr);
+    long used = ut->memUsed(), freeb = ut->memFree();
+    if (used >= 0 || freeb >= 0) {
+        ImGui::SameLine();
+        ImGui::TextDisabled("used=%ld  free=%ld", used, freeb);
+    }
+
+    std::string sel = ut->selectedDemo();
+    std::vector<std::string> files = ut->deviceFiles();
+    if (files.empty()) {
+        ImGui::TextDisabled("(no files listed — press List; Phase-3 firmware returns them)");
+    } else {
+        if (ImGui::BeginListBox("##demofiles", ImVec2(-1, 96))) {
+            for (const auto& f : files) {
+                bool is_sel = (f == sel);
+                if (ImGui::Selectable(f.c_str(), is_sel))
+                    send_verb("select_demo", "name", f.c_str());
+                if (is_sel) {
+                    ImGui::SameLine();
+                    ImGui::TextColored(ImVec4(0.2f, 0.83f, 0.6f, 1.0f), "(selected)");
+                }
+            }
+            ImGui::EndListBox();
+        }
+    }
+
+    // Burn (upload) + delete. Upload is the chunked-handshake shape; the bridge
+    // upload_file is a STUB today (real erase+stream+CRC is Phase-3 firmware).
+    static char s_burn_path[260] = "sequence.m6p";
+    ImGui::SetNextItemWidth(-90);
+    ImGui::InputText("##burnpath", s_burn_path, sizeof(s_burn_path));
+    ImGui::SameLine();
+    if (ImGui::Button("Burn", ImVec2(80, 0))) {
+        // Read the local .m6p and send as a single-chunk upload_file (base64).
+        FILE* f = fopen(s_burn_path, "rb");
+        if (f) {
+            fseek(f, 0, SEEK_END); long sz = ftell(f); fseek(f, 0, SEEK_SET);
+            std::vector<unsigned char> buf((size_t)(sz > 0 ? sz : 0));
+            size_t rd = (sz > 0) ? fread(buf.data(), 1, (size_t)sz, f) : 0;
+            fclose(f);
+            static const char* B64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+            std::string b64;
+            for (size_t i = 0; i < rd; i += 3) {
+                unsigned n = buf[i] << 16;
+                if (i + 1 < rd) n |= buf[i + 1] << 8;
+                if (i + 2 < rd) n |= buf[i + 2];
+                b64.push_back(B64[(n >> 18) & 63]);
+                b64.push_back(B64[(n >> 12) & 63]);
+                b64.push_back((i + 1 < rd) ? B64[(n >> 6) & 63] : '=');
+                b64.push_back((i + 2 < rd) ? B64[n & 63] : '=');
+            }
+            const char* base = strrchr(s_burn_path, '/');
+            const char* base2 = strrchr(s_burn_path, '\\');
+            const char* name = base2 ? base2 + 1 : (base ? base + 1 : s_burn_path);
+            cJSON* r = cJSON_CreateObject();
+            cJSON_AddStringToObject(r, "verb", "upload_file");
+            cJSON_AddStringToObject(r, "name", name);
+            cJSON_AddNumberToObject(r, "chunk_index", 0);
+            cJSON_AddNumberToObject(r, "total_chunks", 1);
+            cJSON_AddStringToObject(r, "data", b64.c_str());
+            char* s = cJSON_PrintUnformatted(r);
+            if (s) { ut->controlSend(s); cJSON_free(s); }
+            cJSON_Delete(r);
+            g_app.log(e.id, "hil", "Burn: uploading %s (%ld bytes) to bridge", name, sz);
+        } else {
+            g_app.log(e.id, "hil", "Burn failed: cannot open %s", s_burn_path);
+        }
+    }
+    if (ImGui::IsItemHovered())
+        ImGui::SetTooltip("Upload a local .m6p to the device via the bridge.\n"
+            "Export one first with the control API 'export_sequence'.");
+    if (!sel.empty()) {
+        ImGui::SameLine();
+        if (ImGui::Button("Delete selected")) send_verb("delete_file", "name", sel.c_str());
+    }
 }
 
 // ── Workspace Save / Load ───────────────────────────────────────────
@@ -2556,21 +2703,39 @@ static void DrawEntitySettingsContent(Entity& e) {
             ImGui::Text("ESP32 Connection");
 
             bool connected = e.serial && e.serial->isOpen();
+            bool is_net = e.serial ? (e.serial->kind() == ITransport::Kind::Network) : e.hil_network;
+
+            // ── Transport kind selector (locked while connected) ──
+            if (!connected) {
+                int kind_idx = e.hil_network ? 1 : 0;
+                const char* kinds[] = { "Serial (USB)", "Network (Voron bridge)" };
+                ImGui::SetNextItemWidth(220);
+                if (ImGui::Combo("Transport##hilkind", &kind_idx, kinds, 2)) {
+                    e.hil_network = (kind_idx == 1);
+                    g_app.settings_dirty = true;
+                }
+                if (ImGui::IsItemHovered()) {
+                    ImGui::SetTooltip("Serial: direct USB COBS to the ESP32.\n"
+                        "Network: UDP motion + line-JSON TCP control to the\n"
+                        "Voron HIL bridge, which relays to the mini over USB.");
+                }
+            }
 
             if (connected) {
                 // ── Connected state ──
-                ImGui::TextColored(ImVec4(0.2f, 0.83f, 0.6f, 1.0f), "Connected: %s", e.serial->portName());
+                ImGui::TextColored(ImVec4(0.2f, 0.83f, 0.6f, 1.0f), "Connected: %s%s",
+                    is_net ? "net " : "", e.serial->portName());
                 ImGui::Text("RX: %d bytes  TX: %d bytes", e.serial->rxBytes(), e.serial->txBytes());
                 int rej = e.serial ? e.serial->telemetryRejected() : 0;
                 ImGui::Text("Telemetry: %.0f Hz (seq %d)", e.rate_tel_hz, e.hil_tel_seq);
                 if (e.serial) {
                     ImGui::Text("COBS: delim=%d ok=%d fail=%d tel=%d resp=%d log=%d",
-                        e.serial->m_cobs_delimiters.load(),
-                        e.serial->m_cobs_decode_ok.load(),
-                        e.serial->m_cobs_decode_fail.load(),
-                        e.serial->m_cobs_tel.load(),
-                        e.serial->m_cobs_resp.load(),
-                        e.serial->m_cobs_log.load());
+                        e.serial->cobsDelimiters(),
+                        e.serial->cobsDecodeOk(),
+                        e.serial->cobsDecodeFail(),
+                        e.serial->cobsTel(),
+                        e.serial->cobsResp(),
+                        e.serial->cobsLog());
                 }
                 if (rej > 0) {
                     ImGui::SameLine();
@@ -2594,26 +2759,109 @@ static void DrawEntitySettingsContent(Entity& e) {
                     e.serial->close();
                     e.serial.reset();
                     e.transport.usb_connected = false;
+                    e.transport.udp_connected = false;
                     e.hil_auto_connect = false;  // manual disconnect disables auto-reconnect
+                    if (is_net) {
+                        // Network handshake is app-forced; clear it so motion re-gates
+                        // until the next Connect.
+                        e.hil_handshake_ok = false;
+                        e.hil_handshake_phase = HandshakePhase::Idle;
+                    }
                 }
                 ImGui::PopStyleColor(2);
 
-                ImGui::Checkbox("Auto-reconnect", &e.hil_auto_connect);
-                if (ImGui::IsItemHovered()) {
-                    ImGui::SetTooltip("Automatically reconnect if the connection is lost.\n"
-                        "Retries every 3 seconds.");
+                if (!is_net) {
+                    ImGui::Checkbox("Auto-reconnect", &e.hil_auto_connect);
+                    if (ImGui::IsItemHovered()) {
+                        ImGui::SetTooltip("Automatically reconnect if the connection is lost.\n"
+                            "Retries every 3 seconds.");
+                    }
                 }
 
-                // Query buttons
-                if (ImGui::SmallButton("VERSION?")) { e.serial->sendCommand("VERSION?"); }
+                // ── Raw-HIL streaming toggle (capability-gated) ──
+                if (e.hil_cap_raw) {
+                    if (ImGui::Checkbox("Stream RAW (ESP cues)##rawmode", &e.hil_raw_mode))
+                        g_app.settings_dirty = true;
+                    if (ImGui::IsItemHovered()) {
+                        ImGui::SetTooltip("RAW: stream pre-cueing telemetry (6x float32, CH_DATA_RAW 0x07);\n"
+                            "the ESP runs the single on-device cue engine (one feel demo+live).\n"
+                            "Off: baked motion (post-cueing 6x uint24, CH_DATA18 0x06).");
+                    }
+                } else {
+                    ImGui::TextDisabled("RAW streaming: device does not advertise raw-HIL");
+                }
+
+                if (!is_net) {
+                    // Query buttons (serial control channel)
+                    if (ImGui::SmallButton("VERSION?")) { e.serial->sendCommand("VERSION?"); }
+                    ImGui::SameLine();
+                    if (ImGui::SmallButton("CONFIG?")) { e.serial->sendCommand("CONFIG?"); }
+                    ImGui::SameLine();
+                    if (ImGui::SmallButton("SCALE?")) { e.serial->sendCommand("SCALE?"); }
+                    ImGui::SameLine();
+                    if (ImGui::SmallButton("BITS?")) { e.serial->sendCommand("BITS?"); }
+                    ImGui::SameLine();
+                    if (ImGui::SmallButton("FINGERPRINT?")) { e.serial->sendCommand("FINGERPRINT?"); }
+                } else {
+                    // ── Network source selector + demo panel (bridge TCP-JSON) ──
+                    DrawHilBridgePanel(e);
+                }
+            } else if (e.hil_network) {
+                // ── Disconnected: Network bridge connect UI ──
+                ImGui::TextDisabled("Not connected (network)");
+                ImGui::TextWrapped("Connect to the Voron HIL bridge. Motion streams over "
+                    "UDP; source / demo control uses the line-JSON TCP port.");
+
+                ImGui::SetNextItemWidth(200);
+                if (ImGui::InputText("Bridge host##nethost", e.hil_host, sizeof(e.hil_host)))
+                    g_app.settings_dirty = true;
+                ImGui::SetNextItemWidth(110);
+                if (ImGui::InputInt("UDP port##netudp", &e.hil_udp_port, 0)) {
+                    if (e.hil_udp_port < 1) e.hil_udp_port = 1;
+                    if (e.hil_udp_port > 65535) e.hil_udp_port = 65535;
+                    g_app.settings_dirty = true;
+                }
                 ImGui::SameLine();
-                if (ImGui::SmallButton("CONFIG?")) { e.serial->sendCommand("CONFIG?"); }
-                ImGui::SameLine();
-                if (ImGui::SmallButton("SCALE?")) { e.serial->sendCommand("SCALE?"); }
-                ImGui::SameLine();
-                if (ImGui::SmallButton("BITS?")) { e.serial->sendCommand("BITS?"); }
-                ImGui::SameLine();
-                if (ImGui::SmallButton("FINGERPRINT?")) { e.serial->sendCommand("FINGERPRINT?"); }
+                ImGui::SetNextItemWidth(110);
+                if (ImGui::InputInt("TCP port##nettcp", &e.hil_tcp_port, 0)) {
+                    if (e.hil_tcp_port < 1) e.hil_tcp_port = 1;
+                    if (e.hil_tcp_port > 65535) e.hil_tcp_port = 65535;
+                    g_app.settings_dirty = true;
+                }
+
+                ImGui::SliderInt("TX Rate (Hz)##nc", &e.hil_tx_hz, 10, 1000);
+                if (ImGui::IsItemHovered())
+                    ImGui::SetTooltip("Motion datagram rate to the bridge.");
+
+                ImGui::Spacing();
+                ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.15f, 0.45f, 0.7f, 1.0f));
+                ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.2f, 0.55f, 0.85f, 1.0f));
+                if (ImGui::Button("Connect (Network)", ImVec2(-1, 28))) {
+                    auto up = std::make_shared<UdpTransport>(e.hil_host, e.hil_udp_port, e.hil_tcp_port);
+                    up->setCobsMode(true);
+                    e.serial = up;
+                    e.hil_network = true;
+                    e.transport.udp_connected = true;
+                    snprintf(e.transport.udp_ip, sizeof(e.transport.udp_ip), "%s", e.hil_host);
+                    // The bridge/ESP own device identity + cueing; the app streams
+                    // raw and drives source over TCP. Bypass the serial FINGERPRINT
+                    // handshake and enable motion. Network = the raw-HIL path.
+                    e.hil_tel_seq = 0;
+                    e.hil_cap_raw = true;
+                    e.hil_raw_mode = true;
+                    e.hil_handshake_ok = true;
+                    e.hil_handshake_pending = false;
+                    e.hil_handshake_phase = HandshakePhase::Ready;
+                    e.hil_last_error[0] = '\0';
+                    snprintf(e.hil_handshake_msg, sizeof(e.hil_handshake_msg),
+                             up->controlConnected() ? "Bridge connected"
+                                                    : "Motion UDP up (control offline)");
+                    g_app.log(e.id, "hil", "Network HIL: UDP %s:%d, control %s:%d (%s)",
+                              e.hil_host, e.hil_udp_port, e.hil_host, e.hil_tcp_port,
+                              up->controlConnected() ? "connected" : "control unreachable");
+                    g_app.settings_dirty = true;
+                }
+                ImGui::PopStyleColor(2);
             } else {
                 // ── Disconnected state — COM port selector ──
                 if (e.hil_auto_connect && e.hil_port[0] != '\0') {

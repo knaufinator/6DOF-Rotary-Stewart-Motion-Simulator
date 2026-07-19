@@ -19,14 +19,7 @@
 
 #include "dev_log.h"
 #include "cobs.h"
-
-// Parsed telemetry from ESP32
-struct ESP32Telemetry {
-    float angles[6];     // servo angles (radians) from ESP32 IK
-    float positions[6];  // input positions (arr[] on ESP32)
-    double timestamp;    // local time when received
-    int seq;             // increments on each new TEL line
-};
+#include "transport.h"   // ITransport + ESP32Telemetry
 
 // A detected COM port
 struct ComPortInfo {
@@ -34,7 +27,7 @@ struct ComPortInfo {
     std::string desc;    // e.g. "USB Serial Device (COM3)"
 };
 
-class SerialPort {
+class SerialPort : public ITransport {
 public:
     SerialPort();
     ~SerialPort();
@@ -44,35 +37,47 @@ public:
 
     // Open/close
     bool open(const char* port, int baud = 115200);
-    void close();
-    bool isOpen() const { return m_open.load(); }
+    void close() override;
+    bool isOpen() const override { return m_open.load(); }
 
     // Write raw bytes
-    bool write(const uint8_t* data, int len);
+    bool write(const uint8_t* data, int len) override;
 
     // Send a text command.
     // COBS mode: sent on CH_CMD frame. Fallback mode: appends 'X' terminator.
-    bool sendCommand(const char* cmd);
+    bool sendCommand(const char* cmd) override;
 
     // COBS-framed motion send — always uses CH_DATA18 (18-byte 6x uint24 LE).
     // Values are masked to 18 bits on the wire regardless of configured bit depth.
-    bool sendCobsData(const uint32_t raw[6], int bit_depth);
-    bool sendCobsCommand(const char* cmd);        // string command on CH_CMD
+    bool sendCobsData(const uint32_t raw[6], int bit_depth) override;
+    // RAW motion send — CH_DATA_RAW (24-byte 6x float32 LE, pre-cueing).
+    bool sendCobsDataRaw(const float raw[6]) override;
+    bool sendCobsCommand(const char* cmd) override;   // string command on CH_CMD
 
     // Enable COBS framing mode (binary protocol uses this)
-    void setCobsMode(bool v) { m_cobs_mode = v; }
-    bool isCobsMode() const  { return m_cobs_mode; }
+    void setCobsMode(bool v) override { m_cobs_mode = v; }
+    bool isCobsMode() const  override { return m_cobs_mode; }
 
     // Latest telemetry (thread-safe read)
-    ESP32Telemetry getLatestTelemetry() const;
+    ESP32Telemetry getLatestTelemetry() const override;
 
     // Connection info
-    const char* portName() const { return m_port_name; }
-    int rxBytes() const { return m_rx_bytes.load(); }
-    int txBytes() const { return m_tx_bytes.load(); }
-    int telemetrySeq() const { return m_telemetry.seq; }
-    float telemetryRate() const { return m_tel_rate.load(); }
-    int telemetryRejected() const { return m_tel_rejected.load(); }
+    const char* portName() const override { return m_port_name; }
+    int rxBytes() const override { return m_rx_bytes.load(); }
+    int txBytes() const override { return m_tx_bytes.load(); }
+    int telemetrySeq() const override { return m_telemetry.seq; }
+    float telemetryRate() const override { return m_tel_rate.load(); }
+    int telemetryRejected() const override { return m_tel_rejected.load(); }
+
+    // COBS decode counters (device card diagnostics)
+    int cobsDelimiters() const override { return m_cobs_delimiters.load(); }
+    int cobsDecodeOk()   const override { return m_cobs_decode_ok.load(); }
+    int cobsDecodeFail() const override { return m_cobs_decode_fail.load(); }
+    int cobsTel()  const override { return m_cobs_tel.load(); }
+    int cobsResp() const override { return m_cobs_resp.load(); }
+    int cobsLog()  const override { return m_cobs_log.load(); }
+
+    Kind kind() const override { return Kind::Serial; }
 
     // Line callback (optional — for logging raw lines to console)
     using LineCallback = std::function<void(const char* line)>;
@@ -84,7 +89,7 @@ public:
 
     // Thread-safe line queue: reader thread pushes, main thread drains.
     // This replaces direct callback invocation to avoid data races.
-    std::vector<std::string> drainLines();
+    std::vector<std::string> drainLines() override;
 
 private:
     void readerThread();
@@ -127,14 +132,13 @@ private:
 
     // COBS mode
     bool m_cobs_mode = false;
-public:
+    // COBS decode counters — private; exposed via cobs*() accessors (ITransport).
     std::atomic<int> m_cobs_delimiters{0};  // 0x00 bytes seen
     std::atomic<int> m_cobs_decode_ok{0};   // successful decodes
     std::atomic<int> m_cobs_decode_fail{0}; // failed decodes
     std::atomic<int> m_cobs_tel{0};         // TEL frames
     std::atomic<int> m_cobs_resp{0};        // RESP frames
     std::atomic<int> m_cobs_log{0};         // LOG frames
-private:
     uint8_t m_cobs_acc[512];  // COBS accumulation buffer
     int m_cobs_pos = 0;
     void processCobsFrame(const uint8_t *data, int len);

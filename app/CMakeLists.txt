@@ -101,6 +101,7 @@ add_executable(stewart-platform WIN32
     src/ui_panels.cpp
     src/platform_viz.cpp
     src/serial_port.cpp
+    src/udp_transport.cpp
     src/plugin_manager.cpp
     src/test_harness_panel.cpp
     src/control_server.cpp

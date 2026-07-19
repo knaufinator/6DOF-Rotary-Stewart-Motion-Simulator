@@ -24,7 +24,7 @@ static const int INPUT_HISTORY_LEN = 2048;  // ~10s at 200Hz
 #include "plugin_manager.h"
 
 // Forward declaration
-class SerialPort;
+class ITransport;   // SerialPort or UdpTransport (see transport.h)
 
 // ── Platform Types ──────────────────────────────────────────────────
 
@@ -182,8 +182,8 @@ struct Entity {
     float           rate_tx_hz;
     float           rate_tel_hz;
 
-    // HIL: serial connection to ESP32
-    std::shared_ptr<SerialPort> serial;  // nullptr for SIL entities
+    // HIL: transport to the ESP32 — SerialPort (USB) or UdpTransport (network bridge)
+    std::shared_ptr<ITransport> serial;  // nullptr for SIL entities
     int             hil_tx_hz;           // target motion packet send rate
     double          hil_last_tx_time;    // last binary packet send time
     int             hil_tel_seq;         // last processed telemetry seq
@@ -200,7 +200,18 @@ struct Entity {
     int             hil_baud;            // serial baud rate (saved per-device)
     bool            hil_auto_connect;    // try to reconnect if disconnected
     double          hil_last_reconnect;  // last reconnect attempt time
-    uint32_t        hil_tx_raw[6];       // latest raw packet for background TX thread (up to 18-bit)
+    uint32_t        hil_tx_raw[6];       // latest baked packet for background TX thread (up to 18-bit)
+    float           hil_tx_raw_f[6];     // latest RAW (pre-cueing) input_pct snapshot for CH_DATA_RAW
+
+    // Network HIL transport (Voron bridge). When hil_network, `serial` is a UdpTransport.
+    bool            hil_network;         // true = network bridge transport, false = USB serial
+    char            hil_host[64];        // bridge host (IP or hostname)
+    int             hil_udp_port;        // bridge UDP motion port (default 8767)
+    int             hil_tcp_port;        // bridge line-JSON TCP control port (default 8789)
+
+    // Raw-HIL streaming (CH_DATA_RAW). Gated on device capability + user toggle.
+    bool            hil_cap_raw;         // device advertises raw-HIL (fingerprint caps=raw / network)
+    bool            hil_raw_mode;        // user: stream pre-cueing raw telemetry (ESP cues) vs baked
 
     // Device fingerprint / handshake
     char            hil_fingerprint[16]; // stored MAC fingerprint (12 hex chars + NUL)

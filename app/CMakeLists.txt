@@ -78,15 +78,16 @@ add_library(implot_lib STATIC
 target_include_directories(implot_lib PUBLIC ${implot_SOURCE_DIR})
 target_link_libraries(implot_lib PUBLIC imgui_lib)
 
-# ── Shared C modules from ESP32 firmware ────────────────────────────
-set(CONTROLLER_DIR ${CMAKE_SOURCE_DIR}/../Controller)
+# ── Shared math from the stewart-core submodule (single source of truth = atan2f) ──
+set(CONTROLLER_DIR ${CMAKE_SOURCE_DIR}/../Controller)     # still needed below for cobs.h
+set(STEWART_CORE ${CMAKE_SOURCE_DIR}/../stewart-core)
 
 add_library(stewart_math STATIC
-    ${CONTROLLER_DIR}/main/InverseKinematics.cpp
-    ${CONTROLLER_DIR}/main/AxisScaling.cpp
-    ${CONTROLLER_DIR}/main/MotionCueing.cpp
+    ${STEWART_CORE}/src/InverseKinematics.cpp
+    ${STEWART_CORE}/src/AxisScaling.cpp
+    ${STEWART_CORE}/src/MotionCueing.cpp
 )
-target_include_directories(stewart_math PUBLIC ${CONTROLLER_DIR}/include)
+target_include_directories(stewart_math PUBLIC ${STEWART_CORE}/include)
 # Desktop build — disable ESP-IDF specific code
 target_compile_definitions(stewart_math PRIVATE
     SIL_BUILD=1

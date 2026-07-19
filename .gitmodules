@@ -1,0 +1,3 @@
+[submodule "stewart-core"]
+	path = stewart-core
+	url = https://github.com/knaufinator/stewart-core.git

@@ -8,16 +8,15 @@
 set(COMMON_SRCS
     "main.cpp"
     "helpers.cpp"
-    "InverseKinematics.cpp"
-    "AxisScaling.cpp"
-    "MotionCueing.cpp"
     "WifiTransport.cpp"
     "BleTransport.cpp"
     "CobsTransport.cpp"
 )
 
 # ── PCB-version-specific sources and dependencies ──
+# IK / AxisScaling / MotionCueing now come from the stewart-core component (submodule).
 set(PRIV_REQS
+    stewart-core
     driver esp_timer nvs_flash freertos
     esp_netif esp_event esp_wifi bt
 )

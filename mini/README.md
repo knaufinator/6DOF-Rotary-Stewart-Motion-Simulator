@@ -2,7 +2,7 @@
 
 Desktop-scale **mini** variant of the Stewart-platform firmware: an **ESP32** driving
 **6 hobby servos via LEDC PWM**. This is one of two firmware variants in this repo — see
-[`../firmware/README.md`](../firmware/README.md) for the variant map. Both variants share the
+[`../FIRMWARE.md`](../FIRMWARE.md) for the variant map. Both variants share the
 single [`stewart-core`](../stewart-core) submodule at the repo root (IK / AxisScaling /
 MotionCueing — single source of truth).
 
@@ -36,6 +36,11 @@ idf.py -p COM6 flash monitor
 `mini/CMakeLists.txt` points at the root submodule via
 `set(EXTRA_COMPONENT_DIRS "${CMAKE_CURRENT_LIST_DIR}/../stewart-core")` (mirrors
 `Controller/CMakeLists.txt`); `main/CMakeLists.txt` resolves it through `PRIV_REQUIRES stewart-core`.
+
+On this machine, the headless build is driven by the **`6dof-esp-build`** skill
+(`idf_build.ps1 -ProjDir mini -Clean`), which encodes the ESP-IDF v5.5 env setup that avoids the
+MSYS/venv/stderr traps. CI builds it the same way (see the "Build Mini Firmware" job in
+`.github/workflows/ci.yml`).
 
 ## Project structure
 

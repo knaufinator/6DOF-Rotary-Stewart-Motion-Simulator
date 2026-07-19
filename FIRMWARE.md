@@ -1,15 +1,15 @@
 # Firmware variants
 
 This repo carries **one firmware codebase in two build-time variants**, both sharing the single
-[`stewart-core`](../stewart-core) submodule at the repo root (IK / AxisScaling / MotionCueing —
+[`stewart-core`](stewart-core) submodule at the repo root (IK / AxisScaling / MotionCueing —
 the single source of truth, canonical `atan2f`). The variant is selected at build time via the
 IDF target + the actuator backend; the shared motion pipeline (COBS transport, playback, CueTask,
 command handler, NVS config) is identical.
 
 | Variant | Directory | Actuator backend | Boards / MCU | Servo rate | Build |
 |---------|-----------|------------------|--------------|-----------|-------|
-| **normal** (full system) | [`../Controller/`](../Controller) | MCPWM step/dir → AASD-15A AC servos (MCP23S17 SPI expander on PCBv1; direct GPIO on PCBv2). W5500 Ethernet. | PCBv1 = ESP32, PCBv2 = ESP32-S3 | 250 Hz cue loop | `set-target esp32`\|`esp32s3` |
-| **mini** (desktop) | [`../mini/`](../mini) | LEDC PWM → hobby servos | ESP32 DevKitC | analog 50 Hz (runtime-switchable to digital 250 Hz via `SERVO:RATE`) | `set-target esp32` |
+| **normal** (full system) | [`Controller/`](Controller) | MCPWM step/dir → AASD-15A AC servos (MCP23S17 SPI expander on PCBv1; direct GPIO on PCBv2). W5500 Ethernet. | PCBv1 = ESP32, PCBv2 = ESP32-S3 | 250 Hz cue loop | `set-target esp32`\|`esp32s3` |
+| **mini** (desktop) | [`mini/`](mini) | LEDC PWM → hobby servos | ESP32 DevKitC | analog 50 Hz (runtime-switchable to digital 250 Hz via `SERVO:RATE`) | `set-target esp32` |
 
 Both directories are project-level ESP-IDF projects that point at the root submodule with
 `set(EXTRA_COMPONENT_DIRS "${CMAKE_CURRENT_LIST_DIR}/../stewart-core")` and resolve it through
@@ -45,8 +45,11 @@ cd Controller && idf.py set-target esp32s3 && idf.py build
 cd Controller && idf.py set-target esp32 && idf.py build
 ```
 
-Per-variant hardware notes, pinouts, and serial commands: [`../mini/README.md`](../mini/README.md)
-and [`../Controller/README.md`](../Controller/README.md).
+Per-variant hardware notes, pinouts, and serial commands: [`mini/README.md`](mini/README.md)
+and [`Controller/README.md`](Controller/README.md).
+
+On this machine, both variants build headlessly via the **`6dof-esp-build`** skill
+(`idf_build.ps1`), which encodes the ESP-IDF env setup.
 
 ## Config-follows-flashed-features (direction)
 

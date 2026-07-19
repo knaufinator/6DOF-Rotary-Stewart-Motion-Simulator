@@ -31,6 +31,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          submodules: 'recursive'   # stewart-core supplies the math sources under test
 
       - name: Install Linux dependencies
         if: runner.os == 'Linux'

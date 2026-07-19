@@ -122,9 +122,27 @@ class ControlAPI:
         self.play_state = "stopped"     # stopped | playing | looping
         self.started_at = time.time()
 
+        # When the serial link (re)connects after a replug/brownout reset, the
+        # mini has rebooted to its own boot_source and would ignore streamed
+        # motion. Re-assert our tracked source so motion resumes hands-free.
+        try:
+            self._serial.on_reconnect = self._on_serial_reconnect
+        except Exception:  # pragma: no cover - injected mocks may lack the attr
+            pass
+
     # ── UDP gate ────────────────────────────────────────────────────────
     def is_live(self) -> bool:
         return self.source == SOURCE_LIVE
+
+    def _on_serial_reconnect(self) -> None:
+        """Serial link came back (mini replugged / recovered from brownout).
+        Re-push our tracked source so the freshly-booted mini resumes without
+        the operator having to re-select LIVE/DEMO."""
+        log.info("ctl: serial reconnected -> re-asserting source=%s", self.source)
+        try:
+            self._set_source(self.source)
+        except Exception as exc:  # noqa: BLE001
+            log.error("ctl: reconnect re-assert failed: %s", exc)
 
     # ── server lifecycle ────────────────────────────────────────────────
     async def start(self) -> None:

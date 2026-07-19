@@ -90,13 +90,35 @@ class SerialLink:
         self._stop = asyncio.Event()
         self._loop: Optional[asyncio.AbstractEventLoop] = None
         self.is_mock = transport is not None and not isinstance(transport, str)
+        # Called (from the RX loop) each time the real device is (re)opened, so
+        # the control layer can re-assert source/mode after the mini reboots.
+        self.on_reconnect: Optional[Callable[[], None]] = None
+        self.connected = False   # True while a real (non-mock) port is open
 
     # ── lifecycle ───────────────────────────────────────────────────────
+    def _try_open_real(self) -> bool:
+        """Attempt to (re)open the real serial device. Returns True on success.
+        Never raises — a missing/again-disconnected device is a normal state the
+        RX loop keeps retrying (the CP2102 re-enumerates across replugs)."""
+        if self.device is None:
+            return False
+        try:
+            import serial  # pyserial, imported lazily so tests need no dep
+            self._transport = serial.Serial(self.device, self.baud, timeout=0)
+            self.is_mock = False
+            self.connected = True
+            log.info("serial: opened %s @ %d", self.device, self.baud)
+            return True
+        except Exception:  # noqa: BLE001 — device not present yet
+            return False
+
     def open(self) -> None:
-        """Open the backing transport. If a transport was injected, use it. If
-        ``device`` is None, fall back to a MockSerial. A real open failure is
-        fatal only when ``require_device=True``; otherwise we degrade to a mock
-        so the service still runs (physical mini may be in use elsewhere)."""
+        """Open the backing transport. Injected transport -> use it. ``device``
+        None -> MockSerial. A configured device that isn't present is NOT fatal
+        even with ``require_device=True``: we leave the transport unopened and
+        the RX loop auto-connects when the device appears (survives replugs /
+        brownout resets). ``require_device=False`` degrades to a mock so the
+        service still runs with no hardware."""
         if self._transport is not None:
             log.info("serial: using injected transport (%s)", type(self._transport).__name__)
             return
@@ -105,14 +127,15 @@ class SerialLink:
             self._transport = MockSerial()
             self.is_mock = True
             return
-        try:
-            import serial  # pyserial, imported lazily so tests need no dep
-            self._transport = serial.Serial(self.device, self.baud, timeout=0)
-            log.info("serial: opened %s @ %d", self.device, self.baud)
-        except Exception as exc:  # noqa: BLE001
-            if self._require_device:
-                raise
-            log.warning("serial: open %s failed (%s) -> MockSerial", self.device, exc)
+        if self._try_open_real():
+            return
+        if self._require_device:
+            log.warning("serial: %s not present yet -> waiting for device (auto-connect)",
+                        self.device)
+            self._transport = None      # RX loop polls until it appears
+            self.is_mock = False
+        else:
+            log.warning("serial: open %s failed -> MockSerial", self.device)
             self._transport = MockSerial()
             self.is_mock = True
 
@@ -162,14 +185,36 @@ class SerialLink:
 
     # ── RX ──────────────────────────────────────────────────────────────
     async def _rx_loop(self) -> None:
+        reconnect_wait = 1.0   # seconds between reconnect attempts
         while not self._stop.is_set():
+            # Auto-(re)connect: a real device is configured but no live port is
+            # open (never opened, or lost to a disconnect). Poll until it returns.
+            if self.device is not None and (self._transport is None or self.is_mock):
+                if self._try_open_real():
+                    log.info("serial: device connected -> re-asserting state")
+                    if self.on_reconnect is not None:
+                        try:
+                            self.on_reconnect()
+                        except Exception as exc:  # noqa: BLE001
+                            log.error("serial: on_reconnect hook failed: %s", exc)
+                else:
+                    await asyncio.sleep(reconnect_wait)
+                    continue
+
             data = b""
             if self._transport is not None:
                 try:
                     data = self._transport.read(256)
-                except Exception as exc:  # noqa: BLE001
-                    log.error("serial: read failed: %s", exc)
-                    data = b""
+                except Exception as exc:  # noqa: BLE001 — device yanked mid-read
+                    log.warning("serial: read failed (%s) -> device lost, reconnecting", exc)
+                    self.connected = False
+                    try:
+                        self._transport.close()
+                    except Exception:  # noqa: BLE001
+                        pass
+                    self._transport = None
+                    await asyncio.sleep(0.5)
+                    continue
             if data:
                 self.feed(data)
             else:

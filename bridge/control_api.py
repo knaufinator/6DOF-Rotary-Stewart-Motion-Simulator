@@ -297,12 +297,14 @@ class ControlAPI:
             self._serial.send_cmd("PLAY:START")
             self.play_state = "playing"
         elif source == SOURCE_LIVE:
-            self._serial.send_cmd("SOURCE:LIVE")   # forward-compat (Phase 3)
-            # LIVE opens the UDP gate. The flashed firmware gates servo output on
-            # the play state even for streamed frames, so PLAY:START is required
-            # for "enabled" alone to move (confirmed on hardware 2026-07-19; the
-            # earlier PLAY:STOP froze LIVE until the user hit Play manually).
-            self._serial.send_cmd("PLAY:START")
+            # SOURCE:LIVE alone arms live streaming: in SRC_LIVE the firmware
+            # applies incoming CH_DATA_RAW directly (liveMotionGate). Do NOT send
+            # a PLAY command here: in the flashed firmware PLAY:START is an alias
+            # for SOURCE:DEMO and PLAY:STOP for SOURCE:OFF (main.cpp:1113-1120),
+            # so either one would knock the mini straight back out of LIVE. This
+            # was the root cause of both "needs manual Play" (old PLAY:STOP=OFF)
+            # and the post-power-cycle stall (confirmed on HW 2026-07-19).
+            self._serial.send_cmd("SOURCE:LIVE")
             self.play_state = "playing"
         self._broadcast(self._status_event())
         return {"source": self.source, "motion_gated": self.source != SOURCE_LIVE}

@@ -1,0 +1,27 @@
+[Unit]
+Description=6DOF HIL Network Bridge (UDP motion relay + WebSocket control -> ESP32 mini over USB COBS)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+# Installed by install.sh; edit these to match the Voron.
+User=knaufinator
+WorkingDirectory=/opt/hil-bridge
+# Serial device: the ESP32 mini on USB. Leave HIL_SERIAL_DEV unset to run in
+# MOCK mode (no hardware) for a smoke test.
+Environment=HIL_SERIAL_DEV=/dev/serial/by-id/usb-ESP32-mini
+Environment=HIL_BAUD=921600
+Environment=HIL_UDP_PORT=8767
+Environment=HIL_WS_PORT=8788
+Environment=HIL_TCP_PORT=8789
+Environment=HIL_BIND=0.0.0.0
+Environment=HIL_LOG_LEVEL=INFO
+ExecStart=/opt/hil-bridge/.venv/bin/python /opt/hil-bridge/bridge.py
+Restart=on-failure
+RestartSec=2
+# Access to the USB serial device (Debian/Ubuntu: dialout).
+SupplementaryGroups=dialout
+
+[Install]
+WantedBy=multi-user.target

@@ -4,6 +4,13 @@ project(stewart-platform LANGUAGES C CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+# Some fetched deps (e.g. cJSON v1.7.18) still declare cmake_minimum_required
+# < 3.5, which CMake >= 4.0 (the VS 2026 CI runner) rejects outright. Provide a
+# compatible policy floor so those subprojects still configure. This variable is
+# read by each subproject's cmake_minimum_required; it is silently ignored on
+# CMake < 3.31, so it is safe for older local toolchains too.
+set(CMAKE_POLICY_VERSION_MINIMUM 3.5)
+
 # ── Fetch dependencies ──────────────────────────────────────────────
 include(FetchContent)
 

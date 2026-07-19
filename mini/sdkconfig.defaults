@@ -1,0 +1,35 @@
+# Mini-6DOF ESP32 defaults
+# UART0 console (regular ESP32 — no USB Serial JTAG)
+CONFIG_ESP_CONSOLE_UART_DEFAULT=y
+CONFIG_ESP_CONSOLE_UART_BAUDRATE=921600
+
+# Flash + custom partition table. Physical chip is 4MB (esptool flash_id); the
+# stock 2MB build config wasted half of it. 4MB no-OTA layout (DECISIONS r3):
+# 2MB factory app + ~1.9MB raw `seq` data partition, nvs/phy/factory offsets
+# preserved so stored servo calibration + mca_cfg survive the repartition.
+CONFIG_ESPTOOLPY_FLASHSIZE_4MB=y
+CONFIG_PARTITION_TABLE_CUSTOM=y
+CONFIG_PARTITION_TABLE_CUSTOM_FILENAME="partitions.csv"
+
+# FreeRTOS
+CONFIG_FREERTOS_HZ=1000
+
+# Watchdog
+CONFIG_ESP_TASK_WDT_TIMEOUT_S=5
+
+# NVS
+CONFIG_NVS_ENCRYPTION=n
+
+# BLE for Android app control (BLE 5.0 for S25+ high-speed accel)
+CONFIG_BT_ENABLED=y
+CONFIG_BT_BLE_ENABLED=y
+CONFIG_BT_BLUEDROID_ENABLED=y
+CONFIG_BT_BLE_42_FEATURES_SUPPORTED=y
+CONFIG_BT_BLE_50_FEATURES_SUPPORTED=y
+CONFIG_BT_CTRL_BLE_MAX_ACT=6
+CONFIG_BT_BLE_ATT_SEND_BUF_TYPE=0
+CONFIG_BT_ACL_CONNECTIONS=3
+CONFIG_BT_BLE_DYNAMIC_ENV_MEMORY=n
+
+# WiFi disabled
+CONFIG_ESP_WIFI_ENABLED=n

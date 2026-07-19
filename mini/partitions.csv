@@ -1,0 +1,10 @@
+# Mini-6DOF partition table (4MB flash, no OTA — DECISIONS 2026-07-18 round 3).
+# nvs/phy/factory OFFSETS PRESERVED from the old 2MB table so stored servo
+# calibration + mca_cfg survive the repartition. Adds a raw `seq` data
+# partition (custom subtype 0x40, no filesystem) for on-device .m6p storage,
+# read via esp_partition_read / written by the bridge (esptool or chunked serial).
+# Name,     Type, SubType,  Offset,   Size
+nvs,        data, nvs,      0x9000,   0x6000
+phy_init,   data, phy,      0xf000,   0x1000
+factory,    app,  factory,  0x10000,  0x200000
+seq,        data, 0x40,     0x210000, 0x1F0000

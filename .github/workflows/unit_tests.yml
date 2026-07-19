@@ -8,6 +8,7 @@ on:
       - 'Controller/main/AxisScaling.cpp'
       - 'Controller/main/MotionCueing.cpp'
       - 'Controller/include/**'
+      - 'stewart-core'          # shared submodule gitlink — the math under test lives here now
       - 'tests/**'
       - '.github/workflows/unit_tests.yml'
   pull_request:
@@ -17,6 +18,7 @@ on:
       - 'Controller/main/AxisScaling.cpp'
       - 'Controller/main/MotionCueing.cpp'
       - 'Controller/include/**'
+      - 'stewart-core'          # shared submodule gitlink — the math under test lives here now
       - 'tests/**'
       - '.github/workflows/unit_tests.yml'
 

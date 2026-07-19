@@ -7,12 +7,18 @@ on:
       - 'v*.*.*'
     paths:
       - 'Controller/**'
+      - 'mini/**'
       - 'app/**'
+      - 'stewart-core'          # shared submodule gitlink — a bump must trigger firmware + SIL
+      - '.github/workflows/ci.yml'
   pull_request:
     branches: [ phoenix, main ]
     paths:
       - 'Controller/**'
+      - 'mini/**'
       - 'app/**'
+      - 'stewart-core'          # shared submodule gitlink — a bump must trigger firmware + SIL
+      - '.github/workflows/ci.yml'
 
 jobs:
   version:
@@ -113,6 +119,50 @@ jobs:
             firmware-*.elf
             bootloader-*.bin
             partition-table-*.bin
+          retention-days: 90
+
+  mini-firmware-build:
+    name: Build Mini Firmware (ESP-IDF)
+    needs: version
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: 'recursive'   # root stewart-core supplies the shared math
+
+      - name: Install ESP-IDF prerequisites
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y git wget flex bison gperf python3 python3-pip python3-venv \
+            cmake ninja-build ccache libffi-dev libssl-dev dfu-util libusb-1.0-0
+
+      - name: Set up ESP-IDF and Build
+        uses: espressif/esp-idf-ci-action@v1
+        with:
+          esp_idf_version: v5.5.2
+          target: esp32
+          path: 'mini'
+          command: idf.py build
+
+      - name: Package mini firmware with version
+        run: |
+          VERSION="${{ needs.version.outputs.version }}"
+          cp mini/build/mini_6dof.bin "mini-firmware-${VERSION}.bin"
+          cp mini/build/mini_6dof.elf "mini-firmware-${VERSION}.elf"
+          cp mini/build/bootloader/bootloader.bin "mini-bootloader-${VERSION}.bin"
+          cp mini/build/partition_table/partition-table.bin "mini-partition-table-${VERSION}.bin"
+
+      - name: Upload mini firmware artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: mini-firmware-${{ needs.version.outputs.version }}
+          path: |
+            mini-firmware-*.bin
+            mini-firmware-*.elf
+            mini-bootloader-*.bin
+            mini-partition-table-*.bin
           retention-days: 90
 
   desktop-app-build:

@@ -49,6 +49,9 @@ def parse_args(argv=None) -> argparse.Namespace:
                    default=int(os.environ.get("HIL_BAUD", "921600")))
     p.add_argument("--require-device", action="store_true",
                    default=os.environ.get("HIL_REQUIRE_DEVICE") == "1")
+    p.add_argument("--auth-token", default=os.environ.get("HIL_AUTH_TOKEN") or None,
+                   help="optional shared token for control clients; unset = auth "
+                        "disabled (trusted-LAN default)")
     p.add_argument("--log-level", default=os.environ.get("HIL_LOG_LEVEL", "INFO"))
     return p.parse_args(argv)
 
@@ -73,6 +76,7 @@ class Bridge:
             ws_port=args.ws_port,
             tcp_port=args.tcp_port,
             udp_stats=self.udp.stats,
+            auth_token=args.auth_token,
         )
         # Route device -> WS.
         self.serial.on_frame(CH_TEL, self.ctl.on_tel)

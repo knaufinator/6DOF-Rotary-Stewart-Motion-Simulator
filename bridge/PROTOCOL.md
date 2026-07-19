@@ -44,7 +44,7 @@ COBS_encode( [channel_byte] + payload )  +  0x00 delimiter
 | `CH_LOG`    | `0x04` | ESP→App  | log / debug text |
 | `CH_RESP`   | `0x05` | ESP→App  | command response text |
 | `CH_DATA18` | `0x06` | App→ESP  | **BAKED** motion, 18 bytes = 6×uint24 LE (low 18 bits) |
-| `CH_DATA_RAW` | `0x07` | App→ESP | **RAW** motion telemetry, 6×int16 LE (pre-cueing) |
+| `CH_DATA_RAW` | `0x07` | App→ESP | **RAW** motion telemetry, 24 bytes = 6×float32 LE (pre-cueing) |
 
 Worked example (`CH_CMD` + `"AB"`): raw = `02 41 42` → COBS prepends one code
 byte `04` → `04 02 41 42` → + delimiter → **`04 02 41 42 00`**.
@@ -54,9 +54,12 @@ byte `04` → `04 02 41 42` → + delimiter → **`04 02 41 42 00`**.
 * **`CH_DATA18` (0x06, baked):** legacy path. The desktop app runs the motion-cue
   engine and ships post-cueing 6×uint24 servo-space values.
 * **`CH_DATA_RAW` (0x07, raw):** the **decided LIVE path**. The app ships **raw
-  (pre-cueing) telemetry** and the **ESP runs the single on-device cue engine**
-  (washout + tilt-coordination + axis scaling + intensity/gain, tunable via
-  NVS). One cue engine for DEMO and LIVE → identical feel, live-tunable feel.
+  (pre-cueing) telemetry** as **6×float32 LE = 24 bytes**, in **app axis order
+  (surge=0, sway=1)**; the **ESP runs the single on-device cue engine** (washout
+  + tilt-coordination + axis scaling + intensity/gain, tunable via NVS) **and
+  swaps axes after cueing**. One cue engine for DEMO and LIVE → identical,
+  live-tunable feel. This float32 layout matches the on-device demo store's
+  **.m6p v2 (`M6P2`)** format byte = float32.
 
 **The bridge does not cue and does not inspect motion payloads.** For both
 channels the app builds the complete COBS frame and the bridge forwards the UDP
@@ -107,10 +110,13 @@ channel byte the app puts in the frame.
 On connect the bridge first sends:
 
 ```json
-{ "type": "hello", "api_version": 1, "service": "hil-bridge", "transport": "ws|tcp" }
+{ "type": "hello", "api_version": 1, "service": "hil-bridge",
+  "transport": "ws|tcp", "auth_required": false }
 ```
 
-immediately followed by a `status` event snapshot.
+If `auth_required` is `false` (the default — auth disabled) this is immediately
+followed by a `status` event snapshot. If `true`, the client must first
+authenticate (see **Auth** below); the status snapshot is withheld until it does.
 
 ### Verbs
 
@@ -163,19 +169,20 @@ gate. Boot default = **OFF** (safe idle, motion gated).
 
 | Source | Bridge action | UDP gate |
 |--------|---------------|----------|
-| **OFF**  | send `PLAY:STOP` **+** `SOURCE:OFF` (fwd-compat) | **closed** (drop) |
+| **OFF**  | send `PLAY:STOP` **+** `ZERO` (home) **+** `SOURCE:OFF` (fwd-compat) | **closed** (drop) |
 | **DEMO** | send `SOURCE:DEMO` (fwd-compat) **+** `PLAY:START` | closed (drop) |
 | **LIVE** | send `SOURCE:LIVE` (fwd-compat) **+** `PLAY:STOP` | **open** (forward) |
+
+**OFF = HOME (locked round-2 decision):** OFF (and startup) must **HOME** the
+platform. No dedicated `SOURCE:`/`HOME` firmware command exists yet (Phase 3),
+but the existing **`ZERO`** command homes on today's firmware, so OFF sends
+`PLAY:STOP` then `ZERO`. When the Phase-3 `SOURCE:` selector lands (which will
+home internally), the explicit `ZERO` can be dropped.
 
 **Forward-compat note:** the firmware `SOURCE:` / `BOOT_SOURCE:` / `SELECT:`
 commands are **Phase 3** (HIL_BRIDGE.md). Today's firmware ignores unknown
 commands, so the bridge sends them now for a clean cutover; the operative
-commands today are `PLAY:*`.
-
-**OFF = STOP, not HOME (for now):** HIL_BRIDGE.md "Decisions round 2" wants OFF
-(and startup) to **HOME** the platform. No `HOME` command exists in the firmware
-yet (that lands with the Phase-3 SOURCE work), so the bridge currently issues
-`PLAY:STOP` only. See OPEN QUESTIONS in the delivery notes.
+commands today are `PLAY:*` and `ZERO`.
 
 ---
 
@@ -189,6 +196,26 @@ yet (that lands with the Phase-3 SOURCE work), so the bridge currently issues
 | Bind addr  | `--bind`     | `HIL_BIND`     | `0.0.0.0` |
 | Serial dev | `--serial-dev` | `HIL_SERIAL_DEV` | *(unset → MockSerial, no hardware)* |
 | Baud       | `--baud`     | `HIL_BAUD`     | `921600` |
+| Auth token | `--auth-token` | `HIL_AUTH_TOKEN` | *(unset → auth DISABLED)* |
 
-**Auth:** none on the LAN (parity with the app's `:8770` server). If the bridge
-is ever exposed beyond a trusted LAN, add a token — flagged in OPEN QUESTIONS.
+---
+
+## 6. Auth (disabled by default; seam is built)
+
+**Current state: DISABLED.** No auth on the LAN (parity with the app's `:8770`
+server). `hello.auth_required` is `false` and every verb is accepted.
+
+**The handshake seam is already implemented** so enabling it later needs no
+rewrite. When the bridge is started with a token (`--auth-token` /
+`HIL_AUTH_TOKEN`):
+
+* `hello.auth_required` is `true` and the `status` snapshot is withheld.
+* The client's **first message must be** `{"auth": "<token>"}`. On success the
+  bridge replies `{"type":"resp","verb":"auth","ok":true}` then sends the
+  `status` snapshot; the connection proceeds normally.
+* Any other message while un-authed is rejected with
+  `{"type":"resp","verb":"auth","ok":false,"error":"auth_required"}`.
+
+**TODO (Android / off-LAN phase):** turn this on for connections that leave the
+trusted LAN, and consider TLS/`wss://` termination in front of the bridge. Until
+then it stays disabled for desktop-app parity.

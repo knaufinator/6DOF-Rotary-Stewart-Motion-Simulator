@@ -20,7 +20,8 @@ import socket
 import sys
 
 import cobs
-from cobs import CH_CMD, CH_DATA18, cobs_decode, cobs_encode, frame, make_data18, unframe
+from cobs import (CH_CMD, CH_DATA18, CH_DATA_RAW, cobs_decode, cobs_encode, frame,
+                  make_data18, make_data_raw, unframe)
 from control_api import ControlAPI
 from serial_link import MockSerial, SerialLink
 from udp_relay import UdpRelay
@@ -91,6 +92,17 @@ def test_cobs() -> None:
     check("DATA18 uint24 LE + 18-bit mask",
           p3[0:3] == bytes([0x45, 0x23, 0x01]),
           f"got {p3[0:3].hex()}")
+
+    # DATA_RAW frame: CH_DATA_RAW channel + 24-byte payload = 6x float32 LE.
+    import struct
+    fr = make_data_raw([1.0, -2.5, 3.0, 0.0, 0.0, 0.0])
+    chr_, praw = unframe(fr[:-1])
+    check("DATA_RAW frame: channel + 24-byte (6x float32 LE) payload",
+          chr_ == CH_DATA_RAW and len(praw) == 24 and fr[-1] == 0x00,
+          f"ch={chr_} plen={len(praw)}")
+    check("DATA_RAW float32 LE values round-trip",
+          struct.unpack("<6f", praw) == (1.0, -2.5, 3.0, 0.0, 0.0, 0.0),
+          f"got {struct.unpack('<6f', praw)}")
 
 
 # ── Test 2: UDP loopback gating ──────────────────────────────────────────────
@@ -181,13 +193,13 @@ async def test_ws() -> None:
         check("received set_source resp", got_resp)
         check("is_live() now true", ctl.is_live() is True)
 
-        # OFF must emit PLAY:STOP over serial (framed CMD)
+        # OFF must emit PLAY:STOP + ZERO (home) + SOURCE:OFF over serial
         mock.written.clear()
         await ws.send(json.dumps({"verb": "set_source", "source": "OFF", "id": 2}))
         await asyncio.sleep(0.2)
-        # decode what was written; expect a PLAY:STOP CMD frame present
         cmds = _decode_cmd_frames(mock.written)
         check("OFF sends PLAY:STOP over serial", "PLAY:STOP" in cmds, f"cmds={cmds}")
+        check("OFF sends ZERO (home) over serial", "ZERO" in cmds, f"cmds={cmds}")
         check("OFF sends SOURCE:OFF (forward-compat)", "SOURCE:OFF" in cmds,
               f"cmds={cmds}")
         check("is_live() false after OFF", ctl.is_live() is False)
@@ -253,6 +265,60 @@ async def test_tcp() -> None:
     await link.stop()
 
 
+# ── Test 5: auth handshake seam (enabled) ───────────────────────────────────
+async def test_auth() -> None:
+    print("Test 5: auth handshake seam (token enabled)")
+    import websockets
+
+    mock = MockSerial()
+    link = SerialLink(transport=mock)
+    link.open()
+    link.start()
+
+    port = _free_tcp_port()
+    ctl = ControlAPI(link, host="127.0.0.1", ws_port=port, tcp_port=0,
+                     auth_token="s3cret")
+    await ctl.start()
+
+    async with websockets.connect(f"ws://127.0.0.1:{port}") as ws:
+        hello = json.loads(await ws.recv())
+        check("auth: hello says auth_required=true", hello.get("auth_required") is True)
+
+        # A verb before auth is rejected (no status snapshot leaked).
+        await ws.send(json.dumps({"verb": "status"}))
+        rej = json.loads(await asyncio.wait_for(ws.recv(), timeout=2))
+        check("auth: verb before auth rejected",
+              rej.get("verb") == "auth" and rej.get("ok") is False
+              and rej.get("error") == "auth_required")
+
+        # Wrong token rejected.
+        await ws.send(json.dumps({"auth": "wrong"}))
+        bad = json.loads(await asyncio.wait_for(ws.recv(), timeout=2))
+        check("auth: wrong token rejected", bad.get("ok") is False)
+
+        # Correct token -> ok + status snapshot.
+        await ws.send(json.dumps({"auth": "s3cret"}))
+        ok = json.loads(await asyncio.wait_for(ws.recv(), timeout=2))
+        check("auth: correct token accepted",
+              ok.get("verb") == "auth" and ok.get("ok") is True)
+        snap = json.loads(await asyncio.wait_for(ws.recv(), timeout=2))
+        check("auth: status snapshot delivered after auth",
+              snap.get("event") == "status")
+
+        # Now verbs work.
+        await ws.send(json.dumps({"verb": "set_source", "source": "LIVE", "id": 9}))
+        got = False
+        for _ in range(4):
+            msg = json.loads(await asyncio.wait_for(ws.recv(), timeout=2))
+            if msg.get("type") == "resp" and msg.get("verb") == "set_source":
+                got = msg.get("ok") is True
+                break
+        check("auth: verbs accepted after auth", got)
+
+    await ctl.stop()
+    await link.stop()
+
+
 # ── helpers ─────────────────────────────────────────────────────────────────
 def _decode_cmd_frames(chunks: list[bytes]) -> list[str]:
     out: list[str] = []
@@ -285,6 +351,7 @@ async def _async_main() -> None:
     await test_udp()
     await test_ws()
     await test_tcp()
+    await test_auth()
 
 
 def main() -> int:

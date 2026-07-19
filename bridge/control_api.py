@@ -21,10 +21,9 @@ pre-cueing) verbatim to the ESP, which runs the single on-device cue engine.
 The bridge does NOT cue. See PROTOCOL.md.
 
 State machine (set_source):
-  OFF  -> "PLAY:STOP"  (halt motion) + "SOURCE:OFF" (forward-compat; firmware
-          SOURCE: support lands in Phase 3 — HIL_BRIDGE.md) + gate UDP.
-          NOTE: HIL_BRIDGE.md wants OFF to HOME the platform; no HOME cmd exists
-          yet (Phase 3), so OFF = STOP-only for now. See OPEN QUESTIONS.
+  OFF  -> "PLAY:STOP" (halt) + "ZERO" (HOME the platform — locked round-2
+          decision; ZERO homes on today's firmware) + "SOURCE:OFF" (fwd-compat;
+          firmware SOURCE: support lands in Phase 3 — HIL_BRIDGE.md) + gate UDP.
   DEMO -> "SOURCE:DEMO" (fwd-compat) + "PLAY:START" (on-device playback).
   LIVE -> open the UDP gate (streamed RAW motion from the app).
 
@@ -56,6 +55,11 @@ class _Client:
     implement ``_raw_send(text)``."""
     kind = "?"
 
+    def __init__(self) -> None:
+        # Auth gate. When the server has no token configured this is set True at
+        # connect; otherwise it flips True only after a valid {"auth":...} msg.
+        self.authed = False
+
     async def send(self, obj: dict) -> bool:
         try:
             await self._raw_send(json.dumps(obj))
@@ -71,6 +75,7 @@ class _WsClient(_Client):
     kind = "ws"
 
     def __init__(self, ws) -> None:
+        super().__init__()
         self._ws = ws
 
     async def _raw_send(self, text: str) -> None:
@@ -81,6 +86,7 @@ class _TcpClient(_Client):
     kind = "tcp"
 
     def __init__(self, writer: asyncio.StreamWriter) -> None:
+        super().__init__()
         self._writer = writer
 
     async def _raw_send(self, text: str) -> None:
@@ -92,12 +98,18 @@ class _TcpClient(_Client):
 class ControlAPI:
     def __init__(self, serial_link, host: str = "0.0.0.0",
                  ws_port: int = 8788, tcp_port: int = 8789,
-                 udp_stats: Optional[dict] = None) -> None:
+                 udp_stats: Optional[dict] = None,
+                 auth_token: Optional[str] = None) -> None:
         self._serial = serial_link
         self.host = host
         self.ws_port = ws_port
         self.tcp_port = tcp_port
         self._udp_stats = udp_stats if udp_stats is not None else {}
+        # Optional shared-token auth. None => DISABLED (trusted-LAN default, in
+        # parity with the app's :8770 server). When set, a client must send
+        # {"auth":"<token>"} as its first message before any verb is accepted.
+        # This is the seam for the Android / off-LAN phase — see PROTOCOL.md.
+        self._auth_token = auth_token
         self._clients: Set[_Client] = set()
         self._ws_server = None
         self._tcp_server: Optional[asyncio.AbstractServer] = None
@@ -185,10 +197,15 @@ class ControlAPI:
 
     async def _on_connect(self, client: _Client) -> None:
         self._clients.add(client)
+        # Auth disabled (no token) => client is authed immediately.
+        client.authed = self._auth_token is None
         log.info("ctl: %s client connected (%d total)", client.kind, len(self._clients))
         await client.send({"type": "hello", "api_version": API_VERSION,
-                           "service": "hil-bridge", "transport": client.kind})
-        await client.send(self._status_event())
+                           "service": "hil-bridge", "transport": client.kind,
+                           "auth_required": not client.authed})
+        # Only leak state to already-authed clients.
+        if client.authed:
+            await client.send(self._status_event())
 
     def _on_disconnect(self, client: _Client) -> None:
         self._clients.discard(client)
@@ -200,6 +217,11 @@ class ControlAPI:
         except (ValueError, TypeError):
             await client.send({"type": "resp", "ok": False, "error": "invalid_json"})
             return
+        # Auth gate (no-op when auth is disabled — client.authed is already
+        # True). When enabled, the first message must be {"auth":"<token>"}.
+        if not client.authed:
+            if not await self._try_auth(client, msg):
+                return
         verb = msg.get("verb") or msg.get("cmd")
         req_id = msg.get("id")
         try:
@@ -213,6 +235,21 @@ class ControlAPI:
         except _ApiError as exc:
             await client.send({"type": "resp", "verb": verb, "ok": False,
                                "id": req_id, "error": str(exc)})
+
+    async def _try_auth(self, client: _Client, msg: dict) -> bool:
+        """Handle the token handshake for an un-authed client. Returns True iff
+        the client is now authed (and the caller may proceed to dispatch this
+        same message if it also carried a verb — but the handshake message is
+        auth-only by convention). Only reached when auth is ENABLED."""
+        token = msg.get("auth")
+        if token is not None and token == self._auth_token:
+            client.authed = True
+            await client.send({"type": "resp", "verb": "auth", "ok": True})
+            await client.send(self._status_event())
+            return False   # handshake consumed; verb (if any) not dispatched
+        await client.send({"type": "resp", "verb": "auth", "ok": False,
+                           "error": "auth_required"})
+        return False
 
     async def _dispatch(self, verb: Optional[str], msg: dict) -> Optional[dict]:
         if verb == "set_source":
@@ -245,6 +282,9 @@ class ControlAPI:
         self.source = source
         if source == SOURCE_OFF:
             self._serial.send_cmd("PLAY:STOP")
+            # HOME the platform (locked round-2 decision: OFF + startup home).
+            # No SOURCE:/HOME firmware cmd exists yet, but ZERO homes today.
+            self._serial.send_cmd("ZERO")
             # Forward-compat: firmware SOURCE: support arrives in Phase 3
             # (HIL_BRIDGE.md). Harmless unknown-command today.
             self._serial.send_cmd("SOURCE:OFF")

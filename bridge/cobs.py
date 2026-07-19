@@ -18,8 +18,10 @@ Channel IDs (from cobs.h):
     LOG    0x04  ESP->App  log/debug text
     RESP   0x05  ESP->App  command response text
     DATA18   0x06  App->ESP  BAKED motion data (18 bytes: 6x uint24 LE, low 18 bits)
-    DATA_RAW 0x07  App->ESP  RAW motion telemetry (6x int16 LE, pre-cueing);
-                             the ESP runs the cue engine on these (LIVE path).
+    DATA_RAW 0x07  App->ESP  RAW motion telemetry (24 bytes: 6x float32 LE,
+                             pre-cueing, app axis order surge=0/sway=1; the ESP
+                             runs the cue engine + swaps axes. LIVE path;
+                             matches .m6p v2 "M6P2" float32 format).
 """
 from __future__ import annotations
 
@@ -28,8 +30,8 @@ CH_CMD      = 0x02
 CH_TEL      = 0x03
 CH_LOG      = 0x04
 CH_RESP     = 0x05
-CH_DATA18   = 0x06   # baked motion (post-cueing 6x uint24)
-CH_DATA_RAW = 0x07   # raw motion telemetry (pre-cueing 6x int16); ESP cues it
+CH_DATA18   = 0x06   # baked motion (post-cueing 6x uint24 LE)
+CH_DATA_RAW = 0x07   # raw motion telemetry (pre-cueing 6x float32 LE); ESP cues it
 
 DELIMITER = 0x00
 
@@ -122,6 +124,19 @@ def make_data18(raw6: "list[int] | tuple[int, ...]") -> bytes:
         payload[i * 3 + 1] = (v >> 8) & 0xFF
         payload[i * 3 + 2] = (v >> 16) & 0xFF
     return frame(CH_DATA18, bytes(payload))
+
+
+def make_data_raw(raw6: "list[float] | tuple[float, ...]") -> bytes:
+    """Build a CH_DATA_RAW frame from six raw (pre-cueing) telemetry channels,
+    serialized as 6x float32 LE = 24 bytes, app axis order (surge=0, sway=1;
+    the ESP swaps axes after cueing). In production the APP builds these frames
+    and the bridge forwards them verbatim; this helper exists for tests and any
+    bridge-side generator. Matches the .m6p v2 "M6P2" float32 format."""
+    import struct
+    if len(raw6) != 6:
+        raise ValueError("DATA_RAW needs exactly 6 channel values")
+    payload = struct.pack("<6f", *(float(v) for v in raw6))
+    return frame(CH_DATA_RAW, payload)
 
 
 def make_cmd(cmd: str) -> bytes:

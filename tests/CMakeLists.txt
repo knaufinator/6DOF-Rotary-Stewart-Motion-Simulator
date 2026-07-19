@@ -5,15 +5,15 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_C_STANDARD 11)
 
-# ── Shared C modules from ESP32 firmware ────────────────────────────
-set(CONTROLLER_DIR ${CMAKE_SOURCE_DIR}/../Controller)
+# ── Shared math from the stewart-core submodule (single source of truth = atan2f) ──
+set(STEWART_CORE ${CMAKE_SOURCE_DIR}/../stewart-core)
 
 add_library(stewart_math STATIC
-    ${CONTROLLER_DIR}/main/InverseKinematics.cpp
-    ${CONTROLLER_DIR}/main/AxisScaling.cpp
-    ${CONTROLLER_DIR}/main/MotionCueing.cpp
+    ${STEWART_CORE}/src/InverseKinematics.cpp
+    ${STEWART_CORE}/src/AxisScaling.cpp
+    ${STEWART_CORE}/src/MotionCueing.cpp
 )
-target_include_directories(stewart_math PUBLIC ${CONTROLLER_DIR}/include)
+target_include_directories(stewart_math PUBLIC ${STEWART_CORE}/include)
 target_compile_definitions(stewart_math PRIVATE
     SIL_BUILD=1
     _USE_MATH_DEFINES
@@ -27,7 +27,6 @@ add_executable(stewart-tests
     test_motion_cueing.cpp
 )
 target_include_directories(stewart-tests PRIVATE
-    ${CONTROLLER_DIR}/include
     ${CMAKE_SOURCE_DIR}
 )
 target_link_libraries(stewart-tests PRIVATE stewart_math)

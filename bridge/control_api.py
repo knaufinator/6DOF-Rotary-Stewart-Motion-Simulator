@@ -27,7 +27,8 @@ State machine (set_source):
   DEMO -> "SOURCE:DEMO" (fwd-compat) + "PLAY:START" (on-device playback).
   LIVE -> open the UDP gate (streamed RAW motion from the app).
 
-Verbs: set_source, play, status, select_demo, boot_source, mem, list_files,
+Verbs: set_source, play, cmd (whitelisted CH_CMD passthrough for live tuning),
+       status, select_demo, boot_source, mem, list_files,
        upload_file (chunked, stub), delete_file (stub), flash_firmware (stub).
 """
 from __future__ import annotations
@@ -256,6 +257,8 @@ class ControlAPI:
             return self._set_source(msg.get("source"))
         if verb == "play":
             return self._play(msg.get("action"))
+        if verb == "cmd":
+            return self._cmd(msg.get("text"))
         if verb == "status":
             self._broadcast(self._status_event())
             return self._status_body()
@@ -295,10 +298,12 @@ class ControlAPI:
             self.play_state = "playing"
         elif source == SOURCE_LIVE:
             self._serial.send_cmd("SOURCE:LIVE")   # forward-compat (Phase 3)
-            # LIVE just opens the UDP gate; no PLAY needed. Ensure on-device
-            # demo playback isn't running.
-            self._serial.send_cmd("PLAY:STOP")
-            self.play_state = "stopped"
+            # LIVE opens the UDP gate. The flashed firmware gates servo output on
+            # the play state even for streamed frames, so PLAY:START is required
+            # for "enabled" alone to move (confirmed on hardware 2026-07-19; the
+            # earlier PLAY:STOP froze LIVE until the user hit Play manually).
+            self._serial.send_cmd("PLAY:START")
+            self.play_state = "playing"
         self._broadcast(self._status_event())
         return {"source": self.source, "motion_gated": self.source != SOURCE_LIVE}
 
@@ -312,6 +317,23 @@ class ControlAPI:
                            "loop": "looping"}[action]
         self._broadcast(self._status_event())
         return {"play_state": self.play_state}
+
+    # Whitelisted CH_CMD passthrough so the app (or an operator) can push live
+    # tuning to the on-device cue engine, which the fixed verb set never exposed.
+    # Restricted to tuning/config/query prefixes — never PLAY/SOURCE/BOOT/flash
+    # (those have dedicated, state-tracked verbs) or arbitrary strings.
+    _CMD_ALLOW = ("MCA:", "MCA?", "SERVO:", "TELRATE:", "TELRATE?",
+                  "CONFIG:", "CONFIG?", "BITS:", "BITS?", "SCALE?", "VERSION?",
+                  "FINGERPRINT?")
+
+    def _cmd(self, text: Optional[str]) -> dict:
+        if not text or not isinstance(text, str):
+            raise _ApiError("missing_text")
+        t = text.strip()
+        if not any(t == p or t.startswith(p) for p in self._CMD_ALLOW):
+            raise _ApiError(f"cmd_not_allowed:{t[:32]}")
+        self._serial.send_cmd(t)
+        return {"sent": t}
 
     def _select_demo(self, name: Optional[str]) -> dict:
         if not name:

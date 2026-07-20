@@ -328,11 +328,15 @@ class ControlAPI:
         return {"source": self.source, "motion_gated": self.source != SOURCE_LIVE}
 
     def _play(self, action: Optional[str]) -> dict:
-        mapping = {"start": "PLAY:START", "stop": "PLAY:STOP", "loop": "PLAY:LOOP"}
-        cmd = mapping.get(action)
-        if cmd is None:
+        # Firmware grammar (main.cpp): PLAY:LOOP=1 enables looping (bare
+        # PLAY:LOOP is 'unknown'); loop = enable looping AND start playing.
+        mapping = {"start": ["PLAY:START"], "stop": ["PLAY:STOP"],
+                   "loop": ["PLAY:LOOP=1", "PLAY:START"]}
+        cmds = mapping.get(action)
+        if cmds is None:
             raise _ApiError(f"bad_play_action:{action}")
-        self._serial.send_cmd(cmd)
+        for c in cmds:
+            self._serial.send_cmd(c)
         self.play_state = {"start": "playing", "stop": "stopped",
                            "loop": "looping"}[action]
         self._broadcast(self._status_event())
@@ -344,7 +348,7 @@ class ControlAPI:
     # (those have dedicated, state-tracked verbs) or arbitrary strings.
     _CMD_ALLOW = ("MCA:", "MCA?", "SERVO:", "TELRATE:", "TELRATE?",
                   "CONFIG:", "CONFIG?", "BITS:", "BITS?", "SCALE?", "VERSION?",
-                  "FINGERPRINT?")
+                  "FINGERPRINT?", "PLAY:STATUS", "SOURCE?")
 
     def _cmd(self, text: Optional[str]) -> dict:
         if not text or not isinstance(text, str):

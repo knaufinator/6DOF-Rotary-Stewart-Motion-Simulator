@@ -590,30 +590,36 @@ static inline void decodeSeqFrame(const uint8_t* p, float raw[6]) {
 // PlaybackTask is now a PRODUCER: it paces to the file rate and pushes each
 // sample into the shared target (raw M6P2 -> TGT_RAW so CueTask cues it;
 // baked M6P1 -> TGT_BAKED). CueTask does the IK/servo at cueLoopHz.
-static void PlaybackTask(void* pv) {
-    (void)pv;
-    uint16_t rate = (seqRateHz ? seqRateHz : 50);
-    TickType_t period = pdMS_TO_TICKS(1000 / rate);
-    if (period < 1) period = 1;
-    TickType_t last = xTaskGetTickCount();
-    for (;;) {
-        if (playbackActive && seqSamples && seqCount) {
-            float raw[6];
-            decodeSeqFrame(seqSamples + (size_t)playbackIdx * seqStride, raw);
-            writeTarget(raw, g_framesRaw ? TGT_RAW : TGT_BAKED);
-            uint32_t nxt = playbackIdx + 1;
-            if (nxt >= seqCount) {
-                if (playbackLoop) {
-                    nxt = seqLoopPoint;
-                } else {
-                    playbackActive = false;
-                    nxt = 0;
-                    serial_printf("PLAY:DONE\r\n");
-                }
+// Playback producer, run INLINE from CueTask each cue tick (no separate task:
+// a dedicated prio-6 PlaybackTask on core 1 was observed entering its loop and
+// then never being scheduled again on this build — folding the producer into
+// the one task that demonstrably runs also gives a single clock, no cross-task
+// handoff). Paces the sequence at seqRateHz via a fractional accumulator and
+// pushes the current frame into the shared target as ZOH.
+static void playbackStep(uint16_t cueRateHz) {
+    static float acc = 0.0f;
+    if (!(playbackActive && seqSamples && seqCount)) { acc = 0.0f; return; }
+
+    float raw[6];
+    decodeSeqFrame(seqSamples + (size_t)playbackIdx * seqStride, raw);
+    writeTarget(raw, g_framesRaw ? TGT_RAW : TGT_BAKED);
+
+    // Advance at the file rate regardless of the cue loop rate.
+    acc += (float)(seqRateHz ? seqRateHz : 50) / (float)(cueRateHz ? cueRateHz : 50);
+    while (acc >= 1.0f) {
+        acc -= 1.0f;
+        uint32_t nxt = playbackIdx + 1;
+        if (nxt >= seqCount) {
+            if (playbackLoop) {
+                nxt = seqLoopPoint;
+            } else {
+                playbackActive = false;
+                nxt = 0;
+                serial_printf("PLAY:DONE\r\n");
+                break;
             }
-            playbackIdx = nxt;
         }
-        vTaskDelayUntil(&last, period);
+        playbackIdx = nxt;
     }
 }
 
@@ -638,6 +644,10 @@ static void CueTask(void* pv) {
             if (period < 1) period = 1;
         }
         const float dt = 1.0f / (float)curRate;
+
+        // DEMO producer: feed the shared target from the embedded sequence
+        // (inline; see playbackStep comment). No-op unless playbackActive.
+        playbackStep(curRate);
 
         float ch[6]; int64_t ts; int fmt;
         readTarget(ch, &ts, &fmt);
@@ -1305,7 +1315,7 @@ extern "C" void app_main(void) {
         serial_printf("PLAY: sequence ready -- %u samples @ %uHz, %d-bit, %s, loop@%u (~%.1fs)\r\n",
             (unsigned)seqCount, (unsigned)seqRateHz, seqBits, g_framesRaw ? "raw" : "baked",
             (unsigned)seqLoopPoint, (double)seqCount / (seqRateHz ? seqRateHz : 50));
-        xTaskCreatePinnedToCore(PlaybackTask, "Playback", 4096, NULL, 6, NULL, 1);
+        // Playback runs inline in CueTask (playbackStep) — no separate task.
     } else {
         serial_printf("PLAY: no valid embedded sequence\r\n");
     }
@@ -1323,8 +1333,13 @@ extern "C" void app_main(void) {
 #endif
 
     // ── Apply the boot source (OFF / DEMO / LIVE), default = DEMO ─────
+    // Skip if a runtime SOURCE:/PLAY: command already changed the source
+    // during the hold (don't clobber an operator's explicit choice).
     Source bootSrc = loadBootSource();
-    if (bootSrc == SRC_DEMO && !haveSeq) {
+    if (g_source != SRC_OFF) {
+        serial_printf("SOURCE: runtime source=%s set during hold - boot default skipped\r\n",
+                      sourceName(g_source));
+    } else if (bootSrc == SRC_DEMO && !haveSeq) {
         serial_printf("SOURCE: boot=DEMO but no sequence -> OFF\r\n");
         setSource(SRC_OFF);
     } else {

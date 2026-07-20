@@ -154,6 +154,12 @@ typedef enum {
 } Source;
 static volatile Source g_source = SRC_DEMO;
 
+// Boot home-hold: on every boot, home the platform and hold at home for this
+// long BEFORE entering the boot source (even boot=DEMO). Gives a window to cut
+// power at a known home position (e.g. for servo replacement) before the rig
+// starts moving. 0 disables.
+#define BOOT_HOME_HOLD_MS 3000
+
 // ── BLE Accel Input ──────────────────────────────────────────────────
 // Raw sensor data from phone: [accel_x, accel_y, accel_z, gyro_x, gyro_y, gyro_z]
 // Accel in m/s² (Android TYPE_ACCELEROMETER, includes gravity)
@@ -1303,6 +1309,18 @@ extern "C" void app_main(void) {
     } else {
         serial_printf("PLAY: no valid embedded sequence\r\n");
     }
+
+    // ── Boot home-hold ───────────────────────────────────────────────
+    // Home the platform and hold at home before entering the boot source, so
+    // power can be cut at a known home position (servo work) even when booting
+    // straight into DEMO. SRC_OFF writes the home target; the CueTask drives to
+    // it and holds. setSource(SRC_DEMO) below resets playbackIdx=0, so the demo
+    // still starts from the top after the hold.
+#if BOOT_HOME_HOLD_MS > 0
+    setSource(SRC_OFF);
+    serial_printf("BOOT: home hold %d ms - safe to power off at home now\r\n", BOOT_HOME_HOLD_MS);
+    vTaskDelay(pdMS_TO_TICKS(BOOT_HOME_HOLD_MS));
+#endif
 
     // ── Apply the boot source (OFF / DEMO / LIVE), default = DEMO ─────
     Source bootSrc = loadBootSource();

@@ -160,6 +160,10 @@ static volatile Source g_source = SRC_DEMO;
 // starts moving. 0 disables.
 #define BOOT_HOME_HOLD_MS 3000
 
+// Firmware soft limit for streamed RAW motion: post-cue output is clamped to
+// +-this many percent of travel no matter what the host sends.
+#define RAW_LIMIT_PCT 50.0f
+
 // ── BLE Accel Input ──────────────────────────────────────────────────
 // Raw sensor data from phone: [accel_x, accel_y, accel_z, gyro_x, gyro_y, gyro_z]
 // Accel in m/s² (Android TYPE_ACCELEROMETER, includes gravity)
@@ -206,8 +210,18 @@ static float smoothedPosition[6] = {0};                  // current smoothed out
 static bool smoothingInitialized = false;
 
 // ── IK Angle Limits ──────────────────────────────────────────────────
-// Max servo arm deflection in radians (±45° is typical hobby servo range)
+// HARD STOP: max servo arm deflection from home. The mechanical linkage
+// allows ±60°; the enforced rail is ±45° (stricter = safer). This clamp is
+// the LAST line of defense before pulse output and must never be widened
+// past the mechanical limit. See also ANGLE_SLEW_MAX_RAD_S below — the two
+// together prevent the 2026-07-22 incident (out-of-workspace poses snapping
+// arms to opposite sides at full speed).
 #define SERVO_MAX_ANGLE_RAD  (IK_PI / 4.0f)
+
+// Final-stage angle rate limit (rad/s). Even a valid IK step can't slew an
+// arm faster than this — prevents rail-to-rail slams and elbow-flip snaps.
+// 300°/s is well under the servo's no-load speed but fast enough for cues.
+#define ANGLE_SLEW_MAX_RAD_S  5.236f   /* 300 deg/s */
 
 // ── Servo PWM ────────────────────────────────────────────────────────
 static const int servoPins[6] = {
@@ -386,15 +400,33 @@ static void driveServos(float position[6], float dt) {
     float angles[6];
     calculateAllServoAngles(limited, &stewartConfig, angles);
 
-    // Validate IK output — clamp NaN and out-of-range angles
+    // Validate IK output.
+    //   NaN/inf (pose outside workspace) → HOLD the last commanded angle.
+    //   Snapping to 0 here (old behavior) flung arms to opposite sides while
+    //   neighbors sat at the rail — the 2026-07-22 grinding incident.
+    //   Then clamp to the hard stop, then rate-limit the angle step so no
+    //   arm can slam rail-to-rail regardless of what the cue engine asks.
+    static float lastCmdAngle[6] = {0};
+    static bool  lastCmdInit = false;
+    if (!lastCmdInit) {
+        for (int i = 0; i < 6; i++)
+            lastCmdAngle[i] = (isnan(angles[i]) || isinf(angles[i])) ? 0.0f : angles[i];
+        lastCmdInit = true;
+    }
+    const float maxAngleStep = ANGLE_SLEW_MAX_RAD_S * dt;
     for (int i = 0; i < 6; i++) {
-        if (isnan(angles[i]) || isinf(angles[i])) {
-            angles[i] = 0.0f;  // safe fallback
-        } else if (angles[i] > SERVO_MAX_ANGLE_RAD) {
-            angles[i] = SERVO_MAX_ANGLE_RAD;
-        } else if (angles[i] < -SERVO_MAX_ANGLE_RAD) {
-            angles[i] = -SERVO_MAX_ANGLE_RAD;
-        }
+        float a = angles[i];
+        if (isnan(a) || isinf(a)) a = lastCmdAngle[i];          // hold, don't snap
+        // Soft limit: damped approach into the rail (linear to 80%, then
+        // tanh compression toward SERVO_MAX_ANGLE_RAD — never slams it).
+        a = mcaSoftLimit(a, SERVO_MAX_ANGLE_RAD, 0.8f);
+        if (a >  SERVO_MAX_ANGLE_RAD) a =  SERVO_MAX_ANGLE_RAD; // hard-stop backstop
+        if (a < -SERVO_MAX_ANGLE_RAD) a = -SERVO_MAX_ANGLE_RAD;
+        float delta = a - lastCmdAngle[i];                      // final rate limit
+        if (delta >  maxAngleStep) delta =  maxAngleStep;
+        if (delta < -maxAngleStep) delta = -maxAngleStep;
+        lastCmdAngle[i] += delta;
+        angles[i] = lastCmdAngle[i];
     }
 
     memcpy((void*)lastServoAngles, angles, sizeof(lastServoAngles));
@@ -678,7 +710,15 @@ static void CueTask(void* pv) {
             // output — decoupled from input. Bug found on the first live stream.
             float home = (float)((int)maxRawInput / 2);
             float counts[6];
-            for (int i = 0; i < 6; i++) counts[i] = home * (1.0f + o[i] * 0.01f);
+            for (int i = 0; i < 6; i++) {
+                // Firmware soft limit: clamp post-cue output to +-RAW_LIMIT_PCT
+                // of travel regardless of what the host streams (hardware
+                // safety net; requested 2026-07-21 during digital-servo bring-up).
+                float oc = o[i];
+                if (oc >  RAW_LIMIT_PCT) oc =  RAW_LIMIT_PCT;
+                if (oc < -RAW_LIMIT_PCT) oc = -RAW_LIMIT_PCT;
+                counts[i] = home * (1.0f + oc * 0.01f);
+            }
             mapRawToPosition(counts, &axisScales, maxRawInput, pos);
         } else if (fmt == TGT_PHYS) {
             for (int i = 0; i < 6; i++) pos[i] = ch[i];
@@ -1286,8 +1326,13 @@ extern "C" void app_main(void) {
         serial_printf("MCA: Loaded from NVS (preset=%s, intensity=%.2f)\r\n",
                       mcaPresetName(mcaConfig.preset), mcaGetIntensity(&mcaConfig));
     } else {
+        // SAFETY: no valid saved config — never boot at full intensity. The
+        // boot source may be DEMO (unattended playback), so the fallback must
+        // be gentle. 25% until someone tunes and saves.
         setMotionCueingPreset(&mcaConfig, MCA_MODERATE);
-        serial_printf("MCA: Default preset=%s\r\n", mcaPresetName(mcaConfig.preset));
+        mcaSetIntensity(&mcaConfig, 0.25f);
+        serial_printf("MCA: Default preset=%s (SAFE intensity=0.25 — no saved config)\r\n",
+                      mcaPresetName(mcaConfig.preset));
     }
     // Sync biquads + LEDC carrier to the servo-rate profile (FIX TRAP A).
     applyServoRate(servoRateHz);

@@ -1,44 +1,30 @@
-# Legacy .NET test application
-Platform Test Application/
+# Repository-wide transient files only.
+# Project build/runtime rules live in controller/.gitignore and app/.gitignore.
+# Never blanket-ignore CAD/EDA extensions such as .obj, .lib, .zip or .step.
 
-# Build artifacts
-build/
-Controller/build/
-Controller/.pio/
-
-# Python
+# Python environments and caches (source, requirements and lockfiles stay visible).
 __pycache__/
 *.pyc
+*.pyo
 .venv/
 .coverage
+.coverage.*
 .pytest_cache/
 
-# CFFI build artifacts
-*.pyd
-*.so
-*.exp
-*.lib
-*.obj
+# Installed JavaScript dependencies, not authored build/ packaging scripts.
+node_modules/
 
-# Auto-generated version header
-Controller/include/version_auto.h
-
-# ESP-IDF
-sdkconfig
-sdkconfig.old
-
-# User-specific saved configs
-sil_test/mca_config.json
-
-# IDE
-.vscode/
+# Editor and operating-system caches; shared IDE settings remain visible.
+.vscode/.browse.c_cpp.db*
+.vscode/ipch/
 *.swp
 *.swo
+.DS_Store
+Thumbs.db
+Desktop.ini
 
-# runtime log / UI layout state (untracked 2026-07-18)
-app/app_debug.log
-app/stewart_imgui.ini
-
-# large/regenerable test recordings + hardware experiment pile (2026-07-18)
-app/recordings/*.stwr
-docs/hardware/
+# Separate embedded Git checkouts with their own local modifications.
+# Preserve them locally; do not accidentally add unconfigured gitlinks.
+# Other legacy PCB designs, libraries, scripts and evidence stay visible.
+/hardware/pcb/legacy/easyeda-mcp/
+/hardware/pcb/legacy/pro-api-sdk/

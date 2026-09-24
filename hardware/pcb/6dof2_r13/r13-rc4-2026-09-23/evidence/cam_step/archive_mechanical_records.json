@@ -1,0 +1,1043 @@
+{
+  "archiveSha256": "c42dc31219236dca955aaf34b4688501a36ff6eb6fcefcf141cbf48ceb0c9ea4",
+  "records": [
+    {
+      "ref": "J10",
+      "recordId": "e44",
+      "recordType": "FILL",
+      "footprint": "62d36a6bac2cd9d0",
+      "componentCenterMil": [
+        5288.55,
+        1457
+      ],
+      "componentRotationDeg": -90,
+      "localNativeRecord": {
+        "groupId": 0,
+        "netName": "",
+        "layerId": 12,
+        "width": 1,
+        "fillStyle": "SOLID",
+        "path": [
+          [
+            "CIRCLE",
+            -250,
+            392.175,
+            55.1181
+          ]
+        ],
+        "locked": false,
+        "zIndex": -1,
+        "isBridgingCopper": false,
+        "networkList": [],
+        "refs": null
+      }
+    },
+    {
+      "ref": "J10",
+      "recordId": "e45",
+      "recordType": "FILL",
+      "footprint": "62d36a6bac2cd9d0",
+      "componentCenterMil": [
+        5288.55,
+        1457
+      ],
+      "componentRotationDeg": -90,
+      "localNativeRecord": {
+        "groupId": 0,
+        "netName": "",
+        "layerId": 12,
+        "width": 1,
+        "fillStyle": "SOLID",
+        "path": [
+          [
+            "CIRCLE",
+            250,
+            392.175,
+            55.1181
+          ]
+        ],
+        "locked": false,
+        "zIndex": -1,
+        "isBridgingCopper": false,
+        "networkList": [],
+        "refs": null
+      }
+    },
+    {
+      "ref": "J11",
+      "recordId": "e55",
+      "recordType": "FILL",
+      "footprint": "3f8ef6e6914f2768",
+      "componentCenterMil": [
+        3740.1575,
+        196.8504
+      ],
+      "componentRotationDeg": 0,
+      "localNativeRecord": {
+        "groupId": 0,
+        "netName": "",
+        "layerId": 12,
+        "width": 0.1,
+        "fillStyle": "SOLID",
+        "path": [
+          [
+            "CIRCLE",
+            -114.17,
+            47.465,
+            11.811
+          ]
+        ],
+        "locked": false,
+        "zIndex": 55,
+        "isBridgingCopper": false,
+        "networkList": [],
+        "refs": []
+      }
+    },
+    {
+      "ref": "J11",
+      "recordId": "e56",
+      "recordType": "FILL",
+      "footprint": "3f8ef6e6914f2768",
+      "componentCenterMil": [
+        3740.1575,
+        196.8504
+      ],
+      "componentRotationDeg": 0,
+      "localNativeRecord": {
+        "groupId": 0,
+        "netName": "",
+        "layerId": 12,
+        "width": 0.1,
+        "fillStyle": "SOLID",
+        "path": [
+          [
+            "CIRCLE",
+            114.17,
+            47.465,
+            11.811
+          ]
+        ],
+        "locked": false,
+        "zIndex": 56,
+        "isBridgingCopper": false,
+        "networkList": [],
+        "refs": []
+      }
+    },
+    {
+      "ref": "J3",
+      "recordId": "e59",
+      "recordType": "FILL",
+      "footprint": "6327bc039c3fd8bf",
+      "componentCenterMil": [
+        252.995,
+        1378
+      ],
+      "componentRotationDeg": 90,
+      "localNativeRecord": {
+        "groupId": 0,
+        "netName": "",
+        "layerId": 12,
+        "width": 1,
+        "fillStyle": "SOLID",
+        "path": [
+          [
+            "CIRCLE",
+            925.98,
+            0,
+            62.9921
+          ]
+        ],
+        "locked": false,
+        "zIndex": -1,
+        "isBridgingCopper": false,
+        "networkList": [],
+        "refs": null
+      }
+    },
+    {
+      "ref": "J3",
+      "recordId": "e60",
+      "recordType": "FILL",
+      "footprint": "6327bc039c3fd8bf",
+      "componentCenterMil": [
+        252.995,
+        1378
+      ],
+      "componentRotationDeg": 90,
+      "localNativeRecord": {
+        "groupId": 0,
+        "netName": "",
+        "layerId": 12,
+        "width": 1,
+        "fillStyle": "SOLID",
+        "path": [
+          [
+            "CIRCLE",
+            -925.98,
+            0,
+            62.9921
+          ]
+        ],
+        "locked": false,
+        "zIndex": -1,
+        "isBridgingCopper": false,
+        "networkList": [],
+        "refs": null
+      }
+    },
+    {
+      "ref": "J4",
+      "recordId": "e59",
+      "recordType": "FILL",
+      "footprint": "6327bc039c3fd8bf",
+      "componentCenterMil": [
+        2457.005,
+        1378
+      ],
+      "componentRotationDeg": -90,
+      "localNativeRecord": {
+        "groupId": 0,
+        "netName": "",
+        "layerId": 12,
+        "width": 1,
+        "fillStyle": "SOLID",
+        "path": [
+          [
+            "CIRCLE",
+            925.98,
+            0,
+            62.9921
+          ]
+        ],
+        "locked": false,
+        "zIndex": -1,
+        "isBridgingCopper": false,
+        "networkList": [],
+        "refs": null
+      }
+    },
+    {
+      "ref": "J4",
+      "recordId": "e60",
+      "recordType": "FILL",
+      "footprint": "6327bc039c3fd8bf",
+      "componentCenterMil": [
+        2457.005,
+        1378
+      ],
+      "componentRotationDeg": -90,
+      "localNativeRecord": {
+        "groupId": 0,
+        "netName": "",
+        "layerId": 12,
+        "width": 1,
+        "fillStyle": "SOLID",
+        "path": [
+          [
+            "CIRCLE",
+            -925.98,
+            0,
+            62.9921
+          ]
+        ],
+        "locked": false,
+        "zIndex": -1,
+        "isBridgingCopper": false,
+        "networkList": [],
+        "refs": null
+      }
+    },
+    {
+      "ref": "J5",
+      "recordId": "e59",
+      "recordType": "FILL",
+      "footprint": "6327bc039c3fd8bf",
+      "componentCenterMil": [
+        252.995,
+        3937
+      ],
+      "componentRotationDeg": 90,
+      "localNativeRecord": {
+        "groupId": 0,
+        "netName": "",
+        "layerId": 12,
+        "width": 1,
+        "fillStyle": "SOLID",
+        "path": [
+          [
+            "CIRCLE",
+            925.98,
+            0,
+            62.9921
+          ]
+        ],
+        "locked": false,
+        "zIndex": -1,
+        "isBridgingCopper": false,
+        "networkList": [],
+        "refs": null
+      }
+    },
+    {
+      "ref": "J5",
+      "recordId": "e60",
+      "recordType": "FILL",
+      "footprint": "6327bc039c3fd8bf",
+      "componentCenterMil": [
+        252.995,
+        3937
+      ],
+      "componentRotationDeg": 90,
+      "localNativeRecord": {
+        "groupId": 0,
+        "netName": "",
+        "layerId": 12,
+        "width": 1,
+        "fillStyle": "SOLID",
+        "path": [
+          [
+            "CIRCLE",
+            -925.98,
+            0,
+            62.9921
+          ]
+        ],
+        "locked": false,
+        "zIndex": -1,
+        "isBridgingCopper": false,
+        "networkList": [],
+        "refs": null
+      }
+    },
+    {
+      "ref": "J6",
+      "recordId": "e59",
+      "recordType": "FILL",
+      "footprint": "6327bc039c3fd8bf",
+      "componentCenterMil": [
+        2457.005,
+        3937
+      ],
+      "componentRotationDeg": -90,
+      "localNativeRecord": {
+        "groupId": 0,
+        "netName": "",
+        "layerId": 12,
+        "width": 1,
+        "fillStyle": "SOLID",
+        "path": [
+          [
+            "CIRCLE",
+            925.98,
+            0,
+            62.9921
+          ]
+        ],
+        "locked": false,
+        "zIndex": -1,
+        "isBridgingCopper": false,
+        "networkList": [],
+        "refs": null
+      }
+    },
+    {
+      "ref": "J6",
+      "recordId": "e60",
+      "recordType": "FILL",
+      "footprint": "6327bc039c3fd8bf",
+      "componentCenterMil": [
+        2457.005,
+        3937
+      ],
+      "componentRotationDeg": -90,
+      "localNativeRecord": {
+        "groupId": 0,
+        "netName": "",
+        "layerId": 12,
+        "width": 1,
+        "fillStyle": "SOLID",
+        "path": [
+          [
+            "CIRCLE",
+            -925.98,
+            0,
+            62.9921
+          ]
+        ],
+        "locked": false,
+        "zIndex": -1,
+        "isBridgingCopper": false,
+        "networkList": [],
+        "refs": null
+      }
+    },
+    {
+      "ref": "J7",
+      "recordId": "e59",
+      "recordType": "FILL",
+      "footprint": "6327bc039c3fd8bf",
+      "componentCenterMil": [
+        252.995,
+        6496
+      ],
+      "componentRotationDeg": 90,
+      "localNativeRecord": {
+        "groupId": 0,
+        "netName": "",
+        "layerId": 12,
+        "width": 1,
+        "fillStyle": "SOLID",
+        "path": [
+          [
+            "CIRCLE",
+            925.98,
+            0,
+            62.9921
+          ]
+        ],
+        "locked": false,
+        "zIndex": -1,
+        "isBridgingCopper": false,
+        "networkList": [],
+        "refs": null
+      }
+    },
+    {
+      "ref": "J7",
+      "recordId": "e60",
+      "recordType": "FILL",
+      "footprint": "6327bc039c3fd8bf",
+      "componentCenterMil": [
+        252.995,
+        6496
+      ],
+      "componentRotationDeg": 90,
+      "localNativeRecord": {
+        "groupId": 0,
+        "netName": "",
+        "layerId": 12,
+        "width": 1,
+        "fillStyle": "SOLID",
+        "path": [
+          [
+            "CIRCLE",
+            -925.98,
+            0,
+            62.9921
+          ]
+        ],
+        "locked": false,
+        "zIndex": -1,
+        "isBridgingCopper": false,
+        "networkList": [],
+        "refs": null
+      }
+    },
+    {
+      "ref": "J8",
+      "recordId": "e59",
+      "recordType": "FILL",
+      "footprint": "6327bc039c3fd8bf",
+      "componentCenterMil": [
+        2457.005,
+        6496
+      ],
+      "componentRotationDeg": -90,
+      "localNativeRecord": {
+        "groupId": 0,
+        "netName": "",
+        "layerId": 12,
+        "width": 1,
+        "fillStyle": "SOLID",
+        "path": [
+          [
+            "CIRCLE",
+            925.98,
+            0,
+            62.9921
+          ]
+        ],
+        "locked": false,
+        "zIndex": -1,
+        "isBridgingCopper": false,
+        "networkList": [],
+        "refs": null
+      }
+    },
+    {
+      "ref": "J8",
+      "recordId": "e60",
+      "recordType": "FILL",
+      "footprint": "6327bc039c3fd8bf",
+      "componentCenterMil": [
+        2457.005,
+        6496
+      ],
+      "componentRotationDeg": -90,
+      "localNativeRecord": {
+        "groupId": 0,
+        "netName": "",
+        "layerId": 12,
+        "width": 1,
+        "fillStyle": "SOLID",
+        "path": [
+          [
+            "CIRCLE",
+            -925.98,
+            0,
+            62.9921
+          ]
+        ],
+        "locked": false,
+        "zIndex": -1,
+        "isBridgingCopper": false,
+        "networkList": [],
+        "refs": null
+      }
+    }
+  ],
+  "exactChanges": [
+    {
+      "ref": "J3",
+      "key": [
+        "FILL",
+        "e59"
+      ],
+      "before": {
+        "groupId": 0,
+        "netName": "",
+        "layerId": 12,
+        "width": 0.2,
+        "fillStyle": "SOLID",
+        "path": [
+          "CIRCLE",
+          925.98,
+          0,
+          60.039
+        ],
+        "locked": false,
+        "zIndex": 59,
+        "isBridgingCopper": false,
+        "networkList": [],
+        "refs": []
+      },
+      "after": {
+        "groupId": 0,
+        "netName": "",
+        "layerId": 12,
+        "width": 1,
+        "fillStyle": "SOLID",
+        "path": [
+          [
+            "CIRCLE",
+            925.98,
+            0,
+            62.9921
+          ]
+        ],
+        "locked": false,
+        "zIndex": -1,
+        "isBridgingCopper": false,
+        "networkList": [],
+        "refs": null
+      }
+    },
+    {
+      "ref": "J3",
+      "key": [
+        "FILL",
+        "e60"
+      ],
+      "before": {
+        "groupId": 0,
+        "netName": "",
+        "layerId": 12,
+        "width": 0.2,
+        "fillStyle": "SOLID",
+        "path": [
+          "CIRCLE",
+          -925.98,
+          0,
+          60.039
+        ],
+        "locked": false,
+        "zIndex": 60,
+        "isBridgingCopper": false,
+        "networkList": [],
+        "refs": []
+      },
+      "after": {
+        "groupId": 0,
+        "netName": "",
+        "layerId": 12,
+        "width": 1,
+        "fillStyle": "SOLID",
+        "path": [
+          [
+            "CIRCLE",
+            -925.98,
+            0,
+            62.9921
+          ]
+        ],
+        "locked": false,
+        "zIndex": -1,
+        "isBridgingCopper": false,
+        "networkList": [],
+        "refs": null
+      }
+    },
+    {
+      "ref": "J4",
+      "key": [
+        "FILL",
+        "e59"
+      ],
+      "before": {
+        "groupId": 0,
+        "netName": "",
+        "layerId": 12,
+        "width": 0.2,
+        "fillStyle": "SOLID",
+        "path": [
+          "CIRCLE",
+          925.98,
+          0,
+          60.039
+        ],
+        "locked": false,
+        "zIndex": 59,
+        "isBridgingCopper": false,
+        "networkList": [],
+        "refs": []
+      },
+      "after": {
+        "groupId": 0,
+        "netName": "",
+        "layerId": 12,
+        "width": 1,
+        "fillStyle": "SOLID",
+        "path": [
+          [
+            "CIRCLE",
+            925.98,
+            0,
+            62.9921
+          ]
+        ],
+        "locked": false,
+        "zIndex": -1,
+        "isBridgingCopper": false,
+        "networkList": [],
+        "refs": null
+      }
+    },
+    {
+      "ref": "J4",
+      "key": [
+        "FILL",
+        "e60"
+      ],
+      "before": {
+        "groupId": 0,
+        "netName": "",
+        "layerId": 12,
+        "width": 0.2,
+        "fillStyle": "SOLID",
+        "path": [
+          "CIRCLE",
+          -925.98,
+          0,
+          60.039
+        ],
+        "locked": false,
+        "zIndex": 60,
+        "isBridgingCopper": false,
+        "networkList": [],
+        "refs": []
+      },
+      "after": {
+        "groupId": 0,
+        "netName": "",
+        "layerId": 12,
+        "width": 1,
+        "fillStyle": "SOLID",
+        "path": [
+          [
+            "CIRCLE",
+            -925.98,
+            0,
+            62.9921
+          ]
+        ],
+        "locked": false,
+        "zIndex": -1,
+        "isBridgingCopper": false,
+        "networkList": [],
+        "refs": null
+      }
+    },
+    {
+      "ref": "J5",
+      "key": [
+        "FILL",
+        "e59"
+      ],
+      "before": {
+        "groupId": 0,
+        "netName": "",
+        "layerId": 12,
+        "width": 0.2,
+        "fillStyle": "SOLID",
+        "path": [
+          "CIRCLE",
+          925.98,
+          0,
+          60.039
+        ],
+        "locked": false,
+        "zIndex": 59,
+        "isBridgingCopper": false,
+        "networkList": [],
+        "refs": []
+      },
+      "after": {
+        "groupId": 0,
+        "netName": "",
+        "layerId": 12,
+        "width": 1,
+        "fillStyle": "SOLID",
+        "path": [
+          [
+            "CIRCLE",
+            925.98,
+            0,
+            62.9921
+          ]
+        ],
+        "locked": false,
+        "zIndex": -1,
+        "isBridgingCopper": false,
+        "networkList": [],
+        "refs": null
+      }
+    },
+    {
+      "ref": "J5",
+      "key": [
+        "FILL",
+        "e60"
+      ],
+      "before": {
+        "groupId": 0,
+        "netName": "",
+        "layerId": 12,
+        "width": 0.2,
+        "fillStyle": "SOLID",
+        "path": [
+          "CIRCLE",
+          -925.98,
+          0,
+          60.039
+        ],
+        "locked": false,
+        "zIndex": 60,
+        "isBridgingCopper": false,
+        "networkList": [],
+        "refs": []
+      },
+      "after": {
+        "groupId": 0,
+        "netName": "",
+        "layerId": 12,
+        "width": 1,
+        "fillStyle": "SOLID",
+        "path": [
+          [
+            "CIRCLE",
+            -925.98,
+            0,
+            62.9921
+          ]
+        ],
+        "locked": false,
+        "zIndex": -1,
+        "isBridgingCopper": false,
+        "networkList": [],
+        "refs": null
+      }
+    },
+    {
+      "ref": "J6",
+      "key": [
+        "FILL",
+        "e59"
+      ],
+      "before": {
+        "groupId": 0,
+        "netName": "",
+        "layerId": 12,
+        "width": 0.2,
+        "fillStyle": "SOLID",
+        "path": [
+          "CIRCLE",
+          925.98,
+          0,
+          60.039
+        ],
+        "locked": false,
+        "zIndex": 59,
+        "isBridgingCopper": false,
+        "networkList": [],
+        "refs": []
+      },
+      "after": {
+        "groupId": 0,
+        "netName": "",
+        "layerId": 12,
+        "width": 1,
+        "fillStyle": "SOLID",
+        "path": [
+          [
+            "CIRCLE",
+            925.98,
+            0,
+            62.9921
+          ]
+        ],
+        "locked": false,
+        "zIndex": -1,
+        "isBridgingCopper": false,
+        "networkList": [],
+        "refs": null
+      }
+    },
+    {
+      "ref": "J6",
+      "key": [
+        "FILL",
+        "e60"
+      ],
+      "before": {
+        "groupId": 0,
+        "netName": "",
+        "layerId": 12,
+        "width": 0.2,
+        "fillStyle": "SOLID",
+        "path": [
+          "CIRCLE",
+          -925.98,
+          0,
+          60.039
+        ],
+        "locked": false,
+        "zIndex": 60,
+        "isBridgingCopper": false,
+        "networkList": [],
+        "refs": []
+      },
+      "after": {
+        "groupId": 0,
+        "netName": "",
+        "layerId": 12,
+        "width": 1,
+        "fillStyle": "SOLID",
+        "path": [
+          [
+            "CIRCLE",
+            -925.98,
+            0,
+            62.9921
+          ]
+        ],
+        "locked": false,
+        "zIndex": -1,
+        "isBridgingCopper": false,
+        "networkList": [],
+        "refs": null
+      }
+    },
+    {
+      "ref": "J7",
+      "key": [
+        "FILL",
+        "e59"
+      ],
+      "before": {
+        "groupId": 0,
+        "netName": "",
+        "layerId": 12,
+        "width": 0.2,
+        "fillStyle": "SOLID",
+        "path": [
+          "CIRCLE",
+          925.98,
+          0,
+          60.039
+        ],
+        "locked": false,
+        "zIndex": 59,
+        "isBridgingCopper": false,
+        "networkList": [],
+        "refs": []
+      },
+      "after": {
+        "groupId": 0,
+        "netName": "",
+        "layerId": 12,
+        "width": 1,
+        "fillStyle": "SOLID",
+        "path": [
+          [
+            "CIRCLE",
+            925.98,
+            0,
+            62.9921
+          ]
+        ],
+        "locked": false,
+        "zIndex": -1,
+        "isBridgingCopper": false,
+        "networkList": [],
+        "refs": null
+      }
+    },
+    {
+      "ref": "J7",
+      "key": [
+        "FILL",
+        "e60"
+      ],
+      "before": {
+        "groupId": 0,
+        "netName": "",
+        "layerId": 12,
+        "width": 0.2,
+        "fillStyle": "SOLID",
+        "path": [
+          "CIRCLE",
+          -925.98,
+          0,
+          60.039
+        ],
+        "locked": false,
+        "zIndex": 60,
+        "isBridgingCopper": false,
+        "networkList": [],
+        "refs": []
+      },
+      "after": {
+        "groupId": 0,
+        "netName": "",
+        "layerId": 12,
+        "width": 1,
+        "fillStyle": "SOLID",
+        "path": [
+          [
+            "CIRCLE",
+            -925.98,
+            0,
+            62.9921
+          ]
+        ],
+        "locked": false,
+        "zIndex": -1,
+        "isBridgingCopper": false,
+        "networkList": [],
+        "refs": null
+      }
+    },
+    {
+      "ref": "J8",
+      "key": [
+        "FILL",
+        "e59"
+      ],
+      "before": {
+        "groupId": 0,
+        "netName": "",
+        "layerId": 12,
+        "width": 0.2,
+        "fillStyle": "SOLID",
+        "path": [
+          "CIRCLE",
+          925.98,
+          0,
+          60.039
+        ],
+        "locked": false,
+        "zIndex": 59,
+        "isBridgingCopper": false,
+        "networkList": [],
+        "refs": []
+      },
+      "after": {
+        "groupId": 0,
+        "netName": "",
+        "layerId": 12,
+        "width": 1,
+        "fillStyle": "SOLID",
+        "path": [
+          [
+            "CIRCLE",
+            925.98,
+            0,
+            62.9921
+          ]
+        ],
+        "locked": false,
+        "zIndex": -1,
+        "isBridgingCopper": false,
+        "networkList": [],
+        "refs": null
+      }
+    },
+    {
+      "ref": "J8",
+      "key": [
+        "FILL",
+        "e60"
+      ],
+      "before": {
+        "groupId": 0,
+        "netName": "",
+        "layerId": 12,
+        "width": 0.2,
+        "fillStyle": "SOLID",
+        "path": [
+          "CIRCLE",
+          -925.98,
+          0,
+          60.039
+        ],
+        "locked": false,
+        "zIndex": 60,
+        "isBridgingCopper": false,
+        "networkList": [],
+        "refs": []
+      },
+      "after": {
+        "groupId": 0,
+        "netName": "",
+        "layerId": 12,
+        "width": 1,
+        "fillStyle": "SOLID",
+        "path": [
+          [
+            "CIRCLE",
+            -925.98,
+            0,
+            62.9921
+          ]
+        ],
+        "locked": false,
+        "zIndex": -1,
+        "isBridgingCopper": false,
+        "networkList": [],
+        "refs": null
+      }
+    }
+  ]
+}

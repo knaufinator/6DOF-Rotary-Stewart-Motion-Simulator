@@ -1,0 +1,976 @@
+{
+  "status": "ASSEMBLED_PENDING_RENDER_QA",
+  "pdf": "G:\\My Drive\\projects\\6dof\\pcb\\manufacturing_release\\2026-09-23-r13-rc3\\6DOF2_r13_Schematic_Review.pdf",
+  "pdfSha256": "b754d77d18a8bd01ededc7dbf5f4a227e08761e19f6e6f629f7f9c435dbf1ee8",
+  "pageCount": 30,
+  "manifest": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_review_manifest_rc3.json",
+  "manifestSha256": "d17b2ac51799ffe9c49327245aa0d34f7da23a0846a188ab58256d041b25c023",
+  "sourceSha256": "8f77a89e401a212a5dfa327bf64e8802e6e39c0c91044b6fa49c66b74c3ae1cf",
+  "assembledAtUTC": "2026-09-23T18:18:29.455880+00:00",
+  "pages": [
+    {
+      "page": 2,
+      "section": null,
+      "role": "overview",
+      "title": "Nine-section schematic overview",
+      "inputFile": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\00.png",
+      "inputSha256": "8a9aa9c63a21cb91a2fe6722f44d00f90b0cc8f0cb49dafc413221f764e7de36",
+      "pixelSize": [
+        1747,
+        1005
+      ],
+      "placementPoints": [
+        32,
+        82.90826568831159,
+        1126.5511811023623,
+        648.0732324029045
+      ],
+      "effectiveDpi": 111.65404831133974,
+      "nativeBounds": null,
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": {
+          "left": -1973.3223880597013,
+          "right": 6223.322388059702,
+          "bottom": 35,
+          "top": 4753
+        },
+        "bytes": 380781,
+        "capturedAtUTC": "2026-09-23T18:16:28.680Z"
+      }
+    },
+    {
+      "page": 3,
+      "section": 1,
+      "role": "detail",
+      "title": "1. ESP32-S3 control",
+      "inputFile": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\01.png",
+      "inputSha256": "09f44acc551b72ae478b2c314d1fac217ec3ce5b6084496890123db8836ecf36",
+      "pixelSize": [
+        1747,
+        1005
+      ],
+      "placementPoints": [
+        32,
+        82.90826568831159,
+        1126.5511811023623,
+        648.0732324029045
+      ],
+      "effectiveDpi": 111.65404831133974,
+      "nativeBounds": [
+        180,
+        -620,
+        760,
+        -180
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 322512,
+        "capturedAtUTC": "2026-09-23T18:15:52.143Z"
+      }
+    },
+    {
+      "page": 4,
+      "section": 2,
+      "role": "detail",
+      "title": "2. USB-C, power blocking and protection",
+      "inputFile": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\02.png",
+      "inputSha256": "ecc1858474f1a7efd69b24c62496da9636d7ff6bc79ab38cb6a1267405b5e817",
+      "pixelSize": [
+        1747,
+        1005
+      ],
+      "placementPoints": [
+        32,
+        82.90826568831159,
+        1126.5511811023623,
+        648.0732324029045
+      ],
+      "effectiveDpi": 111.65404831133974,
+      "nativeBounds": [
+        840,
+        -785,
+        1660,
+        -110
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 259110,
+        "capturedAtUTC": "2026-09-23T18:16:29.256Z"
+      }
+    },
+    {
+      "page": 5,
+      "section": 2,
+      "role": "detail",
+      "title": "2. BOOT, RESET and USB series resistors",
+      "inputFile": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\03.png",
+      "inputSha256": "72a820551f0d3276287147d7f3e54daa7a39e7096faf510246a15483a6f5a2af",
+      "pixelSize": [
+        1747,
+        1005
+      ],
+      "placementPoints": [
+        32,
+        82.90826568831159,
+        1126.5511811023623,
+        648.0732324029045
+      ],
+      "effectiveDpi": 111.65404831133974,
+      "nativeBounds": [
+        1620,
+        -785,
+        2380,
+        -110
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 241788,
+        "capturedAtUTC": "2026-09-23T18:16:29.659Z"
+      }
+    },
+    {
+      "page": 6,
+      "section": 3,
+      "role": "detail",
+      "title": "3. 12 V input protection and buck regulator",
+      "inputFile": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\04.png",
+      "inputSha256": "734f1ce28956797064484af3955aee3aa1e1e7193c64aaa61ec5d079eff29fc9",
+      "pixelSize": [
+        1747,
+        1005
+      ],
+      "placementPoints": [
+        32,
+        82.90826568831159,
+        1126.5511811023623,
+        648.0732324029045
+      ],
+      "effectiveDpi": 111.65404831133974,
+      "nativeBounds": [
+        2370,
+        -760,
+        3370,
+        -110
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 251003,
+        "capturedAtUTC": "2026-09-23T18:16:30.045Z"
+      }
+    },
+    {
+      "page": 7,
+      "section": 3,
+      "role": "detail",
+      "title": "3. 5 V filtering, logic power OR and 3.3 V regulator",
+      "inputFile": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\05.png",
+      "inputSha256": "654c5f124c617b755a176609cd4a4b3405a7a0f50901706968d6fd5f3d7e9117",
+      "pixelSize": [
+        1747,
+        1005
+      ],
+      "placementPoints": [
+        32,
+        82.90826568831159,
+        1126.5511811023623,
+        648.0732324029045
+      ],
+      "effectiveDpi": 111.65404831133974,
+      "nativeBounds": [
+        3290,
+        -760,
+        4180,
+        -110
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 258484,
+        "capturedAtUTC": "2026-09-23T18:16:30.432Z"
+      }
+    },
+    {
+      "page": 8,
+      "section": 4,
+      "role": "detail",
+      "title": "4. Stop loop, status and debug",
+      "inputFile": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\06.png",
+      "inputSha256": "e43f95e682bd6e6f97d75aab6fd9c1b381e77019e927cca55ef204d522f02ccf",
+      "pixelSize": [
+        1747,
+        1005
+      ],
+      "placementPoints": [
+        32,
+        82.90826568831159,
+        1126.5511811023623,
+        648.0732324029045
+      ],
+      "effectiveDpi": 111.65404831133974,
+      "nativeBounds": [
+        100,
+        -1480,
+        1020,
+        -900
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 249153,
+        "capturedAtUTC": "2026-09-23T18:16:30.821Z"
+      }
+    },
+    {
+      "page": 9,
+      "section": 5,
+      "role": "detail",
+      "title": "5. Motion drivers - left, axes 0-3",
+      "inputFile": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\07.png",
+      "inputSha256": "6e06b2c172f8c0a847bf0ce8b56a3a27612c09dacbce37033eb7d7478480604c",
+      "pixelSize": [
+        1747,
+        1005
+      ],
+      "placementPoints": [
+        32,
+        82.90826568831159,
+        1126.5511811023623,
+        648.0732324029045
+      ],
+      "effectiveDpi": 111.65404831133974,
+      "nativeBounds": [
+        1040,
+        -1420,
+        2170,
+        -910
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 292706,
+        "capturedAtUTC": "2026-09-23T18:16:31.208Z"
+      }
+    },
+    {
+      "page": 10,
+      "section": 5,
+      "role": "detail",
+      "title": "5. Motion drivers - middle, axes 0-3",
+      "inputFile": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\08.png",
+      "inputSha256": "aa0127154bda3be2f24eb13417d8c95e5b92ec01188f0c192993577e57f26fb8",
+      "pixelSize": [
+        1747,
+        1005
+      ],
+      "placementPoints": [
+        32,
+        82.90826568831159,
+        1126.5511811023623,
+        648.0732324029045
+      ],
+      "effectiveDpi": 111.65404831133974,
+      "nativeBounds": [
+        2070,
+        -1420,
+        3200,
+        -910
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 222131,
+        "capturedAtUTC": "2026-09-23T18:16:31.603Z"
+      }
+    },
+    {
+      "page": 11,
+      "section": 5,
+      "role": "detail",
+      "title": "5. Motion drivers - right, axes 0-3",
+      "inputFile": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\09.png",
+      "inputSha256": "eda87b377b0134cbfad421209fa92be685431f08f57ba2e0d15c5e303953d9e9",
+      "pixelSize": [
+        1747,
+        1005
+      ],
+      "placementPoints": [
+        32,
+        82.90826568831159,
+        1126.5511811023623,
+        648.0732324029045
+      ],
+      "effectiveDpi": 111.65404831133974,
+      "nativeBounds": [
+        3100,
+        -1420,
+        4220,
+        -910
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 223059,
+        "capturedAtUTC": "2026-09-23T18:16:31.988Z"
+      }
+    },
+    {
+      "page": 12,
+      "section": 5,
+      "role": "detail",
+      "title": "5. Motion drivers - left, axes 2-5",
+      "inputFile": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\10.png",
+      "inputSha256": "a5a2669c2f165064275435f03b2ae22d7549aae66e01a4694a3325ca404354a0",
+      "pixelSize": [
+        1747,
+        1005
+      ],
+      "placementPoints": [
+        32,
+        82.90826568831159,
+        1126.5511811023623,
+        648.0732324029045
+      ],
+      "effectiveDpi": 111.65404831133974,
+      "nativeBounds": [
+        1040,
+        -1750,
+        2170,
+        -1220
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 278476,
+        "capturedAtUTC": "2026-09-23T18:16:32.566Z"
+      }
+    },
+    {
+      "page": 13,
+      "section": 5,
+      "role": "detail",
+      "title": "5. Motion drivers - middle, axes 2-5",
+      "inputFile": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\11.png",
+      "inputSha256": "646d4cd39d5c164fa1ef0b14be12a25449ff8876ba4fbda126b28b46072bf037",
+      "pixelSize": [
+        1747,
+        1005
+      ],
+      "placementPoints": [
+        32,
+        82.90826568831159,
+        1126.5511811023623,
+        648.0732324029045
+      ],
+      "effectiveDpi": 111.65404831133974,
+      "nativeBounds": [
+        2070,
+        -1750,
+        3200,
+        -1220
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 223625,
+        "capturedAtUTC": "2026-09-23T18:16:32.973Z"
+      }
+    },
+    {
+      "page": 14,
+      "section": 5,
+      "role": "detail",
+      "title": "5. Motion drivers - right, axes 2-5",
+      "inputFile": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\12.png",
+      "inputSha256": "d665935e80d0a5f55edceaf3bf7ffcb5b816cdfc8639be3db114875433910cfc",
+      "pixelSize": [
+        1747,
+        1005
+      ],
+      "placementPoints": [
+        32,
+        82.90826568831159,
+        1126.5511811023623,
+        648.0732324029045
+      ],
+      "effectiveDpi": 111.65404831133974,
+      "nativeBounds": [
+        3100,
+        -1750,
+        4220,
+        -1220
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 222586,
+        "capturedAtUTC": "2026-09-23T18:16:33.362Z"
+      }
+    },
+    {
+      "page": 15,
+      "section": 6,
+      "role": "detail",
+      "title": "6. DB25 drive connectors - axes 0-2",
+      "inputFile": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\13.png",
+      "inputSha256": "55dc6ddc65c732959d528765599bde7a7b2ee62cf54aa7611a6df1a9683f89cd",
+      "pixelSize": [
+        1747,
+        1005
+      ],
+      "placementPoints": [
+        32,
+        82.90826568831159,
+        1126.5511811023623,
+        648.0732324029045
+      ],
+      "effectiveDpi": 111.65404831133974,
+      "nativeBounds": [
+        90,
+        -2470,
+        1130,
+        -1990
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 328925,
+        "capturedAtUTC": "2026-09-23T18:16:33.764Z"
+      }
+    },
+    {
+      "page": 16,
+      "section": 6,
+      "role": "detail",
+      "title": "6. DB25 drive connectors - axes 3-5",
+      "inputFile": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\14.png",
+      "inputSha256": "2e9474c905a436bd618ec3caeceb14171d1f2ac0851ae4b122a8cacaee18e130",
+      "pixelSize": [
+        1747,
+        1005
+      ],
+      "placementPoints": [
+        32,
+        82.90826568831159,
+        1126.5511811023623,
+        648.0732324029045
+      ],
+      "effectiveDpi": 111.65404831133974,
+      "nativeBounds": [
+        1050,
+        -2470,
+        2140,
+        -1990
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 284750,
+        "capturedAtUTC": "2026-09-23T18:16:34.154Z"
+      }
+    },
+    {
+      "page": 17,
+      "section": 7,
+      "role": "detail",
+      "title": "7. Drive alarm feedback - input networks",
+      "inputFile": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\15.png",
+      "inputSha256": "f84362ad3b10e95abf0d5797d1b4e5307d8f1d6654fc6db1fd1fdedfc4793ef0",
+      "pixelSize": [
+        1747,
+        1005
+      ],
+      "placementPoints": [
+        32,
+        82.90826568831159,
+        1126.5511811023623,
+        648.0732324029045
+      ],
+      "effectiveDpi": 111.65404831133974,
+      "nativeBounds": [
+        2120,
+        -2470,
+        3250,
+        -1950
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 247058,
+        "capturedAtUTC": "2026-09-23T18:16:34.543Z"
+      }
+    },
+    {
+      "page": 18,
+      "section": 7,
+      "role": "detail",
+      "title": "7. Drive alarm feedback - optocouplers",
+      "inputFile": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\16.png",
+      "inputSha256": "13367d2e6ac8099827e2575cfa99a13b6deb97232029e282539115cfe049e1df",
+      "pixelSize": [
+        1747,
+        1005
+      ],
+      "placementPoints": [
+        32,
+        82.90826568831159,
+        1126.5511811023623,
+        648.0732324029045
+      ],
+      "effectiveDpi": 111.65404831133974,
+      "nativeBounds": [
+        3140,
+        -2470,
+        4180,
+        -1950
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 304432,
+        "capturedAtUTC": "2026-09-23T18:16:34.936Z"
+      }
+    },
+    {
+      "page": 19,
+      "section": 8,
+      "role": "detail",
+      "title": "8. Ethernet - W5500 upper pins and clock",
+      "inputFile": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\17.png",
+      "inputSha256": "f2e0d31c53602b2658f2cab7f467d7fd517bd53abd2a0d7bee7b79ef16ea9ed4",
+      "pixelSize": [
+        1747,
+        1005
+      ],
+      "placementPoints": [
+        32,
+        82.90826568831159,
+        1126.5511811023623,
+        648.0732324029045
+      ],
+      "effectiveDpi": 111.65404831133974,
+      "nativeBounds": [
+        90,
+        -3190,
+        1280,
+        -2750
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 312652,
+        "capturedAtUTC": "2026-09-23T18:16:35.334Z"
+      }
+    },
+    {
+      "page": 20,
+      "section": 8,
+      "role": "detail",
+      "title": "8. Ethernet - W5500 lower pins and bypass",
+      "inputFile": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\18.png",
+      "inputSha256": "2290d5ad19de429fa337c7fdc3f8e0e487b74d7d0a6fc72e04aaab13d6654715",
+      "pixelSize": [
+        1747,
+        1005
+      ],
+      "placementPoints": [
+        32,
+        82.90826568831159,
+        1126.5511811023623,
+        648.0732324029045
+      ],
+      "effectiveDpi": 111.65404831133974,
+      "nativeBounds": [
+        90,
+        -3580,
+        1280,
+        -3060
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 296399,
+        "capturedAtUTC": "2026-09-23T18:16:35.883Z"
+      }
+    },
+    {
+      "page": 21,
+      "section": 8,
+      "role": "detail",
+      "title": "8. Ethernet - analog supply and bypass, left",
+      "inputFile": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\19.png",
+      "inputSha256": "aa20d6ea871522fa2783523469db4b51f3ad99c8123597548f10fa15c491e47e",
+      "pixelSize": [
+        1747,
+        1005
+      ],
+      "placementPoints": [
+        32,
+        82.90826568831159,
+        1126.5511811023623,
+        648.0732324029045
+      ],
+      "effectiveDpi": 111.65404831133974,
+      "nativeBounds": [
+        1330,
+        -3230,
+        2410,
+        -2750
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 205740,
+        "capturedAtUTC": "2026-09-23T18:16:36.276Z"
+      }
+    },
+    {
+      "page": 22,
+      "section": 8,
+      "role": "detail",
+      "title": "8. Ethernet - termination, left",
+      "inputFile": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\20.png",
+      "inputSha256": "9a62e73d9ee91472ebeade8a344f35b44cabae1cd90ee49b263d0cf829b6963d",
+      "pixelSize": [
+        1747,
+        1005
+      ],
+      "placementPoints": [
+        32,
+        82.90826568831159,
+        1126.5511811023623,
+        648.0732324029045
+      ],
+      "effectiveDpi": 111.65404831133974,
+      "nativeBounds": [
+        1370,
+        -3570,
+        2490,
+        -3060
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 222658,
+        "capturedAtUTC": "2026-09-23T18:16:36.678Z"
+      }
+    },
+    {
+      "page": 23,
+      "section": 8,
+      "role": "detail",
+      "title": "8. Ethernet - analog supply and bypass, right",
+      "inputFile": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\21.png",
+      "inputSha256": "589b633fdf4639933267d1e30c856721ea257fb9e56ef001162a13caa8ab0c87",
+      "pixelSize": [
+        1747,
+        1005
+      ],
+      "placementPoints": [
+        32,
+        82.90826568831159,
+        1126.5511811023623,
+        648.0732324029045
+      ],
+      "effectiveDpi": 111.65404831133974,
+      "nativeBounds": [
+        2370,
+        -3230,
+        3450,
+        -2750
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 201908,
+        "capturedAtUTC": "2026-09-23T18:16:37.067Z"
+      }
+    },
+    {
+      "page": 24,
+      "section": 8,
+      "role": "detail",
+      "title": "8. Ethernet - chassis coupling network",
+      "inputFile": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\22.png",
+      "inputSha256": "e2f7e643d3c16b7621581e87c723f5c08b322bf6b729213520511be210ce52b5",
+      "pixelSize": [
+        1747,
+        1005
+      ],
+      "placementPoints": [
+        32,
+        82.90826568831159,
+        1126.5511811023623,
+        648.0732324029045
+      ],
+      "effectiveDpi": 111.65404831133974,
+      "nativeBounds": [
+        2520,
+        -3610,
+        3410,
+        -3080
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 214554,
+        "capturedAtUTC": "2026-09-23T18:16:37.461Z"
+      }
+    },
+    {
+      "page": 25,
+      "section": 8,
+      "role": "detail",
+      "title": "8. Ethernet - integrated MagJack",
+      "inputFile": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\23.png",
+      "inputSha256": "eef098f764b45ac7c640226a35bc53858a377224ebb212a05ac76b020f47916f",
+      "pixelSize": [
+        1747,
+        1005
+      ],
+      "placementPoints": [
+        32,
+        82.90826568831159,
+        1126.5511811023623,
+        648.0732324029045
+      ],
+      "effectiveDpi": 111.65404831133974,
+      "nativeBounds": [
+        3290,
+        -3610,
+        4180,
+        -2910
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 209058,
+        "capturedAtUTC": "2026-09-23T18:16:37.863Z"
+      }
+    },
+    {
+      "page": 26,
+      "section": 9,
+      "role": "detail",
+      "title": "9. Output inhibit - input logic and supervisor",
+      "inputFile": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\24.png",
+      "inputSha256": "9ebfb043b07e0e0fddcff17e0ff30d951106db9c661d835e078b4523978e9c16",
+      "pixelSize": [
+        1747,
+        1005
+      ],
+      "placementPoints": [
+        32,
+        82.90826568831159,
+        1126.5511811023623,
+        648.0732324029045
+      ],
+      "effectiveDpi": 111.65404831133974,
+      "nativeBounds": [
+        100,
+        -4310,
+        1300,
+        -3840
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 215649,
+        "capturedAtUTC": "2026-09-23T18:16:38.255Z"
+      }
+    },
+    {
+      "page": 27,
+      "section": 9,
+      "role": "detail",
+      "title": "9. Output inhibit - clear buffer and arm latch",
+      "inputFile": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\25.png",
+      "inputSha256": "909aa3f8b2e4515f7dce11f00e61caf429a1718553b6eb6407bb11aa38c85285",
+      "pixelSize": [
+        1747,
+        1005
+      ],
+      "placementPoints": [
+        32,
+        82.90826568831159,
+        1126.5511811023623,
+        648.0732324029045
+      ],
+      "effectiveDpi": 111.65404831133974,
+      "nativeBounds": [
+        1300,
+        -4310,
+        2390,
+        -3840
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 208604,
+        "capturedAtUTC": "2026-09-23T18:16:38.639Z"
+      }
+    },
+    {
+      "page": 28,
+      "section": 9,
+      "role": "detail",
+      "title": "9. Output inhibit - input bias and supervisor timing",
+      "inputFile": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\26.png",
+      "inputSha256": "f068ab21b0ad6faf60d85da0b4569ef20a71c3d400de9d9bffadcb292d30566e",
+      "pixelSize": [
+        1747,
+        1005
+      ],
+      "placementPoints": [
+        32,
+        82.90826568831159,
+        1126.5511811023623,
+        648.0732324029045
+      ],
+      "effectiveDpi": 111.65404831133974,
+      "nativeBounds": [
+        100,
+        -4710,
+        1300,
+        -4330
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 187558,
+        "capturedAtUTC": "2026-09-23T18:16:39.219Z"
+      }
+    },
+    {
+      "page": 29,
+      "section": 9,
+      "role": "detail",
+      "title": "9. Output inhibit - latch bias and bypass",
+      "inputFile": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\27.png",
+      "inputSha256": "6600b73673f5e3cc192e5a15699010a6ede07a830e075c0eac384adad47eae79",
+      "pixelSize": [
+        1747,
+        1005
+      ],
+      "placementPoints": [
+        32,
+        82.90826568831159,
+        1126.5511811023623,
+        648.0732324029045
+      ],
+      "effectiveDpi": 111.65404831133974,
+      "nativeBounds": [
+        1300,
+        -4710,
+        2390,
+        -4330
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 189154,
+        "capturedAtUTC": "2026-09-23T18:16:39.612Z"
+      }
+    },
+    {
+      "page": 30,
+      "section": 9,
+      "role": "detail",
+      "title": "9. Driver-enable bias and prototype operating notes",
+      "inputFile": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\28.png",
+      "inputSha256": "cc32b3b15f7ec756df5284bada29c3d1dab41268b15b15d7f05367d05aa3e175",
+      "pixelSize": [
+        1747,
+        1005
+      ],
+      "placementPoints": [
+        32,
+        82.90826568831159,
+        1126.5511811023623,
+        648.0732324029045
+      ],
+      "effectiveDpi": 111.65404831133974,
+      "nativeBounds": [
+        2470,
+        -4460,
+        3590,
+        -3840
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 264233,
+        "capturedAtUTC": "2026-09-23T18:16:39.998Z"
+      }
+    }
+  ],
+  "noCircuitGraphicsReconstructed": true,
+  "noImageCropping": true,
+  "noImageResampling": true,
+  "limitations": [
+    "Raster capture PDF, not the timed-out native vector PDF export.",
+    "Legibility and complete native capture coverage require final rendered-page inspection."
+  ]
+}

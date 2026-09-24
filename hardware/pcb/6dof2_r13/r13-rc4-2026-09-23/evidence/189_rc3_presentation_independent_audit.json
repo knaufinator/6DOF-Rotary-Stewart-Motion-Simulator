@@ -1,0 +1,91 @@
+{
+  "status": "PASS_RC3_EXACT_SCHEMATIC_PRESENTATION_ONLY",
+  "sourceHashes": {
+    "167_schematic_final_capture.json": "c62baab8dfd7af70b99ded21be6a74c7f0dc2a92c8d906eac823cbee644ebc64",
+    "189_schematic_rc3_capture.json": "957dde997969d646cb0445e567bfcc4813728e97eac44e4f4219773319581589"
+  },
+  "removedText": {
+    "id": "ecf3db96d886ce95",
+    "value": "PHY CORE"
+  },
+  "changedLabels": [
+    {
+      "id": "246877c082189e50",
+      "net": "M5S_G",
+      "oldY": -231,
+      "newY": -218,
+      "oldAlign": "LEFT_BOTTOM",
+      "newAlign": "RIGHT_BOTTOM"
+    },
+    {
+      "id": "0fe00133467213ad",
+      "net": "M0D_G",
+      "oldY": -231,
+      "newY": -218,
+      "oldAlign": "LEFT_BOTTOM",
+      "newAlign": "RIGHT_BOTTOM"
+    },
+    {
+      "id": "c83f3ca4e030209d",
+      "net": "M1D_G",
+      "oldY": -231,
+      "newY": -218,
+      "oldAlign": "LEFT_BOTTOM",
+      "newAlign": "RIGHT_BOTTOM"
+    },
+    {
+      "id": "82cfc38745a1ff0e",
+      "net": "M2D_G",
+      "oldY": -231,
+      "newY": -218,
+      "oldAlign": "LEFT_BOTTOM",
+      "newAlign": "RIGHT_BOTTOM"
+    },
+    {
+      "id": "3f2db5dbe248b1c7",
+      "net": "M3D_G",
+      "oldY": -231,
+      "newY": -218,
+      "oldAlign": "LEFT_BOTTOM",
+      "newAlign": "RIGHT_BOTTOM"
+    },
+    {
+      "id": "73fca34c0fbcc8f4",
+      "net": "M4D_G",
+      "oldY": -231,
+      "newY": -218,
+      "oldAlign": "LEFT_BOTTOM",
+      "newAlign": "RIGHT_BOTTOM"
+    },
+    {
+      "id": "2bdf9fbd93e14257",
+      "net": "ESTOP_MCU",
+      "oldY": -231,
+      "newY": -218,
+      "oldAlign": "LEFT_BOTTOM",
+      "newAlign": "RIGHT_BOTTOM"
+    },
+    {
+      "id": "r13mcu24000000003",
+      "net": "MCU_INHIBIT",
+      "oldY": -236,
+      "newY": -218,
+      "oldAlign": "LEFT_BOTTOM",
+      "newAlign": "RIGHT_BOTTOM"
+    },
+    {
+      "id": "r13mcu25000000003",
+      "net": "ARM_PULSE",
+      "oldY": -236,
+      "newY": -218,
+      "oldAlign": "LEFT_BOTTOM",
+      "newAlign": "RIGHT_BOTTOM"
+    }
+  ],
+  "allOtherNativePayloadsExact": true,
+  "wholeResolvedNetlistExactlyEqual": true,
+  "population": 144,
+  "logicalPins": 640,
+  "PCBSourceUnchanged": "172_db25_release_capture.json",
+  "scope": "Independent fresh saved/reopened source comparison. Visual QA and regenerated complete RC3 package remain separate gates."
+}

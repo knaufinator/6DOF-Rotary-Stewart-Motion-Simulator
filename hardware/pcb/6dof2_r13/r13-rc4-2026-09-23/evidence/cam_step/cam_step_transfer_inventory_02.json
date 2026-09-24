@@ -1,0 +1,408 @@
+{
+  "status": "READY_FOR_RELEASE_OWNER_TRANSFER; NOT_COPIED_BY_THIS_SCRIPT",
+  "sourceFreeze": "PCB202/SCH189, archive204, fabrication205, STEP206; BOARD-only display repair independently verified",
+  "orderAuthorization": false,
+  "files": [
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\archive_mechanical_drills.json",
+      "destinationRelative": "evidence/cam_step/archive_mechanical_drills.json",
+      "bytes": 5446,
+      "sha256": "9ab4e8b6fb25d3a5e7fd52091739f914e920a3a14ae807417682c81d2459ecf8",
+      "role": "fresh RC4 audit/render witness"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\archive_mechanical_records.json",
+      "destinationRelative": "evidence/cam_step/archive_mechanical_records.json",
+      "bytes": 21842,
+      "sha256": "dfb24c4c31be3b0ade104cc872c89b937a7920174915df3040422b2795bfed3c",
+      "role": "fresh RC4 audit/render witness"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\cam\\Gerber_BoardOutlineLayer.GKO.png",
+      "destinationRelative": "evidence/cam_step/cam/Gerber_BoardOutlineLayer.GKO.png",
+      "bytes": 19731,
+      "sha256": "9612405f2bba3f37fc5e91bc974511942304881a538dc48681b4d6298fd9dd10",
+      "role": "fresh RC4 audit/render witness"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\cam\\Gerber_BoardOutlineLayer.GKO.svg",
+      "destinationRelative": "evidence/cam_step/cam/Gerber_BoardOutlineLayer.GKO.svg",
+      "bytes": 474,
+      "sha256": "02d78997c8e118c4f96fe4f7628248e1d6f6c078440b95ca4c43cc5c59edcb9b",
+      "role": "fresh RC4 audit/render witness"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\cam\\Gerber_BottomLayer.GBL.png",
+      "destinationRelative": "evidence/cam_step/cam/Gerber_BottomLayer.GBL.png",
+      "bytes": 162295,
+      "sha256": "a7bb713242659d08043d5744d83f7a6b735dcb9a5bdf022e0ed8b5d8bdc96d2b",
+      "role": "fresh RC4 audit/render witness"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\cam\\Gerber_BottomLayer.GBL.svg",
+      "destinationRelative": "evidence/cam_step/cam/Gerber_BottomLayer.GBL.svg",
+      "bytes": 92524,
+      "sha256": "205592328674a2cda969d47cdee86fd66a639ee75ed1be785be2864c4ac1c320",
+      "role": "fresh RC4 audit/render witness"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\cam\\Gerber_BottomSolderMaskLayer.GBS.png",
+      "destinationRelative": "evidence/cam_step/cam/Gerber_BottomSolderMaskLayer.GBS.png",
+      "bytes": 60976,
+      "sha256": "76a1b2f1749271b34fdf3e8d50ed35a32b02817a30fa5a9092aee8ed3eb64823",
+      "role": "fresh RC4 audit/render witness"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\cam\\Gerber_BottomSolderMaskLayer.GBS.svg",
+      "destinationRelative": "evidence/cam_step/cam/Gerber_BottomSolderMaskLayer.GBS.svg",
+      "bytes": 16863,
+      "sha256": "ef7b87c50bdf1a7f557bbfe92db3be9b71713c87e16e646ee08fd86702ff99ea",
+      "role": "fresh RC4 audit/render witness"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\cam\\Gerber_DocumentLayer.GDL.png",
+      "destinationRelative": "evidence/cam_step/cam/Gerber_DocumentLayer.GDL.png",
+      "bytes": 31351,
+      "sha256": "0a43cb923b24fe1475ed07015d4e8cd9597471a6618c844fa0e0e54b3e9cde41",
+      "role": "fresh RC4 audit/render witness"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\cam\\Gerber_DocumentLayer.GDL.svg",
+      "destinationRelative": "evidence/cam_step/cam/Gerber_DocumentLayer.GDL.svg",
+      "bytes": 17301,
+      "sha256": "8664e865d2b3cef023701066418cebe2a4d80096c28cbcd7492b08942a5aecc5",
+      "role": "fresh RC4 audit/render witness"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\cam\\Gerber_InnerLayer1.G1.png",
+      "destinationRelative": "evidence/cam_step/cam/Gerber_InnerLayer1.G1.png",
+      "bytes": 178889,
+      "sha256": "41c3959f0440a921fecf00b9aef60175c4813ec471d29b0e3e62408055fcd6a2",
+      "role": "fresh RC4 audit/render witness"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\cam\\Gerber_InnerLayer1.G1.svg",
+      "destinationRelative": "evidence/cam_step/cam/Gerber_InnerLayer1.G1.svg",
+      "bytes": 466935,
+      "sha256": "22e5ea053521f794bdd3c1f6561715a34620e2a7b2f056f90c10c50ccdb6336b",
+      "role": "fresh RC4 audit/render witness"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\cam\\Gerber_InnerLayer2.G2.png",
+      "destinationRelative": "evidence/cam_step/cam/Gerber_InnerLayer2.G2.png",
+      "bytes": 127660,
+      "sha256": "e341a81b89f8a4d53af373ed270e4735ce85fa62ff1d28bca17eaf18318c4b0a",
+      "role": "fresh RC4 audit/render witness"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\cam\\Gerber_InnerLayer2.G2.svg",
+      "destinationRelative": "evidence/cam_step/cam/Gerber_InnerLayer2.G2.svg",
+      "bytes": 52494,
+      "sha256": "09d8a876295d5bf4214a29178c50bac380cfeeae4ca508a72747d65271787ae9",
+      "role": "fresh RC4 audit/render witness"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\cam\\Gerber_TopLayer.GTL.png",
+      "destinationRelative": "evidence/cam_step/cam/Gerber_TopLayer.GTL.png",
+      "bytes": 201523,
+      "sha256": "a44ae511f7899c45994b4cfb4d7a16b9167d639ce775618a7ee1cd19e7144dab",
+      "role": "fresh RC4 audit/render witness"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\cam\\Gerber_TopLayer.GTL.svg",
+      "destinationRelative": "evidence/cam_step/cam/Gerber_TopLayer.GTL.svg",
+      "bytes": 222605,
+      "sha256": "afaa0df6098ac0aa92c4ddc54c7f1057a8b1f3320fa3b1343df60321a0fd3d26",
+      "role": "fresh RC4 audit/render witness"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\cam\\Gerber_TopPasteMaskLayer.GTP.png",
+      "destinationRelative": "evidence/cam_step/cam/Gerber_TopPasteMaskLayer.GTP.png",
+      "bytes": 44290,
+      "sha256": "a05e26b0affd040b1008bbfdb80746f427954ff451058e5235f49c11948e1e84",
+      "role": "fresh RC4 audit/render witness"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\cam\\Gerber_TopPasteMaskLayer.GTP.svg",
+      "destinationRelative": "evidence/cam_step/cam/Gerber_TopPasteMaskLayer.GTP.svg",
+      "bytes": 81784,
+      "sha256": "ed28de15c566dace1200353aa122053a9cc950ff3506cc6170c5fd7ad851ed19",
+      "role": "fresh RC4 audit/render witness"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\cam\\Gerber_TopSilkscreenLayer.GTO.png",
+      "destinationRelative": "evidence/cam_step/cam/Gerber_TopSilkscreenLayer.GTO.png",
+      "bytes": 113097,
+      "sha256": "d494866225a7b3b003d62f3f4d47f740d9abef6ed69c38486c1495dc5503198e",
+      "role": "fresh RC4 audit/render witness"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\cam\\Gerber_TopSilkscreenLayer.GTO.svg",
+      "destinationRelative": "evidence/cam_step/cam/Gerber_TopSilkscreenLayer.GTO.svg",
+      "bytes": 309628,
+      "sha256": "3da94debe8e96bd6edce1dbe81328fab01f2613001eb1fef2c04b68cdc9b2817",
+      "role": "fresh RC4 audit/render witness"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\cam\\Gerber_TopSolderMaskLayer.GTS.png",
+      "destinationRelative": "evidence/cam_step/cam/Gerber_TopSolderMaskLayer.GTS.png",
+      "bytes": 96837,
+      "sha256": "fb4c1b33312407fec12d1d0ce6b72c469bc9ffb7db25c03b1a2262cd5af0eef6",
+      "role": "fresh RC4 audit/render witness"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\cam\\Gerber_TopSolderMaskLayer.GTS.svg",
+      "destinationRelative": "evidence/cam_step/cam/Gerber_TopSolderMaskLayer.GTS.svg",
+      "bytes": 342843,
+      "sha256": "99a18062cb9ebf5ecebe662e6115c41c4ed0e0c9459db7c2bfae3eb3f531cdda",
+      "role": "fresh RC4 audit/render witness"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\cam\\registered_copper_outline_drill.png",
+      "destinationRelative": "evidence/cam_step/cam/registered_copper_outline_drill.png",
+      "bytes": 708110,
+      "sha256": "e76e0b94f7258c620dce9ce74ca48b0b6967bda599b6e190320d2a157444357e",
+      "role": "fresh RC4 audit/render witness"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\cam\\registered_copper_outline_drill.svg",
+      "destinationRelative": "evidence/cam_step/cam/registered_copper_outline_drill.svg",
+      "bytes": 874034,
+      "sha256": "d8d4878586d50038c1bb6d1078012596fd4cc852c8d23ebed72003b9769d380d",
+      "role": "fresh RC4 audit/render witness"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\cam\\strict_cam_source_audit.json",
+      "destinationRelative": "evidence/cam_step/cam/strict_cam_source_audit.json",
+      "bytes": 385301,
+      "sha256": "f992ead66a3eecdb9bb64c1fa07a1f7a9e0e17ab1a00416925d3effbed671420",
+      "role": "fresh RC4 audit/render witness"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\cam_equivalence.json",
+      "destinationRelative": "evidence/cam_step/cam_equivalence.json",
+      "bytes": 5860,
+      "sha256": "89206874e91e8f772e07c60789aad0ed639269fcf0d36776a884483f6a9f1c6a",
+      "role": "fresh RC4 audit/render witness"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\input_hashes.json",
+      "destinationRelative": "evidence/cam_step/input_hashes.json",
+      "bytes": 1233,
+      "sha256": "21f370c10d656f0ca9f7477b2720029282f8807be6a16c1c133a4731bbf2950b",
+      "role": "fresh RC4 audit/render witness"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\rc2_bundle_audit.json",
+      "destinationRelative": "evidence/cam_step/rc2_bundle_audit.json",
+      "bytes": 1867,
+      "sha256": "1a6849e9a3600d81bfbea0c7162b96f0f11f8e7e43c8087e6be72d0be78a4b13",
+      "role": "fresh RC4 audit/render witness"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\source_hole_plane_audit.json",
+      "destinationRelative": "evidence/cam_step/source_hole_plane_audit.json",
+      "bytes": 153623,
+      "sha256": "53a5d23d30bbb98807435c8f6c9844cb95c5a013ab7770c571e67e738de0697b",
+      "role": "fresh RC4 audit/render witness"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\stackup_qualification.json",
+      "destinationRelative": "evidence/cam_step/stackup_qualification.json",
+      "bytes": 2026,
+      "sha256": "2a29e2c130522822db2f2eb8653607899ba362ba4e3bc52f7b732611944560b8",
+      "role": "fresh RC4 audit/render witness"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\step_inventory_equivalence.json",
+      "destinationRelative": "evidence/cam_step/step_inventory_equivalence.json",
+      "bytes": 18607,
+      "sha256": "955ba085d4e7e094ea8d5027303b2e9ea8fc8ea69c2c62bea14a0d7bd37d5e5a",
+      "role": "fresh RC4 audit/render witness"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\step_model_reconciliation.json",
+      "destinationRelative": "evidence/cam_step/step_model_reconciliation.json",
+      "bytes": 235293,
+      "sha256": "0cd646a2aab62d748296b3e64b1c7c0f34c367dae8cf78ca6b1e1b90ef0b9702",
+      "role": "fresh RC4 audit/render witness"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\step_models_process.json",
+      "destinationRelative": "evidence/cam_step/step_models_process.json",
+      "bytes": 688,
+      "sha256": "df140a976862b0634d93f1f84aef9d2187fd6f94292975e0928c99b2beb040c4",
+      "role": "fresh RC4 audit/render witness"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\step_occ_inventory.json",
+      "destinationRelative": "evidence/cam_step/step_occ_inventory.json",
+      "bytes": 1487434,
+      "sha256": "0b3a9b4d92cd459b56023cca6093217b260f66b83bd32518eb64e0e720f6e9a4",
+      "role": "fresh RC4 audit/render witness"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\step_occ_process.json",
+      "destinationRelative": "evidence/cam_step/step_occ_process.json",
+      "bytes": 39455,
+      "sha256": "9437de52526e2d74b40e9104da95e0d03635257c2da2e14b0813a56988057915",
+      "role": "fresh RC4 audit/render witness"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\step_renders\\6DOF2_r13_real_STEP_bottom.png",
+      "destinationRelative": "evidence/cam_step/step_renders/6DOF2_r13_real_STEP_bottom.png",
+      "bytes": 67354,
+      "sha256": "f69b4c0a17a536acc86fbfe2e464bc029daf9c67ada382331f50fc7636035baa",
+      "role": "fresh RC4 audit/render witness"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\step_renders\\6DOF2_r13_real_STEP_isometric.png",
+      "destinationRelative": "evidence/cam_step/step_renders/6DOF2_r13_real_STEP_isometric.png",
+      "bytes": 194034,
+      "sha256": "7cb09fc93b87d89c27a435af956c1baa33b2a6a8a13f657eb46fc88f2729512a",
+      "role": "fresh RC4 audit/render witness"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\step_renders\\6DOF2_r13_real_STEP_top.png",
+      "destinationRelative": "evidence/cam_step/step_renders/6DOF2_r13_real_STEP_top.png",
+      "bytes": 157698,
+      "sha256": "5646f7b54ef87a9673999a7154754729869fd1475c6cccbe25db14fad9686792",
+      "role": "fresh RC4 audit/render witness"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\step_renders\\tessellation_inventory.json",
+      "destinationRelative": "evidence/cam_step/step_renders/tessellation_inventory.json",
+      "bytes": 12630,
+      "sha256": "429eb68b5de7575d16aa45e6c27e54a45222691a20993603ee0dca27dbea9dba",
+      "role": "fresh RC4 audit/render witness"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\strict_cam_process.json",
+      "destinationRelative": "evidence/cam_step/strict_cam_process.json",
+      "bytes": 648,
+      "sha256": "bddff61ea11494964e4f40153af3a8fc129c96917dae61b0077819a89dd21b00",
+      "role": "fresh RC4 audit/render witness"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\manufacturing_release\\2026-09-23-r13-rc4\\STATUS.md",
+      "destinationRelative": "STATUS.md",
+      "bytes": 4371,
+      "sha256": "b7b2b4c6579b215cb8606e5e5aa36d420729df92dd472ca60b0dd1a43ae7e354",
+      "role": "release status; no order authority"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\manufacturing_release\\2026-09-23-r13-rc4\\CAM_STEP_MECHANICAL_REVIEW.md",
+      "destinationRelative": "mechanical/CAM_STEP_MECHANICAL_REVIEW.md",
+      "bytes": 5506,
+      "sha256": "7975b64938caf972113b19277035036271ff4484a1bd0732d1d41d30a094e1e7",
+      "role": "current measured results and physical limitations"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\audit_r13_rc2_bundle.py",
+      "destinationRelative": "evidence/cam_step/tools/audit_r13_rc2_bundle.py",
+      "bytes": 14306,
+      "sha256": "e5a740779e7cdf64fae0135c69b106e2121dd9d90fb99e98c7fe5cc869bf30d6",
+      "role": "offline audit/replay tool or pinned repair-plan input"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\audit_r13_manufacturing_cam.py",
+      "destinationRelative": "evidence/cam_step/tools/audit_r13_manufacturing_cam.py",
+      "bytes": 13715,
+      "sha256": "20059536fd7a719bc4c1fd5dc3aa3f72cdf0184dad34a031e83067c29fc2b804",
+      "role": "offline audit/replay tool or pinned repair-plan input"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\audit_r13_step_occ.py",
+      "destinationRelative": "evidence/cam_step/tools/audit_r13_step_occ.py",
+      "bytes": 3322,
+      "sha256": "dbc77680a835605718f3847d8811a360b7db812ffdc48eb9d4daecfb27fb2c17",
+      "role": "offline audit/replay tool or pinned repair-plan input"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\reconcile_step_rc1_models.py",
+      "destinationRelative": "evidence/cam_step/tools/reconcile_step_rc1_models.py",
+      "bytes": 5051,
+      "sha256": "96b3478b71c18085871bfd1719b3d3e7b55d54cec3dc907694b37f983ef331bd",
+      "role": "offline audit/replay tool or pinned repair-plan input"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\native_poured_geometry.py",
+      "destinationRelative": "evidence/cam_step/tools/native_poured_geometry.py",
+      "bytes": 3633,
+      "sha256": "68122ba552e9ef123307b62a1a4308eae52e25be4516fc6a1c056ad3c150f688",
+      "role": "offline audit/replay tool or pinned repair-plan input"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\r13_exact_geometry.py",
+      "destinationRelative": "evidence/cam_step/tools/r13_exact_geometry.py",
+      "bytes": 15835,
+      "sha256": "0f4501be37a081a5143e3b6f4785822111bcf2d5dd98ea3d0c16a57b01690d49",
+      "role": "offline audit/replay tool or pinned repair-plan input"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\render_rc1_cam.py",
+      "destinationRelative": "evidence/cam_step/tools/render_rc1_cam.py",
+      "bytes": 2018,
+      "sha256": "8340004511311e3b3c8844f976baf0901eb311e6fef2f11f4625cfb30ded25e7",
+      "role": "offline audit/replay tool or pinned repair-plan input"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\render_step_rc1_occ.py",
+      "destinationRelative": "evidence/cam_step/tools/render_step_rc1_occ.py",
+      "bytes": 4874,
+      "sha256": "cef9bc3af1c7fc529489e92361f7d7849979dd5c149159cfc7dc46b3a5e14624",
+      "role": "offline audit/replay tool or pinned repair-plan input"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\test_rc2_audit_guards.py",
+      "destinationRelative": "evidence/cam_step/tools/test_rc2_audit_guards.py",
+      "bytes": 2508,
+      "sha256": "23fffcaea1a4a79c40e561ff4af9fa25a2a11d7800de8ad7eafee942aa474880",
+      "role": "offline audit/replay tool or pinned repair-plan input"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\m4step_slot_clearance_145_plan.json",
+      "destinationRelative": "evidence/cam_step/tools/m4step_slot_clearance_145_plan.json",
+      "bytes": 19975,
+      "sha256": "a9067a356928d8ed2e52d003230e0ef1edfca54d15497509dc5c94ac338f6c60",
+      "role": "offline audit/replay tool or pinned repair-plan input"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\202_final_pcb_capture.json",
+      "destinationRelative": "evidence/cam_step/replay_inputs/202_final_pcb_capture.json",
+      "bytes": 2069797,
+      "sha256": "4bcbd7b23f445253f7220278fb7b193aefef3ee5d6346630237d9ce98210919f",
+      "role": "current or explicitly historical replay input; not current order data"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\205_export_rc4_fabrication.json",
+      "destinationRelative": "evidence/cam_step/replay_inputs/205_export_rc4_fabrication.json",
+      "bytes": 37041,
+      "sha256": "76ba1c1f54577c87152247b8661874700e237b5741b85af7f53e43d1cc6203d3",
+      "role": "current or explicitly historical replay input; not current order data"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\100_routed_labeled_capture.json",
+      "destinationRelative": "evidence/cam_step/replay_inputs/100_routed_labeled_capture.json",
+      "bytes": 2070878,
+      "sha256": "22c0bede843ee63a5d1dca034326b00e9a1ef2eed144f9599e369c0ddc7cd5e3",
+      "role": "current or explicitly historical replay input; not current order data"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\6DOF2-r13-20260923-routed-UNTESTED-DO-NOT-ORDER.epro2",
+      "destinationRelative": "evidence/cam_step/replay_inputs/6DOF2-r13-20260923-routed-UNTESTED-DO-NOT-ORDER.epro2",
+      "bytes": 826775,
+      "sha256": "7f4669f15dc1e6cd637061291652e07de49787c1313548b90224c48b986146b0",
+      "role": "current or explicitly historical replay input; not current order data"
+    }
+  ],
+  "fileCount": 56,
+  "bytes": 12112888,
+  "notes": [
+    "Copy this inventory itself to evidence/cam_step/cam_step_transfer_inventory.json; the final package manifest provides its self-hash.",
+    "All destination paths are relative to docs/hardware/6dof2_r13/r13-rc4-2026-09-23.",
+    "Fresh exported Gerber/STEP/archive/CSV/PDF and electrical/import evidence are supplied separately by their owners.",
+    "No historical76MB STEP is required for current full bundle replay; previous geometry comparisons remain separately hash-bound evidence.",
+    "After copying, rehash every destination and create the final package manifest last."
+  ]
+}

@@ -1,0 +1,855 @@
+{
+  "schematics": {
+    "84828f41ae134accae351f318ccf05d8": {
+      "name": "Schematic1",
+      "sheets": [
+        {
+          "name": "P1",
+          "id": 1,
+          "uuid": "6c4325f4182446d8acd377fa614d4a94"
+        }
+      ]
+    }
+  },
+  "pcbs": {
+    "24c1759e46484aea95d4eeceebbc65a8": "PCB1"
+  },
+  "panels": {},
+  "symbols": {
+    "a0c0e9c9a9fa42a78a75b2b404baafbb": {
+      "source": "383d752f5c9243c8a82a054d0337f883|0819f05c4eef4c71ace90d822a990e87",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[]",
+      "title": "Drawing-Symbol_A4",
+      "version": "1734001722",
+      "type": 20
+    },
+    "e5bbbee881a6459683401b31d0b06a9e": {
+      "source": "62b58dbc335b44c6b63ca8743517ac81|0819f05c4eef4c71ace90d822a990e87",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"Interface\",\"RS-485 / RS-422 ICs\"]",
+      "title": "SN75174N",
+      "version": "1735270212",
+      "type": 2
+    },
+    "df18e5fba03e43d5a41704a4817e4989": {
+      "source": "c8365146175e4a9daf21deb6ef20676f|0819f05c4eef4c71ace90d822a990e87",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"Power Management (PMIC)\",\"Voltage Regulators - Linear, Low Drop Out (LDO) Regulators\"]",
+      "title": "LM7805CT/NOPB",
+      "version": "1724122258",
+      "type": 2
+    },
+    "112be91c59604cb3be41a14f99bde744": {
+      "source": "a40303930341476192bb6344d3ed6ffb|0819f05c4eef4c71ace90d822a990e87",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"Power Management (PMIC)\",\"Voltage Regulators - Linear, Low Drop Out (LDO) Regulators\"]",
+      "title": "LM3940IT-3.3/NOPB",
+      "version": "1732212943",
+      "type": 2
+    },
+    "37641674973d42ea8c4ab7a7cdae53a0": {
+      "source": "39fd955a79be4baa98225721bd5112a6|user",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[]",
+      "title": "ESP32-S3-DEVKITC-1-N8R2",
+      "version": "1732502329",
+      "type": 2
+    },
+    "7af4b2c33e1f48909a7cc4ba82f9c1c6": {
+      "source": "dab7b936614c436bafd5639a388476b2|0819f05c4eef4c71ace90d822a990e87",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"Diodes\",\"Schottky Diodes\"]",
+      "title": "SB140",
+      "version": "1732631132",
+      "type": 2
+    },
+    "33164b7187cf44c9b9d92384ae04d5a6": {
+      "source": "72844ec66a664796b9ba98317297bb90|0819f05c4eef4c71ace90d822a990e87",
+      "desc": "100uF 25V",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"Capacitors\",\"Aluminum Electrolytic Capacitors - Leaded\"]",
+      "title": "100uF 25V Black high frequency",
+      "version": "1757067038",
+      "type": 2
+    },
+    "ac73a19e00154ab48caa6090f64d121a": {
+      "source": "62db211009e44e668b62bae2b5676192|0819f05c4eef4c71ace90d822a990e87",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"Capacitors\",\"Multilayer Ceramic Capacitors MLCC - Leaded\"]",
+      "title": "C315C104M5U5TA",
+      "version": "1756921701",
+      "type": 2
+    },
+    "a2e7ec19996d44f4a4f961bbe139d760": {
+      "source": "f9d6df5f436c487a8d272d05b14febef|0819f05c4eef4c71ace90d822a990e87",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"Resistors\",\"Through Hole Resistors\"]",
+      "title": "CF1/4W-33Ω±5%T52",
+      "version": "1738822889",
+      "type": 2
+    },
+    "d5a8ac30a4de44ae83a8f56d27acda3e": {
+      "source": "44c7fb80234344a6a3a2e1021153b825|0819f05c4eef4c71ace90d822a990e87",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"Resistors\",\"Through Hole Resistors\"]",
+      "title": "MF1/4W-33Ω±1% T52",
+      "version": "1737519653",
+      "type": 2
+    },
+    "bad03532b2c44c29b36e6450cb23b58d": {
+      "source": "e058003ea54b4f3f828803b2b6e679db|0819f05c4eef4c71ace90d822a990e87",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"Resistors\",\"Resistor Networks, Arrays\"]",
+      "title": "4604X-101-103LF",
+      "version": "1768548017",
+      "type": 2
+    },
+    "8f6bf02e37a9468a821725efbf947cb4": {
+      "source": "a7ea85c62bac441ba41038123dc7c368|0819f05c4eef4c71ace90d822a990e87",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[]",
+      "title": "ETHERNET MODULE USR-ES1",
+      "version": "1751390740",
+      "type": 2
+    },
+    "b66762e10a8c08e298a029b7d38a8941": {
+      "source": "b66762e10a8c08e298a029b7d38a8941|user",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[]",
+      "title": "ESP32-S3-DEVKITC-1-N8R2-FIXED",
+      "version": "1772312232",
+      "type": 2
+    },
+    "567a4dbb835aafd3f73d52eff9cb3dbd": {
+      "source": "567a4dbb835aafd3f73d52eff9cb3dbd|user",
+      "desc": "",
+      "title": "DB25F-VERTICAL-TH",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[]",
+      "version": "1772320488",
+      "type": 2
+    }
+  },
+  "footprints": {
+    "202164e3845b41cb9fc7773da7a2d994": {
+      "title": "DIP-16_L20.0-W6.4-P2.54-LS7.6-BL",
+      "source": "0fe7360a54594c0c8fd5689612c80313|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1657866557",
+      "type": 4,
+      "desc": ";PDIP-16;DIP-16;PowerDIP-16;-",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"DIP-16\"]"
+    },
+    "afc1add40878443cacf0ebf7c9b5dc45": {
+      "title": "TO-220-3_L10.0-W4.5-P2.54-T",
+      "source": "7498049426cf454e985b41146e883d5c|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1676442299",
+      "type": 4,
+      "desc": ";TO-220;TO-220FP;TO-220AB;TO-220-3;TO-220A;TO-220(TO-220-3);TO-220F(TO-220IS);ITO-220AB;TO-220AB-R;TO-220C;TO-220-3L;TO-220-FP;TO-263-3;TO-220F",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"TO-220-3\"]"
+    },
+    "09e231e1b5804b789226b773d117b050": {
+      "title": "TO-220-3_L10.2-W4.6-P2.54-L",
+      "source": "639dd3fd97b34d23a7badae5b38fa3a4|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1649665535",
+      "type": 4,
+      "desc": ";TO-220-3;TO-220;TO-220F;TO-220AB;TO-252;TO-220-3L;TO-220SIS;TO-220FP;-;ITO-220;ITO-220S;TO-220C;TO-220F-3L",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"TO-220-3\"]"
+    },
+    "8703a8230b3c4a1ca83721891247b003": {
+      "title": "XCVR_ESP32-S3-DEVKITC-1-N8R2",
+      "source": "dca68ee86966496c9c2adea518311372|user",
+      "version": "1732502330",
+      "type": 4,
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[]"
+    },
+    "783027dc8f36492a9e93d9e7523b9af3": {
+      "title": "DO-41_BD2.4-L4.7-P8.70-D0.6-RD",
+      "source": "c0a9fa4e6cc94ee69712e497620ef098|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1655177366",
+      "type": 4,
+      "desc": ";DO-41(DO-204AL);DO-41;插件,D2.03xL4.06mm;DO-41-2;DO-204AL(DO-41);A-405;-",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"DO-41\"]"
+    },
+    "b70bae5876044957818a3a3f73a162ee": {
+      "title": "CAP-TH_BD6.3-P2.50-D1.0-FD",
+      "source": "6457a4286afc4d2cbb59fa6bf13b0b1a|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1681350413",
+      "type": 4,
+      "desc": ";插件,D6.3xL5mm;插件,D6.3xL11mm;SMD,D6.3xL6.1mm;SMD,D6.3xL8mm;插件,P=2.5mm;插件;SMD;插件,D6.3xL14mm;插件,D6.3xL7mm;插件,D6.3xL8mm;插件,D6.3xL30mm;插件,P=2.54mm;插件,D6.3xL9mm;径向引线,6.3x11mm;直插,D6.3xL11mm;插件,D6.3xL12mm;插件,6.3x9mm;插件,D6xL11mm;插件,D6.3xL15mm;插件,6.3x8mm;插件,D6.3xL6mm;-;插件,D6.3xL20mm;插件,6.3x10mm;直插,D6.3xL12mm;插件,6.3x11mm;插件,D6.3xL10mm;插件,6.3x7mm;EEAGA1V220;插件,D6.3xL11.5mm;插件,6.3x12mm;插件,6.3x14mm;插件,D6.3xL16mm;插件,D8xL10mm;插件,D6.3xL11.2mm;插件,D6.3xL7.7mm;插件,D6.3xL8.9mm;插件,D6.3xL5.5mm;插件,D6.3xL13.5mm;插件,D6.3xL13mm;插件,D6.3xL9.9mm;插件,D6.3xL5.4mm;插件,D6.3xL8.5mm;插件,D6.5xL10mm;插件,6.3x8.5mm;插件,6.3x10.5mm;插件,6.3x5.5mm;插件,6.3x16mm;插件,D7xL14mm;插件,D6xL12mm;插件,6.3x13.5mm;Radial,6.3x11mm;Radial,6.3x9mm;Radial,6.3x7mm;Radial,6.3x14mm;6.3*7.7;CAP-TH_BD6.3-P2.50-D1.0-FD;CE6.3X11P2.5;插件,D6.3XL11",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"CAP-TH\"]"
+    },
+    "265b818fcd9e4c0988c8c8ec0a36bf8d": {
+      "title": "CAP-TH_L8.0-W5.0-P10.00-D0.6",
+      "source": "a82d51338e9940ae89f8be8a0126888f|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1657085645",
+      "type": 4,
+      "desc": ";插件;插件,P=10mm;DIODE9.0",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"CAP-TH\"]"
+    },
+    "13f17d26c27f40cf84b71b44b315574e": {
+      "title": "RES-TH_BD2.3-L6.5-P10.50-D0.5",
+      "source": "1908cb70e0004212b3b9de6a2c067a7f|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1681969960",
+      "type": 4,
+      "desc": ";轴向引线,2.3x6.5mm;轴向引线;插件;-;插件,2.3x6.5mm;插件,3.5x9mm;RES-TH;圆柱状直插 1/4W;RES-TH-2P;BD2.3L6.5D0.35",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"RES-TH\"]"
+    },
+    "40c4ea8258f24bfe989c377bd9d60801": {
+      "title": "RES-TH_BD2.2-L6.5-P10.50-D0.6",
+      "source": "d8cfc421e7ec448d889b1182e5b2feca|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1738916356",
+      "type": 4,
+      "desc": ";轴向引线;插件;轴向引线,2.2x6.5mm;插件,2.7x6.2mm;Axial;插件,2.3x6.5mm;轴向引线,2.3x6.5mm;RES-TH_BD2.2-L6.4;RES-TH_BD2.2-L6.5-P10.50-D0.6;插件,2.2x6.5mm;RES-TH_BD2.2-L6.5-D0.6;-;RES-TH-2P",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"RES-TH\"]"
+    },
+    "e54de05fca7349cd8451c2b6663f8dd3": {
+      "title": "RES-ARRAY-TH_4P-P2.54-D1.0",
+      "source": "7b9ea1eac72541d289a67d574ef7b6e5|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1757495177",
+      "type": 4,
+      "desc": "SIP-4-2.54mm",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"RES-ARRAY-TH\"]"
+    },
+    "26b1cb0cd9e842f3925a40c62f25d67c": {
+      "title": "COMM_ETHERNET-MODULE-USR-ES1",
+      "source": "de50822a8486493596296d299fb761a2|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1752473840",
+      "type": 4,
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"COMM-TH\"]"
+    },
+    "430c1d3f0fccfebea8355126cf6e34da": {
+      "source": "430c1d3f0fccfebea8355126cf6e34da|user",
+      "desc": "",
+      "title": "DB25-VERTICAL-TH",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[]",
+      "version": "1772320488",
+      "type": 4
+    }
+  },
+  "devices": {
+    "b65301fb9ae044bb92276b65d16b563d": {
+      "title": "SN75174N",
+      "attributes": {
+        "LCSC Part Name": "四通道差分线驱动器",
+        "Supplier Part": "C77813",
+        "Manufacturer": "TI(德州仪器)",
+        "Manufacturer Part": "SN75174N",
+        "Supplier Footprint": "DIP-16",
+        "JLCPCB Part Class": "Extended Part",
+        "Datasheet": "https://www.ti.com/cn/lit/gpn/sn75174",
+        "Supplier": "LCSC",
+        "Add into BOM": "yes",
+        "Convert to PCB": "yes",
+        "Symbol": "e5bbbee881a6459683401b31d0b06a9e",
+        "Designator": "U?",
+        "Footprint": "202164e3845b41cb9fc7773da7a2d994",
+        "3D Model": "0eb43ed19d1d4a6199043bf8ee69cb16",
+        "3D Model Title": "DIP-16_L20.0-W6.4-H3.5-LS7.62-P2.54",
+        "3D Model Transform": "787.4,311.8104,0,0,0,0,0,0,-125.984",
+        "Types": "Driver",
+        "Number of Driver": "4",
+        "Number of receiver": "0",
+        "Supply Voltage": "4.75V~5.25V",
+        "Operating Temperature": "0℃~+70℃",
+        "Name": "={Manufacturer Part}",
+        "Description": "Types:Driver Number of Driver:4 Number of receiver:0 Supply Voltage:4.75V~5.25V Supply Voltage:4.75V~5.25V Operating Temperature:0℃~+70℃ Operating Temperature:0℃~+70℃"
+      },
+      "description": "Types:Driver Number of Driver:4 Number of receiver:0 Supply Voltage:4.75V~5.25V Supply Voltage:4.75V~5.25V Operating Temperature:0℃~+70℃ Operating Temperature:0℃~+70℃",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [
+        "https://alimg.szlcsc.com/upload/public/product/middle/20221231/C9EE79732DC30DBAD093A4425CBD53DC.jpg"
+      ],
+      "source": "1bd0387c975f4f9aab6a8aefd8252a1e|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1660157960",
+      "custom_tags": "[\"Interface\",\"RS-485 / RS-422 ICs\"]"
+    },
+    "85155db88c1d4051b48b625136aa522a": {
+      "title": "LM7805CT/NOPB",
+      "attributes": {
+        "LCSC Part Name": "1.5A、30V 线性稳压器",
+        "Supplier Part": "C50931",
+        "Manufacturer": "TI(德州仪器)",
+        "Manufacturer Part": "LM7805CT/NOPB",
+        "Supplier Footprint": "TO-220",
+        "JLCPCB Part Class": "Extended Part",
+        "Datasheet": "https://www.ti.com/cn/lit/gpn/lm7800",
+        "Supplier": "LCSC",
+        "Add into BOM": "yes",
+        "Convert to PCB": "yes",
+        "Symbol": "df18e5fba03e43d5a41704a4817e4989",
+        "Designator": "U?",
+        "Footprint": "afc1add40878443cacf0ebf7c9b5dc45",
+        "3D Model": "6560f2703a8042aa9ff51675fd0d598e",
+        "3D Model Title": "TO-220-3_L10.0-W4.5-P2.54",
+        "3D Model Transform": "397.637,177.165,0,90,0,0,19.685,0,-267.717",
+        "Output Type": "Fixed",
+        "Voltage - Supply": "20V",
+        "Output Voltage": "5V",
+        "Output Current": "1A",
+        "Power Supply Rejection Ratio (PSRR)": "62dB@(120Hz)",
+        "Voltage Dropout": "2V@(1A)",
+        "standby current": "8mA",
+        "Noise": "40uV",
+        "Features": "Short Circuit Protection；Over Temperature Protection；Over Current Protection",
+        "Operating Temperature": "0℃~+70℃@(Ta)",
+        "Output Configuration": "Positive",
+        "Number of Outputs": "1",
+        "Name": "={Manufacturer Part}",
+        "Description": "Output Type:Fixed Voltage - Supply:20V Output Voltage:5V Output Voltage:5V Output Current:1A Power Supply Rejection Ratio (PSRR):62dB@(120Hz) Voltage Dropout:2V@(1A) standby current:8mA Noise:40uV Features:Short Circuit Protection；Over Temperature Protect"
+      },
+      "description": "Output Type:Fixed Voltage - Supply:20V Output Voltage:5V Output Voltage:5V Output Current:1A Power Supply Rejection Ratio (PSRR):62dB@(120Hz) Voltage Dropout:2V@(1A) standby current:8mA Noise:40uV Features:Short Circuit Protection；Over Temperature Protect",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [
+        "https://alimg.szlcsc.com/upload/public/product/middle/20230424/EC3FA532F19488E7572771DA05FEE099.jpg"
+      ],
+      "source": "2a9a766852b3476f8af0d869c61cd039|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1661114425",
+      "custom_tags": "[\"Power Management (PMIC)\",\"Voltage Regulators - Linear, Low Drop Out (LDO) Regulators\"]"
+    },
+    "7c446fc4a83a497b9d763b1af2bfc4a3": {
+      "title": "Drawing-Symbol_A4",
+      "attributes": {
+        "@Project Name": "Project Name",
+        "@Page Count": "3",
+        "@Update Date": "2021.11.05",
+        "@Create Date": "2021.11.05",
+        "@Schematic Name": "Schematic Name",
+        "@Page No": "1",
+        "@Page Name": "P1",
+        "Company": "EasyEDA.com",
+        "Reviewed": "",
+        "Version": "V1.0",
+        "Page Size": "A4",
+        "Drawn": "",
+        "Name": "",
+        "@Create Time": "",
+        "@Update Time": "",
+        "Border": "1",
+        "Width": "1170",
+        "Height": "825",
+        "Region Start": "1",
+        "X Region Count": "6",
+        "Y Region Count": "4",
+        "Blade Width": "10",
+        "Color": "",
+        "Title Block Position": "3",
+        "Title Block": "1",
+        "@Board Name": "",
+        "Symbol": "a0c0e9c9a9fa42a78a75b2b404baafbb",
+        "Footprint": "",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [
+        ""
+      ],
+      "source": "754952feec9e48d6afd574513e1ca00b|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1734001722",
+      "custom_tags": "[\"\",\"\"]"
+    },
+    "f0a1535f36594ef594e1b5d599b696e6": {
+      "title": "LM3940IT-3.3/NOPB",
+      "attributes": {
+        "LCSC Part Name": "用于 5V 至 3.3V 电压转换的 1A 低压降稳压器",
+        "Supplier Part": "C2863697",
+        "Manufacturer": "TI(德州仪器)",
+        "Manufacturer Part": "LM3940IT-3.3/NOPB",
+        "Supplier Footprint": "TO-220",
+        "JLCPCB Part Class": "Extended Part",
+        "Datasheet": "https://www.ti.com/cn/lit/gpn/lm3940",
+        "Supplier": "LCSC",
+        "Add into BOM": "yes",
+        "Convert to PCB": "yes",
+        "Symbol": "112be91c59604cb3be41a14f99bde744",
+        "Designator": "U?",
+        "Footprint": "09e231e1b5804b789226b773d117b050",
+        "3D Model": "8a57f658127440348bf9aaf92df835b4",
+        "3D Model Title": "TO-220-3_L10.2-W4.6-P2.54-L",
+        "3D Model Transform": "399.999,177.204,0,0,0,0,0,24.606,-196.85",
+        "Output Type": "Fixed",
+        "Voltage - Supply": "7.5V",
+        "Output Voltage": "3.3V",
+        "Output Current": "1A",
+        "Voltage Dropout": "200mV@(100mA)",
+        "Operating Temperature": "-40℃~+125℃",
+        "Output Configuration": "Positive electrode",
+        "Number of Outputs": "1",
+        "Name": "={Manufacturer Part}",
+        "Description": "Output Type:Fixed Voltage - Supply:7.5V Output Voltage:3.3V Output Voltage:3.3V Output Current:1A Voltage Dropout:200mV@(100mA) Operating Temperature:-40℃~+125℃ Operating Temperature:-40℃~+125℃ Output Configuration:Positive electrode Number of Outputs:1"
+      },
+      "description": "Output Type:Fixed Voltage - Supply:7.5V Output Voltage:3.3V Output Voltage:3.3V Output Current:1A Voltage Dropout:200mV@(100mA) Operating Temperature:-40℃~+125℃ Operating Temperature:-40℃~+125℃ Output Configuration:Positive electrode Number of Outputs:1",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [
+        "https://alimg.szlcsc.com/upload/public/product/middle/20230617/C307D7B758966DBA1B8127989A4A29C4.jpg"
+      ],
+      "source": "ea4f25dbd5f941128af28699f5365c63|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1681267204",
+      "custom_tags": "[\"Power Management (PMIC)\",\"Voltage Regulators - Linear, Low Drop Out (LDO) Regulators\"]"
+    },
+    "2ff8a490a726447c8f62b5a452f674a2": {
+      "title": "ESP32-S3-DEVKITC-1-N8R2",
+      "attributes": {
+        "Designator": "U?",
+        "Add into BOM": "yes",
+        "Convert to PCB": "yes",
+        "Symbol": "37641674973d42ea8c4ab7a7cdae53a0",
+        "Footprint": "8703a8230b3c4a1ca83721891247b003",
+        "3D Model": "1ce629df0fc14d68a31a4899bb3f21b2|fd7b3430863540bba05b01405b9c8175",
+        "3D Model Title": "ESP32-S3-DEVKITC-1-N8R2--3DModel-STEP-56544",
+        "3D Model Transform": "999.9979755092556,527.1642897500794,2741.7267499999994,0,90,0,0,1480.31496,35.43307",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "36536940712d49129040b91095870a6f|user",
+      "version": "1732502721",
+      "custom_tags": "[]"
+    },
+    "72c0732729094aa7ae2a6eb34e1d800e": {
+      "title": "SB140",
+      "attributes": {
+        "LCSC Part Name": "电压:40V 电流:1A",
+        "Supplier Part": "C896044",
+        "Manufacturer": "onsemi(安森美)",
+        "Manufacturer Part": "SB140",
+        "Supplier Footprint": "DO-41",
+        "JLCPCB Part Class": "Extended Part",
+        "Datasheet": "https://item.szlcsc.com/datasheet/SB140/961481.html",
+        "Supplier": "LCSC",
+        "Add into BOM": "yes",
+        "Convert to PCB": "yes",
+        "Symbol": "7af4b2c33e1f48909a7cc4ba82f9c1c6",
+        "Designator": "U?",
+        "Footprint": "783027dc8f36492a9e93d9e7523b9af3",
+        "3D Model": "39d8e4572d564e62a86d2224fc908dd8",
+        "3D Model Title": "DO-41_D2.4-L4.7-P8.70",
+        "3D Model Transform": "374.015,94.428,0,0,0,0,0,0,-137.795",
+        "Diode Configuration": "1 Independent",
+        "Voltage - Forward(Vf@If)": "500mV@1A",
+        "Voltage - DC Reverse(Vr)": "40V",
+        "Current - Rectified": "1A",
+        "Reverse Leakage Current (Ir)": "500uA@40V",
+        "Operating Junction Temperature Range": "-65℃~+125℃",
+        "Non-Repetitive Peak Forward Surge Current": "30A",
+        "Name": "={Manufacturer Part}",
+        "Description": "Diode Configuration:1 Independent Voltage - Forward(Vf@If):500mV@1A Voltage - DC Reverse(Vr):40V Current - Rectified:1A Reverse Leakage Current (Ir):500uA@40V Operating Junction Temperature Range:-65℃~+125℃ Operating Junction Temperature Range:-65℃~+125℃"
+      },
+      "description": "Diode Configuration:1 Independent Voltage - Forward(Vf@If):500mV@1A Voltage - DC Reverse(Vr):40V Current - Rectified:1A Reverse Leakage Current (Ir):500uA@40V Operating Junction Temperature Range:-65℃~+125℃ Operating Junction Temperature Range:-65℃~+125℃",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "9954670afa0c462fac6a90a41708f746|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1661756449",
+      "custom_tags": "[\"Diodes\",\"Schottky Diodes\"]"
+    },
+    "534d77e75d924d85bd4026ed757b80bd": {
+      "title": "GR107V025E11RR0VH4FP0",
+      "attributes": {
+        "LCSC Part Name": "100uF -10%~+20% 25V",
+        "Supplier Part": "C44601",
+        "Manufacturer": "Chengx(承兴)",
+        "Manufacturer Part": "GR107V025E11RR0VH4FP0",
+        "Supplier Footprint": "插件,D6.3xL11mm",
+        "JLCPCB Part Class": "Extended Part",
+        "Datasheet": "https://item.szlcsc.com/datasheet/GR107V025E11RR0VH4FP0/45603.html",
+        "Supplier": "LCSC",
+        "Add into BOM": "yes",
+        "Convert to PCB": "yes",
+        "Symbol": "33164b7187cf44c9b9d92384ae04d5a6",
+        "Designator": "C?",
+        "Footprint": "b70bae5876044957818a3a3f73a162ee",
+        "3D Model": "b565ea104e684643a82bac9b1c8da51e",
+        "3D Model Title": "CAP-TH_BD6.3-P2.50-D1.0-FD",
+        "3D Model Transform": "248.4247,247.99777,0,0,0,0,0,0,-137.795",
+        "Value": "100uF",
+        "Tolerance": "-10%~+20%",
+        "Voltage Rating": "25V",
+        "Ripple Current": "340mA@100kHz",
+        "Equivalent Series Resistance(ESR)": "-",
+        "Pin Spacing": "2.5mm",
+        "Diameter": "6.3mm",
+        "Height - Seated (Max)": "11mm",
+        "Lifetime": "2000hrs@105℃",
+        "Operating Temperature": "-40℃~+105℃",
+        "Name": "={Value}",
+        "Description": "Capacitance:100uF Tolerance:-10%~+20% Tolerance:-10%~+20% Voltage Rating:25V Ripple Current:340mA@100kHz Equivalent Series Resistance(ESR):- Pin Spacing:2.5mm Diameter:6.3mm Height - Seated (Max):11mm Lifetime:2000hrs@105℃ Operating Temperature:-40℃~+105℃"
+      },
+      "description": "Capacitance:100uF Tolerance:-10%~+20% Tolerance:-10%~+20% Voltage Rating:25V Ripple Current:340mA@100kHz Equivalent Series Resistance(ESR):- Pin Spacing:2.5mm Diameter:6.3mm Height - Seated (Max):11mm Lifetime:2000hrs@105℃ Operating Temperature:-40℃~+105℃",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [
+        "https://alimg.szlcsc.com/upload/public/product/middle/20221229/B58D2191D68A6A66F0B776F834C0F766.jpg"
+      ],
+      "source": "886b926e4a744163bde1ec95986c1b1b|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1665171615",
+      "custom_tags": "[\"Capacitors\",\"Aluminum Electrolytic Capacitors - Leaded\"]"
+    },
+    "40df7270d14a4bae81bd3f70a201f73d": {
+      "title": "C315C104M5U5TA",
+      "attributes": {
+        "LCSC Part Name": "100nF ±20% 50V",
+        "Supplier Part": "C1620210",
+        "Manufacturer": "KEMET(基美)",
+        "Manufacturer Part": "C315C104M5U5TA",
+        "Supplier Footprint": "插件",
+        "JLCPCB Part Class": "Extended Part",
+        "Datasheet": "https://item.szlcsc.com/datasheet/C315C104M5U5TA/1711055.html",
+        "Supplier": "LCSC",
+        "Add into BOM": "yes",
+        "Convert to PCB": "yes",
+        "Symbol": "ac73a19e00154ab48caa6090f64d121a",
+        "Designator": "R?",
+        "Footprint": "265b818fcd9e4c0988c8c8ec0a36bf8d",
+        "3D Model": "aed2d04916f1484494af14f093e7cb6b",
+        "3D Model Title": "CAP-TH_BD8.0-W5.0-P10.0",
+        "3D Model Transform": "431.76953,181.102,0,0,0,0,0,0,-137.795",
+        "Value": "100nF",
+        "Tolerance": "±20%",
+        "Voltage Rating": "50V",
+        "Temperature Coefficient": "Z5U",
+        "Name": "={Value}",
+        "Description": "Capacitance:100nF Tolerance:±20% Tolerance:±20% Voltage Rating:50V Temperature Coefficient:Z5U"
+      },
+      "description": "Capacitance:100nF Tolerance:±20% Tolerance:±20% Voltage Rating:50V Temperature Coefficient:Z5U",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "8552260954cf4cf59ea76be0a55180f4|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1664480467",
+      "custom_tags": "[\"Capacitors\",\"Multilayer Ceramic Capacitors MLCC - Leaded\"]"
+    },
+    "bc385bb643a04dde864989ef89a877fd": {
+      "title": "CF1/4W-33Ω±5%T52",
+      "attributes": {
+        "LCSC Part Name": "碳膜电阻 33Ω ±5% 250mW",
+        "Supplier Part": "C714273",
+        "Manufacturer": "华星机电",
+        "Manufacturer Part": "CF1/4W-33Ω±5%T52",
+        "Supplier Footprint": "插件,D2.3xL6.5mm",
+        "JLCPCB Part Class": "Extended Part",
+        "Datasheet": "https://item.szlcsc.com/datasheet/CF1%252F4W-33%25CE%25A9%25C2%25B15%2525T52/754598.html",
+        "Supplier": "LCSC",
+        "Add into BOM": "yes",
+        "Convert to PCB": "yes",
+        "Symbol": "a2e7ec19996d44f4a4f961bbe139d760",
+        "Designator": "U?",
+        "Footprint": "13f17d26c27f40cf84b71b44b315574e",
+        "3D Model": "f10e09c7dbfa4e279658667a3edbbac9",
+        "3D Model Title": "RES-TH_D2.3-L6.5-P10.50",
+        "3D Model Transform": "431.1015,91.3384,0,0,0,0,0.197,0,-137.795",
+        "Type": "Carbon Film Resistor",
+        "Value": "33Ω",
+        "Tolerance": "±5%",
+        "Voltage-Supply(Max)": "250V",
+        "Power(Watts)": "250mW",
+        "Temperature Coefficient": "-1500ppm/℃~+300ppm/℃",
+        "Operating Temperature": "-55℃~+125℃",
+        "Name": "={Value}",
+        "Description": "Type:Carbon Film Resistor Resistance:33Ω Tolerance:±5% Tolerance:±5% Voltage-Supply(Max):250V Power(Watts):250mW Temperature Coefficient:-1500ppm/℃~+300ppm/℃ Temperature Coefficient:-1500ppm/℃~+300ppm/℃ Operating Temperature:-55℃~+125℃ Operating Temperatu"
+      },
+      "description": "Type:Carbon Film Resistor Resistance:33Ω Tolerance:±5% Tolerance:±5% Voltage-Supply(Max):250V Power(Watts):250mW Temperature Coefficient:-1500ppm/℃~+300ppm/℃ Temperature Coefficient:-1500ppm/℃~+300ppm/℃ Operating Temperature:-55℃~+125℃ Operating Temperatu",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [
+        "https://alimg.szlcsc.com/upload/public/product/middle/20230104/CE090F19F74F67CD5293906C2D9F93A8.jpg"
+      ],
+      "source": "72bf87fc58514d69a19475e5c7362b82|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1660157546",
+      "custom_tags": "[\"Resistors\",\"Through Hole Resistors\"]"
+    },
+    "76040cfb401f42feb2d633fbe219af96": {
+      "title": "MF1/4W-33Ω±1% T",
+      "attributes": {
+        "LCSC Part Name": "33Ω ±1% 250mW 金属膜电阻 圆柱状直插",
+        "Supplier Part": "C119292",
+        "Manufacturer": "CCO(千志电子)",
+        "Manufacturer Part": "MF1/4W-33Ω±1% T",
+        "Supplier Footprint": "插件,D2.3xL6.5mm",
+        "JLCPCB Part Class": "Extended Part",
+        "Datasheet": "https://atta.szlcsc.com/upload/public/pdf/source/20190910/C427326_62A6D058BC0FF74963A2F22379CA06CE.pdf",
+        "Supplier": "LCSC",
+        "Add into BOM": "yes",
+        "Convert to PCB": "yes",
+        "Symbol": "d5a8ac30a4de44ae83a8f56d27acda3e",
+        "Designator": "R?",
+        "Footprint": "40c4ea8258f24bfe989c377bd9d60801",
+        "3D Model": "259c3103781c424fb695c8049f0a17f3",
+        "3D Model Title": "RES-TH_BD2.2-L6.5-P10.50-D0.6",
+        "3D Model Transform": "437.007,91.18383,0,0,0,0,0,0,-137.795",
+        "Type": "Metal Film Resistors",
+        "Value": "33Ω",
+        "Tolerance": "±1%",
+        "Voltage-Supply(Max)": "250V",
+        "Power(Watts)": "250mW",
+        "Temperature Coefficient": "±100ppm/℃",
+        "Operating Temperature": "-55℃~+155℃",
+        "Name": "={Value}",
+        "Description": "Type:Metal Film Resistors Resistance: Tolerance:±1% Tolerance:±1% Voltage-Supply(Max):250V Power(Watts):250mW Temperature Coefficient:±100ppm/℃ Temperature Coefficient:±100ppm/℃ Operating Temperature:-55℃~+155℃ Operating Temperature:-55℃~+155℃"
+      },
+      "description": "Type:Metal Film Resistors Resistance: Tolerance:±1% Tolerance:±1% Voltage-Supply(Max):250V Power(Watts):250mW Temperature Coefficient:±100ppm/℃ Temperature Coefficient:±100ppm/℃ Operating Temperature:-55℃~+155℃ Operating Temperature:-55℃~+155℃",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [
+        "https://alimg.szlcsc.com/upload/public/product/middle/20230101/9F7DBF8A25CC75334097787A45132CA3.jpg"
+      ],
+      "source": "dec1eb14eb914640906e76b6c535daee|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1660159148",
+      "custom_tags": "[\"Resistors\",\"Through Hole Resistors\"]"
+    },
+    "0ee4f05a0c274ec1b52a0aad737e7c78": {
+      "title": "4604X-101-103LF",
+      "attributes": {
+        "LCSC Part Name": "10kΩ ±2%",
+        "Supplier Part": "C1358483",
+        "Manufacturer": "BOURNS",
+        "Manufacturer Part": "4604X-101-103LF",
+        "Supplier Footprint": "SIP-4-2.54mm",
+        "JLCPCB Part Class": "Extended Part",
+        "Datasheet": "https://item.szlcsc.com/datasheet/4604X-101-103LF/1448770.html",
+        "Supplier": "LCSC",
+        "Add into BOM": "yes",
+        "Convert to PCB": "yes",
+        "Symbol": "bad03532b2c44c29b36e6450cb23b58d",
+        "Designator": "RN?",
+        "Footprint": "e54de05fca7349cd8451c2b6663f8dd3",
+        "3D Model": "cc333c98308f4cad90bc3ce38358bb6e",
+        "3D Model Title": "RES-ARRAY-TH_4P-P2.54-D1.0",
+        "3D Model Transform": "413.70559,114.0856,0,0,0,0,0,0,-137.795",
+        "Number of Resistors": "",
+        "Value": "10kΩ",
+        "Tolerance": "±2%",
+        "Power(Watts)": "200mW",
+        "Temperature Coefficient": "±100ppm/℃",
+        "Number of Pins": "",
+        "Name": "={Value}",
+        "Description": "Number of Resistors: Resistance:10kΩ Tolerance:±2% Tolerance:±2% Power(Watts):200mW Temperature Coefficient:±100ppm/℃ Temperature Coefficient:±100ppm/℃ Number of Pins:"
+      },
+      "description": "Number of Resistors: Resistance:10kΩ Tolerance:±2% Tolerance:±2% Power(Watts):200mW Temperature Coefficient:±100ppm/℃ Temperature Coefficient:±100ppm/℃ Number of Pins:",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "31ee95296442460da4d249e2d36c3065|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1768549205",
+      "custom_tags": "[\"Resistors\",\"Resistor Networks, Arrays\"]"
+    },
+    "82a064ebc93748978ac6947938f55f36": {
+      "title": "Ethernet Module USR-ES1",
+      "attributes": {
+        "LCSC Part Name": "Ethernet Module USR-ES1",
+        "Supplier Part": "C9900201496",
+        "Manufacturer": "",
+        "Manufacturer Part": "Ethernet Module USR-ES1",
+        "Supplier Footprint": "Through hole",
+        "JLCPCB Part Class": "Extended Part",
+        "Datasheet": "",
+        "Supplier": "LCSC",
+        "Add into BOM": "yes",
+        "Convert to PCB": "yes",
+        "Symbol": "8f6bf02e37a9468a821725efbf947cb4",
+        "Designator": "U?",
+        "Footprint": "26b1cb0cd9e842f3925a40c62f25d67c",
+        "Name": "={Manufacturer Part}",
+        "3D Model": "625b3a1baadc49a1a65d7d1625dcdf74",
+        "3D Model Title": "COMM_ETHERNET-MODULE-USR-ES1",
+        "3D Model Transform": "905.50992,1082.67496,0,0,0,0,-0.157,62.795,-196.85",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "d6f02ed62ad4492ea4607c1f04f19224|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1751385605",
+      "custom_tags": "[]"
+    },
+    "0930fa753b585f7cecd65a4fea77585d": {
+      "title": "ESP32-S3-DEVKITC-1-N8R2",
+      "attributes": {
+        "Designator": "U?",
+        "Add into BOM": "yes",
+        "Convert to PCB": "yes",
+        "Symbol": "b66762e10a8c08e298a029b7d38a8941",
+        "Footprint": "8703a8230b3c4a1ca83721891247b003",
+        "3D Model": "1ce629df0fc14d68a31a4899bb3f21b2|fd7b3430863540bba05b01405b9c8175",
+        "3D Model Title": "ESP32-S3-DEVKITC-1-N8R2--3DModel-STEP-56544",
+        "3D Model Transform": "999.9979755092556,527.1642897500794,2741.7267499999994,0,90,0,0,1480.31496,35.43307",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "0930fa753b585f7cecd65a4fea77585d|user",
+      "version": "1772312232",
+      "custom_tags": "[]"
+    },
+    "7f339d847c3004ba3fc394c4f9282384": {
+      "title": "DB25 Female Vertical Through-Hole",
+      "attributes": {
+        "Symbol": "567a4dbb835aafd3f73d52eff9cb3dbd",
+        "Footprint": "430c1d3f0fccfebea8355126cf6e34da",
+        "Designator": "J",
+        "Name": "DB25F"
+      },
+      "description": "DB25 Female D-Sub Connector, Vertical Through-Hole, 25 pins",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "7f339d847c3004ba3fc394c4f9282384|user",
+      "custom_tags": "[]",
+      "version": "1772320488"
+    }
+  },
+  "boards": {
+    "Board1": {
+      "schematic": "84828f41ae134accae351f318ccf05d8",
+      "pcb": "24c1759e46484aea95d4eeceebbc65a8"
+    }
+  },
+  "config": {
+    "title": "6dof2",
+    "cbbProject": false,
+    "defaultSheet": "7c446fc4a83a497b9d763b1af2bfc4a3",
+    "editorVersion": "2.2.46.11"
+  }
+}

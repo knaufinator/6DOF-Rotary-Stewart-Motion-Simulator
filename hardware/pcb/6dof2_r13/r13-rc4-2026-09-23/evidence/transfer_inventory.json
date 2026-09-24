@@ -1,0 +1,879 @@
+{
+  "status": "COPIED_FINAL_HASH_MATCHED",
+  "destination": "C:\\Users\\Chris\\Documents\\GitHub\\6DOF-Rotary-Stewart-Motion-Simulator\\docs\\hardware\\6dof2_r13\\r13-rc4-2026-09-23",
+  "files": [
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\RC4_PACKAGE.gitattributes",
+      "destination": ".gitattributes",
+      "bytes": 87,
+      "sha256": "109cc80ea325c0c4752f7e6cbae0d3cc8ad7f1bef227c1f37e4dbb0429c60ed7"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\RC4_PACKAGE_README.md",
+      "destination": "README.md",
+      "bytes": 4251,
+      "sha256": "1b6832eb889749fa008585dbf590127d9cb926b481cda3c6f54aa854ebc450d0"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\manufacturing_release\\2026-09-23-r13-rc4\\STATUS.md",
+      "destination": "STATUS.md",
+      "bytes": 4371,
+      "sha256": "b7b2b4c6579b215cb8606e5e5aa36d420729df92dd472ca60b0dd1a43ae7e354"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\manufacturing_release\\2026-09-23-r13-rc4\\6DOF2_r13_BOM_JLC.csv",
+      "destination": "assembly/6DOF2_r13_BOM_JLC.csv",
+      "bytes": 2959,
+      "sha256": "5c7ce157d1b4507a3196eff41fd2579f1ca568a7fc468eeb57c241228d70fffc"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\manufacturing_release\\2026-09-23-r13-rc4\\6DOF2_r13_CPL_JLC.csv",
+      "destination": "assembly/6DOF2_r13_CPL_JLC.csv",
+      "bytes": 4877,
+      "sha256": "43e663b34e681b8c1de7c1f2084aa8874206f02b15479567abcc260b41c70f4d"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\manufacturing_release\\2026-09-23-r13-rc4\\6DOF2_r13_BOM_raw.csv",
+      "destination": "assembly/raw/6DOF2_r13_BOM_raw.csv",
+      "bytes": 8484,
+      "sha256": "dbd461331c67ed3d60fe169285e394695a01cfa82c8c1f69030078e83ecb4a60"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\manufacturing_release\\2026-09-23-r13-rc4\\6DOF2_r13_CPL_raw.csv",
+      "destination": "assembly/raw/6DOF2_r13_CPL_raw.csv",
+      "bytes": 45898,
+      "sha256": "7e244c74fb5a56a9ce55da0b6bd23070444537a424daf0370836e02ca9a72950"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\208_final_pcb_review.png",
+      "destination": "drawings/208_final_pcb_review.png",
+      "bytes": 548823,
+      "sha256": "baf87e3007e9f2360980924180516898d3b021ed64e2c077b4ba074d5e298d25"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\manufacturing_release\\2026-09-23-r13-rc4\\6DOF2_r13_Schematic_Review.pdf",
+      "destination": "drawings/6DOF2_r13_Schematic_Review.pdf",
+      "bytes": 5667624,
+      "sha256": "b754d77d18a8bd01ededc7dbf5f4a227e08761e19f6e6f629f7f9c435dbf1ee8"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\100_usb_actual_pad_layers_audit.json",
+      "destination": "evidence/100_usb_actual_pad_layers_audit.json",
+      "bytes": 32953,
+      "sha256": "2f802f285c9f08fc6e27e0c7637fe30ad55f2327c4f02ea826823b4410b5ff5a"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\172_db25_plane_connectivity_audit.json",
+      "destination": "evidence/172_db25_plane_connectivity_audit.json",
+      "bytes": 51251,
+      "sha256": "4a8b7a79bb5bc0344c19a150cb0f614c6667b676311f60392cc3198092e746c0"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\172_db25_source_preservation_audit.json",
+      "destination": "evidence/172_db25_source_preservation_audit.json",
+      "bytes": 67747,
+      "sha256": "a94f2a33f9138b44b339c672ff6910cb1b9489a5a8c355979543cb473507dd76"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\173_db25_release_drc.json",
+      "destination": "evidence/173_db25_release_drc.json",
+      "bytes": 405,
+      "sha256": "31be9fea97565178b5eca15e3c2e34fc9f28064e5c8f370eb4204da1b8cff0de"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\189_rc3_presentation_independent_audit.json",
+      "destination": "evidence/189_rc3_presentation_independent_audit.json",
+      "bytes": 2385,
+      "sha256": "31aff0d3237b4e3bd90f3500a420e1b4435ddd7955bfe561fc5a0aa60e9c0e25"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\190_rc3_archive_independent_audit.json",
+      "destination": "evidence/190_rc3_archive_independent_audit.json",
+      "bytes": 102809,
+      "sha256": "7c4308d98395fcbd01bf2f45335049569e518ae5bdd8012c8be441be9867f07b"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\201_save_board_display_refresh.json",
+      "destination": "evidence/201_save_board_display_refresh.json",
+      "bytes": 2438015,
+      "sha256": "40b192215ade14f974b4976895fbf00adb87976dd9417a0cb49c5223928c3887"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\202_rc4_board_display_cache_independent_audit.json",
+      "destination": "evidence/202_rc4_board_display_cache_independent_audit.json",
+      "bytes": 2135,
+      "sha256": "fe2ff6e6bd35045609fd150e09121825f7749f8810c33ab033c2f1bf52b4e1ab"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\203_final_drc.json",
+      "destination": "evidence/203_final_drc.json",
+      "bytes": 405,
+      "sha256": "f864d22f3198a4cf4141e533930205a2bb7745b1478b73dee9512eb19a2fefc4"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\204_export_rc4_project.json",
+      "destination": "evidence/204_export_rc4_project.json",
+      "bytes": 506,
+      "sha256": "0a99c50b25d0718676077f2e07d2ed1e00f7dae5dd3f1795f92342b5b3ca0dfd"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\204_rc4_archive_independent_audit.json",
+      "destination": "evidence/204_rc4_archive_independent_audit.json",
+      "bytes": 75600,
+      "sha256": "01dc529047afe9a03e85d28fce7f638c4a063a6c5028585f34c4c647bc039434"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\205_export_rc4_fabrication.json",
+      "destination": "evidence/205_export_rc4_fabrication.json",
+      "bytes": 37041,
+      "sha256": "76ba1c1f54577c87152247b8661874700e237b5741b85af7f53e43d1cc6203d3"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\206_export_rc4_step.json",
+      "destination": "evidence/206_export_rc4_step.json",
+      "bytes": 37044,
+      "sha256": "6f25fe476b6992c4141235f1e1ab3e69eca5f92739905f15655f26043f0e6f15"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\210_final_jlc_outline_preflight.json",
+      "destination": "evidence/210_final_jlc_outline_preflight.json",
+      "bytes": 501,
+      "sha256": "4010e313b509492eb19a40eefa50eb61711aaac787951328829fb8f43d77077f"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\210_final_jlc_outline_preflight.png",
+      "destination": "evidence/210_final_jlc_outline_preflight.png",
+      "bytes": 231146,
+      "sha256": "75727ddf58709daa049e4b241c81cef6da67ac52c1fb338658b01b7508bb5fa7"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\212_rc4_imported_source_independent_audit.json",
+      "destination": "evidence/212_rc4_imported_source_independent_audit.json",
+      "bytes": 2609,
+      "sha256": "51fa026e3d166d7d27d0167db3f9d771e325cbbfcb9e29827fd311ca8bc493a6"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\96_post_hole_ground_usb_independent_audit.json",
+      "destination": "evidence/96_post_hole_ground_usb_independent_audit.json",
+      "bytes": 57011,
+      "sha256": "beb03cda2c7d0e2dcd5bbf59d7eaa597dd0d1e9533f0992353d67a63c43d4432"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\C3_manufacturer_package_bias_20260923.json",
+      "destination": "evidence/C3_manufacturer_package_bias_20260923.json",
+      "bytes": 11878,
+      "sha256": "7b51e494869bd8785fb72758f4257ceb457e6a35df307c478229fc073ac66660"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\SOURCING_PREFLIGHT.md",
+      "destination": "evidence/SOURCING_PREFLIGHT.md",
+      "bytes": 13352,
+      "sha256": "ef4fa9522c867503c52f6013c76e9181c421f633f1cf26b10d5f4fed123490b4"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\SOURCING_RC4_REBIND_20260923.json",
+      "destination": "evidence/SOURCING_RC4_REBIND_20260923.json",
+      "bytes": 68278,
+      "sha256": "64766bac380f00e4454c6e5b79c9b001b8c7ab7ebc47dcce87e568f519da1452"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\SOURCING_RC4_REBIND_20260923.md",
+      "destination": "evidence/SOURCING_RC4_REBIND_20260923.md",
+      "bytes": 4436,
+      "sha256": "3ca3bd30b73ccd9b587bc4285d821f7805be58633a2bb775587252b4bb4cdaed"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\SOURCING_RELEASE_20260923.json",
+      "destination": "evidence/SOURCING_RELEASE_20260923.json",
+      "bytes": 530792,
+      "sha256": "d06c376fe0b54dbf203c7e9a3226faa12e1c5cbb7dd4b70a3d54441c0fa156f0"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\SOURCING_RELEASE_20260923.md",
+      "destination": "evidence/SOURCING_RELEASE_20260923.md",
+      "bytes": 18676,
+      "sha256": "46104a379c00e40e8c646e2a95d43e920d94887ab8f67f0e6ab69291832bd427"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\archive_mechanical_drills.json",
+      "destination": "evidence/cam_step/archive_mechanical_drills.json",
+      "bytes": 5446,
+      "sha256": "9ab4e8b6fb25d3a5e7fd52091739f914e920a3a14ae807417682c81d2459ecf8"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\archive_mechanical_records.json",
+      "destination": "evidence/cam_step/archive_mechanical_records.json",
+      "bytes": 21842,
+      "sha256": "dfb24c4c31be3b0ade104cc872c89b937a7920174915df3040422b2795bfed3c"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\cam\\Gerber_BoardOutlineLayer.GKO.png",
+      "destination": "evidence/cam_step/cam/Gerber_BoardOutlineLayer.GKO.png",
+      "bytes": 19731,
+      "sha256": "9612405f2bba3f37fc5e91bc974511942304881a538dc48681b4d6298fd9dd10"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\cam\\Gerber_BoardOutlineLayer.GKO.svg",
+      "destination": "evidence/cam_step/cam/Gerber_BoardOutlineLayer.GKO.svg",
+      "bytes": 474,
+      "sha256": "02d78997c8e118c4f96fe4f7628248e1d6f6c078440b95ca4c43cc5c59edcb9b"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\cam\\Gerber_BottomLayer.GBL.png",
+      "destination": "evidence/cam_step/cam/Gerber_BottomLayer.GBL.png",
+      "bytes": 162295,
+      "sha256": "a7bb713242659d08043d5744d83f7a6b735dcb9a5bdf022e0ed8b5d8bdc96d2b"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\cam\\Gerber_BottomLayer.GBL.svg",
+      "destination": "evidence/cam_step/cam/Gerber_BottomLayer.GBL.svg",
+      "bytes": 92524,
+      "sha256": "205592328674a2cda969d47cdee86fd66a639ee75ed1be785be2864c4ac1c320"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\cam\\Gerber_BottomSolderMaskLayer.GBS.png",
+      "destination": "evidence/cam_step/cam/Gerber_BottomSolderMaskLayer.GBS.png",
+      "bytes": 60976,
+      "sha256": "76a1b2f1749271b34fdf3e8d50ed35a32b02817a30fa5a9092aee8ed3eb64823"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\cam\\Gerber_BottomSolderMaskLayer.GBS.svg",
+      "destination": "evidence/cam_step/cam/Gerber_BottomSolderMaskLayer.GBS.svg",
+      "bytes": 16863,
+      "sha256": "ef7b87c50bdf1a7f557bbfe92db3be9b71713c87e16e646ee08fd86702ff99ea"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\cam\\Gerber_DocumentLayer.GDL.png",
+      "destination": "evidence/cam_step/cam/Gerber_DocumentLayer.GDL.png",
+      "bytes": 31351,
+      "sha256": "0a43cb923b24fe1475ed07015d4e8cd9597471a6618c844fa0e0e54b3e9cde41"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\cam\\Gerber_DocumentLayer.GDL.svg",
+      "destination": "evidence/cam_step/cam/Gerber_DocumentLayer.GDL.svg",
+      "bytes": 17301,
+      "sha256": "8664e865d2b3cef023701066418cebe2a4d80096c28cbcd7492b08942a5aecc5"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\cam\\Gerber_InnerLayer1.G1.png",
+      "destination": "evidence/cam_step/cam/Gerber_InnerLayer1.G1.png",
+      "bytes": 178889,
+      "sha256": "41c3959f0440a921fecf00b9aef60175c4813ec471d29b0e3e62408055fcd6a2"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\cam\\Gerber_InnerLayer1.G1.svg",
+      "destination": "evidence/cam_step/cam/Gerber_InnerLayer1.G1.svg",
+      "bytes": 466935,
+      "sha256": "22e5ea053521f794bdd3c1f6561715a34620e2a7b2f056f90c10c50ccdb6336b"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\cam\\Gerber_InnerLayer2.G2.png",
+      "destination": "evidence/cam_step/cam/Gerber_InnerLayer2.G2.png",
+      "bytes": 127660,
+      "sha256": "e341a81b89f8a4d53af373ed270e4735ce85fa62ff1d28bca17eaf18318c4b0a"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\cam\\Gerber_InnerLayer2.G2.svg",
+      "destination": "evidence/cam_step/cam/Gerber_InnerLayer2.G2.svg",
+      "bytes": 52494,
+      "sha256": "09d8a876295d5bf4214a29178c50bac380cfeeae4ca508a72747d65271787ae9"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\cam\\Gerber_TopLayer.GTL.png",
+      "destination": "evidence/cam_step/cam/Gerber_TopLayer.GTL.png",
+      "bytes": 201523,
+      "sha256": "a44ae511f7899c45994b4cfb4d7a16b9167d639ce775618a7ee1cd19e7144dab"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\cam\\Gerber_TopLayer.GTL.svg",
+      "destination": "evidence/cam_step/cam/Gerber_TopLayer.GTL.svg",
+      "bytes": 222605,
+      "sha256": "afaa0df6098ac0aa92c4ddc54c7f1057a8b1f3320fa3b1343df60321a0fd3d26"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\cam\\Gerber_TopPasteMaskLayer.GTP.png",
+      "destination": "evidence/cam_step/cam/Gerber_TopPasteMaskLayer.GTP.png",
+      "bytes": 44290,
+      "sha256": "a05e26b0affd040b1008bbfdb80746f427954ff451058e5235f49c11948e1e84"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\cam\\Gerber_TopPasteMaskLayer.GTP.svg",
+      "destination": "evidence/cam_step/cam/Gerber_TopPasteMaskLayer.GTP.svg",
+      "bytes": 81784,
+      "sha256": "ed28de15c566dace1200353aa122053a9cc950ff3506cc6170c5fd7ad851ed19"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\cam\\Gerber_TopSilkscreenLayer.GTO.png",
+      "destination": "evidence/cam_step/cam/Gerber_TopSilkscreenLayer.GTO.png",
+      "bytes": 113097,
+      "sha256": "d494866225a7b3b003d62f3f4d47f740d9abef6ed69c38486c1495dc5503198e"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\cam\\Gerber_TopSilkscreenLayer.GTO.svg",
+      "destination": "evidence/cam_step/cam/Gerber_TopSilkscreenLayer.GTO.svg",
+      "bytes": 309628,
+      "sha256": "3da94debe8e96bd6edce1dbe81328fab01f2613001eb1fef2c04b68cdc9b2817"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\cam\\Gerber_TopSolderMaskLayer.GTS.png",
+      "destination": "evidence/cam_step/cam/Gerber_TopSolderMaskLayer.GTS.png",
+      "bytes": 96837,
+      "sha256": "fb4c1b33312407fec12d1d0ce6b72c469bc9ffb7db25c03b1a2262cd5af0eef6"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\cam\\Gerber_TopSolderMaskLayer.GTS.svg",
+      "destination": "evidence/cam_step/cam/Gerber_TopSolderMaskLayer.GTS.svg",
+      "bytes": 342843,
+      "sha256": "99a18062cb9ebf5ecebe662e6115c41c4ed0e0c9459db7c2bfae3eb3f531cdda"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\cam\\registered_copper_outline_drill.png",
+      "destination": "evidence/cam_step/cam/registered_copper_outline_drill.png",
+      "bytes": 708110,
+      "sha256": "e76e0b94f7258c620dce9ce74ca48b0b6967bda599b6e190320d2a157444357e"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\cam\\registered_copper_outline_drill.svg",
+      "destination": "evidence/cam_step/cam/registered_copper_outline_drill.svg",
+      "bytes": 874034,
+      "sha256": "d8d4878586d50038c1bb6d1078012596fd4cc852c8d23ebed72003b9769d380d"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\cam\\strict_cam_source_audit.json",
+      "destination": "evidence/cam_step/cam/strict_cam_source_audit.json",
+      "bytes": 385301,
+      "sha256": "f992ead66a3eecdb9bb64c1fa07a1f7a9e0e17ab1a00416925d3effbed671420"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\cam_equivalence.json",
+      "destination": "evidence/cam_step/cam_equivalence.json",
+      "bytes": 5860,
+      "sha256": "89206874e91e8f772e07c60789aad0ed639269fcf0d36776a884483f6a9f1c6a"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\cam_step_transfer_inventory_02.json",
+      "destination": "evidence/cam_step/cam_step_transfer_inventory_02.json",
+      "bytes": 22555,
+      "sha256": "4b669975999488c7dfbf3c875b03d41ff3af626e1a001c98d357d6e8b9bccc10"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\input_hashes.json",
+      "destination": "evidence/cam_step/input_hashes.json",
+      "bytes": 1233,
+      "sha256": "21f370c10d656f0ca9f7477b2720029282f8807be6a16c1c133a4731bbf2950b"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\rc2_bundle_audit.json",
+      "destination": "evidence/cam_step/rc2_bundle_audit.json",
+      "bytes": 1867,
+      "sha256": "1a6849e9a3600d81bfbea0c7162b96f0f11f8e7e43c8087e6be72d0be78a4b13"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\100_routed_labeled_capture.json",
+      "destination": "evidence/cam_step/replay_inputs/100_routed_labeled_capture.json",
+      "bytes": 2070878,
+      "sha256": "22c0bede843ee63a5d1dca034326b00e9a1ef2eed144f9599e369c0ddc7cd5e3"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\202_final_pcb_capture.json",
+      "destination": "evidence/cam_step/replay_inputs/202_final_pcb_capture.json",
+      "bytes": 2069797,
+      "sha256": "4bcbd7b23f445253f7220278fb7b193aefef3ee5d6346630237d9ce98210919f"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\205_export_rc4_fabrication.json",
+      "destination": "evidence/cam_step/replay_inputs/205_export_rc4_fabrication.json",
+      "bytes": 37041,
+      "sha256": "76ba1c1f54577c87152247b8661874700e237b5741b85af7f53e43d1cc6203d3"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\6DOF2-r13-20260923-routed-UNTESTED-DO-NOT-ORDER.epro2",
+      "destination": "evidence/cam_step/replay_inputs/6DOF2-r13-20260923-routed-UNTESTED-DO-NOT-ORDER.epro2",
+      "bytes": 826775,
+      "sha256": "7f4669f15dc1e6cd637061291652e07de49787c1313548b90224c48b986146b0"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\source_hole_plane_audit.json",
+      "destination": "evidence/cam_step/source_hole_plane_audit.json",
+      "bytes": 153623,
+      "sha256": "53a5d23d30bbb98807435c8f6c9844cb95c5a013ab7770c571e67e738de0697b"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\stackup_qualification.json",
+      "destination": "evidence/cam_step/stackup_qualification.json",
+      "bytes": 2026,
+      "sha256": "2a29e2c130522822db2f2eb8653607899ba362ba4e3bc52f7b732611944560b8"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\step_inventory_equivalence.json",
+      "destination": "evidence/cam_step/step_inventory_equivalence.json",
+      "bytes": 18607,
+      "sha256": "955ba085d4e7e094ea8d5027303b2e9ea8fc8ea69c2c62bea14a0d7bd37d5e5a"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\step_model_reconciliation.json",
+      "destination": "evidence/cam_step/step_model_reconciliation.json",
+      "bytes": 235293,
+      "sha256": "0cd646a2aab62d748296b3e64b1c7c0f34c367dae8cf78ca6b1e1b90ef0b9702"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\step_models_process.json",
+      "destination": "evidence/cam_step/step_models_process.json",
+      "bytes": 688,
+      "sha256": "df140a976862b0634d93f1f84aef9d2187fd6f94292975e0928c99b2beb040c4"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\step_occ_inventory.json",
+      "destination": "evidence/cam_step/step_occ_inventory.json",
+      "bytes": 1487434,
+      "sha256": "0b3a9b4d92cd459b56023cca6093217b260f66b83bd32518eb64e0e720f6e9a4"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\step_occ_process.json",
+      "destination": "evidence/cam_step/step_occ_process.json",
+      "bytes": 39455,
+      "sha256": "9437de52526e2d74b40e9104da95e0d03635257c2da2e14b0813a56988057915"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\step_renders\\6DOF2_r13_real_STEP_bottom.png",
+      "destination": "evidence/cam_step/step_renders/6DOF2_r13_real_STEP_bottom.png",
+      "bytes": 67354,
+      "sha256": "f69b4c0a17a536acc86fbfe2e464bc029daf9c67ada382331f50fc7636035baa"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\step_renders\\6DOF2_r13_real_STEP_isometric.png",
+      "destination": "evidence/cam_step/step_renders/6DOF2_r13_real_STEP_isometric.png",
+      "bytes": 194034,
+      "sha256": "7cb09fc93b87d89c27a435af956c1baa33b2a6a8a13f657eb46fc88f2729512a"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\step_renders\\6DOF2_r13_real_STEP_top.png",
+      "destination": "evidence/cam_step/step_renders/6DOF2_r13_real_STEP_top.png",
+      "bytes": 157698,
+      "sha256": "5646f7b54ef87a9673999a7154754729869fd1475c6cccbe25db14fad9686792"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\step_renders\\tessellation_inventory.json",
+      "destination": "evidence/cam_step/step_renders/tessellation_inventory.json",
+      "bytes": 12630,
+      "sha256": "429eb68b5de7575d16aa45e6c27e54a45222691a20993603ee0dca27dbea9dba"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_verified\\strict_cam_process.json",
+      "destination": "evidence/cam_step/strict_cam_process.json",
+      "bytes": 648,
+      "sha256": "bddff61ea11494964e4f40153af3a8fc129c96917dae61b0077819a89dd21b00"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\audit_r13_manufacturing_cam.py",
+      "destination": "evidence/cam_step/tools/audit_r13_manufacturing_cam.py",
+      "bytes": 13715,
+      "sha256": "20059536fd7a719bc4c1fd5dc3aa3f72cdf0184dad34a031e83067c29fc2b804"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\audit_r13_rc2_bundle.py",
+      "destination": "evidence/cam_step/tools/audit_r13_rc2_bundle.py",
+      "bytes": 14306,
+      "sha256": "e5a740779e7cdf64fae0135c69b106e2121dd9d90fb99e98c7fe5cc869bf30d6"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\audit_r13_step_occ.py",
+      "destination": "evidence/cam_step/tools/audit_r13_step_occ.py",
+      "bytes": 3322,
+      "sha256": "dbc77680a835605718f3847d8811a360b7db812ffdc48eb9d4daecfb27fb2c17"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\m4step_slot_clearance_145_plan.json",
+      "destination": "evidence/cam_step/tools/m4step_slot_clearance_145_plan.json",
+      "bytes": 19975,
+      "sha256": "a9067a356928d8ed2e52d003230e0ef1edfca54d15497509dc5c94ac338f6c60"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\native_poured_geometry.py",
+      "destination": "evidence/cam_step/tools/native_poured_geometry.py",
+      "bytes": 3633,
+      "sha256": "68122ba552e9ef123307b62a1a4308eae52e25be4516fc6a1c056ad3c150f688"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\r13_exact_geometry.py",
+      "destination": "evidence/cam_step/tools/r13_exact_geometry.py",
+      "bytes": 15835,
+      "sha256": "0f4501be37a081a5143e3b6f4785822111bcf2d5dd98ea3d0c16a57b01690d49"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\reconcile_step_rc1_models.py",
+      "destination": "evidence/cam_step/tools/reconcile_step_rc1_models.py",
+      "bytes": 5051,
+      "sha256": "96b3478b71c18085871bfd1719b3d3e7b55d54cec3dc907694b37f983ef331bd"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\render_rc1_cam.py",
+      "destination": "evidence/cam_step/tools/render_rc1_cam.py",
+      "bytes": 2018,
+      "sha256": "8340004511311e3b3c8844f976baf0901eb311e6fef2f11f4625cfb30ded25e7"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\render_step_rc1_occ.py",
+      "destination": "evidence/cam_step/tools/render_step_rc1_occ.py",
+      "bytes": 4874,
+      "sha256": "cef9bc3af1c7fc529489e92361f7d7849979dd5c149159cfc7dc46b3a5e14624"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\test_rc2_audit_guards.py",
+      "destination": "evidence/cam_step/tools/test_rc2_audit_guards.py",
+      "bytes": 2508,
+      "sha256": "23fffcaea1a4a79c40e561ff4af9fa25a2a11d7800de8ad7eafee942aa474880"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\electrical_orientation_release_review.json",
+      "destination": "evidence/electrical_orientation_release_review.json",
+      "bytes": 36666,
+      "sha256": "b3ece7f8a7463c179164e7f0e5170ee2722b9026cff5e6de8bfc6738860ed620"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\inhibit_design.md",
+      "destination": "evidence/inhibit_design.md",
+      "bytes": 14060,
+      "sha256": "da2d8690e70af2a0365346b0e08ccc7b0a037c8c15ed2302b602135228f842b0"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\00.png",
+      "destination": "evidence/native_schematic/00.png",
+      "bytes": 380781,
+      "sha256": "8a9aa9c63a21cb91a2fe6722f44d00f90b0cc8f0cb49dafc413221f764e7de36"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\01.png",
+      "destination": "evidence/native_schematic/01.png",
+      "bytes": 322512,
+      "sha256": "09f44acc551b72ae478b2c314d1fac217ec3ce5b6084496890123db8836ecf36"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\02.png",
+      "destination": "evidence/native_schematic/02.png",
+      "bytes": 259110,
+      "sha256": "ecc1858474f1a7efd69b24c62496da9636d7ff6bc79ab38cb6a1267405b5e817"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\03.png",
+      "destination": "evidence/native_schematic/03.png",
+      "bytes": 241788,
+      "sha256": "72a820551f0d3276287147d7f3e54daa7a39e7096faf510246a15483a6f5a2af"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\04.png",
+      "destination": "evidence/native_schematic/04.png",
+      "bytes": 251003,
+      "sha256": "734f1ce28956797064484af3955aee3aa1e1e7193c64aaa61ec5d079eff29fc9"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\05.png",
+      "destination": "evidence/native_schematic/05.png",
+      "bytes": 258484,
+      "sha256": "654c5f124c617b755a176609cd4a4b3405a7a0f50901706968d6fd5f3d7e9117"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\06.png",
+      "destination": "evidence/native_schematic/06.png",
+      "bytes": 249153,
+      "sha256": "e43f95e682bd6e6f97d75aab6fd9c1b381e77019e927cca55ef204d522f02ccf"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\07.png",
+      "destination": "evidence/native_schematic/07.png",
+      "bytes": 292706,
+      "sha256": "6e06b2c172f8c0a847bf0ce8b56a3a27612c09dacbce37033eb7d7478480604c"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\08.png",
+      "destination": "evidence/native_schematic/08.png",
+      "bytes": 222131,
+      "sha256": "aa0127154bda3be2f24eb13417d8c95e5b92ec01188f0c192993577e57f26fb8"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\09.png",
+      "destination": "evidence/native_schematic/09.png",
+      "bytes": 223059,
+      "sha256": "eda87b377b0134cbfad421209fa92be685431f08f57ba2e0d15c5e303953d9e9"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\10.png",
+      "destination": "evidence/native_schematic/10.png",
+      "bytes": 278476,
+      "sha256": "a5a2669c2f165064275435f03b2ae22d7549aae66e01a4694a3325ca404354a0"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\11.png",
+      "destination": "evidence/native_schematic/11.png",
+      "bytes": 223625,
+      "sha256": "646d4cd39d5c164fa1ef0b14be12a25449ff8876ba4fbda126b28b46072bf037"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\12.png",
+      "destination": "evidence/native_schematic/12.png",
+      "bytes": 222586,
+      "sha256": "d665935e80d0a5f55edceaf3bf7ffcb5b816cdfc8639be3db114875433910cfc"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\13.png",
+      "destination": "evidence/native_schematic/13.png",
+      "bytes": 328925,
+      "sha256": "55dc6ddc65c732959d528765599bde7a7b2ee62cf54aa7611a6df1a9683f89cd"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\14.png",
+      "destination": "evidence/native_schematic/14.png",
+      "bytes": 284750,
+      "sha256": "2e9474c905a436bd618ec3caeceb14171d1f2ac0851ae4b122a8cacaee18e130"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\15.png",
+      "destination": "evidence/native_schematic/15.png",
+      "bytes": 247058,
+      "sha256": "f84362ad3b10e95abf0d5797d1b4e5307d8f1d6654fc6db1fd1fdedfc4793ef0"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\16.png",
+      "destination": "evidence/native_schematic/16.png",
+      "bytes": 304432,
+      "sha256": "13367d2e6ac8099827e2575cfa99a13b6deb97232029e282539115cfe049e1df"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\17.png",
+      "destination": "evidence/native_schematic/17.png",
+      "bytes": 312652,
+      "sha256": "f2e0d31c53602b2658f2cab7f467d7fd517bd53abd2a0d7bee7b79ef16ea9ed4"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\18.png",
+      "destination": "evidence/native_schematic/18.png",
+      "bytes": 296399,
+      "sha256": "2290d5ad19de429fa337c7fdc3f8e0e487b74d7d0a6fc72e04aaab13d6654715"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\19.png",
+      "destination": "evidence/native_schematic/19.png",
+      "bytes": 205740,
+      "sha256": "aa20d6ea871522fa2783523469db4b51f3ad99c8123597548f10fa15c491e47e"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\20.png",
+      "destination": "evidence/native_schematic/20.png",
+      "bytes": 222658,
+      "sha256": "9a62e73d9ee91472ebeade8a344f35b44cabae1cd90ee49b263d0cf829b6963d"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\21.png",
+      "destination": "evidence/native_schematic/21.png",
+      "bytes": 201908,
+      "sha256": "589b633fdf4639933267d1e30c856721ea257fb9e56ef001162a13caa8ab0c87"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\22.png",
+      "destination": "evidence/native_schematic/22.png",
+      "bytes": 214554,
+      "sha256": "e2f7e643d3c16b7621581e87c723f5c08b322bf6b729213520511be210ce52b5"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\23.png",
+      "destination": "evidence/native_schematic/23.png",
+      "bytes": 209058,
+      "sha256": "eef098f764b45ac7c640226a35bc53858a377224ebb212a05ac76b020f47916f"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\24.png",
+      "destination": "evidence/native_schematic/24.png",
+      "bytes": 215649,
+      "sha256": "9ebfb043b07e0e0fddcff17e0ff30d951106db9c661d835e078b4523978e9c16"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\25.png",
+      "destination": "evidence/native_schematic/25.png",
+      "bytes": 208604,
+      "sha256": "909aa3f8b2e4515f7dce11f00e61caf429a1718553b6eb6407bb11aa38c85285"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\26.png",
+      "destination": "evidence/native_schematic/26.png",
+      "bytes": 187558,
+      "sha256": "f068ab21b0ad6faf60d85da0b4569ef20a71c3d400de9d9bffadcb292d30566e"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\27.png",
+      "destination": "evidence/native_schematic/27.png",
+      "bytes": 189154,
+      "sha256": "6600b73673f5e3cc192e5a15699010a6ede07a830e075c0eac384adad47eae79"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\28.png",
+      "destination": "evidence/native_schematic/28.png",
+      "bytes": 264233,
+      "sha256": "cc32b3b15f7ec756df5284bada29c3d1dab41268b15b15d7f05367d05aa3e175"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\capture_evidence_0_0.json",
+      "destination": "evidence/native_schematic/capture_evidence_0_0.json",
+      "bytes": 1083,
+      "sha256": "58b4acd727854ad6058f0120825d29daee1de7df951f5ad6a84945b07fa0c0d9"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\capture_evidence_10_17.json",
+      "destination": "evidence/native_schematic/capture_evidence_10_17.json",
+      "bytes": 9101,
+      "sha256": "cbf8c224c1078117a9fcbec2cdadfa89959f410725bc70628db81cbba4a0cec3"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\capture_evidence_18_25.json",
+      "destination": "evidence/native_schematic/capture_evidence_18_25.json",
+      "bytes": 9067,
+      "sha256": "5e4b6cefe9644985f36a3684198a38438686ad00a9d9c0f262cb5ed01b03209b"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\capture_evidence_1_1.json",
+      "destination": "evidence/native_schematic/capture_evidence_1_1.json",
+      "bytes": 1358,
+      "sha256": "30fa9bbe8b5724fd274b59a5cf3213550562928957485f8a8fc4696eb8049c6c"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\capture_evidence_26_28.json",
+      "destination": "evidence/native_schematic/capture_evidence_26_28.json",
+      "bytes": 3589,
+      "sha256": "811806d74b37bb03051d03dd80f9e2f11c274745ccf391984978450a5b391d94"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\capture_evidence_2_9.json",
+      "destination": "evidence/native_schematic/capture_evidence_2_9.json",
+      "bytes": 9291,
+      "sha256": "07dde3e9654730d10824b5b5b200013f82cf24fe923d718fe30436804bfd5b08"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\r13_rc4_cpl_normalization_contract.json",
+      "destination": "evidence/r13_rc4_cpl_normalization_contract.json",
+      "bytes": 78957,
+      "sha256": "368447945a0bfb25b0eeb2f62183aa6730872653c7e65532a3ae12bcb5fff477"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_bom_preview.png",
+      "destination": "evidence/rc4_bom_preview.png",
+      "bytes": 38833,
+      "sha256": "e50dd9cc9e26febfe4eaa9bdca93aa2923aef286512f6afa21ea891af504b8ae"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_cpl_preview.png",
+      "destination": "evidence/rc4_cpl_preview.png",
+      "bytes": 33311,
+      "sha256": "42f09042c9e04248a2b36b005f83371f99e09433395a6af2b3c1938b7e8254a4"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_jlc_csv_normalization.json",
+      "destination": "evidence/rc4_jlc_csv_normalization.json",
+      "bytes": 1807,
+      "sha256": "214b15abd25bc58e20267c7f1d69856094c40c932f3b8f751e058d4b446f1398"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\rc4_saved_csv_independent_audit.json",
+      "destination": "evidence/rc4_saved_csv_independent_audit.json",
+      "bytes": 1351,
+      "sha256": "d621326b33e328e56b7d83c724fe730f0df535bbbbac141e36594ac7b8b2889b"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_contract.json",
+      "destination": "evidence/schematic_contract.json",
+      "bytes": 3439,
+      "sha256": "f76b27d5453ba416d50dfb66c89edc524c12c891f1df09d4fc0ce3941c5da6fb"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_review_manifest_rc3.json",
+      "destination": "evidence/schematic_review_manifest_rc3.json",
+      "bytes": 42600,
+      "sha256": "d17b2ac51799ffe9c49327245aa0d34f7da23a0846a188ab58256d041b25c023"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_review_pdf_rc3_assembly.json",
+      "destination": "evidence/schematic_review_pdf_rc3_assembly.json",
+      "bytes": 29218,
+      "sha256": "0d88a2df9256df7ca54822771179003f4e51e78d8ad818a7768f90840014bc2f"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_review_pdf_rc3_final_audit.json",
+      "destination": "evidence/schematic_review_pdf_rc3_final_audit.json",
+      "bytes": 1912,
+      "sha256": "b7de9d93011b40bf2f8d08b161d6371a837ad03ac3bfc55f39b02eecc14b1e4f"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_review_pdf_rc3_pixel_render_audit.json",
+      "destination": "evidence/schematic_review_pdf_rc3_pixel_render_audit.json",
+      "bytes": 13726,
+      "sha256": "db32cd95ccb7554e4273b03ddf40baf2007ad08c66841940cecacc6515a89369"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_review_pdf_rc4_rebind.json",
+      "destination": "evidence/schematic_review_pdf_rc4_rebind.json",
+      "bytes": 1400,
+      "sha256": "bbba229a2f21c8138fe5f787aa1e8b851cbf0f10d9207044ae719daa395a22cc"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\package_rc4.py",
+      "destination": "evidence/tools/package_rc4.py",
+      "bytes": 7745,
+      "sha256": "5f8d5b7e3e5a8c4c96e9064916d977c9992ccb65c3d350e8aa5cc8e34df7585b"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\replay_rc4_cam_step.py",
+      "destination": "evidence/tools/replay_rc4_cam_step.py",
+      "bytes": 1229,
+      "sha256": "88eab1065a21ffc7abfabcb6df96775ec41523ce2f720afe713fc3c6f3833264"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\verify_rc4_package.py",
+      "destination": "evidence/tools/verify_rc4_package.py",
+      "bytes": 7149,
+      "sha256": "7c11a5401899823f5e35a79cd26529c19837a2882974bf66f59b61cf286b2c14"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\manufacturing_release\\2026-09-23-r13-rc4\\6DOF2_r13_Gerber.zip",
+      "destination": "fabrication/6DOF2_r13_Gerber.zip",
+      "bytes": 272584,
+      "sha256": "44fe2c34b97ee5ce68c5447788e1e77647e0741dcf36d1a453a79871524876c6"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\manufacturing_release\\2026-09-23-r13-rc4\\6DOF2_r13_assembly.step",
+      "destination": "mechanical/6DOF2_r13_assembly.step",
+      "bytes": 76547181,
+      "sha256": "456de7a4919cc36c6f6c2673de218e552bf4b9c5732ff15f9c2519bbec40a715"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\manufacturing_release\\2026-09-23-r13-rc4\\CAM_STEP_MECHANICAL_REVIEW.md",
+      "destination": "mechanical/CAM_STEP_MECHANICAL_REVIEW.md",
+      "bytes": 5506,
+      "sha256": "7975b64938caf972113b19277035036271ff4484a1bd0732d1d41d30a094e1e7"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\189_schematic_rc3_capture.json",
+      "destination": "source/189_schematic_rc3_capture.json",
+      "bytes": 2708139,
+      "sha256": "957dde997969d646cb0445e567bfcc4813728e97eac44e4f4219773319581589"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\202_final_pcb_capture.json",
+      "destination": "source/202_final_pcb_capture.json",
+      "bytes": 2069797,
+      "sha256": "4bcbd7b23f445253f7220278fb7b193aefef3ee5d6346630237d9ce98210919f"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\212_capture_final_import.json",
+      "destination": "source/212_capture_final_import.json",
+      "bytes": 3922343,
+      "sha256": "9d3f0749b2efd32df34e90df0b35edcba9e00e5e602bd9e1a8cef208bad08c3b"
+    },
+    {
+      "source": "G:\\My Drive\\projects\\6dof\\pcb\\manufacturing_release\\2026-09-23-r13-rc4\\6DOF2-r13-rc4-20260923-UNTESTED.epro2",
+      "destination": "source/6DOF2-r13-rc4-20260923-UNTESTED.epro2",
+      "bytes": 829933,
+      "sha256": "c42dc31219236dca955aaf34b4688501a36ff6eb6fcefcf141cbf48ceb0c9ea4"
+    }
+  ],
+  "fileCount": 145,
+  "bytes": 116221036,
+  "reconciliation": "Only portable verifier changed after initial copy: recursive numeric tolerance1e-9 matches the independent source/archive audit; exact imported PCB/SCH comparison remains exact. Manufacturing/source/CSV/PDF bytes unchanged."
+}

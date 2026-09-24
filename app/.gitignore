@@ -1,0 +1,23 @@
+# Generated desktop/bridge build trees. Keep sources and shared presets.
+build/
+build-*/
+cmake-build-*/
+/test_recording.obj
+
+# Temporary products from plugins/build_plugin.bat; shipped DLLs remain visible.
+/plugins/*.obj
+/plugins/*.exp
+/plugins/*.lib
+/plugins/*.pdb
+/plugins/*.ilk
+
+# Local app runtime state, not reusable settings/workspaces.
+/app_debug.log
+/stewart_imgui.ini
+
+# Local captures; retain the two already-versioned example recordings.
+/recordings/*.stwr
+!/recordings/000.stwr
+!/recordings/001.stwr
+
+# Existing tracked plugin DLLs, test executable and diagnostic logs are retained.

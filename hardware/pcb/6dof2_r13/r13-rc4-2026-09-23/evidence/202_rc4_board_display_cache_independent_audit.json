@@ -1,0 +1,72 @@
+{
+  "status": "PASS_RC4_BOARD_DISPLAY_CACHE_ONLY",
+  "inputHashes": {
+    "172_db25_release_capture.json": "9f29d6076ea4ab6b147192e948bc69a04e7bc4a0906c7248c1457a824fb89025",
+    "202_final_pcb_capture.json": "4bcbd7b23f445253f7220278fb7b193aefef3ee5d6346630237d9ce98210919f",
+    "201_save_board_display_refresh.json": "40b192215ade14f974b4976895fbf00adb87976dd9417a0cb49c5223928c3887",
+    "203_final_drc.json": "f864d22f3198a4cf4141e533930205a2bb7745b1478b73dee9512eb19a2fefc4"
+  },
+  "checks": [
+    {
+      "name": "only_exact_BOARD_cache_path_changed",
+      "passed": true,
+      "unexpectedChanged": [],
+      "oldBoard": {
+        "path": [
+          [
+            0.5,
+            7873.5,
+            "L",
+            7888.5,
+            7873.5,
+            7888.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            7873.5
+          ]
+        ]
+      },
+      "newBoard": {
+        "path": [
+          [
+            -787.4016,
+            0,
+            "L",
+            -787.4016,
+            7874,
+            5905.5118,
+            7874,
+            5905.5118,
+            0,
+            -787.4016,
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "name": "fresh_capture_equals_saved_reopened_source",
+      "passed": true
+    },
+    {
+      "name": "all_API_state_objects_exact",
+      "passed": true,
+      "counts": {
+        "components": 144,
+        "pads": 654,
+        "tracks": 967,
+        "vias": 398,
+        "regions": 8,
+        "fills": 689
+      }
+    },
+    {
+      "name": "native_DRC_empty",
+      "passed": true
+    }
+  ],
+  "impact": "Corrects the editor board background to the already-correct closed layer11 outline. Every copper, outline, pad, component, net, rule, layer-stack, model and other active payload is unchanged. Final fabrication/archive exports must still be rebound to RC4.",
+  "method": "Native GUI selected closed outline > Generate Board Shape from Selection, save/close/reopen. Root visual witness208_final_pcb_review.png; no inferred electrical qualification."
+}

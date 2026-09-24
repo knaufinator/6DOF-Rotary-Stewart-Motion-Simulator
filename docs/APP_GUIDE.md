@@ -1,8 +1,16 @@
 # Stewart Platform — Desktop App Guide
 
+Paths and commands in this guide start at the repository root unless noted otherwise.
+
 > A walkthrough for the native C++/OpenGL/ImGui desktop application that controls, tunes, and visualises your 6-DOF Stewart motion simulator.
 
-**See also:** [BUILD.md](../BUILD.md) for build instructions · [ARCHITECTURE_ROADMAP.md](ARCHITECTURE_ROADMAP.md) for internal design · [README.md](../README.md) for project overview
+**See also:** [Build guide](BUILD.md) · [Architecture](ARCHITECTURE.md) · [App overview](../app/README.md)
+
+For MCP setup, safe isolated documentation launches and actual app screenshots, see [App automation](APP_AUTOMATION.md).
+
+> **Safety / scope — 2026-09-23:** the r13 PCB and its firmware combination are untested. Screenshots for this guide use synthetic SIL data or a disconnected, explicitly offline HIL entity; they are not evidence of working hardware. Do not connect powered drives using this guide. Follow the [firmware and commissioning gates](../hardware/pcb/6DOF2_FIRMWARE_TODO.md).
+>
+> The screenshots below show the real app using synthetic SIL data or disconnected HIL views, not hardware telemetry. Long Dynamics and Data Streams panels scroll normally; an image does not show every control.
 
 ---
 
@@ -48,37 +56,13 @@ A default **SIL** (Software-in-the-Loop) entity is created automatically so you 
 
 The interface is built with **Dear ImGui** and supports full **docking** — every panel can be dragged, tabbed, floated, or hidden. The layout auto-saves between sessions.
 
-```
-┌──────────────────────────────────────────────────────────────────────┐
-│  Menu Bar:  File │ View │ Help                                       │
-├──────────────────────────────────────────────────────────────────────┤
-│  Toolbar:  [Source ▾] LIVE │ START/STOP │ E-STOP │ 75% │ REC PLAY  │
-├──────────────────────────────────────────────────────────────────────┤
-│                                                                      │
-│  ┌─ Entity Card ─────────┐  ┌─ Input Panel ──────────────────────┐  │
-│  │  [3D Platform Viz]    │  │  Source selector (Manual/Plugin/   │  │
-│  │   orbit camera        │  │  Capture) + per-axis sliders or    │  │
-│  │   status overlay      │  │  plugin parameters                 │  │
-│  │                        │  └────────────────────────────────────┘  │
-│  │  ┌ Servo Readout ───┐ │                                          │
-│  │  │ S0–S5 angles,    │ │  ┌─ Dynamics Panel ───────────────────┐  │
-│  │  │ util bars        │ │  │  Device selector, profile banner   │  │
-│  │  └──────────────────┘ │  │  MCA filters, axis gains, occupant │  │
-│  └────────────────────────┘  └────────────────────────────────────┘  │
-│                                                                      │
-│  ┌─ Console ─────────────────────────────────────────────────────┐  │
-│  │  Per-entity filtered log with timestamps                       │  │
-│  └────────────────────────────────────────────────────────────────┘  │
-│                                                                      │
-│  ┌─ Data Streams ────────────────────────────────────────────────┐  │
-│  │  Recording │ Frequency │ Spectrogram │ Time History            │  │
-│  └────────────────────────────────────────────────────────────────┘  │
-└──────────────────────────────────────────────────────────────────────┘
-```
+![Desktop overview: SIL demonstration, no connected hardware](images/app/overview.png)
+
+The primary entity tabs are **Overview**, **Dynamics**, **Settings**, **Platform**, **Test Harness** (HIL only), and **I/O**. Global **Input**, **Console**, and **Data Streams** panels support the selected workflow.
 
 ### Resetting the Layout
 
-**View → Reset Layout** restores the default panel arrangement.
+**File → Reset Window Layout** restores the default panel arrangement without changing entity configurations.
 
 ---
 
@@ -88,11 +72,13 @@ The toolbar is pinned across the top of the window. It provides quick access to 
 
 | Section | Controls | What it does |
 |---------|----------|--------------|
-| **Source** | Dropdown + status dot | Switch between Manual, Capture, or Plugin input. Green "LIVE" dot when active. |
-| **Motion** | START / STOP, E-STOP, intensity slider | Start/stop the motion pipeline. E-STOP immediately zeros all outputs. Intensity scales overall motion 0–100%. |
-| **Recording** | REC, PLAY, STOP | Quick-access recording controls (mirrors the Data Streams panel). |
-| **Platform** | SIL:N HIL:N, +SIL, +HIL | Shows entity counts. Add new SIL or HIL entities. |
+| **Source** | Plugin names or Capture Playback; STOPPED / LIVE / READY | Select the source. Changing it stops motion and requires an explicit **START**. **Manual Sliders** is a plugin, not a separate source mode. |
+| **Motion** | START / STOP, E-STOP | Start/stop the software motion pipeline. The app's E-STOP is not a substitute for the independent hardware stop/inhibit chain. |
+| **Recording** | REC / STOP REC, PLAY / STOP, capture selector, Loop, speed, sample rate | Recording and playback controls. Toolbar REC and starting PLAY require motion started; playback also needs a saved capture. |
+| **Platform** | SIL:N / HIL:N counts | Shows entity counts. Use **Entity → Add SIL Entity / Add HIL Entity** to create entities; the displayed +SIL/+HIL buttons are not the documented creation path. |
 | **Status** | fps, MCA Hz, entity count | Read-only status bar (right-aligned). |
+
+Motion intensity is in **Dynamics**, not the toolbar. Its **0–150%** editor is staged until **Apply**; values above 100% are not a safety guarantee or recommended hardware setting.
 
 ---
 
@@ -104,7 +90,7 @@ An **entity** is an independent Stewart platform instance with its own geometry,
 
 - Runs the full pipeline locally: axis scaling → motion cueing → inverse kinematics
 - No hardware required — ideal for tuning, testing, and visualization
-- Click **+SIL** in the toolbar to add one
+- Choose **Entity → Add SIL Entity** to add one
 
 ### HIL (Hardware-in-the-Loop)
 
@@ -112,27 +98,23 @@ An **entity** is an independent Stewart platform instance with its own geometry,
 - Sends motion data to the ESP32; receives telemetry back
 - **When offline (ESP32 not connected):** the entity is idle — no IK computation, no animation. The 3D viewport shows the platform at its home position with an "OFFLINE" label.
 - **When connected with telemetry:** the 3D viewport shows the real platform pose driven by ESP32 telemetry angles.
-- Click **+HIL** in the toolbar to add one
+- Choose **Entity → Add HIL Entity** to add one
 
-### Entity Card
+### Entity Tabs
 
-Each entity gets its own floating window containing:
+![SIL entity Overview tab with platform visualization and readouts](images/app/entity-overview.png)
 
-1. **3D Platform Viewport** — interactive orbit camera (click-drag to rotate). Shows the Stewart platform rendered in real-time with color-coded servo arms, connecting rods, and joint dots.
-2. **Status Overlay** — top-right corner shows connection state:
-   - **ESP32 TELEMETRY** (green) — live data from hardware
-   - **CONNECTED (awaiting telemetry)** (amber) — serial open, waiting for data flow
-   - **OFFLINE** (grey) — no serial connection
-3. **Servo Readout** — below the 3D viewport, shows per-servo angles, step counts, and utilization bars
-4. **Context Menu** — right-click the entity card header for:
-   - **Settings** — name, color, connection config
-   - **Platform Setup** — geometry, motor, and axis configuration
-   - **I/O Monitor** — per-entity serial/debug log
-   - **Remove** — delete the entity
+| Tab | Purpose |
+|-----|---------|
+| **Overview** | 3D platform view, servo readouts, status and connection summary |
+| **Dynamics** | Staged filter, motion-cueing and gain configuration |
+| **Settings** | Entity identity and HIL connection settings |
+| **Platform** | Geometry, drive train, actuator layout and measurement tools |
+| **Test Harness** | HIL-only analyzer workflow; not a safe-to-run commissioning shortcut |
+| **I/O** | Per-entity communication/log inspection |
 
-### Draggable Splitter
+Orbit the viewport with the mouse. The divider between the viewport and servo readout is draggable. HIL status distinguishes **OFFLINE**, connected-but-awaiting-telemetry, and actual telemetry; an offline picture must not be mistaken for a measured platform pose.
 
-The vertical divider between the 3D viewport and the servo readout bars is draggable — pull it up or down to allocate more space to either section.
 
 ---
 
@@ -142,7 +124,7 @@ The **Input** panel controls what data feeds the motion pipeline. All input sour
 
 ### Plugins
 
-Plugins are external DLLs that generate motion data. The app scans `app/build/Release/plugins/` on startup and lists all discovered plugins in the dropdown.
+Plugins are shared libraries that generate motion data. The app scans `plugins/` relative to its **working directory** on startup. With the launch command above (`cd app`), this is `app/plugins/`; when launched from `app/build/Release`, it is `app/build/Release/plugins/`.
 
 Built-in plugins include:
 
@@ -160,7 +142,7 @@ Select a plugin from the dropdown, then configure its parameters in the auto-lay
 
 ### Capture Playback
 
-Plays back a previously recorded motion capture. Select a recording from the library in the Data Streams panel, then switch the source to Capture Playback. Controls include play, pause, stop, loop, and speed adjustment.
+Plays back a previously recorded motion capture. Switch the source to Capture Playback and choose a saved recording in the Input/playback controls. The Data Streams panel manages the recording library. Controls include **Play**, **Stop**, loop, and speed adjustment; no Pause control is documented.
 
 ---
 
@@ -179,22 +161,28 @@ The **Dynamics** panel configures the full motion cueing pipeline for a selected
 
 | Section | What it controls |
 |---------|-----------------|
-| **Intensity** | Global motion scale (0–100%) |
+| **Intensity** | Per-entity motion scale (0–150% UI range); staged until Apply |
 | **Axis Gains** | Per-axis multipliers (Surge through Yaw) with invert toggles |
 | **Motion Cueing (MCA)** | Washout filter configuration — high-pass and low-pass cutoff frequencies, tilt coordination gains. Presets: Off, Gentle, Moderate, Aggressive, Race. |
 | **Occupant Position** | X/Y/Z offset of the rider's head from platform center. Compensates for parasitic translations caused by off-center seating. |
 
 ### Staging Buffer
 
-Dynamics edits use a **staging buffer** — changes are previewed in real-time but only committed to the live config when you click **Apply**. This prevents accidental parameter changes during active sessions.
+Dynamics controls edit a **staging buffer**, not the live pipeline. Click **Apply** to commit the staged settings, or **Revert** to discard them. Do not infer that a changed slider has already changed the running motion.
+
+![Dynamics pipeline and Apply/Revert controls](images/app/dynamics-pipeline.png)
+
+This staging rule applies to the Dynamics editor. Geometry controls are separate and can change the entity configuration immediately; make geometry changes in SIL or on an isolated, disabled bench.
 
 ---
 
 ## Platform Setup (Geometry)
 
-Open from the entity card context menu → **Platform Setup**. Contains tabbed configuration:
+Open the entity's **Platform** tab. Its sub-tabs are **Geometry**, **Drive Train**, **Actuator Layout**, and **Measure**.
 
 ### Geometry Tab
+
+![Platform Geometry tab and computed Home Height](images/app/geometry.png)
 
 | Parameter | Description |
 |-----------|-------------|
@@ -206,24 +194,34 @@ Open from the entity card context menu → **Platform Setup**. Contains tabbed c
 | **Theta R** | Base joint pair angle spread |
 | **Theta P** | Platform joint pair angle spread |
 
-> **Auto button:** The orange **Auto** button next to Home Height computes the mathematically correct value from your geometry. If it's orange, your current value is off by >0.5 mm. Always click Auto after changing any geometry parameter. See the [README geometry section](../README.md#geometry-calibration--home-height) for details.
+> **Auto button:** The orange **Auto** button next to Home Height computes the mathematically correct value from your geometry. If it's orange, your current value is off by >0.5 mm. Always click Auto after changing any geometry parameter. See the [README geometry section](../app/README.md#geometry-calibration) for details.
 
-### Motor Tab
+### Drive Train Tab
 
-Configure servo range, steps per degree, and bit depth.
+Configure the selected actuator's drive parameters, including gearing and pulse/PWM conversion. Values must match the physical drive and transmission; screenshots contain example data only.
 
-### Axis Scales Tab
+### Actuator Layout Tab
 
-Per-axis scaling that maps raw input values to physical units (mm for translations, degrees for rotations).
+Inspect or edit per-actuator layout rather than assuming every mechanism uses the symmetric default geometry.
+
+### Measure Tab
+
+Use the measurement tools to inspect geometric relationships and home-height setup. Compare the computed geometry with measurements of the disabled mechanism; this is not a powered homing procedure.
+
+![Platform Measure tab with home-height measurement view](images/app/measure-home-height.png)
 
 ---
 
 ## HIL Mode — Connecting an ESP32
 
+> **r13 is not commissioned.** The connection controls below describe the desktop interface, not acceptance of the r13 transport, stop chain or firmware. Keep drives disconnected until the linked commissioning gates pass. The example below is **offline** with no device connection.
+
+![Disconnected HIL Settings example; no hardware telemetry](images/app/hil-offline-settings.png)
+
 ### Automatic Connection
 
-1. Click **+HIL** to create a HIL entity
-2. Open **Settings** (right-click header)
+1. Choose **Entity → Add HIL Entity** to create a HIL entity
+2. Open the entity's **Settings** tab
 3. Under **ESP32 Connection**:
    - Select the COM port from the dropdown (or leave blank for auto-detect)
    - Enable **Auto Connect**
@@ -279,17 +277,19 @@ When connected, the HIL panel reports these transport counters:
 1. Switch to the **Data Streams** panel → **Recording** tab
 2. Select a **Sample Rate** (50–1000 Hz)
 3. Click **Record** — captures the current input source data
-4. Click **Stop Recording** when done
-5. Enter a name and click **Save to Library**
+4. Click **Stop Recording** when done. A non-empty recording is automatically saved to the library with a timestamp/source name and selected for playback.
+5. Use **Save to Library** only when you intentionally want another named copy; it adds a duplicate, not a rename of the automatically saved entry.
 
-Recordings are saved as `.stwr` files in `app/recordings/` with a `manifest.json` index.
+Recordings are saved as `.stwr` files with a `manifest.json` index in `recordings/` under the working directory (`app/recordings/` for the launch command above).
+
+![Synthetic capture library and playback workflow](images/app/recording-playback.png)
 
 ### Playback
 
-1. Switch the input source to **Capture** (toolbar or Input panel)
-2. In the Data Streams → Recording tab, select a saved capture from the library
-3. Use **Play**, **Pause**, **Stop**, and **Loop** controls
-4. Adjust **Speed** (0.1×–10×) for slow-motion analysis or fast-forward
+1. Switch the input source to **Capture Playback** (toolbar or Input panel)
+2. Choose a saved capture in the Input/playback controls; the Data Streams → Recording tab manages the library
+3. In SIL, enable **START**, then use **Play**, **Stop**, and **Loop** controls. This is not permission to start a connected uncommissioned platform.
+4. Adjust playback speed from **10–200% (0.1×–2×)** in the UI
 
 ### What Gets Recorded
 
@@ -305,21 +305,27 @@ The **Data Streams** panel contains multiple tabs for signal analysis:
 
 Capture library management (see [Recording & Playback](#recording--playback) above).
 
-### Frequency Tab
+### Snapshot Tab
 
-Real-time FFT frequency charts for each axis. Useful for identifying resonance, vibration modes, or signal quality issues.
+Inspect a snapshot of the six input axes and entity data. The current tab is named **Snapshot**, not Frequency.
 
 ### Spectrogram Tab
 
-Rolling waterfall heatmap showing frequency content over time. Supports multi-entity and multi-axis lane selection. Color intensity maps to signal power — bright spots indicate dominant frequencies.
+Rolling waterfall heatmap showing frequency content over time. Supports multi-entity and multi-axis lane selection. Color intensity maps to signal power — bright spots indicate dominant frequencies. A synthetic signal illustrates the display; it does not identify the physical mechanism's resonances.
 
-### Time History Tab
+![Spectrogram of synthetic SIL input](images/app/spectrogram.png)
 
-Scrolling time-series plots of input/output signals. Compare multiple entities or axes side-by-side.
+### Time-Series Tab
+
+Scrolling plots of input/output signals. Compare selected entities or axes side-by-side.
+
+![Time-Series plots using synthetic SIL data](images/app/time-series.png)
 
 ---
 
 ## Console
+
+![Console in the isolated documentation session](images/app/console.png)
 
 The **Console** panel shows timestamped log messages from all subsystems:
 
@@ -333,7 +339,7 @@ Log categories include: `hil`, `sil`, `serial`, `platform`, `record`, `plugin`, 
 
 ### Per-Entity I/O Monitor
 
-Each entity also has its own dedicated console (right-click entity header → **I/O Monitor**). This shows only messages related to that specific entity — useful when debugging a single ESP32 connection.
+Each entity also has its own **I/O** tab. This shows only messages related to that specific entity — useful when debugging a single ESP32 connection.
 
 ---
 
@@ -344,21 +350,21 @@ Plugins are shared libraries (`.dll` on Windows) that implement the Stewart Plug
 ### Plugin Directory
 
 ```
-app/build/Release/plugins/
+plugins/                         # relative to the working directory
 ├── plugin_sine_demo.dll
 ├── plugin_test_signal.dll
 ├── plugin_simtools_udp.dll
 └── plugin_assetto_corsa.dll
 ```
 
-The app scans this directory on startup. Plugins are listed in the Input panel when **Plugin** source is selected.
+The app scans this working-directory-relative folder on startup, not automatically the executable's directory. Valid plugin names appear directly in the Source dropdown. Documentation mode deliberately does not load them.
 
 ### Using a Plugin
 
-1. Set the input source to **Plugin** (toolbar dropdown or Input panel)
-2. Select a plugin from the plugin dropdown
+1. Open the Source dropdown in the toolbar/Input controls
+2. Select the desired plugin by name
 3. Configure parameters using the auto-generated UI
-4. The plugin immediately starts producing motion data
+4. In SIL, press **START** to activate the selected source. Selecting a different source stops motion until you start it again.
 
 ### Plugin Parameters
 
@@ -375,10 +381,13 @@ See `app/plugins/` for source examples. Each plugin is a single C file compiled 
 
 ```bat
 cd app\plugins
-build_plugin.bat plugin_my_source.c
+build_plugin.bat
 ```
 
-The plugin API requires three exports:
+The supplied batch file builds the listed example plugins; it does not accept an arbitrary source filename. Add an appropriate compiler command for a new plugin.
+
+The plugin API requires **four** exports:
+
 - `stewart_plugin_info()` — returns plugin metadata and parameter definitions
 - `stewart_plugin_init()` — called when the plugin is activated
 - `stewart_plugin_process()` — called every frame, produces 6-axis output
@@ -418,11 +427,7 @@ Delete `stewart_settings.json` to reset all entity configs and preferences to de
 
 ## Keyboard Shortcuts
 
-| Key | Action |
-|-----|--------|
-| **Ctrl+Q** | Quit |
-
-> More shortcuts to be added as the app evolves. Most interactions are mouse-driven via ImGui widgets.
+Use **File → Save** and **File → Exit**. The Save menu displays `Ctrl+S`, but a menu hint alone does not prove that the keyboard shortcut is implemented. `Ctrl+Q` is not implemented; it is not an exit instruction for this build.
 
 ---
 
@@ -430,7 +435,7 @@ Delete `stewart_settings.json` to reset all entity configs and preferences to de
 
 ### General
 
-- **Panels disappeared?** Use **View → Reset Layout** to restore the default arrangement.
+- **Panels disappeared?** Use **File → Reset Window Layout** to restore the default arrangement.
 - **App won't start?** Ensure your GPU supports OpenGL 3.3+. Update drivers if needed.
 - **Settings corrupted?** Delete `stewart_settings.json` and restart.
 
@@ -439,11 +444,11 @@ Delete `stewart_settings.json` to reset all entity configs and preferences to de
 - **Can't find COM port?** The ESP32-S3 uses native USB CDC — no FTDI driver needed. Ensure you're using the USB port (not UART) on the DevKitC. Try unplugging and re-plugging.
 - **Handshake stuck?** The app sends a `FINGERPRINT?` command and waits for a response. If the ESP32 firmware is outdated or unresponsive, the handshake will time out. Reflash the firmware.
 - **Telemetry not flowing?** After successful handshake, the app requests telemetry via `TELRATE:N`. If the ESP32 doesn't respond, check firmware version compatibility.
-- **HIL entity shows "OFFLINE"?** This is normal when the ESP32 is not connected. The entity consumes zero CPU — it simply waits for a connection.
+- **HIL entity shows "OFFLINE"?** This is normal when the ESP32 is not connected. The entity stays offline; the application still renders its interface and checks connection state.
 
 ### Plugins
 
-- **Plugin not appearing?** Ensure the DLL is in `app/build/Release/plugins/`. The app only scans on startup — restart after adding new plugins.
+- **Plugin not appearing?** Ensure the DLL is in `plugins/` under the app's working directory. The app only scans on startup — restart after adding new plugins.
 - **Plugin crashes?** Check the Console for error messages. Plugins run in-process, so a crash will take down the app. Debug with the per-entity I/O monitor.
 
 ### Performance

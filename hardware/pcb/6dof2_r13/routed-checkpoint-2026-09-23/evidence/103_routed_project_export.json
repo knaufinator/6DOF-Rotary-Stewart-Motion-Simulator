@@ -1,0 +1,18 @@
+{
+  "checkedAt": "2026-09-23T12:39:07.875Z",
+  "script": "G:/My Drive/projects/6dof/pcb/revisions/2026-09-22-r13/export_routed_checkpoint.js",
+  "scriptSha256": "0bc466b48d7989d58f1e382b672efe925271155534a49fa9d7e7c172f7437851",
+  "success": true,
+  "result": {
+    "ok": true,
+    "summary": {
+      "ok": true,
+      "path": "G:/My Drive/projects/6dof/pcb/revisions/2026-09-22-r13/6DOF2-r13-20260923-routed-UNTESTED-DO-NOT-ORDER.epro2",
+      "name": "6DOF2-r13-20260923-routed-UNTESTED-DO-NOT-ORDER.epro2",
+      "bytes": 826775,
+      "manufacturingRelease": false,
+      "importRoundTripNotYetTested": true
+    }
+  },
+  "windowId": "fdaceba8-498a-46fe-a4d1-501ae341e414"
+}

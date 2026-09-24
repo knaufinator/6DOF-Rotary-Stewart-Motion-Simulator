@@ -1,0 +1,1223 @@
+{
+  "revision": "r13",
+  "sourceCapture": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\189_schematic_rc3_capture.json",
+  "sourceSha256": "8f77a89e401a212a5dfa327bf64e8802e6e39c0c91044b6fa49c66b74c3ae1cf",
+  "projectUuid": "16231355292e4948ba37840dcdf926b0",
+  "documentUuid": "fd2c3589563945538936811f609de096",
+  "capturedAtUTC": "2026-09-23T18:16:39.998Z",
+  "sections": [
+    {
+      "number": 1,
+      "title": "ESP32-S3 CONTROL"
+    },
+    {
+      "number": 2,
+      "title": "USB-C PROGRAMMING / UART / RESET"
+    },
+    {
+      "number": 3,
+      "title": "REVERSE-BLOCKED USB + 12V POWER"
+    },
+    {
+      "number": 4,
+      "title": "STOP LOOP / STATUS / DEBUG"
+    },
+    {
+      "number": 5,
+      "title": "SIX-AXIS MOTION DRIVERS / INPUT CONDITIONING"
+    },
+    {
+      "number": 6,
+      "title": "AXIS 0-5 DB25 DRIVE CONNECTORS"
+    },
+    {
+      "number": 7,
+      "title": "ISOLATED DRIVE ALARM FEEDBACK"
+    },
+    {
+      "number": 8,
+      "title": "W5500 ETHERNET / INTEGRATED MAGJACK / CHASSIS"
+    },
+    {
+      "number": 9,
+      "title": "LATCHED OUTPUT INHIBIT / DRIVE-SUPPLY SUPERVISION"
+    }
+  ],
+  "captures": [
+    {
+      "ordinal": 0,
+      "role": "overview",
+      "title": "Nine-section schematic overview",
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\00.png",
+      "sha256": "8a9aa9c63a21cb91a2fe6722f44d00f90b0cc8f0cb49dafc413221f764e7de36",
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": {
+          "left": -1973.3223880597013,
+          "right": 6223.322388059702,
+          "bottom": 35,
+          "top": 4753
+        },
+        "bytes": 380781,
+        "capturedAtUTC": "2026-09-23T18:16:28.680Z"
+      },
+      "evidenceFile": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\capture_evidence_0_0.json",
+      "caption": "Navigation only. Section details follow; identical named nets connect across sections."
+    },
+    {
+      "ordinal": 1,
+      "section": 1,
+      "title": "1. ESP32-S3 control",
+      "requestedNativeBounds": [
+        180,
+        -620,
+        760,
+        -180
+      ],
+      "expectedAnchorRefs": [
+        "C18",
+        "C19",
+        "U2"
+      ],
+      "role": "detail",
+      "maxIntendedPage": "A3 landscape",
+      "caution": "Actual viewport padding and 6-unit net-label legibility must be inspected.",
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\01.png",
+      "sha256": "09f44acc551b72ae478b2c314d1fac217ec3ce5b6084496890123db8836ecf36",
+      "nativeBounds": [
+        180,
+        -620,
+        760,
+        -180
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 322512,
+        "capturedAtUTC": "2026-09-23T18:15:52.143Z"
+      },
+      "evidenceFile": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\capture_evidence_1_1.json",
+      "caption": "Unchanged native schematic detail. Overlap with adjacent views is intentional; identical named nets connect across pages."
+    },
+    {
+      "ordinal": 2,
+      "section": 2,
+      "title": "2. USB-C, power blocking and protection",
+      "requestedNativeBounds": [
+        840,
+        -785,
+        1660,
+        -110
+      ],
+      "expectedAnchorRefs": [
+        "C14",
+        "D3",
+        "D6",
+        "J11",
+        "R2",
+        "R3"
+      ],
+      "role": "detail",
+      "maxIntendedPage": "A3 landscape",
+      "caution": "Actual viewport padding and 6-unit net-label legibility must be inspected.",
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\02.png",
+      "sha256": "ecc1858474f1a7efd69b24c62496da9636d7ff6bc79ab38cb6a1267405b5e817",
+      "nativeBounds": [
+        840,
+        -785,
+        1660,
+        -110
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 259110,
+        "capturedAtUTC": "2026-09-23T18:16:29.256Z"
+      },
+      "evidenceFile": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\capture_evidence_2_9.json",
+      "caption": "Unchanged native schematic detail. Overlap with adjacent views is intentional; identical named nets connect across pages."
+    },
+    {
+      "ordinal": 3,
+      "section": 2,
+      "title": "2. BOOT, RESET and USB series resistors",
+      "requestedNativeBounds": [
+        1620,
+        -785,
+        2380,
+        -110
+      ],
+      "expectedAnchorRefs": [
+        "C17",
+        "D7",
+        "R4",
+        "R5",
+        "R69",
+        "R70",
+        "SW1",
+        "SW2"
+      ],
+      "role": "detail",
+      "maxIntendedPage": "A3 landscape",
+      "caution": "Actual viewport padding and 6-unit net-label legibility must be inspected.",
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\03.png",
+      "sha256": "72a820551f0d3276287147d7f3e54daa7a39e7096faf510246a15483a6f5a2af",
+      "nativeBounds": [
+        1620,
+        -785,
+        2380,
+        -110
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 241788,
+        "capturedAtUTC": "2026-09-23T18:16:29.659Z"
+      },
+      "evidenceFile": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\capture_evidence_2_9.json",
+      "caption": "Unchanged native schematic detail. Overlap with adjacent views is intentional; identical named nets connect across pages."
+    },
+    {
+      "ordinal": 4,
+      "section": 3,
+      "title": "3. 12 V input protection and buck regulator",
+      "requestedNativeBounds": [
+        2370,
+        -760,
+        3370,
+        -110
+      ],
+      "expectedAnchorRefs": [
+        "C1",
+        "C4",
+        "D1",
+        "F1",
+        "J9",
+        "U6"
+      ],
+      "role": "detail",
+      "maxIntendedPage": "A3 landscape",
+      "caution": "Actual viewport padding and 6-unit net-label legibility must be inspected.",
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\04.png",
+      "sha256": "734f1ce28956797064484af3955aee3aa1e1e7193c64aaa61ec5d079eff29fc9",
+      "nativeBounds": [
+        2370,
+        -760,
+        3370,
+        -110
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 251003,
+        "capturedAtUTC": "2026-09-23T18:16:30.045Z"
+      },
+      "evidenceFile": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\capture_evidence_2_9.json",
+      "caption": "Unchanged native schematic detail. Overlap with adjacent views is intentional; identical named nets connect across pages."
+    },
+    {
+      "ordinal": 5,
+      "section": 3,
+      "title": "3. 5 V filtering, logic power OR and 3.3 V regulator",
+      "requestedNativeBounds": [
+        3290,
+        -760,
+        4180,
+        -110
+      ],
+      "expectedAnchorRefs": [
+        "C2",
+        "C3",
+        "C42",
+        "C5",
+        "C6",
+        "C7",
+        "D2",
+        "D8",
+        "L1",
+        "U7"
+      ],
+      "role": "detail",
+      "maxIntendedPage": "A3 landscape",
+      "caution": "Actual viewport padding and 6-unit net-label legibility must be inspected.",
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\05.png",
+      "sha256": "654c5f124c617b755a176609cd4a4b3405a7a0f50901706968d6fd5f3d7e9117",
+      "nativeBounds": [
+        3290,
+        -760,
+        4180,
+        -110
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 258484,
+        "capturedAtUTC": "2026-09-23T18:16:30.432Z"
+      },
+      "evidenceFile": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\capture_evidence_2_9.json",
+      "caption": "Unchanged native schematic detail. Overlap with adjacent views is intentional; identical named nets connect across pages."
+    },
+    {
+      "ordinal": 6,
+      "section": 4,
+      "title": "4. Stop loop, status and debug",
+      "requestedNativeBounds": [
+        100,
+        -1480,
+        1020,
+        -900
+      ],
+      "expectedAnchorRefs": [
+        "C36",
+        "D4",
+        "D5",
+        "J1",
+        "J2",
+        "R1",
+        "R18",
+        "R19",
+        "R6",
+        "R60",
+        "R7"
+      ],
+      "role": "detail",
+      "maxIntendedPage": "A3 landscape",
+      "caution": "Actual viewport padding and 6-unit net-label legibility must be inspected.",
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\06.png",
+      "sha256": "e43f95e682bd6e6f97d75aab6fd9c1b381e77019e927cca55ef204d522f02ccf",
+      "nativeBounds": [
+        100,
+        -1480,
+        1020,
+        -900
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 249153,
+        "capturedAtUTC": "2026-09-23T18:16:30.821Z"
+      },
+      "evidenceFile": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\capture_evidence_2_9.json",
+      "caption": "Unchanged native schematic detail. Overlap with adjacent views is intentional; identical named nets connect across pages."
+    },
+    {
+      "ordinal": 7,
+      "section": 5,
+      "title": "5. Motion drivers - left, axes 0-3",
+      "requestedNativeBounds": [
+        1040,
+        -1420,
+        2170,
+        -910
+      ],
+      "expectedAnchorRefs": [
+        "R12",
+        "R14",
+        "R20",
+        "R22",
+        "R46",
+        "R50",
+        "U3",
+        "U4"
+      ],
+      "role": "detail",
+      "maxIntendedPage": "A3 landscape",
+      "caution": "Actual viewport padding and 6-unit net-label legibility must be inspected.",
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\07.png",
+      "sha256": "6e06b2c172f8c0a847bf0ce8b56a3a27612c09dacbce37033eb7d7478480604c",
+      "nativeBounds": [
+        1040,
+        -1420,
+        2170,
+        -910
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 292706,
+        "capturedAtUTC": "2026-09-23T18:16:31.208Z"
+      },
+      "evidenceFile": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\capture_evidence_2_9.json",
+      "caption": "Unchanged native schematic detail. Overlap with adjacent views is intentional; identical named nets connect across pages."
+    },
+    {
+      "ordinal": 8,
+      "section": 5,
+      "title": "5. Motion drivers - middle, axes 0-3",
+      "requestedNativeBounds": [
+        2070,
+        -1420,
+        3200,
+        -910
+      ],
+      "expectedAnchorRefs": [
+        "R13",
+        "R15",
+        "R21",
+        "R23",
+        "R47",
+        "R48",
+        "R51",
+        "R52"
+      ],
+      "role": "detail",
+      "maxIntendedPage": "A3 landscape",
+      "caution": "Actual viewport padding and 6-unit net-label legibility must be inspected.",
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\08.png",
+      "sha256": "aa0127154bda3be2f24eb13417d8c95e5b92ec01188f0c192993577e57f26fb8",
+      "nativeBounds": [
+        2070,
+        -1420,
+        3200,
+        -910
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 222131,
+        "capturedAtUTC": "2026-09-23T18:16:31.603Z"
+      },
+      "evidenceFile": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\capture_evidence_2_9.json",
+      "caption": "Unchanged native schematic detail. Overlap with adjacent views is intentional; identical named nets connect across pages."
+    },
+    {
+      "ordinal": 9,
+      "section": 5,
+      "title": "5. Motion drivers - right, axes 0-3",
+      "requestedNativeBounds": [
+        3100,
+        -1420,
+        4220,
+        -910
+      ],
+      "expectedAnchorRefs": [
+        "C11",
+        "C8",
+        "C9",
+        "R49",
+        "R53"
+      ],
+      "role": "detail",
+      "maxIntendedPage": "A3 landscape",
+      "caution": "Actual viewport padding and 6-unit net-label legibility must be inspected.",
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\09.png",
+      "sha256": "eda87b377b0134cbfad421209fa92be685431f08f57ba2e0d15c5e303953d9e9",
+      "nativeBounds": [
+        3100,
+        -1420,
+        4220,
+        -910
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 223059,
+        "capturedAtUTC": "2026-09-23T18:16:31.988Z"
+      },
+      "evidenceFile": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\capture_evidence_2_9.json",
+      "caption": "Unchanged native schematic detail. Overlap with adjacent views is intentional; identical named nets connect across pages."
+    },
+    {
+      "ordinal": 10,
+      "section": 5,
+      "title": "5. Motion drivers - left, axes 2-5",
+      "requestedNativeBounds": [
+        1040,
+        -1750,
+        2170,
+        -1220
+      ],
+      "expectedAnchorRefs": [
+        "R14",
+        "R16",
+        "R22",
+        "R24",
+        "R50",
+        "R54",
+        "U4",
+        "U5"
+      ],
+      "role": "detail",
+      "maxIntendedPage": "A3 landscape",
+      "caution": "Actual viewport padding and 6-unit net-label legibility must be inspected.",
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\10.png",
+      "sha256": "a5a2669c2f165064275435f03b2ae22d7549aae66e01a4694a3325ca404354a0",
+      "nativeBounds": [
+        1040,
+        -1750,
+        2170,
+        -1220
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 278476,
+        "capturedAtUTC": "2026-09-23T18:16:32.566Z"
+      },
+      "evidenceFile": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\capture_evidence_10_17.json",
+      "caption": "Unchanged native schematic detail. Overlap with adjacent views is intentional; identical named nets connect across pages."
+    },
+    {
+      "ordinal": 11,
+      "section": 5,
+      "title": "5. Motion drivers - middle, axes 2-5",
+      "requestedNativeBounds": [
+        2070,
+        -1750,
+        3200,
+        -1220
+      ],
+      "expectedAnchorRefs": [
+        "R15",
+        "R17",
+        "R23",
+        "R25",
+        "R51",
+        "R52",
+        "R55",
+        "R56"
+      ],
+      "role": "detail",
+      "maxIntendedPage": "A3 landscape",
+      "caution": "Actual viewport padding and 6-unit net-label legibility must be inspected.",
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\11.png",
+      "sha256": "646d4cd39d5c164fa1ef0b14be12a25449ff8876ba4fbda126b28b46072bf037",
+      "nativeBounds": [
+        2070,
+        -1750,
+        3200,
+        -1220
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 223625,
+        "capturedAtUTC": "2026-09-23T18:16:32.973Z"
+      },
+      "evidenceFile": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\capture_evidence_10_17.json",
+      "caption": "Unchanged native schematic detail. Overlap with adjacent views is intentional; identical named nets connect across pages."
+    },
+    {
+      "ordinal": 12,
+      "section": 5,
+      "title": "5. Motion drivers - right, axes 2-5",
+      "requestedNativeBounds": [
+        3100,
+        -1750,
+        4220,
+        -1220
+      ],
+      "expectedAnchorRefs": [
+        "C10",
+        "C9",
+        "R53",
+        "R57"
+      ],
+      "role": "detail",
+      "maxIntendedPage": "A3 landscape",
+      "caution": "Actual viewport padding and 6-unit net-label legibility must be inspected.",
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\12.png",
+      "sha256": "d665935e80d0a5f55edceaf3bf7ffcb5b816cdfc8639be3db114875433910cfc",
+      "nativeBounds": [
+        3100,
+        -1750,
+        4220,
+        -1220
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 222586,
+        "capturedAtUTC": "2026-09-23T18:16:33.362Z"
+      },
+      "evidenceFile": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\capture_evidence_10_17.json",
+      "caption": "Unchanged native schematic detail. Overlap with adjacent views is intentional; identical named nets connect across pages."
+    },
+    {
+      "ordinal": 13,
+      "section": 6,
+      "title": "6. DB25 drive connectors - axes 0-2",
+      "requestedNativeBounds": [
+        90,
+        -2470,
+        1130,
+        -1990
+      ],
+      "expectedAnchorRefs": [
+        "J3",
+        "J4",
+        "J5"
+      ],
+      "role": "detail",
+      "maxIntendedPage": "A3 landscape",
+      "caution": "Actual viewport padding and 6-unit net-label legibility must be inspected.",
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\13.png",
+      "sha256": "55dc6ddc65c732959d528765599bde7a7b2ee62cf54aa7611a6df1a9683f89cd",
+      "nativeBounds": [
+        90,
+        -2470,
+        1130,
+        -1990
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 328925,
+        "capturedAtUTC": "2026-09-23T18:16:33.764Z"
+      },
+      "evidenceFile": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\capture_evidence_10_17.json",
+      "caption": "Unchanged native schematic detail. Overlap with adjacent views is intentional; identical named nets connect across pages."
+    },
+    {
+      "ordinal": 14,
+      "section": 6,
+      "title": "6. DB25 drive connectors - axes 3-5",
+      "requestedNativeBounds": [
+        1050,
+        -2470,
+        2140,
+        -1990
+      ],
+      "expectedAnchorRefs": [
+        "J6",
+        "J7",
+        "J8"
+      ],
+      "role": "detail",
+      "maxIntendedPage": "A3 landscape",
+      "caution": "Actual viewport padding and 6-unit net-label legibility must be inspected.",
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\14.png",
+      "sha256": "2e9474c905a436bd618ec3caeceb14171d1f2ac0851ae4b122a8cacaee18e130",
+      "nativeBounds": [
+        1050,
+        -2470,
+        2140,
+        -1990
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 284750,
+        "capturedAtUTC": "2026-09-23T18:16:34.154Z"
+      },
+      "evidenceFile": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\capture_evidence_10_17.json",
+      "caption": "Unchanged native schematic detail. Overlap with adjacent views is intentional; identical named nets connect across pages."
+    },
+    {
+      "ordinal": 15,
+      "section": 7,
+      "title": "7. Drive alarm feedback - input networks",
+      "requestedNativeBounds": [
+        2120,
+        -2470,
+        3250,
+        -1950
+      ],
+      "expectedAnchorRefs": [
+        "R30",
+        "R31",
+        "R32",
+        "R33",
+        "R36",
+        "R37",
+        "R38",
+        "R39"
+      ],
+      "role": "detail",
+      "maxIntendedPage": "A3 landscape",
+      "caution": "Actual viewport padding and 6-unit net-label legibility must be inspected.",
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\15.png",
+      "sha256": "f84362ad3b10e95abf0d5797d1b4e5307d8f1d6654fc6db1fd1fdedfc4793ef0",
+      "nativeBounds": [
+        2120,
+        -2470,
+        3250,
+        -1950
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 247058,
+        "capturedAtUTC": "2026-09-23T18:16:34.543Z"
+      },
+      "evidenceFile": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\capture_evidence_10_17.json",
+      "caption": "Unchanged native schematic detail. Overlap with adjacent views is intentional; identical named nets connect across pages."
+    },
+    {
+      "ordinal": 16,
+      "section": 7,
+      "title": "7. Drive alarm feedback - optocouplers",
+      "requestedNativeBounds": [
+        3140,
+        -2470,
+        4180,
+        -1950
+      ],
+      "expectedAnchorRefs": [
+        "R34",
+        "R35",
+        "R40",
+        "R41",
+        "U10",
+        "U9"
+      ],
+      "role": "detail",
+      "maxIntendedPage": "A3 landscape",
+      "caution": "Actual viewport padding and 6-unit net-label legibility must be inspected.",
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\16.png",
+      "sha256": "13367d2e6ac8099827e2575cfa99a13b6deb97232029e282539115cfe049e1df",
+      "nativeBounds": [
+        3140,
+        -2470,
+        4180,
+        -1950
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 304432,
+        "capturedAtUTC": "2026-09-23T18:16:34.936Z"
+      },
+      "evidenceFile": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\capture_evidence_10_17.json",
+      "caption": "Unchanged native schematic detail. Overlap with adjacent views is intentional; identical named nets connect across pages."
+    },
+    {
+      "ordinal": 17,
+      "section": 8,
+      "title": "8. Ethernet - W5500 upper pins and clock",
+      "requestedNativeBounds": [
+        90,
+        -3190,
+        1280,
+        -2750
+      ],
+      "expectedAnchorRefs": [
+        "C12",
+        "C23",
+        "C24",
+        "R10",
+        "R11",
+        "R58",
+        "Y1"
+      ],
+      "role": "detail",
+      "maxIntendedPage": "A3 landscape",
+      "caution": "Actual viewport padding and 6-unit net-label legibility must be inspected.",
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\17.png",
+      "sha256": "f2e0d31c53602b2658f2cab7f467d7fd517bd53abd2a0d7bee7b79ef16ea9ed4",
+      "nativeBounds": [
+        90,
+        -3190,
+        1280,
+        -2750
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 312652,
+        "capturedAtUTC": "2026-09-23T18:16:35.334Z"
+      },
+      "evidenceFile": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\capture_evidence_10_17.json",
+      "caption": "Unchanged native schematic detail. Overlap with adjacent views is intentional; identical named nets connect across pages."
+    },
+    {
+      "ordinal": 18,
+      "section": 8,
+      "title": "8. Ethernet - W5500 lower pins and bypass",
+      "requestedNativeBounds": [
+        90,
+        -3580,
+        1280,
+        -3060
+      ],
+      "expectedAnchorRefs": [
+        "C12",
+        "C15",
+        "C16",
+        "R58",
+        "U8"
+      ],
+      "role": "detail",
+      "maxIntendedPage": "A3 landscape",
+      "caution": "Actual viewport padding and 6-unit net-label legibility must be inspected.",
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\18.png",
+      "sha256": "2290d5ad19de429fa337c7fdc3f8e0e487b74d7d0a6fc72e04aaab13d6654715",
+      "nativeBounds": [
+        90,
+        -3580,
+        1280,
+        -3060
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 296399,
+        "capturedAtUTC": "2026-09-23T18:16:35.883Z"
+      },
+      "evidenceFile": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\capture_evidence_18_25.json",
+      "caption": "Unchanged native schematic detail. Overlap with adjacent views is intentional; identical named nets connect across pages."
+    },
+    {
+      "ordinal": 19,
+      "section": 8,
+      "title": "8. Ethernet - analog supply and bypass, left",
+      "requestedNativeBounds": [
+        1330,
+        -3230,
+        2410,
+        -2750
+      ],
+      "expectedAnchorRefs": [
+        "C13",
+        "C20",
+        "C21",
+        "C26",
+        "C27",
+        "C28",
+        "C29",
+        "L2"
+      ],
+      "role": "detail",
+      "maxIntendedPage": "A3 landscape",
+      "caution": "Actual viewport padding and 6-unit net-label legibility must be inspected.",
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\19.png",
+      "sha256": "aa20d6ea871522fa2783523469db4b51f3ad99c8123597548f10fa15c491e47e",
+      "nativeBounds": [
+        1330,
+        -3230,
+        2410,
+        -2750
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 205740,
+        "capturedAtUTC": "2026-09-23T18:16:36.276Z"
+      },
+      "evidenceFile": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\capture_evidence_18_25.json",
+      "caption": "Unchanged native schematic detail. Overlap with adjacent views is intentional; identical named nets connect across pages."
+    },
+    {
+      "ordinal": 20,
+      "section": 8,
+      "title": "8. Ethernet - termination, left",
+      "requestedNativeBounds": [
+        1370,
+        -3570,
+        2490,
+        -3060
+      ],
+      "expectedAnchorRefs": [
+        "C26",
+        "C27",
+        "C28",
+        "C29",
+        "C30",
+        "R42",
+        "R43",
+        "R44",
+        "R45"
+      ],
+      "role": "detail",
+      "maxIntendedPage": "A3 landscape",
+      "caution": "Actual viewport padding and 6-unit net-label legibility must be inspected.",
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\20.png",
+      "sha256": "9a62e73d9ee91472ebeade8a344f35b44cabae1cd90ee49b263d0cf829b6963d",
+      "nativeBounds": [
+        1370,
+        -3570,
+        2490,
+        -3060
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 222658,
+        "capturedAtUTC": "2026-09-23T18:16:36.678Z"
+      },
+      "evidenceFile": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\capture_evidence_18_25.json",
+      "caption": "Unchanged native schematic detail. Overlap with adjacent views is intentional; identical named nets connect across pages."
+    },
+    {
+      "ordinal": 21,
+      "section": 8,
+      "title": "8. Ethernet - analog supply and bypass, right",
+      "requestedNativeBounds": [
+        2370,
+        -3230,
+        3450,
+        -2750
+      ],
+      "expectedAnchorRefs": [
+        "C22",
+        "C30",
+        "C31",
+        "C32",
+        "C33",
+        "C34",
+        "C35",
+        "R59"
+      ],
+      "role": "detail",
+      "maxIntendedPage": "A3 landscape",
+      "caution": "Actual viewport padding and 6-unit net-label legibility must be inspected.",
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\21.png",
+      "sha256": "589b633fdf4639933267d1e30c856721ea257fb9e56ef001162a13caa8ab0c87",
+      "nativeBounds": [
+        2370,
+        -3230,
+        3450,
+        -2750
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 201908,
+        "capturedAtUTC": "2026-09-23T18:16:37.067Z"
+      },
+      "evidenceFile": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\capture_evidence_18_25.json",
+      "caption": "Unchanged native schematic detail. Overlap with adjacent views is intentional; identical named nets connect across pages."
+    },
+    {
+      "ordinal": 22,
+      "section": 8,
+      "title": "8. Ethernet - chassis coupling network",
+      "requestedNativeBounds": [
+        2520,
+        -3610,
+        3410,
+        -3080
+      ],
+      "expectedAnchorRefs": [
+        "C25",
+        "C31",
+        "C33",
+        "C34",
+        "C35"
+      ],
+      "role": "detail",
+      "maxIntendedPage": "A3 landscape",
+      "caution": "Actual viewport padding and 6-unit net-label legibility must be inspected.",
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\22.png",
+      "sha256": "e2f7e643d3c16b7621581e87c723f5c08b322bf6b729213520511be210ce52b5",
+      "nativeBounds": [
+        2520,
+        -3610,
+        3410,
+        -3080
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 214554,
+        "capturedAtUTC": "2026-09-23T18:16:37.461Z"
+      },
+      "evidenceFile": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\capture_evidence_18_25.json",
+      "caption": "Unchanged native schematic detail. Overlap with adjacent views is intentional; identical named nets connect across pages."
+    },
+    {
+      "ordinal": 23,
+      "section": 8,
+      "title": "8. Ethernet - integrated MagJack",
+      "requestedNativeBounds": [
+        3290,
+        -3610,
+        4180,
+        -2910
+      ],
+      "expectedAnchorRefs": [
+        "C25",
+        "C35",
+        "J10"
+      ],
+      "role": "detail",
+      "maxIntendedPage": "A3 landscape",
+      "caution": "Actual viewport padding and 6-unit net-label legibility must be inspected.",
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\23.png",
+      "sha256": "eef098f764b45ac7c640226a35bc53858a377224ebb212a05ac76b020f47916f",
+      "nativeBounds": [
+        3290,
+        -3610,
+        4180,
+        -2910
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 209058,
+        "capturedAtUTC": "2026-09-23T18:16:37.863Z"
+      },
+      "evidenceFile": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\capture_evidence_18_25.json",
+      "caption": "Unchanged native schematic detail. Overlap with adjacent views is intentional; identical named nets connect across pages."
+    },
+    {
+      "ordinal": 24,
+      "section": 9,
+      "title": "9. Output inhibit - input logic and supervisor",
+      "requestedNativeBounds": [
+        100,
+        -4310,
+        1300,
+        -3840
+      ],
+      "expectedAnchorRefs": [
+        "U12",
+        "U13"
+      ],
+      "role": "detail",
+      "maxIntendedPage": "A3 landscape",
+      "caution": "Actual viewport padding and 6-unit net-label legibility must be inspected.",
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\24.png",
+      "sha256": "9ebfb043b07e0e0fddcff17e0ff30d951106db9c661d835e078b4523978e9c16",
+      "nativeBounds": [
+        100,
+        -4310,
+        1300,
+        -3840
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 215649,
+        "capturedAtUTC": "2026-09-23T18:16:38.255Z"
+      },
+      "evidenceFile": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\capture_evidence_18_25.json",
+      "caption": "Unchanged native schematic detail. Overlap with adjacent views is intentional; identical named nets connect across pages."
+    },
+    {
+      "ordinal": 25,
+      "section": 9,
+      "title": "9. Output inhibit - clear buffer and arm latch",
+      "requestedNativeBounds": [
+        1300,
+        -4310,
+        2390,
+        -3840
+      ],
+      "expectedAnchorRefs": [
+        "U11",
+        "U14"
+      ],
+      "role": "detail",
+      "maxIntendedPage": "A3 landscape",
+      "caution": "Actual viewport padding and 6-unit net-label legibility must be inspected.",
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\25.png",
+      "sha256": "909aa3f8b2e4515f7dce11f00e61caf429a1718553b6eb6407bb11aa38c85285",
+      "nativeBounds": [
+        1300,
+        -4310,
+        2390,
+        -3840
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 208604,
+        "capturedAtUTC": "2026-09-23T18:16:38.639Z"
+      },
+      "evidenceFile": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\capture_evidence_18_25.json",
+      "caption": "Unchanged native schematic detail. Overlap with adjacent views is intentional; identical named nets connect across pages."
+    },
+    {
+      "ordinal": 26,
+      "section": 9,
+      "title": "9. Output inhibit - input bias and supervisor timing",
+      "requestedNativeBounds": [
+        100,
+        -4710,
+        1300,
+        -4330
+      ],
+      "expectedAnchorRefs": [
+        "C38",
+        "C39",
+        "C41",
+        "R61",
+        "R67",
+        "R68"
+      ],
+      "role": "detail",
+      "maxIntendedPage": "A3 landscape",
+      "caution": "Actual viewport padding and 6-unit net-label legibility must be inspected.",
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\26.png",
+      "sha256": "f068ab21b0ad6faf60d85da0b4569ef20a71c3d400de9d9bffadcb292d30566e",
+      "nativeBounds": [
+        100,
+        -4710,
+        1300,
+        -4330
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 187558,
+        "capturedAtUTC": "2026-09-23T18:16:39.219Z"
+      },
+      "evidenceFile": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\capture_evidence_26_28.json",
+      "caption": "Unchanged native schematic detail. Overlap with adjacent views is intentional; identical named nets connect across pages."
+    },
+    {
+      "ordinal": 27,
+      "section": 9,
+      "title": "9. Output inhibit - latch bias and bypass",
+      "requestedNativeBounds": [
+        1300,
+        -4710,
+        2390,
+        -4330
+      ],
+      "expectedAnchorRefs": [
+        "C37",
+        "C40",
+        "R62",
+        "R66"
+      ],
+      "role": "detail",
+      "maxIntendedPage": "A3 landscape",
+      "caution": "Actual viewport padding and 6-unit net-label legibility must be inspected.",
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\27.png",
+      "sha256": "6600b73673f5e3cc192e5a15699010a6ede07a830e075c0eac384adad47eae79",
+      "nativeBounds": [
+        1300,
+        -4710,
+        2390,
+        -4330
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 189154,
+        "capturedAtUTC": "2026-09-23T18:16:39.612Z"
+      },
+      "evidenceFile": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\capture_evidence_26_28.json",
+      "caption": "Unchanged native schematic detail. Overlap with adjacent views is intentional; identical named nets connect across pages."
+    },
+    {
+      "ordinal": 28,
+      "section": 9,
+      "title": "9. Driver-enable bias and prototype operating notes",
+      "requestedNativeBounds": [
+        2470,
+        -4460,
+        3590,
+        -3840
+      ],
+      "expectedAnchorRefs": [
+        "R63",
+        "R64",
+        "R65"
+      ],
+      "role": "detail",
+      "maxIntendedPage": "A3 landscape",
+      "caution": "Actual viewport padding and 6-unit net-label legibility must be inspected.",
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\28.png",
+      "sha256": "cc32b3b15f7ec756df5284bada29c3d1dab41268b15b15d7f05367d05aa3e175",
+      "nativeBounds": [
+        2470,
+        -4460,
+        3590,
+        -3840
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 264233,
+        "capturedAtUTC": "2026-09-23T18:16:39.998Z"
+      },
+      "evidenceFile": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\capture_evidence_26_28.json",
+      "caption": "Unchanged native schematic detail. Overlap with adjacent views is intentional; identical named nets connect across pages."
+    }
+  ],
+  "evidenceFiles": [
+    {
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\capture_evidence_0_0.json",
+      "sha256": "58b4acd727854ad6058f0120825d29daee1de7df951f5ad6a84945b07fa0c0d9"
+    },
+    {
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\capture_evidence_10_17.json",
+      "sha256": "cbf8c224c1078117a9fcbec2cdadfa89959f410725bc70628db81cbba4a0cec3"
+    },
+    {
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\capture_evidence_18_25.json",
+      "sha256": "5e4b6cefe9644985f36a3684198a38438686ad00a9d9c0f262cb5ed01b03209b"
+    },
+    {
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\capture_evidence_1_1.json",
+      "sha256": "30fa9bbe8b5724fd274b59a5cf3213550562928957485f8a8fc4696eb8049c6c"
+    },
+    {
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\capture_evidence_26_28.json",
+      "sha256": "811806d74b37bb03051d03dd80f9e2f11c274745ccf391984978450a5b391d94"
+    },
+    {
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\capture_evidence_2_9.json",
+      "sha256": "07dde3e9654730d10824b5b5b200013f82cf24fe923d718fe30436804bfd5b08"
+    }
+  ],
+  "nativeCaptureResolution": [
+    1747,
+    1005
+  ],
+  "limitations": [
+    "Native raster review, not a native vector export.",
+    "Firmware and electrical bench validation remain deferred."
+  ]
+}

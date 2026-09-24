@@ -1,0 +1,806 @@
+{
+  "schema": "6dof-r13-guarded-single-track-repair",
+  "status": "PASS_OFFLINE_CONTINUOUS_SLOT_CLEARANCE; NOT_APPLIED",
+  "sourceCapture": "145_db25_persisted_capture.json",
+  "sourceCaptureSha256": "6720e8bb84a92a8d3f0d4b582307a1a69062941551bf26268f9cc87795ab3cee",
+  "sourceTextSha256": "e845907b15a1a6c5856a1feef1437c4f823898538da0379e2fff405f2a06d0cd",
+  "reason": "New3.20mm NPTH hole needs native11.811mil Line-to-SlotRegion clearance; previous generic6mil feasibility check was insufficient.",
+  "expectedInventoryBefore": {
+    "components": 144,
+    "pads": 654,
+    "tracks": 967,
+    "vias": 398,
+    "regions": 8,
+    "fills": 689
+  },
+  "guardedTrack": {
+    "id": "ea8f94b3cf885985",
+    "net": "M4S_I",
+    "layer": 2,
+    "w": 10,
+    "pts": [
+      1217.0787,
+      6342.0709,
+      "L",
+      1244,
+      6315,
+      1244,
+      6259,
+      2012,
+      5491,
+      2572,
+      5491
+    ]
+  },
+  "replacementTrace": {
+    "net": "M4S_I",
+    "layer": 2,
+    "widthMil": 10,
+    "pointsMil": [
+      [
+        1217.0787,
+        6342.0709
+      ],
+      [
+        1244,
+        6315
+      ],
+      [
+        1244,
+        6259
+      ],
+      [
+        2015,
+        5488
+      ],
+      [
+        2569,
+        5488
+      ],
+      [
+        2572,
+        5491
+      ]
+    ]
+  },
+  "traces": [
+    {
+      "net": "M4S_I",
+      "layer": 2,
+      "widthMil": 10,
+      "pointsMil": [
+        [
+          1217.0787,
+          6342.0709
+        ],
+        [
+          1244,
+          6315
+        ],
+        [
+          1244,
+          6259
+        ],
+        [
+          2015,
+          5488
+        ],
+        [
+          2569,
+          5488
+        ],
+        [
+          2572,
+          5491
+        ]
+      ]
+    }
+  ],
+  "vias": [],
+  "removeTrackIds": [
+    "ea8f94b3cf885985"
+  ],
+  "expectedPrimitiveDelta": {
+    "tracks": 0,
+    "vias": 0,
+    "components": 0,
+    "pads": 0,
+    "fills": 0,
+    "regions": 0
+  },
+  "candidateOptions": [
+    {
+      "shiftMil": 2,
+      "trace": {
+        "net": "M4S_I",
+        "layer": 2,
+        "widthMil": 10,
+        "pointsMil": [
+          [
+            1217.0787,
+            6342.0709
+          ],
+          [
+            1244,
+            6315
+          ],
+          [
+            1244,
+            6259
+          ],
+          [
+            2014,
+            5489
+          ],
+          [
+            2570,
+            5489
+          ],
+          [
+            2572,
+            5491
+          ]
+        ]
+      },
+      "minimumForeignCopperGapMil": 10.574406749828775,
+      "nearestForeignObject": "eabeaf55bf5cd66a",
+      "nearestForeignNet": "GND",
+      "holeClearances": [
+        {
+          "ref": "J3",
+          "id": "e59",
+          "xMil": 252.99500000000006,
+          "yMil": 2303.98,
+          "radiusMil": 62.99212598425198,
+          "edgeGapMil": 3571.4434086041815
+        },
+        {
+          "ref": "J3",
+          "id": "e60",
+          "xMil": 252.99499999999995,
+          "yMil": 452.02,
+          "radiusMil": 62.99212598425198,
+          "edgeGapMil": 5267.952601093137
+        },
+        {
+          "ref": "J4",
+          "id": "e59",
+          "xMil": 2457.005,
+          "yMil": 452.02,
+          "radiusMil": 62.99212598425198,
+          "edgeGapMil": 4968.987874015747
+        },
+        {
+          "ref": "J4",
+          "id": "e60",
+          "xMil": 2457.005,
+          "yMil": 2303.98,
+          "radiusMil": 62.99212598425198,
+          "edgeGapMil": 3117.0278740157473
+        },
+        {
+          "ref": "J5",
+          "id": "e59",
+          "xMil": 252.99500000000006,
+          "yMil": 4862.98,
+          "radiusMil": 62.99212598425198,
+          "edgeGapMil": 1619.8894383775666
+        },
+        {
+          "ref": "J5",
+          "id": "e60",
+          "xMil": 252.99499999999995,
+          "yMil": 3011.02,
+          "radiusMil": 62.99212598425198,
+          "edgeGapMil": 2971.9952901780252
+        },
+        {
+          "ref": "J6",
+          "id": "e59",
+          "xMil": 2457.005,
+          "yMil": 3011.02,
+          "radiusMil": 62.99212598425198,
+          "edgeGapMil": 2409.987874015748
+        },
+        {
+          "ref": "J6",
+          "id": "e60",
+          "xMil": 2457.005,
+          "yMil": 4862.98,
+          "radiusMil": 62.99212598425198,
+          "edgeGapMil": 558.0278740157485
+        },
+        {
+          "ref": "J7",
+          "id": "e59",
+          "xMil": 252.99500000000006,
+          "yMil": 7421.98,
+          "radiusMil": 62.99212598425198,
+          "edgeGapMil": 1379.6476927788613
+        },
+        {
+          "ref": "J7",
+          "id": "e60",
+          "xMil": 252.99499999999995,
+          "yMil": 5570.02,
+          "radiusMil": 62.99212598425198,
+          "edgeGapMil": 1138.9810926187954
+        },
+        {
+          "ref": "J8",
+          "id": "e59",
+          "xMil": 2457.005,
+          "yMil": 5570.02,
+          "radiusMil": 62.99212598425198,
+          "edgeGapMil": 13.02787401574846
+        },
+        {
+          "ref": "J8",
+          "id": "e60",
+          "xMil": 2457.005,
+          "yMil": 7421.98,
+          "radiusMil": 62.99212598425198,
+          "edgeGapMil": 1574.1972207188007
+        }
+      ],
+      "pass": true
+    },
+    {
+      "shiftMil": 3,
+      "trace": {
+        "net": "M4S_I",
+        "layer": 2,
+        "widthMil": 10,
+        "pointsMil": [
+          [
+            1217.0787,
+            6342.0709
+          ],
+          [
+            1244,
+            6315
+          ],
+          [
+            1244,
+            6259
+          ],
+          [
+            2015,
+            5488
+          ],
+          [
+            2569,
+            5488
+          ],
+          [
+            2572,
+            5491
+          ]
+        ]
+      },
+      "minimumForeignCopperGapMil": 10.574406749828775,
+      "nearestForeignObject": "eabeaf55bf5cd66a",
+      "nearestForeignNet": "GND",
+      "holeClearances": [
+        {
+          "ref": "J3",
+          "id": "e59",
+          "xMil": 252.99500000000006,
+          "yMil": 2303.98,
+          "radiusMil": 62.99212598425198,
+          "edgeGapMil": 3571.052388778517
+        },
+        {
+          "ref": "J3",
+          "id": "e60",
+          "xMil": 252.99499999999995,
+          "yMil": 452.02,
+          "radiusMil": 62.99212598425198,
+          "edgeGapMil": 5267.338808496288
+        },
+        {
+          "ref": "J4",
+          "id": "e59",
+          "xMil": 2457.005,
+          "yMil": 452.02,
+          "radiusMil": 62.99212598425198,
+          "edgeGapMil": 4967.987874015748
+        },
+        {
+          "ref": "J4",
+          "id": "e60",
+          "xMil": 2457.005,
+          "yMil": 2303.98,
+          "radiusMil": 62.99212598425198,
+          "edgeGapMil": 3116.0278740157482
+        },
+        {
+          "ref": "J5",
+          "id": "e59",
+          "xMil": 252.99500000000006,
+          "yMil": 4862.98,
+          "radiusMil": 62.99212598425198,
+          "edgeGapMil": 1619.8894383775669
+        },
+        {
+          "ref": "J5",
+          "id": "e60",
+          "xMil": 252.99499999999995,
+          "yMil": 3011.02,
+          "radiusMil": 62.99212598425198,
+          "edgeGapMil": 2971.7597619870344
+        },
+        {
+          "ref": "J6",
+          "id": "e59",
+          "xMil": 2457.005,
+          "yMil": 3011.02,
+          "radiusMil": 62.99212598425198,
+          "edgeGapMil": 2408.987874015748
+        },
+        {
+          "ref": "J6",
+          "id": "e60",
+          "xMil": 2457.005,
+          "yMil": 4862.98,
+          "radiusMil": 62.99212598425198,
+          "edgeGapMil": 557.0278740157485
+        },
+        {
+          "ref": "J7",
+          "id": "e59",
+          "xMil": 252.99500000000006,
+          "yMil": 7421.98,
+          "radiusMil": 62.99212598425198,
+          "edgeGapMil": 1379.6476927788613
+        },
+        {
+          "ref": "J7",
+          "id": "e60",
+          "xMil": 252.99499999999995,
+          "yMil": 5570.02,
+          "radiusMil": 62.99212598425198,
+          "edgeGapMil": 1138.9810926187954
+        },
+        {
+          "ref": "J8",
+          "id": "e59",
+          "xMil": 2457.005,
+          "yMil": 5570.02,
+          "radiusMil": 62.99212598425198,
+          "edgeGapMil": 14.02787401574846
+        },
+        {
+          "ref": "J8",
+          "id": "e60",
+          "xMil": 2457.005,
+          "yMil": 7421.98,
+          "radiusMil": 62.99212598425198,
+          "edgeGapMil": 1574.1972207188007
+        }
+      ],
+      "pass": true
+    },
+    {
+      "shiftMil": 4,
+      "trace": {
+        "net": "M4S_I",
+        "layer": 2,
+        "widthMil": 10,
+        "pointsMil": [
+          [
+            1217.0787,
+            6342.0709
+          ],
+          [
+            1244,
+            6315
+          ],
+          [
+            1244,
+            6259
+          ],
+          [
+            2016,
+            5487
+          ],
+          [
+            2568,
+            5487
+          ],
+          [
+            2572,
+            5491
+          ]
+        ]
+      },
+      "minimumForeignCopperGapMil": 10.574406749828775,
+      "nearestForeignObject": "eabeaf55bf5cd66a",
+      "nearestForeignNet": "GND",
+      "holeClearances": [
+        {
+          "ref": "J3",
+          "id": "e59",
+          "xMil": 252.99500000000006,
+          "yMil": 2303.98,
+          "radiusMil": 62.99212598425198,
+          "edgeGapMil": 3570.661876586616
+        },
+        {
+          "ref": "J3",
+          "id": "e60",
+          "xMil": 252.99499999999995,
+          "yMil": 452.02,
+          "radiusMil": 62.99212598425198,
+          "edgeGapMil": 5266.7253201814765
+        },
+        {
+          "ref": "J4",
+          "id": "e59",
+          "xMil": 2457.005,
+          "yMil": 452.02,
+          "radiusMil": 62.99212598425198,
+          "edgeGapMil": 4966.987874015747
+        },
+        {
+          "ref": "J4",
+          "id": "e60",
+          "xMil": 2457.005,
+          "yMil": 2303.98,
+          "radiusMil": 62.99212598425198,
+          "edgeGapMil": 3115.027874015748
+        },
+        {
+          "ref": "J5",
+          "id": "e59",
+          "xMil": 252.99500000000006,
+          "yMil": 4862.98,
+          "radiusMil": 62.99212598425198,
+          "edgeGapMil": 1619.8894383775669
+        },
+        {
+          "ref": "J5",
+          "id": "e60",
+          "xMil": 252.99499999999995,
+          "yMil": 3011.02,
+          "radiusMil": 62.99212598425198,
+          "edgeGapMil": 2971.5248735446203
+        },
+        {
+          "ref": "J6",
+          "id": "e59",
+          "xMil": 2457.005,
+          "yMil": 3011.02,
+          "radiusMil": 62.99212598425198,
+          "edgeGapMil": 2407.9878740157474
+        },
+        {
+          "ref": "J6",
+          "id": "e60",
+          "xMil": 2457.005,
+          "yMil": 4862.98,
+          "radiusMil": 62.99212598425198,
+          "edgeGapMil": 556.0278740157486
+        },
+        {
+          "ref": "J7",
+          "id": "e59",
+          "xMil": 252.99500000000006,
+          "yMil": 7421.98,
+          "radiusMil": 62.99212598425198,
+          "edgeGapMil": 1379.6476927788613
+        },
+        {
+          "ref": "J7",
+          "id": "e60",
+          "xMil": 252.99499999999995,
+          "yMil": 5570.02,
+          "radiusMil": 62.99212598425198,
+          "edgeGapMil": 1138.9810926187954
+        },
+        {
+          "ref": "J8",
+          "id": "e59",
+          "xMil": 2457.005,
+          "yMil": 5570.02,
+          "radiusMil": 62.99212598425198,
+          "edgeGapMil": 15.02787401574846
+        },
+        {
+          "ref": "J8",
+          "id": "e60",
+          "xMil": 2457.005,
+          "yMil": 7421.98,
+          "radiusMil": 62.99212598425198,
+          "edgeGapMil": 1574.1972207188007
+        }
+      ],
+      "pass": true
+    },
+    {
+      "shiftMil": 5,
+      "trace": {
+        "net": "M4S_I",
+        "layer": 2,
+        "widthMil": 10,
+        "pointsMil": [
+          [
+            1217.0787,
+            6342.0709
+          ],
+          [
+            1244,
+            6315
+          ],
+          [
+            1244,
+            6259
+          ],
+          [
+            2017,
+            5486
+          ],
+          [
+            2567,
+            5486
+          ],
+          [
+            2572,
+            5491
+          ]
+        ]
+      },
+      "minimumForeignCopperGapMil": 10.574406749828771,
+      "nearestForeignObject": "eabeaf55bf5cd66a",
+      "nearestForeignNet": "GND",
+      "holeClearances": [
+        {
+          "ref": "J3",
+          "id": "e59",
+          "xMil": 252.99500000000006,
+          "yMil": 2303.98,
+          "radiusMil": 62.99212598425198,
+          "edgeGapMil": 3570.271872191938
+        },
+        {
+          "ref": "J3",
+          "id": "e60",
+          "xMil": 252.99499999999995,
+          "yMil": 452.02,
+          "radiusMil": 62.99212598425198,
+          "edgeGapMil": 5266.1121362536915
+        },
+        {
+          "ref": "J4",
+          "id": "e59",
+          "xMil": 2457.005,
+          "yMil": 452.02,
+          "radiusMil": 62.99212598425198,
+          "edgeGapMil": 4965.9878740157465
+        },
+        {
+          "ref": "J4",
+          "id": "e60",
+          "xMil": 2457.005,
+          "yMil": 2303.98,
+          "radiusMil": 62.99212598425198,
+          "edgeGapMil": 3114.027874015748
+        },
+        {
+          "ref": "J5",
+          "id": "e59",
+          "xMil": 252.99500000000006,
+          "yMil": 4862.98,
+          "radiusMil": 62.99212598425198,
+          "edgeGapMil": 1619.8894383775666
+        },
+        {
+          "ref": "J5",
+          "id": "e60",
+          "xMil": 252.99499999999995,
+          "yMil": 3011.02,
+          "radiusMil": 62.99212598425198,
+          "edgeGapMil": 2971.290624999111
+        },
+        {
+          "ref": "J6",
+          "id": "e59",
+          "xMil": 2457.005,
+          "yMil": 3011.02,
+          "radiusMil": 62.99212598425198,
+          "edgeGapMil": 2406.987874015748
+        },
+        {
+          "ref": "J6",
+          "id": "e60",
+          "xMil": 2457.005,
+          "yMil": 4862.98,
+          "radiusMil": 62.99212598425198,
+          "edgeGapMil": 555.0278740157485
+        },
+        {
+          "ref": "J7",
+          "id": "e59",
+          "xMil": 252.99500000000006,
+          "yMil": 7421.98,
+          "radiusMil": 62.99212598425198,
+          "edgeGapMil": 1379.6476927788613
+        },
+        {
+          "ref": "J7",
+          "id": "e60",
+          "xMil": 252.99499999999995,
+          "yMil": 5570.02,
+          "radiusMil": 62.99212598425198,
+          "edgeGapMil": 1138.9810926187954
+        },
+        {
+          "ref": "J8",
+          "id": "e59",
+          "xMil": 2457.005,
+          "yMil": 5570.02,
+          "radiusMil": 62.99212598425198,
+          "edgeGapMil": 16.02787401574846
+        },
+        {
+          "ref": "J8",
+          "id": "e60",
+          "xMil": 2457.005,
+          "yMil": 7421.98,
+          "radiusMil": 62.99212598425198,
+          "edgeGapMil": 1574.1972207188007
+        }
+      ],
+      "pass": true
+    }
+  ],
+  "chosenShiftMil": 3,
+  "copperClearance": {
+    "minimumMil": 10.574406749828775,
+    "requiredMil": 6.5,
+    "nearestObject": "eabeaf55bf5cd66a",
+    "nearestNet": "GND"
+  },
+  "slotClearance": {
+    "minimumMil": 14.02787401574846,
+    "minimumMm": 0.35630800000001084,
+    "requiredNativeMil": 11.811,
+    "designTargetMm": 0.32,
+    "holes": [
+      {
+        "ref": "J3",
+        "id": "e59",
+        "xMil": 252.99500000000006,
+        "yMil": 2303.98,
+        "radiusMil": 62.99212598425198,
+        "edgeGapMil": 3571.052388778517
+      },
+      {
+        "ref": "J3",
+        "id": "e60",
+        "xMil": 252.99499999999995,
+        "yMil": 452.02,
+        "radiusMil": 62.99212598425198,
+        "edgeGapMil": 5267.338808496288
+      },
+      {
+        "ref": "J4",
+        "id": "e59",
+        "xMil": 2457.005,
+        "yMil": 452.02,
+        "radiusMil": 62.99212598425198,
+        "edgeGapMil": 4967.987874015748
+      },
+      {
+        "ref": "J4",
+        "id": "e60",
+        "xMil": 2457.005,
+        "yMil": 2303.98,
+        "radiusMil": 62.99212598425198,
+        "edgeGapMil": 3116.0278740157482
+      },
+      {
+        "ref": "J5",
+        "id": "e59",
+        "xMil": 252.99500000000006,
+        "yMil": 4862.98,
+        "radiusMil": 62.99212598425198,
+        "edgeGapMil": 1619.8894383775669
+      },
+      {
+        "ref": "J5",
+        "id": "e60",
+        "xMil": 252.99499999999995,
+        "yMil": 3011.02,
+        "radiusMil": 62.99212598425198,
+        "edgeGapMil": 2971.7597619870344
+      },
+      {
+        "ref": "J6",
+        "id": "e59",
+        "xMil": 2457.005,
+        "yMil": 3011.02,
+        "radiusMil": 62.99212598425198,
+        "edgeGapMil": 2408.987874015748
+      },
+      {
+        "ref": "J6",
+        "id": "e60",
+        "xMil": 2457.005,
+        "yMil": 4862.98,
+        "radiusMil": 62.99212598425198,
+        "edgeGapMil": 557.0278740157485
+      },
+      {
+        "ref": "J7",
+        "id": "e59",
+        "xMil": 252.99500000000006,
+        "yMil": 7421.98,
+        "radiusMil": 62.99212598425198,
+        "edgeGapMil": 1379.6476927788613
+      },
+      {
+        "ref": "J7",
+        "id": "e60",
+        "xMil": 252.99499999999995,
+        "yMil": 5570.02,
+        "radiusMil": 62.99212598425198,
+        "edgeGapMil": 1138.9810926187954
+      },
+      {
+        "ref": "J8",
+        "id": "e59",
+        "xMil": 2457.005,
+        "yMil": 5570.02,
+        "radiusMil": 62.99212598425198,
+        "edgeGapMil": 14.02787401574846
+      },
+      {
+        "ref": "J8",
+        "id": "e60",
+        "xMil": 2457.005,
+        "yMil": 7421.98,
+        "radiusMil": 62.99212598425198,
+        "edgeGapMil": 1574.1972207188007
+      }
+    ]
+  },
+  "fullDeltaAudit": {
+    "status": "PASS_CONTINUOUS_DELTA_CLEARANCE",
+    "clearanceMil": 6.5,
+    "candidateObjectsChecked": 1,
+    "nearbyForeignPairsChecked": 20,
+    "violations": [],
+    "finalProvisionalOpenNets": [],
+    "finalStrictStaticOpenNets": [
+      "GND"
+    ],
+    "padFreeCopperIslands": [],
+    "unnettedCopper": [],
+    "groundPlaneAssumption": "PROVISIONAL: all GND vias/TH pads joined only for search; native layer15 GND rebuild/connectivity/antipad verification required",
+    "releaseReady": false,
+    "remainingGates": [
+      "Native derived plane geometry/antipads/connectivity",
+      "Native DRC",
+      "Exact saved/closed/reopened source comparison",
+      "PCB manufacturing and assembly release checks"
+    ]
+  },
+  "M4S_IConnectedPadMembershipUnchanged": [
+    [
+      "b8f45c03a100faede8",
+      "d614abbb1a6527c8e36",
+      "dc04883ca789f18ee7"
+    ]
+  ],
+  "lengthBeforeMm": 44.203478095378806,
+  "lengthAfterMm": 44.26660424228447,
+  "geometryNotes": "Same10milBottomlayer and bothendpoints preserved. Firstthreevertices unchanged; continueexisting45deg diagonal3mil farther, lowerlastlonghorizontal3mil, restoreexactendpointwith3mil45deg endsegment. No vias or othernets changed.",
+  "requiredPostApply": [
+    "Guard currenttrack exactcoordinates/width/net/layer",
+    "Modifyonlythistrack or exactguardedremove+recreate",
+    "save/reopen",
+    "nativeDRCwith11.811milslotrule",
+    "freshcapture andRC2exports"
+  ]
+}

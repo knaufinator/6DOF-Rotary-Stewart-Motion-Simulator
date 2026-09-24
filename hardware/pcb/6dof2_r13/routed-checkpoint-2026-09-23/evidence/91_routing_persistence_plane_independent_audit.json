@@ -1,0 +1,5379 @@
+{
+  "status": "PASS_PERSISTENCE_ACTUAL_GND_AND_REQUIRED_USB_REFERENCE",
+  "capture": "91_final_routes_capture.json",
+  "captureSha256": "0c70d5a9eb78f6317e6be551e96726a2df26d6776332b010aba2f17da81db183",
+  "inventory": {
+    "components": 144,
+    "pads": 654,
+    "tracks": 967,
+    "vias": 399,
+    "regions": 8,
+    "fills": 689
+  },
+  "checks": [
+    {
+      "name": "source85_exact_hash",
+      "pass": true
+    },
+    {
+      "name": "apply_rebuild_reload_capture_sequence",
+      "pass": true
+    },
+    {
+      "name": "exact88_creation_counts",
+      "pass": true
+    },
+    {
+      "name": "exact88_removal_guards",
+      "pass": true
+    },
+    {
+      "name": "exact_API_scope_components",
+      "pass": true,
+      "before": 144,
+      "after": 144,
+      "added": [],
+      "removed": [],
+      "changed": []
+    },
+    {
+      "name": "exact_API_scope_pads",
+      "pass": true,
+      "before": 654,
+      "after": 654,
+      "added": [],
+      "removed": [],
+      "changed": []
+    },
+    {
+      "name": "exact_API_scope_tracks",
+      "pass": true,
+      "before": 915,
+      "after": 967,
+      "added": [
+        "0284892ebf4bd0c6",
+        "0710b731afe16676",
+        "0a01be5bd790a493",
+        "0df6477b676a6d53",
+        "0e42132621eda993",
+        "0f41de6ba901d897",
+        "163d2e11ef6bc7a1",
+        "1bd4bf2e855d3ff6",
+        "2bcaf308e1f44934",
+        "2d012cdb09ebb55b",
+        "2e4e547764754078",
+        "38fb6c611705316c",
+        "3a07dc889a06c240",
+        "3aa96277185ac1fc",
+        "3b673c45e4197486",
+        "4a3104dcacc37345",
+        "4cd5fd26d429cc3c",
+        "50bb3198955b82ff",
+        "51cebe8f9288b0cc",
+        "5977927e9a4a33ea",
+        "5bb688953da5676d",
+        "6659064d8bff970b",
+        "6aac3aa6a17ba3c0",
+        "6cad2758652ccc45",
+        "6de18bbf624c2ed8",
+        "721b293e13136a47",
+        "76a6e568d75505ca",
+        "76a8062f3a5023fa",
+        "7b81e3d2eb47a4ac",
+        "7fd980edfec5ded3",
+        "80fe26f8ebcf2bb0",
+        "81649d64f772e89d",
+        "832b2d692aca1940",
+        "847ceb28154e7239",
+        "8a59f687416cbf80",
+        "8d565c36f0c801ff",
+        "900dd0c4c74ab3c4",
+        "91c322dc832f6737",
+        "a1a3e9b53c4aa138",
+        "a7307ed7c6967731",
+        "a7f7092689bef08e",
+        "a8349f92133f1e36",
+        "a9b0b1d16e1a9472",
+        "ac6a8b2033bd78bc",
+        "b173cca154193475",
+        "b57bb1368d4136bb",
+        "bbbf7933e4456086",
+        "c788058b56908fe5",
+        "c9b936b249935523",
+        "d0fe568ff9dbde32",
+        "da6d9a756f77909b",
+        "e8d008244eaf6223",
+        "ea979bdea386863e",
+        "eb8373de73cf0016",
+        "ee57a98fbc05b03e",
+        "f42bf1bfcfb1c4e0"
+      ],
+      "removed": [
+        "1bbf62480e725830",
+        "6f3572cea5f6a8db",
+        "8973a29d6089da4f",
+        "aa5465b9c37b0842"
+      ],
+      "changed": []
+    },
+    {
+      "name": "exact_API_scope_vias",
+      "pass": true,
+      "before": 367,
+      "after": 399,
+      "added": [
+        "118e14c77e3dfa5c",
+        "19f3c33dc4adc503",
+        "1a9587fcce791db5",
+        "1b92d5b6f89ee20b",
+        "2b80474b987ae1dd",
+        "2e7bcaae87f81994",
+        "305862d115b22dbe",
+        "356953743bddccc6",
+        "39bfeb96cda9ce39",
+        "55771cf76b879af5",
+        "56674f5e7cd79726",
+        "577ddfb3dd8c742e",
+        "59f29f83f027848a",
+        "5e00ed32e0c06320",
+        "619628be8aba1d8c",
+        "6c54be83471ce0f1",
+        "708370906ac2dad8",
+        "785c233924ecdf33",
+        "795c3eae24d56e15",
+        "7f8937776a79ac56",
+        "a6637f9065a48e50",
+        "b1dfe07534ff0948",
+        "b33042660ad888f4",
+        "c0d11a5629585feb",
+        "caaef68b25cf2632",
+        "cfa1368e30b53dee",
+        "d04397806d7a284c",
+        "db5dcae7b1e146cd",
+        "e0cb1785e895371a",
+        "e1d2ccb311076947",
+        "e81de51360b38d50",
+        "ff9875616e7adb1c"
+      ],
+      "removed": [],
+      "changed": []
+    },
+    {
+      "name": "exact_API_scope_regions",
+      "pass": true,
+      "before": 8,
+      "after": 8,
+      "added": [],
+      "removed": [],
+      "changed": []
+    },
+    {
+      "name": "exact_API_scope_fills",
+      "pass": true,
+      "before": 689,
+      "after": 689,
+      "added": [],
+      "removed": [],
+      "changed": []
+    },
+    {
+      "name": "persisted_trace_2d012cdb09ebb55b",
+      "pass": true
+    },
+    {
+      "name": "persisted_trace_a7f7092689bef08e",
+      "pass": true
+    },
+    {
+      "name": "persisted_trace_b57bb1368d4136bb",
+      "pass": true
+    },
+    {
+      "name": "persisted_trace_2bcaf308e1f44934",
+      "pass": true
+    },
+    {
+      "name": "persisted_trace_a9b0b1d16e1a9472",
+      "pass": true
+    },
+    {
+      "name": "persisted_trace_6de18bbf624c2ed8",
+      "pass": true
+    },
+    {
+      "name": "persisted_trace_c9b936b249935523",
+      "pass": true
+    },
+    {
+      "name": "persisted_trace_4a3104dcacc37345",
+      "pass": true
+    },
+    {
+      "name": "persisted_trace_6659064d8bff970b",
+      "pass": true
+    },
+    {
+      "name": "persisted_trace_0f41de6ba901d897",
+      "pass": true
+    },
+    {
+      "name": "persisted_trace_832b2d692aca1940",
+      "pass": true
+    },
+    {
+      "name": "persisted_trace_a1a3e9b53c4aa138",
+      "pass": true
+    },
+    {
+      "name": "persisted_trace_0710b731afe16676",
+      "pass": true
+    },
+    {
+      "name": "persisted_trace_d0fe568ff9dbde32",
+      "pass": true
+    },
+    {
+      "name": "persisted_trace_8a59f687416cbf80",
+      "pass": true
+    },
+    {
+      "name": "persisted_trace_38fb6c611705316c",
+      "pass": true
+    },
+    {
+      "name": "persisted_trace_7fd980edfec5ded3",
+      "pass": true
+    },
+    {
+      "name": "persisted_trace_ac6a8b2033bd78bc",
+      "pass": true
+    },
+    {
+      "name": "persisted_trace_eb8373de73cf0016",
+      "pass": true
+    },
+    {
+      "name": "persisted_trace_5977927e9a4a33ea",
+      "pass": true
+    },
+    {
+      "name": "persisted_trace_a8349f92133f1e36",
+      "pass": true
+    },
+    {
+      "name": "persisted_trace_2e4e547764754078",
+      "pass": true
+    },
+    {
+      "name": "persisted_trace_0e42132621eda993",
+      "pass": true
+    },
+    {
+      "name": "persisted_trace_721b293e13136a47",
+      "pass": true
+    },
+    {
+      "name": "persisted_trace_0284892ebf4bd0c6",
+      "pass": true
+    },
+    {
+      "name": "persisted_trace_51cebe8f9288b0cc",
+      "pass": true
+    },
+    {
+      "name": "persisted_trace_3a07dc889a06c240",
+      "pass": true
+    },
+    {
+      "name": "persisted_trace_3aa96277185ac1fc",
+      "pass": true
+    },
+    {
+      "name": "persisted_trace_0df6477b676a6d53",
+      "pass": true
+    },
+    {
+      "name": "persisted_trace_1bd4bf2e855d3ff6",
+      "pass": true
+    },
+    {
+      "name": "persisted_trace_a7307ed7c6967731",
+      "pass": true
+    },
+    {
+      "name": "persisted_trace_da6d9a756f77909b",
+      "pass": true
+    },
+    {
+      "name": "persisted_trace_ea979bdea386863e",
+      "pass": true
+    },
+    {
+      "name": "persisted_trace_8d565c36f0c801ff",
+      "pass": true
+    },
+    {
+      "name": "persisted_trace_bbbf7933e4456086",
+      "pass": true
+    },
+    {
+      "name": "persisted_trace_50bb3198955b82ff",
+      "pass": true
+    },
+    {
+      "name": "persisted_trace_6aac3aa6a17ba3c0",
+      "pass": true
+    },
+    {
+      "name": "persisted_trace_847ceb28154e7239",
+      "pass": true
+    },
+    {
+      "name": "persisted_trace_5bb688953da5676d",
+      "pass": true
+    },
+    {
+      "name": "persisted_trace_b173cca154193475",
+      "pass": true
+    },
+    {
+      "name": "persisted_trace_c788058b56908fe5",
+      "pass": true
+    },
+    {
+      "name": "persisted_trace_91c322dc832f6737",
+      "pass": true
+    },
+    {
+      "name": "persisted_trace_900dd0c4c74ab3c4",
+      "pass": true
+    },
+    {
+      "name": "persisted_trace_3b673c45e4197486",
+      "pass": true
+    },
+    {
+      "name": "persisted_trace_81649d64f772e89d",
+      "pass": true
+    },
+    {
+      "name": "persisted_trace_76a8062f3a5023fa",
+      "pass": true
+    },
+    {
+      "name": "persisted_trace_163d2e11ef6bc7a1",
+      "pass": true
+    },
+    {
+      "name": "persisted_trace_4cd5fd26d429cc3c",
+      "pass": true
+    },
+    {
+      "name": "persisted_trace_f42bf1bfcfb1c4e0",
+      "pass": true
+    },
+    {
+      "name": "persisted_trace_76a6e568d75505ca",
+      "pass": true
+    },
+    {
+      "name": "persisted_trace_7b81e3d2eb47a4ac",
+      "pass": true
+    },
+    {
+      "name": "persisted_trace_6cad2758652ccc45",
+      "pass": true
+    },
+    {
+      "name": "persisted_trace_e8d008244eaf6223",
+      "pass": true
+    },
+    {
+      "name": "persisted_trace_80fe26f8ebcf2bb0",
+      "pass": true
+    },
+    {
+      "name": "persisted_trace_ee57a98fbc05b03e",
+      "pass": true
+    },
+    {
+      "name": "persisted_trace_0a01be5bd790a493",
+      "pass": true
+    },
+    {
+      "name": "persisted_via_2e7bcaae87f81994",
+      "pass": true
+    },
+    {
+      "name": "persisted_via_b1dfe07534ff0948",
+      "pass": true
+    },
+    {
+      "name": "persisted_via_b33042660ad888f4",
+      "pass": true
+    },
+    {
+      "name": "persisted_via_c0d11a5629585feb",
+      "pass": true
+    },
+    {
+      "name": "persisted_via_577ddfb3dd8c742e",
+      "pass": true
+    },
+    {
+      "name": "persisted_via_305862d115b22dbe",
+      "pass": true
+    },
+    {
+      "name": "persisted_via_39bfeb96cda9ce39",
+      "pass": true
+    },
+    {
+      "name": "persisted_via_cfa1368e30b53dee",
+      "pass": true
+    },
+    {
+      "name": "persisted_via_795c3eae24d56e15",
+      "pass": true
+    },
+    {
+      "name": "persisted_via_55771cf76b879af5",
+      "pass": true
+    },
+    {
+      "name": "persisted_via_db5dcae7b1e146cd",
+      "pass": true
+    },
+    {
+      "name": "persisted_via_118e14c77e3dfa5c",
+      "pass": true
+    },
+    {
+      "name": "persisted_via_19f3c33dc4adc503",
+      "pass": true
+    },
+    {
+      "name": "persisted_via_caaef68b25cf2632",
+      "pass": true
+    },
+    {
+      "name": "persisted_via_e81de51360b38d50",
+      "pass": true
+    },
+    {
+      "name": "persisted_via_d04397806d7a284c",
+      "pass": true
+    },
+    {
+      "name": "persisted_via_56674f5e7cd79726",
+      "pass": true
+    },
+    {
+      "name": "persisted_via_59f29f83f027848a",
+      "pass": true
+    },
+    {
+      "name": "persisted_via_ff9875616e7adb1c",
+      "pass": true
+    },
+    {
+      "name": "persisted_via_5e00ed32e0c06320",
+      "pass": true
+    },
+    {
+      "name": "persisted_via_708370906ac2dad8",
+      "pass": true
+    },
+    {
+      "name": "persisted_via_356953743bddccc6",
+      "pass": true
+    },
+    {
+      "name": "persisted_via_6c54be83471ce0f1",
+      "pass": true
+    },
+    {
+      "name": "persisted_via_a6637f9065a48e50",
+      "pass": true
+    },
+    {
+      "name": "persisted_via_1b92d5b6f89ee20b",
+      "pass": true
+    },
+    {
+      "name": "persisted_via_619628be8aba1d8c",
+      "pass": true
+    },
+    {
+      "name": "persisted_via_e0cb1785e895371a",
+      "pass": true
+    },
+    {
+      "name": "persisted_via_1a9587fcce791db5",
+      "pass": true
+    },
+    {
+      "name": "persisted_via_2b80474b987ae1dd",
+      "pass": true
+    },
+    {
+      "name": "persisted_via_7f8937776a79ac56",
+      "pass": true
+    },
+    {
+      "name": "persisted_via_e1d2ccb311076947",
+      "pass": true
+    },
+    {
+      "name": "persisted_via_785c233924ecdf33",
+      "pass": true
+    },
+    {
+      "name": "native_added_only88_copper",
+      "pass": true
+    },
+    {
+      "name": "native_removed_only4_guarded_tracks",
+      "pass": true
+    },
+    {
+      "name": "all_unrelated_native_records_preserved",
+      "pass": true,
+      "changed": [
+        [
+          "DOCHEAD",
+          ""
+        ],
+        [
+          "POURED",
+          "[\"POURED\",\"a18ff0f4e7510908\"]"
+        ]
+      ]
+    },
+    {
+      "name": "native_pour_source_unchanged",
+      "pass": true
+    },
+    {
+      "name": "one_actual_connected_native_GND_body",
+      "pass": true,
+      "count": 1,
+      "areaMm2": 30612.17497651034
+    },
+    {
+      "name": "new_native_antipad_2e7bcaae87f81994",
+      "pass": true,
+      "net": "LOGIC_5V",
+      "wholePlaneGapMil": 14.099006191974922,
+      "matchingExactCircleCount": 1
+    },
+    {
+      "name": "new_native_antipad_b1dfe07534ff0948",
+      "pass": true,
+      "net": "LOGIC_5V",
+      "wholePlaneGapMil": 14.09900619197457,
+      "matchingExactCircleCount": 1
+    },
+    {
+      "name": "new_native_antipad_b33042660ad888f4",
+      "pass": true,
+      "net": "LOGIC_5V",
+      "wholePlaneGapMil": 14.09900619197457,
+      "matchingExactCircleCount": 1
+    },
+    {
+      "name": "new_native_antipad_c0d11a5629585feb",
+      "pass": true,
+      "net": "LOGIC_5V",
+      "wholePlaneGapMil": 14.099006191973967,
+      "matchingExactCircleCount": 1
+    },
+    {
+      "name": "new_native_antipad_577ddfb3dd8c742e",
+      "pass": true,
+      "net": "VCC5",
+      "wholePlaneGapMil": 14.099006191974311,
+      "matchingExactCircleCount": 1
+    },
+    {
+      "name": "new_native_antipad_305862d115b22dbe",
+      "pass": true,
+      "net": "VCC5",
+      "wholePlaneGapMil": 14.099006191974311,
+      "matchingExactCircleCount": 1
+    },
+    {
+      "name": "new_native_antipad_39bfeb96cda9ce39",
+      "pass": true,
+      "net": "VCC5",
+      "wholePlaneGapMil": 14.099006191974837,
+      "matchingExactCircleCount": 1
+    },
+    {
+      "name": "new_native_antipad_cfa1368e30b53dee",
+      "pass": true,
+      "net": "VCC5",
+      "wholePlaneGapMil": 14.09900619197457,
+      "matchingExactCircleCount": 1
+    },
+    {
+      "name": "new_native_antipad_795c3eae24d56e15",
+      "pass": true,
+      "net": "ESTOP_MCU",
+      "wholePlaneGapMil": 14.099013361385268,
+      "matchingExactCircleCount": 0
+    },
+    {
+      "name": "new_native_antipad_55771cf76b879af5",
+      "pass": true,
+      "net": "ESTOP_MCU",
+      "wholePlaneGapMil": 14.099006191974812,
+      "matchingExactCircleCount": 1
+    },
+    {
+      "name": "new_native_antipad_db5dcae7b1e146cd",
+      "pass": true,
+      "net": "ESTOP_MCU",
+      "wholePlaneGapMil": 14.099006191974812,
+      "matchingExactCircleCount": 1
+    },
+    {
+      "name": "new_native_antipad_118e14c77e3dfa5c",
+      "pass": true,
+      "net": "ESTOP_MCU",
+      "wholePlaneGapMil": 14.099006191974812,
+      "matchingExactCircleCount": 1
+    },
+    {
+      "name": "new_native_antipad_19f3c33dc4adc503",
+      "pass": true,
+      "net": "ARM_PULSE",
+      "wholePlaneGapMil": 14.099006191973103,
+      "matchingExactCircleCount": 1
+    },
+    {
+      "name": "new_native_antipad_caaef68b25cf2632",
+      "pass": true,
+      "net": "ARM_PULSE",
+      "wholePlaneGapMil": 14.099006191974812,
+      "matchingExactCircleCount": 1
+    },
+    {
+      "name": "new_native_antipad_e81de51360b38d50",
+      "pass": true,
+      "net": "MCU_INHIBIT",
+      "wholePlaneGapMil": 14.099006191973103,
+      "matchingExactCircleCount": 1
+    },
+    {
+      "name": "new_native_antipad_d04397806d7a284c",
+      "pass": true,
+      "net": "MCU_INHIBIT",
+      "wholePlaneGapMil": 14.099006191974812,
+      "matchingExactCircleCount": 1
+    },
+    {
+      "name": "new_native_antipad_56674f5e7cd79726",
+      "pass": true,
+      "net": "ARM_PULSE",
+      "wholePlaneGapMil": 14.099006191974812,
+      "matchingExactCircleCount": 1
+    },
+    {
+      "name": "new_native_antipad_59f29f83f027848a",
+      "pass": true,
+      "net": "ARM_PULSE",
+      "wholePlaneGapMil": 14.099006191974812,
+      "matchingExactCircleCount": 1
+    },
+    {
+      "name": "new_native_antipad_ff9875616e7adb1c",
+      "pass": true,
+      "net": "MCU_INHIBIT",
+      "wholePlaneGapMil": 14.099006418625557,
+      "matchingExactCircleCount": 0
+    },
+    {
+      "name": "new_native_antipad_5e00ed32e0c06320",
+      "pass": true,
+      "net": "MCU_INHIBIT",
+      "wholePlaneGapMil": 14.099006191974812,
+      "matchingExactCircleCount": 1
+    },
+    {
+      "name": "new_native_antipad_708370906ac2dad8",
+      "pass": true,
+      "net": "MCU_INHIBIT",
+      "wholePlaneGapMil": 14.099006191975015,
+      "matchingExactCircleCount": 1
+    },
+    {
+      "name": "new_native_antipad_356953743bddccc6",
+      "pass": true,
+      "net": "M2D_N",
+      "wholePlaneGapMil": 14.09900619197488,
+      "matchingExactCircleCount": 1
+    },
+    {
+      "name": "new_native_antipad_6c54be83471ce0f1",
+      "pass": true,
+      "net": "M2D_N",
+      "wholePlaneGapMil": 14.099006191974613,
+      "matchingExactCircleCount": 1
+    },
+    {
+      "name": "new_native_antipad_a6637f9065a48e50",
+      "pass": true,
+      "net": "DRIVE_ENABLE",
+      "wholePlaneGapMil": 14.099006191974922,
+      "matchingExactCircleCount": 1
+    },
+    {
+      "name": "new_native_antipad_1b92d5b6f89ee20b",
+      "pass": true,
+      "net": "DRIVE_ENABLE",
+      "wholePlaneGapMil": 14.09900619197488,
+      "matchingExactCircleCount": 1
+    },
+    {
+      "name": "new_native_antipad_619628be8aba1d8c",
+      "pass": true,
+      "net": "DRIVE_ENABLE",
+      "wholePlaneGapMil": 14.09900619197457,
+      "matchingExactCircleCount": 1
+    },
+    {
+      "name": "new_native_antipad_e0cb1785e895371a",
+      "pass": true,
+      "net": "DRIVE_ENABLE",
+      "wholePlaneGapMil": 14.09900619197457,
+      "matchingExactCircleCount": 1
+    },
+    {
+      "name": "new_native_antipad_1a9587fcce791db5",
+      "pass": true,
+      "net": "DRIVE_ENABLE",
+      "wholePlaneGapMil": 14.099006191974425,
+      "matchingExactCircleCount": 1
+    },
+    {
+      "name": "new_native_antipad_2b80474b987ae1dd",
+      "pass": true,
+      "net": "DRIVE_ENABLE",
+      "wholePlaneGapMil": 14.099006191973103,
+      "matchingExactCircleCount": 1
+    },
+    {
+      "name": "new_native_antipad_7f8937776a79ac56",
+      "pass": true,
+      "net": "DRIVE_ENABLE",
+      "wholePlaneGapMil": 14.099006191974418,
+      "matchingExactCircleCount": 1
+    },
+    {
+      "name": "new_native_antipad_e1d2ccb311076947",
+      "pass": true,
+      "net": "DRIVE_ENABLE",
+      "wholePlaneGapMil": 14.099006191974418,
+      "matchingExactCircleCount": 1
+    },
+    {
+      "name": "new_native_antipad_785c233924ecdf33",
+      "pass": true,
+      "net": "DRIVE_ENABLE",
+      "wholePlaneGapMil": 14.099006191974631,
+      "matchingExactCircleCount": 1
+    },
+    {
+      "name": "strict_GND_island_actual_plane_join_1",
+      "pass": true,
+      "pads": [
+        "C11.2",
+        "U3.8",
+        "J3.10",
+        "J4.10",
+        "J5.10",
+        "J6.10",
+        "U9.15",
+        "U9.13",
+        "U10.15",
+        "U10.13",
+        "R46.2",
+        "R47.2",
+        "R48.2",
+        "R49.2",
+        "R50.2",
+        "R51.2",
+        "R52.2",
+        "R53.2",
+        "R64.2"
+      ],
+      "objectCount": 193
+    },
+    {
+      "name": "strict_GND_island_actual_plane_join_2",
+      "pass": true,
+      "pads": [
+        "C16.2",
+        "C20.2",
+        "C21.2",
+        "C22.2",
+        "U8.3",
+        "U8.14",
+        "U8.16",
+        "U8.19",
+        "U8.23",
+        "U8.29",
+        "U8.48",
+        "C12.2",
+        "C15.2",
+        "C28.2",
+        "C30.2",
+        "C31.2"
+      ],
+      "objectCount": 68
+    },
+    {
+      "name": "strict_GND_island_actual_plane_join_3",
+      "pass": true,
+      "pads": [
+        "U2.41",
+        "U2.41",
+        "U2.41",
+        "U2.41",
+        "U2.41",
+        "U2.41",
+        "U2.41",
+        "U2.41",
+        "U2.41"
+      ],
+      "objectCount": 22
+    },
+    {
+      "name": "strict_GND_island_actual_plane_join_4",
+      "pass": true,
+      "pads": [
+        "U5.8",
+        "J7.10",
+        "J8.10",
+        "R54.2",
+        "R55.2",
+        "R56.2",
+        "R57.2",
+        "R65.2"
+      ],
+      "objectCount": 59
+    },
+    {
+      "name": "strict_GND_island_actual_plane_join_5",
+      "pass": true,
+      "pads": [
+        "U6.8",
+        "U6.7",
+        "U6.6",
+        "U6.5"
+      ],
+      "objectCount": 27
+    },
+    {
+      "name": "strict_GND_island_actual_plane_join_6",
+      "pass": true,
+      "pads": [
+        "C2.2",
+        "C5.2",
+        "D2.2",
+        "U6.4"
+      ],
+      "objectCount": 17
+    },
+    {
+      "name": "strict_GND_island_actual_plane_join_7",
+      "pass": true,
+      "pads": [
+        "J11.B1A12",
+        "J11.1",
+        "D7.2"
+      ],
+      "objectCount": 5
+    },
+    {
+      "name": "strict_GND_island_actual_plane_join_8",
+      "pass": true,
+      "pads": [
+        "U9.11",
+        "U9.9"
+      ],
+      "objectCount": 12
+    },
+    {
+      "name": "strict_GND_island_actual_plane_join_9",
+      "pass": true,
+      "pads": [
+        "Y1.2",
+        "Y1.4"
+      ],
+      "objectCount": 8
+    },
+    {
+      "name": "strict_GND_island_actual_plane_join_10",
+      "pass": true,
+      "pads": [
+        "R2.2",
+        "R3.2"
+      ],
+      "objectCount": 7
+    },
+    {
+      "name": "strict_GND_island_actual_plane_join_11",
+      "pass": true,
+      "pads": [
+        "C26.2",
+        "C27.2"
+      ],
+      "objectCount": 7
+    },
+    {
+      "name": "strict_GND_island_actual_plane_join_12",
+      "pass": true,
+      "pads": [
+        "C40.2",
+        "C41.2"
+      ],
+      "objectCount": 5
+    },
+    {
+      "name": "strict_GND_island_actual_plane_join_13",
+      "pass": true,
+      "pads": [
+        "R62.2",
+        "U11.4"
+      ],
+      "objectCount": 5
+    },
+    {
+      "name": "strict_GND_island_actual_plane_join_14",
+      "pass": true,
+      "pads": [
+        "U14.2",
+        "U14.3"
+      ],
+      "objectCount": 5
+    },
+    {
+      "name": "strict_GND_island_actual_plane_join_15",
+      "pass": true,
+      "pads": [
+        "J11.A1B12",
+        "J11.4"
+      ],
+      "objectCount": 3
+    },
+    {
+      "name": "strict_GND_island_actual_plane_join_16",
+      "pass": true,
+      "pads": [
+        "C1.2"
+      ],
+      "objectCount": 8
+    },
+    {
+      "name": "strict_GND_island_actual_plane_join_17",
+      "pass": true,
+      "pads": [
+        "C13.2"
+      ],
+      "objectCount": 7
+    },
+    {
+      "name": "strict_GND_island_actual_plane_join_18",
+      "pass": true,
+      "pads": [
+        "C29.2"
+      ],
+      "objectCount": 7
+    },
+    {
+      "name": "strict_GND_island_actual_plane_join_19",
+      "pass": true,
+      "pads": [
+        "C3.2"
+      ],
+      "objectCount": 3
+    },
+    {
+      "name": "strict_GND_island_actual_plane_join_20",
+      "pass": true,
+      "pads": [
+        "C4.2"
+      ],
+      "objectCount": 5
+    },
+    {
+      "name": "strict_GND_island_actual_plane_join_21",
+      "pass": true,
+      "pads": [
+        "C6.2"
+      ],
+      "objectCount": 3
+    },
+    {
+      "name": "strict_GND_island_actual_plane_join_22",
+      "pass": true,
+      "pads": [
+        "C7.2"
+      ],
+      "objectCount": 3
+    },
+    {
+      "name": "strict_GND_island_actual_plane_join_23",
+      "pass": true,
+      "pads": [
+        "C8.2"
+      ],
+      "objectCount": 5
+    },
+    {
+      "name": "strict_GND_island_actual_plane_join_24",
+      "pass": true,
+      "pads": [
+        "C9.2"
+      ],
+      "objectCount": 5
+    },
+    {
+      "name": "strict_GND_island_actual_plane_join_25",
+      "pass": true,
+      "pads": [
+        "C10.2"
+      ],
+      "objectCount": 5
+    },
+    {
+      "name": "strict_GND_island_actual_plane_join_26",
+      "pass": true,
+      "pads": [
+        "C14.2"
+      ],
+      "objectCount": 5
+    },
+    {
+      "name": "strict_GND_island_actual_plane_join_27",
+      "pass": true,
+      "pads": [
+        "C17.2"
+      ],
+      "objectCount": 5
+    },
+    {
+      "name": "strict_GND_island_actual_plane_join_28",
+      "pass": true,
+      "pads": [
+        "C18.2"
+      ],
+      "objectCount": 5
+    },
+    {
+      "name": "strict_GND_island_actual_plane_join_29",
+      "pass": true,
+      "pads": [
+        "C19.2"
+      ],
+      "objectCount": 5
+    },
+    {
+      "name": "strict_GND_island_actual_plane_join_30",
+      "pass": true,
+      "pads": [
+        "C25.2"
+      ],
+      "objectCount": 5
+    },
+    {
+      "name": "strict_GND_island_actual_plane_join_31",
+      "pass": true,
+      "pads": [
+        "D4.2"
+      ],
+      "objectCount": 5
+    },
+    {
+      "name": "strict_GND_island_actual_plane_join_32",
+      "pass": true,
+      "pads": [
+        "D5.2"
+      ],
+      "objectCount": 5
+    },
+    {
+      "name": "strict_GND_island_actual_plane_join_33",
+      "pass": true,
+      "pads": [
+        "R10.2"
+      ],
+      "objectCount": 5
+    },
+    {
+      "name": "strict_GND_island_actual_plane_join_34",
+      "pass": true,
+      "pads": [
+        "U2.1"
+      ],
+      "objectCount": 5
+    },
+    {
+      "name": "strict_GND_island_actual_plane_join_35",
+      "pass": true,
+      "pads": [
+        "U2.40"
+      ],
+      "objectCount": 5
+    },
+    {
+      "name": "strict_GND_island_actual_plane_join_36",
+      "pass": true,
+      "pads": [
+        "U4.8"
+      ],
+      "objectCount": 5
+    },
+    {
+      "name": "strict_GND_island_actual_plane_join_37",
+      "pass": true,
+      "pads": [
+        "U7.1"
+      ],
+      "objectCount": 3
+    },
+    {
+      "name": "strict_GND_island_actual_plane_join_38",
+      "pass": true,
+      "pads": [
+        "U8.9"
+      ],
+      "objectCount": 5
+    },
+    {
+      "name": "strict_GND_island_actual_plane_join_39",
+      "pass": true,
+      "pads": [
+        "C32.2"
+      ],
+      "objectCount": 3
+    },
+    {
+      "name": "strict_GND_island_actual_plane_join_40",
+      "pass": true,
+      "pads": [
+        "C35.2"
+      ],
+      "objectCount": 5
+    },
+    {
+      "name": "strict_GND_island_actual_plane_join_41",
+      "pass": true,
+      "pads": [
+        "D6.2"
+      ],
+      "objectCount": 5
+    },
+    {
+      "name": "strict_GND_island_actual_plane_join_42",
+      "pass": true,
+      "pads": [
+        "SW1.2"
+      ],
+      "objectCount": 5
+    },
+    {
+      "name": "strict_GND_island_actual_plane_join_43",
+      "pass": true,
+      "pads": [
+        "SW2.2"
+      ],
+      "objectCount": 5
+    },
+    {
+      "name": "strict_GND_island_actual_plane_join_44",
+      "pass": true,
+      "pads": [
+        "C23.2"
+      ],
+      "objectCount": 5
+    },
+    {
+      "name": "strict_GND_island_actual_plane_join_45",
+      "pass": true,
+      "pads": [
+        "C24.2"
+      ],
+      "objectCount": 5
+    },
+    {
+      "name": "strict_GND_island_actual_plane_join_46",
+      "pass": true,
+      "pads": [
+        "C36.2"
+      ],
+      "objectCount": 5
+    },
+    {
+      "name": "strict_GND_island_actual_plane_join_47",
+      "pass": true,
+      "pads": [
+        "C37.2"
+      ],
+      "objectCount": 3
+    },
+    {
+      "name": "strict_GND_island_actual_plane_join_48",
+      "pass": true,
+      "pads": [
+        "C38.2"
+      ],
+      "objectCount": 3
+    },
+    {
+      "name": "strict_GND_island_actual_plane_join_49",
+      "pass": true,
+      "pads": [
+        "C39.2"
+      ],
+      "objectCount": 3
+    },
+    {
+      "name": "strict_GND_island_actual_plane_join_50",
+      "pass": true,
+      "pads": [
+        "C42.2"
+      ],
+      "objectCount": 3
+    },
+    {
+      "name": "strict_GND_island_actual_plane_join_51",
+      "pass": true,
+      "pads": [
+        "R63.2"
+      ],
+      "objectCount": 3
+    },
+    {
+      "name": "strict_GND_island_actual_plane_join_52",
+      "pass": true,
+      "pads": [
+        "R68.2"
+      ],
+      "objectCount": 3
+    },
+    {
+      "name": "strict_GND_island_actual_plane_join_53",
+      "pass": true,
+      "pads": [
+        "U13.2"
+      ],
+      "objectCount": 3
+    },
+    {
+      "name": "strict_GND_island_actual_plane_join_54",
+      "pass": true,
+      "pads": [
+        "U12.2"
+      ],
+      "objectCount": 3
+    },
+    {
+      "name": "strict_GND_island_actual_plane_join_55",
+      "pass": true,
+      "pads": [
+        "J1.1"
+      ],
+      "objectCount": 1
+    },
+    {
+      "name": "strict_GND_island_actual_plane_join_56",
+      "pass": true,
+      "pads": [
+        "J2.2"
+      ],
+      "objectCount": 1
+    },
+    {
+      "name": "strict_GND_island_actual_plane_join_57",
+      "pass": true,
+      "pads": [
+        "J9.2"
+      ],
+      "objectCount": 1
+    },
+    {
+      "name": "strict_GND_island_actual_plane_join_58",
+      "pass": true,
+      "pads": [
+        "J11.2"
+      ],
+      "objectCount": 1
+    },
+    {
+      "name": "strict_GND_island_actual_plane_join_59",
+      "pass": true,
+      "pads": [
+        "J11.3"
+      ],
+      "objectCount": 1
+    },
+    {
+      "name": "strict_GND_island_actual_plane_join_60",
+      "pass": true,
+      "pads": [],
+      "objectCount": 7
+    },
+    {
+      "name": "strict_GND_island_actual_plane_join_61",
+      "pass": true,
+      "pads": [],
+      "objectCount": 3
+    },
+    {
+      "name": "strict_GND_island_actual_plane_join_62",
+      "pass": true,
+      "pads": [],
+      "objectCount": 3
+    },
+    {
+      "name": "strict_GND_island_actual_plane_join_63",
+      "pass": true,
+      "pads": [],
+      "objectCount": 3
+    },
+    {
+      "name": "strict_GND_island_actual_plane_join_64",
+      "pass": true,
+      "pads": [],
+      "objectCount": 3
+    },
+    {
+      "name": "strict_GND_island_actual_plane_join_65",
+      "pass": true,
+      "pads": [],
+      "objectCount": 3
+    },
+    {
+      "name": "strict_GND_island_actual_plane_join_66",
+      "pass": true,
+      "pads": [],
+      "objectCount": 3
+    },
+    {
+      "name": "strict_GND_island_actual_plane_join_67",
+      "pass": true,
+      "pads": [],
+      "objectCount": 3
+    },
+    {
+      "name": "persisted_new_vias_USB_return_reservation",
+      "pass": true,
+      "violations": []
+    },
+    {
+      "name": "USB_geometry_preserved_f725670f0f3c4d2c",
+      "pass": true
+    },
+    {
+      "name": "USB_geometry_preserved_69da6c37ea089157",
+      "pass": true
+    },
+    {
+      "name": "USB_geometry_preserved_0c41b38925ec107b",
+      "pass": true
+    },
+    {
+      "name": "USB_geometry_preserved_72f18b8b5ce56f02",
+      "pass": true
+    },
+    {
+      "name": "USB_geometry_preserved_08982686c2a6c022",
+      "pass": true
+    },
+    {
+      "name": "USB_geometry_preserved_6b7539fd6f10bbd5",
+      "pass": true
+    },
+    {
+      "name": "USB_geometry_preserved_eeaa89249d12a300",
+      "pass": true
+    },
+    {
+      "name": "USB_geometry_preserved_2ae47c44c4ff173d",
+      "pass": true
+    },
+    {
+      "name": "USB_geometry_preserved_da905e14ea19a98d",
+      "pass": true
+    },
+    {
+      "name": "USB_geometry_preserved_ec358d6e8d541f2e",
+      "pass": true
+    },
+    {
+      "name": "USB_geometry_preserved_63524ba48522cc31",
+      "pass": true
+    },
+    {
+      "name": "USB_geometry_preserved_8ef4d38504e5769b",
+      "pass": true
+    },
+    {
+      "name": "USB_geometry_preserved_c8638845e683cf52",
+      "pass": true
+    },
+    {
+      "name": "USB_geometry_preserved_5ae72975366a6c9e",
+      "pass": true
+    },
+    {
+      "name": "USB_geometry_preserved_66b9d8a146fb8bb3",
+      "pass": true
+    },
+    {
+      "name": "USB_geometry_preserved_56c401548bd3bcb6",
+      "pass": true
+    },
+    {
+      "name": "USB_geometry_preserved_04b10feb1c66d4fe",
+      "pass": true
+    },
+    {
+      "name": "USB_geometry_preserved_f780cd033dda22c6",
+      "pass": true
+    },
+    {
+      "name": "USB_geometry_preserved_0674a291ecb96f99",
+      "pass": true
+    },
+    {
+      "name": "USB_geometry_preserved_bcb5be8af9272700",
+      "pass": true
+    },
+    {
+      "name": "USB_required_reference_04b10feb1c66d4fe",
+      "pass": true,
+      "id": "04b10feb1c66d4fe",
+      "net": "USB_DN_PIN",
+      "fullProjectionInActualMainGND": true,
+      "conservativeEdgeMarginMm": 1.8024940556381892
+    },
+    {
+      "name": "USB_required_reference_f780cd033dda22c6",
+      "pass": true,
+      "id": "f780cd033dda22c6",
+      "net": "USB_DP_PIN",
+      "fullProjectionInActualMainGND": true,
+      "conservativeEdgeMarginMm": 0.5325608057749818
+    },
+    {
+      "name": "USB_required_reference_0674a291ecb96f99",
+      "pass": true,
+      "id": "0674a291ecb96f99",
+      "net": "USB_DN_MCU",
+      "fullProjectionInActualMainGND": true,
+      "conservativeEdgeMarginMm": 0.35719939424593644
+    },
+    {
+      "name": "USB_required_reference_bcb5be8af9272700",
+      "pass": true,
+      "id": "bcb5be8af9272700",
+      "net": "USB_DP_MCU",
+      "fullProjectionInActualMainGND": true,
+      "conservativeEdgeMarginMm": 0.2827197799999839
+    },
+    {
+      "name": "all_nonGND_physical_copper_connected",
+      "pass": true
+    },
+    {
+      "name": "no_nonGND_orphans_or_unnetted_copper",
+      "pass": true
+    },
+    {
+      "name": "persisted_new_copper_clearance_2d012cdb09ebb55b",
+      "pass": true,
+      "minimumMil": 29.331900623004984,
+      "nearestId": "3263f26bd398c9a2"
+    },
+    {
+      "name": "persisted_new_copper_clearance_a7f7092689bef08e",
+      "pass": true,
+      "minimumMil": 11.208223273681337,
+      "nearestId": "6659064d8bff970b"
+    },
+    {
+      "name": "persisted_new_copper_clearance_b57bb1368d4136bb",
+      "pass": true,
+      "minimumMil": 7.028638882401204,
+      "nearestId": "0077b6233493129e"
+    },
+    {
+      "name": "persisted_new_copper_clearance_2bcaf308e1f44934",
+      "pass": true,
+      "minimumMil": 7.473548803768459,
+      "nearestId": "188f888eca80d0e7"
+    },
+    {
+      "name": "persisted_new_copper_clearance_a9b0b1d16e1a9472",
+      "pass": true,
+      "minimumMil": 6.794493159961348,
+      "nearestId": "8f95fbdd4b6b2d41"
+    },
+    {
+      "name": "persisted_new_copper_clearance_6de18bbf624c2ed8",
+      "pass": true,
+      "minimumMil": 13.430476920301498,
+      "nearestId": "7bafec0474db07eae15"
+    },
+    {
+      "name": "persisted_new_copper_clearance_c9b936b249935523",
+      "pass": true,
+      "minimumMil": 12.43100597310491,
+      "nearestId": "0077b6233493129e"
+    },
+    {
+      "name": "persisted_new_copper_clearance_4a3104dcacc37345",
+      "pass": true,
+      "minimumMil": 6.998999999999796,
+      "nearestId": "619628be8aba1d8c"
+    },
+    {
+      "name": "persisted_new_copper_clearance_6659064d8bff970b",
+      "pass": true,
+      "minimumMil": 6.777723398830705,
+      "nearestId": "27ef3b6816882833"
+    },
+    {
+      "name": "persisted_new_copper_clearance_0f41de6ba901d897",
+      "pass": true,
+      "minimumMil": 11.663713458223125,
+      "nearestId": "62f9fee66bc18db6e8"
+    },
+    {
+      "name": "persisted_new_copper_clearance_832b2d692aca1940",
+      "pass": true,
+      "minimumMil": 11.658324864356402,
+      "nearestId": "a7583152436bb34ee8"
+    },
+    {
+      "name": "persisted_new_copper_clearance_a1a3e9b53c4aa138",
+      "pass": true,
+      "minimumMil": 8.827999999999975,
+      "nearestId": "0ef577d733d287e3"
+    },
+    {
+      "name": "persisted_new_copper_clearance_0710b731afe16676",
+      "pass": true,
+      "minimumMil": 8.681761158948639,
+      "nearestId": "5a2cba588e26a65fe7"
+    },
+    {
+      "name": "persisted_new_copper_clearance_d0fe568ff9dbde32",
+      "pass": true,
+      "minimumMil": 7.619031229103804,
+      "nearestId": "b4af062d8ea37e54"
+    },
+    {
+      "name": "persisted_new_copper_clearance_8a59f687416cbf80",
+      "pass": true,
+      "minimumMil": 105.47829999999978,
+      "nearestId": "989793a2579f062f"
+    },
+    {
+      "name": "persisted_new_copper_clearance_38fb6c611705316c",
+      "pass": true,
+      "minimumMil": 6.840596293080434,
+      "nearestId": "cf2cf930286a7831"
+    },
+    {
+      "name": "persisted_new_copper_clearance_7fd980edfec5ded3",
+      "pass": true,
+      "minimumMil": 20.877705266423284,
+      "nearestId": "a60fa0014af70dcc"
+    },
+    {
+      "name": "persisted_new_copper_clearance_ac6a8b2033bd78bc",
+      "pass": true,
+      "minimumMil": 7.383733410790015,
+      "nearestId": "49821184ce016423"
+    },
+    {
+      "name": "persisted_new_copper_clearance_eb8373de73cf0016",
+      "pass": true,
+      "minimumMil": 11.40771700506728,
+      "nearestId": "67a60bc229f4af16"
+    },
+    {
+      "name": "persisted_new_copper_clearance_5977927e9a4a33ea",
+      "pass": true,
+      "minimumMil": 37.31825188416527,
+      "nearestId": "e189da665cdd6cd9"
+    },
+    {
+      "name": "persisted_new_copper_clearance_a8349f92133f1e36",
+      "pass": true,
+      "minimumMil": 11.645361319691443,
+      "nearestId": "60f4295dacbd43c6"
+    },
+    {
+      "name": "persisted_new_copper_clearance_2e4e547764754078",
+      "pass": true,
+      "minimumMil": 11.910563568529906,
+      "nearestId": "f401e26d0cff2912"
+    },
+    {
+      "name": "persisted_new_copper_clearance_0e42132621eda993",
+      "pass": true,
+      "minimumMil": 8.284097530882816,
+      "nearestId": "a579519c796f67ace79"
+    },
+    {
+      "name": "persisted_new_copper_clearance_721b293e13136a47",
+      "pass": true,
+      "minimumMil": 12.614975498976445,
+      "nearestId": "d30f0d10ac5d25af"
+    },
+    {
+      "name": "persisted_new_copper_clearance_0284892ebf4bd0c6",
+      "pass": true,
+      "minimumMil": 27.06450471933178,
+      "nearestId": "d04397806d7a284c"
+    },
+    {
+      "name": "persisted_new_copper_clearance_51cebe8f9288b0cc",
+      "pass": true,
+      "minimumMil": 8.73510000000033,
+      "nearestId": "0e9f1326b31a2b9fe10"
+    },
+    {
+      "name": "persisted_new_copper_clearance_3a07dc889a06c240",
+      "pass": true,
+      "minimumMil": 11.300000000000178,
+      "nearestId": "a579519c796f67ace76"
+    },
+    {
+      "name": "persisted_new_copper_clearance_3aa96277185ac1fc",
+      "pass": true,
+      "minimumMil": 11.617719344664444,
+      "nearestId": "7a0928c386fb9bdc"
+    },
+    {
+      "name": "persisted_new_copper_clearance_0df6477b676a6d53",
+      "pass": true,
+      "minimumMil": 14.879062732935893,
+      "nearestId": "657cea9c507d5969e8"
+    },
+    {
+      "name": "persisted_new_copper_clearance_1bd4bf2e855d3ff6",
+      "pass": true,
+      "minimumMil": 11.547412923488753,
+      "nearestId": "d9628d33ac5e493be9"
+    },
+    {
+      "name": "persisted_new_copper_clearance_a7307ed7c6967731",
+      "pass": true,
+      "minimumMil": 95.38500000000022,
+      "nearestId": "e64cad97fefd4319"
+    },
+    {
+      "name": "persisted_new_copper_clearance_da6d9a756f77909b",
+      "pass": true,
+      "minimumMil": 42.48174814237814,
+      "nearestId": "8d565c36f0c801ff"
+    },
+    {
+      "name": "persisted_new_copper_clearance_ea979bdea386863e",
+      "pass": true,
+      "minimumMil": 15.840107473179664,
+      "nearestId": "7a0928c386fb9bdc"
+    },
+    {
+      "name": "persisted_new_copper_clearance_8d565c36f0c801ff",
+      "pass": true,
+      "minimumMil": 15.000046671919023,
+      "nearestId": "a60fa0014af70dcc"
+    },
+    {
+      "name": "persisted_new_copper_clearance_bbbf7933e4456086",
+      "pass": true,
+      "minimumMil": 6.92811358115803,
+      "nearestId": "a579519c796f67ace79"
+    },
+    {
+      "name": "persisted_new_copper_clearance_50bb3198955b82ff",
+      "pass": true,
+      "minimumMil": 17.42086640996725,
+      "nearestId": "6aac3aa6a17ba3c0"
+    },
+    {
+      "name": "persisted_new_copper_clearance_6aac3aa6a17ba3c0",
+      "pass": true,
+      "minimumMil": 7.989153647132692,
+      "nearestId": "0c3456f1bfa7b091"
+    },
+    {
+      "name": "persisted_new_copper_clearance_847ceb28154e7239",
+      "pass": true,
+      "minimumMil": 18.000396360974772,
+      "nearestId": "d69b57d190b71ba6e7"
+    },
+    {
+      "name": "persisted_new_copper_clearance_5bb688953da5676d",
+      "pass": true,
+      "minimumMil": 19.980822306748312,
+      "nearestId": "4319dd6d705a28bc"
+    },
+    {
+      "name": "persisted_new_copper_clearance_b173cca154193475",
+      "pass": true,
+      "minimumMil": 6.549444975281684,
+      "nearestId": "227d3dc86b112edb"
+    },
+    {
+      "name": "persisted_new_copper_clearance_c788058b56908fe5",
+      "pass": true,
+      "minimumMil": 18.5,
+      "nearestId": "067d5b432aa20230"
+    },
+    {
+      "name": "persisted_new_copper_clearance_91c322dc832f6737",
+      "pass": true,
+      "minimumMil": 19.03065083855001,
+      "nearestId": "76e4cf3bcc14d3b9e38"
+    },
+    {
+      "name": "persisted_new_copper_clearance_900dd0c4c74ab3c4",
+      "pass": true,
+      "minimumMil": 33.0,
+      "nearestId": "356953743bddccc6"
+    },
+    {
+      "name": "persisted_new_copper_clearance_3b673c45e4197486",
+      "pass": true,
+      "minimumMil": 19.030650628735444,
+      "nearestId": "904bc3dc0904315be38"
+    },
+    {
+      "name": "persisted_new_copper_clearance_81649d64f772e89d",
+      "pass": true,
+      "minimumMil": 33.14999999999999,
+      "nearestId": "d614abbb1a6527c8e38"
+    },
+    {
+      "name": "persisted_new_copper_clearance_76a8062f3a5023fa",
+      "pass": true,
+      "minimumMil": 19.030662436173458,
+      "nearestId": "d614abbb1a6527c8e38"
+    },
+    {
+      "name": "persisted_new_copper_clearance_163d2e11ef6bc7a1",
+      "pass": true,
+      "minimumMil": 8.73510000000033,
+      "nearestId": "0e9f1326b31a2b9fe14"
+    },
+    {
+      "name": "persisted_new_copper_clearance_4cd5fd26d429cc3c",
+      "pass": true,
+      "minimumMil": 18.279499999999878,
+      "nearestId": "1679ed13f06bdb1d"
+    },
+    {
+      "name": "persisted_new_copper_clearance_f42bf1bfcfb1c4e0",
+      "pass": true,
+      "minimumMil": 30.057000000000016,
+      "nearestId": "eafdcdb08da3048c"
+    },
+    {
+      "name": "persisted_new_copper_clearance_76a6e568d75505ca",
+      "pass": true,
+      "minimumMil": 6.560439381315177,
+      "nearestId": "1679ed13f06bdb1d"
+    },
+    {
+      "name": "persisted_new_copper_clearance_7b81e3d2eb47a4ac",
+      "pass": true,
+      "minimumMil": 7.093770587696422,
+      "nearestId": "47d6e0c534d3287f"
+    },
+    {
+      "name": "persisted_new_copper_clearance_6cad2758652ccc45",
+      "pass": true,
+      "minimumMil": 9.758024209758009,
+      "nearestId": "82fd0fbea95292ba"
+    },
+    {
+      "name": "persisted_new_copper_clearance_e8d008244eaf6223",
+      "pass": true,
+      "minimumMil": 10.456035659213796,
+      "nearestId": "454705cae1476aa5"
+    },
+    {
+      "name": "persisted_new_copper_clearance_80fe26f8ebcf2bb0",
+      "pass": true,
+      "minimumMil": 36.47239999999965,
+      "nearestId": "9c9893f4474dbcfc"
+    },
+    {
+      "name": "persisted_new_copper_clearance_ee57a98fbc05b03e",
+      "pass": true,
+      "minimumMil": 6.609999999999673,
+      "nearestId": "f983f19732a5a022e54"
+    },
+    {
+      "name": "persisted_new_copper_clearance_0a01be5bd790a493",
+      "pass": true,
+      "minimumMil": 13.229938175590107,
+      "nearestId": "b1dfe07534ff0948"
+    },
+    {
+      "name": "persisted_new_copper_clearance_2e7bcaae87f81994",
+      "pass": true,
+      "minimumMil": 9.87039999999979,
+      "nearestId": "a84f314e96161ffa"
+    },
+    {
+      "name": "persisted_new_copper_clearance_b1dfe07534ff0948",
+      "pass": true,
+      "minimumMil": 7.146199999999681,
+      "nearestId": "188f888eca80d0e7"
+    },
+    {
+      "name": "persisted_new_copper_clearance_b33042660ad888f4",
+      "pass": true,
+      "minimumMil": 7.146200000000135,
+      "nearestId": "7abc60f66ecb2914"
+    },
+    {
+      "name": "persisted_new_copper_clearance_c0d11a5629585feb",
+      "pass": true,
+      "minimumMil": 9.338005898255108,
+      "nearestId": "38fb6c611705316c"
+    },
+    {
+      "name": "persisted_new_copper_clearance_577ddfb3dd8c742e",
+      "pass": true,
+      "minimumMil": 9.663713458223125,
+      "nearestId": "62f9fee66bc18db6e8"
+    },
+    {
+      "name": "persisted_new_copper_clearance_305862d115b22dbe",
+      "pass": true,
+      "minimumMil": 9.658324864356402,
+      "nearestId": "a7583152436bb34ee8"
+    },
+    {
+      "name": "persisted_new_copper_clearance_39bfeb96cda9ce39",
+      "pass": true,
+      "minimumMil": 10.419581055854785,
+      "nearestId": "5a2cba588e26a65fe7"
+    },
+    {
+      "name": "persisted_new_copper_clearance_cfa1368e30b53dee",
+      "pass": true,
+      "minimumMil": 21.725310553300325,
+      "nearestId": "de9db997d55060f9"
+    },
+    {
+      "name": "persisted_new_copper_clearance_795c3eae24d56e15",
+      "pass": true,
+      "minimumMil": 8.51939114451563,
+      "nearestId": "49821184ce016423"
+    },
+    {
+      "name": "persisted_new_copper_clearance_55771cf76b879af5",
+      "pass": true,
+      "minimumMil": 29.237099191479004,
+      "nearestId": "49b33f550644d0f4"
+    },
+    {
+      "name": "persisted_new_copper_clearance_db5dcae7b1e146cd",
+      "pass": true,
+      "minimumMil": 30.31825188416527,
+      "nearestId": "e189da665cdd6cd9"
+    },
+    {
+      "name": "persisted_new_copper_clearance_118e14c77e3dfa5c",
+      "pass": true,
+      "minimumMil": 27.979478907729295,
+      "nearestId": "60f4295dacbd43c6"
+    },
+    {
+      "name": "persisted_new_copper_clearance_19f3c33dc4adc503",
+      "pass": true,
+      "minimumMil": 31.188144458574904,
+      "nearestId": "e6d2f8e6cb030334"
+    },
+    {
+      "name": "persisted_new_copper_clearance_caaef68b25cf2632",
+      "pass": true,
+      "minimumMil": 30.754500000000007,
+      "nearestId": "13343b029e9e3b3b"
+    },
+    {
+      "name": "persisted_new_copper_clearance_e81de51360b38d50",
+      "pass": true,
+      "minimumMil": 25.731499999998967,
+      "nearestId": "a579519c796f67ace76"
+    },
+    {
+      "name": "persisted_new_copper_clearance_d04397806d7a284c",
+      "pass": true,
+      "minimumMil": 27.06450471933178,
+      "nearestId": "0284892ebf4bd0c6"
+    },
+    {
+      "name": "persisted_new_copper_clearance_56674f5e7cd79726",
+      "pass": true,
+      "minimumMil": 6.519365072114358,
+      "nearestId": "a60fa0014af70dcc"
+    },
+    {
+      "name": "persisted_new_copper_clearance_59f29f83f027848a",
+      "pass": true,
+      "minimumMil": 6.227299999999559,
+      "nearestId": "f3c784b75543f1ac"
+    },
+    {
+      "name": "persisted_new_copper_clearance_ff9875616e7adb1c",
+      "pass": true,
+      "minimumMil": 8.000046671919023,
+      "nearestId": "a60fa0014af70dcc"
+    },
+    {
+      "name": "persisted_new_copper_clearance_5e00ed32e0c06320",
+      "pass": true,
+      "minimumMil": 8.000046671919023,
+      "nearestId": "a60fa0014af70dcc"
+    },
+    {
+      "name": "persisted_new_copper_clearance_708370906ac2dad8",
+      "pass": true,
+      "minimumMil": 7.282046865946146,
+      "nearestId": "640d27e48bf601cb"
+    },
+    {
+      "name": "persisted_new_copper_clearance_356953743bddccc6",
+      "pass": true,
+      "minimumMil": 11.980822306748312,
+      "nearestId": "4319dd6d705a28bc"
+    },
+    {
+      "name": "persisted_new_copper_clearance_6c54be83471ce0f1",
+      "pass": true,
+      "minimumMil": 9.58893489336404,
+      "nearestId": "76a6e568d75505ca"
+    },
+    {
+      "name": "persisted_new_copper_clearance_a6637f9065a48e50",
+      "pass": true,
+      "minimumMil": 13.704053950139931,
+      "nearestId": "76e4cf3bcc14d3b9e38"
+    },
+    {
+      "name": "persisted_new_copper_clearance_1b92d5b6f89ee20b",
+      "pass": true,
+      "minimumMil": 6.836579183844567,
+      "nearestId": "53ee4eed1f123a9e"
+    },
+    {
+      "name": "persisted_new_copper_clearance_619628be8aba1d8c",
+      "pass": true,
+      "minimumMil": 6.998999999999796,
+      "nearestId": "4a3104dcacc37345"
+    },
+    {
+      "name": "persisted_new_copper_clearance_e0cb1785e895371a",
+      "pass": true,
+      "minimumMil": 29.335493145843465,
+      "nearestId": "0e9f1326b31a2b9fe14"
+    },
+    {
+      "name": "persisted_new_copper_clearance_1a9587fcce791db5",
+      "pass": true,
+      "minimumMil": 6.76759999999922,
+      "nearestId": "394b98b46e24a934"
+    },
+    {
+      "name": "persisted_new_copper_clearance_2b80474b987ae1dd",
+      "pass": true,
+      "minimumMil": 33.623863468842536,
+      "nearestId": "c9d3cad1b7ca04d7"
+    },
+    {
+      "name": "persisted_new_copper_clearance_7f8937776a79ac56",
+      "pass": true,
+      "minimumMil": 33.17581739987234,
+      "nearestId": "6aac3aa6a17ba3c0"
+    },
+    {
+      "name": "persisted_new_copper_clearance_e1d2ccb311076947",
+      "pass": true,
+      "minimumMil": 29.472399999999652,
+      "nearestId": "9c9893f4474dbcfc"
+    },
+    {
+      "name": "persisted_new_copper_clearance_785c233924ecdf33",
+      "pass": true,
+      "minimumMil": 25.97744984179016,
+      "nearestId": "b173cca154193475"
+    },
+    {
+      "name": "persisted_no_via_in_SMD_pad_2e7bcaae87f81994",
+      "pass": true,
+      "minimumMil": 36.56123476448712,
+      "padId": "76e4cf3bcc14d3b9e48"
+    },
+    {
+      "name": "persisted_no_via_in_SMD_pad_b1dfe07534ff0948",
+      "pass": true,
+      "minimumMil": 21.25628309337867,
+      "padId": "904bc3dc0904315be47"
+    },
+    {
+      "name": "persisted_no_via_in_SMD_pad_b33042660ad888f4",
+      "pass": true,
+      "minimumMil": 21.25628309337958,
+      "padId": "d614abbb1a6527c8e47"
+    },
+    {
+      "name": "persisted_no_via_in_SMD_pad_c0d11a5629585feb",
+      "pass": true,
+      "minimumMil": 71.12013013753065,
+      "padId": "7bafec0474db07eae15"
+    },
+    {
+      "name": "persisted_no_via_in_SMD_pad_577ddfb3dd8c742e",
+      "pass": true,
+      "minimumMil": 9.663713458223125,
+      "padId": "62f9fee66bc18db6e8"
+    },
+    {
+      "name": "persisted_no_via_in_SMD_pad_305862d115b22dbe",
+      "pass": true,
+      "minimumMil": 9.658324864356402,
+      "padId": "a7583152436bb34ee8"
+    },
+    {
+      "name": "persisted_no_via_in_SMD_pad_39bfeb96cda9ce39",
+      "pass": true,
+      "minimumMil": 10.419581055854785,
+      "padId": "5a2cba588e26a65fe7"
+    },
+    {
+      "name": "persisted_no_via_in_SMD_pad_cfa1368e30b53dee",
+      "pass": true,
+      "minimumMil": 20.37048848874568,
+      "padId": "ad502b5c63666fc2e8"
+    },
+    {
+      "name": "persisted_no_via_in_SMD_pad_795c3eae24d56e15",
+      "pass": true,
+      "minimumMil": 72.10000000000036,
+      "padId": "d9628d33ac5e493be4"
+    },
+    {
+      "name": "persisted_no_via_in_SMD_pad_55771cf76b879af5",
+      "pass": true,
+      "minimumMil": 84.76779999999872,
+      "padId": "991b6bc606947d5ae15"
+    },
+    {
+      "name": "persisted_no_via_in_SMD_pad_db5dcae7b1e146cd",
+      "pass": true,
+      "minimumMil": 86.51083640899635,
+      "padId": "9d0b66f16fc6b519e14"
+    },
+    {
+      "name": "persisted_no_via_in_SMD_pad_118e14c77e3dfa5c",
+      "pass": true,
+      "minimumMil": 145.97199723052137,
+      "padId": "388527658888a258e16"
+    },
+    {
+      "name": "persisted_no_via_in_SMD_pad_19f3c33dc4adc503",
+      "pass": true,
+      "minimumMil": 131.17696228866635,
+      "padId": "f19f457de484afbee7"
+    },
+    {
+      "name": "persisted_no_via_in_SMD_pad_caaef68b25cf2632",
+      "pass": true,
+      "minimumMil": 96.40155418599886,
+      "padId": "657cea9c507d5969e8"
+    },
+    {
+      "name": "persisted_no_via_in_SMD_pad_e81de51360b38d50",
+      "pass": true,
+      "minimumMil": 25.731499999998967,
+      "padId": "a579519c796f67ace76"
+    },
+    {
+      "name": "persisted_no_via_in_SMD_pad_d04397806d7a284c",
+      "pass": true,
+      "minimumMil": 42.26670000000013,
+      "padId": "657cea9c507d5969e8"
+    },
+    {
+      "name": "persisted_no_via_in_SMD_pad_56674f5e7cd79726",
+      "pass": true,
+      "minimumMil": 141.93196922968997,
+      "padId": "5137461042b6aaf9e7"
+    },
+    {
+      "name": "persisted_no_via_in_SMD_pad_59f29f83f027848a",
+      "pass": true,
+      "minimumMil": 188.51212387895728,
+      "padId": "4110e2748d84d03fe7"
+    },
+    {
+      "name": "persisted_no_via_in_SMD_pad_ff9875616e7adb1c",
+      "pass": true,
+      "minimumMil": 45.621399999999994,
+      "padId": "898b960ff129cf3de7"
+    },
+    {
+      "name": "persisted_no_via_in_SMD_pad_5e00ed32e0c06320",
+      "pass": true,
+      "minimumMil": 99.44120170605692,
+      "padId": "898b960ff129cf3de7"
+    },
+    {
+      "name": "persisted_no_via_in_SMD_pad_708370906ac2dad8",
+      "pass": true,
+      "minimumMil": 7.368199999999888,
+      "padId": "d9628d33ac5e493be8"
+    },
+    {
+      "name": "persisted_no_via_in_SMD_pad_356953743bddccc6",
+      "pass": true,
+      "minimumMil": 8.500000000000364,
+      "padId": "904bc3dc0904315be40"
+    },
+    {
+      "name": "persisted_no_via_in_SMD_pad_6c54be83471ce0f1",
+      "pass": true,
+      "minimumMil": 10.000396360974772,
+      "padId": "d69b57d190b71ba6e7"
+    },
+    {
+      "name": "persisted_no_via_in_SMD_pad_a6637f9065a48e50",
+      "pass": true,
+      "minimumMil": 8.080971925232882,
+      "padId": "76e4cf3bcc14d3b9e39"
+    },
+    {
+      "name": "persisted_no_via_in_SMD_pad_1b92d5b6f89ee20b",
+      "pass": true,
+      "minimumMil": 8.665700000000012,
+      "padId": "0cd1fc9025284cfbe8"
+    },
+    {
+      "name": "persisted_no_via_in_SMD_pad_619628be8aba1d8c",
+      "pass": true,
+      "minimumMil": 20.954637123071436,
+      "padId": "d614abbb1a6527c8e38"
+    },
+    {
+      "name": "persisted_no_via_in_SMD_pad_e0cb1785e895371a",
+      "pass": true,
+      "minimumMil": 10.674937248425188,
+      "padId": "0e9f1326b31a2b9fe13"
+    },
+    {
+      "name": "persisted_no_via_in_SMD_pad_1a9587fcce791db5",
+      "pass": true,
+      "minimumMil": 73.47279999999992,
+      "padId": "d614abbb1a6527c8e36"
+    },
+    {
+      "name": "persisted_no_via_in_SMD_pad_2b80474b987ae1dd",
+      "pass": true,
+      "minimumMil": 211.4042890534777,
+      "padId": "6dd745146c3983c0e7"
+    },
+    {
+      "name": "persisted_no_via_in_SMD_pad_7f8937776a79ac56",
+      "pass": true,
+      "minimumMil": 542.5485443648918,
+      "padId": "fc97bc0fefe1a830e7"
+    },
+    {
+      "name": "persisted_no_via_in_SMD_pad_e1d2ccb311076947",
+      "pass": true,
+      "minimumMil": 586.6609017275308,
+      "padId": "fc97bc0fefe1a830e7"
+    },
+    {
+      "name": "persisted_no_via_in_SMD_pad_785c233924ecdf33",
+      "pass": true,
+      "minimumMil": 81.81186342555236,
+      "padId": "904bc3dc0904315be48"
+    }
+  ],
+  "nativePlane": {
+    "pourId": "a18ff0f4e7510908",
+    "definition": {
+      "partitionId": "",
+      "groupId": 0,
+      "netName": "GND",
+      "layerId": 15,
+      "width": 0.2,
+      "name": "L2_GND_NATIVE_R5",
+      "order": 1,
+      "path": [
+        [
+          -767.4016,
+          20,
+          "L",
+          -767.4016,
+          7854,
+          5885.5118,
+          7854,
+          5885.5118,
+          20,
+          -767.4016,
+          20
+        ]
+      ],
+      "pourType": {
+        "pourType": "SOLID",
+        "fineness": 8
+      },
+      "keepIsland": false,
+      "locked": true,
+      "zIndex": -1
+    },
+    "positiveRegions": 53,
+    "subtractedHoles": 425,
+    "arcSagittaBoundMil": 0.001,
+    "areaMm2": 30612.17497651034,
+    "sixMountHoleUnitsCalibration": true
+  },
+  "newViaAntipads": [
+    {
+      "id": "2e7bcaae87f81994",
+      "net": "LOGIC_5V",
+      "wholeNativePlaneEdgeGapMil": 14.099006191974922,
+      "nativeCircleMatches": [
+        {
+          "x": 1396.8976,
+          "y": 1553.6499,
+          "r": 26.100000000000136
+        }
+      ],
+      "exactCircleGapMil": 14.100000000000136
+    },
+    {
+      "id": "b1dfe07534ff0948",
+      "net": "LOGIC_5V",
+      "wholeNativePlaneEdgeGapMil": 14.09900619197457,
+      "nativeCircleMatches": [
+        {
+          "x": 1331.8797,
+          "y": 4116.7171,
+          "r": 26.100000000000136
+        }
+      ],
+      "exactCircleGapMil": 14.100000000000136
+    },
+    {
+      "id": "b33042660ad888f4",
+      "net": "LOGIC_5V",
+      "wholeNativePlaneEdgeGapMil": 14.09900619197457,
+      "nativeCircleMatches": [
+        {
+          "x": 1331.8797,
+          "y": 6692.7171,
+          "r": 26.100000000000136
+        }
+      ],
+      "exactCircleGapMil": 14.100000000000136
+    },
+    {
+      "id": "c0d11a5629585feb",
+      "net": "LOGIC_5V",
+      "wholeNativePlaneEdgeGapMil": 14.099006191973967,
+      "nativeCircleMatches": [
+        {
+          "x": 5492.126,
+          "y": 4500,
+          "r": 26.100000000000136
+        }
+      ],
+      "exactCircleGapMil": 14.100000000000136
+    },
+    {
+      "id": "577ddfb3dd8c742e",
+      "net": "VCC5",
+      "wholeNativePlaneEdgeGapMil": 14.099006191974311,
+      "nativeCircleMatches": [
+        {
+          "x": 1192.6548,
+          "y": 4146.6824,
+          "r": 26.099999999999994
+        }
+      ],
+      "exactCircleGapMil": 14.099999999999994
+    },
+    {
+      "id": "305862d115b22dbe",
+      "net": "VCC5",
+      "wholeNativePlaneEdgeGapMil": 14.099006191974311,
+      "nativeCircleMatches": [
+        {
+          "x": 1192.6548,
+          "y": 6722.6667,
+          "r": 26.099999999999994
+        }
+      ],
+      "exactCircleGapMil": 14.099999999999994
+    },
+    {
+      "id": "39bfeb96cda9ce39",
+      "net": "VCC5",
+      "wholeNativePlaneEdgeGapMil": 14.099006191974837,
+      "nativeCircleMatches": [
+        {
+          "x": 5481.7553,
+          "y": 6007.478300000001,
+          "r": 26.100000000000136
+        }
+      ],
+      "exactCircleGapMil": 14.100000000000136
+    },
+    {
+      "id": "cfa1368e30b53dee",
+      "net": "VCC5",
+      "wholeNativePlaneEdgeGapMil": 14.09900619197457,
+      "nativeCircleMatches": [
+        {
+          "x": 3699.5605,
+          "y": 3812.4387,
+          "r": 26.100000000000136
+        }
+      ],
+      "exactCircleGapMil": 14.100000000000136
+    },
+    {
+      "id": "795c3eae24d56e15",
+      "net": "ESTOP_MCU",
+      "wholeNativePlaneEdgeGapMil": 14.099013361385268,
+      "nativeCircleMatches": [],
+      "exactCircleGapMil": null
+    },
+    {
+      "id": "55771cf76b879af5",
+      "net": "ESTOP_MCU",
+      "wholeNativePlaneEdgeGapMil": 14.099006191974812,
+      "nativeCircleMatches": [
+        {
+          "x": 4656.6771,
+          "y": 2298.5512,
+          "r": 26.100000000000136
+        }
+      ],
+      "exactCircleGapMil": 14.100000000000136
+    },
+    {
+      "id": "db5dcae7b1e146cd",
+      "net": "ESTOP_MCU",
+      "wholeNativePlaneEdgeGapMil": 14.099006191974812,
+      "nativeCircleMatches": [
+        {
+          "x": 4476.6771,
+          "y": 2478.5512,
+          "r": 26.100000000000136
+        }
+      ],
+      "exactCircleGapMil": 14.100000000000136
+    },
+    {
+      "id": "118e14c77e3dfa5c",
+      "net": "ESTOP_MCU",
+      "wholeNativePlaneEdgeGapMil": 14.099006191974812,
+      "nativeCircleMatches": [
+        {
+          "x": 4228.6771,
+          "y": 2990.5512,
+          "r": 26.100000000000136
+        }
+      ],
+      "exactCircleGapMil": 14.100000000000136
+    },
+    {
+      "id": "19f3c33dc4adc503",
+      "net": "ARM_PULSE",
+      "wholeNativePlaneEdgeGapMil": 14.099006191973103,
+      "nativeCircleMatches": [
+        {
+          "x": 4816.4567,
+          "y": 2306.9055,
+          "r": 26.100000000000136
+        }
+      ],
+      "exactCircleGapMil": 14.100000000000136
+    },
+    {
+      "id": "caaef68b25cf2632",
+      "net": "ARM_PULSE",
+      "wholeNativePlaneEdgeGapMil": 14.099006191974812,
+      "nativeCircleMatches": [
+        {
+          "x": 4292.4567,
+          "y": 3382.9055,
+          "r": 26.100000000000136
+        }
+      ],
+      "exactCircleGapMil": 14.100000000000136
+    },
+    {
+      "id": "e81de51360b38d50",
+      "net": "MCU_INHIBIT",
+      "wholeNativePlaneEdgeGapMil": 14.099006191973103,
+      "nativeCircleMatches": [
+        {
+          "x": 4992.6771,
+          "y": 2620.9055,
+          "r": 26.100000000000136
+        }
+      ],
+      "exactCircleGapMil": 14.100000000000136
+    },
+    {
+      "id": "d04397806d7a284c",
+      "net": "MCU_INHIBIT",
+      "wholeNativePlaneEdgeGapMil": 14.099006191974812,
+      "nativeCircleMatches": [
+        {
+          "x": 4296.6771,
+          "y": 3480.9055,
+          "r": 26.100000000000136
+        }
+      ],
+      "exactCircleGapMil": 14.100000000000136
+    },
+    {
+      "id": "56674f5e7cd79726",
+      "net": "ARM_PULSE",
+      "wholeNativePlaneEdgeGapMil": 14.099006191974812,
+      "nativeCircleMatches": [
+        {
+          "x": 4588.0953,
+          "y": 2755.2669000000005,
+          "r": 26.100000000000136
+        }
+      ],
+      "exactCircleGapMil": 14.100000000000136
+    },
+    {
+      "id": "59f29f83f027848a",
+      "net": "ARM_PULSE",
+      "wholeNativePlaneEdgeGapMil": 14.099006191974812,
+      "nativeCircleMatches": [
+        {
+          "x": 4541.4262,
+          "y": 2853.9359999999997,
+          "r": 26.100000000000136
+        }
+      ],
+      "exactCircleGapMil": 14.100000000000136
+    },
+    {
+      "id": "ff9875616e7adb1c",
+      "net": "MCU_INHIBIT",
+      "wholeNativePlaneEdgeGapMil": 14.099006418625557,
+      "nativeCircleMatches": [],
+      "exactCircleGapMil": null
+    },
+    {
+      "id": "5e00ed32e0c06320",
+      "net": "MCU_INHIBIT",
+      "wholeNativePlaneEdgeGapMil": 14.099006191974812,
+      "nativeCircleMatches": [
+        {
+          "x": 4698.9976,
+          "y": 3050.585,
+          "r": 26.100000000000136
+        }
+      ],
+      "exactCircleGapMil": 14.100000000000136
+    },
+    {
+      "id": "708370906ac2dad8",
+      "net": "MCU_INHIBIT",
+      "wholeNativePlaneEdgeGapMil": 14.099006191975015,
+      "nativeCircleMatches": [
+        {
+          "x": 3835.0,
+          "y": 3518.0,
+          "r": 26.100000000000136
+        }
+      ],
+      "exactCircleGapMil": 14.100000000000136
+    },
+    {
+      "id": "356953743bddccc6",
+      "net": "M2D_N",
+      "wholeNativePlaneEdgeGapMil": 14.09900619197488,
+      "nativeCircleMatches": [
+        {
+          "x": 1380.0,
+          "y": 3770,
+          "r": 26.100000000000136
+        }
+      ],
+      "exactCircleGapMil": 14.100000000000136
+    },
+    {
+      "id": "6c54be83471ce0f1",
+      "net": "M2D_N",
+      "wholeNativePlaneEdgeGapMil": 14.099006191974613,
+      "nativeCircleMatches": [
+        {
+          "x": 1145.0,
+          "y": 3718.8898,
+          "r": 26.099999999999994
+        }
+      ],
+      "exactCircleGapMil": 14.099999999999994
+    },
+    {
+      "id": "a6637f9065a48e50",
+      "net": "DRIVE_ENABLE",
+      "wholeNativePlaneEdgeGapMil": 14.099006191974922,
+      "nativeCircleMatches": [
+        {
+          "x": 1308.9072,
+          "y": 1304.2225000000003,
+          "r": 26.100000000000136
+        }
+      ],
+      "exactCircleGapMil": 14.100000000000136
+    },
+    {
+      "id": "1b92d5b6f89ee20b",
+      "net": "DRIVE_ENABLE",
+      "wholeNativePlaneEdgeGapMil": 14.09900619197488,
+      "nativeCircleMatches": [
+        {
+          "x": 1292.3343,
+          "y": 3738.367,
+          "r": 26.100000000000136
+        }
+      ],
+      "exactCircleGapMil": 14.100000000000136
+    },
+    {
+      "id": "619628be8aba1d8c",
+      "net": "DRIVE_ENABLE",
+      "wholeNativePlaneEdgeGapMil": 14.09900619197457,
+      "nativeCircleMatches": [
+        {
+          "x": 1302.8807000000002,
+          "y": 6470.7718,
+          "r": 26.100000000000136
+        }
+      ],
+      "exactCircleGapMil": 14.100000000000136
+    },
+    {
+      "id": "e0cb1785e895371a",
+      "net": "DRIVE_ENABLE",
+      "wholeNativePlaneEdgeGapMil": 14.09900619197457,
+      "nativeCircleMatches": [
+        {
+          "x": 3947.9626,
+          "y": 3567.7856,
+          "r": 26.100000000000136
+        }
+      ],
+      "exactCircleGapMil": 14.100000000000136
+    },
+    {
+      "id": "1a9587fcce791db5",
+      "net": "DRIVE_ENABLE",
+      "wholeNativePlaneEdgeGapMil": 14.099006191974425,
+      "nativeCircleMatches": [
+        {
+          "x": 1082.6772,
+          "y": 6431.4017,
+          "r": 26.099999999999994
+        }
+      ],
+      "exactCircleGapMil": 14.099999999999994
+    },
+    {
+      "id": "2b80474b987ae1dd",
+      "net": "DRIVE_ENABLE",
+      "wholeNativePlaneEdgeGapMil": 14.099006191973103,
+      "nativeCircleMatches": [
+        {
+          "x": 4228.5984,
+          "y": 3968.0,
+          "r": 26.100000000000136
+        }
+      ],
+      "exactCircleGapMil": 14.100000000000136
+    },
+    {
+      "id": "7f8937776a79ac56",
+      "net": "DRIVE_ENABLE",
+      "wholeNativePlaneEdgeGapMil": 14.099006191974418,
+      "nativeCircleMatches": [
+        {
+          "x": 3236.5984,
+          "y": 4216.0,
+          "r": 26.100000000000136
+        }
+      ],
+      "exactCircleGapMil": 14.100000000000136
+    },
+    {
+      "id": "e1d2ccb311076947",
+      "net": "DRIVE_ENABLE",
+      "wholeNativePlaneEdgeGapMil": 14.099006191974418,
+      "nativeCircleMatches": [
+        {
+          "x": 3156.5984,
+          "y": 4152.0,
+          "r": 26.100000000000136
+        }
+      ],
+      "exactCircleGapMil": 14.100000000000136
+    },
+    {
+      "id": "785c233924ecdf33",
+      "net": "DRIVE_ENABLE",
+      "wholeNativePlaneEdgeGapMil": 14.099006191974631,
+      "nativeCircleMatches": [
+        {
+          "x": 1396.5984,
+          "y": 4176.0,
+          "r": 26.100000000000136
+        }
+      ],
+      "exactCircleGapMil": 14.100000000000136
+    }
+  ],
+  "strictStaticGNDIslandActualPlaneJoins": [
+    {
+      "pads": [
+        "C11.2",
+        "U3.8",
+        "J3.10",
+        "J4.10",
+        "J5.10",
+        "J6.10",
+        "U9.15",
+        "U9.13",
+        "U10.15",
+        "U10.13",
+        "R46.2",
+        "R47.2",
+        "R48.2",
+        "R49.2",
+        "R50.2",
+        "R51.2",
+        "R52.2",
+        "R53.2",
+        "R64.2"
+      ],
+      "tracks": [
+        "53ee4eed1f123a9e",
+        "3503d6aae25aa3e7",
+        "48d82d3fc05a390c",
+        "423e0142a3bcacd2",
+        "097c3d84651ae535",
+        "4eca1328b89f0891",
+        "461cf1bdd09a4e6d",
+        "ce404c43171ca1a4",
+        "1cbe8e736f77e118",
+        "092bdcdd71aa5f44",
+        "4de0fab0664f8568",
+        "27eb4e20372b6a5b",
+        "2e3a97b912a9ec3d",
+        "98a3b1d03767e2dc",
+        "1efd2f4a01cb1839",
+        "eb362ec545a318c8",
+        "f871f458d45d9abc",
+        "9abb8f305d4cd487",
+        "285445ef6bf214b3",
+        "b0afa20a509095c9",
+        "5998b85c138287e9",
+        "3c085cf0d774cf14",
+        "682055d335ee1eba",
+        "06f5689c0b00e1e9",
+        "a54d589dd8815453",
+        "58a6e1b8ef16936e",
+        "4b8484b10e38f81d",
+        "f228e9543d2776f3",
+        "ede9d616a334d13c",
+        "440dac856e465316",
+        "15a1b7f35d4c943c",
+        "a84f314e96161ffa",
+        "a7b4ccf283ec2058",
+        "2be4517defccebeb",
+        "9758f7b9f3d75200",
+        "3e9059d04d3cdec2",
+        "6a59a2eab63711e8",
+        "cd5eaa74194fd3c7",
+        "43ece05ed9bdfe81",
+        "23d7b3a798dc8d7e",
+        "cd8e79d6f65899ee",
+        "4b3c06493f6806ba",
+        "c1b2f689cac4c81a",
+        "5f8c7a814347306c",
+        "c7dc4427fd7a2029",
+        "25d05ead0face382",
+        "93f863a41744e55a",
+        "9cec9ef326943c96",
+        "6c0ccb54c3047b19",
+        "a1984b43c63c1f6b",
+        "1b22b99a3235d87f",
+        "8e0e80c0c7912a6a",
+        "787ac95ea5ebe2c7",
+        "b8e4419f2d7b6d92",
+        "91f4c8530c39efbd",
+        "9aaeb0839dfc0444",
+        "0c0cc2cca0222cd9",
+        "8f2ad11085a005fb",
+        "d9156dd183a059a0",
+        "1ca45253bc1ec01d"
+      ],
+      "vias": [
+        "05b4e85146ebef68",
+        "633c55d2d9b6b800",
+        "2b21a3469a027dd2",
+        "f73d1b8ce7c470cb",
+        "3348f0fddf6fd228",
+        "df31df1830c23d22",
+        "cd07c0502766359f",
+        "48c0cfbb8a4b7985",
+        "76c8a9a5ab1b449b",
+        "92db8ffb66287226",
+        "d6d33ed75dd5d694",
+        "0077b6233493129e",
+        "eb304081fed0b4ea",
+        "9fdb7daf32bfda38",
+        "eaf11f1710509dbb",
+        "f3c48d28f1615b3d",
+        "227d3dc86b112edb",
+        "72b470f964f71448",
+        "992780dff050c83a",
+        "0b1b0b6280207132",
+        "46357363835fa85a",
+        "4b660998d94a1074",
+        "13e270f28205e8e4",
+        "fdfdb9af43d6d59f"
+      ],
+      "fills": [
+        "1dd922c707bdb0df",
+        "a96016164c409d62",
+        "7bfc741cbf925099",
+        "847682e380b834e0",
+        "5155e7bfb2427c78",
+        "a6fe127dac8635e3",
+        "910fe0fa7a105689",
+        "5daccee01b39c8a2",
+        "813e9e30dddcfd07",
+        "550ee1ab0dda7c62",
+        "87fd72f3d0df9ac8",
+        "3fa6d4dc12c601da",
+        "807d2f56a4d40d2d",
+        "1da4eea631d317ed",
+        "bce14e72d76e7cbb",
+        "06333db0e25ed881",
+        "36cb0aa55cf57755",
+        "11d044449af8ff79",
+        "e19dadea995c005d",
+        "9c6e5fe4f30e813d",
+        "fc0446f183371103",
+        "88fa4e8b6712d5df",
+        "f0d1adcdd366463e",
+        "da7415d2871a54f6",
+        "d29ff237763f8325",
+        "ad43e29aa2f7e9a5",
+        "e1cccb472c81a018",
+        "096695e1853bf141",
+        "5344ba87aa2b53f4",
+        "b566e8c2d216286b",
+        "1eeef6c54b94f479",
+        "da78bb2aad36331c",
+        "0035b167ce3f2c3d",
+        "8f06f80a2d7428e3",
+        "4308a6f38509576d",
+        "dc783260e4cea968",
+        "bf755c3ab2240362",
+        "9f9528aab9dae6c9",
+        "5ea34529e3f587e4",
+        "6b991efcf98aec31",
+        "e50c0f768259f2ac",
+        "75971df71ec9dbd5",
+        "d12f8dfe796c1fa1",
+        "599ed5d965c4a03a",
+        "69e8573bb599a473",
+        "e4a3f65d8aedd0c8",
+        "910b26f0c5074a4b",
+        "e3447a00b92294ac",
+        "bbc04b1671fa7a35",
+        "15dea9ea19620031",
+        "a8d305acd30a71b8",
+        "2e92f36ab7749968",
+        "82976e16d04916b7",
+        "1611b142fd58cbc6",
+        "59f9d1731a7709c6",
+        "453e315fb875f0c4",
+        "e695aaf04267f6e4",
+        "3a291c1364e3014e",
+        "29bfdabf82477be0",
+        "7d96ca4f23e20d05",
+        "8bbf19c6a0fb01af",
+        "f89e6df862a76341",
+        "9eee07c5dcaa5721",
+        "2d89717005b76161",
+        "9c9ce7ed7191269d",
+        "c585762a498eb4c4",
+        "d91dbabd60401519",
+        "9ad7fe12356966a8",
+        "eae931d6122da587",
+        "b17921df3f65facb",
+        "9c5b0d5379fddfa6",
+        "146d775ae7439a09",
+        "78010605638aadd6",
+        "6d333ceab4304525",
+        "4e27a791d22a4003",
+        "a31a2675204ec036",
+        "245ece2dbf737d7b",
+        "bd04817d5f2cb122",
+        "8e5d04a493fc15e6",
+        "e072cc0b29731611",
+        "0b5773516ac0d69e",
+        "5fa8b5dac80ae2f7",
+        "2ad7cb3608024e14",
+        "e491a4a38076bb79",
+        "ce9c60a4517feb90",
+        "393785e3d81cc713",
+        "ef9daa5726f65d51",
+        "9563e6cec53b300a",
+        "0e68d75561c48da3",
+        "a86e9ca27b0f5b11"
+      ],
+      "provenMainPlaneJoins": [
+        {
+          "id": "e560c34471b7184ae49",
+          "kind": "pads",
+          "actualCopperOverlapMil2": 443.89268755847223
+        },
+        {
+          "id": "47a758b83ad9850fe49",
+          "kind": "pads",
+          "actualCopperOverlapMil2": 443.8926875584642
+        },
+        {
+          "id": "89e380518a3b212fe49",
+          "kind": "pads",
+          "actualCopperOverlapMil2": 443.89268755846206
+        },
+        {
+          "id": "f983f19732a5a022e49",
+          "kind": "pads",
+          "actualCopperOverlapMil2": 443.89268755845546
+        },
+        {
+          "id": "05b4e85146ebef68",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.2521755427893
+        },
+        {
+          "id": "633c55d2d9b6b800",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.252175542788
+        },
+        {
+          "id": "2b21a3469a027dd2",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.2521755427866
+        },
+        {
+          "id": "f73d1b8ce7c470cb",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.25217554278805
+        },
+        {
+          "id": "3348f0fddf6fd228",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.25217554278896
+        },
+        {
+          "id": "df31df1830c23d22",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.25217554278873
+        },
+        {
+          "id": "cd07c0502766359f",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.2521755427866
+        },
+        {
+          "id": "48c0cfbb8a4b7985",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.2521755427866
+        },
+        {
+          "id": "76c8a9a5ab1b449b",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.252175542788
+        },
+        {
+          "id": "92db8ffb66287226",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.25217554278805
+        },
+        {
+          "id": "d6d33ed75dd5d694",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.25217554278896
+        },
+        {
+          "id": "0077b6233493129e",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 302.1905526607029
+        },
+        {
+          "id": "eb304081fed0b4ea",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.252175542789
+        },
+        {
+          "id": "9fdb7daf32bfda38",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.2521755427887
+        },
+        {
+          "id": "eaf11f1710509dbb",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.25217554278714
+        },
+        {
+          "id": "f3c48d28f1615b3d",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.25217554278873
+        },
+        {
+          "id": "227d3dc86b112edb",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.25217554278714
+        },
+        {
+          "id": "72b470f964f71448",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.252175542789
+        },
+        {
+          "id": "992780dff050c83a",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.252175542789
+        },
+        {
+          "id": "0b1b0b6280207132",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.25217554278805
+        },
+        {
+          "id": "46357363835fa85a",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.252175542788
+        },
+        {
+          "id": "4b660998d94a1074",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 201.02296616663546
+        },
+        {
+          "id": "13e270f28205e8e4",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 201.0229661666363
+        },
+        {
+          "id": "fdfdb9af43d6d59f",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.25217554278873
+        },
+        {
+          "id": "9cec9ef326943c96",
+          "kind": "tracks",
+          "actualCopperOverlapMil2": 11955.582780302597
+        },
+        {
+          "id": "6c0ccb54c3047b19",
+          "kind": "tracks",
+          "actualCopperOverlapMil2": 8115.492042330253
+        },
+        {
+          "id": "a1984b43c63c1f6b",
+          "kind": "tracks",
+          "actualCopperOverlapMil2": 19171.699516436336
+        },
+        {
+          "id": "7bfc741cbf925099",
+          "kind": "fills",
+          "actualCopperOverlapMil2": 314.1572940367096
+        },
+        {
+          "id": "910fe0fa7a105689",
+          "kind": "fills",
+          "actualCopperOverlapMil2": 314.1572940367093
+        },
+        {
+          "id": "87fd72f3d0df9ac8",
+          "kind": "fills",
+          "actualCopperOverlapMil2": 314.15729403670844
+        },
+        {
+          "id": "bce14e72d76e7cbb",
+          "kind": "fills",
+          "actualCopperOverlapMil2": 314.1572940367093
+        },
+        {
+          "id": "e19dadea995c005d",
+          "kind": "fills",
+          "actualCopperOverlapMil2": 314.1572940367091
+        },
+        {
+          "id": "f0d1adcdd366463e",
+          "kind": "fills",
+          "actualCopperOverlapMil2": 314.1572940367089
+        },
+        {
+          "id": "e1cccb472c81a018",
+          "kind": "fills",
+          "actualCopperOverlapMil2": 314.15729403670844
+        },
+        {
+          "id": "1eeef6c54b94f479",
+          "kind": "fills",
+          "actualCopperOverlapMil2": 314.15729403670844
+        },
+        {
+          "id": "4308a6f38509576d",
+          "kind": "fills",
+          "actualCopperOverlapMil2": 314.15729403670935
+        },
+        {
+          "id": "5ea34529e3f587e4",
+          "kind": "fills",
+          "actualCopperOverlapMil2": 314.15729403670935
+        },
+        {
+          "id": "d12f8dfe796c1fa1",
+          "kind": "fills",
+          "actualCopperOverlapMil2": 314.1572940367091
+        },
+        {
+          "id": "910b26f0c5074a4b",
+          "kind": "fills",
+          "actualCopperOverlapMil2": 303.37730086899444
+        },
+        {
+          "id": "a8d305acd30a71b8",
+          "kind": "fills",
+          "actualCopperOverlapMil2": 314.1572940367091
+        },
+        {
+          "id": "59f9d1731a7709c6",
+          "kind": "fills",
+          "actualCopperOverlapMil2": 314.15729403670895
+        },
+        {
+          "id": "29bfdabf82477be0",
+          "kind": "fills",
+          "actualCopperOverlapMil2": 314.1572940367079
+        },
+        {
+          "id": "9eee07c5dcaa5721",
+          "kind": "fills",
+          "actualCopperOverlapMil2": 314.15729403670895
+        },
+        {
+          "id": "d91dbabd60401519",
+          "kind": "fills",
+          "actualCopperOverlapMil2": 314.1572940367079
+        },
+        {
+          "id": "9c5b0d5379fddfa6",
+          "kind": "fills",
+          "actualCopperOverlapMil2": 314.1572940367091
+        },
+        {
+          "id": "4e27a791d22a4003",
+          "kind": "fills",
+          "actualCopperOverlapMil2": 314.1572940367091
+        },
+        {
+          "id": "8e5d04a493fc15e6",
+          "kind": "fills",
+          "actualCopperOverlapMil2": 314.1572940367093
+        },
+        {
+          "id": "2ad7cb3608024e14",
+          "kind": "fills",
+          "actualCopperOverlapMil2": 314.1572940367093
+        },
+        {
+          "id": "ef9daa5726f65d51",
+          "kind": "fills",
+          "actualCopperOverlapMil2": 201.06066818349285
+        }
+      ]
+    },
+    {
+      "pads": [
+        "C16.2",
+        "C20.2",
+        "C21.2",
+        "C22.2",
+        "U8.3",
+        "U8.14",
+        "U8.16",
+        "U8.19",
+        "U8.23",
+        "U8.29",
+        "U8.48",
+        "C12.2",
+        "C15.2",
+        "C28.2",
+        "C30.2",
+        "C31.2"
+      ],
+      "tracks": [
+        "4c0ff3eb82b6dae4",
+        "196c21c3e51745d7",
+        "071e3345bae58186",
+        "cbc1aa15ac3caf94",
+        "578fdcc828729f4a",
+        "e3295e5a12367f6f",
+        "ceb560bd965a1b57",
+        "b413517fa0f3e710",
+        "9a6be2a50619647c",
+        "d41cfae63cf0d280",
+        "ce12bae8036b2b9d",
+        "22ea46ebcd654e49",
+        "02e816c780606205",
+        "5cdcb29b1cc80bd8",
+        "8d8efd3421bd2ec1",
+        "144bca22dd397ed4",
+        "b0aba1cc06c29b67",
+        "06f7e568ff3772e9",
+        "08592830fd677c8e",
+        "37987d45f97e1a39",
+        "f08f67af70770497",
+        "b40c94b43ec8239a",
+        "23895f87e950e5b9",
+        "57c947b1553077fc",
+        "c0b6e39d9b5c42cf",
+        "4ffe21dea7971e88",
+        "8701af4374940be5",
+        "41c5e8514ac9ec22",
+        "202b528e5378461d",
+        "4ed8fccd6746d55a",
+        "6256ad2fd9ac65be",
+        "e5c444979b971d86",
+        "8070c43a991fd26f",
+        "d0ac2bb17cea0406",
+        "b3517fcc6bfbe43c",
+        "d47b4b28e5be2f37",
+        "cdc6abbc74a696d7",
+        "9b9b73312ae5f523",
+        "5b3ad74063c67f06",
+        "f09720036b8ea17e",
+        "9a3e665ef989adc5",
+        "ff5cb4eef8ab04e3",
+        "e68c4674214d681a",
+        "596d0406f28b0977"
+      ],
+      "vias": [
+        "dff1360d2e1dbab0",
+        "a18f40f83ff22b55",
+        "9a4a5c813da26805",
+        "2aecf043db88cdc0",
+        "608fad4b7722fc5d",
+        "ee43cd615b34730a",
+        "8d892ce647b101b8",
+        "c68f516334bf4516"
+      ],
+      "fills": [],
+      "provenMainPlaneJoins": [
+        {
+          "id": "dff1360d2e1dbab0",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.252175542788
+        },
+        {
+          "id": "a18f40f83ff22b55",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.25217554278646
+        },
+        {
+          "id": "9a4a5c813da26805",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.2521755427887
+        },
+        {
+          "id": "2aecf043db88cdc0",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.25217554278646
+        },
+        {
+          "id": "608fad4b7722fc5d",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.252175542788
+        },
+        {
+          "id": "ee43cd615b34730a",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.2521755427888
+        },
+        {
+          "id": "8d892ce647b101b8",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.25217554278646
+        },
+        {
+          "id": "c68f516334bf4516",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.2521755427888
+        }
+      ]
+    },
+    {
+      "pads": [
+        "U2.41",
+        "U2.41",
+        "U2.41",
+        "U2.41",
+        "U2.41",
+        "U2.41",
+        "U2.41",
+        "U2.41",
+        "U2.41"
+      ],
+      "tracks": [
+        "28b0e4b885c610df",
+        "1fa6901c33bccaaa",
+        "c75beec32dede08a",
+        "b9d4f422cc741161"
+      ],
+      "vias": [
+        "55661cce8256ad76",
+        "74f2df22cf9c8277",
+        "cac2aa553d40894a"
+      ],
+      "fills": [
+        "d14b60643a34b978",
+        "a0b43b11f941e141",
+        "b8163395e42f9ec8",
+        "67699899cf53691b",
+        "84b3b9d2efb1285f",
+        "7f658c161ffd8476"
+      ],
+      "provenMainPlaneJoins": [
+        {
+          "id": "55661cce8256ad76",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.2521755427865
+        },
+        {
+          "id": "74f2df22cf9c8277",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.2521755427865
+        },
+        {
+          "id": "cac2aa553d40894a",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.2521755427865
+        }
+      ]
+    },
+    {
+      "pads": [
+        "U5.8",
+        "J7.10",
+        "J8.10",
+        "R54.2",
+        "R55.2",
+        "R56.2",
+        "R57.2",
+        "R65.2"
+      ],
+      "tracks": [
+        "02b7fcbeff59c873",
+        "28d052668ac40cd2",
+        "cc802e9bb7e40b0d",
+        "9e33057efd22b2a4",
+        "f1baf1a6ca41cd93",
+        "8cb94ee2786b5af1",
+        "2c12ec3e355c51c2",
+        "daa3c686f06c6472",
+        "746742192190ceff",
+        "8f95fbdd4b6b2d41",
+        "f216a8cf07490cb9",
+        "f203c562b05639f9",
+        "3c73809880975c8e",
+        "9d23bc487e737aa6",
+        "eca4e63b53266e99",
+        "2115d6feb2285a3a",
+        "4b44b54b0481678f",
+        "fce1f1aa850b6e90",
+        "fa6aa05bf006a694",
+        "904c3181a26b7421"
+      ],
+      "vias": [
+        "5729a60ff847e8c6",
+        "434eda1ece1525b5",
+        "eabeaf55bf5cd66a",
+        "3320f3c85c724907",
+        "30b53f255c223882",
+        "3b31a59f9f4d84db",
+        "c880ddcc741bc8d3"
+      ],
+      "fills": [
+        "1b79207fa1d0ca65",
+        "c72902e33e9e256b",
+        "650cfc289b3b79e2",
+        "f36b67a84685cf4c",
+        "6ffb73d76e44cb15",
+        "8d93d0548525da67",
+        "ba7d898787b8569b",
+        "68d47816e36f47af",
+        "101710dd9f4eb48a",
+        "28b79ee3145127f0",
+        "803a57e9064687ef",
+        "1a7df66636b4ec69",
+        "d56529bd68a38751",
+        "0507c1c7066c226a",
+        "12f9884ab8d34a30",
+        "3b9c40d245f4ea5d",
+        "4cbbf099fcfd4d0c",
+        "263fefed6c0a9062",
+        "371ae4964e477263",
+        "5ec786d1eb52727b",
+        "5badf6a3ca2ac124",
+        "5a5d5b24b1bbd228",
+        "8bb306fd7ac0bdf9",
+        "32521498b6640509"
+      ],
+      "provenMainPlaneJoins": [
+        {
+          "id": "08cd4f1ba27054d7e49",
+          "kind": "pads",
+          "actualCopperOverlapMil2": 443.89268755846206
+        },
+        {
+          "id": "5076dbd203cf5932e49",
+          "kind": "pads",
+          "actualCopperOverlapMil2": 443.89268755845427
+        },
+        {
+          "id": "5729a60ff847e8c6",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.25217554278714
+        },
+        {
+          "id": "434eda1ece1525b5",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.25217554278663
+        },
+        {
+          "id": "eabeaf55bf5cd66a",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.2521755427872
+        },
+        {
+          "id": "3320f3c85c724907",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.25217554278714
+        },
+        {
+          "id": "30b53f255c223882",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.25217554278714
+        },
+        {
+          "id": "3b31a59f9f4d84db",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.25217554278714
+        },
+        {
+          "id": "c880ddcc741bc8d3",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.25217554278714
+        },
+        {
+          "id": "650cfc289b3b79e2",
+          "kind": "fills",
+          "actualCopperOverlapMil2": 314.1572940367079
+        },
+        {
+          "id": "ba7d898787b8569b",
+          "kind": "fills",
+          "actualCopperOverlapMil2": 314.15729403670844
+        },
+        {
+          "id": "803a57e9064687ef",
+          "kind": "fills",
+          "actualCopperOverlapMil2": 314.15729403670787
+        },
+        {
+          "id": "12f9884ab8d34a30",
+          "kind": "fills",
+          "actualCopperOverlapMil2": 314.1572940367079
+        },
+        {
+          "id": "371ae4964e477263",
+          "kind": "fills",
+          "actualCopperOverlapMil2": 314.1572940367079
+        },
+        {
+          "id": "8bb306fd7ac0bdf9",
+          "kind": "fills",
+          "actualCopperOverlapMil2": 314.15729403670787
+        }
+      ]
+    },
+    {
+      "pads": [
+        "U6.8",
+        "U6.7",
+        "U6.6",
+        "U6.5"
+      ],
+      "tracks": [
+        "51ad2ea7fd2c02fc",
+        "670318b0df3f0b27",
+        "2ae7c7a73cffea96",
+        "673aba1f30cf4e3b",
+        "02d5d0e293114715",
+        "393d8afea281d865",
+        "6216bd859c8bee2c",
+        "635c529a4b80898a",
+        "19683845e0ad39df",
+        "ea5656fcc813a335"
+      ],
+      "vias": [
+        "e2e0f7bff31b7d50",
+        "1f9d32043359d015",
+        "9162f0b3f48f3a0d",
+        "3ed44e7826d3c5c1"
+      ],
+      "fills": [
+        "dce1f8915cb5e576",
+        "c1a6b0a2dbf0476c",
+        "6178992f9edeaf69",
+        "d698d446dadfd594",
+        "1d84dfc7867c3e85",
+        "5358f9dab1138cee",
+        "04522ae545639b62",
+        "6f5ba3b0d8b43e5a",
+        "a79d84c97f9eec42"
+      ],
+      "provenMainPlaneJoins": [
+        {
+          "id": "e2e0f7bff31b7d50",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.2521755427865
+        },
+        {
+          "id": "1f9d32043359d015",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.2521755427865
+        },
+        {
+          "id": "9162f0b3f48f3a0d",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.2521755427866
+        },
+        {
+          "id": "3ed44e7826d3c5c1",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.2521755427865
+        }
+      ]
+    },
+    {
+      "pads": [
+        "C2.2",
+        "C5.2",
+        "D2.2",
+        "U6.4"
+      ],
+      "tracks": [
+        "912710320c8ee2e3",
+        "4f92e616f67fcfd5",
+        "778262301daa3a86",
+        "68a468d9a5fca95a",
+        "5447b060f9bd5265",
+        "5dfc51c9979a9eb1",
+        "797661081f314c5e",
+        "0f67d62d1d444087",
+        "561059afeb1f29a3",
+        "2737b4028698aa3e"
+      ],
+      "vias": [
+        "3aa6d59bce54eca9",
+        "9fa54acd716a0de3",
+        "273de4ca228c7dec"
+      ],
+      "fills": [],
+      "provenMainPlaneJoins": [
+        {
+          "id": "3aa6d59bce54eca9",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.2521755427849
+        },
+        {
+          "id": "9fa54acd716a0de3",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.2521755427849
+        },
+        {
+          "id": "273de4ca228c7dec",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.25217554278487
+        }
+      ]
+    },
+    {
+      "pads": [
+        "J11.B1A12",
+        "J11.1",
+        "D7.2"
+      ],
+      "tracks": [
+        "7f7196543758bb0b",
+        "c0bb19f620f6dae0"
+      ],
+      "vias": [],
+      "fills": [],
+      "provenMainPlaneJoins": [
+        {
+          "id": "26b1b787dc4c1f8de36",
+          "kind": "pads",
+          "actualCopperOverlapMil2": 916.7229454997732
+        },
+        {
+          "id": "26b1b787dc4c1f8de58",
+          "kind": "pads",
+          "actualCopperOverlapMil2": 195.67068075872487
+        }
+      ]
+    },
+    {
+      "pads": [
+        "U9.11",
+        "U9.9"
+      ],
+      "tracks": [
+        "341e331c760d4853",
+        "2e0e190f3f8be85f",
+        "7e8f2c2e5ec1bb2e",
+        "0e97160f9daf58f2",
+        "64934e82e30f0370",
+        "3cf8e8d2297c1485",
+        "bd41a7d86e73e5cd"
+      ],
+      "vias": [
+        "09de232b69195cc9"
+      ],
+      "fills": [
+        "ce81927832e603a7",
+        "576e39a2f6b6f54b"
+      ],
+      "provenMainPlaneJoins": [
+        {
+          "id": "09de232b69195cc9",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.25217554278805
+        }
+      ]
+    },
+    {
+      "pads": [
+        "Y1.2",
+        "Y1.4"
+      ],
+      "tracks": [
+        "6f4354e5a5174550",
+        "f5fe527b46d4a122",
+        "81acf4823c38f324",
+        "ee9362dcdb771c41",
+        "279649d28cd5c8ae"
+      ],
+      "vias": [
+        "0e95a59ea442533a"
+      ],
+      "fills": [],
+      "provenMainPlaneJoins": [
+        {
+          "id": "0e95a59ea442533a",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.2521755427865
+        }
+      ]
+    },
+    {
+      "pads": [
+        "R2.2",
+        "R3.2"
+      ],
+      "tracks": [
+        "300b9f586c9500f5",
+        "fb6a69180fe3b44a"
+      ],
+      "vias": [
+        "4a0eb8550ee770e6"
+      ],
+      "fills": [
+        "0bf60904860c7e90",
+        "8b1dbb426d525243"
+      ],
+      "provenMainPlaneJoins": [
+        {
+          "id": "4a0eb8550ee770e6",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.25217554278873
+        }
+      ]
+    },
+    {
+      "pads": [
+        "C26.2",
+        "C27.2"
+      ],
+      "tracks": [
+        "8236ca2edf7258ed",
+        "a30665060680a0f1"
+      ],
+      "vias": [
+        "4007ccf038a7f0f1"
+      ],
+      "fills": [
+        "c5c1816842831d18",
+        "d8574116f45e392e"
+      ],
+      "provenMainPlaneJoins": [
+        {
+          "id": "4007ccf038a7f0f1",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.2521755427874
+        }
+      ]
+    },
+    {
+      "pads": [
+        "C40.2",
+        "C41.2"
+      ],
+      "tracks": [
+        "a402b24c2a6cbc0b",
+        "a279196086317c25"
+      ],
+      "vias": [
+        "8dce32d3f2de8b2f"
+      ],
+      "fills": [],
+      "provenMainPlaneJoins": [
+        {
+          "id": "8dce32d3f2de8b2f",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.252175542788
+        }
+      ]
+    },
+    {
+      "pads": [
+        "R62.2",
+        "U11.4"
+      ],
+      "tracks": [
+        "947cdf4177ae864f",
+        "c04af8ad65e57e0e"
+      ],
+      "vias": [
+        "0f50d9198a7391b2"
+      ],
+      "fills": [],
+      "provenMainPlaneJoins": [
+        {
+          "id": "0f50d9198a7391b2",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.2521755427865
+        }
+      ]
+    },
+    {
+      "pads": [
+        "U14.2",
+        "U14.3"
+      ],
+      "tracks": [
+        "8520cc92ffb57aa7",
+        "fedcf4aec30c4e51"
+      ],
+      "vias": [
+        "d0c78726b944da26"
+      ],
+      "fills": [],
+      "provenMainPlaneJoins": [
+        {
+          "id": "d0c78726b944da26",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.25217554278646
+        }
+      ]
+    },
+    {
+      "pads": [
+        "J11.A1B12",
+        "J11.4"
+      ],
+      "tracks": [
+        "8cb809997ddb9db0"
+      ],
+      "vias": [],
+      "fills": [],
+      "provenMainPlaneJoins": [
+        {
+          "id": "26b1b787dc4c1f8de35",
+          "kind": "pads",
+          "actualCopperOverlapMil2": 916.774745152786
+        },
+        {
+          "id": "26b1b787dc4c1f8de59",
+          "kind": "pads",
+          "actualCopperOverlapMil2": 195.67068075872487
+        }
+      ]
+    },
+    {
+      "pads": [
+        "C1.2"
+      ],
+      "tracks": [
+        "dedea92eddb12447",
+        "45c7541a9577e231",
+        "97ba603239275ad5",
+        "7c0724334d394db3"
+      ],
+      "vias": [
+        "4e1b5e960f230c79"
+      ],
+      "fills": [
+        "4da98bdca3081e72",
+        "0d2243883134eb18"
+      ],
+      "provenMainPlaneJoins": [
+        {
+          "id": "4e1b5e960f230c79",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.2521755427866
+        }
+      ]
+    },
+    {
+      "pads": [
+        "C13.2"
+      ],
+      "tracks": [
+        "30f8467439f4f866",
+        "e97658afe9e413de",
+        "edfe9d2564c60122"
+      ],
+      "vias": [
+        "c66df38325994716"
+      ],
+      "fills": [
+        "3a5dda31c83f3c85",
+        "1afe3a2915a13ca6"
+      ],
+      "provenMainPlaneJoins": [
+        {
+          "id": "c66df38325994716",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.2521755427893
+        }
+      ]
+    },
+    {
+      "pads": [
+        "C29.2"
+      ],
+      "tracks": [
+        "a8029286d2710eca",
+        "1fac8639f87723c7",
+        "85c9ec608c558427"
+      ],
+      "vias": [
+        "0f22af1b25710dca"
+      ],
+      "fills": [
+        "801a41d56396b54f",
+        "56b710aa7e394cbd"
+      ],
+      "provenMainPlaneJoins": [
+        {
+          "id": "0f22af1b25710dca",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.2521755427874
+        }
+      ]
+    },
+    {
+      "pads": [
+        "C3.2"
+      ],
+      "tracks": [
+        "f9cdc1c25246a7bb"
+      ],
+      "vias": [
+        "50993997a6e576b6"
+      ],
+      "fills": [],
+      "provenMainPlaneJoins": [
+        {
+          "id": "50993997a6e576b6",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.25217554278487
+        }
+      ]
+    },
+    {
+      "pads": [
+        "C4.2"
+      ],
+      "tracks": [
+        "da2e77514c85da0d"
+      ],
+      "vias": [
+        "68c146bea6b8acee"
+      ],
+      "fills": [
+        "a93e9653ac916dad",
+        "e028bb4062968a4b"
+      ],
+      "provenMainPlaneJoins": [
+        {
+          "id": "68c146bea6b8acee",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.25217554278487
+        }
+      ]
+    },
+    {
+      "pads": [
+        "C6.2"
+      ],
+      "tracks": [
+        "d9a3384084b5c483"
+      ],
+      "vias": [
+        "3b1f72a203f0c8ea"
+      ],
+      "fills": [],
+      "provenMainPlaneJoins": [
+        {
+          "id": "3b1f72a203f0c8ea",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.25217554278487
+        }
+      ]
+    },
+    {
+      "pads": [
+        "C7.2"
+      ],
+      "tracks": [
+        "9482d9c96456fc72"
+      ],
+      "vias": [
+        "3263f26bd398c9a2"
+      ],
+      "fills": [],
+      "provenMainPlaneJoins": [
+        {
+          "id": "3263f26bd398c9a2",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.25217554278487
+        }
+      ]
+    },
+    {
+      "pads": [
+        "C8.2"
+      ],
+      "tracks": [
+        "dd736660089446cc"
+      ],
+      "vias": [
+        "541b00ab8af5f477"
+      ],
+      "fills": [
+        "dd1fc7c361d88fb0",
+        "1f4167cebc6809e7"
+      ],
+      "provenMainPlaneJoins": [
+        {
+          "id": "541b00ab8af5f477",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.252175542789
+        }
+      ]
+    },
+    {
+      "pads": [
+        "C9.2"
+      ],
+      "tracks": [
+        "1da45ecc624f4799"
+      ],
+      "vias": [
+        "83865f0cecc00770"
+      ],
+      "fills": [
+        "51eaac93e01fba38",
+        "aa3487f4b42aa39b"
+      ],
+      "provenMainPlaneJoins": [
+        {
+          "id": "83865f0cecc00770",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.2521755427872
+        }
+      ]
+    },
+    {
+      "pads": [
+        "C10.2"
+      ],
+      "tracks": [
+        "84c6910ec335f38c"
+      ],
+      "vias": [
+        "7c6851bfe7474237"
+      ],
+      "fills": [
+        "d157685f7d35566c",
+        "304d24d90f4d0a8d"
+      ],
+      "provenMainPlaneJoins": [
+        {
+          "id": "7c6851bfe7474237",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.2521755427872
+        }
+      ]
+    },
+    {
+      "pads": [
+        "C14.2"
+      ],
+      "tracks": [
+        "3397a9398fa53dab"
+      ],
+      "vias": [
+        "bd707b5a833f5150"
+      ],
+      "fills": [
+        "78e338c19580eaae",
+        "714a53c7995cc6d5"
+      ],
+      "provenMainPlaneJoins": [
+        {
+          "id": "bd707b5a833f5150",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.2521755427865
+        }
+      ]
+    },
+    {
+      "pads": [
+        "C17.2"
+      ],
+      "tracks": [
+        "50d328feecbe2e6b"
+      ],
+      "vias": [
+        "6f83e751a6e7fe56"
+      ],
+      "fills": [
+        "bb7654c8aca11624",
+        "0a25bffe53792701"
+      ],
+      "provenMainPlaneJoins": [
+        {
+          "id": "6f83e751a6e7fe56",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 331.82476572232775
+        }
+      ]
+    },
+    {
+      "pads": [
+        "C18.2"
+      ],
+      "tracks": [
+        "ba38782339686e50"
+      ],
+      "vias": [
+        "848c6dd1fa8944b6"
+      ],
+      "fills": [
+        "6c158b0f67f5d89c",
+        "10dfbba77ea24574"
+      ],
+      "provenMainPlaneJoins": [
+        {
+          "id": "848c6dd1fa8944b6",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.2521755427865
+        }
+      ]
+    },
+    {
+      "pads": [
+        "C19.2"
+      ],
+      "tracks": [
+        "20ed326a7395a346"
+      ],
+      "vias": [
+        "8a3c5c11214aafed"
+      ],
+      "fills": [
+        "e023210219cb34b7",
+        "e28c80e8a6309500"
+      ],
+      "provenMainPlaneJoins": [
+        {
+          "id": "8a3c5c11214aafed",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.2521755427865
+        }
+      ]
+    },
+    {
+      "pads": [
+        "C25.2"
+      ],
+      "tracks": [
+        "474f6b725eba01e7"
+      ],
+      "vias": [
+        "26dab21729b51dc9"
+      ],
+      "fills": [
+        "a2c64fe364064d1d",
+        "0773d6aa0a6ae32f"
+      ],
+      "provenMainPlaneJoins": [
+        {
+          "id": "26dab21729b51dc9",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.25217554278646
+        }
+      ]
+    },
+    {
+      "pads": [
+        "D4.2"
+      ],
+      "tracks": [
+        "a3b291207582cac8"
+      ],
+      "vias": [
+        "e6d2ec91917cfe2a"
+      ],
+      "fills": [
+        "4700d2029c382efd",
+        "3ea387843d020107"
+      ],
+      "provenMainPlaneJoins": [
+        {
+          "id": "e6d2ec91917cfe2a",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.2521755427849
+        }
+      ]
+    },
+    {
+      "pads": [
+        "D5.2"
+      ],
+      "tracks": [
+        "3ebee1c925236e8c"
+      ],
+      "vias": [
+        "ae011d8925ab3c87"
+      ],
+      "fills": [
+        "2b576cc03517c1f2",
+        "4e5d0e8536d4dfe6"
+      ],
+      "provenMainPlaneJoins": [
+        {
+          "id": "ae011d8925ab3c87",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.2521755427849
+        }
+      ]
+    },
+    {
+      "pads": [
+        "R10.2"
+      ],
+      "tracks": [
+        "af6d437cb6ef825a"
+      ],
+      "vias": [
+        "9f5e24966b2b0da7"
+      ],
+      "fills": [
+        "323f2a0986faaf3b",
+        "d5bdca101a6b7fa6"
+      ],
+      "provenMainPlaneJoins": [
+        {
+          "id": "9f5e24966b2b0da7",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.25217554278646
+        }
+      ]
+    },
+    {
+      "pads": [
+        "U2.1"
+      ],
+      "tracks": [
+        "097f33f3cde64114"
+      ],
+      "vias": [
+        "bedd23e27d53b8be"
+      ],
+      "fills": [
+        "242e9a0e98b48c64",
+        "81f8a71835c731fa"
+      ],
+      "provenMainPlaneJoins": [
+        {
+          "id": "bedd23e27d53b8be",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.2521755427865
+        }
+      ]
+    },
+    {
+      "pads": [
+        "U2.40"
+      ],
+      "tracks": [
+        "ab47490949d27260"
+      ],
+      "vias": [
+        "55515e8e5ac6bf6b"
+      ],
+      "fills": [
+        "bc0ca36a1d660a8c",
+        "ef6ed27cb009a263"
+      ],
+      "provenMainPlaneJoins": [
+        {
+          "id": "55515e8e5ac6bf6b",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.2521755427865
+        }
+      ]
+    },
+    {
+      "pads": [
+        "U4.8"
+      ],
+      "tracks": [
+        "405b297438fe6079"
+      ],
+      "vias": [
+        "a790bde07aa5cc8c"
+      ],
+      "fills": [
+        "1602bec9ab10374e",
+        "12ec4e4d9cf124b2"
+      ],
+      "provenMainPlaneJoins": [
+        {
+          "id": "a790bde07aa5cc8c",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.2521755427886
+        }
+      ]
+    },
+    {
+      "pads": [
+        "U7.1"
+      ],
+      "tracks": [
+        "801a2da9ab4a1468"
+      ],
+      "vias": [
+        "e79334be1002df80"
+      ],
+      "fills": [],
+      "provenMainPlaneJoins": [
+        {
+          "id": "e79334be1002df80",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.2521755427849
+        }
+      ]
+    },
+    {
+      "pads": [
+        "U8.9"
+      ],
+      "tracks": [
+        "6522b556ded8cfab"
+      ],
+      "vias": [
+        "7d463d4e1d7b6541"
+      ],
+      "fills": [
+        "805535feea1b5700",
+        "fd2c79d32ed2dae3"
+      ],
+      "provenMainPlaneJoins": [
+        {
+          "id": "7d463d4e1d7b6541",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.2521755427869
+        }
+      ]
+    },
+    {
+      "pads": [
+        "C32.2"
+      ],
+      "tracks": [
+        "75da8126709b2578"
+      ],
+      "vias": [
+        "6cd9fa249243eeee"
+      ],
+      "fills": [],
+      "provenMainPlaneJoins": [
+        {
+          "id": "6cd9fa249243eeee",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 201.02296616663514
+        }
+      ]
+    },
+    {
+      "pads": [
+        "C35.2"
+      ],
+      "tracks": [
+        "62140ca601447cf9"
+      ],
+      "vias": [
+        "533e56242b80f196"
+      ],
+      "fills": [
+        "725c28c1c006a984",
+        "0b1d0131d12a22fb"
+      ],
+      "provenMainPlaneJoins": [
+        {
+          "id": "533e56242b80f196",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.2521755427874
+        }
+      ]
+    },
+    {
+      "pads": [
+        "D6.2"
+      ],
+      "tracks": [
+        "bc08599842331de8"
+      ],
+      "vias": [
+        "ca704ff3040ed089"
+      ],
+      "fills": [
+        "f6b18cefb9e629e0",
+        "2e254923be49753a"
+      ],
+      "provenMainPlaneJoins": [
+        {
+          "id": "ca704ff3040ed089",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.2521755427883
+        }
+      ]
+    },
+    {
+      "pads": [
+        "SW1.2"
+      ],
+      "tracks": [
+        "3495d7dc244c7f87"
+      ],
+      "vias": [
+        "fabc9ff22413d07e"
+      ],
+      "fills": [
+        "8c14529f0b7daf07",
+        "9657eefc2413585b"
+      ],
+      "provenMainPlaneJoins": [
+        {
+          "id": "fabc9ff22413d07e",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.2521755427879
+        }
+      ]
+    },
+    {
+      "pads": [
+        "SW2.2"
+      ],
+      "tracks": [
+        "43cb91fa03d8f19e"
+      ],
+      "vias": [
+        "3ea226ad83a72504"
+      ],
+      "fills": [
+        "7a63b72a6274ad94",
+        "0440bba7745934c3"
+      ],
+      "provenMainPlaneJoins": [
+        {
+          "id": "3ea226ad83a72504",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.2521755427879
+        }
+      ]
+    },
+    {
+      "pads": [
+        "C23.2"
+      ],
+      "tracks": [
+        "ea039f24562ede99"
+      ],
+      "vias": [
+        "ef15a714d4f51fc7"
+      ],
+      "fills": [
+        "a4d1a0e839a25da5",
+        "55a1e2bcb321f263"
+      ],
+      "provenMainPlaneJoins": [
+        {
+          "id": "ef15a714d4f51fc7",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.25217554278646
+        }
+      ]
+    },
+    {
+      "pads": [
+        "C24.2"
+      ],
+      "tracks": [
+        "140c77ebac6cef07"
+      ],
+      "vias": [
+        "586b9f4165d0c3b1"
+      ],
+      "fills": [
+        "41ceccb4e0d92c05",
+        "0f684d7358a4c4a8"
+      ],
+      "provenMainPlaneJoins": [
+        {
+          "id": "586b9f4165d0c3b1",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.25217554278805
+        }
+      ]
+    },
+    {
+      "pads": [
+        "C36.2"
+      ],
+      "tracks": [
+        "259ba7a0c9f6e932"
+      ],
+      "vias": [
+        "f75e883f2d8c5fdf"
+      ],
+      "fills": [
+        "6d952f6e02372bb6",
+        "b28448766350c4be"
+      ],
+      "provenMainPlaneJoins": [
+        {
+          "id": "f75e883f2d8c5fdf",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.2521755427879
+        }
+      ]
+    },
+    {
+      "pads": [
+        "C37.2"
+      ],
+      "tracks": [
+        "436b90129a2ba665"
+      ],
+      "vias": [
+        "4a0c1d1d2f8bb75f"
+      ],
+      "fills": [],
+      "provenMainPlaneJoins": [
+        {
+          "id": "4a0c1d1d2f8bb75f",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 273.2105082284048
+        }
+      ]
+    },
+    {
+      "pads": [
+        "C38.2"
+      ],
+      "tracks": [
+        "f52801c4ea7485f1"
+      ],
+      "vias": [
+        "dddf103ed9be71bd"
+      ],
+      "fills": [],
+      "provenMainPlaneJoins": [
+        {
+          "id": "dddf103ed9be71bd",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.252175542788
+        }
+      ]
+    },
+    {
+      "pads": [
+        "C39.2"
+      ],
+      "tracks": [
+        "e700b64ccb43841b"
+      ],
+      "vias": [
+        "08164dedc4d41b92"
+      ],
+      "fills": [],
+      "provenMainPlaneJoins": [
+        {
+          "id": "08164dedc4d41b92",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.25217554278805
+        }
+      ]
+    },
+    {
+      "pads": [
+        "C42.2"
+      ],
+      "tracks": [
+        "60a623bd5ba1ead0"
+      ],
+      "vias": [
+        "7947f8a69952d1a9"
+      ],
+      "fills": [],
+      "provenMainPlaneJoins": [
+        {
+          "id": "7947f8a69952d1a9",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.2521755427849
+        }
+      ]
+    },
+    {
+      "pads": [
+        "R63.2"
+      ],
+      "tracks": [
+        "aad5d2a12f26a430"
+      ],
+      "vias": [
+        "237c20b8799e091a"
+      ],
+      "fills": [],
+      "provenMainPlaneJoins": [
+        {
+          "id": "237c20b8799e091a",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.25217554278896
+        }
+      ]
+    },
+    {
+      "pads": [
+        "R68.2"
+      ],
+      "tracks": [
+        "fd15504935c40b07"
+      ],
+      "vias": [
+        "f0a38e3b4c825113"
+      ],
+      "fills": [],
+      "provenMainPlaneJoins": [
+        {
+          "id": "f0a38e3b4c825113",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.252175542788
+        }
+      ]
+    },
+    {
+      "pads": [
+        "U13.2"
+      ],
+      "tracks": [
+        "7c8d415732b790fc"
+      ],
+      "vias": [
+        "37c0b7e61fe3732e"
+      ],
+      "fills": [],
+      "provenMainPlaneJoins": [
+        {
+          "id": "37c0b7e61fe3732e",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.252175542788
+        }
+      ]
+    },
+    {
+      "pads": [
+        "U12.2"
+      ],
+      "tracks": [
+        "592b85459d00c6b5"
+      ],
+      "vias": [
+        "4d958d7bf8313bcb"
+      ],
+      "fills": [],
+      "provenMainPlaneJoins": [
+        {
+          "id": "4d958d7bf8313bcb",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.252175542788
+        }
+      ]
+    },
+    {
+      "pads": [
+        "J1.1"
+      ],
+      "tracks": [],
+      "vias": [],
+      "fills": [],
+      "provenMainPlaneJoins": [
+        {
+          "id": "7148e8e04a58f5efe12",
+          "kind": "pads",
+          "actualCopperOverlapMil2": 391.48050588016656
+        }
+      ]
+    },
+    {
+      "pads": [
+        "J2.2"
+      ],
+      "tracks": [],
+      "vias": [],
+      "fills": [],
+      "provenMainPlaneJoins": [
+        {
+          "id": "4405575c47dfa4d5e24",
+          "kind": "pads",
+          "actualCopperOverlapMil2": 631.769374693086
+        }
+      ]
+    },
+    {
+      "pads": [
+        "J9.2"
+      ],
+      "tracks": [],
+      "vias": [],
+      "fills": [],
+      "provenMainPlaneJoins": [
+        {
+          "id": "96aac19c5f9d52fae24",
+          "kind": "pads",
+          "actualCopperOverlapMil2": 631.769374693086
+        }
+      ]
+    },
+    {
+      "pads": [
+        "J11.2"
+      ],
+      "tracks": [],
+      "vias": [],
+      "fills": [],
+      "provenMainPlaneJoins": [
+        {
+          "id": "26b1b787dc4c1f8de57",
+          "kind": "pads",
+          "actualCopperOverlapMil2": 239.64398525649267
+        }
+      ]
+    },
+    {
+      "pads": [
+        "J11.3"
+      ],
+      "tracks": [],
+      "vias": [],
+      "fills": [],
+      "provenMainPlaneJoins": [
+        {
+          "id": "26b1b787dc4c1f8de60",
+          "kind": "pads",
+          "actualCopperOverlapMil2": 239.64398525649267
+        }
+      ]
+    },
+    {
+      "pads": [],
+      "tracks": [
+        "ab8bf7cad6e18281",
+        "0000d0029074a622",
+        "e816bfba4dd81568",
+        "319c607a1e357258"
+      ],
+      "vias": [
+        "8d3756b9c6876652"
+      ],
+      "fills": [
+        "85ef474babba6ca4",
+        "e3f9c3411a68a043"
+      ],
+      "provenMainPlaneJoins": [
+        {
+          "id": "8d3756b9c6876652",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.2521755427893
+        }
+      ]
+    },
+    {
+      "pads": [],
+      "tracks": [],
+      "vias": [
+        "ea16631b2b7b5d99"
+      ],
+      "fills": [
+        "ae03f60be9aa4d4d",
+        "d817c449e6a7949b"
+      ],
+      "provenMainPlaneJoins": [
+        {
+          "id": "ea16631b2b7b5d99",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.2521755427865
+        }
+      ]
+    },
+    {
+      "pads": [],
+      "tracks": [],
+      "vias": [
+        "8657decc97f908e4"
+      ],
+      "fills": [
+        "5640043440afdb47",
+        "87606dc42e8dd03a"
+      ],
+      "provenMainPlaneJoins": [
+        {
+          "id": "8657decc97f908e4",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 308.52394572498594
+        }
+      ]
+    },
+    {
+      "pads": [],
+      "tracks": [],
+      "vias": [
+        "a7e555271ddb3bb7"
+      ],
+      "fills": [
+        "c653584b62307ecb",
+        "26ea1f62c758c7df"
+      ],
+      "provenMainPlaneJoins": [
+        {
+          "id": "a7e555271ddb3bb7",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.25217554278737
+        }
+      ]
+    },
+    {
+      "pads": [],
+      "tracks": [],
+      "vias": [
+        "a7067c49b7ba45b3"
+      ],
+      "fills": [
+        "3ec25cf33e1218ba",
+        "5679f362f16943b5"
+      ],
+      "provenMainPlaneJoins": [
+        {
+          "id": "a7067c49b7ba45b3",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.25217554278873
+        }
+      ]
+    },
+    {
+      "pads": [],
+      "tracks": [],
+      "vias": [
+        "a65369b0b90b2432"
+      ],
+      "fills": [
+        "ad52b9e3dfdaa9d5",
+        "1acdfe6d734a2d6e"
+      ],
+      "provenMainPlaneJoins": [
+        {
+          "id": "a65369b0b90b2432",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 339.25217554278873
+        }
+      ]
+    },
+    {
+      "pads": [],
+      "tracks": [],
+      "vias": [
+        "7ae212b11caddb18"
+      ],
+      "fills": [
+        "889170dee6dca42c",
+        "e6de6ae9cff8db73"
+      ],
+      "provenMainPlaneJoins": [
+        {
+          "id": "7ae212b11caddb18",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 337.63133888315167
+        }
+      ]
+    },
+    {
+      "pads": [],
+      "tracks": [],
+      "vias": [
+        "da6fcbb00dc6daf9"
+      ],
+      "fills": [
+        "b3a0ca2329675578",
+        "757b53512e45ee4a"
+      ],
+      "provenMainPlaneJoins": [
+        {
+          "id": "da6fcbb00dc6daf9",
+          "kind": "vias",
+          "actualCopperOverlapMil2": 337.63083543694285
+        }
+      ]
+    }
+  ],
+  "groundProof": "Every strict static GND island joins the one actual native plane through positive plated copper overlap; no global via-connection assumption.",
+  "all20USBTraceReferenceMeasurements": [
+    {
+      "id": "f725670f0f3c4d2c",
+      "net": "USB_DN",
+      "fullProjectionInActualMainGND": true,
+      "conservativeEdgeMarginMm": 1.0583675323130626
+    },
+    {
+      "id": "69da6c37ea089157",
+      "net": "USB_DP",
+      "fullProjectionInActualMainGND": true,
+      "conservativeEdgeMarginMm": 0.24765664377844127
+    },
+    {
+      "id": "0c41b38925ec107b",
+      "net": "USB_DN",
+      "fullProjectionInActualMainGND": false,
+      "conservativeEdgeMarginMm": -0.12004039999999999
+    },
+    {
+      "id": "72f18b8b5ce56f02",
+      "net": "USB_DN",
+      "fullProjectionInActualMainGND": false,
+      "conservativeEdgeMarginMm": -0.12004039999999999
+    },
+    {
+      "id": "08982686c2a6c022",
+      "net": "USB_DN",
+      "fullProjectionInActualMainGND": false,
+      "conservativeEdgeMarginMm": -0.12004039999999999
+    },
+    {
+      "id": "6b7539fd6f10bbd5",
+      "net": "USB_DP",
+      "fullProjectionInActualMainGND": false,
+      "conservativeEdgeMarginMm": -0.06708344194777809
+    },
+    {
+      "id": "eeaa89249d12a300",
+      "net": "USB_DP_MCU",
+      "fullProjectionInActualMainGND": false,
+      "conservativeEdgeMarginMm": -0.12004039999999999
+    },
+    {
+      "id": "2ae47c44c4ff173d",
+      "net": "USB_DN_MCU",
+      "fullProjectionInActualMainGND": false,
+      "conservativeEdgeMarginMm": -0.12004039999999999
+    },
+    {
+      "id": "da905e14ea19a98d",
+      "net": "USB_DP_MCU",
+      "fullProjectionInActualMainGND": false,
+      "conservativeEdgeMarginMm": -0.12004039999999999
+    },
+    {
+      "id": "ec358d6e8d541f2e",
+      "net": "USB_DN_MCU",
+      "fullProjectionInActualMainGND": false,
+      "conservativeEdgeMarginMm": -0.12004039999999999
+    },
+    {
+      "id": "63524ba48522cc31",
+      "net": "USB_DN_MCU",
+      "fullProjectionInActualMainGND": false,
+      "conservativeEdgeMarginMm": -0.12004039999999999
+    },
+    {
+      "id": "8ef4d38504e5769b",
+      "net": "USB_DP_MCU",
+      "fullProjectionInActualMainGND": false,
+      "conservativeEdgeMarginMm": -0.12004039999999999
+    },
+    {
+      "id": "c8638845e683cf52",
+      "net": "USB_DN_MCU",
+      "fullProjectionInActualMainGND": false,
+      "conservativeEdgeMarginMm": -0.12004039999999999
+    },
+    {
+      "id": "5ae72975366a6c9e",
+      "net": "USB_DP_MCU",
+      "fullProjectionInActualMainGND": false,
+      "conservativeEdgeMarginMm": -0.12004039999999999
+    },
+    {
+      "id": "66b9d8a146fb8bb3",
+      "net": "USB_DN_MCU",
+      "fullProjectionInActualMainGND": false,
+      "conservativeEdgeMarginMm": -0.12004039999999999
+    },
+    {
+      "id": "56c401548bd3bcb6",
+      "net": "USB_DP_MCU",
+      "fullProjectionInActualMainGND": false,
+      "conservativeEdgeMarginMm": -0.12004039999999999
+    },
+    {
+      "id": "04b10feb1c66d4fe",
+      "net": "USB_DN_PIN",
+      "fullProjectionInActualMainGND": true,
+      "conservativeEdgeMarginMm": 1.8024940556381892
+    },
+    {
+      "id": "f780cd033dda22c6",
+      "net": "USB_DP_PIN",
+      "fullProjectionInActualMainGND": true,
+      "conservativeEdgeMarginMm": 0.5325608057749818
+    },
+    {
+      "id": "0674a291ecb96f99",
+      "net": "USB_DN_MCU",
+      "fullProjectionInActualMainGND": true,
+      "conservativeEdgeMarginMm": 0.35719939424593644
+    },
+    {
+      "id": "bcb5be8af9272700",
+      "net": "USB_DP_MCU",
+      "fullProjectionInActualMainGND": true,
+      "conservativeEdgeMarginMm": 0.2827197799999839
+    }
+  ],
+  "continuousPersistedClearance": [
+    {
+      "id": "2d012cdb09ebb55b",
+      "minimumMil": 29.331900623004984,
+      "nearestId": "3263f26bd398c9a2"
+    },
+    {
+      "id": "a7f7092689bef08e",
+      "minimumMil": 11.208223273681337,
+      "nearestId": "6659064d8bff970b"
+    },
+    {
+      "id": "b57bb1368d4136bb",
+      "minimumMil": 7.028638882401204,
+      "nearestId": "0077b6233493129e"
+    },
+    {
+      "id": "2bcaf308e1f44934",
+      "minimumMil": 7.473548803768459,
+      "nearestId": "188f888eca80d0e7"
+    },
+    {
+      "id": "a9b0b1d16e1a9472",
+      "minimumMil": 6.794493159961348,
+      "nearestId": "8f95fbdd4b6b2d41"
+    },
+    {
+      "id": "6de18bbf624c2ed8",
+      "minimumMil": 13.430476920301498,
+      "nearestId": "7bafec0474db07eae15"
+    },
+    {
+      "id": "c9b936b249935523",
+      "minimumMil": 12.43100597310491,
+      "nearestId": "0077b6233493129e"
+    },
+    {
+      "id": "4a3104dcacc37345",
+      "minimumMil": 6.998999999999796,
+      "nearestId": "619628be8aba1d8c"
+    },
+    {
+      "id": "6659064d8bff970b",
+      "minimumMil": 6.777723398830705,
+      "nearestId": "27ef3b6816882833"
+    },
+    {
+      "id": "0f41de6ba901d897",
+      "minimumMil": 11.663713458223125,
+      "nearestId": "62f9fee66bc18db6e8"
+    },
+    {
+      "id": "832b2d692aca1940",
+      "minimumMil": 11.658324864356402,
+      "nearestId": "a7583152436bb34ee8"
+    },
+    {
+      "id": "a1a3e9b53c4aa138",
+      "minimumMil": 8.827999999999975,
+      "nearestId": "0ef577d733d287e3"
+    },
+    {
+      "id": "0710b731afe16676",
+      "minimumMil": 8.681761158948639,
+      "nearestId": "5a2cba588e26a65fe7"
+    },
+    {
+      "id": "d0fe568ff9dbde32",
+      "minimumMil": 7.619031229103804,
+      "nearestId": "b4af062d8ea37e54"
+    },
+    {
+      "id": "8a59f687416cbf80",
+      "minimumMil": 105.47829999999978,
+      "nearestId": "989793a2579f062f"
+    },
+    {
+      "id": "38fb6c611705316c",
+      "minimumMil": 6.840596293080434,
+      "nearestId": "cf2cf930286a7831"
+    },
+    {
+      "id": "7fd980edfec5ded3",
+      "minimumMil": 20.877705266423284,
+      "nearestId": "a60fa0014af70dcc"
+    },
+    {
+      "id": "ac6a8b2033bd78bc",
+      "minimumMil": 7.383733410790015,
+      "nearestId": "49821184ce016423"
+    },
+    {
+      "id": "eb8373de73cf0016",
+      "minimumMil": 11.40771700506728,
+      "nearestId": "67a60bc229f4af16"
+    },
+    {
+      "id": "5977927e9a4a33ea",
+      "minimumMil": 37.31825188416527,
+      "nearestId": "e189da665cdd6cd9"
+    },
+    {
+      "id": "a8349f92133f1e36",
+      "minimumMil": 11.645361319691443,
+      "nearestId": "60f4295dacbd43c6"
+    },
+    {
+      "id": "2e4e547764754078",
+      "minimumMil": 11.910563568529906,
+      "nearestId": "f401e26d0cff2912"
+    },
+    {
+      "id": "0e42132621eda993",
+      "minimumMil": 8.284097530882816,
+      "nearestId": "a579519c796f67ace79"
+    },
+    {
+      "id": "721b293e13136a47",
+      "minimumMil": 12.614975498976445,
+      "nearestId": "d30f0d10ac5d25af"
+    },
+    {
+      "id": "0284892ebf4bd0c6",
+      "minimumMil": 27.06450471933178,
+      "nearestId": "d04397806d7a284c"
+    },
+    {
+      "id": "51cebe8f9288b0cc",
+      "minimumMil": 8.73510000000033,
+      "nearestId": "0e9f1326b31a2b9fe10"
+    },
+    {
+      "id": "3a07dc889a06c240",
+      "minimumMil": 11.300000000000178,
+      "nearestId": "a579519c796f67ace76"
+    },
+    {
+      "id": "3aa96277185ac1fc",
+      "minimumMil": 11.617719344664444,
+      "nearestId": "7a0928c386fb9bdc"
+    },
+    {
+      "id": "0df6477b676a6d53",
+      "minimumMil": 14.879062732935893,
+      "nearestId": "657cea9c507d5969e8"
+    },
+    {
+      "id": "1bd4bf2e855d3ff6",
+      "minimumMil": 11.547412923488753,
+      "nearestId": "d9628d33ac5e493be9"
+    },
+    {
+      "id": "a7307ed7c6967731",
+      "minimumMil": 95.38500000000022,
+      "nearestId": "e64cad97fefd4319"
+    },
+    {
+      "id": "da6d9a756f77909b",
+      "minimumMil": 42.48174814237814,
+      "nearestId": "8d565c36f0c801ff"
+    },
+    {
+      "id": "ea979bdea386863e",
+      "minimumMil": 15.840107473179664,
+      "nearestId": "7a0928c386fb9bdc"
+    },
+    {
+      "id": "8d565c36f0c801ff",
+      "minimumMil": 15.000046671919023,
+      "nearestId": "a60fa0014af70dcc"
+    },
+    {
+      "id": "bbbf7933e4456086",
+      "minimumMil": 6.92811358115803,
+      "nearestId": "a579519c796f67ace79"
+    },
+    {
+      "id": "50bb3198955b82ff",
+      "minimumMil": 17.42086640996725,
+      "nearestId": "6aac3aa6a17ba3c0"
+    },
+    {
+      "id": "6aac3aa6a17ba3c0",
+      "minimumMil": 7.989153647132692,
+      "nearestId": "0c3456f1bfa7b091"
+    },
+    {
+      "id": "847ceb28154e7239",
+      "minimumMil": 18.000396360974772,
+      "nearestId": "d69b57d190b71ba6e7"
+    },
+    {
+      "id": "5bb688953da5676d",
+      "minimumMil": 19.980822306748312,
+      "nearestId": "4319dd6d705a28bc"
+    },
+    {
+      "id": "b173cca154193475",
+      "minimumMil": 6.549444975281684,
+      "nearestId": "227d3dc86b112edb"
+    },
+    {
+      "id": "c788058b56908fe5",
+      "minimumMil": 18.5,
+      "nearestId": "067d5b432aa20230"
+    },
+    {
+      "id": "91c322dc832f6737",
+      "minimumMil": 19.03065083855001,
+      "nearestId": "76e4cf3bcc14d3b9e38"
+    },
+    {
+      "id": "900dd0c4c74ab3c4",
+      "minimumMil": 33.0,
+      "nearestId": "356953743bddccc6"
+    },
+    {
+      "id": "3b673c45e4197486",
+      "minimumMil": 19.030650628735444,
+      "nearestId": "904bc3dc0904315be38"
+    },
+    {
+      "id": "81649d64f772e89d",
+      "minimumMil": 33.14999999999999,
+      "nearestId": "d614abbb1a6527c8e38"
+    },
+    {
+      "id": "76a8062f3a5023fa",
+      "minimumMil": 19.030662436173458,
+      "nearestId": "d614abbb1a6527c8e38"
+    },
+    {
+      "id": "163d2e11ef6bc7a1",
+      "minimumMil": 8.73510000000033,
+      "nearestId": "0e9f1326b31a2b9fe14"
+    },
+    {
+      "id": "4cd5fd26d429cc3c",
+      "minimumMil": 18.279499999999878,
+      "nearestId": "1679ed13f06bdb1d"
+    },
+    {
+      "id": "f42bf1bfcfb1c4e0",
+      "minimumMil": 30.057000000000016,
+      "nearestId": "eafdcdb08da3048c"
+    },
+    {
+      "id": "76a6e568d75505ca",
+      "minimumMil": 6.560439381315177,
+      "nearestId": "1679ed13f06bdb1d"
+    },
+    {
+      "id": "7b81e3d2eb47a4ac",
+      "minimumMil": 7.093770587696422,
+      "nearestId": "47d6e0c534d3287f"
+    },
+    {
+      "id": "6cad2758652ccc45",
+      "minimumMil": 9.758024209758009,
+      "nearestId": "82fd0fbea95292ba"
+    },
+    {
+      "id": "e8d008244eaf6223",
+      "minimumMil": 10.456035659213796,
+      "nearestId": "454705cae1476aa5"
+    },
+    {
+      "id": "80fe26f8ebcf2bb0",
+      "minimumMil": 36.47239999999965,
+      "nearestId": "9c9893f4474dbcfc"
+    },
+    {
+      "id": "ee57a98fbc05b03e",
+      "minimumMil": 6.609999999999673,
+      "nearestId": "f983f19732a5a022e54"
+    },
+    {
+      "id": "0a01be5bd790a493",
+      "minimumMil": 13.229938175590107,
+      "nearestId": "b1dfe07534ff0948"
+    },
+    {
+      "id": "2e7bcaae87f81994",
+      "minimumMil": 9.87039999999979,
+      "nearestId": "a84f314e96161ffa"
+    },
+    {
+      "id": "b1dfe07534ff0948",
+      "minimumMil": 7.146199999999681,
+      "nearestId": "188f888eca80d0e7"
+    },
+    {
+      "id": "b33042660ad888f4",
+      "minimumMil": 7.146200000000135,
+      "nearestId": "7abc60f66ecb2914"
+    },
+    {
+      "id": "c0d11a5629585feb",
+      "minimumMil": 9.338005898255108,
+      "nearestId": "38fb6c611705316c"
+    },
+    {
+      "id": "577ddfb3dd8c742e",
+      "minimumMil": 9.663713458223125,
+      "nearestId": "62f9fee66bc18db6e8"
+    },
+    {
+      "id": "305862d115b22dbe",
+      "minimumMil": 9.658324864356402,
+      "nearestId": "a7583152436bb34ee8"
+    },
+    {
+      "id": "39bfeb96cda9ce39",
+      "minimumMil": 10.419581055854785,
+      "nearestId": "5a2cba588e26a65fe7"
+    },
+    {
+      "id": "cfa1368e30b53dee",
+      "minimumMil": 21.725310553300325,
+      "nearestId": "de9db997d55060f9"
+    },
+    {
+      "id": "795c3eae24d56e15",
+      "minimumMil": 8.51939114451563,
+      "nearestId": "49821184ce016423"
+    },
+    {
+      "id": "55771cf76b879af5",
+      "minimumMil": 29.237099191479004,
+      "nearestId": "49b33f550644d0f4"
+    },
+    {
+      "id": "db5dcae7b1e146cd",
+      "minimumMil": 30.31825188416527,
+      "nearestId": "e189da665cdd6cd9"
+    },
+    {
+      "id": "118e14c77e3dfa5c",
+      "minimumMil": 27.979478907729295,
+      "nearestId": "60f4295dacbd43c6"
+    },
+    {
+      "id": "19f3c33dc4adc503",
+      "minimumMil": 31.188144458574904,
+      "nearestId": "e6d2f8e6cb030334"
+    },
+    {
+      "id": "caaef68b25cf2632",
+      "minimumMil": 30.754500000000007,
+      "nearestId": "13343b029e9e3b3b"
+    },
+    {
+      "id": "e81de51360b38d50",
+      "minimumMil": 25.731499999998967,
+      "nearestId": "a579519c796f67ace76"
+    },
+    {
+      "id": "d04397806d7a284c",
+      "minimumMil": 27.06450471933178,
+      "nearestId": "0284892ebf4bd0c6"
+    },
+    {
+      "id": "56674f5e7cd79726",
+      "minimumMil": 6.519365072114358,
+      "nearestId": "a60fa0014af70dcc"
+    },
+    {
+      "id": "59f29f83f027848a",
+      "minimumMil": 6.227299999999559,
+      "nearestId": "f3c784b75543f1ac"
+    },
+    {
+      "id": "ff9875616e7adb1c",
+      "minimumMil": 8.000046671919023,
+      "nearestId": "a60fa0014af70dcc"
+    },
+    {
+      "id": "5e00ed32e0c06320",
+      "minimumMil": 8.000046671919023,
+      "nearestId": "a60fa0014af70dcc"
+    },
+    {
+      "id": "708370906ac2dad8",
+      "minimumMil": 7.282046865946146,
+      "nearestId": "640d27e48bf601cb"
+    },
+    {
+      "id": "356953743bddccc6",
+      "minimumMil": 11.980822306748312,
+      "nearestId": "4319dd6d705a28bc"
+    },
+    {
+      "id": "6c54be83471ce0f1",
+      "minimumMil": 9.58893489336404,
+      "nearestId": "76a6e568d75505ca"
+    },
+    {
+      "id": "a6637f9065a48e50",
+      "minimumMil": 13.704053950139931,
+      "nearestId": "76e4cf3bcc14d3b9e38"
+    },
+    {
+      "id": "1b92d5b6f89ee20b",
+      "minimumMil": 6.836579183844567,
+      "nearestId": "53ee4eed1f123a9e"
+    },
+    {
+      "id": "619628be8aba1d8c",
+      "minimumMil": 6.998999999999796,
+      "nearestId": "4a3104dcacc37345"
+    },
+    {
+      "id": "e0cb1785e895371a",
+      "minimumMil": 29.335493145843465,
+      "nearestId": "0e9f1326b31a2b9fe14"
+    },
+    {
+      "id": "1a9587fcce791db5",
+      "minimumMil": 6.76759999999922,
+      "nearestId": "394b98b46e24a934"
+    },
+    {
+      "id": "2b80474b987ae1dd",
+      "minimumMil": 33.623863468842536,
+      "nearestId": "c9d3cad1b7ca04d7"
+    },
+    {
+      "id": "7f8937776a79ac56",
+      "minimumMil": 33.17581739987234,
+      "nearestId": "6aac3aa6a17ba3c0"
+    },
+    {
+      "id": "e1d2ccb311076947",
+      "minimumMil": 29.472399999999652,
+      "nearestId": "9c9893f4474dbcfc"
+    },
+    {
+      "id": "785c233924ecdf33",
+      "minimumMil": 25.97744984179016,
+      "nearestId": "b173cca154193475"
+    }
+  ],
+  "nativeDRCRecord": "92_final_routes_drc.json: zero connection errors but one pre-existing same-GND hole-to-hole spacing issue remains; root repairing separately.",
+  "notReleaseApproval": true
+}

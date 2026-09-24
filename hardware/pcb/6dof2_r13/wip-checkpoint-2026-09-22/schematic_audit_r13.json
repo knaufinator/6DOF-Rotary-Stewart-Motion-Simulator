@@ -1,0 +1,6280 @@
+{
+  "checkedAt": "2026-09-23T00:22:38.818Z",
+  "mode": "FRESH_SCHEMATIC_VERIFICATION",
+  "input": "06_reopen_schematic.json",
+  "pass": true,
+  "assertions": [
+    {
+      "name": "capture_result_ok",
+      "pass": true
+    },
+    {
+      "name": "source_document_identity",
+      "pass": true
+    },
+    {
+      "name": "baseline_part_count",
+      "pass": true
+    },
+    {
+      "name": "source_part_count",
+      "pass": true,
+      "detail": {
+        "actual": 144,
+        "expected": 144
+      }
+    },
+    {
+      "name": "source_unique_primitive_ids",
+      "pass": true
+    },
+    {
+      "name": "exactly_one_NET_attribute_per_wire",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "no_orphan_NET_attributes",
+      "pass": true
+    },
+    {
+      "name": "unique_designators",
+      "pass": true
+    },
+    {
+      "name": "exact_reference_set",
+      "pass": true
+    },
+    {
+      "name": "all_required_parts_in_BOM_and_PCB",
+      "pass": true
+    },
+    {
+      "name": "no_coincident_component_anchors",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "baseline_retag_D3.1",
+      "pass": true,
+      "detail": {
+        "actual": "VCC5",
+        "expected": "VCC5"
+      }
+    },
+    {
+      "name": "baseline_retag_U7.3",
+      "pass": true,
+      "detail": {
+        "actual": "VCC5",
+        "expected": "VCC5"
+      }
+    },
+    {
+      "name": "baseline_retag_C6.1",
+      "pass": true,
+      "detail": {
+        "actual": "VCC5",
+        "expected": "VCC5"
+      }
+    },
+    {
+      "name": "baseline_retag_U3.4",
+      "pass": true,
+      "detail": {
+        "actual": "VCC5",
+        "expected": "VCC5"
+      }
+    },
+    {
+      "name": "baseline_retag_U4.4",
+      "pass": true,
+      "detail": {
+        "actual": "VCC5",
+        "expected": "VCC5"
+      }
+    },
+    {
+      "name": "baseline_retag_U5.4",
+      "pass": true,
+      "detail": {
+        "actual": "VCC5",
+        "expected": "VCC5"
+      }
+    },
+    {
+      "name": "baseline_retag_U3.12",
+      "pass": true,
+      "detail": {
+        "actual": "GND",
+        "expected": "GND"
+      }
+    },
+    {
+      "name": "baseline_retag_U4.12",
+      "pass": true,
+      "detail": {
+        "actual": "GND",
+        "expected": "GND"
+      }
+    },
+    {
+      "name": "baseline_retag_U5.12",
+      "pass": true,
+      "detail": {
+        "actual": "GND",
+        "expected": "GND"
+      }
+    },
+    {
+      "name": "baseline_retag_U2.13",
+      "pass": true,
+      "detail": {
+        "actual": "USB_DN_MCU",
+        "expected": "USB_DN_MCU"
+      }
+    },
+    {
+      "name": "baseline_retag_U2.14",
+      "pass": true,
+      "detail": {
+        "actual": "USB_DP_MCU",
+        "expected": "USB_DP_MCU"
+      }
+    },
+    {
+      "name": "baseline_unused_U2.24",
+      "pass": true,
+      "detail": {
+        "actual": ""
+      }
+    },
+    {
+      "name": "baseline_unused_U2.25",
+      "pass": true,
+      "detail": {
+        "actual": ""
+      }
+    },
+    {
+      "name": "independent_contract_U11.1",
+      "pass": true
+    },
+    {
+      "name": "independent_contract_U11.2",
+      "pass": true
+    },
+    {
+      "name": "independent_contract_U11.3",
+      "pass": true
+    },
+    {
+      "name": "independent_contract_U11.4",
+      "pass": true
+    },
+    {
+      "name": "independent_contract_U11.5",
+      "pass": true
+    },
+    {
+      "name": "independent_contract_U11.6",
+      "pass": true
+    },
+    {
+      "name": "independent_contract_U11.7",
+      "pass": true
+    },
+    {
+      "name": "independent_contract_U11.8",
+      "pass": true
+    },
+    {
+      "name": "independent_contract_U12.1",
+      "pass": true
+    },
+    {
+      "name": "independent_contract_U12.2",
+      "pass": true
+    },
+    {
+      "name": "independent_contract_U12.3",
+      "pass": true
+    },
+    {
+      "name": "independent_contract_U12.4",
+      "pass": true
+    },
+    {
+      "name": "independent_contract_U12.5",
+      "pass": true
+    },
+    {
+      "name": "independent_contract_U12.6",
+      "pass": true
+    },
+    {
+      "name": "independent_contract_U13.1",
+      "pass": true
+    },
+    {
+      "name": "independent_contract_U13.2",
+      "pass": true
+    },
+    {
+      "name": "independent_contract_U13.3",
+      "pass": true
+    },
+    {
+      "name": "independent_contract_U13.4",
+      "pass": true
+    },
+    {
+      "name": "independent_contract_U13.5",
+      "pass": true
+    },
+    {
+      "name": "independent_contract_U13.6",
+      "pass": true
+    },
+    {
+      "name": "independent_contract_U14.1",
+      "pass": true
+    },
+    {
+      "name": "independent_contract_U14.2",
+      "pass": true
+    },
+    {
+      "name": "independent_contract_U14.3",
+      "pass": true
+    },
+    {
+      "name": "independent_contract_U14.4",
+      "pass": true
+    },
+    {
+      "name": "independent_contract_U14.5",
+      "pass": true
+    },
+    {
+      "name": "independent_contract_U14.6",
+      "pass": true
+    },
+    {
+      "name": "independent_contract_D8.1",
+      "pass": true
+    },
+    {
+      "name": "independent_contract_D8.2",
+      "pass": true
+    },
+    {
+      "name": "independent_contract_R61.1",
+      "pass": true
+    },
+    {
+      "name": "independent_contract_R61.2",
+      "pass": true
+    },
+    {
+      "name": "independent_contract_R62.1",
+      "pass": true
+    },
+    {
+      "name": "independent_contract_R62.2",
+      "pass": true
+    },
+    {
+      "name": "independent_contract_R63.1",
+      "pass": true
+    },
+    {
+      "name": "independent_contract_R63.2",
+      "pass": true
+    },
+    {
+      "name": "independent_contract_R64.1",
+      "pass": true
+    },
+    {
+      "name": "independent_contract_R64.2",
+      "pass": true
+    },
+    {
+      "name": "independent_contract_R65.1",
+      "pass": true
+    },
+    {
+      "name": "independent_contract_R65.2",
+      "pass": true
+    },
+    {
+      "name": "independent_contract_R66.1",
+      "pass": true
+    },
+    {
+      "name": "independent_contract_R66.2",
+      "pass": true
+    },
+    {
+      "name": "independent_contract_R67.1",
+      "pass": true
+    },
+    {
+      "name": "independent_contract_R67.2",
+      "pass": true
+    },
+    {
+      "name": "independent_contract_R68.1",
+      "pass": true
+    },
+    {
+      "name": "independent_contract_R68.2",
+      "pass": true
+    },
+    {
+      "name": "independent_contract_R69.1",
+      "pass": true
+    },
+    {
+      "name": "independent_contract_R69.2",
+      "pass": true
+    },
+    {
+      "name": "independent_contract_R70.1",
+      "pass": true
+    },
+    {
+      "name": "independent_contract_R70.2",
+      "pass": true
+    },
+    {
+      "name": "independent_contract_C37.1",
+      "pass": true
+    },
+    {
+      "name": "independent_contract_C37.2",
+      "pass": true
+    },
+    {
+      "name": "independent_contract_C38.1",
+      "pass": true
+    },
+    {
+      "name": "independent_contract_C38.2",
+      "pass": true
+    },
+    {
+      "name": "independent_contract_C39.1",
+      "pass": true
+    },
+    {
+      "name": "independent_contract_C39.2",
+      "pass": true
+    },
+    {
+      "name": "independent_contract_C40.1",
+      "pass": true
+    },
+    {
+      "name": "independent_contract_C40.2",
+      "pass": true
+    },
+    {
+      "name": "independent_contract_C41.1",
+      "pass": true
+    },
+    {
+      "name": "independent_contract_C41.2",
+      "pass": true
+    },
+    {
+      "name": "independent_contract_C42.1",
+      "pass": true
+    },
+    {
+      "name": "independent_contract_C42.2",
+      "pass": true
+    },
+    {
+      "name": "U3_enable_OR_truth_table",
+      "pass": true
+    },
+    {
+      "name": "U4_enable_OR_truth_table",
+      "pass": true
+    },
+    {
+      "name": "U5_enable_OR_truth_table",
+      "pass": true
+    },
+    {
+      "name": "USB_power_separated",
+      "pass": true
+    },
+    {
+      "name": "source_MPN_U7",
+      "pass": true,
+      "detail": {
+        "actual": "LDL1117S33R",
+        "expected": "LDL1117S33R"
+      }
+    },
+    {
+      "name": "public_supplier_code_U7",
+      "pass": true,
+      "detail": {
+        "actual": "C435835",
+        "expected": "C435835"
+      }
+    },
+    {
+      "name": "substituted_visible_value_U7",
+      "pass": true,
+      "detail": {
+        "name": "LDL1117S33R",
+        "expected": "LDL1117S33R"
+      }
+    },
+    {
+      "name": "source_MPN_C6",
+      "pass": true,
+      "detail": {
+        "actual": "CL10A105KB8NNNC",
+        "expected": "CL10A105KB8NNNC"
+      }
+    },
+    {
+      "name": "public_supplier_code_C6",
+      "pass": true,
+      "detail": {
+        "actual": "C15849",
+        "expected": "C15849"
+      }
+    },
+    {
+      "name": "substituted_visible_value_C6",
+      "pass": true,
+      "detail": {
+        "value": "1uF",
+        "name": "1uF",
+        "expected": "1uF"
+      }
+    },
+    {
+      "name": "source_MPN_C15",
+      "pass": true,
+      "detail": {
+        "actual": "CL21A475KAQNNNE",
+        "expected": "CL21A475KAQNNNE"
+      }
+    },
+    {
+      "name": "public_supplier_code_C15",
+      "pass": true,
+      "detail": {
+        "actual": "C1779",
+        "expected": "C1779"
+      }
+    },
+    {
+      "name": "substituted_visible_value_C15",
+      "pass": true,
+      "detail": {
+        "value": "4.7uF",
+        "name": "4.7uF",
+        "expected": "4.7uF"
+      }
+    },
+    {
+      "name": "source_MPN_C33",
+      "pass": true,
+      "detail": {
+        "actual": "0603B682K500NT",
+        "expected": "0603B682K500NT"
+      }
+    },
+    {
+      "name": "public_supplier_code_C33",
+      "pass": true,
+      "detail": {
+        "actual": "C1631",
+        "expected": "C1631"
+      }
+    },
+    {
+      "name": "substituted_visible_value_C33",
+      "pass": true,
+      "detail": {
+        "value": "6.8nF",
+        "name": "6.8nF",
+        "expected": "6.8nF"
+      }
+    },
+    {
+      "name": "source_MPN_C34",
+      "pass": true,
+      "detail": {
+        "actual": "0603B682K500NT",
+        "expected": "0603B682K500NT"
+      }
+    },
+    {
+      "name": "public_supplier_code_C34",
+      "pass": true,
+      "detail": {
+        "actual": "C1631",
+        "expected": "C1631"
+      }
+    },
+    {
+      "name": "substituted_visible_value_C34",
+      "pass": true,
+      "detail": {
+        "value": "6.8nF",
+        "name": "6.8nF",
+        "expected": "6.8nF"
+      }
+    },
+    {
+      "name": "source_MPN_R46",
+      "pass": true,
+      "detail": {
+        "actual": "0603WAF1001T5E",
+        "expected": "0603WAF1001T5E"
+      }
+    },
+    {
+      "name": "public_supplier_code_R46",
+      "pass": true,
+      "detail": {
+        "actual": "C21190",
+        "expected": "C21190"
+      }
+    },
+    {
+      "name": "substituted_visible_value_R46",
+      "pass": true,
+      "detail": {
+        "value": "1k",
+        "name": "1k",
+        "expected": "1k"
+      }
+    },
+    {
+      "name": "source_MPN_R47",
+      "pass": true,
+      "detail": {
+        "actual": "0603WAF1001T5E",
+        "expected": "0603WAF1001T5E"
+      }
+    },
+    {
+      "name": "public_supplier_code_R47",
+      "pass": true,
+      "detail": {
+        "actual": "C21190",
+        "expected": "C21190"
+      }
+    },
+    {
+      "name": "substituted_visible_value_R47",
+      "pass": true,
+      "detail": {
+        "value": "1k",
+        "name": "1k",
+        "expected": "1k"
+      }
+    },
+    {
+      "name": "source_MPN_R48",
+      "pass": true,
+      "detail": {
+        "actual": "0603WAF1001T5E",
+        "expected": "0603WAF1001T5E"
+      }
+    },
+    {
+      "name": "public_supplier_code_R48",
+      "pass": true,
+      "detail": {
+        "actual": "C21190",
+        "expected": "C21190"
+      }
+    },
+    {
+      "name": "substituted_visible_value_R48",
+      "pass": true,
+      "detail": {
+        "value": "1k",
+        "name": "1k",
+        "expected": "1k"
+      }
+    },
+    {
+      "name": "source_MPN_R49",
+      "pass": true,
+      "detail": {
+        "actual": "0603WAF1001T5E",
+        "expected": "0603WAF1001T5E"
+      }
+    },
+    {
+      "name": "public_supplier_code_R49",
+      "pass": true,
+      "detail": {
+        "actual": "C21190",
+        "expected": "C21190"
+      }
+    },
+    {
+      "name": "substituted_visible_value_R49",
+      "pass": true,
+      "detail": {
+        "value": "1k",
+        "name": "1k",
+        "expected": "1k"
+      }
+    },
+    {
+      "name": "source_MPN_R50",
+      "pass": true,
+      "detail": {
+        "actual": "0603WAF1001T5E",
+        "expected": "0603WAF1001T5E"
+      }
+    },
+    {
+      "name": "public_supplier_code_R50",
+      "pass": true,
+      "detail": {
+        "actual": "C21190",
+        "expected": "C21190"
+      }
+    },
+    {
+      "name": "substituted_visible_value_R50",
+      "pass": true,
+      "detail": {
+        "value": "1k",
+        "name": "1k",
+        "expected": "1k"
+      }
+    },
+    {
+      "name": "source_MPN_R51",
+      "pass": true,
+      "detail": {
+        "actual": "0603WAF1001T5E",
+        "expected": "0603WAF1001T5E"
+      }
+    },
+    {
+      "name": "public_supplier_code_R51",
+      "pass": true,
+      "detail": {
+        "actual": "C21190",
+        "expected": "C21190"
+      }
+    },
+    {
+      "name": "substituted_visible_value_R51",
+      "pass": true,
+      "detail": {
+        "value": "1k",
+        "name": "1k",
+        "expected": "1k"
+      }
+    },
+    {
+      "name": "source_MPN_R52",
+      "pass": true,
+      "detail": {
+        "actual": "0603WAF1001T5E",
+        "expected": "0603WAF1001T5E"
+      }
+    },
+    {
+      "name": "public_supplier_code_R52",
+      "pass": true,
+      "detail": {
+        "actual": "C21190",
+        "expected": "C21190"
+      }
+    },
+    {
+      "name": "substituted_visible_value_R52",
+      "pass": true,
+      "detail": {
+        "value": "1k",
+        "name": "1k",
+        "expected": "1k"
+      }
+    },
+    {
+      "name": "source_MPN_R53",
+      "pass": true,
+      "detail": {
+        "actual": "0603WAF1001T5E",
+        "expected": "0603WAF1001T5E"
+      }
+    },
+    {
+      "name": "public_supplier_code_R53",
+      "pass": true,
+      "detail": {
+        "actual": "C21190",
+        "expected": "C21190"
+      }
+    },
+    {
+      "name": "substituted_visible_value_R53",
+      "pass": true,
+      "detail": {
+        "value": "1k",
+        "name": "1k",
+        "expected": "1k"
+      }
+    },
+    {
+      "name": "source_MPN_R54",
+      "pass": true,
+      "detail": {
+        "actual": "0603WAF1001T5E",
+        "expected": "0603WAF1001T5E"
+      }
+    },
+    {
+      "name": "public_supplier_code_R54",
+      "pass": true,
+      "detail": {
+        "actual": "C21190",
+        "expected": "C21190"
+      }
+    },
+    {
+      "name": "substituted_visible_value_R54",
+      "pass": true,
+      "detail": {
+        "value": "1k",
+        "name": "1k",
+        "expected": "1k"
+      }
+    },
+    {
+      "name": "source_MPN_R55",
+      "pass": true,
+      "detail": {
+        "actual": "0603WAF1001T5E",
+        "expected": "0603WAF1001T5E"
+      }
+    },
+    {
+      "name": "public_supplier_code_R55",
+      "pass": true,
+      "detail": {
+        "actual": "C21190",
+        "expected": "C21190"
+      }
+    },
+    {
+      "name": "substituted_visible_value_R55",
+      "pass": true,
+      "detail": {
+        "value": "1k",
+        "name": "1k",
+        "expected": "1k"
+      }
+    },
+    {
+      "name": "source_MPN_R56",
+      "pass": true,
+      "detail": {
+        "actual": "0603WAF1001T5E",
+        "expected": "0603WAF1001T5E"
+      }
+    },
+    {
+      "name": "public_supplier_code_R56",
+      "pass": true,
+      "detail": {
+        "actual": "C21190",
+        "expected": "C21190"
+      }
+    },
+    {
+      "name": "substituted_visible_value_R56",
+      "pass": true,
+      "detail": {
+        "value": "1k",
+        "name": "1k",
+        "expected": "1k"
+      }
+    },
+    {
+      "name": "source_MPN_R57",
+      "pass": true,
+      "detail": {
+        "actual": "0603WAF1001T5E",
+        "expected": "0603WAF1001T5E"
+      }
+    },
+    {
+      "name": "public_supplier_code_R57",
+      "pass": true,
+      "detail": {
+        "actual": "C21190",
+        "expected": "C21190"
+      }
+    },
+    {
+      "name": "substituted_visible_value_R57",
+      "pass": true,
+      "detail": {
+        "value": "1k",
+        "name": "1k",
+        "expected": "1k"
+      }
+    },
+    {
+      "name": "source_MPN_U11",
+      "pass": true,
+      "detail": {
+        "actual": "SN74LVC1G74DCUR",
+        "expected": "SN74LVC1G74DCUR"
+      }
+    },
+    {
+      "name": "public_supplier_code_U11",
+      "pass": true,
+      "detail": {
+        "actual": "C70285",
+        "expected": "C70285"
+      }
+    },
+    {
+      "name": "source_MPN_U12",
+      "pass": true,
+      "detail": {
+        "actual": "SN74LVC1G98DCKR",
+        "expected": "SN74LVC1G98DCKR"
+      }
+    },
+    {
+      "name": "public_supplier_code_U12",
+      "pass": true,
+      "detail": {
+        "actual": "C485081",
+        "expected": "C485081"
+      }
+    },
+    {
+      "name": "source_MPN_U13",
+      "pass": true,
+      "detail": {
+        "actual": "TPS389001DSER",
+        "expected": "TPS389001DSER"
+      }
+    },
+    {
+      "name": "public_supplier_code_U13",
+      "pass": true,
+      "detail": {
+        "actual": "C1509297",
+        "expected": "C1509297"
+      }
+    },
+    {
+      "name": "source_MPN_U14",
+      "pass": true,
+      "detail": {
+        "actual": "SN74LVC1G98DCKR",
+        "expected": "SN74LVC1G98DCKR"
+      }
+    },
+    {
+      "name": "public_supplier_code_U14",
+      "pass": true,
+      "detail": {
+        "actual": "C485081",
+        "expected": "C485081"
+      }
+    },
+    {
+      "name": "source_MPN_D8",
+      "pass": true,
+      "detail": {
+        "actual": "SS34",
+        "expected": "SS34"
+      }
+    },
+    {
+      "name": "public_supplier_code_D8",
+      "pass": true,
+      "detail": {
+        "actual": "C8678",
+        "expected": "C8678"
+      }
+    },
+    {
+      "name": "source_MPN_R61",
+      "pass": true,
+      "detail": {
+        "actual": "0603WAF1001T5E",
+        "expected": "0603WAF1001T5E"
+      }
+    },
+    {
+      "name": "public_supplier_code_R61",
+      "pass": true,
+      "detail": {
+        "actual": "C21190",
+        "expected": "C21190"
+      }
+    },
+    {
+      "name": "source_MPN_R62",
+      "pass": true,
+      "detail": {
+        "actual": "0603WAF1001T5E",
+        "expected": "0603WAF1001T5E"
+      }
+    },
+    {
+      "name": "public_supplier_code_R62",
+      "pass": true,
+      "detail": {
+        "actual": "C21190",
+        "expected": "C21190"
+      }
+    },
+    {
+      "name": "source_MPN_R63",
+      "pass": true,
+      "detail": {
+        "actual": "0603WAF1001T5E",
+        "expected": "0603WAF1001T5E"
+      }
+    },
+    {
+      "name": "public_supplier_code_R63",
+      "pass": true,
+      "detail": {
+        "actual": "C21190",
+        "expected": "C21190"
+      }
+    },
+    {
+      "name": "source_MPN_R64",
+      "pass": true,
+      "detail": {
+        "actual": "0603WAF1001T5E",
+        "expected": "0603WAF1001T5E"
+      }
+    },
+    {
+      "name": "public_supplier_code_R64",
+      "pass": true,
+      "detail": {
+        "actual": "C21190",
+        "expected": "C21190"
+      }
+    },
+    {
+      "name": "source_MPN_R65",
+      "pass": true,
+      "detail": {
+        "actual": "0603WAF1001T5E",
+        "expected": "0603WAF1001T5E"
+      }
+    },
+    {
+      "name": "public_supplier_code_R65",
+      "pass": true,
+      "detail": {
+        "actual": "C21190",
+        "expected": "C21190"
+      }
+    },
+    {
+      "name": "source_MPN_R66",
+      "pass": true,
+      "detail": {
+        "actual": "0603WAF1002T5E",
+        "expected": "0603WAF1002T5E"
+      }
+    },
+    {
+      "name": "public_supplier_code_R66",
+      "pass": true,
+      "detail": {
+        "actual": "C25804",
+        "expected": "C25804"
+      }
+    },
+    {
+      "name": "source_MPN_R67",
+      "pass": true,
+      "detail": {
+        "actual": "RT0603BRD0732KL",
+        "expected": "RT0603BRD0732KL"
+      }
+    },
+    {
+      "name": "public_supplier_code_R67",
+      "pass": true,
+      "detail": {
+        "actual": "C861325",
+        "expected": "C861325"
+      }
+    },
+    {
+      "name": "source_MPN_R68",
+      "pass": true,
+      "detail": {
+        "actual": "RT0603BRD0710KL",
+        "expected": "RT0603BRD0710KL"
+      }
+    },
+    {
+      "name": "public_supplier_code_R68",
+      "pass": true,
+      "detail": {
+        "actual": "C95204",
+        "expected": "C95204"
+      }
+    },
+    {
+      "name": "source_MPN_R69",
+      "pass": true,
+      "detail": {
+        "actual": "0603WAF330JT5E",
+        "expected": "0603WAF330JT5E"
+      }
+    },
+    {
+      "name": "public_supplier_code_R69",
+      "pass": true,
+      "detail": {
+        "actual": "C23140",
+        "expected": "C23140"
+      }
+    },
+    {
+      "name": "source_MPN_R70",
+      "pass": true,
+      "detail": {
+        "actual": "0603WAF330JT5E",
+        "expected": "0603WAF330JT5E"
+      }
+    },
+    {
+      "name": "public_supplier_code_R70",
+      "pass": true,
+      "detail": {
+        "actual": "C23140",
+        "expected": "C23140"
+      }
+    },
+    {
+      "name": "source_MPN_C37",
+      "pass": true,
+      "detail": {
+        "actual": "CC0603KRX7R9BB104",
+        "expected": "CC0603KRX7R9BB104"
+      }
+    },
+    {
+      "name": "public_supplier_code_C37",
+      "pass": true,
+      "detail": {
+        "actual": "C14663",
+        "expected": "C14663"
+      }
+    },
+    {
+      "name": "source_MPN_C38",
+      "pass": true,
+      "detail": {
+        "actual": "CC0603KRX7R9BB104",
+        "expected": "CC0603KRX7R9BB104"
+      }
+    },
+    {
+      "name": "public_supplier_code_C38",
+      "pass": true,
+      "detail": {
+        "actual": "C14663",
+        "expected": "C14663"
+      }
+    },
+    {
+      "name": "source_MPN_C39",
+      "pass": true,
+      "detail": {
+        "actual": "CC0603KRX7R9BB104",
+        "expected": "CC0603KRX7R9BB104"
+      }
+    },
+    {
+      "name": "public_supplier_code_C39",
+      "pass": true,
+      "detail": {
+        "actual": "C14663",
+        "expected": "C14663"
+      }
+    },
+    {
+      "name": "source_MPN_C40",
+      "pass": true,
+      "detail": {
+        "actual": "CC0603KRX7R9BB104",
+        "expected": "CC0603KRX7R9BB104"
+      }
+    },
+    {
+      "name": "public_supplier_code_C40",
+      "pass": true,
+      "detail": {
+        "actual": "C14663",
+        "expected": "C14663"
+      }
+    },
+    {
+      "name": "source_MPN_C41",
+      "pass": true,
+      "detail": {
+        "actual": "CC0603KRX7R9BB104",
+        "expected": "CC0603KRX7R9BB104"
+      }
+    },
+    {
+      "name": "public_supplier_code_C41",
+      "pass": true,
+      "detail": {
+        "actual": "C14663",
+        "expected": "C14663"
+      }
+    },
+    {
+      "name": "source_MPN_C42",
+      "pass": true,
+      "detail": {
+        "actual": "CL21A475KAQNNNE",
+        "expected": "CL21A475KAQNNNE"
+      }
+    },
+    {
+      "name": "public_supplier_code_C42",
+      "pass": true,
+      "detail": {
+        "actual": "C1779",
+        "expected": "C1779"
+      }
+    },
+    {
+      "name": "unchanged_anchor_C1",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_C1",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_C2",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_C2",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_C3",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_C3",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_C4",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_C4",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_C5",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_C5",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_C6",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_C6",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_C8",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_C8",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_C9",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_C9",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_C10",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_C10",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_C13",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_C13",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_C16",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_C16",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_C17",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_C17",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_C18",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_C18",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_C20",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_C20",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_C21",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_C21",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_C26",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_C26",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_C27",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_C27",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_C28",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_C28",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_C29",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_C29",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_C30",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_C30",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_C36",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_C36",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_C7",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_C7",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_C11",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_C11",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_C19",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_C19",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_C22",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_C22",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_C31",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_C31",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_C14",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_C14",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_C25",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_C25",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_D1",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_D1",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_D2",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_D2",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_D3",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_D3",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_D4",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_D4",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_D5",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_D5",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_J1",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_J1",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2",
+          "3"
+        ],
+        "expected": [
+          "1",
+          "2",
+          "3"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_J2",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_J2",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_J9",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_J9",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_J10",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_J10",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9"
+        ],
+        "expected": [
+          "1",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_J11",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_J11",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "A1B12",
+          "A4B9",
+          "A5",
+          "A6",
+          "A7",
+          "A8",
+          "B1A12",
+          "B4A9",
+          "B5",
+          "B6",
+          "B7",
+          "B8"
+        ],
+        "expected": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "A1B12",
+          "A4B9",
+          "A5",
+          "A6",
+          "A7",
+          "A8",
+          "B1A12",
+          "B4A9",
+          "B5",
+          "B6",
+          "B7",
+          "B8"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_L1",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_L1",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_R1",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_R1",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_R4",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_R4",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_R5",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_R5",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_R11",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_R11",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_R36",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_R36",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_R37",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_R37",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_R38",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_R38",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_R39",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_R39",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_R40",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_R40",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_R41",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_R41",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_R46",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_R46",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_R47",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_R47",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_R48",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_R48",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_R49",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_R49",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_R50",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_R50",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_R51",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_R51",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_R52",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_R52",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_R53",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_R53",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_R54",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_R54",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_R55",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_R55",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_R56",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_R56",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_R57",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_R57",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_R2",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_R2",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_R3",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_R3",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_R6",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_R6",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_R7",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_R7",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_R18",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_R18",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_R19",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_R19",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_R60",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_R60",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_R10",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_R10",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_R12",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_R12",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_R13",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_R13",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_R14",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_R14",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_R15",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_R15",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_R16",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_R16",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_R17",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_R17",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_R20",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_R20",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_R21",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_R21",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_R22",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_R22",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_R23",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_R23",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_R24",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_R24",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_R25",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_R25",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_U2",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_U2",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "15",
+          "16",
+          "17",
+          "18",
+          "19",
+          "2",
+          "20",
+          "21",
+          "22",
+          "23",
+          "24",
+          "25",
+          "26",
+          "27",
+          "28",
+          "29",
+          "3",
+          "30",
+          "31",
+          "32",
+          "33",
+          "34",
+          "35",
+          "36",
+          "37",
+          "38",
+          "39",
+          "4",
+          "40",
+          "41",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9"
+        ],
+        "expected": [
+          "1",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "15",
+          "16",
+          "17",
+          "18",
+          "19",
+          "2",
+          "20",
+          "21",
+          "22",
+          "23",
+          "24",
+          "25",
+          "26",
+          "27",
+          "28",
+          "29",
+          "3",
+          "30",
+          "31",
+          "32",
+          "33",
+          "34",
+          "35",
+          "36",
+          "37",
+          "38",
+          "39",
+          "4",
+          "40",
+          "41",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_U3",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_U3",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "15",
+          "16",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9"
+        ],
+        "expected": [
+          "1",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "15",
+          "16",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_U4",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_U4",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "15",
+          "16",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9"
+        ],
+        "expected": [
+          "1",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "15",
+          "16",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_U5",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_U5",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "15",
+          "16",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9"
+        ],
+        "expected": [
+          "1",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "15",
+          "16",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_U6",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_U6",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8"
+        ],
+        "expected": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_U7",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_U7",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2",
+          "3",
+          "4"
+        ],
+        "expected": [
+          "1",
+          "2",
+          "3",
+          "4"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_U8",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_U8",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "15",
+          "16",
+          "17",
+          "18",
+          "19",
+          "2",
+          "20",
+          "21",
+          "22",
+          "23",
+          "24",
+          "25",
+          "26",
+          "27",
+          "28",
+          "29",
+          "3",
+          "30",
+          "31",
+          "32",
+          "33",
+          "34",
+          "35",
+          "36",
+          "37",
+          "38",
+          "39",
+          "4",
+          "40",
+          "41",
+          "42",
+          "43",
+          "44",
+          "45",
+          "46",
+          "47",
+          "48",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9"
+        ],
+        "expected": [
+          "1",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "15",
+          "16",
+          "17",
+          "18",
+          "19",
+          "2",
+          "20",
+          "21",
+          "22",
+          "23",
+          "24",
+          "25",
+          "26",
+          "27",
+          "28",
+          "29",
+          "3",
+          "30",
+          "31",
+          "32",
+          "33",
+          "34",
+          "35",
+          "36",
+          "37",
+          "38",
+          "39",
+          "4",
+          "40",
+          "41",
+          "42",
+          "43",
+          "44",
+          "45",
+          "46",
+          "47",
+          "48",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_Y1",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_Y1",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2",
+          "3",
+          "4"
+        ],
+        "expected": [
+          "1",
+          "2",
+          "3",
+          "4"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_J3",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_J3",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "15",
+          "16",
+          "17",
+          "18",
+          "19",
+          "2",
+          "20",
+          "21",
+          "22",
+          "23",
+          "24",
+          "25",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9"
+        ],
+        "expected": [
+          "1",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "15",
+          "16",
+          "17",
+          "18",
+          "19",
+          "2",
+          "20",
+          "21",
+          "22",
+          "23",
+          "24",
+          "25",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_J4",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_J4",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "15",
+          "16",
+          "17",
+          "18",
+          "19",
+          "2",
+          "20",
+          "21",
+          "22",
+          "23",
+          "24",
+          "25",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9"
+        ],
+        "expected": [
+          "1",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "15",
+          "16",
+          "17",
+          "18",
+          "19",
+          "2",
+          "20",
+          "21",
+          "22",
+          "23",
+          "24",
+          "25",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_J5",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_J5",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "15",
+          "16",
+          "17",
+          "18",
+          "19",
+          "2",
+          "20",
+          "21",
+          "22",
+          "23",
+          "24",
+          "25",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9"
+        ],
+        "expected": [
+          "1",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "15",
+          "16",
+          "17",
+          "18",
+          "19",
+          "2",
+          "20",
+          "21",
+          "22",
+          "23",
+          "24",
+          "25",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_J6",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_J6",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "15",
+          "16",
+          "17",
+          "18",
+          "19",
+          "2",
+          "20",
+          "21",
+          "22",
+          "23",
+          "24",
+          "25",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9"
+        ],
+        "expected": [
+          "1",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "15",
+          "16",
+          "17",
+          "18",
+          "19",
+          "2",
+          "20",
+          "21",
+          "22",
+          "23",
+          "24",
+          "25",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_J7",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_J7",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "15",
+          "16",
+          "17",
+          "18",
+          "19",
+          "2",
+          "20",
+          "21",
+          "22",
+          "23",
+          "24",
+          "25",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9"
+        ],
+        "expected": [
+          "1",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "15",
+          "16",
+          "17",
+          "18",
+          "19",
+          "2",
+          "20",
+          "21",
+          "22",
+          "23",
+          "24",
+          "25",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_J8",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_J8",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "15",
+          "16",
+          "17",
+          "18",
+          "19",
+          "2",
+          "20",
+          "21",
+          "22",
+          "23",
+          "24",
+          "25",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9"
+        ],
+        "expected": [
+          "1",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "15",
+          "16",
+          "17",
+          "18",
+          "19",
+          "2",
+          "20",
+          "21",
+          "22",
+          "23",
+          "24",
+          "25",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_R30",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_R30",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_R31",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_R31",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_R32",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_R32",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_R33",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_R33",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_R34",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_R34",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_R35",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_R35",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_U9",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_U9",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "15",
+          "16",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9"
+        ],
+        "expected": [
+          "1",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "15",
+          "16",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_U10",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_U10",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "15",
+          "16",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9"
+        ],
+        "expected": [
+          "1",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "15",
+          "16",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_C12",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_C12",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_C35",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_C35",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_C15",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_C15",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_L2",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_L2",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_R42",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_R42",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_R43",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_R43",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_R44",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_R44",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_R45",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_R45",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_R58",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_R58",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_R59",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_R59",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_C32",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_C32",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_C33",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_C33",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_C34",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_C34",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_D7",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_D7",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_D6",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_D6",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ],
+        "expected": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_SW1",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_SW1",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_SW2",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_SW2",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_C23",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_C23",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_C24",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_C24",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_F1",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_F1",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "unchanged_anchor_U11",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_U11",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8"
+        ],
+        "expected": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8"
+        ]
+      }
+    },
+    {
+      "name": "new_anchor_contract_U11",
+      "pass": true
+    },
+    {
+      "name": "unchanged_anchor_U12",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_U12",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ],
+        "expected": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ]
+      }
+    },
+    {
+      "name": "new_anchor_contract_U12",
+      "pass": true
+    },
+    {
+      "name": "unchanged_anchor_U13",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_U13",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ],
+        "expected": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ]
+      }
+    },
+    {
+      "name": "new_anchor_contract_U13",
+      "pass": true
+    },
+    {
+      "name": "unchanged_anchor_U14",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_U14",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ],
+        "expected": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ]
+      }
+    },
+    {
+      "name": "new_anchor_contract_U14",
+      "pass": true
+    },
+    {
+      "name": "unchanged_anchor_D8",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_D8",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "new_anchor_contract_D8",
+      "pass": true
+    },
+    {
+      "name": "unchanged_anchor_R61",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_R61",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "new_anchor_contract_R61",
+      "pass": true
+    },
+    {
+      "name": "unchanged_anchor_R62",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_R62",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "new_anchor_contract_R62",
+      "pass": true
+    },
+    {
+      "name": "unchanged_anchor_R63",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_R63",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "new_anchor_contract_R63",
+      "pass": true
+    },
+    {
+      "name": "unchanged_anchor_R64",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_R64",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "new_anchor_contract_R64",
+      "pass": true
+    },
+    {
+      "name": "unchanged_anchor_R65",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_R65",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "new_anchor_contract_R65",
+      "pass": true
+    },
+    {
+      "name": "unchanged_anchor_R66",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_R66",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "new_anchor_contract_R66",
+      "pass": true
+    },
+    {
+      "name": "unchanged_anchor_R67",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_R67",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "new_anchor_contract_R67",
+      "pass": true
+    },
+    {
+      "name": "unchanged_anchor_R68",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_R68",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "new_anchor_contract_R68",
+      "pass": true
+    },
+    {
+      "name": "unchanged_anchor_R69",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_R69",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "new_anchor_contract_R69",
+      "pass": true
+    },
+    {
+      "name": "unchanged_anchor_R70",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_R70",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "new_anchor_contract_R70",
+      "pass": true
+    },
+    {
+      "name": "unchanged_anchor_C37",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_C37",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "new_anchor_contract_C37",
+      "pass": true
+    },
+    {
+      "name": "unchanged_anchor_C38",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_C38",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "new_anchor_contract_C38",
+      "pass": true
+    },
+    {
+      "name": "unchanged_anchor_C39",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_C39",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "new_anchor_contract_C39",
+      "pass": true
+    },
+    {
+      "name": "unchanged_anchor_C40",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_C40",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "new_anchor_contract_C40",
+      "pass": true
+    },
+    {
+      "name": "unchanged_anchor_C41",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_C41",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "new_anchor_contract_C41",
+      "pass": true
+    },
+    {
+      "name": "unchanged_anchor_C42",
+      "pass": true
+    },
+    {
+      "name": "all_symbol_pin_numbers_C42",
+      "pass": true,
+      "detail": {
+        "actual": [
+          "1",
+          "2"
+        ],
+        "expected": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "new_anchor_contract_C42",
+      "pass": true
+    },
+    {
+      "name": "all_physical_pin_keys_unique",
+      "pass": true
+    },
+    {
+      "name": "new_named_stubs_at_most_8_native_units",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "new_stubs_no_wire_intersections",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "new_stubs_no_foreign_pin_contacts",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "exactly_one_named_stub_per_new_connected_pin",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "U11_complement_output_unwired",
+      "pass": true
+    },
+    {
+      "name": "netlist_exact_reference_set",
+      "pass": true
+    },
+    {
+      "name": "netlist_unique_component_identities",
+      "pass": true
+    },
+    {
+      "name": "every_reference_every_pin_exact",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "manufacturer_pin_name_U11.1",
+      "pass": true,
+      "detail": {
+        "actual": "CLK",
+        "expected": "CLK"
+      }
+    },
+    {
+      "name": "manufacturer_pin_name_U11.2",
+      "pass": true,
+      "detail": {
+        "actual": "D",
+        "expected": "D"
+      }
+    },
+    {
+      "name": "manufacturer_pin_name_U11.3",
+      "pass": true,
+      "detail": {
+        "actual": "Q#",
+        "expected": "Q#"
+      }
+    },
+    {
+      "name": "manufacturer_pin_name_U11.4",
+      "pass": true,
+      "detail": {
+        "actual": "GND",
+        "expected": "GND"
+      }
+    },
+    {
+      "name": "manufacturer_pin_name_U11.5",
+      "pass": true,
+      "detail": {
+        "actual": "Q",
+        "expected": "Q"
+      }
+    },
+    {
+      "name": "manufacturer_pin_name_U11.6",
+      "pass": true,
+      "detail": {
+        "actual": "CLR#",
+        "expected": "CLR#"
+      }
+    },
+    {
+      "name": "manufacturer_pin_name_U11.7",
+      "pass": true,
+      "detail": {
+        "actual": "PRE#",
+        "expected": "PRE#"
+      }
+    },
+    {
+      "name": "manufacturer_pin_name_U11.8",
+      "pass": true,
+      "detail": {
+        "actual": "VCC",
+        "expected": "VCC"
+      }
+    },
+    {
+      "name": "manufacturer_pin_name_U12.1",
+      "pass": true,
+      "detail": {
+        "actual": "IN1",
+        "expected": "IN1"
+      }
+    },
+    {
+      "name": "manufacturer_pin_name_U12.2",
+      "pass": true,
+      "detail": {
+        "actual": "GND",
+        "expected": "GND"
+      }
+    },
+    {
+      "name": "manufacturer_pin_name_U12.3",
+      "pass": true,
+      "detail": {
+        "actual": "IN0",
+        "expected": "IN0"
+      }
+    },
+    {
+      "name": "manufacturer_pin_name_U12.4",
+      "pass": true,
+      "detail": {
+        "actual": "Y1",
+        "expected": "Y1"
+      }
+    },
+    {
+      "name": "manufacturer_pin_name_U12.5",
+      "pass": true,
+      "detail": {
+        "actual": "VCC",
+        "expected": "VCC"
+      }
+    },
+    {
+      "name": "manufacturer_pin_name_U12.6",
+      "pass": true,
+      "detail": {
+        "actual": "IN2",
+        "expected": "IN2"
+      }
+    },
+    {
+      "name": "manufacturer_pin_name_U13.1",
+      "pass": true,
+      "detail": {
+        "actual": "SENSE",
+        "expected": "SENSE"
+      }
+    },
+    {
+      "name": "manufacturer_pin_name_U13.2",
+      "pass": true,
+      "detail": {
+        "actual": "GND",
+        "expected": "GND"
+      }
+    },
+    {
+      "name": "manufacturer_pin_name_U13.3",
+      "pass": true,
+      "detail": {
+        "actual": "MR#",
+        "expected": "MR#"
+      }
+    },
+    {
+      "name": "manufacturer_pin_name_U13.4",
+      "pass": true,
+      "detail": {
+        "actual": "VDD",
+        "expected": "VDD"
+      }
+    },
+    {
+      "name": "manufacturer_pin_name_U13.5",
+      "pass": true,
+      "detail": {
+        "actual": "CT",
+        "expected": "CT"
+      }
+    },
+    {
+      "name": "manufacturer_pin_name_U13.6",
+      "pass": true,
+      "detail": {
+        "actual": "RESET#",
+        "expected": "RESET#"
+      }
+    },
+    {
+      "name": "manufacturer_pin_name_U14.1",
+      "pass": true,
+      "detail": {
+        "actual": "IN1",
+        "expected": "IN1"
+      }
+    },
+    {
+      "name": "manufacturer_pin_name_U14.2",
+      "pass": true,
+      "detail": {
+        "actual": "GND",
+        "expected": "GND"
+      }
+    },
+    {
+      "name": "manufacturer_pin_name_U14.3",
+      "pass": true,
+      "detail": {
+        "actual": "IN0",
+        "expected": "IN0"
+      }
+    },
+    {
+      "name": "manufacturer_pin_name_U14.4",
+      "pass": true,
+      "detail": {
+        "actual": "Y1",
+        "expected": "Y1"
+      }
+    },
+    {
+      "name": "manufacturer_pin_name_U14.5",
+      "pass": true,
+      "detail": {
+        "actual": "VCC",
+        "expected": "VCC"
+      }
+    },
+    {
+      "name": "manufacturer_pin_name_U14.6",
+      "pass": true,
+      "detail": {
+        "actual": "IN2",
+        "expected": "IN2"
+      }
+    },
+    {
+      "name": "manufacturer_pin_name_D8.1",
+      "pass": true,
+      "detail": {
+        "actual": "K",
+        "expected": "K"
+      }
+    },
+    {
+      "name": "manufacturer_pin_name_D8.2",
+      "pass": true,
+      "detail": {
+        "actual": "A",
+        "expected": "A"
+      }
+    },
+    {
+      "name": "netlist_supplier_U7",
+      "pass": true,
+      "detail": {
+        "actual": "C435835",
+        "expected": "C435835"
+      }
+    },
+    {
+      "name": "netlist_MPN_U7",
+      "pass": true
+    },
+    {
+      "name": "netlist_supplier_C6",
+      "pass": true,
+      "detail": {
+        "actual": "C15849",
+        "expected": "C15849"
+      }
+    },
+    {
+      "name": "netlist_MPN_C6",
+      "pass": true
+    },
+    {
+      "name": "netlist_supplier_C15",
+      "pass": true,
+      "detail": {
+        "actual": "C1779",
+        "expected": "C1779"
+      }
+    },
+    {
+      "name": "netlist_MPN_C15",
+      "pass": true
+    },
+    {
+      "name": "netlist_supplier_C33",
+      "pass": true,
+      "detail": {
+        "actual": "C1631",
+        "expected": "C1631"
+      }
+    },
+    {
+      "name": "netlist_MPN_C33",
+      "pass": true
+    },
+    {
+      "name": "netlist_supplier_C34",
+      "pass": true,
+      "detail": {
+        "actual": "C1631",
+        "expected": "C1631"
+      }
+    },
+    {
+      "name": "netlist_MPN_C34",
+      "pass": true
+    },
+    {
+      "name": "netlist_supplier_R46",
+      "pass": true,
+      "detail": {
+        "actual": "C21190",
+        "expected": "C21190"
+      }
+    },
+    {
+      "name": "netlist_MPN_R46",
+      "pass": true
+    },
+    {
+      "name": "netlist_supplier_R47",
+      "pass": true,
+      "detail": {
+        "actual": "C21190",
+        "expected": "C21190"
+      }
+    },
+    {
+      "name": "netlist_MPN_R47",
+      "pass": true
+    },
+    {
+      "name": "netlist_supplier_R48",
+      "pass": true,
+      "detail": {
+        "actual": "C21190",
+        "expected": "C21190"
+      }
+    },
+    {
+      "name": "netlist_MPN_R48",
+      "pass": true
+    },
+    {
+      "name": "netlist_supplier_R49",
+      "pass": true,
+      "detail": {
+        "actual": "C21190",
+        "expected": "C21190"
+      }
+    },
+    {
+      "name": "netlist_MPN_R49",
+      "pass": true
+    },
+    {
+      "name": "netlist_supplier_R50",
+      "pass": true,
+      "detail": {
+        "actual": "C21190",
+        "expected": "C21190"
+      }
+    },
+    {
+      "name": "netlist_MPN_R50",
+      "pass": true
+    },
+    {
+      "name": "netlist_supplier_R51",
+      "pass": true,
+      "detail": {
+        "actual": "C21190",
+        "expected": "C21190"
+      }
+    },
+    {
+      "name": "netlist_MPN_R51",
+      "pass": true
+    },
+    {
+      "name": "netlist_supplier_R52",
+      "pass": true,
+      "detail": {
+        "actual": "C21190",
+        "expected": "C21190"
+      }
+    },
+    {
+      "name": "netlist_MPN_R52",
+      "pass": true
+    },
+    {
+      "name": "netlist_supplier_R53",
+      "pass": true,
+      "detail": {
+        "actual": "C21190",
+        "expected": "C21190"
+      }
+    },
+    {
+      "name": "netlist_MPN_R53",
+      "pass": true
+    },
+    {
+      "name": "netlist_supplier_R54",
+      "pass": true,
+      "detail": {
+        "actual": "C21190",
+        "expected": "C21190"
+      }
+    },
+    {
+      "name": "netlist_MPN_R54",
+      "pass": true
+    },
+    {
+      "name": "netlist_supplier_R55",
+      "pass": true,
+      "detail": {
+        "actual": "C21190",
+        "expected": "C21190"
+      }
+    },
+    {
+      "name": "netlist_MPN_R55",
+      "pass": true
+    },
+    {
+      "name": "netlist_supplier_R56",
+      "pass": true,
+      "detail": {
+        "actual": "C21190",
+        "expected": "C21190"
+      }
+    },
+    {
+      "name": "netlist_MPN_R56",
+      "pass": true
+    },
+    {
+      "name": "netlist_supplier_R57",
+      "pass": true,
+      "detail": {
+        "actual": "C21190",
+        "expected": "C21190"
+      }
+    },
+    {
+      "name": "netlist_MPN_R57",
+      "pass": true
+    },
+    {
+      "name": "netlist_supplier_U11",
+      "pass": true,
+      "detail": {
+        "actual": "C70285",
+        "expected": "C70285"
+      }
+    },
+    {
+      "name": "netlist_MPN_U11",
+      "pass": true
+    },
+    {
+      "name": "netlist_supplier_U12",
+      "pass": true,
+      "detail": {
+        "actual": "C485081",
+        "expected": "C485081"
+      }
+    },
+    {
+      "name": "netlist_MPN_U12",
+      "pass": true
+    },
+    {
+      "name": "netlist_supplier_U13",
+      "pass": true,
+      "detail": {
+        "actual": "C1509297",
+        "expected": "C1509297"
+      }
+    },
+    {
+      "name": "netlist_MPN_U13",
+      "pass": true
+    },
+    {
+      "name": "netlist_supplier_U14",
+      "pass": true,
+      "detail": {
+        "actual": "C485081",
+        "expected": "C485081"
+      }
+    },
+    {
+      "name": "netlist_MPN_U14",
+      "pass": true
+    },
+    {
+      "name": "netlist_supplier_D8",
+      "pass": true,
+      "detail": {
+        "actual": "C8678",
+        "expected": "C8678"
+      }
+    },
+    {
+      "name": "netlist_MPN_D8",
+      "pass": true
+    },
+    {
+      "name": "netlist_supplier_R61",
+      "pass": true,
+      "detail": {
+        "actual": "C21190",
+        "expected": "C21190"
+      }
+    },
+    {
+      "name": "netlist_MPN_R61",
+      "pass": true
+    },
+    {
+      "name": "netlist_supplier_R62",
+      "pass": true,
+      "detail": {
+        "actual": "C21190",
+        "expected": "C21190"
+      }
+    },
+    {
+      "name": "netlist_MPN_R62",
+      "pass": true
+    },
+    {
+      "name": "netlist_supplier_R63",
+      "pass": true,
+      "detail": {
+        "actual": "C21190",
+        "expected": "C21190"
+      }
+    },
+    {
+      "name": "netlist_MPN_R63",
+      "pass": true
+    },
+    {
+      "name": "netlist_supplier_R64",
+      "pass": true,
+      "detail": {
+        "actual": "C21190",
+        "expected": "C21190"
+      }
+    },
+    {
+      "name": "netlist_MPN_R64",
+      "pass": true
+    },
+    {
+      "name": "netlist_supplier_R65",
+      "pass": true,
+      "detail": {
+        "actual": "C21190",
+        "expected": "C21190"
+      }
+    },
+    {
+      "name": "netlist_MPN_R65",
+      "pass": true
+    },
+    {
+      "name": "netlist_supplier_R66",
+      "pass": true,
+      "detail": {
+        "actual": "C25804",
+        "expected": "C25804"
+      }
+    },
+    {
+      "name": "netlist_MPN_R66",
+      "pass": true
+    },
+    {
+      "name": "netlist_supplier_R67",
+      "pass": true,
+      "detail": {
+        "actual": "C861325",
+        "expected": "C861325"
+      }
+    },
+    {
+      "name": "netlist_MPN_R67",
+      "pass": true
+    },
+    {
+      "name": "netlist_supplier_R68",
+      "pass": true,
+      "detail": {
+        "actual": "C95204",
+        "expected": "C95204"
+      }
+    },
+    {
+      "name": "netlist_MPN_R68",
+      "pass": true
+    },
+    {
+      "name": "netlist_supplier_R69",
+      "pass": true,
+      "detail": {
+        "actual": "C23140",
+        "expected": "C23140"
+      }
+    },
+    {
+      "name": "netlist_MPN_R69",
+      "pass": true
+    },
+    {
+      "name": "netlist_supplier_R70",
+      "pass": true,
+      "detail": {
+        "actual": "C23140",
+        "expected": "C23140"
+      }
+    },
+    {
+      "name": "netlist_MPN_R70",
+      "pass": true
+    },
+    {
+      "name": "netlist_supplier_C37",
+      "pass": true,
+      "detail": {
+        "actual": "C14663",
+        "expected": "C14663"
+      }
+    },
+    {
+      "name": "netlist_MPN_C37",
+      "pass": true
+    },
+    {
+      "name": "netlist_supplier_C38",
+      "pass": true,
+      "detail": {
+        "actual": "C14663",
+        "expected": "C14663"
+      }
+    },
+    {
+      "name": "netlist_MPN_C38",
+      "pass": true
+    },
+    {
+      "name": "netlist_supplier_C39",
+      "pass": true,
+      "detail": {
+        "actual": "C14663",
+        "expected": "C14663"
+      }
+    },
+    {
+      "name": "netlist_MPN_C39",
+      "pass": true
+    },
+    {
+      "name": "netlist_supplier_C40",
+      "pass": true,
+      "detail": {
+        "actual": "C14663",
+        "expected": "C14663"
+      }
+    },
+    {
+      "name": "netlist_MPN_C40",
+      "pass": true
+    },
+    {
+      "name": "netlist_supplier_C41",
+      "pass": true,
+      "detail": {
+        "actual": "C14663",
+        "expected": "C14663"
+      }
+    },
+    {
+      "name": "netlist_MPN_C41",
+      "pass": true
+    },
+    {
+      "name": "netlist_supplier_C42",
+      "pass": true,
+      "detail": {
+        "actual": "C1779",
+        "expected": "C1779"
+      }
+    },
+    {
+      "name": "netlist_MPN_C42",
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "warnings": [
+    {
+      "name": "legacy_or_unresolved_supplier_metadata",
+      "items": [
+        {
+          "ref": "C1",
+          "value": "RVT1E101M0607.1"
+        },
+        {
+          "ref": "C2",
+          "value": "RST220UF25V019.1"
+        },
+        {
+          "ref": "C3",
+          "value": "CL31A107MQHNNNE.1"
+        },
+        {
+          "ref": "C4",
+          "value": "CC0603KRX7R9BB104.1"
+        },
+        {
+          "ref": "C5",
+          "value": "CC0603KRX7R9BB104.1"
+        },
+        {
+          "ref": "C7",
+          "value": "CL21A106KAYNNNE.1"
+        },
+        {
+          "ref": "C8",
+          "value": "CC0603KRX7R9BB104.1"
+        },
+        {
+          "ref": "C9",
+          "value": "CC0603KRX7R9BB104.1"
+        },
+        {
+          "ref": "C10",
+          "value": "CC0603KRX7R9BB104.1"
+        },
+        {
+          "ref": "C11",
+          "value": "CL21A106KAYNNNE.1"
+        },
+        {
+          "ref": "C13",
+          "value": "CC0603KRX7R9BB104.1"
+        },
+        {
+          "ref": "C14",
+          "value": "CL10A105KB8NNNC.1"
+        },
+        {
+          "ref": "C16",
+          "value": "CC0603KRX7R9BB104.1"
+        },
+        {
+          "ref": "C17",
+          "value": "CC0603KRX7R9BB104.1"
+        },
+        {
+          "ref": "C18",
+          "value": "CC0603KRX7R9BB104.1"
+        },
+        {
+          "ref": "C19",
+          "value": "CL21A106KAYNNNE.1"
+        },
+        {
+          "ref": "C20",
+          "value": "CC0603KRX7R9BB104.1"
+        },
+        {
+          "ref": "C21",
+          "value": "CC0603KRX7R9BB104.1"
+        },
+        {
+          "ref": "C22",
+          "value": "CL21A106KAYNNNE.1"
+        },
+        {
+          "ref": "C25",
+          "value": "CC1206KKX7RDBB102.1"
+        },
+        {
+          "ref": "D1",
+          "value": "SS34_C8678.1"
+        },
+        {
+          "ref": "D2",
+          "value": "SS34_C8678.1"
+        },
+        {
+          "ref": "D3",
+          "value": "SS34_C8678.1"
+        },
+        {
+          "ref": "D4",
+          "value": "0805G (Green).1"
+        },
+        {
+          "ref": "D5",
+          "value": "0805G (Green).1"
+        },
+        {
+          "ref": "J1",
+          "value": "Header-Male-2.54_1x3.1"
+        },
+        {
+          "ref": "J2",
+          "value": "KF128-5.08-2P.1"
+        },
+        {
+          "ref": "J9",
+          "value": "KF128-5.08-2P.1"
+        },
+        {
+          "ref": "J10",
+          "value": "HR961160C.1"
+        },
+        {
+          "ref": "J11",
+          "value": "TYPE-C-31-M-12.1"
+        },
+        {
+          "ref": "L1",
+          "value": "CYH125-68UH.1"
+        },
+        {
+          "ref": "R1",
+          "value": "0603WAF1002T5E.1"
+        },
+        {
+          "ref": "R2",
+          "value": "0603WAF5101T5E.1"
+        },
+        {
+          "ref": "R3",
+          "value": "0603WAF5101T5E.1"
+        },
+        {
+          "ref": "R4",
+          "value": "0603WAF1002T5E.1"
+        },
+        {
+          "ref": "R5",
+          "value": "0603WAF1002T5E.1"
+        },
+        {
+          "ref": "R6",
+          "value": "0603WAF1001T5E.1"
+        },
+        {
+          "ref": "R7",
+          "value": "0603WAF1001T5E.1"
+        },
+        {
+          "ref": "R10",
+          "value": "0603WAF1242T5E.1"
+        },
+        {
+          "ref": "R11",
+          "value": "0603WAF1002T5E.1"
+        },
+        {
+          "ref": "R12",
+          "value": "0603WAF330JT5E.1"
+        },
+        {
+          "ref": "R13",
+          "value": "0603WAF330JT5E.1"
+        },
+        {
+          "ref": "R14",
+          "value": "0603WAF330JT5E.1"
+        },
+        {
+          "ref": "R15",
+          "value": "0603WAF330JT5E.1"
+        },
+        {
+          "ref": "R16",
+          "value": "0603WAF330JT5E.1"
+        },
+        {
+          "ref": "R17",
+          "value": "0603WAF330JT5E.1"
+        },
+        {
+          "ref": "R18",
+          "value": "0603WAF1001T5E.1"
+        },
+        {
+          "ref": "R19",
+          "value": "0603WAF1001T5E.1"
+        },
+        {
+          "ref": "R20",
+          "value": "0603WAF330JT5E.1"
+        },
+        {
+          "ref": "R21",
+          "value": "0603WAF330JT5E.1"
+        },
+        {
+          "ref": "R22",
+          "value": "0603WAF330JT5E.1"
+        },
+        {
+          "ref": "R23",
+          "value": "0603WAF330JT5E.1"
+        },
+        {
+          "ref": "R24",
+          "value": "0603WAF330JT5E.1"
+        },
+        {
+          "ref": "R25",
+          "value": "0603WAF330JT5E.1"
+        },
+        {
+          "ref": "U2",
+          "value": "ESP32-S3-WROOM-1(N8R2).1"
+        },
+        {
+          "ref": "U3",
+          "value": "AM26LS31CDR.1"
+        },
+        {
+          "ref": "U4",
+          "value": "AM26LS31CDR.1"
+        },
+        {
+          "ref": "U5",
+          "value": "AM26LS31CDR.1"
+        },
+        {
+          "ref": "U6",
+          "value": "XL1509-5.0E1.1"
+        },
+        {
+          "ref": "U8",
+          "value": "W5500.1"
+        },
+        {
+          "ref": "Y1",
+          "value": "X322525MOB4SI.1"
+        },
+        {
+          "ref": "J3",
+          "value": "DS1034-25FUNSI44.1"
+        },
+        {
+          "ref": "J4",
+          "value": "DS1034-25FUNSI44.1"
+        },
+        {
+          "ref": "J5",
+          "value": "DS1034-25FUNSI44.1"
+        },
+        {
+          "ref": "J6",
+          "value": "DS1034-25FUNSI44.1"
+        },
+        {
+          "ref": "J7",
+          "value": "DS1034-25FUNSI44.1"
+        },
+        {
+          "ref": "J8",
+          "value": "DS1034-25FUNSI44.1"
+        },
+        {
+          "ref": "R30",
+          "value": "0603WAF2201T5E.1"
+        },
+        {
+          "ref": "R31",
+          "value": "0603WAF2201T5E.1"
+        },
+        {
+          "ref": "R32",
+          "value": "0603WAF2201T5E.1"
+        },
+        {
+          "ref": "R33",
+          "value": "0603WAF2201T5E.1"
+        },
+        {
+          "ref": "R34",
+          "value": "0603WAF2201T5E.1"
+        },
+        {
+          "ref": "R35",
+          "value": "0603WAF2201T5E.1"
+        },
+        {
+          "ref": "R36",
+          "value": "0603WAF1002T5E.1"
+        },
+        {
+          "ref": "R37",
+          "value": "0603WAF1002T5E.1"
+        },
+        {
+          "ref": "R38",
+          "value": "0603WAF1002T5E.1"
+        },
+        {
+          "ref": "R39",
+          "value": "0603WAF1002T5E.1"
+        },
+        {
+          "ref": "R40",
+          "value": "0603WAF1002T5E.1"
+        },
+        {
+          "ref": "R41",
+          "value": "0603WAF1002T5E.1"
+        },
+        {
+          "ref": "U9",
+          "value": "LTV-847S.1"
+        },
+        {
+          "ref": "U10",
+          "value": "LTV-847S.1"
+        },
+        {
+          "ref": "C12",
+          "value": "CL10B103KB8NNNC.1"
+        },
+        {
+          "ref": "C26",
+          "value": "CC0603KRX7R9BB104.1"
+        },
+        {
+          "ref": "C27",
+          "value": "CC0603KRX7R9BB104.1"
+        },
+        {
+          "ref": "C28",
+          "value": "CC0603KRX7R9BB104.1"
+        },
+        {
+          "ref": "C29",
+          "value": "CC0603KRX7R9BB104.1"
+        },
+        {
+          "ref": "C30",
+          "value": "CC0603KRX7R9BB104.1"
+        },
+        {
+          "ref": "C31",
+          "value": "CL21A106KAYNNNE.1"
+        },
+        {
+          "ref": "L2",
+          "value": "PBY160808T-601Y-N.1"
+        },
+        {
+          "ref": "R42",
+          "value": "RC0603FR-0749R9L.1"
+        },
+        {
+          "ref": "R43",
+          "value": "RC0603FR-0749R9L.1"
+        },
+        {
+          "ref": "R44",
+          "value": "RC0603FR-0749R9L.1"
+        },
+        {
+          "ref": "R45",
+          "value": "RC0603FR-0749R9L.1"
+        },
+        {
+          "ref": "R58",
+          "value": "0603WAF1004T5E.1"
+        },
+        {
+          "ref": "R59",
+          "value": "0603WAF100JT5E.1"
+        },
+        {
+          "ref": "C32",
+          "value": "CL10B223KB8NNNC.1"
+        },
+        {
+          "ref": "C35",
+          "value": "CL10B103KB8NNNC.1"
+        },
+        {
+          "ref": "D7",
+          "value": "SMF5.0A_C193402.1"
+        },
+        {
+          "ref": "D6",
+          "value": "USBLC6-2SC6.1"
+        },
+        {
+          "ref": "SW1",
+          "value": "TS-1088R-02026.1"
+        },
+        {
+          "ref": "SW2",
+          "value": "TS-1088R-02026.1"
+        },
+        {
+          "ref": "C23",
+          "value": "CL10C180JB8NNNC.1"
+        },
+        {
+          "ref": "C24",
+          "value": "CL10C180JB8NNNC.1"
+        },
+        {
+          "ref": "F1",
+          "value": "BSMD1812-110-16V.1"
+        },
+        {
+          "ref": "R60",
+          "value": "0603WAF1001T5E.1"
+        },
+        {
+          "ref": "C36",
+          "value": "CC0603KRX7R9BB104.1"
+        }
+      ],
+      "note": "Manual normalized BOM needs exact public codes. One-click ordering not certified for these rows."
+    }
+  ],
+  "evidence": {
+    "baseline_schematic.json": {
+      "sha256": "7500802a25cb5e1160c6b75d1a4af882f809e81adacc0fe40a5d7bae72707c30",
+      "bytes": 2334661
+    },
+    "schematic_contract.json": {
+      "sha256": "f76b27d5453ba416d50dfb66c89edc524c12c891f1df09d4fc0ce3941c5da6fb",
+      "bytes": 3439
+    },
+    "03_add_parts.json": {
+      "sha256": "e296721351f487cb2f2831315fa2736479a2253d9dae473a16689edbbcea0458",
+      "bytes": 2240155
+    },
+    "inspect_design_inputs.json": {
+      "sha256": "95c9197b5bcbe19ca755c339d3d0080c973085116e728fc93e4255707a2f7d43",
+      "bytes": 118574
+    },
+    "06_reopen_schematic.json": {
+      "sha256": "3d2f641f047cb5bf4a0da313f5b748849d85ac720adbb6715029fdfe8c822279",
+      "bytes": 2719489
+    }
+  },
+  "nativeWireInventory": {
+    "wires": 496,
+    "lines": 496,
+    "netAttributes": 496,
+    "duplicateNetAttrs": []
+  },
+  "physicalPinCount": 640,
+  "geometry": {
+    "coordinates": "native source X, Y=-API_Y",
+    "newLineCount": 61,
+    "totalLineCount": 496,
+    "maxNewLength": 3
+  },
+  "netlistCounts": {
+    "components": 144,
+    "pins": 640,
+    "connectedPins": 496,
+    "nets": 124
+  },
+  "newSymbolPinMaps": {
+    "U11": {
+      "1": {
+        "name": "CLK",
+        "number": "1",
+        "net": "ARM_PULSE",
+        "props": {
+          "Pin Number": "1"
+        }
+      },
+      "2": {
+        "name": "D",
+        "number": "2",
+        "net": "VCC3V3",
+        "props": {
+          "Pin Number": "2"
+        }
+      },
+      "3": {
+        "name": "Q#",
+        "number": "3",
+        "net": "",
+        "props": {
+          "Pin Number": "3"
+        }
+      },
+      "4": {
+        "name": "GND",
+        "number": "4",
+        "net": "GND",
+        "props": {
+          "Pin Number": "4"
+        }
+      },
+      "5": {
+        "name": "Q",
+        "number": "5",
+        "net": "DRIVE_ENABLE",
+        "props": {
+          "Pin Number": "5"
+        }
+      },
+      "6": {
+        "name": "CLR#",
+        "number": "6",
+        "net": "ARM_CLEAR_N",
+        "props": {
+          "Pin Number": "6"
+        }
+      },
+      "7": {
+        "name": "PRE#",
+        "number": "7",
+        "net": "VCC3V3",
+        "props": {
+          "Pin Number": "7"
+        }
+      },
+      "8": {
+        "name": "VCC",
+        "number": "8",
+        "net": "VCC3V3",
+        "props": {
+          "Pin Number": "8"
+        }
+      }
+    },
+    "U12": {
+      "1": {
+        "name": "IN1",
+        "number": "1",
+        "net": "ESTOP_MCU",
+        "props": {
+          "Pin Number": "1"
+        }
+      },
+      "2": {
+        "name": "GND",
+        "number": "2",
+        "net": "GND",
+        "props": {
+          "Pin Number": "2"
+        }
+      },
+      "3": {
+        "name": "IN0",
+        "number": "3",
+        "net": "VCC3V3",
+        "props": {
+          "Pin Number": "3"
+        }
+      },
+      "4": {
+        "name": "Y1",
+        "number": "4",
+        "net": "CONTROL_PERMIT",
+        "props": {
+          "Pin Number": "4"
+        }
+      },
+      "5": {
+        "name": "VCC",
+        "number": "5",
+        "net": "VCC3V3",
+        "props": {
+          "Pin Number": "5"
+        }
+      },
+      "6": {
+        "name": "IN2",
+        "number": "6",
+        "net": "MCU_INHIBIT",
+        "props": {
+          "Pin Number": "6"
+        }
+      }
+    },
+    "U13": {
+      "1": {
+        "name": "SENSE",
+        "number": "1",
+        "net": "DRIVE_5V_SENSE",
+        "props": {
+          "Pin Number": "1"
+        }
+      },
+      "2": {
+        "name": "GND",
+        "number": "2",
+        "net": "GND",
+        "props": {
+          "Pin Number": "2"
+        }
+      },
+      "3": {
+        "name": "MR#",
+        "number": "3",
+        "net": "CONTROL_PERMIT",
+        "props": {
+          "Pin Number": "3"
+        }
+      },
+      "4": {
+        "name": "VDD",
+        "number": "4",
+        "net": "VCC3V3",
+        "props": {
+          "Pin Number": "4"
+        }
+      },
+      "5": {
+        "name": "CT",
+        "number": "5",
+        "net": "SUPERVISOR_CT",
+        "props": {
+          "Pin Number": "5"
+        }
+      },
+      "6": {
+        "name": "RESET#",
+        "number": "6",
+        "net": "SUPERVISOR_RELEASE_N",
+        "props": {
+          "Pin Number": "6"
+        }
+      }
+    },
+    "U14": {
+      "1": {
+        "name": "IN1",
+        "number": "1",
+        "net": "VCC3V3",
+        "props": {
+          "Pin Number": "1"
+        }
+      },
+      "2": {
+        "name": "GND",
+        "number": "2",
+        "net": "GND",
+        "props": {
+          "Pin Number": "2"
+        }
+      },
+      "3": {
+        "name": "IN0",
+        "number": "3",
+        "net": "GND",
+        "props": {
+          "Pin Number": "3"
+        }
+      },
+      "4": {
+        "name": "Y1",
+        "number": "4",
+        "net": "ARM_CLEAR_N",
+        "props": {
+          "Pin Number": "4"
+        }
+      },
+      "5": {
+        "name": "VCC",
+        "number": "5",
+        "net": "VCC3V3",
+        "props": {
+          "Pin Number": "5"
+        }
+      },
+      "6": {
+        "name": "IN2",
+        "number": "6",
+        "net": "SUPERVISOR_RELEASE_N",
+        "props": {
+          "Pin Number": "6"
+        }
+      }
+    },
+    "D8": {
+      "1": {
+        "name": "K",
+        "number": "1",
+        "net": "LOGIC_5V",
+        "props": {
+          "Pin Number": "1"
+        }
+      },
+      "2": {
+        "name": "A",
+        "number": "2",
+        "net": "VCC5",
+        "props": {
+          "Pin Number": "2"
+        }
+      }
+    },
+    "R61": {
+      "1": {
+        "name": "1",
+        "number": "1",
+        "net": "VCC3V3",
+        "props": {
+          "Pin Number": "1"
+        }
+      },
+      "2": {
+        "name": "2",
+        "number": "2",
+        "net": "MCU_INHIBIT",
+        "props": {
+          "Pin Number": "2"
+        }
+      }
+    },
+    "R62": {
+      "1": {
+        "name": "1",
+        "number": "1",
+        "net": "ARM_PULSE",
+        "props": {
+          "Pin Number": "1"
+        }
+      },
+      "2": {
+        "name": "2",
+        "number": "2",
+        "net": "GND",
+        "props": {
+          "Pin Number": "2"
+        }
+      }
+    },
+    "R63": {
+      "1": {
+        "name": "1",
+        "number": "1",
+        "net": "DRIVE_ENABLE",
+        "props": {
+          "Pin Number": "1"
+        }
+      },
+      "2": {
+        "name": "2",
+        "number": "2",
+        "net": "GND",
+        "props": {
+          "Pin Number": "2"
+        }
+      }
+    },
+    "R64": {
+      "1": {
+        "name": "1",
+        "number": "1",
+        "net": "DRIVE_ENABLE",
+        "props": {
+          "Pin Number": "1"
+        }
+      },
+      "2": {
+        "name": "2",
+        "number": "2",
+        "net": "GND",
+        "props": {
+          "Pin Number": "2"
+        }
+      }
+    },
+    "R65": {
+      "1": {
+        "name": "1",
+        "number": "1",
+        "net": "DRIVE_ENABLE",
+        "props": {
+          "Pin Number": "1"
+        }
+      },
+      "2": {
+        "name": "2",
+        "number": "2",
+        "net": "GND",
+        "props": {
+          "Pin Number": "2"
+        }
+      }
+    },
+    "R66": {
+      "1": {
+        "name": "1",
+        "number": "1",
+        "net": "VCC3V3",
+        "props": {
+          "Pin Number": "1"
+        }
+      },
+      "2": {
+        "name": "2",
+        "number": "2",
+        "net": "SUPERVISOR_RELEASE_N",
+        "props": {
+          "Pin Number": "2"
+        }
+      }
+    },
+    "R67": {
+      "1": {
+        "name": "1",
+        "number": "1",
+        "net": "VCC5",
+        "props": {
+          "Pin Number": "1"
+        }
+      },
+      "2": {
+        "name": "2",
+        "number": "2",
+        "net": "DRIVE_5V_SENSE",
+        "props": {
+          "Pin Number": "2"
+        }
+      }
+    },
+    "R68": {
+      "1": {
+        "name": "1",
+        "number": "1",
+        "net": "DRIVE_5V_SENSE",
+        "props": {
+          "Pin Number": "1"
+        }
+      },
+      "2": {
+        "name": "2",
+        "number": "2",
+        "net": "GND",
+        "props": {
+          "Pin Number": "2"
+        }
+      }
+    },
+    "R69": {
+      "1": {
+        "name": "1",
+        "number": "1",
+        "net": "USB_DN_MCU",
+        "props": {
+          "Pin Number": "1"
+        }
+      },
+      "2": {
+        "name": "2",
+        "number": "2",
+        "net": "USB_DN_PIN",
+        "props": {
+          "Pin Number": "2"
+        }
+      }
+    },
+    "R70": {
+      "1": {
+        "name": "1",
+        "number": "1",
+        "net": "USB_DP_MCU",
+        "props": {
+          "Pin Number": "1"
+        }
+      },
+      "2": {
+        "name": "2",
+        "number": "2",
+        "net": "USB_DP_PIN",
+        "props": {
+          "Pin Number": "2"
+        }
+      }
+    },
+    "C37": {
+      "1": {
+        "name": "1",
+        "number": "1",
+        "net": "VCC3V3",
+        "props": {
+          "Pin Number": "1"
+        }
+      },
+      "2": {
+        "name": "2",
+        "number": "2",
+        "net": "GND",
+        "props": {
+          "Pin Number": "2"
+        }
+      }
+    },
+    "C38": {
+      "1": {
+        "name": "1",
+        "number": "1",
+        "net": "VCC3V3",
+        "props": {
+          "Pin Number": "1"
+        }
+      },
+      "2": {
+        "name": "2",
+        "number": "2",
+        "net": "GND",
+        "props": {
+          "Pin Number": "2"
+        }
+      }
+    },
+    "C39": {
+      "1": {
+        "name": "1",
+        "number": "1",
+        "net": "VCC3V3",
+        "props": {
+          "Pin Number": "1"
+        }
+      },
+      "2": {
+        "name": "2",
+        "number": "2",
+        "net": "GND",
+        "props": {
+          "Pin Number": "2"
+        }
+      }
+    },
+    "C40": {
+      "1": {
+        "name": "1",
+        "number": "1",
+        "net": "VCC3V3",
+        "props": {
+          "Pin Number": "1"
+        }
+      },
+      "2": {
+        "name": "2",
+        "number": "2",
+        "net": "GND",
+        "props": {
+          "Pin Number": "2"
+        }
+      }
+    },
+    "C41": {
+      "1": {
+        "name": "1",
+        "number": "1",
+        "net": "SUPERVISOR_CT",
+        "props": {
+          "Pin Number": "1"
+        }
+      },
+      "2": {
+        "name": "2",
+        "number": "2",
+        "net": "GND",
+        "props": {
+          "Pin Number": "2"
+        }
+      }
+    },
+    "C42": {
+      "1": {
+        "name": "1",
+        "number": "1",
+        "net": "LOGIC_5V",
+        "props": {
+          "Pin Number": "1"
+        }
+      },
+      "2": {
+        "name": "2",
+        "number": "2",
+        "net": "GND",
+        "props": {
+          "Pin Number": "2"
+        }
+      }
+    }
+  },
+  "limitations": [
+    "Geometry audit covers electrical named-wire line segments and pin contacts, not visual label/body collisions.",
+    "Netlist match is not simulation or proof of safe physical hardware.",
+    "A fresh save/close/reopen capture is required by the release workflow; this offline checker cannot establish how its input was captured."
+  ]
+}

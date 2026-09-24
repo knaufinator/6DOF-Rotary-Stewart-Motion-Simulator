@@ -1,0 +1,2754 @@
+{
+  "status": "PASS_RC4_SUPPLIER_IDENTITY_REBIND_NOT_ORDER_ALLOCATION",
+  "orderStatus": "DO NOT ORDER until actual JLC processed allocation, orientation and full assembly acceptance pass",
+  "checkedAtUTC": "2026-09-23T18:34:47.702690+00:00",
+  "boards": 5,
+  "population": 144,
+  "skuCount": 46,
+  "requiredParts": 144,
+  "optionalParts": 0,
+  "dniParts": 0,
+  "nominalPlacements": 720,
+  "noSupplierOrMpnChanges": true,
+  "footprintChanges": [
+    {
+      "ref": "J3",
+      "beforeFootprint": "DSUB-TH_25P-P2.77_L77SDB25SOL2",
+      "beforeUuid": "afdfb76d38aded99",
+      "afterFootprint": "6DOF_R13_CONNFLY_DS1034_25_3P20_NPTH",
+      "afterUuid": "6327bc039c3fd8bf"
+    },
+    {
+      "ref": "J4",
+      "beforeFootprint": "DSUB-TH_25P-P2.77_L77SDB25SOL2",
+      "beforeUuid": "afdfb76d38aded99",
+      "afterFootprint": "6DOF_R13_CONNFLY_DS1034_25_3P20_NPTH",
+      "afterUuid": "6327bc039c3fd8bf"
+    },
+    {
+      "ref": "J5",
+      "beforeFootprint": "DSUB-TH_25P-P2.77_L77SDB25SOL2",
+      "beforeUuid": "afdfb76d38aded99",
+      "afterFootprint": "6DOF_R13_CONNFLY_DS1034_25_3P20_NPTH",
+      "afterUuid": "6327bc039c3fd8bf"
+    },
+    {
+      "ref": "J6",
+      "beforeFootprint": "DSUB-TH_25P-P2.77_L77SDB25SOL2",
+      "beforeUuid": "afdfb76d38aded99",
+      "afterFootprint": "6DOF_R13_CONNFLY_DS1034_25_3P20_NPTH",
+      "afterUuid": "6327bc039c3fd8bf"
+    },
+    {
+      "ref": "J7",
+      "beforeFootprint": "DSUB-TH_25P-P2.77_L77SDB25SOL2",
+      "beforeUuid": "afdfb76d38aded99",
+      "afterFootprint": "6DOF_R13_CONNFLY_DS1034_25_3P20_NPTH",
+      "afterUuid": "6327bc039c3fd8bf"
+    },
+    {
+      "ref": "J8",
+      "beforeFootprint": "DSUB-TH_25P-P2.77_L77SDB25SOL2",
+      "beforeUuid": "afdfb76d38aded99",
+      "afterFootprint": "6DOF_R13_CONNFLY_DS1034_25_3P20_NPTH",
+      "afterUuid": "6327bc039c3fd8bf"
+    }
+  ],
+  "latestCatalogScreenStartedAtUTC": "2026-09-23T13:30:51.556109+00:00",
+  "latestCatalogScreenCompletedAtUTC": "2026-09-23T13:31:04.419291+00:00",
+  "inventoryRefreshedForThisRebind": false,
+  "allocatedOrReserved": false,
+  "actualAttritionVerified": false,
+  "actualJlcAssemblyPreviewVerified": false,
+  "processSummary": {
+    "requiredService": "Standard PCBA",
+    "reason": "U2 C2913204 product page explicitly Standard Only",
+    "skuClasses": {
+      "Basic": 19,
+      "Extended": 27
+    },
+    "topSideComponentsPerBoard": 144,
+    "smtComponentsPerBoard": 135,
+    "throughHoleComponentsPerBoard": 9,
+    "throughHoleRefs": [
+      "J1",
+      "J2",
+      "J3",
+      "J4",
+      "J5",
+      "J6",
+      "J7",
+      "J8",
+      "J9"
+    ],
+    "throughHoleForFiveBoards": 45,
+    "smtSkus": 43,
+    "throughHoleSkus": 3,
+    "fullAssemblyRequired": true,
+    "handInstallApproved": false,
+    "dniApproved": false,
+    "xrayReview": "U13 WSON has hidden joints; JLC system must determine required X-ray and quote. Do not suppress.",
+    "fixtureReview": "Confirm DB25/USB/MagJack edge protrusion and mechanical stability in JLC DFM; if fixtures required, five-board quantity falls in 1–29 range (2 fixtures)."
+  },
+  "currentSourceAndExportBindings": [
+    {
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\202_final_pcb_capture.json",
+      "sha256": "4bcbd7b23f445253f7220278fb7b193aefef3ee5d6346630237d9ce98210919f"
+    },
+    {
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\189_schematic_rc3_capture.json",
+      "sha256": "957dde997969d646cb0445e567bfcc4813728e97eac44e4f4219773319581589"
+    },
+    {
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\manufacturing_release\\2026-09-23-r13-rc4\\6DOF2_r13_BOM_raw.csv",
+      "sha256": "dbd461331c67ed3d60fe169285e394695a01cfa82c8c1f69030078e83ecb4a60"
+    },
+    {
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\manufacturing_release\\2026-09-23-r13-rc4\\6DOF2_r13_CPL_raw.csv",
+      "sha256": "7e244c74fb5a56a9ce55da0b6bd23070444537a424daf0370836e02ca9a72950"
+    },
+    {
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_contract.json",
+      "sha256": "f76b27d5453ba416d50dfb66c89edc524c12c891f1df09d4fc0ce3941c5da6fb"
+    },
+    {
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\204_rc4_archive_independent_audit.json",
+      "sha256": "01dc529047afe9a03e85d28fce7f638c4a063a6c5028585f34c4c647bc039434"
+    },
+    {
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\manufacturing_release\\2026-09-23-r13-rc4\\6DOF2_r13_BOM_JLC.csv",
+      "sha256": "5c7ce157d1b4507a3196eff41fd2579f1ca568a7fc468eeb57c241228d70fffc"
+    },
+    {
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\manufacturing_release\\2026-09-23-r13-rc4\\6DOF2_r13_CPL_JLC.csv",
+      "sha256": "43e663b34e681b8c1de7c1f2084aa8874206f02b15479567abcc260b41c70f4d"
+    }
+  ],
+  "checks": [
+    {
+      "name": "old sourcing exact source audit passed",
+      "passCheck": true
+    },
+    {
+      "name": "RC4 normalized CSV identity audit passed",
+      "passCheck": true
+    },
+    {
+      "name": "RC4 population and logical pins",
+      "passCheck": true
+    },
+    {
+      "name": "no omitted or optional parts",
+      "passCheck": true
+    },
+    {
+      "name": "exact designator set unchanged",
+      "passCheck": true
+    },
+    {
+      "name": "C1 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "C1 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "C1 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "C2 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "C2 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "C2 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "C3 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "C3 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "C3 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "C4 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "C4 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "C4 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "C5 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "C5 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "C5 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "C6 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "C6 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "C6 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "C7 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "C7 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "C7 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "C8 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "C8 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "C8 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "C9 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "C9 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "C9 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "C10 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "C10 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "C10 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "C11 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "C11 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "C11 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "C13 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "C13 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "C13 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "C14 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "C14 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "C14 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "C16 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "C16 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "C16 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "C17 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "C17 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "C17 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "C18 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "C18 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "C18 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "C19 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "C19 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "C19 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "C20 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "C20 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "C20 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "C21 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "C21 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "C21 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "C22 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "C22 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "C22 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "C25 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "C25 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "C25 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "D1 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "D1 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "D1 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "D2 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "D2 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "D2 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "D3 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "D3 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "D3 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "D4 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "D4 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "D4 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "D5 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "D5 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "D5 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "J1 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "J1 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "J1 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "J2 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "J2 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "J2 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "J9 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "J9 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "J9 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "J10 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "J10 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "J10 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "J11 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "J11 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "J11 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "L1 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "L1 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "L1 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "R1 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "R1 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "R1 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "R2 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "R2 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "R2 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "R3 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "R3 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "R3 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "R4 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "R4 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "R4 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "R5 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "R5 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "R5 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "R6 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "R6 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "R6 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "R7 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "R7 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "R7 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "R10 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "R10 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "R10 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "R11 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "R11 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "R11 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "R12 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "R12 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "R12 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "R13 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "R13 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "R13 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "R14 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "R14 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "R14 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "R15 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "R15 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "R15 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "R16 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "R16 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "R16 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "R17 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "R17 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "R17 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "R18 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "R18 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "R18 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "R19 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "R19 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "R19 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "R20 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "R20 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "R20 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "R21 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "R21 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "R21 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "R22 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "R22 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "R22 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "R23 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "R23 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "R23 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "R24 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "R24 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "R24 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "R25 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "R25 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "R25 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "U2 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "U2 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "U2 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "U3 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "U3 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "U3 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "U4 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "U4 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "U4 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "U5 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "U5 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "U5 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "U6 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "U6 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "U6 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "U7 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "U7 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "U7 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "U8 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "U8 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "U8 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "Y1 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "Y1 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "Y1 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "R30 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "R30 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "R30 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "R31 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "R31 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "R31 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "R32 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "R32 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "R32 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "R33 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "R33 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "R33 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "R34 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "R34 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "R34 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "R35 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "R35 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "R35 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "R36 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "R36 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "R36 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "R37 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "R37 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "R37 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "R38 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "R38 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "R38 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "R39 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "R39 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "R39 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "R40 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "R40 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "R40 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "R41 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "R41 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "R41 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "U9 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "U9 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "U9 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "U10 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "U10 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "U10 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "C12 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "C12 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "C12 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "C15 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "C15 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "C15 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "C26 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "C26 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "C26 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "C27 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "C27 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "C27 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "C28 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "C28 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "C28 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "C29 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "C29 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "C29 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "C30 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "C30 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "C30 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "C31 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "C31 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "C31 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "L2 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "L2 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "L2 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "R42 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "R42 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "R42 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "R43 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "R43 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "R43 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "R44 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "R44 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "R44 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "R45 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "R45 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "R45 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "R46 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "R46 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "R46 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "R47 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "R47 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "R47 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "R48 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "R48 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "R48 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "R49 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "R49 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "R49 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "R50 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "R50 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "R50 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "R51 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "R51 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "R51 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "R52 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "R52 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "R52 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "R53 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "R53 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "R53 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "R54 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "R54 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "R54 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "R55 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "R55 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "R55 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "R56 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "R56 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "R56 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "R57 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "R57 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "R57 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "R58 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "R58 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "R58 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "C32 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "C32 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "C32 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "C33 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "C33 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "C33 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "C34 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "C34 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "C34 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "C35 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "C35 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "C35 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "R59 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "R59 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "R59 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "D7 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "D7 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "D7 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "D6 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "D6 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "D6 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "SW1 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "SW1 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "SW1 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "SW2 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "SW2 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "SW2 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "C23 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "C23 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "C23 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "C24 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "C24 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "C24 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "C36 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "C36 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "C36 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "F1 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "F1 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "F1 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "R60 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "R60 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "R60 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "C37 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "C37 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "C37 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "C38 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "C38 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "C38 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "C39 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "C39 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "C39 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "C40 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "C40 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "C40 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "C41 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "C41 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "C41 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "C42 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "C42 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "C42 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "D8 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "D8 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "D8 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "R61 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "R61 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "R61 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "R62 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "R62 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "R62 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "R63 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "R63 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "R63 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "R64 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "R64 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "R64 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "R65 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "R65 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "R65 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "R66 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "R66 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "R66 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "R67 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "R67 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "R67 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "R68 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "R68 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "R68 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "R69 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "R69 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "R69 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "R70 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "R70 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "R70 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "U13 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "U13 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "U13 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "U11 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "U11 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "U11 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "U12 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "U12 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "U12 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "U14 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "U14 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "U14 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "J3 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "J3 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "J3 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "J4 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "J4 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "J4 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "J5 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "J5 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "J5 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "J6 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "J6 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "J6 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "J7 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "J7 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "J7 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "J8 unchanged code",
+      "passCheck": true
+    },
+    {
+      "name": "J8 unchanged mpn",
+      "passCheck": true
+    },
+    {
+      "name": "J8 unchanged criticality",
+      "passCheck": true
+    },
+    {
+      "name": "only six DB25 footprint associations changed",
+      "passCheck": true
+    },
+    {
+      "name": "46 exact public supplier SKUs retained",
+      "passCheck": true
+    },
+    {
+      "name": "all rows required",
+      "passCheck": true
+    },
+    {
+      "name": "contract current hash 202_final_pcb_capture.json",
+      "passCheck": true
+    },
+    {
+      "name": "contract current hash 189_schematic_rc3_capture.json",
+      "passCheck": true
+    },
+    {
+      "name": "contract current hash 6DOF2_r13_BOM_raw.csv",
+      "passCheck": true
+    },
+    {
+      "name": "contract current hash 6DOF2_r13_CPL_raw.csv",
+      "passCheck": true
+    },
+    {
+      "name": "contract current hash schematic_contract.json",
+      "passCheck": true
+    },
+    {
+      "name": "contract current hash 204_rc4_archive_independent_audit.json",
+      "passCheck": true
+    },
+    {
+      "name": "normalized saved hash 6DOF2_r13_BOM_JLC.csv",
+      "passCheck": true
+    },
+    {
+      "name": "normalized saved hash 6DOF2_r13_CPL_JLC.csv",
+      "passCheck": true
+    },
+    {
+      "name": "contract hash bound independently",
+      "passCheck": true
+    },
+    {
+      "name": "catalog reference group retained C1589",
+      "passCheck": true
+    },
+    {
+      "name": "catalog reference group retained C1631",
+      "passCheck": true
+    },
+    {
+      "name": "catalog reference group retained C1647",
+      "passCheck": true
+    },
+    {
+      "name": "catalog reference group retained C1779",
+      "passCheck": true
+    },
+    {
+      "name": "catalog reference group retained C2297",
+      "passCheck": true
+    },
+    {
+      "name": "catalog reference group retained C3338",
+      "passCheck": true
+    },
+    {
+      "name": "catalog reference group retained C4190",
+      "passCheck": true
+    },
+    {
+      "name": "catalog reference group retained C6179",
+      "passCheck": true
+    },
+    {
+      "name": "catalog reference group retained C7519",
+      "passCheck": true
+    },
+    {
+      "name": "catalog reference group retained C8678",
+      "passCheck": true
+    },
+    {
+      "name": "catalog reference group retained C9006",
+      "passCheck": true
+    },
+    {
+      "name": "catalog reference group retained C14663",
+      "passCheck": true
+    },
+    {
+      "name": "catalog reference group retained C15008",
+      "passCheck": true
+    },
+    {
+      "name": "catalog reference group retained C15849",
+      "passCheck": true
+    },
+    {
+      "name": "catalog reference group retained C15850",
+      "passCheck": true
+    },
+    {
+      "name": "catalog reference group retained C21122",
+      "passCheck": true
+    },
+    {
+      "name": "catalog reference group retained C21190",
+      "passCheck": true
+    },
+    {
+      "name": "catalog reference group retained C22859",
+      "passCheck": true
+    },
+    {
+      "name": "catalog reference group retained C22865",
+      "passCheck": true
+    },
+    {
+      "name": "catalog reference group retained C22935",
+      "passCheck": true
+    },
+    {
+      "name": "catalog reference group retained C23140",
+      "passCheck": true
+    },
+    {
+      "name": "catalog reference group retained C23186",
+      "passCheck": true
+    },
+    {
+      "name": "catalog reference group retained C23631",
+      "passCheck": true
+    },
+    {
+      "name": "catalog reference group retained C25804",
+      "passCheck": true
+    },
+    {
+      "name": "catalog reference group retained C32843",
+      "passCheck": true
+    },
+    {
+      "name": "catalog reference group retained C49257",
+      "passCheck": true
+    },
+    {
+      "name": "catalog reference group retained C55683",
+      "passCheck": true
+    },
+    {
+      "name": "catalog reference group retained C61063",
+      "passCheck": true
+    },
+    {
+      "name": "catalog reference group retained C70285",
+      "passCheck": true
+    },
+    {
+      "name": "catalog reference group retained C77833",
+      "passCheck": true
+    },
+    {
+      "name": "catalog reference group retained C95204",
+      "passCheck": true
+    },
+    {
+      "name": "catalog reference group retained C108301",
+      "passCheck": true
+    },
+    {
+      "name": "catalog reference group retained C114599",
+      "passCheck": true
+    },
+    {
+      "name": "catalog reference group retained C114625",
+      "passCheck": true
+    },
+    {
+      "name": "catalog reference group retained C165948",
+      "passCheck": true
+    },
+    {
+      "name": "catalog reference group retained C193402",
+      "passCheck": true
+    },
+    {
+      "name": "catalog reference group retained C435835",
+      "passCheck": true
+    },
+    {
+      "name": "catalog reference group retained C455280",
+      "passCheck": true
+    },
+    {
+      "name": "catalog reference group retained C474952",
+      "passCheck": true
+    },
+    {
+      "name": "catalog reference group retained C485081",
+      "passCheck": true
+    },
+    {
+      "name": "catalog reference group retained C861325",
+      "passCheck": true
+    },
+    {
+      "name": "catalog reference group retained C883148",
+      "passCheck": true
+    },
+    {
+      "name": "catalog reference group retained C1509297",
+      "passCheck": true
+    },
+    {
+      "name": "catalog reference group retained C2913204",
+      "passCheck": true
+    },
+    {
+      "name": "catalog reference group retained C4747974",
+      "passCheck": true
+    },
+    {
+      "name": "catalog reference group retained C7431083",
+      "passCheck": true
+    }
+  ],
+  "catalogRows": [
+    {
+      "code": "C1589",
+      "expectedMpn": "CL10B103KB8NNNC",
+      "designators": "C12,C35",
+      "quantityPerBoard": 2,
+      "nominalDemand": 10,
+      "catalogCheckedAtUTC": "2026-09-23T13:30:52.119803+00:00",
+      "productPageCheckedAtUTC": "2026-09-23T13:30:53.161507+00:00",
+      "jlcProductUrl": "https://jlcpcb.com/partdetail/1941-CL10B103KB8NNNC/C1589",
+      "process": "SMT Assembly",
+      "pcbaEligibility": "Economic and Standard",
+      "criticality": "REQUIRED"
+    },
+    {
+      "code": "C1631",
+      "expectedMpn": "0603B682K500NT",
+      "designators": "C33,C34",
+      "quantityPerBoard": 2,
+      "nominalDemand": 10,
+      "catalogCheckedAtUTC": "2026-09-23T13:30:52.241282+00:00",
+      "productPageCheckedAtUTC": "2026-09-23T13:30:52.801442+00:00",
+      "jlcProductUrl": "https://jlcpcb.com/partdetail/1983-0603B682K500NT/C1631",
+      "process": "SMT Assembly",
+      "pcbaEligibility": "Economic and Standard",
+      "criticality": "REQUIRED"
+    },
+    {
+      "code": "C1647",
+      "expectedMpn": "CL10C180JB8NNNC",
+      "designators": "C23,C24",
+      "quantityPerBoard": 2,
+      "nominalDemand": 10,
+      "catalogCheckedAtUTC": "2026-09-23T13:30:52.116800+00:00",
+      "productPageCheckedAtUTC": "2026-09-23T13:30:53.159507+00:00",
+      "jlcProductUrl": "https://jlcpcb.com/partdetail/1999-CL10C180JB8NNNC/C1647",
+      "process": "SMT Assembly",
+      "pcbaEligibility": "Economic and Standard",
+      "criticality": "REQUIRED"
+    },
+    {
+      "code": "C1779",
+      "expectedMpn": "CL21A475KAQNNNE",
+      "designators": "C15,C42",
+      "quantityPerBoard": 2,
+      "nominalDemand": 10,
+      "catalogCheckedAtUTC": "2026-09-23T13:30:52.482729+00:00",
+      "productPageCheckedAtUTC": "2026-09-23T13:30:53.089395+00:00",
+      "jlcProductUrl": "https://jlcpcb.com/partdetail/2131-CL21A475KAQNNNE/C1779",
+      "process": "SMT Assembly",
+      "pcbaEligibility": "Economic and Standard",
+      "criticality": "REQUIRED"
+    },
+    {
+      "code": "C2297",
+      "expectedMpn": "KT-0805G",
+      "designators": "D4,D5",
+      "quantityPerBoard": 2,
+      "nominalDemand": 10,
+      "catalogCheckedAtUTC": "2026-09-23T13:30:53.162507+00:00",
+      "productPageCheckedAtUTC": "2026-09-23T13:30:53.887200+00:00",
+      "jlcProductUrl": "https://jlcpcb.com/partdetail/Hubei_KENTOElec-KT0805G/C2297",
+      "process": "SMT Assembly",
+      "pcbaEligibility": "Economic and Standard",
+      "criticality": "REQUIRED"
+    },
+    {
+      "code": "C3338",
+      "expectedMpn": "RVT1E101M0607",
+      "designators": "C1",
+      "quantityPerBoard": 1,
+      "nominalDemand": 5,
+      "catalogCheckedAtUTC": "2026-09-23T13:30:53.431810+00:00",
+      "productPageCheckedAtUTC": "2026-09-23T13:30:54.088619+00:00",
+      "jlcProductUrl": "https://jlcpcb.com/partdetail/HonorElec-RVT1E101M0607/C3338",
+      "process": "SMT Assembly",
+      "pcbaEligibility": "Economic and Standard",
+      "criticality": "REQUIRED"
+    },
+    {
+      "code": "C4190",
+      "expectedMpn": "0603WAF2201T5E",
+      "designators": "R30,R31,R32,R33,R34,R35",
+      "quantityPerBoard": 6,
+      "nominalDemand": 30,
+      "catalogCheckedAtUTC": "2026-09-23T13:30:53.488234+00:00",
+      "productPageCheckedAtUTC": "2026-09-23T13:30:54.072064+00:00",
+      "jlcProductUrl": "https://jlcpcb.com/partdetail/4597-0603WAF2201T5E/C4190",
+      "process": "SMT Assembly",
+      "pcbaEligibility": "Economic and Standard",
+      "criticality": "REQUIRED"
+    },
+    {
+      "code": "C6179",
+      "expectedMpn": "AM26LS31CDR",
+      "designators": "U3,U4,U5",
+      "quantityPerBoard": 3,
+      "nominalDemand": 15,
+      "catalogCheckedAtUTC": "2026-09-23T13:30:53.464194+00:00",
+      "productPageCheckedAtUTC": "2026-09-23T13:30:54.084600+00:00",
+      "jlcProductUrl": "https://jlcpcb.com/partdetail/TexasInstruments-AM26LS31CDR/C6179",
+      "process": "SMT Assembly",
+      "pcbaEligibility": "Economic and Standard",
+      "criticality": "REQUIRED"
+    },
+    {
+      "code": "C7519",
+      "expectedMpn": "USBLC6-2SC6",
+      "designators": "D6",
+      "quantityPerBoard": 1,
+      "nominalDemand": 5,
+      "catalogCheckedAtUTC": "2026-09-23T13:30:54.197832+00:00",
+      "productPageCheckedAtUTC": "2026-09-23T13:30:54.827873+00:00",
+      "jlcProductUrl": "https://jlcpcb.com/partdetail/STMicroelectronics-USBLC62SC6/C7519",
+      "process": "SMT Assembly",
+      "pcbaEligibility": "Economic and Standard",
+      "criticality": "REQUIRED"
+    },
+    {
+      "code": "C8678",
+      "expectedMpn": "SS34",
+      "designators": "D1,D2,D3,D8",
+      "quantityPerBoard": 4,
+      "nominalDemand": 20,
+      "catalogCheckedAtUTC": "2026-09-23T13:30:54.422384+00:00",
+      "productPageCheckedAtUTC": "2026-09-23T13:30:55.101182+00:00",
+      "jlcProductUrl": "https://jlcpcb.com/partdetail/MDD_Microdiode_Semiconductor-SS34/C8678",
+      "process": "SMT Assembly",
+      "pcbaEligibility": "Economic and Standard",
+      "criticality": "REQUIRED"
+    },
+    {
+      "code": "C9006",
+      "expectedMpn": "X322525MOB4SI",
+      "designators": "Y1",
+      "quantityPerBoard": 1,
+      "nominalDemand": 5,
+      "catalogCheckedAtUTC": "2026-09-23T13:30:54.443899+00:00",
+      "productPageCheckedAtUTC": "2026-09-23T13:30:55.314304+00:00",
+      "jlcProductUrl": "https://jlcpcb.com/partdetail/YXC_CrystalOscillators-X322525MOB4SI/C9006",
+      "process": "SMT Assembly",
+      "pcbaEligibility": "Economic and Standard",
+      "criticality": "REQUIRED"
+    },
+    {
+      "code": "C14663",
+      "expectedMpn": "CC0603KRX7R9BB104",
+      "designators": "C4,C5,C8,C9,C10,C13,C16,C17,C18,C20,C21,C26,C27,C28,C29,C30,C36,C37,C38,C39,C40,C41",
+      "quantityPerBoard": 22,
+      "nominalDemand": 110,
+      "catalogCheckedAtUTC": "2026-09-23T13:30:54.404933+00:00",
+      "productPageCheckedAtUTC": "2026-09-23T13:30:55.198313+00:00",
+      "jlcProductUrl": "https://jlcpcb.com/partdetail/YAGEO-CC0603KRX7R9BB104/C14663",
+      "process": "SMT Assembly",
+      "pcbaEligibility": "Economic and Standard",
+      "criticality": "REQUIRED"
+    },
+    {
+      "code": "C15008",
+      "expectedMpn": "CL31A107MQHNNNE",
+      "designators": "C3",
+      "quantityPerBoard": 1,
+      "nominalDemand": 5,
+      "catalogCheckedAtUTC": "2026-09-23T13:30:55.140642+00:00",
+      "productPageCheckedAtUTC": "2026-09-23T13:30:55.799170+00:00",
+      "jlcProductUrl": "https://jlcpcb.com/partdetail/15681-CL31A107MQHNNNE/C15008",
+      "process": "SMT Assembly",
+      "pcbaEligibility": "Economic and Standard",
+      "criticality": "REQUIRED"
+    },
+    {
+      "code": "C15849",
+      "expectedMpn": "CL10A105KB8NNNC",
+      "designators": "C6,C14",
+      "quantityPerBoard": 2,
+      "nominalDemand": 10,
+      "catalogCheckedAtUTC": "2026-09-23T13:30:55.390195+00:00",
+      "productPageCheckedAtUTC": "2026-09-23T13:30:56.086831+00:00",
+      "jlcProductUrl": "https://jlcpcb.com/partdetail/16531-CL10A105KB8NNNC/C15849",
+      "process": "SMT Assembly",
+      "pcbaEligibility": "Economic and Standard",
+      "criticality": "REQUIRED"
+    },
+    {
+      "code": "C15850",
+      "expectedMpn": "CL21A106KAYNNNE",
+      "designators": "C7,C11,C19,C22,C31",
+      "quantityPerBoard": 5,
+      "nominalDemand": 25,
+      "catalogCheckedAtUTC": "2026-09-23T13:30:55.557983+00:00",
+      "productPageCheckedAtUTC": "2026-09-23T13:30:56.235719+00:00",
+      "jlcProductUrl": "https://jlcpcb.com/partdetail/16532-CL21A106KAYNNNE/C15850",
+      "process": "SMT Assembly",
+      "pcbaEligibility": "Economic and Standard",
+      "criticality": "REQUIRED"
+    },
+    {
+      "code": "C21122",
+      "expectedMpn": "CL10B223KB8NNNC",
+      "designators": "C32",
+      "quantityPerBoard": 1,
+      "nominalDemand": 5,
+      "catalogCheckedAtUTC": "2026-09-23T13:30:55.637867+00:00",
+      "productPageCheckedAtUTC": "2026-09-23T13:33:55.427904+00:00",
+      "jlcProductUrl": "https://jlcpcb.com/partdetail/21834-CL10B223KB8NNNC/C21122",
+      "process": "SMT Assembly",
+      "pcbaEligibility": "Economic and Standard",
+      "criticality": "REQUIRED"
+    },
+    {
+      "code": "C21190",
+      "expectedMpn": "0603WAF1001T5E",
+      "designators": "R6,R7,R18,R19,R46,R47,R48,R49,R50,R51,R52,R53,R54,R55,R56,R57,R60,R61,R62,R63,R64,R65",
+      "quantityPerBoard": 22,
+      "nominalDemand": 110,
+      "catalogCheckedAtUTC": "2026-09-23T13:30:56.097955+00:00",
+      "productPageCheckedAtUTC": "2026-09-23T13:30:56.784742+00:00",
+      "jlcProductUrl": "https://jlcpcb.com/partdetail/21904-0603WAF1001T5E/C21190",
+      "process": "SMT Assembly",
+      "pcbaEligibility": "Economic and Standard",
+      "criticality": "REQUIRED"
+    },
+    {
+      "code": "C22859",
+      "expectedMpn": "0603WAF100JT5E",
+      "designators": "R59",
+      "quantityPerBoard": 1,
+      "nominalDemand": 5,
+      "catalogCheckedAtUTC": "2026-09-23T13:30:56.150084+00:00",
+      "productPageCheckedAtUTC": "2026-09-23T13:30:56.786739+00:00",
+      "jlcProductUrl": "https://jlcpcb.com/partdetail/23586-0603WAF100JT5E/C22859",
+      "process": "SMT Assembly",
+      "pcbaEligibility": "Economic and Standard",
+      "criticality": "REQUIRED"
+    },
+    {
+      "code": "C22865",
+      "expectedMpn": "0603WAF1242T5E",
+      "designators": "R10",
+      "quantityPerBoard": 1,
+      "nominalDemand": 5,
+      "catalogCheckedAtUTC": "2026-09-23T13:30:56.381573+00:00",
+      "productPageCheckedAtUTC": "2026-09-23T13:30:57.325654+00:00",
+      "jlcProductUrl": "https://jlcpcb.com/partdetail/23592-0603WAF1242T5E/C22865",
+      "process": "SMT Assembly",
+      "pcbaEligibility": "Economic and Standard",
+      "criticality": "REQUIRED"
+    },
+    {
+      "code": "C22935",
+      "expectedMpn": "0603WAF1004T5E",
+      "designators": "R58",
+      "quantityPerBoard": 1,
+      "nominalDemand": 5,
+      "catalogCheckedAtUTC": "2026-09-23T13:30:56.526598+00:00",
+      "productPageCheckedAtUTC": "2026-09-23T13:30:57.369434+00:00",
+      "jlcProductUrl": "https://jlcpcb.com/partdetail/23662-0603WAF1004T5E/C22935",
+      "process": "SMT Assembly",
+      "pcbaEligibility": "Economic and Standard",
+      "criticality": "REQUIRED"
+    },
+    {
+      "code": "C23140",
+      "expectedMpn": "0603WAF330JT5E",
+      "designators": "R12,R13,R14,R15,R16,R17,R20,R21,R22,R23,R24,R25,R69,R70",
+      "quantityPerBoard": 14,
+      "nominalDemand": 70,
+      "catalogCheckedAtUTC": "2026-09-23T13:30:57.115340+00:00",
+      "productPageCheckedAtUTC": "2026-09-23T13:30:57.705951+00:00",
+      "jlcProductUrl": "https://jlcpcb.com/partdetail/23867-0603WAF330JT5E/C23140",
+      "process": "SMT Assembly",
+      "pcbaEligibility": "Economic and Standard",
+      "criticality": "REQUIRED"
+    },
+    {
+      "code": "C23186",
+      "expectedMpn": "0603WAF5101T5E",
+      "designators": "R2,R3",
+      "quantityPerBoard": 2,
+      "nominalDemand": 10,
+      "catalogCheckedAtUTC": "2026-09-23T13:30:57.088739+00:00",
+      "productPageCheckedAtUTC": "2026-09-23T13:30:57.865997+00:00",
+      "jlcProductUrl": "https://jlcpcb.com/partdetail/23913-0603WAF5101T5E/C23186",
+      "process": "SMT Assembly",
+      "pcbaEligibility": "Economic and Standard",
+      "criticality": "REQUIRED"
+    },
+    {
+      "code": "C23631",
+      "expectedMpn": "CC1206KKX7RDBB102",
+      "designators": "C25",
+      "quantityPerBoard": 1,
+      "nominalDemand": 5,
+      "catalogCheckedAtUTC": "2026-09-23T13:30:57.629254+00:00",
+      "productPageCheckedAtUTC": "2026-09-23T13:30:58.283671+00:00",
+      "jlcProductUrl": "https://jlcpcb.com/partdetail/YAGEO-CC1206KKX7RDBB102/C23631",
+      "process": "SMT Assembly",
+      "pcbaEligibility": "Economic and Standard",
+      "criticality": "REQUIRED"
+    },
+    {
+      "code": "C25804",
+      "expectedMpn": "0603WAF1002T5E",
+      "designators": "R1,R4,R5,R11,R36,R37,R38,R39,R40,R41,R66",
+      "quantityPerBoard": 11,
+      "nominalDemand": 55,
+      "catalogCheckedAtUTC": "2026-09-23T13:30:57.670457+00:00",
+      "productPageCheckedAtUTC": "2026-09-23T13:30:58.419868+00:00",
+      "jlcProductUrl": "https://jlcpcb.com/partdetail/26547-0603WAF1002T5E/C25804",
+      "process": "SMT Assembly",
+      "pcbaEligibility": "Economic and Standard",
+      "criticality": "REQUIRED"
+    },
+    {
+      "code": "C32843",
+      "expectedMpn": "W5500",
+      "designators": "U8",
+      "quantityPerBoard": 1,
+      "nominalDemand": 5,
+      "catalogCheckedAtUTC": "2026-09-23T13:30:58.012777+00:00",
+      "productPageCheckedAtUTC": "2026-09-23T13:30:58.502925+00:00",
+      "jlcProductUrl": "https://jlcpcb.com/partdetail/WIZNET-W5500/C32843",
+      "process": "SMT Assembly",
+      "pcbaEligibility": "Economic and Standard",
+      "criticality": "REQUIRED"
+    },
+    {
+      "code": "C49257",
+      "expectedMpn": "2.54-1*3P针",
+      "designators": "J1",
+      "quantityPerBoard": 1,
+      "nominalDemand": 5,
+      "catalogCheckedAtUTC": "2026-09-23T13:30:58.170568+00:00",
+      "productPageCheckedAtUTC": "2026-09-23T13:30:58.971664+00:00",
+      "jlcProductUrl": "https://jlcpcb.com/partdetail/50265-2_54_13PPin/C49257",
+      "process": "Wave Soldering",
+      "pcbaEligibility": "Economic and Standard",
+      "criticality": "REQUIRED"
+    },
+    {
+      "code": "C55683",
+      "expectedMpn": "HR961160C",
+      "designators": "J10",
+      "quantityPerBoard": 1,
+      "nominalDemand": 5,
+      "catalogCheckedAtUTC": "2026-09-23T13:30:58.572926+00:00",
+      "productPageCheckedAtUTC": "2026-09-23T13:30:59.909920+00:00",
+      "jlcProductUrl": "https://jlcpcb.com/partdetail/56710-HR961160C/C55683",
+      "process": "SMT Assembly",
+      "pcbaEligibility": "Economic and Standard",
+      "criticality": "REQUIRED"
+    },
+    {
+      "code": "C61063",
+      "expectedMpn": "XL1509-5.0E1",
+      "designators": "U6",
+      "quantityPerBoard": 1,
+      "nominalDemand": 5,
+      "catalogCheckedAtUTC": "2026-09-23T13:30:58.737385+00:00",
+      "productPageCheckedAtUTC": "2026-09-23T13:30:59.386717+00:00",
+      "jlcProductUrl": "https://jlcpcb.com/partdetail/XLSEMI-XL1509_50E1/C61063",
+      "process": "SMT Assembly",
+      "pcbaEligibility": "Economic and Standard",
+      "criticality": "REQUIRED"
+    },
+    {
+      "code": "C70285",
+      "expectedMpn": "SN74LVC1G74DCUR",
+      "designators": "U11",
+      "quantityPerBoard": 1,
+      "nominalDemand": 5,
+      "catalogCheckedAtUTC": "2026-09-23T13:30:59.281987+00:00",
+      "productPageCheckedAtUTC": "2026-09-23T13:31:00.079357+00:00",
+      "jlcProductUrl": "https://jlcpcb.com/partdetail/TexasInstruments-SN74LVC1G74DCUR/C70285",
+      "process": "SMT Assembly",
+      "pcbaEligibility": "Economic and Standard",
+      "criticality": "REQUIRED"
+    },
+    {
+      "code": "C77833",
+      "expectedMpn": "DS1034-25FUNSI44",
+      "designators": "J3,J4,J5,J6,J7,J8",
+      "quantityPerBoard": 6,
+      "nominalDemand": 30,
+      "catalogCheckedAtUTC": "2026-09-23T13:30:59.268417+00:00",
+      "productPageCheckedAtUTC": "2026-09-23T13:31:00.399243+00:00",
+      "jlcProductUrl": "https://jlcpcb.com/partdetail/CONNFLYElec-DS103425FUNSI44/C77833",
+      "process": "Wave Soldering",
+      "pcbaEligibility": "Economic and Standard",
+      "criticality": "REQUIRED"
+    },
+    {
+      "code": "C95204",
+      "expectedMpn": "RT0603BRD0710KL",
+      "designators": "R68",
+      "quantityPerBoard": 1,
+      "nominalDemand": 5,
+      "catalogCheckedAtUTC": "2026-09-23T13:30:59.689798+00:00",
+      "productPageCheckedAtUTC": "2026-09-23T13:31:00.642823+00:00",
+      "jlcProductUrl": "https://jlcpcb.com/partdetail/YAGEO-RT0603BRD0710KL/C95204",
+      "process": "SMT Assembly",
+      "pcbaEligibility": "Economic and Standard",
+      "criticality": "REQUIRED"
+    },
+    {
+      "code": "C108301",
+      "expectedMpn": "PBY160808T-601Y-N",
+      "designators": "L2",
+      "quantityPerBoard": 1,
+      "nominalDemand": 5,
+      "catalogCheckedAtUTC": "2026-09-23T13:31:00.223014+00:00",
+      "productPageCheckedAtUTC": "2026-09-23T13:31:01.304433+00:00",
+      "jlcProductUrl": "https://jlcpcb.com/partdetail/ChilisinElec-PBY160808T_601YN/C108301",
+      "process": "SMT Assembly",
+      "pcbaEligibility": "Economic and Standard",
+      "criticality": "REQUIRED"
+    },
+    {
+      "code": "C114599",
+      "expectedMpn": "LTV-847S",
+      "designators": "U9,U10",
+      "quantityPerBoard": 2,
+      "nominalDemand": 10,
+      "catalogCheckedAtUTC": "2026-09-23T13:31:00.378317+00:00",
+      "productPageCheckedAtUTC": "2026-09-23T13:31:01.116031+00:00",
+      "jlcProductUrl": "https://jlcpcb.com/partdetail/LiteOn-LTV847S/C114599",
+      "process": "SMT Assembly",
+      "pcbaEligibility": "Economic and Standard",
+      "criticality": "REQUIRED"
+    },
+    {
+      "code": "C114625",
+      "expectedMpn": "RC0603FR-0749R9L",
+      "designators": "R42,R43,R44,R45",
+      "quantityPerBoard": 4,
+      "nominalDemand": 20,
+      "catalogCheckedAtUTC": "2026-09-23T13:31:00.718750+00:00",
+      "productPageCheckedAtUTC": "2026-09-23T13:31:01.346556+00:00",
+      "jlcProductUrl": "https://jlcpcb.com/partdetail/YAGEO-RC0603FR0749R9L/C114625",
+      "process": "SMT Assembly",
+      "pcbaEligibility": "Economic and Standard",
+      "criticality": "REQUIRED"
+    },
+    {
+      "code": "C165948",
+      "expectedMpn": "TYPE-C-31-M-12",
+      "designators": "J11",
+      "quantityPerBoard": 1,
+      "nominalDemand": 5,
+      "catalogCheckedAtUTC": "2026-09-23T13:31:00.961636+00:00",
+      "productPageCheckedAtUTC": "2026-09-23T13:31:01.681871+00:00",
+      "jlcProductUrl": "https://jlcpcb.com/partdetail/Korean_HropartsElec-TYPE_C_31_M12/C165948",
+      "process": "SMT Assembly",
+      "pcbaEligibility": "Economic and Standard",
+      "criticality": "REQUIRED"
+    },
+    {
+      "code": "C193402",
+      "expectedMpn": "SMF5.0A",
+      "designators": "D7",
+      "quantityPerBoard": 1,
+      "nominalDemand": 5,
+      "catalogCheckedAtUTC": "2026-09-23T13:31:01.429483+00:00",
+      "productPageCheckedAtUTC": "2026-09-23T13:31:02.059819+00:00",
+      "jlcProductUrl": "https://jlcpcb.com/partdetail/MDD_Microdiode_Semiconductor-SMF50A/C193402",
+      "process": "SMT Assembly",
+      "pcbaEligibility": "Economic and Standard",
+      "criticality": "REQUIRED"
+    },
+    {
+      "code": "C435835",
+      "expectedMpn": "LDL1117S33R",
+      "designators": "U7",
+      "quantityPerBoard": 1,
+      "nominalDemand": 5,
+      "catalogCheckedAtUTC": "2026-09-23T13:31:01.611854+00:00",
+      "productPageCheckedAtUTC": "2026-09-23T13:31:02.235463+00:00",
+      "jlcProductUrl": "https://jlcpcb.com/partdetail/STMicroelectronics-LDL1117S33R/C435835",
+      "process": "SMT Assembly",
+      "pcbaEligibility": "Economic and Standard",
+      "criticality": "REQUIRED"
+    },
+    {
+      "code": "C455280",
+      "expectedMpn": "TS-1088R-02026",
+      "designators": "SW1,SW2",
+      "quantityPerBoard": 2,
+      "nominalDemand": 10,
+      "catalogCheckedAtUTC": "2026-09-23T13:31:01.631040+00:00",
+      "productPageCheckedAtUTC": "2026-09-23T13:33:56.339599+00:00",
+      "jlcProductUrl": "https://jlcpcb.com/partdetail/XUNPU-TS_1088R02026/C455280",
+      "process": "SMT Assembly",
+      "pcbaEligibility": "Economic and Standard",
+      "criticality": "REQUIRED"
+    },
+    {
+      "code": "C474952",
+      "expectedMpn": "KF128-5.08-2P-AA",
+      "designators": "J2,J9",
+      "quantityPerBoard": 2,
+      "nominalDemand": 10,
+      "catalogCheckedAtUTC": "2026-09-23T13:31:01.976354+00:00",
+      "productPageCheckedAtUTC": "2026-09-23T13:31:02.612752+00:00",
+      "jlcProductUrl": "https://jlcpcb.com/partdetail/Cixi_KefaElec-KF128_5_08_2PAA/C474952",
+      "process": "Wave Soldering",
+      "pcbaEligibility": "Economic and Standard",
+      "criticality": "REQUIRED"
+    },
+    {
+      "code": "C485081",
+      "expectedMpn": "SN74LVC1G98DCKR",
+      "designators": "U12,U14",
+      "quantityPerBoard": 2,
+      "nominalDemand": 10,
+      "catalogCheckedAtUTC": "2026-09-23T13:31:02.177996+00:00",
+      "productPageCheckedAtUTC": "2026-09-23T13:31:02.804360+00:00",
+      "jlcProductUrl": "https://jlcpcb.com/partdetail/TexasInstruments-SN74LVC1G98DCKR/C485081",
+      "process": "SMT Assembly",
+      "pcbaEligibility": "Economic and Standard",
+      "criticality": "REQUIRED"
+    },
+    {
+      "code": "C861325",
+      "expectedMpn": "RT0603BRD0732KL",
+      "designators": "R67",
+      "quantityPerBoard": 1,
+      "nominalDemand": 5,
+      "catalogCheckedAtUTC": "2026-09-23T13:31:02.357702+00:00",
+      "productPageCheckedAtUTC": "2026-09-23T13:31:03.192737+00:00",
+      "jlcProductUrl": "https://jlcpcb.com/partdetail/YAGEO-RT0603BRD0732KL/C861325",
+      "process": "SMT Assembly",
+      "pcbaEligibility": "Economic and Standard",
+      "criticality": "REQUIRED"
+    },
+    {
+      "code": "C883148",
+      "expectedMpn": "BSMD1812-110-16V",
+      "designators": "F1",
+      "quantityPerBoard": 1,
+      "nominalDemand": 5,
+      "catalogCheckedAtUTC": "2026-09-23T13:31:02.530424+00:00",
+      "productPageCheckedAtUTC": "2026-09-23T13:31:03.454370+00:00",
+      "jlcProductUrl": "https://jlcpcb.com/partdetail/BHFUSE-BSMD1812_11016V/C883148",
+      "process": "SMT Assembly",
+      "pcbaEligibility": "Economic and Standard",
+      "criticality": "REQUIRED"
+    },
+    {
+      "code": "C1509297",
+      "expectedMpn": "TPS389001DSER",
+      "designators": "U13",
+      "quantityPerBoard": 1,
+      "nominalDemand": 5,
+      "catalogCheckedAtUTC": "2026-09-23T13:31:02.915331+00:00",
+      "productPageCheckedAtUTC": "2026-09-23T13:31:03.718611+00:00",
+      "jlcProductUrl": "https://jlcpcb.com/partdetail/TexasInstruments-TPS389001DSER/C1509297",
+      "process": "SMT Assembly",
+      "pcbaEligibility": "Economic and Standard",
+      "criticality": "REQUIRED"
+    },
+    {
+      "code": "C2913204",
+      "expectedMpn": "ESP32-S3-WROOM-1-N8R2",
+      "designators": "U2",
+      "quantityPerBoard": 1,
+      "nominalDemand": 5,
+      "catalogCheckedAtUTC": "2026-09-23T13:31:03.103209+00:00",
+      "productPageCheckedAtUTC": "2026-09-23T13:31:03.730611+00:00",
+      "jlcProductUrl": "https://jlcpcb.com/partdetail/3198302-ESP32_S3_WROOM_1N8R2/C2913204",
+      "process": "SMT Assembly",
+      "pcbaEligibility": "Standard Only",
+      "criticality": "REQUIRED"
+    },
+    {
+      "code": "C4747974",
+      "expectedMpn": "RST220UF25V019",
+      "designators": "C2",
+      "quantityPerBoard": 1,
+      "nominalDemand": 5,
+      "catalogCheckedAtUTC": "2026-09-23T13:31:03.487272+00:00",
+      "productPageCheckedAtUTC": "2026-09-23T13:31:04.198237+00:00",
+      "jlcProductUrl": "https://jlcpcb.com/partdetail/KNSCHA-RST220UF25V019/C4747974",
+      "process": "SMT Assembly",
+      "pcbaEligibility": "Economic and Standard",
+      "criticality": "REQUIRED"
+    },
+    {
+      "code": "C7431083",
+      "expectedMpn": "CYH125-68UH",
+      "designators": "L1",
+      "quantityPerBoard": 1,
+      "nominalDemand": 5,
+      "catalogCheckedAtUTC": "2026-09-23T13:31:03.753614+00:00",
+      "productPageCheckedAtUTC": "2026-09-23T13:31:04.419291+00:00",
+      "jlcProductUrl": "https://jlcpcb.com/partdetail/SHOUHAN-CYH12568UH/C7431083",
+      "process": "SMT Assembly",
+      "pcbaEligibility": "Economic and Standard",
+      "criticality": "REQUIRED"
+    }
+  ],
+  "minimalEvidence": [
+    {
+      "file": "SOURCING_RELEASE_20260923.json",
+      "sha256": "d06c376fe0b54dbf203c7e9a3226faa12e1c5cbb7dd4b70a3d54441c0fa156f0"
+    },
+    {
+      "file": "SOURCING_RELEASE_20260923.md",
+      "sha256": "46104a379c00e40e8c646e2a95d43e920d94887ab8f67f0e6ab69291832bd427"
+    },
+    {
+      "file": "r13_rc4_cpl_normalization_contract.json",
+      "sha256": "368447945a0bfb25b0eeb2f62183aa6730872653c7e65532a3ae12bcb5fff477"
+    },
+    {
+      "file": "rc4_saved_csv_independent_audit.json",
+      "sha256": "d621326b33e328e56b7d83c724fe730f0df535bbbbac141e36594ac7b8b2889b"
+    },
+    {
+      "file": "rc4_jlc_csv_normalization.json",
+      "sha256": "214b15abd25bc58e20267c7f1d69856094c40c932f3b8f751e058d4b446f1398"
+    },
+    {
+      "file": "172_db25_source_preservation_audit.json",
+      "sha256": "a94f2a33f9138b44b339c672ff6910cb1b9489a5a8c355979543cb473507dd76"
+    },
+    {
+      "file": "189_rc3_presentation_independent_audit.json",
+      "sha256": "31aff0d3237b4e3bd90f3500a420e1b4435ddd7955bfe561fc5a0aa60e9c0e25"
+    },
+    {
+      "file": "202_rc4_board_display_cache_independent_audit.json",
+      "sha256": "fe2ff6e6bd35045609fd150e09121825f7749f8810c33ab033c2f1bf52b4e1ab"
+    },
+    {
+      "file": "204_rc4_archive_independent_audit.json",
+      "sha256": "01dc529047afe9a03e85d28fce7f638c4a063a6c5028585f34c4c647bc039434"
+    }
+  ],
+  "blocksRemaining": [
+    "Actual five-board processed BOM: all 144 refs / 46 SKUs selected, zero unmatched/shortfall with actual attrition.",
+    "Accepted Standard PCBA including 45 THT placements and all hybrid retention/shield joints; fixture/X-ray quote if required.",
+    "Actual JLC physical pin-1 and connector-orientation preview, including exactly-once DB25 CPL correction.",
+    "Owner authorization before purchase; no orders, payment, procurement or supplier communication performed."
+  ],
+  "interpretation": "This new report binds historical timestamped primary catalog/process evidence to exact RC4 identities. It does not turn earlier stock indicators into current guaranteed assembly stock."
+}

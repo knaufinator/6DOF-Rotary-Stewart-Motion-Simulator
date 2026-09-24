@@ -1,0 +1,60 @@
+{
+  "status": "CAD_LAYER_RECORDS_CONFIRMED; FABRICATOR_STACK_AND_CONTROLLED_IMPEDANCE_UNQUALIFIED",
+  "sourceCapture": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\202_final_pcb_capture.json",
+  "sourceSha256": "4bcbd7b23f445253f7220278fb7b193aefef3ee5d6346630237d9ce98210919f",
+  "physicalLayerRecordCount": 11,
+  "copperTopToBottom": [
+    {
+      "layerId": 1,
+      "role": "Top signal",
+      "thicknessMil": 1.379,
+      "thicknessMm": 0.0350266
+    },
+    {
+      "layerId": 15,
+      "role": "Inner1 GND reference",
+      "thicknessMil": 1.378,
+      "thicknessMm": 0.035001199999999996
+    },
+    {
+      "layerId": 16,
+      "role": "Inner2 signal",
+      "thicknessMil": 1.378,
+      "thicknessMm": 0.035001199999999996
+    },
+    {
+      "layerId": 2,
+      "role": "Bottom signal",
+      "thicknessMil": 1.378,
+      "thicknessMm": 0.035001199999999996
+    }
+  ],
+  "dielectricRecords": [
+    {
+      "layerId": 361,
+      "material": "FR4",
+      "thickness": 59.449,
+      "permittivity": 4.5,
+      "lossTangent": 0,
+      "isKeepIsland": true,
+      "zIndex": 1001,
+      "thicknessMm": 1.5100045999999998
+    }
+  ],
+  "actualCopperTotalMm": 0.1400302,
+  "actualDielectricTotalMm": 1.5100045999999998,
+  "actualCopperPlusDielectricMm": 1.6500347999999998,
+  "maskTotalMm": 0.0200152,
+  "sumIncludingMasksMm": 1.6700499999999998,
+  "intent": {
+    "nominalFabricationThicknessMm": 1.6,
+    "copperPerLayer": "approximately1oz /35um",
+    "note": "Intent is not a fabricator-approved stack; these saved records do not provide three dielectric spacings."
+  },
+  "requiredBeforeOrder": [
+    "Select and obtain JLC acceptance of actual four-layer dielectric/copper construction.",
+    "Review actual signal-reference layer spacing and high-speed-pair impedance against that construction.",
+    "Do not treat saved/imported LAYER_PHYS count, nominal1.6 setting or zeroDRC as stackup qualification."
+  ],
+  "orderAuthorization": false
+}

@@ -1,0 +1,43 @@
+{
+  "sourceCapture": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\189_schematic_rc3_capture.json",
+  "sourceSha256": "8f77a89e401a212a5dfa327bf64e8802e6e39c0c91044b6fa49c66b74c3ae1cf",
+  "projectUuid": "16231355292e4948ba37840dcdf926b0",
+  "documentUuid": "fd2c3589563945538936811f609de096",
+  "captures": [
+    {
+      "ordinal": 1,
+      "section": 1,
+      "title": "1. ESP32-S3 control",
+      "requestedNativeBounds": [
+        180,
+        -620,
+        760,
+        -180
+      ],
+      "expectedAnchorRefs": [
+        "C18",
+        "C19",
+        "U2"
+      ],
+      "role": "detail",
+      "maxIntendedPage": "A3 landscape",
+      "caution": "Actual viewport padding and 6-unit net-label legibility must be inspected.",
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\01.png",
+      "sha256": "09f44acc551b72ae478b2c314d1fac217ec3ce5b6084496890123db8836ecf36",
+      "nativeBounds": [
+        180,
+        -620,
+        760,
+        -180
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 322512,
+        "capturedAtUTC": "2026-09-23T18:15:52.143Z"
+      }
+    }
+  ]
+}

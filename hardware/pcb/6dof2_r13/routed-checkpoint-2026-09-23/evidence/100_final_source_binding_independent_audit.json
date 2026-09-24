@@ -1,0 +1,189 @@
+{
+  "status": "PASS_FINAL100_EXACT_COPPER_PLANE_AND_LABEL_SOURCE_BINDING",
+  "capture": "100_routed_labeled_capture.json",
+  "captureSha256": "22c0bede843ee63a5d1dca034326b00e9a1ef2eed144f9599e369c0ddc7cd5e3",
+  "sourceTextSha256": "284e27148e25e48cc817f879fc999f346fe6762017167230dc45a71f904084fe",
+  "checkedAt": "2026-09-23T12:38:42.248Z",
+  "inventory": {
+    "components": 144,
+    "pads": 654,
+    "tracks": 967,
+    "vias": 398,
+    "regions": 8,
+    "fills": 689
+  },
+  "checks": [
+    {
+      "name": "all_components_identical",
+      "pass": true,
+      "count": 144
+    },
+    {
+      "name": "all_pads_identical",
+      "pass": true,
+      "count": 654
+    },
+    {
+      "name": "all_tracks_identical",
+      "pass": true,
+      "count": 967
+    },
+    {
+      "name": "all_vias_identical",
+      "pass": true,
+      "count": 398
+    },
+    {
+      "name": "all_regions_identical",
+      "pass": true,
+      "count": 8
+    },
+    {
+      "name": "all_fills_identical",
+      "pass": true,
+      "count": 689
+    },
+    {
+      "name": "no_native_added_or_removed",
+      "pass": true,
+      "added": [],
+      "removed": []
+    },
+    {
+      "name": "only_document_metadata_and_labels_changed",
+      "pass": true,
+      "types": {
+        "ATTR": 26,
+        "DOCHEAD": 1
+      }
+    },
+    {
+      "name": "native_plane_definition_and_derived_exact",
+      "pass": true
+    },
+    {
+      "name": "all144_labels_visible_no_outside_anchors",
+      "pass": true
+    },
+    {
+      "name": "native_final_DRC_empty",
+      "pass": true
+    },
+    {
+      "name": "post96_actual_ground_audit_pass",
+      "pass": true
+    }
+  ],
+  "changedNativeRecordIds": [
+    [
+      "ATTR",
+      "0975e70c4abf0978e20"
+    ],
+    [
+      "ATTR",
+      "dbeca255eccb2b9ee16"
+    ],
+    [
+      "ATTR",
+      "5d10edb092115312e16"
+    ],
+    [
+      "ATTR",
+      "657cea9c507d5969e16"
+    ],
+    [
+      "ATTR",
+      "0cd1fc9025284cfbe16"
+    ],
+    [
+      "ATTR",
+      "31c6ff4cc5ae839de26"
+    ],
+    [
+      "ATTR",
+      "3e964e659f0ed20ce16"
+    ],
+    [
+      "ATTR",
+      "d2a336c984693694e18"
+    ],
+    [
+      "ATTR",
+      "6dd745146c3983c0e16"
+    ],
+    [
+      "ATTR",
+      "73e5820e1c1df48ae20"
+    ],
+    [
+      "ATTR",
+      "d9628d33ac5e493be26"
+    ],
+    [
+      "ATTR",
+      "b022b909d7789aece18"
+    ],
+    [
+      "ATTR",
+      "761c980b68ee060ae16"
+    ],
+    [
+      "ATTR",
+      "a579519c796f67ace126"
+    ],
+    [
+      "ATTR",
+      "28bdf3a73fbcdb16e18"
+    ],
+    [
+      "ATTR",
+      "7bafec0474db07eae20"
+    ],
+    [
+      "ATTR",
+      "ad502b5c63666fc2e16"
+    ],
+    [
+      "ATTR",
+      "e31ab36fe54e49e7e18"
+    ],
+    [
+      "ATTR",
+      "15795de520b67ea1e18"
+    ],
+    [
+      "ATTR",
+      "466393572b732e6ae21"
+    ],
+    [
+      "ATTR",
+      "3c55b5751732adc7e16"
+    ],
+    [
+      "DOCHEAD",
+      ""
+    ],
+    [
+      "ATTR",
+      "89ba45058210ce8ee18"
+    ],
+    [
+      "ATTR",
+      "fc97bc0fefe1a830e16"
+    ],
+    [
+      "ATTR",
+      "9282237d95d6a260e18"
+    ],
+    [
+      "ATTR",
+      "0e9f1326b31a2b9fe34"
+    ],
+    [
+      "ATTR",
+      "288938601d9cf9c7e20"
+    ]
+  ],
+  "groundUSBProofBoundToThisSource": "96_post_hole_ground_usb_independent_audit.json; all copper/plane byte-equivalent, only labels and document metadata differ.",
+  "notManufacturingOrFunctionalApproval": true
+}

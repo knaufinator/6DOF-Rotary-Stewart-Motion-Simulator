@@ -1,0 +1,1458 @@
+{
+  "status": "PASS_PERSISTED_26_LABELS_UNCHANGED_COPPER",
+  "inputs": {
+    "96_routed_capture.json": "fc8fc4c0fe43c80c6f6baed05d4b986329345ae1047f1527a1cec71fbe24b15a",
+    "100_routed_labeled_capture.json": "22c0bede843ee63a5d1dca034326b00e9a1ef2eed144f9599e369c0ddc7cd5e3",
+    "86_label_inventory.json": "3e7e3462fab83892310f264afe1d0df2f4466f09dd0e1b20c928a50c6603138d",
+    "101_final_label_inventory.json": "71f949f945451fe5b71b8752d2ef3c198788390a548c28740edf41f7d47ecd06",
+    "targeted_label_plan_86_v2.json": "eee071212b38c6423a4c2d4e434bb329a9f2cc63d38f2c8f32204c1e66aeb1b7",
+    "102_final_drc.json": "74560b93d159e04d46dda60c42ffb60a0ba6afe2fc27cb7594ff4ca2c38e4561"
+  },
+  "beforeSourceSha256": "beb78a98787a25d98e3af677aac62378053dd3b35dd4d1f6f82cb0becb655879",
+  "afterSourceSha256": "284e27148e25e48cc817f879fc999f346fe6762017167230dc45a71f904084fe",
+  "checksPassed": 158,
+  "checksTotal": 158,
+  "violations": [],
+  "checks": [
+    {
+      "name": "exact144_visible_unique_references",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_components",
+      "pass": true,
+      "details": {
+        "beforeCount": 144,
+        "afterCount": 144
+      }
+    },
+    {
+      "name": "unchanged_pads",
+      "pass": true,
+      "details": {
+        "beforeCount": 654,
+        "afterCount": 654
+      }
+    },
+    {
+      "name": "unchanged_tracks",
+      "pass": true,
+      "details": {
+        "beforeCount": 967,
+        "afterCount": 967
+      }
+    },
+    {
+      "name": "unchanged_vias",
+      "pass": true,
+      "details": {
+        "beforeCount": 398,
+        "afterCount": 398
+      }
+    },
+    {
+      "name": "unchanged_regions",
+      "pass": true,
+      "details": {
+        "beforeCount": 8,
+        "afterCount": 8
+      }
+    },
+    {
+      "name": "unchanged_fills",
+      "pass": true,
+      "details": {
+        "beforeCount": 689,
+        "afterCount": 689
+      }
+    },
+    {
+      "name": "unchanged_label_C1",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_C2",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "planned_label_C3",
+      "pass": true,
+      "details": {}
+    },
+    {
+      "name": "unchanged_label_C4",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_C5",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "planned_label_C6",
+      "pass": true,
+      "details": {}
+    },
+    {
+      "name": "planned_label_C7",
+      "pass": true,
+      "details": {}
+    },
+    {
+      "name": "unchanged_label_C8",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_C9",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_C10",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_C11",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_C13",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_C14",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_C16",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_C17",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_C18",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_C19",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_C20",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_C21",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_C22",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_C25",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_D1",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_D2",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "planned_label_D3",
+      "pass": true,
+      "details": {}
+    },
+    {
+      "name": "unchanged_label_D4",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_D5",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_J1",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_J2",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_J9",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_J10",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_J11",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_L1",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_R1",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_R2",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_R3",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_R4",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_R5",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_R6",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_R7",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_R10",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_R11",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_R12",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_R13",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_R14",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_R15",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_R16",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_R17",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_R18",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_R19",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_R20",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_R21",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_R22",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_R23",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_R24",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_R25",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "planned_label_U2",
+      "pass": true,
+      "details": {}
+    },
+    {
+      "name": "unchanged_label_U3",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_U4",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_U5",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_U6",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "planned_label_U7",
+      "pass": true,
+      "details": {}
+    },
+    {
+      "name": "unchanged_label_U8",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_Y1",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_J3",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_J4",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_J5",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_J6",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_J7",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_J8",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_R30",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_R31",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_R32",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_R33",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_R34",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_R35",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_R36",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_R37",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_R38",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_R39",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_R40",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_R41",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_U9",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_U10",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_C12",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_C15",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_C26",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_C27",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_C28",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_C29",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_C30",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_C31",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_L2",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_R42",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_R43",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_R44",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_R45",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_R46",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_R47",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_R48",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_R49",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_R50",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_R51",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_R52",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_R53",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_R54",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_R55",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_R56",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_R57",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_R58",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_C32",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_C33",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_C34",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_C35",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_R59",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_D7",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_D6",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_SW1",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_SW2",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_C23",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_C24",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_C36",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_F1",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "unchanged_label_R60",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "planned_label_C37",
+      "pass": true,
+      "details": {}
+    },
+    {
+      "name": "unchanged_label_C38",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "planned_label_C39",
+      "pass": true,
+      "details": {}
+    },
+    {
+      "name": "planned_label_C40",
+      "pass": true,
+      "details": {}
+    },
+    {
+      "name": "planned_label_C41",
+      "pass": true,
+      "details": {}
+    },
+    {
+      "name": "planned_label_C42",
+      "pass": true,
+      "details": {}
+    },
+    {
+      "name": "planned_label_D8",
+      "pass": true,
+      "details": {}
+    },
+    {
+      "name": "planned_label_R61",
+      "pass": true,
+      "details": {}
+    },
+    {
+      "name": "planned_label_R62",
+      "pass": true,
+      "details": {}
+    },
+    {
+      "name": "planned_label_R63",
+      "pass": true,
+      "details": {}
+    },
+    {
+      "name": "planned_label_R64",
+      "pass": true,
+      "details": {}
+    },
+    {
+      "name": "planned_label_R65",
+      "pass": true,
+      "details": {}
+    },
+    {
+      "name": "planned_label_R66",
+      "pass": true,
+      "details": {}
+    },
+    {
+      "name": "planned_label_R67",
+      "pass": true,
+      "details": {}
+    },
+    {
+      "name": "planned_label_R68",
+      "pass": true,
+      "details": {}
+    },
+    {
+      "name": "planned_label_R69",
+      "pass": true,
+      "details": {}
+    },
+    {
+      "name": "planned_label_R70",
+      "pass": true,
+      "details": {}
+    },
+    {
+      "name": "planned_label_U13",
+      "pass": true,
+      "details": {}
+    },
+    {
+      "name": "planned_label_U11",
+      "pass": true,
+      "details": {}
+    },
+    {
+      "name": "planned_label_U12",
+      "pass": true,
+      "details": {}
+    },
+    {
+      "name": "planned_label_U14",
+      "pass": true,
+      "details": {}
+    },
+    {
+      "name": "exact26_label_changes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "all_size_stroke_unchanged",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "18_fixed_strings_unchanged",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "exact_source_record_keys",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "only_allowed_26_designator_records_and_dochead_changed",
+      "pass": true,
+      "details": []
+    },
+    {
+      "name": "source_label_keys_and_values_preserved",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "U2_estimated_full_text_inside_outline",
+      "pass": true,
+      "details": null
+    }
+  ],
+  "changedReferences": [
+    "C3",
+    "C6",
+    "C7",
+    "D3",
+    "U2",
+    "U7",
+    "C37",
+    "C39",
+    "C40",
+    "C41",
+    "C42",
+    "D8",
+    "R61",
+    "R62",
+    "R63",
+    "R64",
+    "R65",
+    "R66",
+    "R67",
+    "R68",
+    "R69",
+    "R70",
+    "U13",
+    "U11",
+    "U12",
+    "U14"
+  ],
+  "sourceChanges": [
+    {
+      "type": "DOCHEAD",
+      "id": null,
+      "fields": {
+        "version": {
+          "before": "1790167001429",
+          "after": "1790167122185"
+        },
+        "client": {
+          "before": "33fc92020c954714",
+          "after": "0c5e8d74901c816b"
+        },
+        "updateTime": {
+          "before": 1790167001429,
+          "after": 1790167122185
+        }
+      },
+      "headerUnchanged": true
+    },
+    {
+      "type": "ATTR",
+      "id": "73e5820e1c1df48ae20",
+      "fields": {
+        "y": {
+          "before": 4161.5824,
+          "after": 4135
+        },
+        "x": {
+          "before": 5143.2991,
+          "after": 5040
+        },
+        "origin": {
+          "before": "LEFT_BOTTOM",
+          "after": "CENTER_MIDDLE"
+        },
+        "angle": {
+          "before": 180,
+          "after": 0
+        }
+      },
+      "headerUnchanged": true
+    },
+    {
+      "type": "ATTR",
+      "id": "89ba45058210ce8ee18",
+      "fields": {
+        "y": {
+          "before": 4467.8381,
+          "after": 4525
+        },
+        "x": {
+          "before": 5288.8147,
+          "after": 5400
+        },
+        "origin": {
+          "before": "LEFT_BOTTOM",
+          "after": "CENTER_MIDDLE"
+        },
+        "angle": {
+          "before": 90,
+          "after": 0
+        }
+      },
+      "headerUnchanged": true
+    },
+    {
+      "type": "ATTR",
+      "id": "288938601d9cf9c7e20",
+      "fields": {
+        "y": {
+          "before": 4365.8738,
+          "after": 4340
+        },
+        "x": {
+          "before": 4954.3227,
+          "after": 4875
+        },
+        "origin": {
+          "before": "LEFT_BOTTOM",
+          "after": "CENTER_MIDDLE"
+        },
+        "angle": {
+          "before": 180,
+          "after": 0
+        }
+      },
+      "headerUnchanged": true
+    },
+    {
+      "type": "ATTR",
+      "id": "15795de520b67ea1e18",
+      "fields": {
+        "y": {
+          "before": 4299.2083,
+          "after": 4175
+        },
+        "x": {
+          "before": 5477.6358,
+          "after": 5520
+        },
+        "origin": {
+          "before": "LEFT_BOTTOM",
+          "after": "CENTER_MIDDLE"
+        },
+        "angle": {
+          "before": -90,
+          "after": 0
+        }
+      },
+      "headerUnchanged": true
+    },
+    {
+      "type": "ATTR",
+      "id": "a579519c796f67ace126",
+      "fields": {
+        "y": {
+          "before": 3129.923,
+          "after": 2340
+        },
+        "x": {
+          "before": 5931.0616,
+          "after": 5275
+        },
+        "origin": {
+          "before": "LEFT_BOTTOM",
+          "after": "CENTER_MIDDLE"
+        },
+        "angle": {
+          "before": -90,
+          "after": 0
+        }
+      },
+      "headerUnchanged": true
+    },
+    {
+      "type": "ATTR",
+      "id": "466393572b732e6ae21",
+      "fields": {
+        "y": {
+          "before": 4548.4018,
+          "after": 4580
+        },
+        "x": {
+          "before": 4955.1192,
+          "after": 5115
+        },
+        "origin": {
+          "before": "LEFT_BOTTOM",
+          "after": "CENTER_MIDDLE"
+        }
+      },
+      "headerUnchanged": true
+    },
+    {
+      "type": "ATTR",
+      "id": "b022b909d7789aece18",
+      "fields": {
+        "y": {
+          "before": 3477.0439,
+          "after": 3330
+        },
+        "x": {
+          "before": 4014.3349,
+          "after": 3975
+        },
+        "origin": {
+          "before": "LEFT_BOTTOM",
+          "after": "CENTER_MIDDLE"
+        },
+        "angle": {
+          "before": -90,
+          "after": 0
+        }
+      },
+      "headerUnchanged": true
+    },
+    {
+      "type": "ATTR",
+      "id": "e31ab36fe54e49e7e18",
+      "fields": {
+        "y": {
+          "before": 3752.6344,
+          "after": 3700
+        },
+        "x": {
+          "before": 3896.2247,
+          "after": 3770
+        },
+        "origin": {
+          "before": "LEFT_BOTTOM",
+          "after": "CENTER_MIDDLE"
+        },
+        "angle": {
+          "before": -90,
+          "after": 0
+        }
+      },
+      "headerUnchanged": true
+    },
+    {
+      "type": "ATTR",
+      "id": "d2a336c984693694e18",
+      "fields": {
+        "y": {
+          "before": 3704.0586,
+          "after": 3815
+        },
+        "x": {
+          "before": 4017.1611,
+          "after": 4185
+        },
+        "origin": {
+          "before": "LEFT_BOTTOM",
+          "after": "CENTER_MIDDLE"
+        },
+        "angle": {
+          "before": 90,
+          "after": 0
+        }
+      },
+      "headerUnchanged": true
+    },
+    {
+      "type": "ATTR",
+      "id": "28bdf3a73fbcdb16e18",
+      "fields": {
+        "y": {
+          "before": 3825.3586,
+          "after": 3715
+        },
+        "x": {
+          "before": 3916.6569,
+          "after": 3946
+        },
+        "origin": {
+          "before": "LEFT_BOTTOM",
+          "after": "CENTER_MIDDLE"
+        }
+      },
+      "headerUnchanged": true
+    },
+    {
+      "type": "ATTR",
+      "id": "7bafec0474db07eae20",
+      "fields": {
+        "y": {
+          "before": 4329.1418,
+          "after": 4410
+        },
+        "x": {
+          "before": 5342.2518,
+          "after": 5485
+        },
+        "origin": {
+          "before": "LEFT_BOTTOM",
+          "after": "CENTER_MIDDLE"
+        },
+        "angle": {
+          "before": 90,
+          "after": 0
+        }
+      },
+      "headerUnchanged": true
+    },
+    {
+      "type": "ATTR",
+      "id": "9282237d95d6a260e18",
+      "fields": {
+        "y": {
+          "before": 4598.4294,
+          "after": 4725
+        },
+        "x": {
+          "before": 5349.1358,
+          "after": 5520
+        },
+        "origin": {
+          "before": "LEFT_BOTTOM",
+          "after": "CENTER_MIDDLE"
+        },
+        "angle": {
+          "before": 90,
+          "after": 0
+        }
+      },
+      "headerUnchanged": true
+    },
+    {
+      "type": "ATTR",
+      "id": "5d10edb092115312e16",
+      "fields": {
+        "y": {
+          "before": 3632.4332,
+          "after": 3660
+        },
+        "x": {
+          "before": 4139.3194,
+          "after": 4195
+        },
+        "origin": {
+          "before": "LEFT_BOTTOM",
+          "after": "CENTER_MIDDLE"
+        }
+      },
+      "headerUnchanged": true
+    },
+    {
+      "type": "ATTR",
+      "id": "657cea9c507d5969e16",
+      "fields": {
+        "y": {
+          "before": 3462.055,
+          "after": 3435
+        },
+        "x": {
+          "before": 4254.3814,
+          "after": 4210
+        },
+        "origin": {
+          "before": "LEFT_BOTTOM",
+          "after": "CENTER_MIDDLE"
+        },
+        "angle": {
+          "before": 180,
+          "after": 0
+        }
+      },
+      "headerUnchanged": true
+    },
+    {
+      "type": "ATTR",
+      "id": "3e964e659f0ed20ce16",
+      "fields": {
+        "y": {
+          "before": 1202.531,
+          "after": 1055
+        },
+        "x": {
+          "before": 1364.008,
+          "after": 1330
+        },
+        "origin": {
+          "before": "LEFT_BOTTOM",
+          "after": "CENTER_MIDDLE"
+        },
+        "angle": {
+          "before": -90,
+          "after": 0
+        }
+      },
+      "headerUnchanged": true
+    },
+    {
+      "type": "ATTR",
+      "id": "0cd1fc9025284cfbe16",
+      "fields": {
+        "y": {
+          "before": 3777.531,
+          "after": 3630
+        },
+        "x": {
+          "before": 1364.008,
+          "after": 1330
+        },
+        "origin": {
+          "before": "LEFT_BOTTOM",
+          "after": "CENTER_MIDDLE"
+        },
+        "angle": {
+          "before": -90,
+          "after": 0
+        }
+      },
+      "headerUnchanged": true
+    },
+    {
+      "type": "ATTR",
+      "id": "3c55b5751732adc7e16",
+      "fields": {
+        "y": {
+          "before": 6357.531,
+          "after": 6210
+        },
+        "x": {
+          "before": 1364.008,
+          "after": 1330
+        },
+        "origin": {
+          "before": "LEFT_BOTTOM",
+          "after": "CENTER_MIDDLE"
+        },
+        "angle": {
+          "before": -90,
+          "after": 0
+        }
+      },
+      "headerUnchanged": true
+    },
+    {
+      "type": "ATTR",
+      "id": "6dd745146c3983c0e16",
+      "fields": {
+        "y": {
+          "before": 3900.1498,
+          "after": 3925
+        },
+        "x": {
+          "before": 3918.8469,
+          "after": 4000
+        },
+        "origin": {
+          "before": "LEFT_BOTTOM",
+          "after": "CENTER_MIDDLE"
+        }
+      },
+      "headerUnchanged": true
+    },
+    {
+      "type": "ATTR",
+      "id": "ad502b5c63666fc2e16",
+      "fields": {
+        "y": {
+          "before": 3892.2757,
+          "after": 3855
+        },
+        "x": {
+          "before": 3702.3115,
+          "after": 3635
+        },
+        "origin": {
+          "before": "LEFT_BOTTOM",
+          "after": "CENTER_MIDDLE"
+        }
+      },
+      "headerUnchanged": true
+    },
+    {
+      "type": "ATTR",
+      "id": "fc97bc0fefe1a830e16",
+      "fields": {
+        "y": {
+          "before": 3883.3149,
+          "after": 3980
+        },
+        "x": {
+          "before": 3817.3735,
+          "after": 3750
+        },
+        "origin": {
+          "before": "LEFT_BOTTOM",
+          "after": "CENTER_MIDDLE"
+        },
+        "angle": {
+          "before": 180,
+          "after": 0
+        }
+      },
+      "headerUnchanged": true
+    },
+    {
+      "type": "ATTR",
+      "id": "761c980b68ee060ae16",
+      "fields": {
+        "y": {
+          "before": 3258.3184,
+          "after": 3200
+        },
+        "x": {
+          "before": 5059.7936,
+          "after": 5115
+        },
+        "origin": {
+          "before": "LEFT_BOTTOM",
+          "after": "CENTER_MIDDLE"
+        },
+        "angle": {
+          "before": -90,
+          "after": 0
+        }
+      },
+      "headerUnchanged": true
+    },
+    {
+      "type": "ATTR",
+      "id": "dbeca255eccb2b9ee16",
+      "fields": {
+        "y": {
+          "before": 3258.3184,
+          "after": 3200
+        },
+        "x": {
+          "before": 5009.7936,
+          "after": 4885
+        },
+        "origin": {
+          "before": "LEFT_BOTTOM",
+          "after": "CENTER_MIDDLE"
+        },
+        "angle": {
+          "before": -90,
+          "after": 0
+        }
+      },
+      "headerUnchanged": true
+    },
+    {
+      "type": "ATTR",
+      "id": "0975e70c4abf0978e20",
+      "fields": {
+        "y": {
+          "before": 3832.3566,
+          "after": 3770
+        },
+        "x": {
+          "before": 3797.7527,
+          "after": 3730
+        },
+        "origin": {
+          "before": "LEFT_BOTTOM",
+          "after": "CENTER_MIDDLE"
+        }
+      },
+      "headerUnchanged": true
+    },
+    {
+      "type": "ATTR",
+      "id": "0e9f1326b31a2b9fe34",
+      "fields": {
+        "y": {
+          "before": 3563.0721,
+          "after": 3410
+        },
+        "x": {
+          "before": 3957.6595,
+          "after": 4085
+        },
+        "origin": {
+          "before": "LEFT_BOTTOM",
+          "after": "CENTER_MIDDLE"
+        }
+      },
+      "headerUnchanged": true
+    },
+    {
+      "type": "ATTR",
+      "id": "d9628d33ac5e493be26",
+      "fields": {
+        "y": {
+          "before": 3577.8682,
+          "after": 3505
+        },
+        "x": {
+          "before": 3807.3647,
+          "after": 3738
+        },
+        "origin": {
+          "before": "LEFT_BOTTOM",
+          "after": "CENTER_MIDDLE"
+        }
+      },
+      "headerUnchanged": true
+    },
+    {
+      "type": "ATTR",
+      "id": "31c6ff4cc5ae839de26",
+      "fields": {
+        "y": {
+          "before": 3711.7264,
+          "after": 3730
+        },
+        "x": {
+          "before": 4004.2151,
+          "after": 4170
+        },
+        "origin": {
+          "before": "LEFT_BOTTOM",
+          "after": "CENTER_MIDDLE"
+        }
+      },
+      "headerUnchanged": true
+    }
+  ],
+  "nativeDrcEvidence": {
+    "checkedAt": "2026-09-23T12:38:43.478Z",
+    "script": "G:/My Drive/projects/6dof/pcb/revisions/2026-09-22-r13/41_placement_drc.js",
+    "scriptSha256": "f668529207338ecf313cf852951b64f685390b224801cae2f6ca046f12c1092f",
+    "success": true,
+    "result": {
+      "ok": true,
+      "drc": [],
+      "summary": {
+        "ok": true,
+        "drcCount": 0
+      }
+    },
+    "windowId": "fdaceba8-498a-46fe-a4d1-501ae341e414"
+  },
+  "minimumConservativeLabelClearanceMm": 0.4012615800000019,
+  "minimumKnownNativeSilkClearanceMm": 0.4334496450224552,
+  "fullPlacedSilkGeometryVerified": false,
+  "nativeGlyphDimensionsVerified": false,
+  "remainingVisualGate": "Root must inspect native rendering, especially C41 association and opaque legacy footprint silk. Offline model does not qualify JLC font height.",
+  "releaseReady": false
+}

@@ -1,0 +1,2326 @@
+{
+  "status": "PASS_PERSISTED_REGENERATED_PLANE_CONNECTIVITY",
+  "capture": "172_db25_release_capture.json",
+  "sha256": "9f29d6076ea4ab6b147192e948bc69a04e7bc4a0906c7248c1457a824fb89025",
+  "sourceCapture": "172_db25_release_capture.json",
+  "sourceCaptureSha256": "9f29d6076ea4ab6b147192e948bc69a04e7bc4a0906c7248c1457a824fb89025",
+  "actualNativePlane": {
+    "pourId": "a18ff0f4e7510908",
+    "definition": {
+      "partitionId": "",
+      "groupId": 0,
+      "netName": "GND",
+      "layerId": 15,
+      "width": 0.2,
+      "name": "L2_GND_NATIVE_R5",
+      "order": 1,
+      "path": [
+        [
+          -767.4016,
+          20,
+          "L",
+          -767.4016,
+          7854,
+          5885.5118,
+          7854,
+          5885.5118,
+          20,
+          -767.4016,
+          20
+        ]
+      ],
+      "pourType": {
+        "pourType": "SOLID",
+        "fineness": 8
+      },
+      "keepIsland": false,
+      "locked": true,
+      "zIndex": -1
+    },
+    "positiveRegions": 53,
+    "subtractedHoles": 425,
+    "arcSagittaBoundMil": 0.001,
+    "areaMm2": 30601.312870983165,
+    "sixMountHoleUnitsCalibration": true
+  },
+  "baselineNativePlane": {
+    "pourId": "a18ff0f4e7510908",
+    "definition": {
+      "partitionId": "",
+      "groupId": 0,
+      "netName": "GND",
+      "layerId": 15,
+      "width": 0.2,
+      "name": "L2_GND_NATIVE_R5",
+      "order": 1,
+      "path": [
+        [
+          -767.4016,
+          20,
+          "L",
+          -767.4016,
+          7854,
+          5885.5118,
+          7854,
+          5885.5118,
+          20,
+          -767.4016,
+          20
+        ]
+      ],
+      "pourType": {
+        "pourType": "SOLID",
+        "fineness": 8
+      },
+      "keepIsland": false,
+      "locked": true,
+      "zIndex": -1
+    },
+    "positiveRegions": 53,
+    "subtractedHoles": 425,
+    "arcSagittaBoundMil": 0.001,
+    "areaMm2": 30612.17497651034,
+    "sixMountHoleUnitsCalibration": true
+  },
+  "delta": {
+    "totalSymmetricAreaMm2": 10.862105527194982,
+    "atFlangeHolesMm2": 10.862105527194052,
+    "outsideFlangesAtDB25PadsMm2": 9.25539355280556e-13,
+    "outsideAllReplacedFootprintFeaturesMm2": 0.0,
+    "note": "Plane differences are confined to enlarged flange NPTH clearances."
+  },
+  "actualCopperLayersCorrectionJ11": [
+    "26b1b787dc4c1f8de35",
+    "26b1b787dc4c1f8de36",
+    "26b1b787dc4c1f8de37",
+    "26b1b787dc4c1f8de38"
+  ],
+  "nonGroundDisconnectedNetsOrOrphans": [],
+  "groundIslandsWithoutMainPlane": [],
+  "groundIslands": [
+    {
+      "island": 0,
+      "pads": [
+        "C11.2",
+        "U3.8",
+        "U9.15",
+        "U9.13",
+        "U10.15",
+        "U10.13",
+        "R46.2",
+        "R47.2",
+        "R48.2",
+        "R49.2",
+        "R50.2",
+        "R51.2",
+        "R52.2",
+        "R53.2",
+        "R64.2",
+        "J3.10",
+        "J4.10",
+        "J5.10",
+        "J6.10"
+      ],
+      "joins": [
+        {
+          "id": "e9f9711a2555d878e49",
+          "kind": "pads",
+          "annularCopperPlaneOverlapMil2": 443.89268755847223
+        },
+        {
+          "id": "be4d953d8744481fe49",
+          "kind": "pads",
+          "annularCopperPlaneOverlapMil2": 443.8926875584642
+        },
+        {
+          "id": "6546de9a0b603630e49",
+          "kind": "pads",
+          "annularCopperPlaneOverlapMil2": 443.89268755846206
+        },
+        {
+          "id": "15750519d39fbedce49",
+          "kind": "pads",
+          "annularCopperPlaneOverlapMil2": 443.8926875584556
+        },
+        {
+          "id": "05b4e85146ebef68",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.2521755427893
+        },
+        {
+          "id": "633c55d2d9b6b800",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.252175542788
+        },
+        {
+          "id": "2b21a3469a027dd2",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.2521755427866
+        },
+        {
+          "id": "f73d1b8ce7c470cb",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.25217554278805
+        },
+        {
+          "id": "3348f0fddf6fd228",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.25217554278896
+        },
+        {
+          "id": "df31df1830c23d22",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.25217554278873
+        },
+        {
+          "id": "cd07c0502766359f",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.2521755427866
+        },
+        {
+          "id": "48c0cfbb8a4b7985",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.2521755427866
+        },
+        {
+          "id": "76c8a9a5ab1b449b",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.252175542788
+        },
+        {
+          "id": "92db8ffb66287226",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.25217554278805
+        },
+        {
+          "id": "d6d33ed75dd5d694",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.25217554278896
+        },
+        {
+          "id": "0077b6233493129e",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 302.1905526607029
+        },
+        {
+          "id": "eb304081fed0b4ea",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.252175542789
+        },
+        {
+          "id": "9fdb7daf32bfda38",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.2521755427887
+        },
+        {
+          "id": "eaf11f1710509dbb",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.25217554278714
+        },
+        {
+          "id": "f3c48d28f1615b3d",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.25217554278873
+        },
+        {
+          "id": "227d3dc86b112edb",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.25217554278714
+        },
+        {
+          "id": "72b470f964f71448",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.252175542789
+        },
+        {
+          "id": "992780dff050c83a",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.252175542789
+        },
+        {
+          "id": "0b1b0b6280207132",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.25217554278805
+        },
+        {
+          "id": "46357363835fa85a",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.252175542788
+        },
+        {
+          "id": "4b660998d94a1074",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 201.02296616663546
+        },
+        {
+          "id": "13e270f28205e8e4",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 201.0229661666363
+        },
+        {
+          "id": "fdfdb9af43d6d59f",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.25217554278873
+        },
+        {
+          "id": "9cec9ef326943c96",
+          "kind": "tracks",
+          "annularCopperPlaneOverlapMil2": 11955.582780302597
+        },
+        {
+          "id": "6c0ccb54c3047b19",
+          "kind": "tracks",
+          "annularCopperPlaneOverlapMil2": 8115.492042330253
+        },
+        {
+          "id": "a1984b43c63c1f6b",
+          "kind": "tracks",
+          "annularCopperPlaneOverlapMil2": 19171.69951643634
+        },
+        {
+          "id": "7bfc741cbf925099",
+          "kind": "fills",
+          "annularCopperPlaneOverlapMil2": 314.1572940367096
+        },
+        {
+          "id": "910fe0fa7a105689",
+          "kind": "fills",
+          "annularCopperPlaneOverlapMil2": 314.1572940367093
+        },
+        {
+          "id": "87fd72f3d0df9ac8",
+          "kind": "fills",
+          "annularCopperPlaneOverlapMil2": 314.15729403670844
+        },
+        {
+          "id": "bce14e72d76e7cbb",
+          "kind": "fills",
+          "annularCopperPlaneOverlapMil2": 314.1572940367093
+        },
+        {
+          "id": "e19dadea995c005d",
+          "kind": "fills",
+          "annularCopperPlaneOverlapMil2": 314.1572940367091
+        },
+        {
+          "id": "f0d1adcdd366463e",
+          "kind": "fills",
+          "annularCopperPlaneOverlapMil2": 314.1572940367089
+        },
+        {
+          "id": "e1cccb472c81a018",
+          "kind": "fills",
+          "annularCopperPlaneOverlapMil2": 314.15729403670844
+        },
+        {
+          "id": "1eeef6c54b94f479",
+          "kind": "fills",
+          "annularCopperPlaneOverlapMil2": 314.15729403670844
+        },
+        {
+          "id": "4308a6f38509576d",
+          "kind": "fills",
+          "annularCopperPlaneOverlapMil2": 314.15729403670935
+        },
+        {
+          "id": "5ea34529e3f587e4",
+          "kind": "fills",
+          "annularCopperPlaneOverlapMil2": 314.15729403670935
+        },
+        {
+          "id": "d12f8dfe796c1fa1",
+          "kind": "fills",
+          "annularCopperPlaneOverlapMil2": 314.1572940367091
+        },
+        {
+          "id": "910b26f0c5074a4b",
+          "kind": "fills",
+          "annularCopperPlaneOverlapMil2": 303.37730086899444
+        },
+        {
+          "id": "a8d305acd30a71b8",
+          "kind": "fills",
+          "annularCopperPlaneOverlapMil2": 314.1572940367091
+        },
+        {
+          "id": "59f9d1731a7709c6",
+          "kind": "fills",
+          "annularCopperPlaneOverlapMil2": 314.15729403670895
+        },
+        {
+          "id": "29bfdabf82477be0",
+          "kind": "fills",
+          "annularCopperPlaneOverlapMil2": 314.1572940367079
+        },
+        {
+          "id": "9eee07c5dcaa5721",
+          "kind": "fills",
+          "annularCopperPlaneOverlapMil2": 314.15729403670895
+        },
+        {
+          "id": "d91dbabd60401519",
+          "kind": "fills",
+          "annularCopperPlaneOverlapMil2": 314.1572940367079
+        },
+        {
+          "id": "9c5b0d5379fddfa6",
+          "kind": "fills",
+          "annularCopperPlaneOverlapMil2": 314.1572940367091
+        },
+        {
+          "id": "4e27a791d22a4003",
+          "kind": "fills",
+          "annularCopperPlaneOverlapMil2": 314.1572940367091
+        },
+        {
+          "id": "8e5d04a493fc15e6",
+          "kind": "fills",
+          "annularCopperPlaneOverlapMil2": 314.1572940367093
+        },
+        {
+          "id": "2ad7cb3608024e14",
+          "kind": "fills",
+          "annularCopperPlaneOverlapMil2": 314.1572940367093
+        },
+        {
+          "id": "ef9daa5726f65d51",
+          "kind": "fills",
+          "annularCopperPlaneOverlapMil2": 201.06066818349285
+        }
+      ]
+    },
+    {
+      "island": 1,
+      "pads": [
+        "C16.2",
+        "C20.2",
+        "C21.2",
+        "C22.2",
+        "U8.3",
+        "U8.14",
+        "U8.16",
+        "U8.19",
+        "U8.23",
+        "U8.29",
+        "U8.48",
+        "C12.2",
+        "C15.2",
+        "C28.2",
+        "C30.2",
+        "C31.2"
+      ],
+      "joins": [
+        {
+          "id": "dff1360d2e1dbab0",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.252175542788
+        },
+        {
+          "id": "a18f40f83ff22b55",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.25217554278646
+        },
+        {
+          "id": "9a4a5c813da26805",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.2521755427887
+        },
+        {
+          "id": "2aecf043db88cdc0",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.25217554278646
+        },
+        {
+          "id": "608fad4b7722fc5d",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.252175542788
+        },
+        {
+          "id": "ee43cd615b34730a",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.2521755427888
+        },
+        {
+          "id": "8d892ce647b101b8",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.25217554278646
+        },
+        {
+          "id": "c68f516334bf4516",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.2521755427888
+        }
+      ]
+    },
+    {
+      "island": 2,
+      "pads": [
+        "U2.41",
+        "U2.41",
+        "U2.41",
+        "U2.41",
+        "U2.41",
+        "U2.41",
+        "U2.41",
+        "U2.41",
+        "U2.41"
+      ],
+      "joins": [
+        {
+          "id": "55661cce8256ad76",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.2521755427865
+        },
+        {
+          "id": "74f2df22cf9c8277",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.2521755427865
+        },
+        {
+          "id": "cac2aa553d40894a",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.2521755427865
+        }
+      ]
+    },
+    {
+      "island": 3,
+      "pads": [
+        "U5.8",
+        "R54.2",
+        "R55.2",
+        "R56.2",
+        "R57.2",
+        "R65.2",
+        "J7.10",
+        "J8.10"
+      ],
+      "joins": [
+        {
+          "id": "4b4b0da9806144bfe49",
+          "kind": "pads",
+          "annularCopperPlaneOverlapMil2": 443.89268755846206
+        },
+        {
+          "id": "cb6cf9d3603ec5fbe49",
+          "kind": "pads",
+          "annularCopperPlaneOverlapMil2": 443.89268755845427
+        },
+        {
+          "id": "5729a60ff847e8c6",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.25217554278714
+        },
+        {
+          "id": "434eda1ece1525b5",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.25217554278663
+        },
+        {
+          "id": "eabeaf55bf5cd66a",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.2521755427872
+        },
+        {
+          "id": "3320f3c85c724907",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.25217554278714
+        },
+        {
+          "id": "30b53f255c223882",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.25217554278714
+        },
+        {
+          "id": "3b31a59f9f4d84db",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.25217554278714
+        },
+        {
+          "id": "650cfc289b3b79e2",
+          "kind": "fills",
+          "annularCopperPlaneOverlapMil2": 314.1572940367079
+        },
+        {
+          "id": "ba7d898787b8569b",
+          "kind": "fills",
+          "annularCopperPlaneOverlapMil2": 314.15729403670844
+        },
+        {
+          "id": "803a57e9064687ef",
+          "kind": "fills",
+          "annularCopperPlaneOverlapMil2": 314.15729403670787
+        },
+        {
+          "id": "12f9884ab8d34a30",
+          "kind": "fills",
+          "annularCopperPlaneOverlapMil2": 314.1572940367079
+        },
+        {
+          "id": "371ae4964e477263",
+          "kind": "fills",
+          "annularCopperPlaneOverlapMil2": 314.1572940367079
+        },
+        {
+          "id": "8bb306fd7ac0bdf9",
+          "kind": "fills",
+          "annularCopperPlaneOverlapMil2": 314.15729403670787
+        }
+      ]
+    },
+    {
+      "island": 4,
+      "pads": [
+        "U6.8",
+        "U6.7",
+        "U6.6",
+        "U6.5"
+      ],
+      "joins": [
+        {
+          "id": "e2e0f7bff31b7d50",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.2521755427865
+        },
+        {
+          "id": "1f9d32043359d015",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.2521755427865
+        },
+        {
+          "id": "9162f0b3f48f3a0d",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.2521755427866
+        },
+        {
+          "id": "3ed44e7826d3c5c1",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.2521755427865
+        }
+      ]
+    },
+    {
+      "island": 5,
+      "pads": [
+        "C2.2",
+        "C5.2",
+        "D2.2",
+        "U6.4"
+      ],
+      "joins": [
+        {
+          "id": "3aa6d59bce54eca9",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.2521755427849
+        },
+        {
+          "id": "9fa54acd716a0de3",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.2521755427849
+        },
+        {
+          "id": "273de4ca228c7dec",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.25217554278487
+        }
+      ]
+    },
+    {
+      "island": 6,
+      "pads": [
+        "J11.B1A12",
+        "J11.1",
+        "D7.2"
+      ],
+      "joins": [
+        {
+          "id": "26b1b787dc4c1f8de58",
+          "kind": "pads",
+          "annularCopperPlaneOverlapMil2": 195.67068075872487
+        }
+      ]
+    },
+    {
+      "island": 7,
+      "pads": [
+        "U9.11",
+        "U9.9"
+      ],
+      "joins": [
+        {
+          "id": "09de232b69195cc9",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.25217554278805
+        }
+      ]
+    },
+    {
+      "island": 8,
+      "pads": [
+        "Y1.2",
+        "Y1.4"
+      ],
+      "joins": [
+        {
+          "id": "0e95a59ea442533a",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.2521755427865
+        }
+      ]
+    },
+    {
+      "island": 9,
+      "pads": [
+        "R2.2",
+        "R3.2"
+      ],
+      "joins": [
+        {
+          "id": "4a0eb8550ee770e6",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.25217554278873
+        }
+      ]
+    },
+    {
+      "island": 10,
+      "pads": [
+        "C26.2",
+        "C27.2"
+      ],
+      "joins": [
+        {
+          "id": "4007ccf038a7f0f1",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.2521755427874
+        }
+      ]
+    },
+    {
+      "island": 11,
+      "pads": [
+        "C40.2",
+        "C41.2"
+      ],
+      "joins": [
+        {
+          "id": "8dce32d3f2de8b2f",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.252175542788
+        }
+      ]
+    },
+    {
+      "island": 12,
+      "pads": [
+        "R62.2",
+        "U11.4"
+      ],
+      "joins": [
+        {
+          "id": "0f50d9198a7391b2",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.2521755427865
+        }
+      ]
+    },
+    {
+      "island": 13,
+      "pads": [
+        "U14.2",
+        "U14.3"
+      ],
+      "joins": [
+        {
+          "id": "d0c78726b944da26",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.25217554278646
+        }
+      ]
+    },
+    {
+      "island": 14,
+      "pads": [
+        "J11.A1B12",
+        "J11.4"
+      ],
+      "joins": [
+        {
+          "id": "26b1b787dc4c1f8de59",
+          "kind": "pads",
+          "annularCopperPlaneOverlapMil2": 195.67068075872487
+        }
+      ]
+    },
+    {
+      "island": 15,
+      "pads": [
+        "C1.2"
+      ],
+      "joins": [
+        {
+          "id": "4e1b5e960f230c79",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.2521755427866
+        }
+      ]
+    },
+    {
+      "island": 16,
+      "pads": [
+        "C13.2"
+      ],
+      "joins": [
+        {
+          "id": "c66df38325994716",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.2521755427893
+        }
+      ]
+    },
+    {
+      "island": 17,
+      "pads": [
+        "C29.2"
+      ],
+      "joins": [
+        {
+          "id": "0f22af1b25710dca",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.2521755427874
+        }
+      ]
+    },
+    {
+      "island": 18,
+      "pads": [
+        "C3.2"
+      ],
+      "joins": [
+        {
+          "id": "50993997a6e576b6",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.25217554278487
+        }
+      ]
+    },
+    {
+      "island": 19,
+      "pads": [
+        "C4.2"
+      ],
+      "joins": [
+        {
+          "id": "68c146bea6b8acee",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.25217554278487
+        }
+      ]
+    },
+    {
+      "island": 20,
+      "pads": [
+        "C6.2"
+      ],
+      "joins": [
+        {
+          "id": "3b1f72a203f0c8ea",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.25217554278487
+        }
+      ]
+    },
+    {
+      "island": 21,
+      "pads": [
+        "C7.2"
+      ],
+      "joins": [
+        {
+          "id": "3263f26bd398c9a2",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.25217554278487
+        }
+      ]
+    },
+    {
+      "island": 22,
+      "pads": [
+        "C8.2"
+      ],
+      "joins": [
+        {
+          "id": "541b00ab8af5f477",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.252175542789
+        }
+      ]
+    },
+    {
+      "island": 23,
+      "pads": [
+        "C9.2"
+      ],
+      "joins": [
+        {
+          "id": "83865f0cecc00770",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.2521755427872
+        }
+      ]
+    },
+    {
+      "island": 24,
+      "pads": [
+        "C10.2"
+      ],
+      "joins": [
+        {
+          "id": "7c6851bfe7474237",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.2521755427872
+        }
+      ]
+    },
+    {
+      "island": 25,
+      "pads": [
+        "C14.2"
+      ],
+      "joins": [
+        {
+          "id": "bd707b5a833f5150",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.2521755427865
+        }
+      ]
+    },
+    {
+      "island": 26,
+      "pads": [
+        "C17.2"
+      ],
+      "joins": [
+        {
+          "id": "6f83e751a6e7fe56",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 331.82476572232775
+        }
+      ]
+    },
+    {
+      "island": 27,
+      "pads": [
+        "C18.2"
+      ],
+      "joins": [
+        {
+          "id": "848c6dd1fa8944b6",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.2521755427865
+        }
+      ]
+    },
+    {
+      "island": 28,
+      "pads": [
+        "C19.2"
+      ],
+      "joins": [
+        {
+          "id": "8a3c5c11214aafed",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.2521755427865
+        }
+      ]
+    },
+    {
+      "island": 29,
+      "pads": [
+        "C25.2"
+      ],
+      "joins": [
+        {
+          "id": "26dab21729b51dc9",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.25217554278646
+        }
+      ]
+    },
+    {
+      "island": 30,
+      "pads": [
+        "D4.2"
+      ],
+      "joins": [
+        {
+          "id": "e6d2ec91917cfe2a",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.2521755427849
+        }
+      ]
+    },
+    {
+      "island": 31,
+      "pads": [
+        "D5.2"
+      ],
+      "joins": [
+        {
+          "id": "ae011d8925ab3c87",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.2521755427849
+        }
+      ]
+    },
+    {
+      "island": 32,
+      "pads": [
+        "R10.2"
+      ],
+      "joins": [
+        {
+          "id": "9f5e24966b2b0da7",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.25217554278646
+        }
+      ]
+    },
+    {
+      "island": 33,
+      "pads": [
+        "U2.1"
+      ],
+      "joins": [
+        {
+          "id": "bedd23e27d53b8be",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.2521755427865
+        }
+      ]
+    },
+    {
+      "island": 34,
+      "pads": [
+        "U2.40"
+      ],
+      "joins": [
+        {
+          "id": "55515e8e5ac6bf6b",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.2521755427865
+        }
+      ]
+    },
+    {
+      "island": 35,
+      "pads": [
+        "U4.8"
+      ],
+      "joins": [
+        {
+          "id": "a790bde07aa5cc8c",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.2521755427886
+        }
+      ]
+    },
+    {
+      "island": 36,
+      "pads": [
+        "U7.1"
+      ],
+      "joins": [
+        {
+          "id": "e79334be1002df80",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.2521755427849
+        }
+      ]
+    },
+    {
+      "island": 37,
+      "pads": [
+        "U8.9"
+      ],
+      "joins": [
+        {
+          "id": "7d463d4e1d7b6541",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.2521755427869
+        }
+      ]
+    },
+    {
+      "island": 38,
+      "pads": [
+        "C32.2"
+      ],
+      "joins": [
+        {
+          "id": "6cd9fa249243eeee",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 201.02296616663514
+        }
+      ]
+    },
+    {
+      "island": 39,
+      "pads": [
+        "C35.2"
+      ],
+      "joins": [
+        {
+          "id": "533e56242b80f196",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.2521755427874
+        }
+      ]
+    },
+    {
+      "island": 40,
+      "pads": [
+        "D6.2"
+      ],
+      "joins": [
+        {
+          "id": "ca704ff3040ed089",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.2521755427883
+        }
+      ]
+    },
+    {
+      "island": 41,
+      "pads": [
+        "SW1.2"
+      ],
+      "joins": [
+        {
+          "id": "fabc9ff22413d07e",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.2521755427879
+        }
+      ]
+    },
+    {
+      "island": 42,
+      "pads": [
+        "SW2.2"
+      ],
+      "joins": [
+        {
+          "id": "3ea226ad83a72504",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.2521755427879
+        }
+      ]
+    },
+    {
+      "island": 43,
+      "pads": [
+        "C23.2"
+      ],
+      "joins": [
+        {
+          "id": "ef15a714d4f51fc7",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.25217554278646
+        }
+      ]
+    },
+    {
+      "island": 44,
+      "pads": [
+        "C24.2"
+      ],
+      "joins": [
+        {
+          "id": "586b9f4165d0c3b1",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.25217554278805
+        }
+      ]
+    },
+    {
+      "island": 45,
+      "pads": [
+        "C36.2"
+      ],
+      "joins": [
+        {
+          "id": "f75e883f2d8c5fdf",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.2521755427879
+        }
+      ]
+    },
+    {
+      "island": 46,
+      "pads": [
+        "C37.2"
+      ],
+      "joins": [
+        {
+          "id": "4a0c1d1d2f8bb75f",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 273.2105082284048
+        }
+      ]
+    },
+    {
+      "island": 47,
+      "pads": [
+        "C38.2"
+      ],
+      "joins": [
+        {
+          "id": "dddf103ed9be71bd",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.252175542788
+        }
+      ]
+    },
+    {
+      "island": 48,
+      "pads": [
+        "C39.2"
+      ],
+      "joins": [
+        {
+          "id": "08164dedc4d41b92",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.25217554278805
+        }
+      ]
+    },
+    {
+      "island": 49,
+      "pads": [
+        "C42.2"
+      ],
+      "joins": [
+        {
+          "id": "7947f8a69952d1a9",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.2521755427849
+        }
+      ]
+    },
+    {
+      "island": 50,
+      "pads": [
+        "R63.2"
+      ],
+      "joins": [
+        {
+          "id": "237c20b8799e091a",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.25217554278896
+        }
+      ]
+    },
+    {
+      "island": 51,
+      "pads": [
+        "R68.2"
+      ],
+      "joins": [
+        {
+          "id": "f0a38e3b4c825113",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.252175542788
+        }
+      ]
+    },
+    {
+      "island": 52,
+      "pads": [
+        "U13.2"
+      ],
+      "joins": [
+        {
+          "id": "37c0b7e61fe3732e",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.252175542788
+        }
+      ]
+    },
+    {
+      "island": 53,
+      "pads": [
+        "U12.2"
+      ],
+      "joins": [
+        {
+          "id": "4d958d7bf8313bcb",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.252175542788
+        }
+      ]
+    },
+    {
+      "island": 54,
+      "pads": [
+        "J1.1"
+      ],
+      "joins": [
+        {
+          "id": "7148e8e04a58f5efe12",
+          "kind": "pads",
+          "annularCopperPlaneOverlapMil2": 391.48050588016656
+        }
+      ]
+    },
+    {
+      "island": 55,
+      "pads": [
+        "J2.2"
+      ],
+      "joins": [
+        {
+          "id": "4405575c47dfa4d5e24",
+          "kind": "pads",
+          "annularCopperPlaneOverlapMil2": 631.769374693086
+        }
+      ]
+    },
+    {
+      "island": 56,
+      "pads": [
+        "J9.2"
+      ],
+      "joins": [
+        {
+          "id": "96aac19c5f9d52fae24",
+          "kind": "pads",
+          "annularCopperPlaneOverlapMil2": 631.769374693086
+        }
+      ]
+    },
+    {
+      "island": 57,
+      "pads": [
+        "J11.2"
+      ],
+      "joins": [
+        {
+          "id": "26b1b787dc4c1f8de57",
+          "kind": "pads",
+          "annularCopperPlaneOverlapMil2": 239.64398525649267
+        }
+      ]
+    },
+    {
+      "island": 58,
+      "pads": [
+        "J11.3"
+      ],
+      "joins": [
+        {
+          "id": "26b1b787dc4c1f8de60",
+          "kind": "pads",
+          "annularCopperPlaneOverlapMil2": 239.64398525649267
+        }
+      ]
+    },
+    {
+      "island": 59,
+      "pads": [],
+      "joins": [
+        {
+          "id": "8d3756b9c6876652",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.2521755427893
+        }
+      ]
+    },
+    {
+      "island": 60,
+      "pads": [],
+      "joins": [
+        {
+          "id": "ea16631b2b7b5d99",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.2521755427865
+        }
+      ]
+    },
+    {
+      "island": 61,
+      "pads": [],
+      "joins": [
+        {
+          "id": "8657decc97f908e4",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 308.52394572498594
+        }
+      ]
+    },
+    {
+      "island": 62,
+      "pads": [],
+      "joins": [
+        {
+          "id": "a7e555271ddb3bb7",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.25217554278737
+        }
+      ]
+    },
+    {
+      "island": 63,
+      "pads": [],
+      "joins": [
+        {
+          "id": "a7067c49b7ba45b3",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.25217554278873
+        }
+      ]
+    },
+    {
+      "island": 64,
+      "pads": [],
+      "joins": [
+        {
+          "id": "a65369b0b90b2432",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 339.25217554278873
+        }
+      ]
+    },
+    {
+      "island": 65,
+      "pads": [],
+      "joins": [
+        {
+          "id": "7ae212b11caddb18",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 337.63133888315167
+        }
+      ]
+    },
+    {
+      "island": 66,
+      "pads": [],
+      "joins": [
+        {
+          "id": "da6fcbb00dc6daf9",
+          "kind": "vias",
+          "annularCopperPlaneOverlapMil2": 337.63083543694285
+        }
+      ]
+    }
+  ],
+  "allSixDB25GroundAnnuli": [
+    {
+      "ref": "J3",
+      "pin": "10",
+      "oldAnnulusPlaneOverlapMm2": 0.286381806305224,
+      "newAnnulusPlaneOverlapMm2": 0.286381806305224
+    },
+    {
+      "ref": "J4",
+      "pin": "10",
+      "oldAnnulusPlaneOverlapMm2": 0.28638180630521887,
+      "newAnnulusPlaneOverlapMm2": 0.28638180630521887
+    },
+    {
+      "ref": "J5",
+      "pin": "10",
+      "oldAnnulusPlaneOverlapMm2": 0.28638180630521737,
+      "newAnnulusPlaneOverlapMm2": 0.28638180630521737
+    },
+    {
+      "ref": "J6",
+      "pin": "10",
+      "oldAnnulusPlaneOverlapMm2": 0.28638180630521326,
+      "newAnnulusPlaneOverlapMm2": 0.2863818063052133
+    },
+    {
+      "ref": "J7",
+      "pin": "10",
+      "oldAnnulusPlaneOverlapMm2": 0.28638180630521737,
+      "newAnnulusPlaneOverlapMm2": 0.28638180630521737
+    },
+    {
+      "ref": "J8",
+      "pin": "10",
+      "oldAnnulusPlaneOverlapMm2": 0.28638180630521237,
+      "newAnnulusPlaneOverlapMm2": 0.28638180630521237
+    }
+  ],
+  "DB25OtherPadPlaneClearances": [
+    {
+      "ref": "J3",
+      "pin": "25",
+      "net": "",
+      "planeClearanceMm": 0.3580131759551734
+    },
+    {
+      "ref": "J3",
+      "pin": "24",
+      "net": "",
+      "planeClearanceMm": 0.35801317595518256
+    },
+    {
+      "ref": "J3",
+      "pin": "23",
+      "net": "M0_ALARM_DRV",
+      "planeClearanceMm": 0.35801317595517745
+    },
+    {
+      "ref": "J3",
+      "pin": "22",
+      "net": "",
+      "planeClearanceMm": 0.35801317595517745
+    },
+    {
+      "ref": "J3",
+      "pin": "21",
+      "net": "",
+      "planeClearanceMm": 0.35801317595517745
+    },
+    {
+      "ref": "J3",
+      "pin": "20",
+      "net": "",
+      "planeClearanceMm": 0.35801317595517745
+    },
+    {
+      "ref": "J3",
+      "pin": "19",
+      "net": "",
+      "planeClearanceMm": 0.3580131759551734
+    },
+    {
+      "ref": "J3",
+      "pin": "18",
+      "net": "",
+      "planeClearanceMm": 0.35801317595518256
+    },
+    {
+      "ref": "J3",
+      "pin": "17",
+      "net": "",
+      "planeClearanceMm": 0.35801317595518256
+    },
+    {
+      "ref": "J3",
+      "pin": "16",
+      "net": "",
+      "planeClearanceMm": 0.3580131759551805
+    },
+    {
+      "ref": "J3",
+      "pin": "15",
+      "net": "",
+      "planeClearanceMm": 0.35801317595517945
+    },
+    {
+      "ref": "J3",
+      "pin": "14",
+      "net": "M0S_N",
+      "planeClearanceMm": 0.3580131759551805
+    },
+    {
+      "ref": "J3",
+      "pin": "13",
+      "net": "",
+      "planeClearanceMm": 0.3580131759551762
+    },
+    {
+      "ref": "J3",
+      "pin": "12",
+      "net": "",
+      "planeClearanceMm": 0.3580131759551736
+    },
+    {
+      "ref": "J3",
+      "pin": "11",
+      "net": "",
+      "planeClearanceMm": 0.3580131759551823
+    },
+    {
+      "ref": "J3",
+      "pin": "9",
+      "net": "",
+      "planeClearanceMm": 0.3580131759551777
+    },
+    {
+      "ref": "J3",
+      "pin": "8",
+      "net": "",
+      "planeClearanceMm": 0.35801317595517745
+    },
+    {
+      "ref": "J3",
+      "pin": "7",
+      "net": "",
+      "planeClearanceMm": 0.35801317595517745
+    },
+    {
+      "ref": "J3",
+      "pin": "6",
+      "net": "",
+      "planeClearanceMm": 0.3580131759551734
+    },
+    {
+      "ref": "J3",
+      "pin": "5",
+      "net": "M0D_N",
+      "planeClearanceMm": 0.3580131759551823
+    },
+    {
+      "ref": "J3",
+      "pin": "4",
+      "net": "M0D_P",
+      "planeClearanceMm": 0.35801317595518256
+    },
+    {
+      "ref": "J3",
+      "pin": "3",
+      "net": "M0S_P",
+      "planeClearanceMm": 0.35801317595517945
+    },
+    {
+      "ref": "J3",
+      "pin": "2",
+      "net": "",
+      "planeClearanceMm": 0.3580131759551792
+    },
+    {
+      "ref": "J3",
+      "pin": "1",
+      "net": "",
+      "planeClearanceMm": 0.3580130495088076
+    },
+    {
+      "ref": "J4",
+      "pin": "25",
+      "net": "",
+      "planeClearanceMm": 0.35801317595517806
+    },
+    {
+      "ref": "J4",
+      "pin": "24",
+      "net": "",
+      "planeClearanceMm": 0.35801317595517695
+    },
+    {
+      "ref": "J4",
+      "pin": "23",
+      "net": "M1_ALARM_DRV",
+      "planeClearanceMm": 0.35801317595517806
+    },
+    {
+      "ref": "J4",
+      "pin": "22",
+      "net": "",
+      "planeClearanceMm": 0.35801317595518
+    },
+    {
+      "ref": "J4",
+      "pin": "21",
+      "net": "",
+      "planeClearanceMm": 0.35801317595518
+    },
+    {
+      "ref": "J4",
+      "pin": "20",
+      "net": "",
+      "planeClearanceMm": 0.35801317595517396
+    },
+    {
+      "ref": "J4",
+      "pin": "19",
+      "net": "",
+      "planeClearanceMm": 0.3580131759551781
+    },
+    {
+      "ref": "J4",
+      "pin": "18",
+      "net": "",
+      "planeClearanceMm": 0.3580131759551781
+    },
+    {
+      "ref": "J4",
+      "pin": "17",
+      "net": "",
+      "planeClearanceMm": 0.35801317595516985
+    },
+    {
+      "ref": "J4",
+      "pin": "16",
+      "net": "",
+      "planeClearanceMm": 0.35801317595516985
+    },
+    {
+      "ref": "J4",
+      "pin": "15",
+      "net": "",
+      "planeClearanceMm": 0.3580131759551719
+    },
+    {
+      "ref": "J4",
+      "pin": "14",
+      "net": "M1S_N",
+      "planeClearanceMm": 0.35801317595516574
+    },
+    {
+      "ref": "J4",
+      "pin": "13",
+      "net": "",
+      "planeClearanceMm": 0.3580131759551708
+    },
+    {
+      "ref": "J4",
+      "pin": "12",
+      "net": "",
+      "planeClearanceMm": 0.35801317595517806
+    },
+    {
+      "ref": "J4",
+      "pin": "11",
+      "net": "",
+      "planeClearanceMm": 0.35801317595517695
+    },
+    {
+      "ref": "J4",
+      "pin": "9",
+      "net": "",
+      "planeClearanceMm": 0.35801317595518
+    },
+    {
+      "ref": "J4",
+      "pin": "8",
+      "net": "",
+      "planeClearanceMm": 0.35801317595518
+    },
+    {
+      "ref": "J4",
+      "pin": "7",
+      "net": "",
+      "planeClearanceMm": 0.3580131759551781
+    },
+    {
+      "ref": "J4",
+      "pin": "6",
+      "net": "",
+      "planeClearanceMm": 0.3580131759551781
+    },
+    {
+      "ref": "J4",
+      "pin": "5",
+      "net": "M1D_N",
+      "planeClearanceMm": 0.3580131759551781
+    },
+    {
+      "ref": "J4",
+      "pin": "4",
+      "net": "M1D_P",
+      "planeClearanceMm": 0.3580131759551781
+    },
+    {
+      "ref": "J4",
+      "pin": "3",
+      "net": "M1S_P",
+      "planeClearanceMm": 0.35801317595518
+    },
+    {
+      "ref": "J4",
+      "pin": "2",
+      "net": "",
+      "planeClearanceMm": 0.35801317595518
+    },
+    {
+      "ref": "J4",
+      "pin": "1",
+      "net": "",
+      "planeClearanceMm": 0.3580130495087923
+    },
+    {
+      "ref": "J5",
+      "pin": "25",
+      "net": "",
+      "planeClearanceMm": 0.358013175955156
+    },
+    {
+      "ref": "J5",
+      "pin": "24",
+      "net": "",
+      "planeClearanceMm": 0.3580131759551724
+    },
+    {
+      "ref": "J5",
+      "pin": "23",
+      "net": "M2_ALARM_DRV",
+      "planeClearanceMm": 0.358013175955156
+    },
+    {
+      "ref": "J5",
+      "pin": "22",
+      "net": "",
+      "planeClearanceMm": 0.358013175955156
+    },
+    {
+      "ref": "J5",
+      "pin": "21",
+      "net": "",
+      "planeClearanceMm": 0.3580131759551642
+    },
+    {
+      "ref": "J5",
+      "pin": "20",
+      "net": "",
+      "planeClearanceMm": 0.3580131759551642
+    },
+    {
+      "ref": "J5",
+      "pin": "19",
+      "net": "",
+      "planeClearanceMm": 0.3580131759551642
+    },
+    {
+      "ref": "J5",
+      "pin": "18",
+      "net": "",
+      "planeClearanceMm": 0.3580131759551642
+    },
+    {
+      "ref": "J5",
+      "pin": "17",
+      "net": "",
+      "planeClearanceMm": 0.3580131759551642
+    },
+    {
+      "ref": "J5",
+      "pin": "16",
+      "net": "",
+      "planeClearanceMm": 0.35801317595517845
+    },
+    {
+      "ref": "J5",
+      "pin": "15",
+      "net": "",
+      "planeClearanceMm": 0.35801317595517845
+    },
+    {
+      "ref": "J5",
+      "pin": "14",
+      "net": "M2S_N",
+      "planeClearanceMm": 0.3580131759551642
+    },
+    {
+      "ref": "J5",
+      "pin": "13",
+      "net": "",
+      "planeClearanceMm": 0.35801317595517257
+    },
+    {
+      "ref": "J5",
+      "pin": "12",
+      "net": "",
+      "planeClearanceMm": 0.35801317595515625
+    },
+    {
+      "ref": "J5",
+      "pin": "11",
+      "net": "",
+      "planeClearanceMm": 0.35801317595515675
+    },
+    {
+      "ref": "J5",
+      "pin": "9",
+      "net": "",
+      "planeClearanceMm": 0.35801317595517257
+    },
+    {
+      "ref": "J5",
+      "pin": "8",
+      "net": "",
+      "planeClearanceMm": 0.3580131759551783
+    },
+    {
+      "ref": "J5",
+      "pin": "7",
+      "net": "",
+      "planeClearanceMm": 0.3580131759551642
+    },
+    {
+      "ref": "J5",
+      "pin": "6",
+      "net": "",
+      "planeClearanceMm": 0.3580131759551783
+    },
+    {
+      "ref": "J5",
+      "pin": "5",
+      "net": "M2D_N",
+      "planeClearanceMm": 0.3580131759551642
+    },
+    {
+      "ref": "J5",
+      "pin": "4",
+      "net": "M2D_P",
+      "planeClearanceMm": 0.3580131759551783
+    },
+    {
+      "ref": "J5",
+      "pin": "3",
+      "net": "M2S_P",
+      "planeClearanceMm": 0.3580131759551783
+    },
+    {
+      "ref": "J5",
+      "pin": "2",
+      "net": "",
+      "planeClearanceMm": 0.3580131759551783
+    },
+    {
+      "ref": "J5",
+      "pin": "1",
+      "net": "",
+      "planeClearanceMm": 0.35801304950880747
+    },
+    {
+      "ref": "J6",
+      "pin": "25",
+      "net": "",
+      "planeClearanceMm": 0.3580130212524099
+    },
+    {
+      "ref": "J6",
+      "pin": "24",
+      "net": "",
+      "planeClearanceMm": 0.35801317595517596
+    },
+    {
+      "ref": "J6",
+      "pin": "23",
+      "net": "M3_ALARM_DRV",
+      "planeClearanceMm": 0.35801317595517596
+    },
+    {
+      "ref": "J6",
+      "pin": "22",
+      "net": "",
+      "planeClearanceMm": 0.3580130663066184
+    },
+    {
+      "ref": "J6",
+      "pin": "21",
+      "net": "",
+      "planeClearanceMm": 0.3580131759551596
+    },
+    {
+      "ref": "J6",
+      "pin": "20",
+      "net": "",
+      "planeClearanceMm": 0.3580131759551596
+    },
+    {
+      "ref": "J6",
+      "pin": "19",
+      "net": "",
+      "planeClearanceMm": 0.3580131759551596
+    },
+    {
+      "ref": "J6",
+      "pin": "18",
+      "net": "",
+      "planeClearanceMm": 0.3580131759551596
+    },
+    {
+      "ref": "J6",
+      "pin": "17",
+      "net": "",
+      "planeClearanceMm": 0.3580131759551596
+    },
+    {
+      "ref": "J6",
+      "pin": "16",
+      "net": "",
+      "planeClearanceMm": 0.35801317595514326
+    },
+    {
+      "ref": "J6",
+      "pin": "15",
+      "net": "",
+      "planeClearanceMm": 0.3580131759551596
+    },
+    {
+      "ref": "J6",
+      "pin": "14",
+      "net": "M3S_N",
+      "planeClearanceMm": 0.3580131759551596
+    },
+    {
+      "ref": "J6",
+      "pin": "13",
+      "net": "",
+      "planeClearanceMm": 0.35801317595516785
+    },
+    {
+      "ref": "J6",
+      "pin": "12",
+      "net": "",
+      "planeClearanceMm": 0.35801317595517596
+    },
+    {
+      "ref": "J6",
+      "pin": "11",
+      "net": "",
+      "planeClearanceMm": 0.35801317595517596
+    },
+    {
+      "ref": "J6",
+      "pin": "9",
+      "net": "",
+      "planeClearanceMm": 0.3580131759551596
+    },
+    {
+      "ref": "J6",
+      "pin": "8",
+      "net": "",
+      "planeClearanceMm": 0.3580131759551596
+    },
+    {
+      "ref": "J6",
+      "pin": "7",
+      "net": "",
+      "planeClearanceMm": 0.3580131759551596
+    },
+    {
+      "ref": "J6",
+      "pin": "6",
+      "net": "",
+      "planeClearanceMm": 0.35801317595517596
+    },
+    {
+      "ref": "J6",
+      "pin": "5",
+      "net": "M3D_N",
+      "planeClearanceMm": 0.35801317595516785
+    },
+    {
+      "ref": "J6",
+      "pin": "4",
+      "net": "M3D_P",
+      "planeClearanceMm": 0.35801317595516785
+    },
+    {
+      "ref": "J6",
+      "pin": "3",
+      "net": "M3S_P",
+      "planeClearanceMm": 0.3580131759551515
+    },
+    {
+      "ref": "J6",
+      "pin": "2",
+      "net": "",
+      "planeClearanceMm": 0.3580131759551515
+    },
+    {
+      "ref": "J6",
+      "pin": "1",
+      "net": "",
+      "planeClearanceMm": 0.3580130495087982
+    },
+    {
+      "ref": "J7",
+      "pin": "25",
+      "net": "",
+      "planeClearanceMm": 0.35801317595518406
+    },
+    {
+      "ref": "J7",
+      "pin": "24",
+      "net": "",
+      "planeClearanceMm": 0.35801317595518406
+    },
+    {
+      "ref": "J7",
+      "pin": "23",
+      "net": "M4_ALARM_DRV",
+      "planeClearanceMm": 0.3580131759551677
+    },
+    {
+      "ref": "J7",
+      "pin": "22",
+      "net": "",
+      "planeClearanceMm": 0.35801317595518406
+    },
+    {
+      "ref": "J7",
+      "pin": "21",
+      "net": "",
+      "planeClearanceMm": 0.35801317595518406
+    },
+    {
+      "ref": "J7",
+      "pin": "20",
+      "net": "",
+      "planeClearanceMm": 0.35801317595518406
+    },
+    {
+      "ref": "J7",
+      "pin": "19",
+      "net": "",
+      "planeClearanceMm": 0.35801317595518406
+    },
+    {
+      "ref": "J7",
+      "pin": "18",
+      "net": "",
+      "planeClearanceMm": 0.35801317595518406
+    },
+    {
+      "ref": "J7",
+      "pin": "17",
+      "net": "",
+      "planeClearanceMm": 0.3580131759551677
+    },
+    {
+      "ref": "J7",
+      "pin": "16",
+      "net": "",
+      "planeClearanceMm": 0.35801317595518406
+    },
+    {
+      "ref": "J7",
+      "pin": "15",
+      "net": "",
+      "planeClearanceMm": 0.35801317595518406
+    },
+    {
+      "ref": "J7",
+      "pin": "14",
+      "net": "M4S_N",
+      "planeClearanceMm": 0.35801317595518406
+    },
+    {
+      "ref": "J7",
+      "pin": "13",
+      "net": "",
+      "planeClearanceMm": 0.3580131759551841
+    },
+    {
+      "ref": "J7",
+      "pin": "12",
+      "net": "",
+      "planeClearanceMm": 0.3580131759551841
+    },
+    {
+      "ref": "J7",
+      "pin": "11",
+      "net": "",
+      "planeClearanceMm": 0.358013175955168
+    },
+    {
+      "ref": "J7",
+      "pin": "9",
+      "net": "",
+      "planeClearanceMm": 0.3580131759551841
+    },
+    {
+      "ref": "J7",
+      "pin": "8",
+      "net": "",
+      "planeClearanceMm": 0.35801317595518406
+    },
+    {
+      "ref": "J7",
+      "pin": "7",
+      "net": "",
+      "planeClearanceMm": 0.35801317595518406
+    },
+    {
+      "ref": "J7",
+      "pin": "6",
+      "net": "",
+      "planeClearanceMm": 0.35801317595518406
+    },
+    {
+      "ref": "J7",
+      "pin": "5",
+      "net": "M4D_N",
+      "planeClearanceMm": 0.358013175955168
+    },
+    {
+      "ref": "J7",
+      "pin": "4",
+      "net": "M4D_P",
+      "planeClearanceMm": 0.35801317595518406
+    },
+    {
+      "ref": "J7",
+      "pin": "3",
+      "net": "M4S_P",
+      "planeClearanceMm": 0.35801317595518406
+    },
+    {
+      "ref": "J7",
+      "pin": "2",
+      "net": "",
+      "planeClearanceMm": 0.35801317595518406
+    },
+    {
+      "ref": "J7",
+      "pin": "1",
+      "net": "",
+      "planeClearanceMm": 0.35801304950880675
+    },
+    {
+      "ref": "J8",
+      "pin": "25",
+      "net": "",
+      "planeClearanceMm": 0.35801317595518417
+    },
+    {
+      "ref": "J8",
+      "pin": "24",
+      "net": "",
+      "planeClearanceMm": 0.35801317595518417
+    },
+    {
+      "ref": "J8",
+      "pin": "23",
+      "net": "M5_ALARM_DRV",
+      "planeClearanceMm": 0.35801317595518417
+    },
+    {
+      "ref": "J8",
+      "pin": "22",
+      "net": "",
+      "planeClearanceMm": 0.3580131759551678
+    },
+    {
+      "ref": "J8",
+      "pin": "21",
+      "net": "",
+      "planeClearanceMm": 0.35801317595518417
+    },
+    {
+      "ref": "J8",
+      "pin": "20",
+      "net": "",
+      "planeClearanceMm": 0.35801317595518417
+    },
+    {
+      "ref": "J8",
+      "pin": "19",
+      "net": "",
+      "planeClearanceMm": 0.35801317595518417
+    },
+    {
+      "ref": "J8",
+      "pin": "18",
+      "net": "",
+      "planeClearanceMm": 0.35801317595518417
+    },
+    {
+      "ref": "J8",
+      "pin": "17",
+      "net": "",
+      "planeClearanceMm": 0.35801317595517596
+    },
+    {
+      "ref": "J8",
+      "pin": "16",
+      "net": "",
+      "planeClearanceMm": 0.3580131759551596
+    },
+    {
+      "ref": "J8",
+      "pin": "15",
+      "net": "",
+      "planeClearanceMm": 0.35801317595517596
+    },
+    {
+      "ref": "J8",
+      "pin": "14",
+      "net": "M5S_N",
+      "planeClearanceMm": 0.35801317595517596
+    },
+    {
+      "ref": "J8",
+      "pin": "13",
+      "net": "",
+      "planeClearanceMm": 0.35801317595517596
+    },
+    {
+      "ref": "J8",
+      "pin": "12",
+      "net": "",
+      "planeClearanceMm": 0.35801317595518417
+    },
+    {
+      "ref": "J8",
+      "pin": "11",
+      "net": "",
+      "planeClearanceMm": 0.35801317595518417
+    },
+    {
+      "ref": "J8",
+      "pin": "9",
+      "net": "",
+      "planeClearanceMm": 0.3580131759551678
+    },
+    {
+      "ref": "J8",
+      "pin": "8",
+      "net": "",
+      "planeClearanceMm": 0.35801317595518417
+    },
+    {
+      "ref": "J8",
+      "pin": "7",
+      "net": "",
+      "planeClearanceMm": 0.35801317595518417
+    },
+    {
+      "ref": "J8",
+      "pin": "6",
+      "net": "",
+      "planeClearanceMm": 0.35801317595518417
+    },
+    {
+      "ref": "J8",
+      "pin": "5",
+      "net": "M5D_N",
+      "planeClearanceMm": 0.35801317595518417
+    },
+    {
+      "ref": "J8",
+      "pin": "4",
+      "net": "M5D_P",
+      "planeClearanceMm": 0.3580131759551678
+    },
+    {
+      "ref": "J8",
+      "pin": "3",
+      "net": "M5S_P",
+      "planeClearanceMm": 0.3580131759551678
+    },
+    {
+      "ref": "J8",
+      "pin": "2",
+      "net": "",
+      "planeClearanceMm": 0.35801317595518417
+    },
+    {
+      "ref": "J8",
+      "pin": "1",
+      "net": "",
+      "planeClearanceMm": 0.3580130495087982
+    }
+  ],
+  "unnettedCopper": [],
+  "limits": [
+    "Connectivity and changed-region classification only; CAM must independently confirm plane and12flangeNPTHdiameters.",
+    "Four J11 top polygon pad hole fields ignored as inactive per prior exact drill/CAM evidence.",
+    "No impedance/current/thermal qualification or order authorization."
+  ]
+}

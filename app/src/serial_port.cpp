@@ -1,4 +1,5 @@
 #include "serial_port.h"
+#include "automation.h"
 
 #include <cstdio>
 #include <cstring>
@@ -40,6 +41,7 @@ SerialPort::~SerialPort() {
 
 std::vector<ComPortInfo> SerialPort::enumerate() {
     std::vector<ComPortInfo> ports;
+    if (IsDocumentationMode()) return ports;
 
 #ifdef _WIN32
     HDEVINFO devInfo = SetupDiGetClassDevs(
@@ -102,6 +104,7 @@ std::vector<ComPortInfo> SerialPort::enumerate() {
 // ── Open / Close ─────────────────────────────────────────────────────
 
 bool SerialPort::open(const char* port, int baud) {
+    if (IsDocumentationMode()) return false;  // before enumeration/CreateFile or device reset
     if (m_open.load()) close();
 
     snprintf(m_port_name, sizeof(m_port_name), "%s", port);

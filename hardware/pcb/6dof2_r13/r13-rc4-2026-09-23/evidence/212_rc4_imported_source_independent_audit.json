@@ -1,0 +1,84 @@
+{
+  "status": "PASS_RC4_IMPORT_PCB_SCH_NETLIST_DRC",
+  "isolatedProject": "516954dc615b4628b5279693106fad2d",
+  "inputHashes": {
+    "212_capture_final_import.json": "9d3f0749b2efd32df34e90df0b35edcba9e00e5e602bd9e1a8cef208bad08c3b",
+    "202_final_pcb_capture.json": "4bcbd7b23f445253f7220278fb7b193aefef3ee5d6346630237d9ce98210919f",
+    "189_schematic_rc3_capture.json": "957dde997969d646cb0445e567bfcc4813728e97eac44e4f4219773319581589",
+    "204_rc4_archive_independent_audit.json": "01dc529047afe9a03e85d28fce7f638c4a063a6c5028585f34c4c647bc039434"
+  },
+  "checks": [
+    {
+      "type": "PCB",
+      "source": "202_final_pcb_capture.json",
+      "passed": true,
+      "added": [],
+      "removed": [],
+      "rawChanged": [],
+      "unexplainedChanged": [],
+      "everyActivePayloadExactlyEqualWithoutNormalization": true,
+      "nativeCounts": {
+        "CANVAS": 1,
+        "LAYER": 60,
+        "LAYER_PHYS": 11,
+        "ACTIVE_LAYER": 1,
+        "NET": 125,
+        "RULE_TEMPLATE": 1,
+        "RULE": 16,
+        "RULE_SELECTOR": 125,
+        "PRIMITIVE": 37,
+        "SILK_OPTS": 2,
+        "PREFERENCE": 1,
+        "PANELIZE": 1,
+        "VIA": 398,
+        "PAD": 6,
+        "FILL": 689,
+        "REGION": 8,
+        "POLY": 968,
+        "POUR": 1,
+        "STRING": 18,
+        "COMPONENT": 144,
+        "ATTR": 434,
+        "PAD_NET": 648,
+        "POURED": 1,
+        "BOARD": 1
+      },
+      "layerStackAndRulePayloadsExact": {
+        "LAYER_PHYS": true,
+        "RULE_SELECTOR": true
+      }
+    },
+    {
+      "type": "SCH_PAGE",
+      "source": "189_schematic_rc3_capture.json",
+      "passed": true,
+      "added": [],
+      "removed": [],
+      "rawChanged": [],
+      "unexplainedChanged": [],
+      "everyActivePayloadExactlyEqualWithoutNormalization": true,
+      "nativeCounts": {
+        "CANVAS": 1,
+        "COMPONENT": 144,
+        "ATTR": 5341,
+        "WIRE": 496,
+        "LINE": 496,
+        "RECT": 9,
+        "TEXT": 16
+      },
+      "layerStackAndRulePayloadsExact": {
+        "LAYER_PHYS": true,
+        "RULE_SELECTOR": true
+      }
+    },
+    {
+      "type": "RESOLVED_SCHEMATIC_NETLIST",
+      "passed": true,
+      "wholeNetlistExactlyEqual": true,
+      "components": 144,
+      "logicalPins": 640
+    }
+  ],
+  "nativeDRC": [],
+  "scope": "Independently captured actual portable import. PCB and schematic active records, resolved netlist and native DRC verified. Model visual fidelity, bench electrical performance and actual vendor assembly preview remain separate gates."
+}

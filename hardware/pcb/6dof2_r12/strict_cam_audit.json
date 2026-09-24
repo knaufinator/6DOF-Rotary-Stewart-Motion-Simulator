@@ -1,0 +1,319 @@
+{
+  "tool": "audit_r8_gerber.py (dependency-free)",
+  "zip": "G:\\My Drive\\projects\\6dof\\pcb\\manufacturing_release\\2026-09-05-r12\\6DOF_2_Gerber.zip",
+  "gerberCount": 11,
+  "nonGerberMembers": [
+    "FlyingProbeTesting.json",
+    "PCB\u4e0b\u5355\u5fc5\u8bfb.txt"
+  ],
+  "drillCount": 3,
+  "allGerbersMetric36": true,
+  "anyOverrange": false,
+  "outline": {
+    "file": "Gerber_BoardOutlineLayer.GKO",
+    "widthMm": 170.000001,
+    "heightMm": 199.9996,
+    "extrema": {
+      "minX": -20.000001,
+      "maxX": 150.0,
+      "minY": 0.0,
+      "maxY": 199.9996
+    }
+  },
+  "drills": [
+    {
+      "file": "Drill_PTH_Through.DRL",
+      "formatLine": "METRIC,LZ,000.000000",
+      "metric": true,
+      "tools": {
+        "T01": "0.304800",
+        "T02": "0.799998",
+        "T03": "1.039978",
+        "T04": "1.100023",
+        "T05": "1.599997"
+      },
+      "hitCount": 501
+    },
+    {
+      "file": "Drill_NPTH_Through.DRL",
+      "formatLine": "METRIC,LZ,000.000000",
+      "metric": true,
+      "tools": {
+        "T01": "0.599999",
+        "T02": "2.799999",
+        "T03": "3.049981",
+        "T04": "4.500001"
+      },
+      "hitCount": 22
+    },
+    {
+      "file": "Drill_PTH_Through_Via.DRL",
+      "formatLine": "METRIC,LZ,000.000000",
+      "metric": true,
+      "tools": {
+        "T01": "0.304800"
+      },
+      "hitCount": 344
+    }
+  ],
+  "drillsInsideBoard": true,
+  "drillHitsOutside": [],
+  "gerbers": [
+    {
+      "file": "Gerber_TopLayer.GTL",
+      "formatStatement": "%FSLAX36Y36*%",
+      "declaredIntegerDigits": {
+        "x": 3,
+        "y": 3
+      },
+      "fractionalDigits": {
+        "x": 6,
+        "y": 6
+      },
+      "coordinateExtremaMm": {
+        "minX": -10.0,
+        "maxX": 147.1608,
+        "minY": 2.525913,
+        "maxY": 190.000001
+      },
+      "requiredIntegerDigits": {
+        "x": 3,
+        "y": 3
+      },
+      "overrange": false,
+      "coordinateCount": 6390
+    },
+    {
+      "file": "Gerber_BottomLayer.GBL",
+      "formatStatement": "%FSLAX36Y36*%",
+      "declaredIntegerDigits": {
+        "x": 3,
+        "y": 3
+      },
+      "fractionalDigits": {
+        "x": 6,
+        "y": 6
+      },
+      "coordinateExtremaMm": {
+        "minX": -10.0,
+        "maxX": 147.1608,
+        "minY": 2.525913,
+        "maxY": 190.000001
+      },
+      "requiredIntegerDigits": {
+        "x": 3,
+        "y": 3
+      },
+      "overrange": false,
+      "coordinateCount": 2922
+    },
+    {
+      "file": "Gerber_TopSilkscreenLayer.GTO",
+      "formatStatement": "%FSLAX36Y36*%",
+      "declaredIntegerDigits": {
+        "x": 3,
+        "y": 3
+      },
+      "fractionalDigits": {
+        "x": 6,
+        "y": 6
+      },
+      "coordinateExtremaMm": {
+        "minX": 0.126111,
+        "maxX": 151.591305,
+        "minY": -1.29999,
+        "maxY": 191.599109
+      },
+      "requiredIntegerDigits": {
+        "x": 3,
+        "y": 3
+      },
+      "overrange": false,
+      "coordinateCount": 14510
+    },
+    {
+      "file": "Gerber_BottomSilkscreenLayer.GBO",
+      "formatStatement": "%FSLAX36Y36*%",
+      "declaredIntegerDigits": {
+        "x": 3,
+        "y": 3
+      },
+      "fractionalDigits": {
+        "x": 6,
+        "y": 6
+      },
+      "empty": true
+    },
+    {
+      "file": "Gerber_TopSolderMaskLayer.GTS",
+      "formatStatement": "%FSLAX36Y36*%",
+      "declaredIntegerDigits": {
+        "x": 3,
+        "y": 3
+      },
+      "fractionalDigits": {
+        "x": 6,
+        "y": 6
+      },
+      "coordinateExtremaMm": {
+        "minX": -10.0,
+        "maxX": 146.782579,
+        "minY": 2.525913,
+        "maxY": 190.000001
+      },
+      "requiredIntegerDigits": {
+        "x": 3,
+        "y": 3
+      },
+      "overrange": false,
+      "coordinateCount": 1260
+    },
+    {
+      "file": "Gerber_BottomSolderMaskLayer.GBS",
+      "formatStatement": "%FSLAX36Y36*%",
+      "declaredIntegerDigits": {
+        "x": 3,
+        "y": 3
+      },
+      "fractionalDigits": {
+        "x": 6,
+        "y": 6
+      },
+      "coordinateExtremaMm": {
+        "minX": -10.0,
+        "maxX": 139.999999,
+        "minY": 2.525913,
+        "maxY": 190.000001
+      },
+      "requiredIntegerDigits": {
+        "x": 3,
+        "y": 3
+      },
+      "overrange": false,
+      "coordinateCount": 334
+    },
+    {
+      "file": "Gerber_TopPasteMaskLayer.GTP",
+      "formatStatement": "%FSLAX36Y36*%",
+      "declaredIntegerDigits": {
+        "x": 3,
+        "y": 3
+      },
+      "fractionalDigits": {
+        "x": 6,
+        "y": 6
+      },
+      "coordinateExtremaMm": {
+        "minX": 23.695025,
+        "maxX": 147.524996,
+        "minY": 1.626017,
+        "maxY": 172.161606
+      },
+      "requiredIntegerDigits": {
+        "x": 3,
+        "y": 3
+      },
+      "overrange": false,
+      "coordinateCount": 5118
+    },
+    {
+      "file": "Gerber_BoardOutlineLayer.GKO",
+      "formatStatement": "%FSLAX36Y36*%",
+      "declaredIntegerDigits": {
+        "x": 3,
+        "y": 3
+      },
+      "fractionalDigits": {
+        "x": 6,
+        "y": 6
+      },
+      "coordinateExtremaMm": {
+        "minX": -20.000001,
+        "maxX": 150.0,
+        "minY": 0.0,
+        "maxY": 199.9996
+      },
+      "requiredIntegerDigits": {
+        "x": 3,
+        "y": 3
+      },
+      "overrange": false,
+      "coordinateCount": 10
+    },
+    {
+      "file": "Gerber_DocumentLayer.GDL",
+      "formatStatement": "%FSLAX36Y36*%",
+      "declaredIntegerDigits": {
+        "x": 3,
+        "y": 3
+      },
+      "fractionalDigits": {
+        "x": 6,
+        "y": 6
+      },
+      "coordinateExtremaMm": {
+        "minX": 5.676011,
+        "maxX": 149.36695,
+        "minY": -0.99999,
+        "maxY": 188.518292
+      },
+      "requiredIntegerDigits": {
+        "x": 3,
+        "y": 3
+      },
+      "overrange": false,
+      "coordinateCount": 916
+    },
+    {
+      "file": "Gerber_InnerLayer1.G1",
+      "formatStatement": "%FSLAX36Y36*%",
+      "declaredIntegerDigits": {
+        "x": 3,
+        "y": 3
+      },
+      "fractionalDigits": {
+        "x": 6,
+        "y": 6
+      },
+      "coordinateExtremaMm": {
+        "minX": -19.390401,
+        "maxX": 149.3904,
+        "minY": 0.6096,
+        "maxY": 199.39
+      },
+      "requiredIntegerDigits": {
+        "x": 3,
+        "y": 3
+      },
+      "overrange": false,
+      "coordinateCount": 32326
+    },
+    {
+      "file": "Gerber_InnerLayer2.G2",
+      "formatStatement": "%FSLAX36Y36*%",
+      "declaredIntegerDigits": {
+        "x": 3,
+        "y": 3
+      },
+      "fractionalDigits": {
+        "x": 6,
+        "y": 6
+      },
+      "coordinateExtremaMm": {
+        "minX": -10.0,
+        "maxX": 147.1608,
+        "minY": 2.525913,
+        "maxY": 190.000001
+      },
+      "requiredIntegerDigits": {
+        "x": 3,
+        "y": 3
+      },
+      "overrange": false,
+      "coordinateCount": 1190
+    }
+  ],
+  "issues": [],
+  "ok": true,
+  "humanJlcCamReview": "PENDING"
+}

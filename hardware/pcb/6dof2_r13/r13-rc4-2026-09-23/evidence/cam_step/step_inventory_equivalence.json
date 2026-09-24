@@ -1,0 +1,829 @@
+{
+  "status": "PASS_ACTUAL_STEP_BODY_INVENTORY_EQUIVALENCE",
+  "beforeStep": "..\\..\\manufacturing_release\\2026-09-23-r13-rc3\\6DOF2_r13_assembly.step",
+  "afterStep": "..\\..\\manufacturing_release\\2026-09-23-r13-rc4\\6DOF2_r13_assembly.step",
+  "beforeSha256": "c8860e23dbc7aa73692731329664df98f6d489644dbb8040c2c28dc080a7f698",
+  "afterSha256": "456de7a4919cc36c6f6c2673de218e552bf4b9c5732ff15f9c2519bbec40a715",
+  "sourceCapture": "202_final_pcb_capture.json",
+  "sourceCaptureSha256": "4bcbd7b23f445253f7220278fb7b193aefef3ee5d6346630237d9ce98210919f",
+  "checks": [
+    {
+      "name": "actual_step_inputs_match_independent_inventories",
+      "pass": true
+    },
+    {
+      "name": "all_144_components_preserved",
+      "pass": true
+    },
+    {
+      "name": "actual_body_inventory_C1",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_C10",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_C11",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_C12",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_C13",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_C14",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_C15",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_C16",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_C17",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_C18",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_C19",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_C2",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_C20",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_C21",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_C22",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_C23",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_C24",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_C25",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_C26",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_C27",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_C28",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_C29",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_C3",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_C30",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_C31",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_C32",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_C33",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_C34",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_C35",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_C36",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_C37",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_C38",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_C39",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_C4",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_C40",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_C41",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_C42",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_C5",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_C6",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_C7",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_C8",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_C9",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_D1",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_D2",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_D3",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_D4",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_D5",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_D6",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_D7",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_D8",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_F1",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_J1",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_J10",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_J11",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_J2",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_J3",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_J4",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_J5",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_J6",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_J7",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_J8",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_J9",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_L1",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_L2",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_R1",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_R10",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_R11",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_R12",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_R13",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_R14",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_R15",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_R16",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_R17",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_R18",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_R19",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_R2",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_R20",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_R21",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_R22",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_R23",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_R24",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_R25",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_R3",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_R30",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_R31",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_R32",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_R33",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_R34",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_R35",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_R36",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_R37",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_R38",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_R39",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_R4",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_R40",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_R41",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_R42",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_R43",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_R44",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_R45",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_R46",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_R47",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_R48",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_R49",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_R5",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_R50",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_R51",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_R52",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_R53",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_R54",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_R55",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_R56",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_R57",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_R58",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_R59",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_R6",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_R60",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_R61",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_R62",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_R63",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_R64",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_R65",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_R66",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_R67",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_R68",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_R69",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_R7",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_R70",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_SW1",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_SW2",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_U10",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_U11",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_U12",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_U13",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_U14",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_U2",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_U3",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_U4",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_U5",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_U6",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_U7",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_U8",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_U9",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_body_inventory_Y1",
+      "pass": true,
+      "differentFields": []
+    },
+    {
+      "name": "actual_board_body_preserved",
+      "pass": true,
+      "before": {
+        "path": [
+          1,
+          1
+        ],
+        "name": "=>[0:1:1:2]",
+        "referredName": "Board~Si5J",
+        "assembly": false,
+        "null": false,
+        "bboxMm": [
+          -19.987340714680002,
+          0.012699925400050001,
+          -1e-07,
+          149.98759979519002,
+          199.9873000746,
+          1.670050900102
+        ],
+        "solids": 1,
+        "faces": 1176,
+        "volumeMm3": 56138.30839730925,
+        "validBRep": true,
+        "locationMatrix": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ]
+        ]
+      },
+      "after": {
+        "path": [
+          1,
+          1
+        ],
+        "name": "=>[0:1:1:2]",
+        "referredName": "Board~RH98",
+        "assembly": false,
+        "null": false,
+        "bboxMm": [
+          -19.987340714680002,
+          0.012699925400050001,
+          -1e-07,
+          149.98759979519002,
+          199.9873000746,
+          1.670050900102
+        ],
+        "solids": 1,
+        "faces": 1176,
+        "volumeMm3": 56138.30839730925,
+        "validBRep": true,
+        "locationMatrix": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ]
+        ]
+      }
+    }
+  ],
+  "scope": "Every actual component and PCB geometric inventory field matches, including bounds/volume/face-count/solid-count/BRep validity/transform. This is not a full topological isomorphism proof; it accompanies exact native PCB geometry/persistence and fresh model-binding evidence. Export-generated names and object ordering are not geometry.",
+  "orderAuthorization": false
+}

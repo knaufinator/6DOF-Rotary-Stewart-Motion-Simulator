@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-12 -212 200 232" width="1000" height="1160" font-family="Arial, Helvetica, sans-serif">
+<style>.lid{fill:#e9e9e9;stroke:#222;stroke-width:0.4}.open{fill:#fff;stroke:#c0392b;stroke-width:0.35}.vent{fill:#fff;stroke:#c0392b;stroke-width:0.25}.wall{fill:none;stroke:#2c6fb0;stroke-width:0.35;stroke-dasharray:1.2,0.8}.under{fill:none;stroke:#888;stroke-width:0.25;stroke-dasharray:0.8,0.6}.lbl{fill:#111;font-weight:700}.grp{fill:none;stroke:#2e8b57;stroke-width:0.3;stroke-dasharray:2,1}.note{fill:#333;font-size:2.6px;font-weight:400}.pillar{fill:#d5d5d5;stroke:#222;stroke-width:0.3}</style>
+<rect class="lid" x="-3.50" y="-203.50" width="177.00" height="207.00" rx="1"/>
+<rect class="lid" x="173.10" y="-88.50" width="4.40" height="37.00"/>
+<circle class="pillar" cx="-3.50" cy="3.50" r="4.5"/><circle class="open" cx="-3.50" cy="3.50" r="1.7"/>
+<circle class="pillar" cx="173.50" cy="3.50" r="4.5"/><circle class="open" cx="173.50" cy="3.50" r="1.7"/>
+<circle class="pillar" cx="-3.50" cy="-203.50" r="4.5"/><circle class="open" cx="-3.50" cy="-203.50" r="1.7"/>
+<circle class="pillar" cx="173.50" cy="-203.50" r="4.5"/><circle class="open" cx="173.50" cy="-203.50" r="1.7"/>
+<rect class="open" x="17.43" y="-63.50" width="18.00" height="57.00"/>
+<text class="note" x="26.43" y="-60.50" text-anchor="middle">MOTOR 0 (J3)</text>
+<rect class="open" x="73.41" y="-63.50" width="18.00" height="57.00"/>
+<text class="note" x="82.41" y="-60.50" text-anchor="middle">MOTOR 1 (J4)</text>
+<rect class="open" x="17.43" y="-128.50" width="18.00" height="57.00"/>
+<text class="note" x="26.43" y="-125.50" text-anchor="middle">MOTOR 2 (J5)</text>
+<rect class="open" x="73.41" y="-128.50" width="18.00" height="57.00"/>
+<text class="note" x="82.41" y="-125.50" text-anchor="middle">MOTOR 3 (J6)</text>
+<rect class="open" x="17.43" y="-193.50" width="18.00" height="57.00"/>
+<text class="note" x="26.43" y="-190.50" text-anchor="middle">MOTOR 4 (J7)</text>
+<rect class="open" x="73.41" y="-193.50" width="18.00" height="57.00"/>
+<text class="note" x="82.41" y="-190.50" text-anchor="middle">MOTOR 5 (J8)</text>
+<rect class="open" x="124.42" y="-10.50" width="31.59" height="8.50"/>
+<circle class="open" cx="141.00" cy="-14.00" r="1.50"/>
+<circle class="open" cx="148.50" cy="-14.00" r="1.50"/>
+<rect class="vent" x="120.00" y="-152.55" width="30.00" height="1.60"/>
+<rect class="vent" x="120.00" y="-156.05" width="30.00" height="1.60"/>
+<rect class="vent" x="120.00" y="-159.55" width="30.00" height="1.60"/>
+<rect class="vent" x="120.00" y="-163.05" width="30.00" height="1.60"/>
+<rect class="vent" x="120.00" y="-166.55" width="30.00" height="1.60"/>
+<rect class="vent" x="120.00" y="-170.05" width="30.00" height="1.60"/>
+<rect class="vent" x="96.00" y="-80.55" width="14.00" height="1.60"/>
+<rect class="vent" x="96.00" y="-84.05" width="14.00" height="1.60"/>
+<rect class="vent" x="96.00" y="-87.55" width="14.00" height="1.60"/>
+<rect class="vent" x="96.00" y="-130.55" width="14.00" height="1.60"/>
+<rect class="vent" x="96.00" y="-134.05" width="14.00" height="1.60"/>
+<rect class="vent" x="96.00" y="-137.55" width="14.00" height="1.60"/>
+<rect class="vent" x="96.00" y="-141.05" width="14.00" height="1.60"/>
+<rect class="vent" x="96.00" y="-144.55" width="14.00" height="1.60"/>
+<rect class="wall" x="108.50" y="1.00" width="13.00" height="2.50"/>
+<rect class="wall" x="124.12" y="1.00" width="23.36" height="2.50"/>
+<rect class="wall" x="171.00" y="-45.60" width="2.50" height="17.10"/>
+<rect class="under" x="124.92" y="-9.40" width="10.88" height="10.70"/>
+<text class="note" x="130.36" y="4.10" text-anchor="middle" font-size="1.8">J9 12V</text>
+<rect class="under" x="135.80" y="-9.40" width="10.88" height="10.70"/>
+<text class="note" x="141.24" y="4.10" text-anchor="middle" font-size="1.8">J2 E-STOP</text>
+<rect class="under" x="147.19" y="-5.27" width="7.62" height="2.54"/>
+<text class="note" x="151.00" y="0.07" text-anchor="middle" font-size="1.8">J1 console</text>
+<rect class="grp" x="-1" y="-201.50" width="103" height="205"/>
+<rect class="grp" x="95" y="-95.00" width="75" height="93"/>
+<text class="lbl" transform="translate(8.50,-35.00) rotate(-90)" font-size="6.90" text-anchor="middle" dominant-baseline="middle">MOTOR 0</text>
+<text class="lbl" transform="translate(66.50,-35.00) rotate(-90)" font-size="6.90" text-anchor="middle" dominant-baseline="middle">MOTOR 1</text>
+<text class="lbl" transform="translate(8.50,-100.00) rotate(-90)" font-size="6.90" text-anchor="middle" dominant-baseline="middle">MOTOR 2</text>
+<text class="lbl" transform="translate(66.50,-100.00) rotate(-90)" font-size="6.90" text-anchor="middle" dominant-baseline="middle">MOTOR 3</text>
+<text class="lbl" transform="translate(8.50,-165.00) rotate(-90)" font-size="6.90" text-anchor="middle" dominant-baseline="middle">MOTOR 4</text>
+<text class="lbl" transform="translate(66.50,-165.00) rotate(-90)" font-size="6.90" text-anchor="middle" dominant-baseline="middle">MOTOR 5</text>
+<text class="lbl" x="105.50" y="-16.00" font-size="6.90" text-anchor="middle" dominant-baseline="middle">USB-C</text>
+<text class="lbl" x="127.00" y="0.60" font-size="4.14" text-anchor="middle" dominant-baseline="middle">+</text>
+<text class="lbl" x="133.50" y="0.60" font-size="4.14" text-anchor="middle" dominant-baseline="middle">GND</text>
+<text class="lbl" transform="translate(130.40,-32.50) rotate(-90)" font-size="5.52" text-anchor="middle" dominant-baseline="middle">12V IN</text>
+<text class="lbl" transform="translate(141.20,-32.50) rotate(-90)" font-size="5.52" text-anchor="middle" dominant-baseline="middle">E-STOP</text>
+<text class="lbl" transform="translate(155.50,-29.50) rotate(-90)" font-size="5.52" text-anchor="middle" dominant-baseline="middle">UART</text>
+<text class="lbl" x="128.50" y="-14.00" font-size="5.52" text-anchor="middle" dominant-baseline="middle">RESET</text>
+<text class="lbl" x="159.80" y="-14.00" font-size="5.52" text-anchor="middle" dominant-baseline="middle">BOOT</text>
+<text class="lbl" transform="translate(167.50,-37.00) rotate(-90)" font-size="6.90" text-anchor="middle" dominant-baseline="middle">ETHERNET</text>
+<text class="lbl" x="135.00" y="-187.00" font-size="9.66" text-anchor="middle" dominant-baseline="middle">6DOF 2</text>
+<g font-size="3" fill="#111"><text x="100" y="-203" font-weight="700">LEGEND (case mm, y up; front wall = bottom edge)</text>
+<rect class="open" x="100" y="-201.2" width="5" height="2.6"/><text x="107" y="-199.0">lid opening (through)</text>
+<rect class="vent" x="100" y="-197.2" width="5" height="2.6"/><text x="107" y="-195.0">vent slot</text>
+<rect class="wall" x="100" y="-193.2" width="5" height="2.6"/><text x="107" y="-191.0">port in the wall below (dashed blue)</text>
+<rect class="under" x="100" y="-189.2" width="5" height="2.6"/><text x="107" y="-187.0">connector under the service window (grey)</text>
+<rect class="grp" x="100" y="-185.2" width="5" height="2.6"/><text x="107" y="-183.0">label group (green)</text>
+<text x="100" y="-179.0">debossed text 0.6-0.8 deep, bold sans; cap heights 7 / 5 / 4 / 3.5 mm</text>
+<text x="100" y="-175.0">vertical labels read bottom-to-top (rotate 90 CCW)</text>
+</g></svg>

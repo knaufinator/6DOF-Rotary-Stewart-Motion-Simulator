@@ -1,0 +1,319 @@
+{
+  "status": "PASS",
+  "input_sha256": "544296c3d0c19c09b4b32294c249162ddd33f73a961985aab1646695dcd0f825",
+  "component_origins_verified": 144,
+  "component_pad_transforms_verified": 648,
+  "unmoved_components": 118,
+  "changed_refs": [
+    "U11",
+    "U12",
+    "U13",
+    "U14",
+    "C37",
+    "C38",
+    "C39",
+    "C40",
+    "C41",
+    "R61",
+    "R62",
+    "R66",
+    "R67",
+    "R68",
+    "R63",
+    "R64",
+    "R65",
+    "R69",
+    "R70",
+    "U7",
+    "D3",
+    "D8",
+    "C3",
+    "C6",
+    "C7",
+    "C42"
+  ],
+  "continuous_envelope_pairs_checked": 3393,
+  "minimum_body_or_pad_envelope_clearance_mm": 0.29992600000000635,
+  "minimum_pair": [
+    "C37",
+    "U11"
+  ],
+  "critical_local_routes_checked": 12,
+  "critical_local_route_hits": [],
+  "critical_local_route_sketches": [
+    {
+      "name": "U11.8 -> C37.1",
+      "net": "VCC3V3",
+      "layer": 1,
+      "width_mm": 0.254,
+      "points_mm": [
+        [
+          115.95,
+          63.45
+        ],
+        [
+          116,
+          62.500023999999996
+        ]
+      ],
+      "endpoint_refs": [
+        "U11",
+        "C37"
+      ],
+      "length_mm": 0.9512909126949611
+    },
+    {
+      "name": "U12.5 -> C38.1",
+      "net": "VCC3V3",
+      "layer": 1,
+      "width_mm": 0.254,
+      "points_mm": [
+        [
+          113,
+          65.3
+        ],
+        [
+          113,
+          66.3
+        ],
+        [
+          111.2,
+          66.099976
+        ]
+      ],
+      "endpoint_refs": [
+        "U12",
+        "C38"
+      ],
+      "length_mm": 2.811079678141188
+    },
+    {
+      "name": "U13.4 -> C39.1",
+      "net": "VCC3V3",
+      "layer": 1,
+      "width_mm": 0.254,
+      "points_mm": [
+        [
+          113.636143,
+          70.700001
+        ],
+        [
+          113,
+          69.500024
+        ]
+      ],
+      "endpoint_refs": [
+        "U13",
+        "C39"
+      ],
+      "length_mm": 1.3581688838204236
+    },
+    {
+      "name": "U14.5 -> C40.1",
+      "net": "VCC3V3",
+      "layer": 1,
+      "width_mm": 0.254,
+      "points_mm": [
+        [
+          118,
+          68.69999999999999
+        ],
+        [
+          118,
+          69.899976
+        ]
+      ],
+      "endpoint_refs": [
+        "U14",
+        "C40"
+      ],
+      "length_mm": 1.1999760000000066
+    },
+    {
+      "name": "U13.5 -> C41.1",
+      "net": "SUPERVISOR_CT",
+      "layer": 1,
+      "width_mm": 0.1524,
+      "points_mm": [
+        [
+          113.636143,
+          71.200127
+        ],
+        [
+          115.299976,
+          71.2
+        ]
+      ],
+      "endpoint_refs": [
+        "U13",
+        "C41"
+      ],
+      "length_mm": 1.6638330048469376
+    },
+    {
+      "name": "U7.4 -> C7.1",
+      "net": "VCC3V3",
+      "layer": 1,
+      "width_mm": 0.254,
+      "points_mm": [
+        [
+          127.03002879999998,
+          112
+        ],
+        [
+          124.79999799999999,
+          112
+        ]
+      ],
+      "endpoint_refs": [
+        "U7",
+        "C7"
+      ],
+      "length_mm": 2.2300307999999944
+    },
+    {
+      "name": "U7.3 -> C6.1",
+      "net": "LOGIC_5V",
+      "layer": 1,
+      "width_mm": 0.254,
+      "points_mm": [
+        [
+          132.9699458,
+          114.29997
+        ],
+        [
+          135.3,
+          114.29997599999999
+        ]
+      ],
+      "endpoint_refs": [
+        "U7",
+        "C6"
+      ],
+      "length_mm": 2.3300542000077313
+    },
+    {
+      "name": "U2.13 -> R69.2",
+      "net": "USB_DN_PIN",
+      "layer": 1,
+      "width_mm": 0.1524,
+      "points_mm": [
+        [
+          127.65495424000001,
+          78.7500457
+        ],
+        [
+          127.65495424,
+          80.54663599999999
+        ]
+      ],
+      "endpoint_refs": [
+        "U2",
+        "R69"
+      ],
+      "length_mm": 1.7965902999999912
+    },
+    {
+      "name": "U2.14 -> R70.2",
+      "net": "USB_DP_PIN",
+      "layer": 1,
+      "width_mm": 0.1524,
+      "points_mm": [
+        [
+          126.38495424000001,
+          78.7500457
+        ],
+        [
+          126.38495424,
+          80.54663599999999
+        ]
+      ],
+      "endpoint_refs": [
+        "U2",
+        "R70"
+      ],
+      "length_mm": 1.7965902999999912
+    },
+    {
+      "name": "U3.4 -> R63.1",
+      "net": "DRIVE_ENABLE",
+      "layer": 1,
+      "width_mm": 0.254,
+      "points_mm": [
+        [
+          33.782000000000004,
+          31.83382
+        ],
+        [
+          33.782,
+          29.836364
+        ]
+      ],
+      "endpoint_refs": [
+        "U3",
+        "R63"
+      ],
+      "length_mm": 1.9974559999999997
+    },
+    {
+      "name": "U4.4 -> R64.1",
+      "net": "DRIVE_ENABLE",
+      "layer": 1,
+      "width_mm": 0.254,
+      "points_mm": [
+        [
+          33.782000000000004,
+          97.26422
+        ],
+        [
+          33.782,
+          95.241364
+        ]
+      ],
+      "endpoint_refs": [
+        "U4",
+        "R64"
+      ],
+      "length_mm": 2.02285599999999
+    },
+    {
+      "name": "U5.4 -> R65.1",
+      "net": "DRIVE_ENABLE",
+      "layer": 1,
+      "width_mm": 0.254,
+      "points_mm": [
+        [
+          33.782000000000004,
+          162.69461999999996
+        ],
+        [
+          33.782,
+          160.77336400000002
+        ]
+      ],
+      "endpoint_refs": [
+        "U5",
+        "R65"
+      ],
+      "length_mm": 1.9212559999999428
+    }
+  ],
+  "scope": "Offline candidate: transformed pads + conservative package envelopes. Foreign pads tested continuously against 6mil copper clearance and route half-width; entire unrelated bodies excluded. Not native DRC or completed routing.",
+  "official_land_corrections_verified": 20,
+  "native_land_grid": {
+    "pad_size_mil": 0.1,
+    "pad_size_policy": "TI nominal rounded upward",
+    "centre_mil": 0.0001,
+    "centre_verification_tolerance_mm": 3e-06,
+    "dimension_verification_tolerance_mm": 1e-05
+  },
+  "layer11_outline_bounds_mm": [
+    -20.00000064,
+    0.0,
+    149.99999972,
+    199.9996
+  ],
+  "minimum_changed_envelope_to_outline_mm": 11.199999719999994,
+  "mount_to_changed_envelope_pairs_checked": 156,
+  "minimum_mount_pad_to_changed_envelope_mm": 44.65982861481191
+}

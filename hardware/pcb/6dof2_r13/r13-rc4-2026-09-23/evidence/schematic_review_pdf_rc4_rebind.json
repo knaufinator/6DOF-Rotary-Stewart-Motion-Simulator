@@ -1,0 +1,20 @@
+{
+  "status": "PASS_RC4_UNCHANGED_SCHEMATIC_PDF_REBIND",
+  "checkedAtUTC": "2026-09-23T18:35:43.5179809Z",
+  "sourceCapture": "189_schematic_rc3_capture.json",
+  "sourceCaptureSha256": "957dde997969d646cb0445e567bfcc4813728e97eac44e4f4219773319581589",
+  "nativeSchematicSourceSha256": "8f77a89e401a212a5dfa327bf64e8802e6e39c0c91044b6fa49c66b74c3ae1cf",
+  "sourceUnchangedSinceNativeCaptures": true,
+  "pdf": "G:\\My Drive\\projects\\6dof\\pcb\\manufacturing_release\\2026-09-23-r13-rc4\\6DOF2_r13_Schematic_Review.pdf",
+  "pdfSha256": "b754d77d18a8bd01ededc7dbf5f4a227e08761e19f6e6f629f7f9c435dbf1ee8",
+  "byteIdenticalToInspectedRC3PDF": true,
+  "pageCount": 30,
+  "nativeImageCount": 29,
+  "creationAudit": "schematic_review_pdf_rc3_final_audit.json",
+  "creationAuditSha256": "b7de9d93011b40bf2f8d08b161d6371a837ad03ac3bfc55f39b02eecc14b1e4f",
+  "archiveAudit": "204_rc4_archive_independent_audit.json",
+  "archiveAuditSha256": "01dc529047afe9a03e85d28fce7f638c4a063a6c5028585f34c4c647bc039434",
+  "allPagesPreviouslyRenderedAndVisuallyReviewed": true,
+  "noPDFContentChanged": true,
+  "interpretation": "Only PCB BOARD display-cache geometry changed for RC4; SCH189 remains the exact native capture source. The r13 PDF has no RC3 visible label and is copied byte-for-byte, retaining all capture and visual-review evidence. This does not claim a native vector export or functional validation."
+}

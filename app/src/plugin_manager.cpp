@@ -1,4 +1,5 @@
 #include "plugin_manager.h"
+#include "automation.h"
 #include <cstring>
 #include <cstdio>
 #include <filesystem>
@@ -64,6 +65,7 @@ PluginManager::~PluginManager() {
 }
 
 void PluginManager::scanDirectory(const std::string& dir) {
+    if (IsDocumentationMode()) return;  // no external DLL loading in isolated captures
     std::error_code ec;
     if (!fs::is_directory(dir, ec)) {
         // Create the directory if it doesn't exist
@@ -97,6 +99,7 @@ void PluginManager::scanDirectory(const std::string& dir) {
 }
 
 bool PluginManager::loadPlugin(const std::string& path) {
+    if (IsDocumentationMode()) return false;
     PluginInstance p = {};
     p.filepath = path;
     p.filename = fs::path(path).filename().string();
@@ -204,6 +207,7 @@ void PluginManager::unloadAll() {
 }
 
 bool PluginManager::activatePlugin(int index, float sample_rate) {
+    if (IsDocumentationMode()) return false;
     if (index < 0 || index >= (int)m_plugins.size()) return false;
 
     // Deactivate current

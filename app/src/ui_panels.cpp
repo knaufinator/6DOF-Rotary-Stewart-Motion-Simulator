@@ -1,4 +1,5 @@
 #include "ui_panels.h"
+#include "automation.h"
 #include "serial_port.h"
 #include "udp_transport.h"
 #include "platform_viz.h"
@@ -191,6 +192,7 @@ static char s_pending_ini_load[512] = "";
 static bool s_pending_first_frame = false;
 
 static void EnsureWorkspacesDir() {
+    if (IsDocumentationMode()) return;
     // Migrate old "layouts" directory if present
     std::error_code ec;
     if (fs::exists("layouts") && !fs::exists(WORKSPACES_DIR)) {
@@ -201,6 +203,7 @@ static void EnsureWorkspacesDir() {
 
 static std::vector<std::string> EnumerateWorkspaces() {
     std::vector<std::string> names;
+    if (IsDocumentationMode()) return names;
     EnsureWorkspacesDir();
     std::error_code ec;
     for (auto& entry : fs::directory_iterator(WORKSPACES_DIR, ec)) {
@@ -213,6 +216,10 @@ static std::vector<std::string> EnumerateWorkspaces() {
 }
 
 static bool SaveWorkspace(const char* name) {
+    if (IsDocumentationMode()) {
+        g_app.log(-1, "workspace", "Workspace save blocked in documentation mode");
+        return false;
+    }
     EnsureWorkspacesDir();
     // Flush current ImGui window layout to disk
     ImGui::SaveIniSettingsToDisk(ImGui::GetIO().IniFilename);
@@ -231,6 +238,10 @@ static bool SaveWorkspace(const char* name) {
 }
 
 static bool LoadWorkspace(const char* name) {
+    if (IsDocumentationMode()) {
+        g_app.log(-1, "workspace", "Workspace load blocked in documentation mode");
+        return false;
+    }
     fs::path ini_src = fs::path(WORKSPACES_DIR) / (std::string(name) + ".ini");
     if (!fs::exists(ini_src)) return false;
 
@@ -254,6 +265,10 @@ static bool LoadWorkspace(const char* name) {
 }
 
 static bool DeleteWorkspace(const char* name) {
+    if (IsDocumentationMode()) {
+        g_app.log(-1, "workspace", "Workspace deletion blocked in documentation mode");
+        return false;
+    }
     std::error_code ec;
     fs::remove(fs::path(WORKSPACES_DIR) / (std::string(name) + ".json"), ec);
     return fs::remove(fs::path(WORKSPACES_DIR) / (std::string(name) + ".ini"), ec);
@@ -293,6 +308,279 @@ struct DynStaging {
 };
 static std::map<int, DynStaging> s_dyn_staging;
 
+// Presentation-only automation. Keep this separate from pipeline/transport
+// state: selecting a tab or camera must never imply starting motion.
+static const char* UI_LAYOUTS[] = {"overview", "entity", "geometry", "dynamics", "data", "console", "comparison"};
+static const char* UI_ENTITY_TABS[] = {"Overview", "Dynamics", "Settings", "Platform", "Test Harness", "I/O"};
+static const char* UI_PLATFORM_TABS[] = {"Geometry", "Drive Train", "Actuator Layout", "Measure"};
+static const char* UI_DATA_TABS[] = {"Recording", "Snapshot", "Time-Series", "Spectrogram"};
+static const char* UI_PANEL_NAMES[] = {"input", "console", "data", "dynamics", "harness", "entities"};
+static const char* UI_MEASURE_STEPS[] = {"Base Radius (RD)", "Platform Radius (PD)", "Servo Arm Length (L1)", "Connecting Rod Length (L2)", "Home Height", "Base Pair Angle (Theta R)", "Platform Pair Angle (Theta P)"};
+static std::map<int, int> s_ui_measure_steps;
+static std::map<int, std::string> s_ui_entity_tabs, s_ui_platform_tabs;
+static std::map<int, std::string> s_ui_pending_entity_tabs, s_ui_pending_platform_tabs;
+static std::string s_ui_data_tab = "Recording", s_ui_pending_data_tab;
+static std::string s_ui_layout = "custom", s_ui_pending_layout;
+static std::map<std::string, float> s_ui_pending_scroll;
+static std::map<std::string, std::string> s_ui_scroll_windows;
+static int s_ui_revision = 0, s_ui_rendered_revision = 0, s_ui_settle_frames = 0;
+static int s_ui_active_entity = -1;
+
+template<size_t N> static bool UINameKnown(const char* value, const char* const (&names)[N]) {
+    for (const char* name : names) if (!strcmp(value, name)) return true;
+    return false;
+}
+
+static std::string UIEntityWindowName(const Entity& e) {
+    char title[128];
+    snprintf(title, sizeof(title), "%s [%s]###entity_%d", e.name,
+             e.type == EntityType::SIL ? "SIL" : "HIL", e.id);
+    return title;
+}
+
+// SetSelected is consumed only by the matching real tab. User clicks remain
+// authoritative on subsequent frames and are reflected in UIAutomationState.
+static bool UIBeginTab(const char* label, std::string& current, std::string& pending) {
+    bool requested = pending == label;
+    bool visible = ImGui::BeginTabItem(label, nullptr, requested ? ImGuiTabItemFlags_SetSelected : 0);
+    if (requested && visible) pending.clear();
+    if (visible) current = label;
+    return visible;
+}
+
+static void UIApplyScroll(const char* panel) {
+    s_ui_scroll_windows[panel] = ImGui::GetCurrentWindow()->Name;
+    auto it = s_ui_pending_scroll.find(panel);
+    if (it != s_ui_pending_scroll.end()) {
+        ImGui::SetScrollY(it->second);
+        s_ui_pending_scroll.erase(it);
+    }
+}
+
+cJSON* UIAutomationState() {
+    cJSON* r = cJSON_CreateObject();
+    cJSON_AddBoolToObject(r, "documentation_mode", IsDocumentationMode());
+    cJSON_AddNumberToObject(r, "frame", g_app.frame_count);
+    cJSON_AddNumberToObject(r, "revision", s_ui_revision);
+    cJSON_AddNumberToObject(r, "rendered_revision", s_ui_rendered_revision);
+    bool tabs_pending = !s_ui_pending_data_tab.empty();
+    for (const auto& kv : s_ui_pending_entity_tabs) tabs_pending |= !kv.second.empty();
+    for (const auto& kv : s_ui_pending_platform_tabs) tabs_pending |= !kv.second.empty();
+    cJSON_AddBoolToObject(r, "pending", s_ui_settle_frames > 0 || !s_ui_pending_layout.empty() || tabs_pending || !s_ui_pending_scroll.empty());
+    cJSON_AddStringToObject(r, "layout", s_ui_layout.c_str());
+    cJSON_AddNumberToObject(r, "entity", s_ui_active_entity);
+    cJSON_AddNumberToObject(r, "dynamics_entity", s_selected_dynamics_id);
+    cJSON_AddStringToObject(r, "data_tab", s_ui_data_tab.c_str());
+    cJSON_AddBoolToObject(r, "input_expanded", s_input_strip_expanded);
+    cJSON_AddNumberToObject(r, "input_height", s_input_strip_user_h);
+    cJSON* panels = cJSON_AddObjectToObject(r, "panels");
+    cJSON_AddBoolToObject(panels, "input", s_show_input);
+    cJSON_AddBoolToObject(panels, "console", s_show_console);
+    cJSON_AddBoolToObject(panels, "data", s_show_data_streams);
+    cJSON_AddBoolToObject(panels, "dynamics", s_show_dynamics);
+    cJSON_AddBoolToObject(panels, "harness", GetTestHarnessState().show_panel);
+    cJSON* ents = cJSON_AddArrayToObject(r, "entities");
+    for (const auto& e : g_app.entities) {
+        cJSON* ej = cJSON_CreateObject();
+        cJSON_AddNumberToObject(ej, "id", e.id);
+        cJSON_AddStringToObject(ej, "name", e.name);
+        cJSON_AddBoolToObject(ej, "visible", e.show_card);
+        auto tab = s_ui_entity_tabs.find(e.id), platform = s_ui_platform_tabs.find(e.id);
+        cJSON_AddStringToObject(ej, "tab", tab == s_ui_entity_tabs.end() ? "Overview" : tab->second.c_str());
+        cJSON_AddStringToObject(ej, "platform_tab", platform == s_ui_platform_tabs.end() ? "Geometry" : platform->second.c_str());
+        auto step = s_ui_measure_steps.find(e.id);
+        cJSON_AddNumberToObject(ej, "measure_step", step == s_ui_measure_steps.end() ? 0 : step->second);
+        cJSON* cam = cJSON_AddObjectToObject(ej, "camera");
+        cJSON_AddNumberToObject(cam, "azimuth", e.viz_cam.azimuth);
+        cJSON_AddNumberToObject(cam, "elevation", e.viz_cam.elevation);
+        cJSON_AddNumberToObject(cam, "distance", e.viz_cam.distance);
+        cJSON_AddNumberToObject(cam, "split", e.viz_split_ratio);
+        cJSON_AddItemToArray(ents, ej);
+    }
+    cJSON* supported = cJSON_AddObjectToObject(r, "supported");
+    auto names = [&](const char* key, const char* const* values, int n) {
+        cJSON* arr = cJSON_AddArrayToObject(supported, key);
+        for (int i = 0; i < n; ++i) cJSON_AddItemToArray(arr, cJSON_CreateString(values[i]));
+    };
+    names("layouts", UI_LAYOUTS, 7); names("entity_tabs", UI_ENTITY_TABS, 6);
+    names("platform_tabs", UI_PLATFORM_TABS, 4); names("data_tabs", UI_DATA_TABS, 4);
+    names("panels", UI_PANEL_NAMES, 6);
+    names("measure_steps", UI_MEASURE_STEPS, 7);
+    cJSON* actions = cJSON_AddArrayToObject(supported, "actions");
+    cJSON_AddItemToArray(actions, cJSON_CreateString("dynamics_reload"));
+    cJSON_AddStringToObject(r, "bounds_coordinates", "main viewport logical pixels");
+    cJSON* bounds = cJSON_AddArrayToObject(r, "bounds");
+    if (ImGui::GetCurrentContext()) {
+        ImGuiViewport* vp = ImGui::GetMainViewport();
+        auto window = [&](const char* key, const char* name) {
+            ImGuiWindow* w = ImGui::FindWindowByName(name);
+            if (!w || w->LastFrameActive != ImGui::GetFrameCount() || w->Hidden) return;
+            cJSON* b = cJSON_CreateObject();
+            cJSON_AddStringToObject(b, "panel", key);
+            cJSON_AddStringToObject(b, "window", name);
+            cJSON_AddNumberToObject(b, "x", w->Pos.x - vp->Pos.x);
+            cJSON_AddNumberToObject(b, "y", w->Pos.y - vp->Pos.y);
+            cJSON_AddNumberToObject(b, "width", w->Size.x);
+            cJSON_AddNumberToObject(b, "height", w->Size.y);
+            cJSON_AddNumberToObject(b, "scroll_y", w->Scroll.y);
+            cJSON_AddNumberToObject(b, "scroll_max_y", w->ScrollMax.y);
+            cJSON_AddBoolToObject(b, "docked", w->DockId != 0);
+            cJSON_AddBoolToObject(b, "main_viewport", w->ViewportId == vp->ID);
+            cJSON_AddItemToArray(bounds, b);
+        };
+        window("console", "Console"); window("data", "Data Streams");
+        window("dynamics", "Dynamics###dynamics_global"); window("harness", "Test Harness");
+        window("input", "##InputStrip"); window("input", "##InputStripBar");
+        for (const auto& e : g_app.entities) {
+            std::string key = "entity:" + std::to_string(e.id);
+            window(key.c_str(), UIEntityWindowName(e).c_str());
+        }
+        for (const auto& sw : s_ui_scroll_windows) {
+            std::string key = sw.first + ":content";
+            window(key.c_str(), sw.second.c_str());
+        }
+    }
+    return r;
+}
+
+cJSON* UIAutomationConfigure(const cJSON* args, std::string& error) {
+    error.clear();
+    auto fail = [&](const std::string& message) -> cJSON* { error = message; return nullptr; };
+    if (!cJSON_IsObject(args)) return fail("ui_set args must be an object");
+    const char* fields[] = {"layout", "entity", "entity_tab", "platform_tab", "measure_step", "dynamics_reload", "data_tab", "panels", "camera", "scroll", "input_expanded", "input_height"};
+    for (const cJSON* v = args->child; v; v = v->next)
+        if (!v->string || !UINameKnown(v->string, fields)) return fail(std::string("unknown ui_set field: ") + (v->string ? v->string : ""));
+    auto get = [&](const char* name) { return cJSON_GetObjectItemCaseSensitive(args, name); };
+    int entity = g_app.findEntity(s_ui_active_entity) ? s_ui_active_entity :
+                 (g_app.entities.empty() ? -1 : g_app.entities[0].id);
+    if (const cJSON* v = get("entity")) {
+        if (!cJSON_IsNumber(v) || !std::isfinite(v->valuedouble) || v->valuedouble != std::floor(v->valuedouble) || v->valuedouble < 0 || v->valuedouble > 2147483647.0)
+            return fail("entity must be a nonnegative integer ID");
+        entity = v->valueint;
+        if (!g_app.findEntity(entity)) return fail("unknown entity ID");
+    }
+    Entity* selected = g_app.findEntity(entity);
+    auto named = [&](const char* key, const char* const* values, int n) {
+        const cJSON* v = get(key);
+        if (!v) return true;
+        if (!cJSON_IsString(v)) { error = std::string(key) + " must be a string"; return false; }
+        for (int i = 0; i < n; ++i) if (!strcmp(v->valuestring, values[i])) return true;
+        error = std::string("unknown ") + key + ": " + v->valuestring; return false;
+    };
+    if (!named("layout", UI_LAYOUTS, 7) || !named("entity_tab", UI_ENTITY_TABS, 6) ||
+        !named("platform_tab", UI_PLATFORM_TABS, 4) || !named("data_tab", UI_DATA_TABS, 4)) return nullptr;
+    if ((get("layout") || get("entity_tab") || get("platform_tab") || get("measure_step") || get("dynamics_reload") || get("camera")) && !selected)
+        return fail("this presentation request requires an entity");
+    std::string layout = get("layout") ? get("layout")->valuestring : "";
+    if (layout == "comparison" && g_app.entities.size() < 2) return fail("comparison layout requires at least two entities");
+    if (get("entity_tab") && !strcmp(get("entity_tab")->valuestring, "Test Harness") && selected->type != EntityType::HIL)
+        return fail("Test Harness entity tab requires a HIL entity");
+    if (get("platform_tab") && get("entity_tab") && strcmp(get("entity_tab")->valuestring, "Platform"))
+        return fail("platform_tab requires entity_tab Platform");
+    if (const cJSON* v = get("measure_step")) {
+        if (!cJSON_IsNumber(v) || !std::isfinite(v->valuedouble) || v->valuedouble != std::floor(v->valuedouble) || v->valuedouble < 0 || v->valuedouble > 6)
+            return fail("measure_step must be an integer in 0..6");
+        if ((get("entity_tab") && strcmp(get("entity_tab")->valuestring, "Platform")) ||
+            (get("platform_tab") && strcmp(get("platform_tab")->valuestring, "Measure")))
+            return fail("measure_step requires Platform / Measure tabs");
+    }
+    if (get("dynamics_reload") && !cJSON_IsTrue(get("dynamics_reload")))
+        return fail("dynamics_reload is an explicit true action (discard staged edits and reload live values)");
+    std::map<std::string, bool> panels;
+    if (const cJSON* p = get("panels")) {
+        if (!cJSON_IsObject(p)) return fail("panels must be an object");
+        for (const cJSON* v = p->child; v; v = v->next) {
+            if (!v->string || !UINameKnown(v->string, UI_PANEL_NAMES)) return fail("unknown panel name");
+            if (!cJSON_IsBool(v)) return fail(std::string("panel ") + v->string + " must be boolean");
+            panels[v->string] = cJSON_IsTrue(v);
+        }
+    }
+    std::map<std::string, float> camera, scroll;
+    if (const cJSON* p = get("camera")) {
+        if (!cJSON_IsObject(p)) return fail("camera must be an object");
+        const char* keys[] = {"azimuth", "elevation", "distance", "split"};
+        for (const cJSON* v = p->child; v; v = v->next) {
+            if (!v->string || !UINameKnown(v->string, keys)) return fail("unknown camera field");
+            if (!cJSON_IsNumber(v) || !std::isfinite(v->valuedouble)) return fail("camera values must be finite numbers");
+            double lo = 0, hi = 20000;
+            if (!strcmp(v->string, "azimuth")) { lo = -6.284; hi = 6.284; }
+            if (!strcmp(v->string, "elevation")) { lo = -1.4; hi = 1.4; }
+            if (!strcmp(v->string, "split")) { lo = 0.15; hi = 0.92; }
+            if (v->valuedouble < lo || v->valuedouble > hi) return fail(std::string("camera ") + v->string + " out of range");
+            camera[v->string] = (float)v->valuedouble;
+        }
+    }
+    if (const cJSON* p = get("scroll")) {
+        if (!cJSON_IsObject(p)) return fail("scroll must be an object");
+        const char* keys[] = {"entity", "dynamics", "data", "console"};
+        for (const cJSON* v = p->child; v; v = v->next) {
+            if (!v->string || !UINameKnown(v->string, keys)) return fail("unknown scroll panel");
+            if (!cJSON_IsNumber(v) || !std::isfinite(v->valuedouble) || v->valuedouble < 0 || v->valuedouble > 100000) return fail("scroll offsets must be finite pixels in 0..100000");
+            if (!strcmp(v->string, "entity") && !selected) return fail("entity scroll requires an entity");
+            scroll[v->string] = (float)v->valuedouble;
+        }
+    }
+    if (get("input_expanded") && !cJSON_IsBool(get("input_expanded"))) return fail("input_expanded must be boolean");
+    if (const cJSON* v = get("input_height"))
+        if (!cJSON_IsNumber(v) || !std::isfinite(v->valuedouble) || v->valuedouble < 60 || v->valuedouble > 600) return fail("input_height must be finite pixels in 60..600");
+
+    // Validation is complete. Only presentation state is changed below.
+    s_ui_active_entity = entity;
+    if (selected) s_selected_dynamics_id = entity;
+    if (!layout.empty()) {
+        s_ui_layout = s_ui_pending_layout = layout;
+        s_ui_pending_entity_tabs.clear(); s_ui_pending_platform_tabs.clear();
+        s_ui_pending_data_tab.clear(); s_ui_pending_scroll.clear();
+        s_show_input = true; s_input_strip_expanded = layout == "overview";
+        s_show_console = layout == "console";
+        s_show_data_streams = layout == "data" || layout == "overview" || layout == "comparison";
+        s_show_dynamics = layout == "dynamics" || layout == "overview";
+        GetTestHarnessState().show_panel = false;
+        for (auto& e : g_app.entities) e.show_card = layout == "comparison" || e.id == entity;
+        s_ui_pending_entity_tabs[entity] = layout == "geometry" ? "Platform" : "Overview";
+        if (layout == "geometry") s_ui_pending_platform_tabs[entity] = "Geometry";
+    }
+    for (const auto& p : panels) {
+        if (p.first == "input") s_show_input = p.second;
+        if (p.first == "console") s_show_console = p.second;
+        if (p.first == "data") s_show_data_streams = p.second;
+        if (p.first == "dynamics") s_show_dynamics = p.second;
+        if (p.first == "harness") GetTestHarnessState().show_panel = p.second;
+        if (p.first == "entities") for (auto& e : g_app.entities) e.show_card = p.second;
+    }
+    if (get("entity_tab")) { selected->show_card = true; s_ui_pending_entity_tabs[entity] = get("entity_tab")->valuestring; }
+    if (get("platform_tab")) {
+        selected->show_card = true; s_ui_pending_entity_tabs[entity] = "Platform";
+        s_ui_pending_platform_tabs[entity] = get("platform_tab")->valuestring;
+    }
+    if (get("measure_step")) {
+        selected->show_card = true; s_ui_pending_entity_tabs[entity] = "Platform";
+        s_ui_pending_platform_tabs[entity] = "Measure";
+        s_ui_measure_steps[entity] = get("measure_step")->valueint;
+    }
+    // Explicit equivalent of Revert: never do this as a side effect of a layout
+    // change, because a normal interactive session may contain unsaved staging.
+    if (get("dynamics_reload")) s_dyn_staging.erase(entity);
+    if (get("data_tab")) { s_show_data_streams = true; s_ui_pending_data_tab = get("data_tab")->valuestring; }
+    for (const auto& p : camera) {
+        if (p.first == "azimuth") selected->viz_cam.azimuth = p.second;
+        if (p.first == "elevation") selected->viz_cam.elevation = p.second;
+        if (p.first == "distance") selected->viz_cam.distance = p.second;
+        if (p.first == "split") selected->viz_split_ratio = p.second;
+    }
+    for (const auto& p : scroll) s_ui_pending_scroll[p.first] = p.second;
+    for (const auto& e : g_app.entities) if (!e.show_card) {
+        s_ui_pending_entity_tabs.erase(e.id); s_ui_pending_platform_tabs.erase(e.id);
+    }
+    if (get("input_expanded")) s_input_strip_expanded = cJSON_IsTrue(get("input_expanded"));
+    if (get("input_height")) s_input_strip_user_h = (float)get("input_height")->valuedouble;
+    s_input_strip_autofit = 0;
+    s_input_strip_last_source = (int)g_app.input_source;
+    s_input_strip_last_plugin = g_app.active_plugin_idx;
+    ++s_ui_revision; s_ui_settle_frames = 3;
+    return UIAutomationState();
+}
+
 // ── Toolbar / Menu Bar ──────────────────────────────────────────────
 
 static void DrawMainMenuBar() {
@@ -300,9 +588,13 @@ static void DrawMainMenuBar() {
         if (ImGui::BeginMenu("File")) {
             // ── Quick save ──
             if (ImGui::MenuItem("Save", "Ctrl+S")) {
-                g_app.saveSettings();
-                ImGui::SaveIniSettingsToDisk(ImGui::GetIO().IniFilename);
-                g_app.log(-1, "workspace", "Saved current session");
+                if (IsDocumentationMode()) {
+                    g_app.log(-1, "workspace", "Session save blocked in documentation mode");
+                } else {
+                    g_app.saveSettings();
+                    ImGui::SaveIniSettingsToDisk(ImGui::GetIO().IniFilename);
+                    g_app.log(-1, "workspace", "Saved current session");
+                }
             }
             if (ImGui::IsItemHovered())
                 ImGui::SetTooltip("Save current entity configs and window layout to disk.");
@@ -403,6 +695,11 @@ static void DrawMainMenuBar() {
                 }
             }
             ImGui::EndMenu();
+        }
+
+        if (IsDocumentationMode()) {
+            ImGui::SameLine(0, 24);
+            ImGui::TextColored(ImVec4(0.98f, 0.74f, 0.18f, 1.0f), "DOCUMENTATION / Hardware disabled");
         }
 
         // Right-aligned status
@@ -948,6 +1245,7 @@ static void DrawBadge(ImDrawList* dl, ImVec2 pos, const char* text, ImVec4 color
 // ── Input Strip (fixed horizontal band below toolbar) ────────────────
 
 static void DrawInputStrip() {
+    if (!s_show_input) { s_input_strip_h = 0.0f; return; }
     ImGuiViewport* vp = ImGui::GetMainViewport();
     float toolbar_h = 82.0f;
     float strip_y = vp->WorkPos.y + toolbar_h;
@@ -1518,6 +1816,7 @@ static void DrawEntityCard(Entity& e) {
     ImGui::PushStyleColor(ImGuiCol_TitleBgActive, ImVec4(col.x * 0.5f, col.y * 0.5f, col.z * 0.5f, 1.0f));
 
     if (ImGui::Begin(title, &e.show_card, ImGuiWindowFlags_None)) {
+        if (e.id == s_ui_active_entity) UIApplyScroll("entity");
         // Header row: type badge + enable toggle + dynamics + remove
         ImGui::TextColored(col, "%s", type_str);
         ImGui::SameLine();
@@ -1549,7 +1848,7 @@ static void DrawEntityCard(Entity& e) {
             // ════════════════════════════════════════════════════════════
             //  Overview tab (3D viz + workspace readout)
             // ════════════════════════════════════════════════════════════
-            if (ImGui::BeginTabItem("Overview")) {
+            if (UIBeginTab("Overview", s_ui_entity_tabs[e.id], s_ui_pending_entity_tabs[e.id])) {
                 // ── 3D Platform Viewport ──
                 ImVec2 avail = ImGui::GetContentRegionAvail();
                 if (e.viz_split_ratio < 0.15f) e.viz_split_ratio = 0.15f;
@@ -1859,7 +2158,7 @@ static void DrawEntityCard(Entity& e) {
             // ════════════════════════════════════════════════════════════
             //  Dynamics tab
             // ════════════════════════════════════════════════════════════
-            if (ImGui::BeginTabItem("Dynamics")) {
+            if (UIBeginTab("Dynamics", s_ui_entity_tabs[e.id], s_ui_pending_entity_tabs[e.id])) {
                 DrawEntityDynamicsContent(e);
                 ImGui::EndTabItem();
             }
@@ -1867,7 +2166,7 @@ static void DrawEntityCard(Entity& e) {
             // ════════════════════════════════════════════════════════════
             //  Settings tab
             // ════════════════════════════════════════════════════════════
-            if (ImGui::BeginTabItem("Settings")) {
+            if (UIBeginTab("Settings", s_ui_entity_tabs[e.id], s_ui_pending_entity_tabs[e.id])) {
                 DrawEntitySettingsContent(e);
                 ImGui::EndTabItem();
             }
@@ -1875,7 +2174,7 @@ static void DrawEntityCard(Entity& e) {
             // ════════════════════════════════════════════════════════════
             //  Platform tab
             // ════════════════════════════════════════════════════════════
-            if (ImGui::BeginTabItem("Platform")) {
+            if (UIBeginTab("Platform", s_ui_entity_tabs[e.id], s_ui_pending_entity_tabs[e.id])) {
                 DrawPlatformSetupContent(e);
                 ImGui::EndTabItem();
             }
@@ -1884,7 +2183,7 @@ static void DrawEntityCard(Entity& e) {
             //  Test Harness tab (HIL only)
             // ════════════════════════════════════════════════════════════
             if (e.type == EntityType::HIL) {
-                if (ImGui::BeginTabItem("Test Harness")) {
+                if (UIBeginTab("Test Harness", s_ui_entity_tabs[e.id], s_ui_pending_entity_tabs[e.id])) {
                     DrawTestHarnessTabContent(e);
                     ImGui::EndTabItem();
                 }
@@ -1893,7 +2192,7 @@ static void DrawEntityCard(Entity& e) {
             // ════════════════════════════════════════════════════════════
             //  I/O tab
             // ════════════════════════════════════════════════════════════
-            if (ImGui::BeginTabItem("I/O")) {
+            if (UIBeginTab("I/O", s_ui_entity_tabs[e.id], s_ui_pending_entity_tabs[e.id])) {
                 DrawEntityConsoleContent(e);
                 ImGui::EndTabItem();
             }
@@ -1927,7 +2226,7 @@ static void DrawPlatformSetupContent(Entity& e) {
             // ════════════════════════════════════════════════════════
             //  Geometry Tab
             // ════════════════════════════════════════════════════════
-            if (ImGui::BeginTabItem("Geometry")) {
+            if (UIBeginTab("Geometry", s_ui_platform_tabs[e.id], s_ui_pending_platform_tabs[e.id])) {
                 ImGui::Text("Platform Dimensions");
                 ImGui::Separator();
 
@@ -1998,7 +2297,7 @@ static void DrawPlatformSetupContent(Entity& e) {
             // ════════════════════════════════════════════════════════
             //  Drive Train Tab
             // ════════════════════════════════════════════════════════
-            if (ImGui::BeginTabItem("Drive Train")) {
+            if (UIBeginTab("Drive Train", s_ui_platform_tabs[e.id], s_ui_pending_platform_tabs[e.id])) {
 
                 if (e.config.isStepper()) {
                     // ── Stepper / Closed-Loop Servo Drive ──
@@ -2105,7 +2404,7 @@ static void DrawPlatformSetupContent(Entity& e) {
             // ════════════════════════════════════════════════════════
             //  Actuator Layout Tab
             // ════════════════════════════════════════════════════════
-            if (ImGui::BeginTabItem("Actuator Layout")) {
+            if (UIBeginTab("Actuator Layout", s_ui_platform_tabs[e.id], s_ui_pending_platform_tabs[e.id])) {
                 // Preset selector
                 static const char* presets[] = {"Standard 3-Pair Symmetric", "Custom"};
                 static int preset_sel = 0;
@@ -2234,8 +2533,8 @@ static void DrawPlatformSetupContent(Entity& e) {
             // ════════════════════════════════════════════════════════
             //  Measure Tab — Calibration Wizard
             // ════════════════════════════════════════════════════════
-            if (ImGui::BeginTabItem("Measure")) {
-                static int measure_step = 0;
+            if (UIBeginTab("Measure", s_ui_platform_tabs[e.id], s_ui_pending_platform_tabs[e.id])) {
+                int& measure_step = s_ui_measure_steps[e.id];
 
                 struct MeasureStep {
                     const char* title;
@@ -4060,6 +4359,7 @@ static void DrawEntityDynamicsContent(Entity& e) {
                     }
                     resetMotionCueing(&mca);
                     g_app.saveSettings();
+                    g_app.pushCueSettingsToDevice(e);
                     g_app.log(e.id, "dynamics", "Dynamics settings applied (saved)");
                 }
                 ImGui::PopStyleColor(2);
@@ -4125,6 +4425,7 @@ static void DrawEntityDynamicsContent(Entity& e) {
         // SCROLLABLE CONTENT REGION
         // ═══════════════════════════════════════════════════════════════
         ImGui::BeginChild("##dyn_scroll", ImVec2(0, 0), false);
+        if (e.id == s_ui_active_entity) UIApplyScroll("dynamics");
 
         ImGui::Spacing();
         ImGui::Separator();
@@ -5501,7 +5802,8 @@ static void DrawBadge(ImDrawList* dl, ImVec2 pos, const char* text, ImVec4 color
 
 // Map saved recording source string to badge icon + color
 static void GetCaptureSourceBadge(const char* source, const char** icon, const char** label, ImVec4* color) {
-    if (strcmp(source, "capture") == 0)       { *icon = "CAP"; *label = "Capture Playback"; *color = ImVec4(0.95f, 0.75f, 0.20f, 1.0f); }
+    if (strcmp(source, "synthetic-docs") == 0) { *icon = "SYN"; *label = "Synthetic";       *color = ImVec4(0.75f, 0.60f, 0.95f, 1.0f); }
+    else if (strcmp(source, "capture") == 0) { *icon = "CAP"; *label = "Capture Playback"; *color = ImVec4(0.95f, 0.75f, 0.20f, 1.0f); }
     else if (strcmp(source, "plugin") == 0)  { *icon = "PLG"; *label = "Plugin";            *color = ImVec4(0.20f, 0.83f, 0.60f, 1.0f); }
     else                                     { *icon = "MAN"; *label = "Manual";            *color = ImVec4(0.60f, 0.70f, 0.80f, 1.0f); }
 }
@@ -6334,6 +6636,7 @@ static void DrawConsolePanel() {
         // Log output — rolling window (frozen when paused)
         const auto& log_src = g_app.console_paused ? g_app.console_log_frozen : g_app.console_log;
         ImGui::BeginChild("log_scroll", ImVec2(0, 0), ImGuiChildFlags_None, ImGuiWindowFlags_HorizontalScrollbar);
+        UIApplyScroll("console");
         for (auto& entry : log_src) {
             if (g_app.console_filter >= 0 && entry.entity_id != g_app.console_filter) continue;
 
@@ -6385,12 +6688,13 @@ static void PlotRingBuffer(const char* label, const float* time_buf, const float
 static void DrawDataStreamsPanel() {
     if (!s_show_data_streams) return;
     if (ImGui::Begin("Data Streams", &s_show_data_streams)) {
+        UIApplyScroll("data");
 
         // Top-level tab bar so every section is always one click away
         if (ImGui::BeginTabBar("##cmp_main_tabs")) {
 
             // ── Tab: Recording / Playback ──
-            if (ImGui::BeginTabItem("Recording")) {
+            if (UIBeginTab("Recording", s_ui_data_tab, s_ui_pending_data_tab)) {
                 RecordMode mode = g_app.recording.mode;
                 bool is_idle = (mode == RecordMode::Idle);
                 bool is_recording = (mode == RecordMode::Recording);
@@ -6503,7 +6807,7 @@ static void DrawDataStreamsPanel() {
             }
 
             // ── Tab: Snapshot ──
-            if (ImGui::BeginTabItem("Snapshot")) {
+            if (UIBeginTab("Snapshot", s_ui_data_tab, s_ui_pending_data_tab)) {
                 const char* snap_axis[] = {"Surge", "Sway", "Heave", "Roll", "Pitch", "Yaw"};
 
                 // Active source badge
@@ -6645,7 +6949,7 @@ static void DrawDataStreamsPanel() {
             }
 
             // ── Tab: Time-Series ──
-            if (ImGui::BeginTabItem("Time-Series")) {
+            if (UIBeginTab("Time-Series", s_ui_data_tab, s_ui_pending_data_tab)) {
                 static int chart_mode = 0;
                 ImGui::RadioButton("Input (Global)", &chart_mode, 0);
                 ImGui::SameLine();
@@ -6728,7 +7032,7 @@ static void DrawDataStreamsPanel() {
             }
 
             // ── Tab: Spectrogram ──
-            if (ImGui::BeginTabItem("Spectrogram")) {
+            if (UIBeginTab("Spectrogram", s_ui_data_tab, s_ui_pending_data_tab)) {
                 static const char* axis_short[] = {"Surge","Sway","Heave","Roll","Pitch","Yaw"};
 
                 // ── Rolling waterfall state (reads from global input_spectrum) ──
@@ -6936,6 +7240,57 @@ static void BuildDefaultLayout(ImGuiID dockspace_id) {
     ImGui::DockBuilderFinish(dockspace_id);
 }
 
+// Dock the same windows drawn by the interactive UI; no screenshot-only
+// replacement panels. The caller supplies the real area below the input strip.
+static void BuildAutomationLayout(ImGuiID dockspace_id, const ImVec2& pos, const ImVec2& size) {
+    const std::string layout = s_ui_pending_layout;
+    s_ui_pending_layout.clear();
+    ImGui::DockBuilderRemoveNode(dockspace_id);
+    ImGui::DockBuilderAddNode(dockspace_id, ImGuiDockNodeFlags_DockSpace);
+    ImGui::DockBuilderSetNodePos(dockspace_id, pos);
+    ImGui::DockBuilderSetNodeSize(dockspace_id, size);
+    ImGuiID center = dockspace_id;
+    auto dock_entity = [&](int id, ImGuiID node) {
+        Entity* e = g_app.findEntity(id);
+        if (e && e->show_card) ImGui::DockBuilderDockWindow(UIEntityWindowName(*e).c_str(), node);
+    };
+    if (layout == "overview") {
+        ImGuiID bottom, right;
+        // Keep room for the six-axis legend, plot and its axis labels. A fixed
+        // fraction alone clipped them at common 1080p capture sizes.
+        float data_fraction = fminf(0.48f, fmaxf(0.28f, 320.0f / fmaxf(size.y, 1.0f)));
+        ImGui::DockBuilderSplitNode(center, ImGuiDir_Down, data_fraction, &bottom, &center);
+        ImGui::DockBuilderDockWindow("Data Streams", bottom);
+        ImGui::DockBuilderSplitNode(center, ImGuiDir_Right, 0.44f, &right, &center);
+        ImGui::DockBuilderDockWindow("Dynamics###dynamics_global", right);
+        dock_entity(s_ui_active_entity, center);
+    } else if (layout == "comparison") {
+        ImGuiID bottom;
+        ImGui::DockBuilderSplitNode(center, ImGuiDir_Down, 0.30f, &bottom, &center);
+        ImGui::DockBuilderDockWindow("Data Streams", bottom);
+        std::vector<int> visible;
+        for (const auto& e : g_app.entities) if (e.show_card) visible.push_back(e.id);
+        for (size_t i = 0; i < visible.size(); ++i) {
+            if (i + 1 == visible.size()) dock_entity(visible[i], center);
+            else {
+                ImGuiID left;
+                ImGui::DockBuilderSplitNode(center, ImGuiDir_Left, 1.0f / (float)(visible.size() - i), &left, &center);
+                dock_entity(visible[i], left);
+            }
+        }
+    } else if (layout == "dynamics" || layout == "data" || layout == "console") {
+        ImGuiID detail;
+        ImGui::DockBuilderSplitNode(center, ImGuiDir_Right, 0.65f, &detail, &center);
+        const char* name = layout == "dynamics" ? "Dynamics###dynamics_global" :
+                           layout == "data" ? "Data Streams" : "Console";
+        ImGui::DockBuilderDockWindow(name, detail);
+        dock_entity(s_ui_active_entity, center);
+    } else {
+        dock_entity(s_ui_active_entity, center);
+    }
+    ImGui::DockBuilderFinish(dockspace_id);
+}
+
 // ── Pre-Frame Hook ──────────────────────────────────────────────────
 // Called BEFORE ImGui::NewFrame() so docking state from a loaded .ini
 // is already present when the dockspace is (re)built this frame.
@@ -6999,8 +7354,11 @@ void DrawUI() {
     }
     if (s_reset_layout) {
         s_reset_layout = false;
+        s_ui_layout = "custom";
+        s_ui_pending_layout.clear();
         BuildDefaultLayout(dockspace_id);
     }
+    if (!s_ui_pending_layout.empty()) BuildAutomationLayout(dockspace_id, ds_pos, ds_size);
 
     // Global panels (docked by default layout)
     DrawConsolePanel();
@@ -7018,4 +7376,6 @@ void DrawUI() {
             DrawEntityCard(*e);
         }
     }
+    if (s_ui_settle_frames > 0 && --s_ui_settle_frames == 0)
+        s_ui_rendered_revision = s_ui_revision;
 }

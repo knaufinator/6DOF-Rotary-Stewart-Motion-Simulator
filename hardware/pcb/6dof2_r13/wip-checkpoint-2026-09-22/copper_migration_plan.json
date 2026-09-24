@@ -1,0 +1,2665 @@
+{
+  "schema": "r13-offline-copper-migration-v1",
+  "status": "EXPLICIT_RIP_AND_REUSE_PLAN_REQUIRES_FRESH_ID_GEOMETRY_GUARD_NATIVE_DRC_AND_REROUTING",
+  "sourceCapture": "09_capture_pcb.json",
+  "sourceSha256": "544296c3d0c19c09b4b32294c249162ddd33f73a961985aab1646695dcd0f825",
+  "sourceCheckedAt": "2026-09-23T00:25:14.316Z",
+  "placementPlan": "placement_plan_r13.json",
+  "placementPlanSha256": "f83d6a8bdd6737e82b72b4aa82eb7e323cbb184aaa0da8ce65c6cdefc1cb827e",
+  "units": "mil",
+  "remove": {
+    "tracks": [
+      {
+        "id": "54b0d6d37995ba42",
+        "reasons": [
+          "U3.12 GND->LOGIC_5V: remove old tie up to shared GND via1374.1772,1527.7795"
+        ],
+        "captured": {
+          "id": "54b0d6d37995ba42",
+          "net": "GND",
+          "layer": 1,
+          "w": 8,
+          "pts": [
+            1380,
+            1468.7008,
+            "L",
+            1380,
+            1517.5709
+          ]
+        }
+      },
+      {
+        "id": "6b17f1071e6b3412",
+        "reasons": [
+          "U3.12 GND->LOGIC_5V: remove old tie up to shared GND via1374.1772,1527.7795"
+        ],
+        "captured": {
+          "id": "6b17f1071e6b3412",
+          "net": "GND",
+          "layer": 1,
+          "w": 8,
+          "pts": [
+            1374.1772,
+            1527.7795,
+            "L",
+            1380,
+            1517.5709
+          ]
+        }
+      },
+      {
+        "id": "59c4730cc03998c2",
+        "reasons": [
+          "U4.12 GND->LOGIC_5V: remove old tie up to shared GND branch1380,4109.1181"
+        ],
+        "captured": {
+          "id": "59c4730cc03998c2",
+          "net": "GND",
+          "layer": 1,
+          "w": 8,
+          "pts": [
+            1380,
+            4044.7008,
+            "L",
+            1380,
+            4093.5709
+          ]
+        }
+      },
+      {
+        "id": "60c123792143b486",
+        "reasons": [
+          "U4.12 GND->LOGIC_5V: remove old tie up to shared GND branch1380,4109.1181"
+        ],
+        "captured": {
+          "id": "60c123792143b486",
+          "net": "GND",
+          "layer": 1,
+          "w": 8,
+          "pts": [
+            1380,
+            4109.1181,
+            "L",
+            1380,
+            4093.5709
+          ]
+        }
+      },
+      {
+        "id": "b76b67329cbee0d1",
+        "reasons": [
+          "U5.12 GND->LOGIC_5V: remove old tie up to shared GND branch1380,6679.0079"
+        ],
+        "captured": {
+          "id": "b76b67329cbee0d1",
+          "net": "GND",
+          "layer": 1,
+          "w": 8,
+          "pts": [
+            1380,
+            6620.7008,
+            "L",
+            1380,
+            6669.5709
+          ]
+        }
+      },
+      {
+        "id": "c8397cf635a95689",
+        "reasons": [
+          "U5.12 GND->LOGIC_5V: remove old tie up to shared GND branch1380,6679.0079"
+        ],
+        "captured": {
+          "id": "c8397cf635a95689",
+          "net": "GND",
+          "layer": 1,
+          "w": 8,
+          "pts": [
+            1380,
+            6669.5709,
+            "L",
+            1380,
+            6679.0079
+          ]
+        }
+      },
+      {
+        "id": "b00e609b252d39c1",
+        "reasons": [
+          "U3.4 VCC5->DRIVE_ENABLE: remove complete old tie to shared U3.16/C8 supply branch1180,1408.8307"
+        ],
+        "captured": {
+          "id": "b00e609b252d39c1",
+          "net": "VCC5",
+          "layer": 1,
+          "w": 30,
+          "pts": [
+            1330,
+            1253.2992,
+            "L",
+            1330,
+            1313.1693
+          ]
+        }
+      },
+      {
+        "id": "30f1c09949faf1be",
+        "reasons": [
+          "U3.4 VCC5->DRIVE_ENABLE: remove complete old tie to shared U3.16/C8 supply branch1180,1408.8307"
+        ],
+        "captured": {
+          "id": "30f1c09949faf1be",
+          "net": "VCC5",
+          "layer": 1,
+          "w": 30,
+          "pts": [
+            1330,
+            1313.1693,
+            "L",
+            1275.6614,
+            1313.1693,
+            1180,
+            1408.8307
+          ]
+        }
+      },
+      {
+        "id": "7c95366eaa31d10c",
+        "reasons": [
+          "U4.4 VCC5->DRIVE_ENABLE: remove pad tie only; preserve both VCC5 trunks at1330,3889.1693"
+        ],
+        "captured": {
+          "id": "7c95366eaa31d10c",
+          "net": "VCC5",
+          "layer": 1,
+          "w": 30,
+          "pts": [
+            1330,
+            3829.2992,
+            "L",
+            1330,
+            3889.1693
+          ]
+        }
+      },
+      {
+        "id": "76eb23c2f4f466ba",
+        "reasons": [
+          "U5.4 VCC5->DRIVE_ENABLE: remove old local tie through U5.16; surviving U5.16 feed43de68f17259f635 remains"
+        ],
+        "captured": {
+          "id": "76eb23c2f4f466ba",
+          "net": "VCC5",
+          "layer": 1,
+          "w": 30,
+          "pts": [
+            1330,
+            6405.2992,
+            "L",
+            1330,
+            6465.1693
+          ]
+        }
+      },
+      {
+        "id": "b7ab3c7409fafdd2",
+        "reasons": [
+          "U5.4 VCC5->DRIVE_ENABLE: remove old local tie through U5.16; surviving U5.16 feed43de68f17259f635 remains"
+        ],
+        "captured": {
+          "id": "b7ab3c7409fafdd2",
+          "net": "VCC5",
+          "layer": 1,
+          "w": 30,
+          "pts": [
+            1330,
+            6465.1693,
+            "L",
+            1275.7638,
+            6465.1693,
+            1197.8346,
+            6543.0984,
+            1197.8346,
+            6567.0157
+          ]
+        }
+      },
+      {
+        "id": "c844c0b354aded2e",
+        "reasons": [
+          "U5.4 VCC5->DRIVE_ENABLE: remove old local tie through U5.16; surviving U5.16 feed43de68f17259f635 remains"
+        ],
+        "captured": {
+          "id": "c844c0b354aded2e",
+          "net": "VCC5",
+          "layer": 1,
+          "w": 23.6929,
+          "pts": [
+            1197.8346,
+            6567.0157,
+            "L",
+            1197.8346,
+            6579.4409,
+            1168.2913,
+            6608.9843
+          ]
+        }
+      },
+      {
+        "id": "450f35c109452d72",
+        "reasons": [
+          "U5.4 VCC5->DRIVE_ENABLE: remove old local tie through U5.16; surviving U5.16 feed43de68f17259f635 remains"
+        ],
+        "captured": {
+          "id": "450f35c109452d72",
+          "net": "VCC5",
+          "layer": 1,
+          "w": 30,
+          "pts": [
+            1168.2913,
+            6608.9843,
+            "L",
+            1180,
+            6620.7008
+          ]
+        }
+      },
+      {
+        "id": "9a5d14152cd57339",
+        "reasons": [
+          "U5.4 was also junction of long VCC5 trunks: delete complete records, recreate safe shortened prefixes below; reroute local VCC5 gap, never reconnect these to pin4"
+        ],
+        "captured": {
+          "id": "9a5d14152cd57339",
+          "net": "VCC5",
+          "layer": 1,
+          "w": 30,
+          "pts": [
+            1309.0354,
+            4414,
+            "L",
+            1330,
+            6405.2992
+          ]
+        }
+      },
+      {
+        "id": "aa1c3ebd792f0377",
+        "reasons": [
+          "U5.4 was also junction of long VCC5 trunks: delete complete records, recreate safe shortened prefixes below; reroute local VCC5 gap, never reconnect these to pin4"
+        ],
+        "captured": {
+          "id": "aa1c3ebd792f0377",
+          "net": "VCC5",
+          "layer": 1,
+          "w": 12,
+          "pts": [
+            1330,
+            6405.3,
+            "L",
+            1324.63,
+            4513.3,
+            1160.63,
+            4137.3,
+            1141.7323,
+            4125.5896
+          ]
+        }
+      },
+      {
+        "id": "8a2a0207c5eb845f",
+        "reasons": [
+          "Moved C3.2: old GND branch to shared5153.5787,6455; keep via and other branches"
+        ],
+        "captured": {
+          "id": "8a2a0207c5eb845f",
+          "net": "GND",
+          "layer": 1,
+          "w": 8,
+          "pts": [
+            5430.0551,
+            6455,
+            "L",
+            5153.5787,
+            6455
+          ]
+        }
+      },
+      {
+        "id": "3422c1b582b78ea8",
+        "reasons": [
+          "Moved C7.2: old GND branch to stationary C5.2 at5035.315,6227"
+        ],
+        "captured": {
+          "id": "3422c1b582b78ea8",
+          "net": "GND",
+          "layer": 1,
+          "w": 8,
+          "pts": [
+            5153.3858,
+            6227,
+            "L",
+            5035.315,
+            6227
+          ]
+        }
+      },
+      {
+        "id": "bb215a3b6b60d146",
+        "reasons": [
+          "Moved U7.1: old GND branch to shared5153.5787,5813.3898; preserve shared tracks561059afeb1f29a3 and5dfc51c9979a9eb1"
+        ],
+        "captured": {
+          "id": "bb215a3b6b60d146",
+          "net": "GND",
+          "layer": 1,
+          "w": 8,
+          "pts": [
+            5608.1063,
+            6136.4488,
+            "L",
+            5548.8386,
+            6136.4488
+          ]
+        }
+      },
+      {
+        "id": "85fb02e989bc6014",
+        "reasons": [
+          "Moved U7.1: old GND branch to shared5153.5787,5813.3898; preserve shared tracks561059afeb1f29a3 and5dfc51c9979a9eb1"
+        ],
+        "captured": {
+          "id": "85fb02e989bc6014",
+          "net": "GND",
+          "layer": 1,
+          "w": 8,
+          "pts": [
+            5548.8386,
+            6136.4488,
+            "L",
+            5225.7795,
+            5813.3898,
+            5153.5787,
+            5813.3898
+          ]
+        }
+      },
+      {
+        "id": "c16ad79b36b8201c",
+        "reasons": [
+          "Moved C6.2: old isolated GND stitch branch"
+        ],
+        "captured": {
+          "id": "c16ad79b36b8201c",
+          "net": "GND",
+          "layer": 1,
+          "w": 10,
+          "pts": [
+            5757.875,
+            6317.7165,
+            "L",
+            5793.7323,
+            6312.7254
+          ]
+        }
+      },
+      {
+        "id": "a2b3f7dec99f40b4",
+        "reasons": [
+          "Moved/retagged D3.1: remove old VCC5 connection back to stationary U6.8 at4269.2559,6252; do not relabel buck copper LOGIC_5V"
+        ],
+        "captured": {
+          "id": "a2b3f7dec99f40b4",
+          "net": "VCC5",
+          "layer": 2,
+          "w": 12,
+          "pts": [
+            3692.9176,
+            5925.1969,
+            "L",
+            3752.63,
+            5921.3
+          ]
+        }
+      },
+      {
+        "id": "9b4d4d06c00ed1b0",
+        "reasons": [
+          "Moved/retagged D3.1: remove old VCC5 connection back to stationary U6.8 at4269.2559,6252; do not relabel buck copper LOGIC_5V"
+        ],
+        "captured": {
+          "id": "9b4d4d06c00ed1b0",
+          "net": "VCC5",
+          "layer": 1,
+          "w": 12,
+          "pts": [
+            3752.63,
+            5921.3,
+            "L",
+            3692.9176,
+            5925.1969
+          ]
+        }
+      },
+      {
+        "id": "4ba20a08a6cda487",
+        "reasons": [
+          "Moved/retagged D3.1: remove old VCC5 connection back to stationary U6.8 at4269.2559,6252; do not relabel buck copper LOGIC_5V"
+        ],
+        "captured": {
+          "id": "4ba20a08a6cda487",
+          "net": "VCC5",
+          "layer": 2,
+          "w": 12,
+          "pts": [
+            4152,
+            6240,
+            "L",
+            3968,
+            6064,
+            3692.9176,
+            5925.1969
+          ]
+        }
+      },
+      {
+        "id": "c452cf298f7f524d",
+        "reasons": [
+          "Moved/retagged D3.1: remove old VCC5 connection back to stationary U6.8 at4269.2559,6252; do not relabel buck copper LOGIC_5V"
+        ],
+        "captured": {
+          "id": "c452cf298f7f524d",
+          "net": "VCC5",
+          "layer": 1,
+          "w": 12,
+          "pts": [
+            4269.2559,
+            6252,
+            "L",
+            4200,
+            6248,
+            4152,
+            6240
+          ]
+        }
+      },
+      {
+        "id": "731c8fbe9e9b6867",
+        "reasons": [
+          "Moved U7.3/C6.1: remove old VCC5 branch from shared4980.1968,6321.1457 including R18 spur; reroute stationary R18.1 to VCC5 afterwards"
+        ],
+        "captured": {
+          "id": "731c8fbe9e9b6867",
+          "net": "VCC5",
+          "layer": 1,
+          "w": 30,
+          "pts": [
+            5537.8386,
+            6317.5512,
+            "L",
+            5534.2441,
+            6321.1457,
+            4980.1968,
+            6321.1457
+          ]
+        }
+      },
+      {
+        "id": "e780cdc66cfb3a99",
+        "reasons": [
+          "Moved U7.3/C6.1: remove old VCC5 branch from shared4980.1968,6321.1457 including R18 spur; reroute stationary R18.1 to VCC5 afterwards"
+        ],
+        "captured": {
+          "id": "e780cdc66cfb3a99",
+          "net": "VCC5",
+          "layer": 1,
+          "w": 30,
+          "pts": [
+            5608.1063,
+            6317.5512,
+            "L",
+            5537.8386,
+            6317.5512
+          ]
+        }
+      },
+      {
+        "id": "b0502925707de60e",
+        "reasons": [
+          "Moved U7.3/C6.1: remove old VCC5 branch from shared4980.1968,6321.1457 including R18 spur; reroute stationary R18.1 to VCC5 afterwards"
+        ],
+        "captured": {
+          "id": "b0502925707de60e",
+          "net": "VCC5",
+          "layer": 1,
+          "w": 30,
+          "pts": [
+            5778.3819,
+            6227,
+            "L",
+            5687.8307,
+            6317.5512,
+            5608.1063,
+            6317.5512
+          ]
+        }
+      },
+      {
+        "id": "28d7c44f01cf9d96",
+        "reasons": [
+          "Moved U7.3/C6.1: remove old VCC5 branch from shared4980.1968,6321.1457 including R18 spur; reroute stationary R18.1 to VCC5 afterwards"
+        ],
+        "captured": {
+          "id": "28d7c44f01cf9d96",
+          "net": "VCC5",
+          "layer": 1,
+          "w": 12,
+          "pts": [
+            5778.3819,
+            6227,
+            "L",
+            5628.63,
+            6061.3,
+            5452.63,
+            5985.3,
+            5442.7809,
+            5968.5039
+          ]
+        }
+      },
+      {
+        "id": "391be0a74e60710e",
+        "reasons": [
+          "Moved U7/C3/C7 output network: remove obsolete branches up to shared VCC3V3 node3600,5863.622 and R19.1; reroute R19 supply, preserve its pad stubs/via989793a2579f062f"
+        ],
+        "captured": {
+          "id": "391be0a74e60710e",
+          "net": "VCC3V3",
+          "layer": 1,
+          "w": 8,
+          "pts": [
+            5555.4567,
+            6455,
+            "L",
+            5516.1417,
+            6455
+          ]
+        }
+      },
+      {
+        "id": "398c0172360a9b3e",
+        "reasons": [
+          "Moved U7/C3/C7 output network: remove obsolete branches up to shared VCC3V3 node3600,5863.622 and R19.1; reroute R19 supply, preserve its pad stubs/via989793a2579f062f"
+        ],
+        "captured": {
+          "id": "398c0172360a9b3e",
+          "net": "VCC3V3",
+          "layer": 1,
+          "w": 8,
+          "pts": [
+            5516.1417,
+            6455,
+            "L",
+            5466.5787,
+            6504.563,
+            5044.4764,
+            6504.563
+          ]
+        }
+      },
+      {
+        "id": "0477c2b786633397",
+        "reasons": [
+          "Moved U7/C3/C7 output network: remove obsolete branches up to shared VCC3V3 node3600,5863.622 and R19.1; reroute R19 supply, preserve its pad stubs/via989793a2579f062f"
+        ],
+        "captured": {
+          "id": "0477c2b786633397",
+          "net": "VCC3V3",
+          "layer": 1,
+          "w": 8,
+          "pts": [
+            5555.6811,
+            6455,
+            "L",
+            5555.4567,
+            6455
+          ]
+        }
+      },
+      {
+        "id": "2128732786b56705",
+        "reasons": [
+          "Moved U7/C3/C7 output network: remove obsolete branches up to shared VCC3V3 node3600,5863.622 and R19.1; reroute R19 supply, preserve its pad stubs/via989793a2579f062f"
+        ],
+        "captured": {
+          "id": "2128732786b56705",
+          "net": "VCC3V3",
+          "layer": 2,
+          "w": 8,
+          "pts": [
+            5044.4764,
+            6504.563,
+            "L",
+            4403.5354,
+            5863.622,
+            4316.0315,
+            5863.622
+          ]
+        }
+      },
+      {
+        "id": "82ac5f8ccf12a228",
+        "reasons": [
+          "Moved U7/C3/C7 output network: remove obsolete branches up to shared VCC3V3 node3600,5863.622 and R19.1; reroute R19 supply, preserve its pad stubs/via989793a2579f062f"
+        ],
+        "captured": {
+          "id": "82ac5f8ccf12a228",
+          "net": "VCC3V3",
+          "layer": 1,
+          "w": 8,
+          "pts": [
+            5232.126,
+            6190.3819,
+            "L",
+            4905.3661,
+            5863.622,
+            4316.0315,
+            5863.622
+          ]
+        }
+      },
+      {
+        "id": "127cc0cf01f73178",
+        "reasons": [
+          "Moved U7/C3/C7 output network: remove obsolete branches up to shared VCC3V3 node3600,5863.622 and R19.1; reroute R19 supply, preserve its pad stubs/via989793a2579f062f"
+        ],
+        "captured": {
+          "id": "127cc0cf01f73178",
+          "net": "VCC3V3",
+          "layer": 1,
+          "w": 8,
+          "pts": [
+            5374.252,
+            6146.0827,
+            "L",
+            5276.4252,
+            6146.0827,
+            5232.126,
+            6190.3819
+          ]
+        }
+      },
+      {
+        "id": "1a840b33ad6f5224",
+        "reasons": [
+          "Moved U7/C3/C7 output network: remove obsolete branches up to shared VCC3V3 node3600,5863.622 and R19.1; reroute R19 supply, preserve its pad stubs/via989793a2579f062f"
+        ],
+        "captured": {
+          "id": "1a840b33ad6f5224",
+          "net": "VCC3V3",
+          "layer": 1,
+          "w": 8,
+          "pts": [
+            5232.126,
+            6227,
+            "L",
+            5232.126,
+            6190.3819
+          ]
+        }
+      },
+      {
+        "id": "056f7f912f90725d",
+        "reasons": [
+          "Moved U7/C3/C7 output network: remove obsolete branches up to shared VCC3V3 node3600,5863.622 and R19.1; reroute R19 supply, preserve its pad stubs/via989793a2579f062f"
+        ],
+        "captured": {
+          "id": "056f7f912f90725d",
+          "net": "VCC3V3",
+          "layer": 1,
+          "w": 8,
+          "pts": [
+            5374.252,
+            6227,
+            "L",
+            5374.252,
+            6146.0827
+          ]
+        }
+      },
+      {
+        "id": "c34f9fc859949633",
+        "reasons": [
+          "Moved U7/C3/C7 output network: remove obsolete branches up to shared VCC3V3 node3600,5863.622 and R19.1; reroute R19 supply, preserve its pad stubs/via989793a2579f062f"
+        ],
+        "captured": {
+          "id": "c34f9fc859949633",
+          "net": "VCC3V3",
+          "layer": 1,
+          "w": 8,
+          "pts": [
+            5548.8976,
+            6227,
+            "L",
+            5548.8386,
+            6227
+          ]
+        }
+      },
+      {
+        "id": "3c1bf2944715be46",
+        "reasons": [
+          "Moved U7/C3/C7 output network: remove obsolete branches up to shared VCC3V3 node3600,5863.622 and R19.1; reroute R19 supply, preserve its pad stubs/via989793a2579f062f"
+        ],
+        "captured": {
+          "id": "3c1bf2944715be46",
+          "net": "VCC3V3",
+          "layer": 1,
+          "w": 8,
+          "pts": [
+            5552.374,
+            6227,
+            "L",
+            5548.8976,
+            6227
+          ]
+        }
+      },
+      {
+        "id": "66dc52956daca34b",
+        "reasons": [
+          "Moved U7/C3/C7 output network: remove obsolete branches up to shared VCC3V3 node3600,5863.622 and R19.1; reroute R19 supply, preserve its pad stubs/via989793a2579f062f"
+        ],
+        "captured": {
+          "id": "66dc52956daca34b",
+          "net": "VCC3V3",
+          "layer": 1,
+          "w": 8,
+          "pts": [
+            5608.1063,
+            6227,
+            "L",
+            5552.374,
+            6227
+          ]
+        }
+      },
+      {
+        "id": "3c6aef18844fd16a",
+        "reasons": [
+          "Moved U7/C3/C7 output network: remove obsolete branches up to shared VCC3V3 node3600,5863.622 and R19.1; reroute R19 supply, preserve its pad stubs/via989793a2579f062f"
+        ],
+        "captured": {
+          "id": "3c6aef18844fd16a",
+          "net": "VCC3V3",
+          "layer": 1,
+          "w": 8,
+          "pts": [
+            5548.8386,
+            6227,
+            "L",
+            5467.9213,
+            6146.0827,
+            5374.252,
+            6146.0827
+          ]
+        }
+      },
+      {
+        "id": "ca299f863fc4277d",
+        "reasons": [
+          "Moved U7/C3/C7 output network: remove obsolete branches up to shared VCC3V3 node3600,5863.622 and R19.1; reroute R19 supply, preserve its pad stubs/via989793a2579f062f"
+        ],
+        "captured": {
+          "id": "ca299f863fc4277d",
+          "net": "VCC3V3",
+          "layer": 1,
+          "w": 12,
+          "pts": [
+            5374.2534,
+            6227,
+            "L",
+            5384,
+            6048
+          ]
+        }
+      },
+      {
+        "id": "59be8047be207ce8",
+        "reasons": [
+          "Moved U7/C3/C7 output network: remove obsolete branches up to shared VCC3V3 node3600,5863.622 and R19.1; reroute R19 supply, preserve its pad stubs/via989793a2579f062f"
+        ],
+        "captured": {
+          "id": "59be8047be207ce8",
+          "net": "VCC3V3",
+          "layer": 2,
+          "w": 12,
+          "pts": [
+            5384,
+            6048,
+            "L",
+            5400,
+            5904,
+            5442.7809,
+            5842.5197
+          ]
+        }
+      },
+      {
+        "id": "47995ea9834f7c58",
+        "reasons": [
+          "Moved U7/C3/C7 output network: remove obsolete branches up to shared VCC3V3 node3600,5863.622 and R19.1; reroute R19 supply, preserve its pad stubs/via989793a2579f062f"
+        ],
+        "captured": {
+          "id": "47995ea9834f7c58",
+          "net": "VCC3V3",
+          "layer": 1,
+          "w": 12,
+          "pts": [
+            3600,
+            5863.622,
+            "L",
+            4120,
+            5856
+          ]
+        }
+      },
+      {
+        "id": "e2b30eb2d17e687c",
+        "reasons": [
+          "Moved U7/C3/C7 output network: remove obsolete branches up to shared VCC3V3 node3600,5863.622 and R19.1; reroute R19 supply, preserve its pad stubs/via989793a2579f062f"
+        ],
+        "captured": {
+          "id": "e2b30eb2d17e687c",
+          "net": "VCC3V3",
+          "layer": 2,
+          "w": 12,
+          "pts": [
+            4120,
+            5856,
+            "L",
+            4316.0315,
+            5863.622
+          ]
+        }
+      },
+      {
+        "id": "4b9ab165753ca0cf",
+        "reasons": [
+          "Moved D3.2: obsolete long VBUS supply branch, starting at D6.5; USB connector-to-D6 local hookup preserved"
+        ],
+        "captured": {
+          "id": "4b9ab165753ca0cf",
+          "net": "VBUS",
+          "layer": 2,
+          "w": 20,
+          "pts": [
+            2245.6675,
+            3964,
+            "L",
+            2245.6675,
+            4344,
+            2225.6675,
+            4364
+          ]
+        }
+      },
+      {
+        "id": "f0d740683b1d8aac",
+        "reasons": [
+          "Moved D3.2: obsolete long VBUS supply branch, starting at D6.5; USB connector-to-D6 local hookup preserved"
+        ],
+        "captured": {
+          "id": "f0d740683b1d8aac",
+          "net": "VBUS",
+          "layer": 2,
+          "w": 20,
+          "pts": [
+            3866.1376,
+            5925.1969,
+            "L",
+            3805.6675,
+            5920
+          ]
+        }
+      },
+      {
+        "id": "243eb3492226c9d8",
+        "reasons": [
+          "Moved D3.2: obsolete long VBUS supply branch, starting at D6.5; USB connector-to-D6 local hookup preserved"
+        ],
+        "captured": {
+          "id": "243eb3492226c9d8",
+          "net": "VBUS",
+          "layer": 1,
+          "w": 20,
+          "pts": [
+            3805.6675,
+            5920,
+            "L",
+            3866.1376,
+            5925.1969
+          ]
+        }
+      },
+      {
+        "id": "008079bfa4052a01",
+        "reasons": [
+          "Moved D3.2: obsolete long VBUS supply branch, starting at D6.5; USB connector-to-D6 local hookup preserved"
+        ],
+        "captured": {
+          "id": "008079bfa4052a01",
+          "net": "VBUS",
+          "layer": 2,
+          "w": 20,
+          "pts": [
+            3605.6675,
+            1160,
+            "L",
+            3409.6675,
+            1376,
+            3409.6675,
+            1440,
+            3093.6675,
+            1756
+          ]
+        }
+      },
+      {
+        "id": "be7ec35f3d38fb80",
+        "reasons": [
+          "Moved D3.2: obsolete long VBUS supply branch, starting at D6.5; USB connector-to-D6 local hookup preserved"
+        ],
+        "captured": {
+          "id": "be7ec35f3d38fb80",
+          "net": "VBUS",
+          "layer": 1,
+          "w": 20,
+          "pts": [
+            3093.6675,
+            1756,
+            "L",
+            2941.6675,
+            1908,
+            2709.6675,
+            1968,
+            2685.6675,
+            1996
+          ]
+        }
+      },
+      {
+        "id": "a694be3529483e6f",
+        "reasons": [
+          "Moved D3.2: obsolete long VBUS supply branch, starting at D6.5; USB connector-to-D6 local hookup preserved"
+        ],
+        "captured": {
+          "id": "a694be3529483e6f",
+          "net": "VBUS",
+          "layer": 2,
+          "w": 20,
+          "pts": [
+            2685.6675,
+            1996,
+            "L",
+            2685.6675,
+            2732,
+            2665.6675,
+            2752
+          ]
+        }
+      },
+      {
+        "id": "d4b709ee2dea5cdb",
+        "reasons": [
+          "Moved D3.2: obsolete long VBUS supply branch, starting at D6.5; USB connector-to-D6 local hookup preserved"
+        ],
+        "captured": {
+          "id": "d4b709ee2dea5cdb",
+          "net": "VBUS",
+          "layer": 1,
+          "w": 20,
+          "pts": [
+            2665.6675,
+            2752,
+            "L",
+            2625.6675,
+            2856,
+            2597.6675,
+            2984
+          ]
+        }
+      },
+      {
+        "id": "6e90e1dd8974d1d7",
+        "reasons": [
+          "Moved D3.2: obsolete long VBUS supply branch, starting at D6.5; USB connector-to-D6 local hookup preserved"
+        ],
+        "captured": {
+          "id": "6e90e1dd8974d1d7",
+          "net": "VBUS",
+          "layer": 2,
+          "w": 20,
+          "pts": [
+            2597.6675,
+            2984,
+            "L",
+            2333.6675,
+            3272,
+            2333.6675,
+            3484,
+            2261.6675,
+            3556,
+            2261.6675,
+            3688,
+            2273.6675,
+            3700
+          ]
+        }
+      },
+      {
+        "id": "f8a784d07cf39f20",
+        "reasons": [
+          "Moved D3.2: obsolete long VBUS supply branch, starting at D6.5; USB connector-to-D6 local hookup preserved"
+        ],
+        "captured": {
+          "id": "f8a784d07cf39f20",
+          "net": "VBUS",
+          "layer": 1,
+          "w": 20,
+          "pts": [
+            2273.6675,
+            3700,
+            "L",
+            2253.6675,
+            3756,
+            2245.6675,
+            3964
+          ]
+        }
+      },
+      {
+        "id": "8b1b6d94da5d8e2e",
+        "reasons": [
+          "Moved D3.2: obsolete long VBUS supply branch, starting at D6.5; USB connector-to-D6 local hookup preserved"
+        ],
+        "captured": {
+          "id": "8b1b6d94da5d8e2e",
+          "net": "VBUS",
+          "layer": 1,
+          "w": 20,
+          "pts": [
+            2225.6675,
+            4364,
+            "L",
+            2305.6675,
+            4420
+          ]
+        }
+      },
+      {
+        "id": "9f21885bc4a5e4b3",
+        "reasons": [
+          "Moved D3.2: obsolete long VBUS supply branch, starting at D6.5; USB connector-to-D6 local hookup preserved"
+        ],
+        "captured": {
+          "id": "9f21885bc4a5e4b3",
+          "net": "VBUS",
+          "layer": 2,
+          "w": 20,
+          "pts": [
+            2305.6675,
+            4420,
+            "L",
+            2349.6675,
+            4376,
+            2441.6675,
+            4376,
+            2461.6675,
+            4324,
+            2861.6675,
+            4324,
+            2925.6675,
+            4260
+          ]
+        }
+      },
+      {
+        "id": "dbd2e9b38b0fdc11",
+        "reasons": [
+          "Moved D3.2: obsolete long VBUS supply branch, starting at D6.5; USB connector-to-D6 local hookup preserved"
+        ],
+        "captured": {
+          "id": "dbd2e9b38b0fdc11",
+          "net": "VBUS",
+          "layer": 1,
+          "w": 20,
+          "pts": [
+            2925.6675,
+            4260,
+            "L",
+            2977.6675,
+            4312,
+            2977.6675,
+            4392,
+            3285.6675,
+            4700,
+            3373.6675,
+            4884,
+            3597.6675,
+            5136,
+            3597.6675,
+            5388,
+            3617.6675,
+            5408
+          ]
+        }
+      },
+      {
+        "id": "be5bb101166d6fdc",
+        "reasons": [
+          "Moved D3.2: obsolete long VBUS supply branch, starting at D6.5; USB connector-to-D6 local hookup preserved"
+        ],
+        "captured": {
+          "id": "be5bb101166d6fdc",
+          "net": "VBUS",
+          "layer": 2,
+          "w": 20,
+          "pts": [
+            3617.6675,
+            5408,
+            "L",
+            3866.1376,
+            5925.1969
+          ]
+        }
+      },
+      {
+        "id": "7e1a48a50d5df7e1",
+        "reasons": [
+          "Moved D3.2: obsolete long VBUS supply branch, starting at D6.5; USB connector-to-D6 local hookup preserved"
+        ],
+        "captured": {
+          "id": "7e1a48a50d5df7e1",
+          "net": "VBUS",
+          "layer": 1,
+          "w": 20,
+          "pts": [
+            3605.6675,
+            1160,
+            "L",
+            3621.6675,
+            860,
+            3765.6675,
+            692,
+            3779.5276,
+            537.366
+          ]
+        }
+      },
+      {
+        "id": "349be1c8a4ac8165",
+        "reasons": [
+          "Insert R69/R70: old direct MCU contact must be removed; recreate unchanged prefix below and reroute last local pair to resistor pin1"
+        ],
+        "captured": {
+          "id": "349be1c8a4ac8165",
+          "net": "USB_DN_MCU",
+          "layer": 1,
+          "w": 9.45,
+          "pts": [
+            4462.5984,
+            1976.7717,
+            "L",
+            4521.0595,
+            1972.3425,
+            4574.4921,
+            2268.8211,
+            4574.4921,
+            2302.7709,
+            4322.9331,
+            3002.5819,
+            4322.9331,
+            3141.7323,
+            5011.811,
+            3141.7323,
+            5025.7856,
+            3100.3955
+          ]
+        }
+      },
+      {
+        "id": "5a8158d24ad47a8e",
+        "reasons": [
+          "Insert R69/R70: old direct MCU contact must be removed; recreate unchanged prefix below and reroute last local pair to resistor pin1"
+        ],
+        "captured": {
+          "id": "5a8158d24ad47a8e",
+          "net": "USB_DP_MCU",
+          "layer": 1,
+          "w": 9.45,
+          "pts": [
+            4435.0394,
+            1952.3622,
+            "L",
+            4534.0586,
+            1956.7913,
+            4590.0433,
+            2267.4309,
+            4590.0433,
+            2305.4811,
+            4338.4843,
+            3005.2921,
+            4338.4843,
+            3124.6063,
+            4944.8819,
+            3124.6063,
+            4975.7856,
+            3100.3955
+          ]
+        }
+      }
+    ],
+    "vias": [
+      {
+        "id": "2f52a898403778eb",
+        "reasons": [
+          "Moved C6.2 dedicated GND stitch via; no other explicit tracks/pads attach"
+        ],
+        "captured": {
+          "id": "2f52a898403778eb",
+          "net": "GND",
+          "x": 5793.7323,
+          "y": 6312.7254,
+          "d": 24,
+          "h": 12
+        },
+        "associatedExplicitCoverIds": [
+          "26b594c42a91206c",
+          "83d4d591f24b9ef7"
+        ]
+      },
+      {
+        "id": "c2187041f95393b7",
+        "reasons": [
+          "Old D3-to-buck VCC5 branch transitions; obsolete after OR redesign"
+        ],
+        "captured": {
+          "id": "c2187041f95393b7",
+          "net": "VCC5",
+          "x": 3752.63,
+          "y": 5921.3,
+          "d": 24,
+          "h": 12
+        },
+        "associatedExplicitCoverIds": [
+          "85ba66c3d1aa6e90",
+          "6c644b5eae1d7e97"
+        ]
+      },
+      {
+        "id": "87b74b3373543d7e",
+        "reasons": [
+          "Old D3-to-buck VCC5 branch transitions; obsolete after OR redesign"
+        ],
+        "captured": {
+          "id": "87b74b3373543d7e",
+          "net": "VCC5",
+          "x": 4152,
+          "y": 6240,
+          "d": 24,
+          "h": 12
+        },
+        "associatedExplicitCoverIds": [
+          "5faa9d6538b2d8f4",
+          "fb0237a1e496b299"
+        ]
+      },
+      {
+        "id": "afe8e564085efb3d",
+        "reasons": [
+          "Former U7/C3/C7 output branch transitions; now obsolete"
+        ],
+        "captured": {
+          "id": "afe8e564085efb3d",
+          "net": "VCC3V3",
+          "x": 5044.4764,
+          "y": 6504.563,
+          "d": 24,
+          "h": 12
+        },
+        "associatedExplicitCoverIds": []
+      },
+      {
+        "id": "2aec7d1cf167190a",
+        "reasons": [
+          "Former U7/C3/C7 output branch transitions; now obsolete"
+        ],
+        "captured": {
+          "id": "2aec7d1cf167190a",
+          "net": "VCC3V3",
+          "x": 4316.0315,
+          "y": 5863.622,
+          "d": 24,
+          "h": 12
+        },
+        "associatedExplicitCoverIds": []
+      },
+      {
+        "id": "5fe5aad80fdbebae",
+        "reasons": [
+          "Former U7/C3/C7 output branch transitions; now obsolete"
+        ],
+        "captured": {
+          "id": "5fe5aad80fdbebae",
+          "net": "VCC3V3",
+          "x": 4120,
+          "y": 5856,
+          "d": 24,
+          "h": 12
+        },
+        "associatedExplicitCoverIds": [
+          "9416d2c8fc7914e9",
+          "374492e09cd728f9"
+        ]
+      },
+      {
+        "id": "826537ab955bca13",
+        "reasons": [
+          "Former U7/C3/C7 output branch transitions; now obsolete"
+        ],
+        "captured": {
+          "id": "826537ab955bca13",
+          "net": "VCC3V3",
+          "x": 5384,
+          "y": 6048,
+          "d": 24,
+          "h": 12
+        },
+        "associatedExplicitCoverIds": [
+          "8f77a7172b88c967",
+          "fb9b0c518d5cb34c"
+        ]
+      },
+      {
+        "id": "677972d6a9c96936",
+        "reasons": [
+          "All six old U7 VCC3V3 thermal vias inside former thermal region"
+        ],
+        "captured": {
+          "id": "677972d6a9c96936",
+          "net": "VCC3V3",
+          "x": 5229.37,
+          "y": 6136.772,
+          "d": 24,
+          "h": 12
+        },
+        "associatedExplicitCoverIds": [
+          "2da01104ae274d71",
+          "fbaa3925092a6897"
+        ]
+      },
+      {
+        "id": "02a980150aea8084",
+        "reasons": [
+          "All six old U7 VCC3V3 thermal vias inside former thermal region"
+        ],
+        "captured": {
+          "id": "02a980150aea8084",
+          "net": "VCC3V3",
+          "x": 5288.424999999999,
+          "y": 6136.772,
+          "d": 24,
+          "h": 12
+        },
+        "associatedExplicitCoverIds": [
+          "ad5bfb9f051977d0",
+          "b5c23d16b2734ff2"
+        ]
+      },
+      {
+        "id": "bdc7ed8b07df45f6",
+        "reasons": [
+          "All six old U7 VCC3V3 thermal vias inside former thermal region"
+        ],
+        "captured": {
+          "id": "bdc7ed8b07df45f6",
+          "net": "VCC3V3",
+          "x": 5347.48,
+          "y": 6136.772,
+          "d": 24,
+          "h": 12
+        },
+        "associatedExplicitCoverIds": [
+          "7f5b94702fa30469",
+          "f4f5f935447125f2"
+        ]
+      },
+      {
+        "id": "ca7de823c601df1a",
+        "reasons": [
+          "All six old U7 VCC3V3 thermal vias inside former thermal region"
+        ],
+        "captured": {
+          "id": "ca7de823c601df1a",
+          "net": "VCC3V3",
+          "x": 5406.535,
+          "y": 6136.772,
+          "d": 24,
+          "h": 12
+        },
+        "associatedExplicitCoverIds": [
+          "399f13a3ead2e3ee",
+          "71a4db6692516a62"
+        ]
+      },
+      {
+        "id": "5f14f1f1c5aba6d9",
+        "reasons": [
+          "All six old U7 VCC3V3 thermal vias inside former thermal region"
+        ],
+        "captured": {
+          "id": "5f14f1f1c5aba6d9",
+          "net": "VCC3V3",
+          "x": 5288.424999999999,
+          "y": 6195.827,
+          "d": 24,
+          "h": 12
+        },
+        "associatedExplicitCoverIds": [
+          "fc81667ddacd9b7e",
+          "61596bf13ba38f3e"
+        ]
+      },
+      {
+        "id": "6df0b0f0b86a643a",
+        "reasons": [
+          "All six old U7 VCC3V3 thermal vias inside former thermal region"
+        ],
+        "captured": {
+          "id": "6df0b0f0b86a643a",
+          "net": "VCC3V3",
+          "x": 5288.424999999999,
+          "y": 6254.882,
+          "d": 24,
+          "h": 12
+        },
+        "associatedExplicitCoverIds": [
+          "3b7dfa42770b15fa",
+          "3f6ee8b1539a3dfb"
+        ]
+      },
+      {
+        "id": "792d5a433993c690",
+        "reasons": [
+          "Obsolete long VBUS supply branch transition"
+        ],
+        "captured": {
+          "id": "792d5a433993c690",
+          "net": "VBUS",
+          "x": 3605.6675,
+          "y": 1160,
+          "d": 24,
+          "h": 12
+        },
+        "associatedExplicitCoverIds": [
+          "5debc68c49a4a719",
+          "d72016cb11b0ca7c"
+        ]
+      },
+      {
+        "id": "0ab096d01c39b800",
+        "reasons": [
+          "Obsolete long VBUS supply branch transition"
+        ],
+        "captured": {
+          "id": "0ab096d01c39b800",
+          "net": "VBUS",
+          "x": 3093.6675000000005,
+          "y": 1756,
+          "d": 24,
+          "h": 12
+        },
+        "associatedExplicitCoverIds": [
+          "dada783f8eb4bbaf",
+          "1b1a41b1aee17720"
+        ]
+      },
+      {
+        "id": "dfd66c86b7b7a7de",
+        "reasons": [
+          "Obsolete long VBUS supply branch transition"
+        ],
+        "captured": {
+          "id": "dfd66c86b7b7a7de",
+          "net": "VBUS",
+          "x": 2685.6675,
+          "y": 1996,
+          "d": 24,
+          "h": 12
+        },
+        "associatedExplicitCoverIds": [
+          "8e29c1d1b2a6e445",
+          "c69b2a8a596dd434"
+        ]
+      },
+      {
+        "id": "ffb3c5a05e766f0e",
+        "reasons": [
+          "Obsolete long VBUS supply branch transition"
+        ],
+        "captured": {
+          "id": "ffb3c5a05e766f0e",
+          "net": "VBUS",
+          "x": 2665.6675,
+          "y": 2752,
+          "d": 24,
+          "h": 12
+        },
+        "associatedExplicitCoverIds": [
+          "e8dfa979f4427576",
+          "eddcae31c7e3e9bd"
+        ]
+      },
+      {
+        "id": "cc52e43e195f53ec",
+        "reasons": [
+          "Obsolete long VBUS supply branch transition"
+        ],
+        "captured": {
+          "id": "cc52e43e195f53ec",
+          "net": "VBUS",
+          "x": 2597.6675,
+          "y": 2984,
+          "d": 24,
+          "h": 12
+        },
+        "associatedExplicitCoverIds": [
+          "c095514ab642a782",
+          "ca4055a757ad2f63"
+        ]
+      },
+      {
+        "id": "c559638b246a1722",
+        "reasons": [
+          "Obsolete long VBUS supply branch transition"
+        ],
+        "captured": {
+          "id": "c559638b246a1722",
+          "net": "VBUS",
+          "x": 2273.6675,
+          "y": 3700,
+          "d": 24,
+          "h": 12
+        },
+        "associatedExplicitCoverIds": [
+          "3e5163f2db56a443",
+          "89b0a8288c080d07"
+        ]
+      },
+      {
+        "id": "da1636e8a582c928",
+        "reasons": [
+          "Obsolete long VBUS supply branch transition"
+        ],
+        "captured": {
+          "id": "da1636e8a582c928",
+          "net": "VBUS",
+          "x": 2245.6675,
+          "y": 3964,
+          "d": 24,
+          "h": 12
+        },
+        "associatedExplicitCoverIds": [
+          "92d01e74386ddee9",
+          "1dc8964265c3f88c"
+        ]
+      },
+      {
+        "id": "89fa097a8668f229",
+        "reasons": [
+          "Obsolete long VBUS supply branch transition"
+        ],
+        "captured": {
+          "id": "89fa097a8668f229",
+          "net": "VBUS",
+          "x": 2225.6675,
+          "y": 4364,
+          "d": 24,
+          "h": 12
+        },
+        "associatedExplicitCoverIds": [
+          "fed6eafa331b52d9",
+          "b483b99698e9c0e3"
+        ]
+      },
+      {
+        "id": "52db2735426097f4",
+        "reasons": [
+          "Obsolete long VBUS supply branch transition"
+        ],
+        "captured": {
+          "id": "52db2735426097f4",
+          "net": "VBUS",
+          "x": 2305.6675,
+          "y": 4420,
+          "d": 24,
+          "h": 12
+        },
+        "associatedExplicitCoverIds": [
+          "66c4ee3c49096d0c",
+          "94cc90974020138f"
+        ]
+      },
+      {
+        "id": "f41bb2c2f6c1f79d",
+        "reasons": [
+          "Obsolete long VBUS supply branch transition"
+        ],
+        "captured": {
+          "id": "f41bb2c2f6c1f79d",
+          "net": "VBUS",
+          "x": 2925.6675,
+          "y": 4260,
+          "d": 24,
+          "h": 12
+        },
+        "associatedExplicitCoverIds": [
+          "5bf8775c04487c24",
+          "30008800f778c938"
+        ]
+      },
+      {
+        "id": "cab8cd0eac50864f",
+        "reasons": [
+          "Obsolete long VBUS supply branch transition"
+        ],
+        "captured": {
+          "id": "cab8cd0eac50864f",
+          "net": "VBUS",
+          "x": 3617.6675,
+          "y": 5408,
+          "d": 24,
+          "h": 12
+        },
+        "associatedExplicitCoverIds": [
+          "4fc80778f55aa89d",
+          "9d7988c616332719"
+        ]
+      },
+      {
+        "id": "c330369c96c95c55",
+        "reasons": [
+          "Obsolete long VBUS supply branch transition"
+        ],
+        "captured": {
+          "id": "c330369c96c95c55",
+          "net": "VBUS",
+          "x": 3805.6675,
+          "y": 5920,
+          "d": 24,
+          "h": 12
+        },
+        "associatedExplicitCoverIds": [
+          "7e056e19c12e28a1",
+          "da1e7dbf7c961821"
+        ]
+      }
+    ],
+    "fills": [
+      {
+        "id": "ff8566d52dbb3d7a",
+        "reasons": [
+          "Old U7 top/bottom rectangular VCC3V3 heat-spreading fills; must rebuild at new U7 location"
+        ],
+        "captured": {
+          "id": "ff8566d52dbb3d7a",
+          "net": "VCC3V3",
+          "layer": 1,
+          "src": [
+            5199.37,
+            6106.772,
+            "L",
+            5199.37,
+            6290.772,
+            5487.37,
+            6290.772,
+            5487.37,
+            6106.772,
+            5199.37,
+            6106.772
+          ]
+        }
+      },
+      {
+        "id": "bf841e4a36d24918",
+        "reasons": [
+          "Old U7 top/bottom rectangular VCC3V3 heat-spreading fills; must rebuild at new U7 location"
+        ],
+        "captured": {
+          "id": "bf841e4a36d24918",
+          "net": "VCC3V3",
+          "layer": 2,
+          "src": [
+            5167.37,
+            5994.772,
+            "L",
+            5167.37,
+            6434.772,
+            5767.37,
+            6434.772,
+            5767.37,
+            5994.772,
+            5167.37,
+            5994.772
+          ]
+        }
+      },
+      {
+        "id": "26b594c42a91206c",
+        "reasons": [
+          "Explicit copper cover of deleted via 2f52a898403778eb; remove every captured cover on its persisted layer"
+        ],
+        "captured": {
+          "id": "26b594c42a91206c",
+          "net": "GND",
+          "layer": 1,
+          "src": [
+            "CIRCLE",
+            5793.7323,
+            6312.7254,
+            10
+          ]
+        }
+      },
+      {
+        "id": "83d4d591f24b9ef7",
+        "reasons": [
+          "Explicit copper cover of deleted via 2f52a898403778eb; remove every captured cover on its persisted layer"
+        ],
+        "captured": {
+          "id": "83d4d591f24b9ef7",
+          "net": "GND",
+          "layer": 2,
+          "src": [
+            "CIRCLE",
+            5793.7323,
+            6312.7254,
+            10
+          ]
+        }
+      },
+      {
+        "id": "85ba66c3d1aa6e90",
+        "reasons": [
+          "Explicit copper cover of deleted via c2187041f95393b7; remove every captured cover on its persisted layer"
+        ],
+        "captured": {
+          "id": "85ba66c3d1aa6e90",
+          "net": "VCC5",
+          "layer": 1,
+          "src": [
+            "CIRCLE",
+            3752.63,
+            5921.3,
+            10
+          ]
+        }
+      },
+      {
+        "id": "6c644b5eae1d7e97",
+        "reasons": [
+          "Explicit copper cover of deleted via c2187041f95393b7; remove every captured cover on its persisted layer"
+        ],
+        "captured": {
+          "id": "6c644b5eae1d7e97",
+          "net": "VCC5",
+          "layer": 2,
+          "src": [
+            "CIRCLE",
+            3752.63,
+            5921.3,
+            10
+          ]
+        }
+      },
+      {
+        "id": "5faa9d6538b2d8f4",
+        "reasons": [
+          "Explicit copper cover of deleted via 87b74b3373543d7e; remove every captured cover on its persisted layer"
+        ],
+        "captured": {
+          "id": "5faa9d6538b2d8f4",
+          "net": "VCC5",
+          "layer": 1,
+          "src": [
+            "CIRCLE",
+            4152,
+            6240,
+            10
+          ]
+        }
+      },
+      {
+        "id": "fb0237a1e496b299",
+        "reasons": [
+          "Explicit copper cover of deleted via 87b74b3373543d7e; remove every captured cover on its persisted layer"
+        ],
+        "captured": {
+          "id": "fb0237a1e496b299",
+          "net": "VCC5",
+          "layer": 2,
+          "src": [
+            "CIRCLE",
+            4152,
+            6240,
+            10
+          ]
+        }
+      },
+      {
+        "id": "9416d2c8fc7914e9",
+        "reasons": [
+          "Explicit copper cover of deleted via 5fe5aad80fdbebae; remove every captured cover on its persisted layer"
+        ],
+        "captured": {
+          "id": "9416d2c8fc7914e9",
+          "net": "VCC3V3",
+          "layer": 1,
+          "src": [
+            "CIRCLE",
+            4120,
+            5856,
+            10
+          ]
+        }
+      },
+      {
+        "id": "374492e09cd728f9",
+        "reasons": [
+          "Explicit copper cover of deleted via 5fe5aad80fdbebae; remove every captured cover on its persisted layer"
+        ],
+        "captured": {
+          "id": "374492e09cd728f9",
+          "net": "VCC3V3",
+          "layer": 2,
+          "src": [
+            "CIRCLE",
+            4120,
+            5856,
+            10
+          ]
+        }
+      },
+      {
+        "id": "8f77a7172b88c967",
+        "reasons": [
+          "Explicit copper cover of deleted via 826537ab955bca13; remove every captured cover on its persisted layer"
+        ],
+        "captured": {
+          "id": "8f77a7172b88c967",
+          "net": "VCC3V3",
+          "layer": 1,
+          "src": [
+            "CIRCLE",
+            5384,
+            6048,
+            10
+          ]
+        }
+      },
+      {
+        "id": "fb9b0c518d5cb34c",
+        "reasons": [
+          "Explicit copper cover of deleted via 826537ab955bca13; remove every captured cover on its persisted layer"
+        ],
+        "captured": {
+          "id": "fb9b0c518d5cb34c",
+          "net": "VCC3V3",
+          "layer": 2,
+          "src": [
+            "CIRCLE",
+            5384,
+            6048,
+            10
+          ]
+        }
+      },
+      {
+        "id": "2da01104ae274d71",
+        "reasons": [
+          "Explicit copper cover of deleted via 677972d6a9c96936; remove every captured cover on its persisted layer"
+        ],
+        "captured": {
+          "id": "2da01104ae274d71",
+          "net": "VCC3V3",
+          "layer": 1,
+          "src": [
+            "CIRCLE",
+            5229.37,
+            6136.772,
+            10
+          ]
+        }
+      },
+      {
+        "id": "fbaa3925092a6897",
+        "reasons": [
+          "Explicit copper cover of deleted via 677972d6a9c96936; remove every captured cover on its persisted layer"
+        ],
+        "captured": {
+          "id": "fbaa3925092a6897",
+          "net": "VCC3V3",
+          "layer": 2,
+          "src": [
+            "CIRCLE",
+            5229.37,
+            6136.772,
+            10
+          ]
+        }
+      },
+      {
+        "id": "ad5bfb9f051977d0",
+        "reasons": [
+          "Explicit copper cover of deleted via 02a980150aea8084; remove every captured cover on its persisted layer"
+        ],
+        "captured": {
+          "id": "ad5bfb9f051977d0",
+          "net": "VCC3V3",
+          "layer": 1,
+          "src": [
+            "CIRCLE",
+            5288.425,
+            6136.772,
+            10
+          ]
+        }
+      },
+      {
+        "id": "b5c23d16b2734ff2",
+        "reasons": [
+          "Explicit copper cover of deleted via 02a980150aea8084; remove every captured cover on its persisted layer"
+        ],
+        "captured": {
+          "id": "b5c23d16b2734ff2",
+          "net": "VCC3V3",
+          "layer": 2,
+          "src": [
+            "CIRCLE",
+            5288.425,
+            6136.772,
+            10
+          ]
+        }
+      },
+      {
+        "id": "7f5b94702fa30469",
+        "reasons": [
+          "Explicit copper cover of deleted via bdc7ed8b07df45f6; remove every captured cover on its persisted layer"
+        ],
+        "captured": {
+          "id": "7f5b94702fa30469",
+          "net": "VCC3V3",
+          "layer": 1,
+          "src": [
+            "CIRCLE",
+            5347.48,
+            6136.772,
+            10
+          ]
+        }
+      },
+      {
+        "id": "f4f5f935447125f2",
+        "reasons": [
+          "Explicit copper cover of deleted via bdc7ed8b07df45f6; remove every captured cover on its persisted layer"
+        ],
+        "captured": {
+          "id": "f4f5f935447125f2",
+          "net": "VCC3V3",
+          "layer": 2,
+          "src": [
+            "CIRCLE",
+            5347.48,
+            6136.772,
+            10
+          ]
+        }
+      },
+      {
+        "id": "399f13a3ead2e3ee",
+        "reasons": [
+          "Explicit copper cover of deleted via ca7de823c601df1a; remove every captured cover on its persisted layer"
+        ],
+        "captured": {
+          "id": "399f13a3ead2e3ee",
+          "net": "VCC3V3",
+          "layer": 1,
+          "src": [
+            "CIRCLE",
+            5406.535,
+            6136.772,
+            10
+          ]
+        }
+      },
+      {
+        "id": "71a4db6692516a62",
+        "reasons": [
+          "Explicit copper cover of deleted via ca7de823c601df1a; remove every captured cover on its persisted layer"
+        ],
+        "captured": {
+          "id": "71a4db6692516a62",
+          "net": "VCC3V3",
+          "layer": 2,
+          "src": [
+            "CIRCLE",
+            5406.535,
+            6136.772,
+            10
+          ]
+        }
+      },
+      {
+        "id": "fc81667ddacd9b7e",
+        "reasons": [
+          "Explicit copper cover of deleted via 5f14f1f1c5aba6d9; remove every captured cover on its persisted layer"
+        ],
+        "captured": {
+          "id": "fc81667ddacd9b7e",
+          "net": "VCC3V3",
+          "layer": 1,
+          "src": [
+            "CIRCLE",
+            5288.425,
+            6195.827,
+            10
+          ]
+        }
+      },
+      {
+        "id": "61596bf13ba38f3e",
+        "reasons": [
+          "Explicit copper cover of deleted via 5f14f1f1c5aba6d9; remove every captured cover on its persisted layer"
+        ],
+        "captured": {
+          "id": "61596bf13ba38f3e",
+          "net": "VCC3V3",
+          "layer": 2,
+          "src": [
+            "CIRCLE",
+            5288.425,
+            6195.827,
+            10
+          ]
+        }
+      },
+      {
+        "id": "3b7dfa42770b15fa",
+        "reasons": [
+          "Explicit copper cover of deleted via 6df0b0f0b86a643a; remove every captured cover on its persisted layer"
+        ],
+        "captured": {
+          "id": "3b7dfa42770b15fa",
+          "net": "VCC3V3",
+          "layer": 1,
+          "src": [
+            "CIRCLE",
+            5288.425,
+            6254.882,
+            10
+          ]
+        }
+      },
+      {
+        "id": "3f6ee8b1539a3dfb",
+        "reasons": [
+          "Explicit copper cover of deleted via 6df0b0f0b86a643a; remove every captured cover on its persisted layer"
+        ],
+        "captured": {
+          "id": "3f6ee8b1539a3dfb",
+          "net": "VCC3V3",
+          "layer": 2,
+          "src": [
+            "CIRCLE",
+            5288.425,
+            6254.882,
+            10
+          ]
+        }
+      },
+      {
+        "id": "5debc68c49a4a719",
+        "reasons": [
+          "Explicit copper cover of deleted via 792d5a433993c690; remove every captured cover on its persisted layer"
+        ],
+        "captured": {
+          "id": "5debc68c49a4a719",
+          "net": "VBUS",
+          "layer": 1,
+          "src": [
+            "CIRCLE",
+            3605.6675,
+            1160,
+            10
+          ]
+        }
+      },
+      {
+        "id": "d72016cb11b0ca7c",
+        "reasons": [
+          "Explicit copper cover of deleted via 792d5a433993c690; remove every captured cover on its persisted layer"
+        ],
+        "captured": {
+          "id": "d72016cb11b0ca7c",
+          "net": "VBUS",
+          "layer": 2,
+          "src": [
+            "CIRCLE",
+            3605.6675,
+            1160,
+            10
+          ]
+        }
+      },
+      {
+        "id": "dada783f8eb4bbaf",
+        "reasons": [
+          "Explicit copper cover of deleted via 0ab096d01c39b800; remove every captured cover on its persisted layer"
+        ],
+        "captured": {
+          "id": "dada783f8eb4bbaf",
+          "net": "VBUS",
+          "layer": 1,
+          "src": [
+            "CIRCLE",
+            3093.6675,
+            1756,
+            10
+          ]
+        }
+      },
+      {
+        "id": "1b1a41b1aee17720",
+        "reasons": [
+          "Explicit copper cover of deleted via 0ab096d01c39b800; remove every captured cover on its persisted layer"
+        ],
+        "captured": {
+          "id": "1b1a41b1aee17720",
+          "net": "VBUS",
+          "layer": 2,
+          "src": [
+            "CIRCLE",
+            3093.6675,
+            1756,
+            10
+          ]
+        }
+      },
+      {
+        "id": "8e29c1d1b2a6e445",
+        "reasons": [
+          "Explicit copper cover of deleted via dfd66c86b7b7a7de; remove every captured cover on its persisted layer"
+        ],
+        "captured": {
+          "id": "8e29c1d1b2a6e445",
+          "net": "VBUS",
+          "layer": 1,
+          "src": [
+            "CIRCLE",
+            2685.6675,
+            1996,
+            10
+          ]
+        }
+      },
+      {
+        "id": "c69b2a8a596dd434",
+        "reasons": [
+          "Explicit copper cover of deleted via dfd66c86b7b7a7de; remove every captured cover on its persisted layer"
+        ],
+        "captured": {
+          "id": "c69b2a8a596dd434",
+          "net": "VBUS",
+          "layer": 2,
+          "src": [
+            "CIRCLE",
+            2685.6675,
+            1996,
+            10
+          ]
+        }
+      },
+      {
+        "id": "e8dfa979f4427576",
+        "reasons": [
+          "Explicit copper cover of deleted via ffb3c5a05e766f0e; remove every captured cover on its persisted layer"
+        ],
+        "captured": {
+          "id": "e8dfa979f4427576",
+          "net": "VBUS",
+          "layer": 1,
+          "src": [
+            "CIRCLE",
+            2665.6675,
+            2752,
+            10
+          ]
+        }
+      },
+      {
+        "id": "eddcae31c7e3e9bd",
+        "reasons": [
+          "Explicit copper cover of deleted via ffb3c5a05e766f0e; remove every captured cover on its persisted layer"
+        ],
+        "captured": {
+          "id": "eddcae31c7e3e9bd",
+          "net": "VBUS",
+          "layer": 2,
+          "src": [
+            "CIRCLE",
+            2665.6675,
+            2752,
+            10
+          ]
+        }
+      },
+      {
+        "id": "c095514ab642a782",
+        "reasons": [
+          "Explicit copper cover of deleted via cc52e43e195f53ec; remove every captured cover on its persisted layer"
+        ],
+        "captured": {
+          "id": "c095514ab642a782",
+          "net": "VBUS",
+          "layer": 1,
+          "src": [
+            "CIRCLE",
+            2597.6675,
+            2984,
+            10
+          ]
+        }
+      },
+      {
+        "id": "ca4055a757ad2f63",
+        "reasons": [
+          "Explicit copper cover of deleted via cc52e43e195f53ec; remove every captured cover on its persisted layer"
+        ],
+        "captured": {
+          "id": "ca4055a757ad2f63",
+          "net": "VBUS",
+          "layer": 2,
+          "src": [
+            "CIRCLE",
+            2597.6675,
+            2984,
+            10
+          ]
+        }
+      },
+      {
+        "id": "3e5163f2db56a443",
+        "reasons": [
+          "Explicit copper cover of deleted via c559638b246a1722; remove every captured cover on its persisted layer"
+        ],
+        "captured": {
+          "id": "3e5163f2db56a443",
+          "net": "VBUS",
+          "layer": 1,
+          "src": [
+            "CIRCLE",
+            2273.6675,
+            3700,
+            10
+          ]
+        }
+      },
+      {
+        "id": "89b0a8288c080d07",
+        "reasons": [
+          "Explicit copper cover of deleted via c559638b246a1722; remove every captured cover on its persisted layer"
+        ],
+        "captured": {
+          "id": "89b0a8288c080d07",
+          "net": "VBUS",
+          "layer": 2,
+          "src": [
+            "CIRCLE",
+            2273.6675,
+            3700,
+            10
+          ]
+        }
+      },
+      {
+        "id": "92d01e74386ddee9",
+        "reasons": [
+          "Explicit copper cover of deleted via da1636e8a582c928; remove every captured cover on its persisted layer"
+        ],
+        "captured": {
+          "id": "92d01e74386ddee9",
+          "net": "VBUS",
+          "layer": 1,
+          "src": [
+            "CIRCLE",
+            2245.6675,
+            3964,
+            10
+          ]
+        }
+      },
+      {
+        "id": "1dc8964265c3f88c",
+        "reasons": [
+          "Explicit copper cover of deleted via da1636e8a582c928; remove every captured cover on its persisted layer"
+        ],
+        "captured": {
+          "id": "1dc8964265c3f88c",
+          "net": "VBUS",
+          "layer": 2,
+          "src": [
+            "CIRCLE",
+            2245.6675,
+            3964,
+            10
+          ]
+        }
+      },
+      {
+        "id": "fed6eafa331b52d9",
+        "reasons": [
+          "Explicit copper cover of deleted via 89fa097a8668f229; remove every captured cover on its persisted layer"
+        ],
+        "captured": {
+          "id": "fed6eafa331b52d9",
+          "net": "VBUS",
+          "layer": 1,
+          "src": [
+            "CIRCLE",
+            2225.6675,
+            4364,
+            10
+          ]
+        }
+      },
+      {
+        "id": "b483b99698e9c0e3",
+        "reasons": [
+          "Explicit copper cover of deleted via 89fa097a8668f229; remove every captured cover on its persisted layer"
+        ],
+        "captured": {
+          "id": "b483b99698e9c0e3",
+          "net": "VBUS",
+          "layer": 2,
+          "src": [
+            "CIRCLE",
+            2225.6675,
+            4364,
+            10
+          ]
+        }
+      },
+      {
+        "id": "66c4ee3c49096d0c",
+        "reasons": [
+          "Explicit copper cover of deleted via 52db2735426097f4; remove every captured cover on its persisted layer"
+        ],
+        "captured": {
+          "id": "66c4ee3c49096d0c",
+          "net": "VBUS",
+          "layer": 1,
+          "src": [
+            "CIRCLE",
+            2305.6675,
+            4420,
+            10
+          ]
+        }
+      },
+      {
+        "id": "94cc90974020138f",
+        "reasons": [
+          "Explicit copper cover of deleted via 52db2735426097f4; remove every captured cover on its persisted layer"
+        ],
+        "captured": {
+          "id": "94cc90974020138f",
+          "net": "VBUS",
+          "layer": 2,
+          "src": [
+            "CIRCLE",
+            2305.6675,
+            4420,
+            10
+          ]
+        }
+      },
+      {
+        "id": "5bf8775c04487c24",
+        "reasons": [
+          "Explicit copper cover of deleted via f41bb2c2f6c1f79d; remove every captured cover on its persisted layer"
+        ],
+        "captured": {
+          "id": "5bf8775c04487c24",
+          "net": "VBUS",
+          "layer": 1,
+          "src": [
+            "CIRCLE",
+            2925.6675,
+            4260,
+            10
+          ]
+        }
+      },
+      {
+        "id": "30008800f778c938",
+        "reasons": [
+          "Explicit copper cover of deleted via f41bb2c2f6c1f79d; remove every captured cover on its persisted layer"
+        ],
+        "captured": {
+          "id": "30008800f778c938",
+          "net": "VBUS",
+          "layer": 2,
+          "src": [
+            "CIRCLE",
+            2925.6675,
+            4260,
+            10
+          ]
+        }
+      },
+      {
+        "id": "4fc80778f55aa89d",
+        "reasons": [
+          "Explicit copper cover of deleted via cab8cd0eac50864f; remove every captured cover on its persisted layer"
+        ],
+        "captured": {
+          "id": "4fc80778f55aa89d",
+          "net": "VBUS",
+          "layer": 1,
+          "src": [
+            "CIRCLE",
+            3617.6675,
+            5408,
+            10
+          ]
+        }
+      },
+      {
+        "id": "9d7988c616332719",
+        "reasons": [
+          "Explicit copper cover of deleted via cab8cd0eac50864f; remove every captured cover on its persisted layer"
+        ],
+        "captured": {
+          "id": "9d7988c616332719",
+          "net": "VBUS",
+          "layer": 2,
+          "src": [
+            "CIRCLE",
+            3617.6675,
+            5408,
+            10
+          ]
+        }
+      },
+      {
+        "id": "7e056e19c12e28a1",
+        "reasons": [
+          "Explicit copper cover of deleted via c330369c96c95c55; remove every captured cover on its persisted layer"
+        ],
+        "captured": {
+          "id": "7e056e19c12e28a1",
+          "net": "VBUS",
+          "layer": 1,
+          "src": [
+            "CIRCLE",
+            3805.6675,
+            5920,
+            10
+          ]
+        }
+      },
+      {
+        "id": "da1e7dbf7c961821",
+        "reasons": [
+          "Explicit copper cover of deleted via c330369c96c95c55; remove every captured cover on its persisted layer"
+        ],
+        "captured": {
+          "id": "da1e7dbf7c961821",
+          "net": "VBUS",
+          "layer": 2,
+          "src": [
+            "CIRCLE",
+            3805.6675,
+            5920,
+            10
+          ]
+        }
+      }
+    ]
+  },
+  "recreatePrefixes": [
+    {
+      "replacesDeletedId": "349be1c8a4ac8165",
+      "net": "USB_DN_MCU",
+      "layer": 1,
+      "widthMil": 9.45,
+      "pts": [
+        4462.5984,
+        1976.7717,
+        "L",
+        4521.0595,
+        1972.3425,
+        4574.4921,
+        2268.8211,
+        4574.4921,
+        2302.7709,
+        4322.9331,
+        3002.5819
+      ],
+      "reason": "Preserve existing length-coupled USB route to the last approach corridor; route new resistor-input pair from these ends, then short pin2-to-U2 legs",
+      "status": "REUSE_GEOMETRY_ONLY_NOT_COMPLETED_ROUTING"
+    },
+    {
+      "replacesDeletedId": "5a8158d24ad47a8e",
+      "net": "USB_DP_MCU",
+      "layer": 1,
+      "widthMil": 9.45,
+      "pts": [
+        4435.0394,
+        1952.3622,
+        "L",
+        4534.0586,
+        1956.7913,
+        4590.0433,
+        2267.4309,
+        4590.0433,
+        2305.4811,
+        4338.4843,
+        3005.2921
+      ],
+      "reason": "Preserve existing length-coupled USB route to the last approach corridor; route new resistor-input pair from these ends, then short pin2-to-U2 legs",
+      "status": "REUSE_GEOMETRY_ONLY_NOT_COMPLETED_ROUTING"
+    },
+    {
+      "replacesDeletedId": "9a5d14152cd57339",
+      "net": "VCC5",
+      "layer": 1,
+      "widthMil": 30,
+      "pts": [
+        1309.0354,
+        4414,
+        "L",
+        1328.420872295675,
+        6255.307512378007
+      ],
+      "reason": "Preserve established long VCC5 trunk except150mil approach to U5.4; reconnect this supply island to U5.16/other VCC5 while avoiding DRIVE_ENABLE",
+      "status": "REUSE_GEOMETRY_ONLY_NOT_COMPLETED_ROUTING"
+    },
+    {
+      "replacesDeletedId": "aa1c3ebd792f0377",
+      "net": "VCC5",
+      "layer": 1,
+      "widthMil": 12,
+      "pts": [
+        1329.5742617571016,
+        6255.300604178055,
+        "L",
+        1324.63,
+        4513.3,
+        1160.63,
+        4137.3,
+        1141.7323,
+        4125.5896
+      ],
+      "reason": "Preserve established long VCC5 trunk except150mil approach to U5.4; reconnect this supply island to U5.16/other VCC5 while avoiding DRIVE_ENABLE",
+      "status": "REUSE_GEOMETRY_ONLY_NOT_COMPLETED_ROUTING"
+    }
+  ],
+  "counts": {
+    "tracks": 60,
+    "vias": 25,
+    "fills": 48
+  },
+  "preserveExplicit": {
+    "VBUS_tracks": [
+      "29a5faa2328cf162",
+      "459a779e18d745e7",
+      "5d37cae962dd4d40",
+      "69cdc79bad29149f",
+      "823ee5cf58ed0b94",
+      "98e1a2fbf33b4f97",
+      "c6886b6d851c93c5"
+    ],
+    "VBUS_vias": [
+      "2433ef3f8777d67e",
+      "ece6d0e1c424c4d7",
+      "fa2cfb93f404925d"
+    ],
+    "U3_GND_shared_via": "0077b6233493129e",
+    "U4_GND_shared_vias": [
+      "eaf11f1710509dbb",
+      "227d3dc86b112edb"
+    ],
+    "U5_GND_shared_via": "3320f3c85c724907",
+    "U6_thermal_fill": "dce1f8915cb5e576",
+    "R19_supply_via": "989793a2579f062f"
+  },
+  "requiredRerouteConsequences": [
+    "All moved D3/U7/C3/C6/C7 pads need reconnection at final locations.",
+    "U3/U4/U5 pin4 now DRIVE_ENABLE and pin12 now LOGIC_5V; old VCC5/GND ties must be absent.",
+    "Stationary R18.1 VCC5 and R19.1 VCC3V3 lose old shared regulator spurs and require reconnection.",
+    "VCC5 shortened long trunks must reconnect to the drive supply, never U5.4.",
+    "USB pair prefixes need a coordinated last-approach to R69/R70 pin1; resistor pin2 connects only to respective U2.13/14 PIN net. Validate pair lengths, spacing and native DRC.",
+    "Rebuild new U7 output thermal copper and confirm loaded temperature; this plan intentionally removes old heat-spreader fills/vias.",
+    "Refresh ground/power pours and regenerate via covers after final routing, then save/reopen and validate actual copper."
+  ],
+  "doNotDo": [
+    "Do not delete all GND, VCC5 or VCC3V3 copper.",
+    "Do not retag old VCC5 branches to LOGIC_5V wholesale.",
+    "Do not retain circular copper covers after deleting their via.",
+    "Do not assume schematic import removed touching tracks, vias or fills.",
+    "Do not apply if any captured ID geometry or net differs from this plan; reconcile first."
+  ]
+}

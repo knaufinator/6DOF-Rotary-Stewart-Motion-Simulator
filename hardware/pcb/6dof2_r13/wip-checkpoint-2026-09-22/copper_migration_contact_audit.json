@@ -1,0 +1,7 @@
+{
+  "scope": "Continuous physical overlap check against remaining tracks/vias/top fills plus reused prefixes at the eight fixed retagged pads and former positions of five moved parts. Does not include rebuilt native planes, route clearance or final placement.",
+  "fixedRetaggedPadsChecked": 8,
+  "wrongNetContactsAfterMigration": [],
+  "allRemainingCopperContactsAtOldTargets": [],
+  "status": "PASS_NO_OLD_NET_CONTACT_ON_FIXED_RETAGGED_PADS"
+}

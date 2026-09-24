@@ -1,0 +1,12 @@
+{
+  "status": "PASS_CORE_PACKAGE_INTEGRITY_NOT_ORDER_APPROVAL",
+  "parts": 144,
+  "physicalPads": 654,
+  "logicalPins": 640,
+  "tracks": 967,
+  "vias": 398,
+  "bomRows": 46,
+  "cplRows": 144,
+  "nativeImportedDRC": [],
+  "manifestChecked": false
+}

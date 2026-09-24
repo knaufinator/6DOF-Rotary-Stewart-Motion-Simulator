@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="173mm" height="203mm" viewBox="-21 -2 173 203" style="background-color:white" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <g transform="translate(-21.0 201.0) scale(1 -1) translate(21.0 2.0)">
+    <circle cx="80.0" cy="10.0" r="2.3008" fill="black"/>
+    <circle cx="140.0" cy="10.0" r="2.25552" fill="black"/>
+    <circle cx="80.0" cy="190.0" r="2.3008" fill="black"/>
+    <circle cx="140.0" cy="190.0" r="2.25552" fill="black"/>
+    <circle cx="-10.0" cy="10.0" r="2.25552" fill="black"/>
+    <circle cx="-10.0" cy="190.0" r="2.25552" fill="black"/>
+    <circle cx="133.54" cy="4.0" r="0.849998" fill="black"/>
+    <circle cx="131.0" cy="4.0" r="0.849998" fill="black"/>
+    <circle cx="127.673" cy="4.8" r="0.05" fill="black"/>
+    <circle cx="129.247" cy="4.8" r="0.05" fill="black"/>
+    <circle cx="129.247" cy="3.2" r="0.05" fill="black"/>
+    <circle cx="127.673" cy="3.2" r="0.05" fill="black"/>
+    <rect x="127.673" y="4.75" width="1.5748" height="0.1" fill="black"/>
+    <rect x="128.447" y="3.95" width="1.6" height="0.1" transform="rotate(-90.0 129.247 4.0)" fill="black"/>
+    <rect x="127.673" y="3.15" width="1.5748" height="0.1" transform="rotate(180.0 128.46 3.2)" fill="black"/>
+    <rect x="126.873" y="3.95" width="1.6" height="0.1" transform="rotate(90.0 127.673 4.0)" fill="black"/>
+    <path d="M 127.673 4.8 L 129.247 4.8 L 129.247 3.2 L 127.673 3.2 L 127.673 4.8" fill="black"/>
+    <circle cx="118.46" cy="4.0" r="1.2508" fill="black"/>
+    <circle cx="123.54" cy="4.0" r="1.2508" fill="black"/>
+    <circle cx="107.46" cy="4.0" r="1.2508" fill="black"/>
+    <circle cx="112.54" cy="4.0" r="1.2508" fill="black"/>
+    <path d="M 99.3251 2.22591 L 99.3251 2.82591" fill="none" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.3016"/>
+    <path d="M 99.3251 6.30574 L 99.3251 7.10574" fill="none" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.3016"/>
+    <path d="M 90.6749 6.30574 L 90.6749 7.10574" fill="none" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.3016"/>
+    <path d="M 90.6749 2.22591 L 90.6749 2.82591" fill="none" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.3016"/>
+    <circle cx="7.84619" cy="50.2361" r="0.850799" fill="black"/>
+    <circle cx="7.84619" cy="47.4663" r="0.850799" fill="black"/>
+    <circle cx="7.84619" cy="44.6961" r="0.850799" fill="black"/>
+    <circle cx="7.84619" cy="41.9263" r="0.850799" fill="black"/>
+    <circle cx="7.84619" cy="39.1561" r="0.850799" fill="black"/>
+    <circle cx="7.84619" cy="36.3863" r="0.850799" fill="black"/>
+    <circle cx="7.84619" cy="33.6161" r="0.850799" fill="black"/>
+    <circle cx="7.84619" cy="30.8463" r="0.850799" fill="black"/>
+    <circle cx="7.84619" cy="28.0761" r="0.850799" fill="black"/>
+    <circle cx="7.84619" cy="25.3063" r="0.850799" fill="black"/>
+    <circle cx="7.84619" cy="22.5361" r="0.850799" fill="black"/>
+    <circle cx="7.84619" cy="19.7663" r="0.850799" fill="black"/>
+    <circle cx="5.00621" cy="51.6212" r="0.850799" fill="black"/>
+    <circle cx="5.00621" cy="48.8513" r="0.850799" fill="black"/>
+    <circle cx="5.00621" cy="46.0812" r="0.850799" fill="black"/>
+    <circle cx="5.00621" cy="43.3113" r="0.850799" fill="black"/>
+    <circle cx="5.00621" cy="40.5412" r="0.850799" fill="black"/>
+    <circle cx="5.00621" cy="37.7713" r="0.850799" fill="black"/>
+    <circle cx="5.00621" cy="35.0012" r="0.850799" fill="black"/>
+    <circle cx="5.00621" cy="32.2313" r="0.850799" fill="black"/>
+    <circle cx="5.00621" cy="29.4612" r="0.850799" fill="black"/>
+    <circle cx="5.00621" cy="26.6913" r="0.850799" fill="black"/>
+    <circle cx="5.00621" cy="23.9212" r="0.850799" fill="black"/>
+    <circle cx="5.00621" cy="21.1513" r="0.850799" fill="black"/>
+    <circle cx="4.20596" cy="17.6192" r="0.0508" fill="black"/>
+    <circle cx="4.20596" cy="19.1432" r="0.0508" fill="black"/>
+    <circle cx="5.80596" cy="19.1432" r="0.0508" fill="black"/>
+    <circle cx="5.80596" cy="17.6192" r="0.0508" fill="black"/>
+    <rect x="3.44396" y="18.3304" width="1.524" height="0.1016" transform="rotate(90.0 4.20596 18.3812)" fill="black"/>
+    <rect x="4.20596" y="19.0924" width="1.6" height="0.1016" fill="black"/>
+    <rect x="5.04396" y="18.3304" width="1.524" height="0.1016" transform="rotate(-90.0 5.80596 18.3812)" fill="black"/>
+    <rect x="4.20596" y="17.5684" width="1.6" height="0.1016" transform="rotate(180.0 5.00596 17.6192)" fill="black"/>
+    <path d="M 4.20596 17.6192 L 4.20596 19.1432 L 5.80596 19.1432 L 5.80596 17.6192 L 4.20596 17.6192" fill="black"/>
+    <circle cx="60.9878" cy="19.7663" r="0.850799" fill="black"/>
+    <circle cx="60.9878" cy="22.5361" r="0.850799" fill="black"/>
+    <circle cx="60.9878" cy="25.3063" r="0.850799" fill="black"/>
+    <circle cx="60.9878" cy="28.0761" r="0.850799" fill="black"/>
+    <circle cx="60.9878" cy="30.8463" r="0.850799" fill="black"/>
+    <circle cx="60.9878" cy="33.6161" r="0.850799" fill="black"/>
+    <circle cx="60.9878" cy="36.3863" r="0.850799" fill="black"/>
+    <circle cx="60.9878" cy="39.1561" r="0.850799" fill="black"/>
+    <circle cx="60.9878" cy="41.9263" r="0.850799" fill="black"/>
+    <circle cx="60.9878" cy="44.6961" r="0.850799" fill="black"/>
+    <circle cx="60.9878" cy="47.4663" r="0.850799" fill="black"/>
+    <circle cx="60.9878" cy="50.2361" r="0.850799" fill="black"/>
+    <circle cx="63.8278" cy="18.3812" r="0.850799" fill="black"/>
+    <circle cx="63.8278" cy="21.1511" r="0.850799" fill="black"/>
+    <circle cx="63.8278" cy="23.9212" r="0.850799" fill="black"/>
+    <circle cx="63.8278" cy="26.6911" r="0.850799" fill="black"/>
+    <circle cx="63.8278" cy="29.4612" r="0.850799" fill="black"/>
+    <circle cx="63.8278" cy="32.2311" r="0.850799" fill="black"/>
+    <circle cx="63.8278" cy="35.0012" r="0.850799" fill="black"/>
+    <circle cx="63.8278" cy="37.7711" r="0.850799" fill="black"/>
+    <circle cx="63.8278" cy="40.5412" r="0.850799" fill="black"/>
+    <circle cx="63.8278" cy="43.3111" r="0.850799" fill="black"/>
+    <circle cx="63.8278" cy="46.0812" r="0.850799" fill="black"/>
+    <circle cx="63.8278" cy="48.8511" r="0.850799" fill="black"/>
+    <circle cx="63.028" cy="50.8592" r="0.0508" fill="black"/>
+    <circle cx="63.028" cy="52.3832" r="0.0508" fill="black"/>
+    <circle cx="64.628" cy="52.3832" r="0.0508" fill="black"/>
+    <circle cx="64.628" cy="50.8592" r="0.0508" fill="black"/>
+    <rect x="62.266" y="51.5704" width="1.524" height="0.1016" transform="rotate(90.0 63.028 51.6212)" fill="black"/>
+    <rect x="63.028" y="52.3324" width="1.6" height="0.1016" fill="black"/>
+    <rect x="63.866" y="51.5704" width="1.524" height="0.1016" transform="rotate(-90.0 64.628 51.6212)" fill="black"/>
+    <rect x="63.028" y="50.8084" width="1.6" height="0.1016" transform="rotate(180.0 63.828 50.8592)" fill="black"/>
+    <path d="M 63.028 50.8592 L 63.028 52.3832 L 64.628 52.3832 L 64.628 50.8592 L 63.028 50.8592" fill="black"/>
+    <circle cx="7.84619" cy="115.235" r="0.850799" fill="black"/>
+    <circle cx="7.84619" cy="112.465" r="0.850799" fill="black"/>
+    <circle cx="7.84619" cy="109.695" r="0.850799" fill="black"/>
+    <circle cx="7.84619" cy="106.925" r="0.850799" fill="black"/>
+    <circle cx="7.84619" cy="104.155" r="0.850799" fill="black"/>
+    <circle cx="7.84619" cy="101.385" r="0.850799" fill="black"/>
+    <circle cx="7.84619" cy="98.6147" r="0.850799" fill="black"/>
+    <circle cx="7.84619" cy="95.8449" r="0.850799" fill="black"/>
+    <circle cx="7.84619" cy="93.0747" r="0.850799" fill="black"/>
+    <circle cx="7.84619" cy="90.3049" r="0.850799" fill="black"/>
+    <circle cx="7.84619" cy="87.5348" r="0.850799" fill="black"/>
+    <circle cx="7.84619" cy="84.7649" r="0.850799" fill="black"/>
+    <circle cx="5.00621" cy="116.62" r="0.850799" fill="black"/>
+    <circle cx="5.00621" cy="113.85" r="0.850799" fill="black"/>
+    <circle cx="5.00621" cy="111.08" r="0.850799" fill="black"/>
+    <circle cx="5.00621" cy="108.31" r="0.850799" fill="black"/>
+    <circle cx="5.00621" cy="105.54" r="0.850799" fill="black"/>
+    <circle cx="5.00621" cy="102.77" r="0.850799" fill="black"/>
+    <circle cx="5.00621" cy="99.9998" r="0.850799" fill="black"/>
+    <circle cx="5.00621" cy="97.2299" r="0.850799" fill="black"/>
+    <circle cx="5.00621" cy="94.4598" r="0.850799" fill="black"/>
+    <circle cx="5.00621" cy="91.6899" r="0.850799" fill="black"/>
+    <circle cx="5.00621" cy="88.9198" r="0.850799" fill="black"/>
+    <circle cx="5.00621" cy="86.1499" r="0.850799" fill="black"/>
+    <circle cx="4.20596" cy="82.6178" r="0.0508" fill="black"/>
+    <circle cx="4.20596" cy="84.1418" r="0.0508" fill="black"/>
+    <circle cx="5.80596" cy="84.1418" r="0.0508" fill="black"/>
+    <circle cx="5.80596" cy="82.6178" r="0.0508" fill="black"/>
+    <rect x="3.44396" y="83.329" width="1.524" height="0.1016" transform="rotate(90.0 4.20596 83.3798)" fill="black"/>
+    <rect x="4.20596" y="84.091" width="1.6" height="0.1016" fill="black"/>
+    <rect x="5.04396" y="83.329" width="1.524" height="0.1016" transform="rotate(-90.0 5.80596 83.3798)" fill="black"/>
+    <rect x="4.20596" y="82.567" width="1.6" height="0.1016" transform="rotate(180.0 5.00596 82.6178)" fill="black"/>
+    <path d="M 4.20596 82.6178 L 4.20596 84.1418 L 5.80596 84.1418 L 5.80596 82.6178 L 4.20596 82.6178" fill="black"/>
+    <circle cx="60.9878" cy="84.7649" r="0.850799" fill="black"/>
+    <circle cx="60.9878" cy="87.5348" r="0.850799" fill="black"/>
+    <circle cx="60.9878" cy="90.3049" r="0.850799" fill="black"/>
+    <circle cx="60.9878" cy="93.0747" r="0.850799" fill="black"/>
+    <circle cx="60.9878" cy="95.8449" r="0.850799" fill="black"/>
+    <circle cx="60.9878" cy="98.6147" r="0.850799" fill="black"/>
+    <circle cx="60.9878" cy="101.385" r="0.850799" fill="black"/>
+    <circle cx="60.9878" cy="104.155" r="0.850799" fill="black"/>
+    <circle cx="60.9878" cy="106.925" r="0.850799" fill="black"/>
+    <circle cx="60.9878" cy="109.695" r="0.850799" fill="black"/>
+    <circle cx="60.9878" cy="112.465" r="0.850799" fill="black"/>
+    <circle cx="60.9878" cy="115.235" r="0.850799" fill="black"/>
+    <circle cx="63.8278" cy="83.3798" r="0.850799" fill="black"/>
+    <circle cx="63.8278" cy="86.1497" r="0.850799" fill="black"/>
+    <circle cx="63.8278" cy="88.9198" r="0.850799" fill="black"/>
+    <circle cx="63.8278" cy="91.6897" r="0.850799" fill="black"/>
+    <circle cx="63.8278" cy="94.4598" r="0.850799" fill="black"/>
+    <circle cx="63.8278" cy="97.2297" r="0.850799" fill="black"/>
+    <circle cx="63.8278" cy="99.9998" r="0.850799" fill="black"/>
+    <circle cx="63.8278" cy="102.77" r="0.850799" fill="black"/>
+    <circle cx="63.8278" cy="105.54" r="0.850799" fill="black"/>
+    <circle cx="63.8278" cy="108.31" r="0.850799" fill="black"/>
+    <circle cx="63.8278" cy="111.08" r="0.850799" fill="black"/>
+    <circle cx="63.8278" cy="113.85" r="0.850799" fill="black"/>
+    <circle cx="63.028" cy="115.858" r="0.0508" fill="black"/>
+    <circle cx="63.028" cy="117.382" r="0.0508" fill="black"/>
+    <circle cx="64.628" cy="117.382" r="0.0508" fill="black"/>
+    <circle cx="64.628" cy="115.858" r="0.0508" fill="black"/>
+    <rect x="62.266" y="116.569" width="1.524" height="0.1016" transform="rotate(90.0 63.028 116.62)" fill="black"/>
+    <rect x="63.028" y="117.331" width="1.6" height="0.1016" fill="black"/>
+    <rect x="63.866" y="116.569" width="1.524" height="0.1016" transform="rotate(-90.0 64.628 116.62)" fill="black"/>
+    <rect x="63.028" y="115.807" width="1.6" height="0.1016" transform="rotate(180.0 63.828 115.858)" fill="black"/>
+    <path d="M 63.028 115.858 L 63.028 117.382 L 64.628 117.382 L 64.628 115.858 L 63.028 115.858" fill="black"/>
+    <circle cx="7.84619" cy="180.233" r="0.850799" fill="black"/>
+    <circle cx="7.84619" cy="177.463" r="0.850799" fill="black"/>
+    <circle cx="7.84619" cy="174.693" r="0.850799" fill="black"/>
+    <circle cx="7.84619" cy="171.923" r="0.850799" fill="black"/>
+    <circle cx="7.84619" cy="169.153" r="0.850799" fill="black"/>
+    <circle cx="7.84619" cy="166.383" r="0.850799" fill="black"/>
+    <circle cx="7.84619" cy="163.613" r="0.850799" fill="black"/>
+    <circle cx="7.84619" cy="160.843" r="0.850799" fill="black"/>
+    <circle cx="7.84619" cy="158.073" r="0.850799" fill="black"/>
+    <circle cx="7.84619" cy="155.303" r="0.850799" fill="black"/>
+    <circle cx="7.84619" cy="152.533" r="0.850799" fill="black"/>
+    <circle cx="7.84619" cy="149.763" r="0.850799" fill="black"/>
+    <circle cx="5.00621" cy="181.618" r="0.850799" fill="black"/>
+    <circle cx="5.00621" cy="178.849" r="0.850799" fill="black"/>
+    <circle cx="5.00621" cy="176.078" r="0.850799" fill="black"/>
+    <circle cx="5.00621" cy="173.309" r="0.850799" fill="black"/>
+    <circle cx="5.00621" cy="170.538" r="0.850799" fill="black"/>
+    <circle cx="5.00621" cy="167.769" r="0.850799" fill="black"/>
+    <circle cx="5.00621" cy="164.998" r="0.850799" fill="black"/>
+    <circle cx="5.00621" cy="162.229" r="0.850799" fill="black"/>
+    <circle cx="5.00621" cy="159.458" r="0.850799" fill="black"/>
+    <circle cx="5.00621" cy="156.689" r="0.850799" fill="black"/>
+    <circle cx="5.00621" cy="153.918" r="0.850799" fill="black"/>
+    <circle cx="5.00621" cy="151.149" r="0.850799" fill="black"/>
+    <circle cx="4.20596" cy="147.616" r="0.0508" fill="black"/>
+    <circle cx="4.20596" cy="149.14" r="0.0508" fill="black"/>
+    <circle cx="5.80596" cy="149.14" r="0.0508" fill="black"/>
+    <circle cx="5.80596" cy="147.616" r="0.0508" fill="black"/>
+    <rect x="3.44396" y="148.328" width="1.524" height="0.1016" transform="rotate(90.0 4.20596 148.378)" fill="black"/>
+    <rect x="4.20596" y="149.09" width="1.6" height="0.1016" fill="black"/>
+    <rect x="5.04396" y="148.328" width="1.524" height="0.1016" transform="rotate(-90.0 5.80596 148.378)" fill="black"/>
+    <rect x="4.20596" y="147.566" width="1.6" height="0.1016" transform="rotate(180.0 5.00596 147.616)" fill="black"/>
+    <path d="M 4.20596 147.616 L 4.20596 149.14 L 5.80596 149.14 L 5.80596 147.616 L 4.20596 147.616" fill="black"/>
+    <circle cx="60.9878" cy="149.763" r="0.850799" fill="black"/>
+    <circle cx="60.9878" cy="152.533" r="0.850799" fill="black"/>
+    <circle cx="60.9878" cy="155.303" r="0.850799" fill="black"/>
+    <circle cx="60.9878" cy="158.073" r="0.850799" fill="black"/>
+    <circle cx="60.9878" cy="160.843" r="0.850799" fill="black"/>
+    <circle cx="60.9878" cy="163.613" r="0.850799" fill="black"/>
+    <circle cx="60.9878" cy="166.383" r="0.850799" fill="black"/>
+    <circle cx="60.9878" cy="169.153" r="0.850799" fill="black"/>
+    <circle cx="60.9878" cy="171.923" r="0.850799" fill="black"/>
+    <circle cx="60.9878" cy="174.693" r="0.850799" fill="black"/>
+    <circle cx="60.9878" cy="177.463" r="0.850799" fill="black"/>
+    <circle cx="60.9878" cy="180.233" r="0.850799" fill="black"/>
+    <circle cx="63.8278" cy="148.378" r="0.850799" fill="black"/>
+    <circle cx="63.8278" cy="151.148" r="0.850799" fill="black"/>
+    <circle cx="63.8278" cy="153.918" r="0.850799" fill="black"/>
+    <circle cx="63.8278" cy="156.688" r="0.850799" fill="black"/>
+    <circle cx="63.8278" cy="159.458" r="0.850799" fill="black"/>
+    <circle cx="63.8278" cy="162.228" r="0.850799" fill="black"/>
+    <circle cx="63.8278" cy="164.998" r="0.850799" fill="black"/>
+    <circle cx="63.8278" cy="167.768" r="0.850799" fill="black"/>
+    <circle cx="63.8278" cy="170.538" r="0.850799" fill="black"/>
+    <circle cx="63.8278" cy="173.308" r="0.850799" fill="black"/>
+    <circle cx="63.8278" cy="176.078" r="0.850799" fill="black"/>
+    <circle cx="63.8278" cy="178.848" r="0.850799" fill="black"/>
+    <circle cx="63.028" cy="180.856" r="0.0508" fill="black"/>
+    <circle cx="63.028" cy="182.38" r="0.0508" fill="black"/>
+    <circle cx="64.628" cy="182.38" r="0.0508" fill="black"/>
+    <circle cx="64.628" cy="180.856" r="0.0508" fill="black"/>
+    <rect x="62.266" y="181.568" width="1.524" height="0.1016" transform="rotate(90.0 63.028 181.618)" fill="black"/>
+    <rect x="63.028" y="182.33" width="1.6" height="0.1016" fill="black"/>
+    <rect x="63.866" y="181.568" width="1.524" height="0.1016" transform="rotate(-90.0 64.628 181.618)" fill="black"/>
+    <rect x="63.028" y="180.806" width="1.6" height="0.1016" transform="rotate(180.0 63.828 180.856)" fill="black"/>
+    <path d="M 63.028 180.856 L 63.028 182.38 L 64.628 182.38 L 64.628 180.856 L 63.028 180.856" fill="black"/>
+  </g>
+</svg>

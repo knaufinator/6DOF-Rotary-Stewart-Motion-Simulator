@@ -79,8 +79,8 @@ target_include_directories(implot_lib PUBLIC ${implot_SOURCE_DIR})
 target_link_libraries(implot_lib PUBLIC imgui_lib)
 
 # ── Shared math from the stewart-core submodule (single source of truth = atan2f) ──
-set(CONTROLLER_DIR ${CMAKE_SOURCE_DIR}/../Controller)     # still needed below for cobs.h
-set(STEWART_CORE ${CMAKE_SOURCE_DIR}/../stewart-core)
+set(CONTROLLER_DIR ${CMAKE_SOURCE_DIR}/../controller)     # still needed below for cobs.h
+set(STEWART_CORE ${CONTROLLER_DIR}/stewart-core)
 
 add_library(stewart_math STATIC
     ${STEWART_CORE}/src/InverseKinematics.cpp
@@ -97,6 +97,7 @@ target_compile_definitions(stewart_math PRIVATE
 # ── Main application ────────────────────────────────────────────────
 add_executable(stewart-platform WIN32
     src/main.cpp
+    src/automation.cpp
     src/app.cpp
     src/ui_panels.cpp
     src/platform_viz.cpp
@@ -126,4 +127,24 @@ target_compile_definitions(stewart-platform PRIVATE
 if(WIN32)
     target_link_libraries(stewart-platform PRIVATE ws2_32 setupapi opengl32)
     set_target_properties(stewart-platform PROPERTIES LINK_FLAGS "/ENTRY:mainCRTStartup")
+endif()
+
+# Read-only safety regression: hardware transports are disabled before any I/O.
+include(CTest)
+if(BUILD_TESTING)
+    add_executable(stewart-recording-tests tests/test_recording.cpp)
+    add_test(NAME recording_precision COMMAND stewart-recording-tests)
+endif()
+if(BUILD_TESTING AND WIN32)
+    add_executable(stewart-docs-safety-tests
+        tests/test_documentation_mode.cpp
+        src/automation.cpp
+        src/serial_port.cpp
+        src/udp_transport.cpp
+    )
+    target_include_directories(stewart-docs-safety-tests PRIVATE src ${cjson_SOURCE_DIR})
+    target_link_libraries(stewart-docs-safety-tests PRIVATE cjson ws2_32 setupapi)
+    add_test(NAME documentation_transport_guards COMMAND stewart-docs-safety-tests)
+    set_tests_properties(documentation_transport_guards PROPERTIES
+        ENVIRONMENT "STEWART_DOCUMENTATION_MODE=1")
 endif()

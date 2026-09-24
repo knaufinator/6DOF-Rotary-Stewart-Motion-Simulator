@@ -1,0 +1,532 @@
+{
+  "C1": {
+    "code": "C3338",
+    "mpn": "RVT1E101M0607",
+    "oldToken": "RVT1E101M0607.1"
+  },
+  "C2": {
+    "code": "C4747974",
+    "mpn": "RST220UF25V019",
+    "oldToken": "RST220UF25V019.1"
+  },
+  "C3": {
+    "code": "C15008",
+    "mpn": "CL31A107MQHNNNE",
+    "oldToken": "CL31A107MQHNNNE.1"
+  },
+  "C4": {
+    "code": "C14663",
+    "mpn": "CC0603KRX7R9BB104",
+    "oldToken": "CC0603KRX7R9BB104.1"
+  },
+  "C5": {
+    "code": "C14663",
+    "mpn": "CC0603KRX7R9BB104",
+    "oldToken": "CC0603KRX7R9BB104.1"
+  },
+  "C7": {
+    "code": "C15850",
+    "mpn": "CL21A106KAYNNNE",
+    "oldToken": "CL21A106KAYNNNE.1"
+  },
+  "C8": {
+    "code": "C14663",
+    "mpn": "CC0603KRX7R9BB104",
+    "oldToken": "CC0603KRX7R9BB104.1"
+  },
+  "C9": {
+    "code": "C14663",
+    "mpn": "CC0603KRX7R9BB104",
+    "oldToken": "CC0603KRX7R9BB104.1"
+  },
+  "C10": {
+    "code": "C14663",
+    "mpn": "CC0603KRX7R9BB104",
+    "oldToken": "CC0603KRX7R9BB104.1"
+  },
+  "C11": {
+    "code": "C15850",
+    "mpn": "CL21A106KAYNNNE",
+    "oldToken": "CL21A106KAYNNNE.1"
+  },
+  "C12": {
+    "code": "C1589",
+    "mpn": "CL10B103KB8NNNC",
+    "oldToken": "CL10B103KB8NNNC.1"
+  },
+  "C13": {
+    "code": "C14663",
+    "mpn": "CC0603KRX7R9BB104",
+    "oldToken": "CC0603KRX7R9BB104.1"
+  },
+  "C14": {
+    "code": "C15849",
+    "mpn": "CL10A105KB8NNNC",
+    "oldToken": "CL10A105KB8NNNC.1"
+  },
+  "C16": {
+    "code": "C14663",
+    "mpn": "CC0603KRX7R9BB104",
+    "oldToken": "CC0603KRX7R9BB104.1"
+  },
+  "C17": {
+    "code": "C14663",
+    "mpn": "CC0603KRX7R9BB104",
+    "oldToken": "CC0603KRX7R9BB104.1"
+  },
+  "C18": {
+    "code": "C14663",
+    "mpn": "CC0603KRX7R9BB104",
+    "oldToken": "CC0603KRX7R9BB104.1"
+  },
+  "C19": {
+    "code": "C15850",
+    "mpn": "CL21A106KAYNNNE",
+    "oldToken": "CL21A106KAYNNNE.1"
+  },
+  "C20": {
+    "code": "C14663",
+    "mpn": "CC0603KRX7R9BB104",
+    "oldToken": "CC0603KRX7R9BB104.1"
+  },
+  "C21": {
+    "code": "C14663",
+    "mpn": "CC0603KRX7R9BB104",
+    "oldToken": "CC0603KRX7R9BB104.1"
+  },
+  "C22": {
+    "code": "C15850",
+    "mpn": "CL21A106KAYNNNE",
+    "oldToken": "CL21A106KAYNNNE.1"
+  },
+  "C23": {
+    "code": "C1647",
+    "mpn": "CL10C180JB8NNNC",
+    "oldToken": "CL10C180JB8NNNC.1"
+  },
+  "C24": {
+    "code": "C1647",
+    "mpn": "CL10C180JB8NNNC",
+    "oldToken": "CL10C180JB8NNNC.1"
+  },
+  "C25": {
+    "code": "C23631",
+    "mpn": "CC1206KKX7RDBB102",
+    "oldToken": "CC1206KKX7RDBB102.1"
+  },
+  "C26": {
+    "code": "C14663",
+    "mpn": "CC0603KRX7R9BB104",
+    "oldToken": "CC0603KRX7R9BB104.1"
+  },
+  "C27": {
+    "code": "C14663",
+    "mpn": "CC0603KRX7R9BB104",
+    "oldToken": "CC0603KRX7R9BB104.1"
+  },
+  "C28": {
+    "code": "C14663",
+    "mpn": "CC0603KRX7R9BB104",
+    "oldToken": "CC0603KRX7R9BB104.1"
+  },
+  "C29": {
+    "code": "C14663",
+    "mpn": "CC0603KRX7R9BB104",
+    "oldToken": "CC0603KRX7R9BB104.1"
+  },
+  "C30": {
+    "code": "C14663",
+    "mpn": "CC0603KRX7R9BB104",
+    "oldToken": "CC0603KRX7R9BB104.1"
+  },
+  "C31": {
+    "code": "C15850",
+    "mpn": "CL21A106KAYNNNE",
+    "oldToken": "CL21A106KAYNNNE.1"
+  },
+  "C32": {
+    "code": "C21122",
+    "mpn": "CL10B223KB8NNNC",
+    "oldToken": "CL10B223KB8NNNC.1"
+  },
+  "C35": {
+    "code": "C1589",
+    "mpn": "CL10B103KB8NNNC",
+    "oldToken": "CL10B103KB8NNNC.1"
+  },
+  "C36": {
+    "code": "C14663",
+    "mpn": "CC0603KRX7R9BB104",
+    "oldToken": "CC0603KRX7R9BB104.1"
+  },
+  "D1": {
+    "code": "C8678",
+    "mpn": "SS34",
+    "oldToken": "SS34_C8678.1"
+  },
+  "D2": {
+    "code": "C8678",
+    "mpn": "SS34",
+    "oldToken": "SS34_C8678.1"
+  },
+  "D3": {
+    "code": "C8678",
+    "mpn": "SS34",
+    "oldToken": "SS34_C8678.1"
+  },
+  "D4": {
+    "code": "C2297",
+    "mpn": "KT-0805G",
+    "oldToken": "0805G (Green).1"
+  },
+  "D5": {
+    "code": "C2297",
+    "mpn": "KT-0805G",
+    "oldToken": "0805G (Green).1"
+  },
+  "D6": {
+    "code": "C7519",
+    "mpn": "USBLC6-2SC6",
+    "oldToken": "USBLC6-2SC6.1"
+  },
+  "D7": {
+    "code": "C193402",
+    "mpn": "SMF5.0A",
+    "oldToken": "SMF5.0A_C193402.1"
+  },
+  "F1": {
+    "code": "C883148",
+    "mpn": "BSMD1812-110-16V",
+    "oldToken": "BSMD1812-110-16V.1"
+  },
+  "J1": {
+    "code": "C49257",
+    "mpn": "2.54-1*3P\u9488",
+    "oldToken": "Header-Male-2.54_1x3.1"
+  },
+  "J2": {
+    "code": "C474952",
+    "mpn": "KF128-5.08-2P-AA",
+    "oldToken": "KF128-5.08-2P.1"
+  },
+  "J3": {
+    "code": "C77833",
+    "mpn": "DS1034-25FUNSI44",
+    "oldToken": "DS1034-25FUNSI44.1"
+  },
+  "J4": {
+    "code": "C77833",
+    "mpn": "DS1034-25FUNSI44",
+    "oldToken": "DS1034-25FUNSI44.1"
+  },
+  "J5": {
+    "code": "C77833",
+    "mpn": "DS1034-25FUNSI44",
+    "oldToken": "DS1034-25FUNSI44.1"
+  },
+  "J6": {
+    "code": "C77833",
+    "mpn": "DS1034-25FUNSI44",
+    "oldToken": "DS1034-25FUNSI44.1"
+  },
+  "J7": {
+    "code": "C77833",
+    "mpn": "DS1034-25FUNSI44",
+    "oldToken": "DS1034-25FUNSI44.1"
+  },
+  "J8": {
+    "code": "C77833",
+    "mpn": "DS1034-25FUNSI44",
+    "oldToken": "DS1034-25FUNSI44.1"
+  },
+  "J9": {
+    "code": "C474952",
+    "mpn": "KF128-5.08-2P-AA",
+    "oldToken": "KF128-5.08-2P.1"
+  },
+  "J10": {
+    "code": "C55683",
+    "mpn": "HR961160C",
+    "oldToken": "HR961160C.1"
+  },
+  "J11": {
+    "code": "C165948",
+    "mpn": "TYPE-C-31-M-12",
+    "oldToken": "TYPE-C-31-M-12.1"
+  },
+  "L1": {
+    "code": "C7431083",
+    "mpn": "CYH125-68UH",
+    "oldToken": "CYH125-68UH.1"
+  },
+  "L2": {
+    "code": "C108301",
+    "mpn": "PBY160808T-601Y-N",
+    "oldToken": "PBY160808T-601Y-N.1"
+  },
+  "R1": {
+    "code": "C25804",
+    "mpn": "0603WAF1002T5E",
+    "oldToken": "0603WAF1002T5E.1"
+  },
+  "R2": {
+    "code": "C23186",
+    "mpn": "0603WAF5101T5E",
+    "oldToken": "0603WAF5101T5E.1"
+  },
+  "R3": {
+    "code": "C23186",
+    "mpn": "0603WAF5101T5E",
+    "oldToken": "0603WAF5101T5E.1"
+  },
+  "R4": {
+    "code": "C25804",
+    "mpn": "0603WAF1002T5E",
+    "oldToken": "0603WAF1002T5E.1"
+  },
+  "R5": {
+    "code": "C25804",
+    "mpn": "0603WAF1002T5E",
+    "oldToken": "0603WAF1002T5E.1"
+  },
+  "R6": {
+    "code": "C21190",
+    "mpn": "0603WAF1001T5E",
+    "oldToken": "0603WAF1001T5E.1"
+  },
+  "R7": {
+    "code": "C21190",
+    "mpn": "0603WAF1001T5E",
+    "oldToken": "0603WAF1001T5E.1"
+  },
+  "R10": {
+    "code": "C22865",
+    "mpn": "0603WAF1242T5E",
+    "oldToken": "0603WAF1242T5E.1"
+  },
+  "R11": {
+    "code": "C25804",
+    "mpn": "0603WAF1002T5E",
+    "oldToken": "0603WAF1002T5E.1"
+  },
+  "R12": {
+    "code": "C23140",
+    "mpn": "0603WAF330JT5E",
+    "oldToken": "0603WAF330JT5E.1"
+  },
+  "R13": {
+    "code": "C23140",
+    "mpn": "0603WAF330JT5E",
+    "oldToken": "0603WAF330JT5E.1"
+  },
+  "R14": {
+    "code": "C23140",
+    "mpn": "0603WAF330JT5E",
+    "oldToken": "0603WAF330JT5E.1"
+  },
+  "R15": {
+    "code": "C23140",
+    "mpn": "0603WAF330JT5E",
+    "oldToken": "0603WAF330JT5E.1"
+  },
+  "R16": {
+    "code": "C23140",
+    "mpn": "0603WAF330JT5E",
+    "oldToken": "0603WAF330JT5E.1"
+  },
+  "R17": {
+    "code": "C23140",
+    "mpn": "0603WAF330JT5E",
+    "oldToken": "0603WAF330JT5E.1"
+  },
+  "R18": {
+    "code": "C21190",
+    "mpn": "0603WAF1001T5E",
+    "oldToken": "0603WAF1001T5E.1"
+  },
+  "R19": {
+    "code": "C21190",
+    "mpn": "0603WAF1001T5E",
+    "oldToken": "0603WAF1001T5E.1"
+  },
+  "R20": {
+    "code": "C23140",
+    "mpn": "0603WAF330JT5E",
+    "oldToken": "0603WAF330JT5E.1"
+  },
+  "R21": {
+    "code": "C23140",
+    "mpn": "0603WAF330JT5E",
+    "oldToken": "0603WAF330JT5E.1"
+  },
+  "R22": {
+    "code": "C23140",
+    "mpn": "0603WAF330JT5E",
+    "oldToken": "0603WAF330JT5E.1"
+  },
+  "R23": {
+    "code": "C23140",
+    "mpn": "0603WAF330JT5E",
+    "oldToken": "0603WAF330JT5E.1"
+  },
+  "R24": {
+    "code": "C23140",
+    "mpn": "0603WAF330JT5E",
+    "oldToken": "0603WAF330JT5E.1"
+  },
+  "R25": {
+    "code": "C23140",
+    "mpn": "0603WAF330JT5E",
+    "oldToken": "0603WAF330JT5E.1"
+  },
+  "R30": {
+    "code": "C4190",
+    "mpn": "0603WAF2201T5E",
+    "oldToken": "0603WAF2201T5E.1"
+  },
+  "R31": {
+    "code": "C4190",
+    "mpn": "0603WAF2201T5E",
+    "oldToken": "0603WAF2201T5E.1"
+  },
+  "R32": {
+    "code": "C4190",
+    "mpn": "0603WAF2201T5E",
+    "oldToken": "0603WAF2201T5E.1"
+  },
+  "R33": {
+    "code": "C4190",
+    "mpn": "0603WAF2201T5E",
+    "oldToken": "0603WAF2201T5E.1"
+  },
+  "R34": {
+    "code": "C4190",
+    "mpn": "0603WAF2201T5E",
+    "oldToken": "0603WAF2201T5E.1"
+  },
+  "R35": {
+    "code": "C4190",
+    "mpn": "0603WAF2201T5E",
+    "oldToken": "0603WAF2201T5E.1"
+  },
+  "R36": {
+    "code": "C25804",
+    "mpn": "0603WAF1002T5E",
+    "oldToken": "0603WAF1002T5E.1"
+  },
+  "R37": {
+    "code": "C25804",
+    "mpn": "0603WAF1002T5E",
+    "oldToken": "0603WAF1002T5E.1"
+  },
+  "R38": {
+    "code": "C25804",
+    "mpn": "0603WAF1002T5E",
+    "oldToken": "0603WAF1002T5E.1"
+  },
+  "R39": {
+    "code": "C25804",
+    "mpn": "0603WAF1002T5E",
+    "oldToken": "0603WAF1002T5E.1"
+  },
+  "R40": {
+    "code": "C25804",
+    "mpn": "0603WAF1002T5E",
+    "oldToken": "0603WAF1002T5E.1"
+  },
+  "R41": {
+    "code": "C25804",
+    "mpn": "0603WAF1002T5E",
+    "oldToken": "0603WAF1002T5E.1"
+  },
+  "R42": {
+    "code": "C114625",
+    "mpn": "RC0603FR-0749R9L",
+    "oldToken": "RC0603FR-0749R9L.1"
+  },
+  "R43": {
+    "code": "C114625",
+    "mpn": "RC0603FR-0749R9L",
+    "oldToken": "RC0603FR-0749R9L.1"
+  },
+  "R44": {
+    "code": "C114625",
+    "mpn": "RC0603FR-0749R9L",
+    "oldToken": "RC0603FR-0749R9L.1"
+  },
+  "R45": {
+    "code": "C114625",
+    "mpn": "RC0603FR-0749R9L",
+    "oldToken": "RC0603FR-0749R9L.1"
+  },
+  "R58": {
+    "code": "C22935",
+    "mpn": "0603WAF1004T5E",
+    "oldToken": "0603WAF1004T5E.1"
+  },
+  "R59": {
+    "code": "C22859",
+    "mpn": "0603WAF100JT5E",
+    "oldToken": "0603WAF100JT5E.1"
+  },
+  "R60": {
+    "code": "C21190",
+    "mpn": "0603WAF1001T5E",
+    "oldToken": "0603WAF1001T5E.1"
+  },
+  "SW1": {
+    "code": "C455280",
+    "mpn": "TS-1088R-02026",
+    "oldToken": "TS-1088R-02026.1"
+  },
+  "SW2": {
+    "code": "C455280",
+    "mpn": "TS-1088R-02026",
+    "oldToken": "TS-1088R-02026.1"
+  },
+  "U2": {
+    "code": "C2913204",
+    "mpn": "ESP32-S3-WROOM-1-N8R2",
+    "oldToken": "ESP32-S3-WROOM-1(N8R2).1"
+  },
+  "U3": {
+    "code": "C6179",
+    "mpn": "AM26LS31CDR",
+    "oldToken": "AM26LS31CDR.1"
+  },
+  "U4": {
+    "code": "C6179",
+    "mpn": "AM26LS31CDR",
+    "oldToken": "AM26LS31CDR.1"
+  },
+  "U5": {
+    "code": "C6179",
+    "mpn": "AM26LS31CDR",
+    "oldToken": "AM26LS31CDR.1"
+  },
+  "U6": {
+    "code": "C61063",
+    "mpn": "XL1509-5.0E1",
+    "oldToken": "XL1509-5.0E1.1"
+  },
+  "U8": {
+    "code": "C32843",
+    "mpn": "W5500",
+    "oldToken": "W5500.1"
+  },
+  "U9": {
+    "code": "C114599",
+    "mpn": "LTV-847S",
+    "oldToken": "LTV-847S.1"
+  },
+  "U10": {
+    "code": "C114599",
+    "mpn": "LTV-847S",
+    "oldToken": "LTV-847S.1"
+  },
+  "Y1": {
+    "code": "C9006",
+    "mpn": "X322525MOB4SI",
+    "oldToken": "X322525MOB4SI.1"
+  }
+}

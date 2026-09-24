@@ -1,0 +1,3421 @@
+{
+  "status": "PASS_INTERMEDIATE_SOURCE_PRESERVATION_CACHE_PENDING",
+  "inputs": {
+    "172_db25_release_capture.json": "9f29d6076ea4ab6b147192e948bc69a04e7bc4a0906c7248c1457a824fb89025",
+    "167_schematic_final_capture.json": "c62baab8dfd7af70b99ded21be6a74c7f0dc2a92c8d906eac823cbee644ebc64",
+    "146_schematic_before_db25.json": "4dad955d81fc31713c493226a03463b020ac32d6ffba9487c19d9b3128677d69",
+    "m4step_slot_clearance_145_plan.json": "a9067a356928d8ed2e52d003230e0ef1edfca54d15497509dc5c94ac338f6c60"
+  },
+  "checks": [
+    {
+      "name": "approved_track_repair_exact_geometry",
+      "pass": true,
+      "oldId": "ea8f94b3cf885985",
+      "newIds": [
+        "6c2aac1f583be3e0"
+      ]
+    },
+    {
+      "name": "approved_track_repair_continuous_clearances",
+      "pass": true,
+      "minimumForeignCopperGapMil": 10.574406749828775,
+      "nearestForeignObject": "eabeaf55bf5cd66a",
+      "minimumCorrectedFlangeHoleGapMil": 14.02787401574846
+    },
+    {
+      "name": "exact_population_and_unique_ref_ids",
+      "pass": true
+    },
+    {
+      "name": "component_C1",
+      "pass": true
+    },
+    {
+      "name": "component_C2",
+      "pass": true
+    },
+    {
+      "name": "component_C3",
+      "pass": true
+    },
+    {
+      "name": "component_C4",
+      "pass": true
+    },
+    {
+      "name": "component_C5",
+      "pass": true
+    },
+    {
+      "name": "component_C6",
+      "pass": true
+    },
+    {
+      "name": "component_C7",
+      "pass": true
+    },
+    {
+      "name": "component_C8",
+      "pass": true
+    },
+    {
+      "name": "component_C9",
+      "pass": true
+    },
+    {
+      "name": "component_C10",
+      "pass": true
+    },
+    {
+      "name": "component_C11",
+      "pass": true
+    },
+    {
+      "name": "component_C13",
+      "pass": true
+    },
+    {
+      "name": "component_C14",
+      "pass": true
+    },
+    {
+      "name": "component_C16",
+      "pass": true
+    },
+    {
+      "name": "component_C17",
+      "pass": true
+    },
+    {
+      "name": "component_C18",
+      "pass": true
+    },
+    {
+      "name": "component_C19",
+      "pass": true
+    },
+    {
+      "name": "component_C20",
+      "pass": true
+    },
+    {
+      "name": "component_C21",
+      "pass": true
+    },
+    {
+      "name": "component_C22",
+      "pass": true
+    },
+    {
+      "name": "component_C25",
+      "pass": true
+    },
+    {
+      "name": "component_D1",
+      "pass": true
+    },
+    {
+      "name": "component_D2",
+      "pass": true
+    },
+    {
+      "name": "component_D3",
+      "pass": true
+    },
+    {
+      "name": "component_D4",
+      "pass": true
+    },
+    {
+      "name": "component_D5",
+      "pass": true
+    },
+    {
+      "name": "component_J1",
+      "pass": true
+    },
+    {
+      "name": "component_J2",
+      "pass": true
+    },
+    {
+      "name": "component_J9",
+      "pass": true
+    },
+    {
+      "name": "component_J10",
+      "pass": true
+    },
+    {
+      "name": "component_J11",
+      "pass": true
+    },
+    {
+      "name": "component_L1",
+      "pass": true
+    },
+    {
+      "name": "component_R1",
+      "pass": true
+    },
+    {
+      "name": "component_R2",
+      "pass": true
+    },
+    {
+      "name": "component_R3",
+      "pass": true
+    },
+    {
+      "name": "component_R4",
+      "pass": true
+    },
+    {
+      "name": "component_R5",
+      "pass": true
+    },
+    {
+      "name": "component_R6",
+      "pass": true
+    },
+    {
+      "name": "component_R7",
+      "pass": true
+    },
+    {
+      "name": "component_R10",
+      "pass": true
+    },
+    {
+      "name": "component_R11",
+      "pass": true
+    },
+    {
+      "name": "component_R12",
+      "pass": true
+    },
+    {
+      "name": "component_R13",
+      "pass": true
+    },
+    {
+      "name": "component_R14",
+      "pass": true
+    },
+    {
+      "name": "component_R15",
+      "pass": true
+    },
+    {
+      "name": "component_R16",
+      "pass": true
+    },
+    {
+      "name": "component_R17",
+      "pass": true
+    },
+    {
+      "name": "component_R18",
+      "pass": true
+    },
+    {
+      "name": "component_R19",
+      "pass": true
+    },
+    {
+      "name": "component_R20",
+      "pass": true
+    },
+    {
+      "name": "component_R21",
+      "pass": true
+    },
+    {
+      "name": "component_R22",
+      "pass": true
+    },
+    {
+      "name": "component_R23",
+      "pass": true
+    },
+    {
+      "name": "component_R24",
+      "pass": true
+    },
+    {
+      "name": "component_R25",
+      "pass": true
+    },
+    {
+      "name": "component_U2",
+      "pass": true
+    },
+    {
+      "name": "component_U3",
+      "pass": true
+    },
+    {
+      "name": "component_U4",
+      "pass": true
+    },
+    {
+      "name": "component_U5",
+      "pass": true
+    },
+    {
+      "name": "component_U6",
+      "pass": true
+    },
+    {
+      "name": "component_U7",
+      "pass": true
+    },
+    {
+      "name": "component_U8",
+      "pass": true
+    },
+    {
+      "name": "component_Y1",
+      "pass": true
+    },
+    {
+      "name": "component_J3",
+      "pass": true
+    },
+    {
+      "name": "component_J4",
+      "pass": true
+    },
+    {
+      "name": "component_J5",
+      "pass": true
+    },
+    {
+      "name": "component_J6",
+      "pass": true
+    },
+    {
+      "name": "component_J7",
+      "pass": true
+    },
+    {
+      "name": "component_J8",
+      "pass": true
+    },
+    {
+      "name": "component_R30",
+      "pass": true
+    },
+    {
+      "name": "component_R31",
+      "pass": true
+    },
+    {
+      "name": "component_R32",
+      "pass": true
+    },
+    {
+      "name": "component_R33",
+      "pass": true
+    },
+    {
+      "name": "component_R34",
+      "pass": true
+    },
+    {
+      "name": "component_R35",
+      "pass": true
+    },
+    {
+      "name": "component_R36",
+      "pass": true
+    },
+    {
+      "name": "component_R37",
+      "pass": true
+    },
+    {
+      "name": "component_R38",
+      "pass": true
+    },
+    {
+      "name": "component_R39",
+      "pass": true
+    },
+    {
+      "name": "component_R40",
+      "pass": true
+    },
+    {
+      "name": "component_R41",
+      "pass": true
+    },
+    {
+      "name": "component_U9",
+      "pass": true
+    },
+    {
+      "name": "component_U10",
+      "pass": true
+    },
+    {
+      "name": "component_C12",
+      "pass": true
+    },
+    {
+      "name": "component_C15",
+      "pass": true
+    },
+    {
+      "name": "component_C26",
+      "pass": true
+    },
+    {
+      "name": "component_C27",
+      "pass": true
+    },
+    {
+      "name": "component_C28",
+      "pass": true
+    },
+    {
+      "name": "component_C29",
+      "pass": true
+    },
+    {
+      "name": "component_C30",
+      "pass": true
+    },
+    {
+      "name": "component_C31",
+      "pass": true
+    },
+    {
+      "name": "component_L2",
+      "pass": true
+    },
+    {
+      "name": "component_R42",
+      "pass": true
+    },
+    {
+      "name": "component_R43",
+      "pass": true
+    },
+    {
+      "name": "component_R44",
+      "pass": true
+    },
+    {
+      "name": "component_R45",
+      "pass": true
+    },
+    {
+      "name": "component_R46",
+      "pass": true
+    },
+    {
+      "name": "component_R47",
+      "pass": true
+    },
+    {
+      "name": "component_R48",
+      "pass": true
+    },
+    {
+      "name": "component_R49",
+      "pass": true
+    },
+    {
+      "name": "component_R50",
+      "pass": true
+    },
+    {
+      "name": "component_R51",
+      "pass": true
+    },
+    {
+      "name": "component_R52",
+      "pass": true
+    },
+    {
+      "name": "component_R53",
+      "pass": true
+    },
+    {
+      "name": "component_R54",
+      "pass": true
+    },
+    {
+      "name": "component_R55",
+      "pass": true
+    },
+    {
+      "name": "component_R56",
+      "pass": true
+    },
+    {
+      "name": "component_R57",
+      "pass": true
+    },
+    {
+      "name": "component_R58",
+      "pass": true
+    },
+    {
+      "name": "component_C32",
+      "pass": true
+    },
+    {
+      "name": "component_C33",
+      "pass": true
+    },
+    {
+      "name": "component_C34",
+      "pass": true
+    },
+    {
+      "name": "component_C35",
+      "pass": true
+    },
+    {
+      "name": "component_R59",
+      "pass": true
+    },
+    {
+      "name": "component_D7",
+      "pass": true
+    },
+    {
+      "name": "component_D6",
+      "pass": true
+    },
+    {
+      "name": "component_SW1",
+      "pass": true
+    },
+    {
+      "name": "component_SW2",
+      "pass": true
+    },
+    {
+      "name": "component_C23",
+      "pass": true
+    },
+    {
+      "name": "component_C24",
+      "pass": true
+    },
+    {
+      "name": "component_C36",
+      "pass": true
+    },
+    {
+      "name": "component_F1",
+      "pass": true
+    },
+    {
+      "name": "component_R60",
+      "pass": true
+    },
+    {
+      "name": "component_C37",
+      "pass": true
+    },
+    {
+      "name": "component_C38",
+      "pass": true
+    },
+    {
+      "name": "component_C39",
+      "pass": true
+    },
+    {
+      "name": "component_C40",
+      "pass": true
+    },
+    {
+      "name": "component_C41",
+      "pass": true
+    },
+    {
+      "name": "component_C42",
+      "pass": true
+    },
+    {
+      "name": "component_D8",
+      "pass": true
+    },
+    {
+      "name": "component_R61",
+      "pass": true
+    },
+    {
+      "name": "component_R62",
+      "pass": true
+    },
+    {
+      "name": "component_R63",
+      "pass": true
+    },
+    {
+      "name": "component_R64",
+      "pass": true
+    },
+    {
+      "name": "component_R65",
+      "pass": true
+    },
+    {
+      "name": "component_R66",
+      "pass": true
+    },
+    {
+      "name": "component_R67",
+      "pass": true
+    },
+    {
+      "name": "component_R68",
+      "pass": true
+    },
+    {
+      "name": "component_R69",
+      "pass": true
+    },
+    {
+      "name": "component_R70",
+      "pass": true
+    },
+    {
+      "name": "component_U13",
+      "pass": true
+    },
+    {
+      "name": "component_U11",
+      "pass": true
+    },
+    {
+      "name": "component_U12",
+      "pass": true
+    },
+    {
+      "name": "component_U14",
+      "pass": true
+    },
+    {
+      "name": "all654_pad_identities",
+      "pass": true
+    },
+    {
+      "name": "all654_pad_geometry_and_nets_unchanged",
+      "pass": true,
+      "changed": []
+    },
+    {
+      "name": "six25pin_connectors",
+      "pass": true
+    },
+    {
+      "name": "unchanged_API_tracks",
+      "pass": true,
+      "oldCount": 966,
+      "newCount": 966,
+      "changes": [],
+      "added": [],
+      "removed": []
+    },
+    {
+      "name": "unchanged_API_vias",
+      "pass": true,
+      "oldCount": 398,
+      "newCount": 398,
+      "changes": [],
+      "added": [],
+      "removed": []
+    },
+    {
+      "name": "unchanged_API_regions",
+      "pass": true,
+      "oldCount": 8,
+      "newCount": 8,
+      "changes": [],
+      "added": [],
+      "removed": []
+    },
+    {
+      "name": "unchanged_API_fills",
+      "pass": true,
+      "oldCount": 689,
+      "newCount": 689,
+      "changes": [],
+      "added": [],
+      "removed": []
+    },
+    {
+      "name": "approved_track_native_remaining_fields",
+      "pass": true
+    },
+    {
+      "name": "native_records_only_DB25_rebind",
+      "pass": true,
+      "changed": [],
+      "added": [],
+      "removed": []
+    },
+    {
+      "name": "uniqueId_J3",
+      "pass": true
+    },
+    {
+      "name": "component_attr_inheritance_J3",
+      "pass": true,
+      "removedToDeviceDefaults": [
+        "Current Rating-Signal",
+        "Datasheet",
+        "Gender",
+        "JLCPCB Part Class",
+        "LCSC Part Name",
+        "Manufacturer",
+        "Manufacturer Part",
+        "Mounting Type",
+        "Number of Pins",
+        "Number of Rows",
+        "Operating Temperature",
+        "Supplier Part"
+      ],
+      "addedExplicit": [
+        "Name"
+      ]
+    },
+    {
+      "name": "explicit_pcb_Name_J3",
+      "pass": true,
+      "values": [
+        "={Manufacturer Part}"
+      ]
+    },
+    {
+      "name": "uniqueId_J4",
+      "pass": true
+    },
+    {
+      "name": "component_attr_inheritance_J4",
+      "pass": true,
+      "removedToDeviceDefaults": [
+        "Current Rating-Signal",
+        "Datasheet",
+        "Gender",
+        "JLCPCB Part Class",
+        "LCSC Part Name",
+        "Manufacturer",
+        "Manufacturer Part",
+        "Mounting Type",
+        "Number of Pins",
+        "Number of Rows",
+        "Operating Temperature",
+        "Supplier Part"
+      ],
+      "addedExplicit": [
+        "Name"
+      ]
+    },
+    {
+      "name": "explicit_pcb_Name_J4",
+      "pass": true,
+      "values": [
+        "={Manufacturer Part}"
+      ]
+    },
+    {
+      "name": "uniqueId_J5",
+      "pass": true
+    },
+    {
+      "name": "component_attr_inheritance_J5",
+      "pass": true,
+      "removedToDeviceDefaults": [
+        "Current Rating-Signal",
+        "Datasheet",
+        "Gender",
+        "JLCPCB Part Class",
+        "LCSC Part Name",
+        "Manufacturer",
+        "Manufacturer Part",
+        "Mounting Type",
+        "Number of Pins",
+        "Number of Rows",
+        "Operating Temperature",
+        "Supplier Part"
+      ],
+      "addedExplicit": [
+        "Name"
+      ]
+    },
+    {
+      "name": "explicit_pcb_Name_J5",
+      "pass": true,
+      "values": [
+        "={Manufacturer Part}"
+      ]
+    },
+    {
+      "name": "uniqueId_J6",
+      "pass": true
+    },
+    {
+      "name": "component_attr_inheritance_J6",
+      "pass": true,
+      "removedToDeviceDefaults": [
+        "Current Rating-Signal",
+        "Datasheet",
+        "Gender",
+        "JLCPCB Part Class",
+        "LCSC Part Name",
+        "Manufacturer",
+        "Manufacturer Part",
+        "Mounting Type",
+        "Number of Pins",
+        "Number of Rows",
+        "Operating Temperature",
+        "Supplier Part"
+      ],
+      "addedExplicit": [
+        "Name"
+      ]
+    },
+    {
+      "name": "explicit_pcb_Name_J6",
+      "pass": true,
+      "values": [
+        "={Manufacturer Part}"
+      ]
+    },
+    {
+      "name": "uniqueId_J7",
+      "pass": true
+    },
+    {
+      "name": "component_attr_inheritance_J7",
+      "pass": true,
+      "removedToDeviceDefaults": [
+        "Current Rating-Signal",
+        "Datasheet",
+        "Gender",
+        "JLCPCB Part Class",
+        "LCSC Part Name",
+        "Manufacturer",
+        "Manufacturer Part",
+        "Mounting Type",
+        "Number of Pins",
+        "Number of Rows",
+        "Operating Temperature",
+        "Supplier Part"
+      ],
+      "addedExplicit": [
+        "Name"
+      ]
+    },
+    {
+      "name": "explicit_pcb_Name_J7",
+      "pass": true,
+      "values": [
+        "={Manufacturer Part}"
+      ]
+    },
+    {
+      "name": "uniqueId_J8",
+      "pass": true
+    },
+    {
+      "name": "component_attr_inheritance_J8",
+      "pass": true,
+      "removedToDeviceDefaults": [
+        "Current Rating-Signal",
+        "Datasheet",
+        "Gender",
+        "JLCPCB Part Class",
+        "LCSC Part Name",
+        "Manufacturer",
+        "Manufacturer Part",
+        "Mounting Type",
+        "Number of Pins",
+        "Number of Rows",
+        "Operating Temperature",
+        "Supplier Part"
+      ],
+      "addedExplicit": [
+        "Name"
+      ]
+    },
+    {
+      "name": "explicit_pcb_Name_J8",
+      "pass": true,
+      "values": [
+        "={Manufacturer Part}"
+      ]
+    },
+    {
+      "name": "one_new_DB25_FP_and_device",
+      "pass": true
+    },
+    {
+      "name": "exact_legacy_titleblock_removal",
+      "pass": true,
+      "removed": [
+        [
+          "ATTR",
+          "e10"
+        ],
+        [
+          "ATTR",
+          "e11"
+        ],
+        [
+          "ATTR",
+          "e12"
+        ],
+        [
+          "ATTR",
+          "e13"
+        ],
+        [
+          "ATTR",
+          "e14"
+        ],
+        [
+          "ATTR",
+          "e15"
+        ],
+        [
+          "ATTR",
+          "e16"
+        ],
+        [
+          "ATTR",
+          "e17"
+        ],
+        [
+          "ATTR",
+          "e18"
+        ],
+        [
+          "ATTR",
+          "e19"
+        ],
+        [
+          "ATTR",
+          "e20"
+        ],
+        [
+          "ATTR",
+          "e21"
+        ],
+        [
+          "ATTR",
+          "e22"
+        ],
+        [
+          "ATTR",
+          "e23"
+        ],
+        [
+          "ATTR",
+          "e24"
+        ],
+        [
+          "ATTR",
+          "e25"
+        ],
+        [
+          "ATTR",
+          "e26"
+        ],
+        [
+          "ATTR",
+          "e27"
+        ],
+        [
+          "ATTR",
+          "e28"
+        ],
+        [
+          "ATTR",
+          "e29"
+        ],
+        [
+          "ATTR",
+          "e3"
+        ],
+        [
+          "ATTR",
+          "e30"
+        ],
+        [
+          "ATTR",
+          "e31"
+        ],
+        [
+          "ATTR",
+          "e32"
+        ],
+        [
+          "ATTR",
+          "e4"
+        ],
+        [
+          "ATTR",
+          "e5"
+        ],
+        [
+          "ATTR",
+          "e6"
+        ],
+        [
+          "ATTR",
+          "e7"
+        ],
+        [
+          "ATTR",
+          "e8"
+        ],
+        [
+          "ATTR",
+          "e9"
+        ],
+        [
+          "COMPONENT",
+          "e1"
+        ]
+      ]
+    },
+    {
+      "name": "native_schematic_only_six_association_changes",
+      "pass": true,
+      "changed": [],
+      "added": [],
+      "removed": []
+    },
+    {
+      "name": "schematic144_unique_refs",
+      "pass": true
+    },
+    {
+      "name": "schematic_C1_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C1_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C1_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C1_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C2_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C2_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C2_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C2_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C3_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C3_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C3_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C3_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C4_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C4_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C4_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C4_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C5_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C5_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C5_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C5_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C6_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C6_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C6_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C6_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C7_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C7_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C7_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C7_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C8_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C8_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C8_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C8_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C9_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C9_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C9_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C9_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C10_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C10_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C10_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C10_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C11_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C11_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C11_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C11_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C13_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C13_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C13_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C13_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C14_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C14_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C14_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C14_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C16_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C16_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C16_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C16_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C17_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C17_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C17_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C17_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C18_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C18_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C18_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C18_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C19_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C19_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C19_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C19_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C20_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C20_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C20_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C20_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C21_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C21_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C21_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C21_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C22_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C22_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C22_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C22_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C25_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C25_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C25_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C25_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_D1_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_D1_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_D1_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_D1_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_D2_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_D2_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_D2_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_D2_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_D3_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_D3_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_D3_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_D3_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_D4_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_D4_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_D4_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_D4_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_D5_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_D5_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_D5_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_D5_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_J1_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_J1_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_J1_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_J1_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_J2_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_J2_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_J2_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_J2_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_J9_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_J9_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_J9_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_J9_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_J10_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_J10_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_J10_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_J10_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_J11_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_J11_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_J11_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_J11_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_L1_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_L1_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_L1_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_L1_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R1_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R1_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R1_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R1_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R2_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R2_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R2_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R2_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R3_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R3_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R3_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R3_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R4_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R4_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R4_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R4_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R5_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R5_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R5_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R5_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R6_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R6_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R6_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R6_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R7_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R7_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R7_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R7_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R10_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R10_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R10_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R10_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R11_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R11_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R11_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R11_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R12_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R12_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R12_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R12_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R13_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R13_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R13_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R13_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R14_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R14_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R14_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R14_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R15_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R15_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R15_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R15_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R16_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R16_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R16_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R16_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R17_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R17_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R17_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R17_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R18_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R18_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R18_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R18_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R19_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R19_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R19_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R19_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R20_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R20_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R20_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R20_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R21_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R21_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R21_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R21_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R22_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R22_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R22_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R22_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R23_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R23_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R23_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R23_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R24_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R24_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R24_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R24_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R25_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R25_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R25_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R25_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_U2_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_U2_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_U2_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_U2_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_U3_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_U3_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_U3_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_U3_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_U4_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_U4_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_U4_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_U4_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_U5_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_U5_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_U5_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_U5_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_U6_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_U6_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_U6_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_U6_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_U7_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_U7_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_U7_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_U7_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_U8_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_U8_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_U8_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_U8_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_Y1_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_Y1_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_Y1_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_Y1_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_J3_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_J3_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_J3_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_J3_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_resolved_association_J3",
+      "pass": true
+    },
+    {
+      "name": "schematic_J4_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_J4_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_J4_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_J4_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_resolved_association_J4",
+      "pass": true
+    },
+    {
+      "name": "schematic_J5_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_J5_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_J5_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_J5_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_resolved_association_J5",
+      "pass": true
+    },
+    {
+      "name": "schematic_J6_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_J6_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_J6_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_J6_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_resolved_association_J6",
+      "pass": true
+    },
+    {
+      "name": "schematic_J7_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_J7_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_J7_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_J7_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_resolved_association_J7",
+      "pass": true
+    },
+    {
+      "name": "schematic_J8_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_J8_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_J8_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_J8_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_resolved_association_J8",
+      "pass": true
+    },
+    {
+      "name": "schematic_R30_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R30_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R30_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R30_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R31_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R31_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R31_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R31_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R32_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R32_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R32_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R32_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R33_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R33_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R33_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R33_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R34_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R34_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R34_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R34_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R35_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R35_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R35_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R35_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R36_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R36_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R36_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R36_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R37_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R37_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R37_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R37_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R38_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R38_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R38_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R38_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R39_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R39_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R39_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R39_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R40_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R40_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R40_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R40_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R41_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R41_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R41_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R41_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_U9_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_U9_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_U9_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_U9_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_U10_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_U10_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_U10_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_U10_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C12_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C12_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C12_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C12_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C15_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C15_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C15_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C15_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C26_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C26_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C26_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C26_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C27_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C27_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C27_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C27_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C28_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C28_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C28_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C28_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C29_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C29_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C29_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C29_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C30_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C30_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C30_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C30_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C31_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C31_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C31_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C31_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_L2_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_L2_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_L2_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_L2_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R42_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R42_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R42_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R42_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R43_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R43_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R43_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R43_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R44_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R44_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R44_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R44_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R45_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R45_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R45_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R45_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R58_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R58_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R58_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R58_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R46_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R46_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R46_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R46_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R47_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R47_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R47_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R47_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R48_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R48_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R48_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R48_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R49_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R49_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R49_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R49_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R50_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R50_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R50_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R50_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R51_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R51_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R51_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R51_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R52_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R52_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R52_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R52_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R53_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R53_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R53_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R53_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R54_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R54_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R54_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R54_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R55_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R55_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R55_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R55_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R56_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R56_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R56_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R56_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R57_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R57_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R57_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R57_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R59_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R59_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R59_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R59_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C32_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C32_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C32_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C32_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C33_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C33_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C33_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C33_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C34_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C34_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C34_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C34_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C35_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C35_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C35_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C35_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_D7_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_D7_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_D7_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_D7_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_D6_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_D6_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_D6_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_D6_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_SW1_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_SW1_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_SW1_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_SW1_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_SW2_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_SW2_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_SW2_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_SW2_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C23_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C23_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C23_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C23_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C24_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C24_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C24_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C24_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_F1_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_F1_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_F1_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_F1_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R60_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R60_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R60_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R60_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C36_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C36_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C36_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C36_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_U11_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_U11_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_U11_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_U11_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_U12_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_U12_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_U12_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_U12_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_U13_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_U13_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_U13_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_U13_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_U14_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_U14_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_U14_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_U14_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_D8_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_D8_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_D8_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_D8_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R61_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R61_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R61_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R61_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R62_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R62_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R62_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R62_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R63_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R63_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R63_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R63_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R64_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R64_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R64_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R64_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R65_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R65_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R65_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R65_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R66_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R66_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R66_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R66_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R67_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R67_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R67_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R67_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R68_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R68_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R68_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R68_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R69_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R69_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R69_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R69_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R70_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R70_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_R70_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_R70_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C37_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C37_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C37_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C37_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C38_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C38_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C38_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C38_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C39_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C39_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C39_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C39_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C40_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C40_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C40_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C40_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C41_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C41_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C41_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C41_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C42_Supplier Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C42_Manufacturer Part",
+      "pass": true
+    },
+    {
+      "name": "schematic_C42_Unique ID",
+      "pass": true
+    },
+    {
+      "name": "schematic_C42_Channel ID",
+      "pass": true
+    },
+    {
+      "name": "all640_schematic_pins_unchanged",
+      "pass": true,
+      "changed": []
+    },
+    {
+      "name": "all640_schematic_to_PCB_pins",
+      "pass": true,
+      "changed": []
+    },
+    {
+      "name": "native_plane_change_bounded_to_flange_holes",
+      "pass": true,
+      "outsidePermittedAreaMm2": 9.30913656628414e-13,
+      "totalDeltaMm2": 10.862105527194982,
+      "newAreaMm2": 30601.312870983165
+    }
+  ],
+  "bindings": [
+    {
+      "ref": "J3",
+      "oldId": "e560c34471b7184a",
+      "newId": "e9f9711a2555d878",
+      "oldDevice": "15667e8cf71211a9",
+      "newDevice": "d665c8338bbcede9",
+      "oldFootprint": "afdfb76d38aded99",
+      "newFootprint": "6327bc039c3fd8bf",
+      "uniqueId": "gge33"
+    },
+    {
+      "ref": "J4",
+      "oldId": "47a758b83ad9850f",
+      "newId": "be4d953d8744481f",
+      "oldDevice": "15667e8cf71211a9",
+      "newDevice": "d665c8338bbcede9",
+      "oldFootprint": "afdfb76d38aded99",
+      "newFootprint": "6327bc039c3fd8bf",
+      "uniqueId": "gge34"
+    },
+    {
+      "ref": "J5",
+      "oldId": "89e380518a3b212f",
+      "newId": "6546de9a0b603630",
+      "oldDevice": "15667e8cf71211a9",
+      "newDevice": "d665c8338bbcede9",
+      "oldFootprint": "afdfb76d38aded99",
+      "newFootprint": "6327bc039c3fd8bf",
+      "uniqueId": "gge35"
+    },
+    {
+      "ref": "J6",
+      "oldId": "f983f19732a5a022",
+      "newId": "15750519d39fbedc",
+      "oldDevice": "15667e8cf71211a9",
+      "newDevice": "d665c8338bbcede9",
+      "oldFootprint": "afdfb76d38aded99",
+      "newFootprint": "6327bc039c3fd8bf",
+      "uniqueId": "gge81"
+    },
+    {
+      "ref": "J7",
+      "oldId": "08cd4f1ba27054d7",
+      "newId": "4b4b0da9806144bf",
+      "oldDevice": "15667e8cf71211a9",
+      "newDevice": "d665c8338bbcede9",
+      "oldFootprint": "afdfb76d38aded99",
+      "newFootprint": "6327bc039c3fd8bf",
+      "uniqueId": "gge82"
+    },
+    {
+      "ref": "J8",
+      "oldId": "5076dbd203cf5932",
+      "newId": "cb6cf9d3603ec5fb",
+      "oldDevice": "15667e8cf71211a9",
+      "newDevice": "d665c8338bbcede9",
+      "oldFootprint": "afdfb76d38aded99",
+      "newFootprint": "6327bc039c3fd8bf",
+      "uniqueId": "gge83"
+    }
+  ],
+  "cache": [],
+  "pending": [
+    "New portable archive missing: hidden footprint NPTH geometry/cache/Device associations not yet independently proved."
+  ],
+  "remainingReleaseGates": [
+    "Fresh native DRC after final reload",
+    "Gerber/Excellon exactly12corrected3.20mmNPTH",
+    "Full artifact regeneration/hash binding",
+    "ActualJLC orientation/source-specific+180offset remains because all150pads unchanged",
+    "No order authorized by this audit"
+  ]
+}

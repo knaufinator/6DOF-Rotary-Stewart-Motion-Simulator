@@ -1,0 +1,87 @@
+{
+  "release": "2026-09-05-r12",
+  "generatedOn": "2026-09-05",
+  "supersedes": "2026-09-03-r11",
+  "orderStatus": "NOT ORDERED - r9 order W2026090303177354 was cancelled/refunded by JLC; r12 is the revision to re-order",
+  "reason": "Owner-requested full design pass after the r11 DFM finding: placement and pin review, route quality (jagged/aliased traces), electrical review, DFM, enclosure. Review record: review_r12/PLAN.md, SYNC.md, reports/A..H.",
+  "change": "Placement: 26 parts moved (decoupling caps to their pins, R6/R7 un-swapped and spaced, C6 off the edge, R10/C26/C27 clear of U8, C17/C18/C19/C4/D6/R44 per stream C). Copper: every affected net re-routed, 29 via-in-pad vias removed and 14 nets re-routed, ETH TX/RX and USB/USB_MCU routed as coupled pairs with GND stitch vias (stream H), ACTLED on Inner2, stream D smoother applied board-wide (jogs 0), thermal copper + via grids at U7 (AMS1117) and U6 (XL1509). Silk: 18 strings at 70 mil (1.07 mm rendered cap height), 6 mil stroke - MOTOR 0..5, USB-C, +12V/GND/12V IN, E-STOP, RESET/BOOT, UART GND/TX/RX, ETHERNET. BOM: C15 (W5500 TOCAP) LCSC code corrected from C15850 (10 uF) to C123653 (4.7 uF), in ref2lcsc.json and on the EasyEDA schematic/PCB component.",
+  "sourceInventory": {
+    "components": 123,
+    "pads": 594,
+    "tracks": 876,
+    "vias": 344,
+    "fills": 745,
+    "pours": 1,
+    "poured": 1,
+    "regions": 8,
+    "outlineLines": 0,
+    "outlinePolylines": 1
+  },
+  "drc": {
+    "violations": 0,
+    "verifiedAfterCloseReopen": true
+  },
+  "offlineGates": {
+    "planClearanceIssues": 0,
+    "viaInsideOwnSmdPad": 0,
+    "openConnectionsAfterApply": 0,
+    "deadTracks": 0,
+    "deadVias": 0,
+    "hangingTails": 0
+  },
+  "outline": {
+    "closed": true,
+    "widthMm": 170.000001,
+    "heightMm": 199.9996
+  },
+  "gerber": {
+    "layers": 11,
+    "drillFiles": 3,
+    "allMetric36": true,
+    "anyOverrange": false,
+    "drillsInsideBoard": true,
+    "issues": []
+  },
+  "assembly": {
+    "bomPlacements": 123,
+    "cplPlacements": 123,
+    "smtPlacements": 113,
+    "hybridPlacements": 1,
+    "thtPlacements": 9,
+    "errors": [],
+    "db25RotationOffsetDeg": 180
+  },
+  "stock": {
+    "checkedAt": "2026-09-05",
+    "boardQuantity": 5,
+    "lineCount": 41,
+    "missing": [],
+    "zeroStock": [],
+    "shortfall": []
+  },
+  "silkscreen": {
+    "strings": 18,
+    "capHeightMil": [
+      60,
+      70
+    ],
+    "strokeMil": 6,
+    "verification": "Offline body-clearance check (stream E body table, min 0.44 mm) and editor render inspected; labels sit beside connectors, never under a shell."
+  },
+  "toolingGapsClosedHere": [
+    "Pour rectangle search rewritten as a raster greedy (v3_gen_pour.py); the edge-enumeration version did not finish.",
+    "Smoother rip rows converted by identity (v4_rip_convert.py) and created in 40-trace guarded batches (v3_gen_delta_batched.py) to stay inside the bridge timeout.",
+    "Router grid keepout for the MagJack can be lifted per run (NO_JACK_BLOCK) - only needed for diagnostics; jack nets already bypass it."
+  ],
+  "modelledNotInSource": [
+    "J8's two board-lock slots are footprint children, absent from every API enumeration and from v2_state.json. Native DRC caught M5S_I 4.8 mil from the south one; both are now modelled as 72 mil keepout circles in the router and the offline checker (v3_route_open.SLOT_KEEPOUTS)."
+  ],
+  "deferred": [
+    "RS-422 line protection on the motor-driver differential pairs.",
+    "VBUS and VIN12 still run the full board height (power block at the top edge).",
+    "Enclosure open questions: DB25 hood size, lid screw style, strain relief (reports/F-enclosure.md)."
+  ],
+  "orderSubmitted": false,
+  "previousOrderRef": "W2026090303177354 (cancelled/refunded by JLC on the replace-file request)",
+  "humanJlcCamReview": "PENDING - owner to review in the JLC CAM viewer before re-ordering"
+}

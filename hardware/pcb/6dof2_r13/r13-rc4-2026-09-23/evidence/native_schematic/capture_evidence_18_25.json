@@ -1,0 +1,306 @@
+{
+  "sourceCapture": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\189_schematic_rc3_capture.json",
+  "sourceSha256": "8f77a89e401a212a5dfa327bf64e8802e6e39c0c91044b6fa49c66b74c3ae1cf",
+  "projectUuid": "16231355292e4948ba37840dcdf926b0",
+  "documentUuid": "fd2c3589563945538936811f609de096",
+  "captures": [
+    {
+      "ordinal": 18,
+      "section": 8,
+      "title": "8. Ethernet - W5500 lower pins and bypass",
+      "requestedNativeBounds": [
+        90,
+        -3580,
+        1280,
+        -3060
+      ],
+      "expectedAnchorRefs": [
+        "C12",
+        "C15",
+        "C16",
+        "R58",
+        "U8"
+      ],
+      "role": "detail",
+      "maxIntendedPage": "A3 landscape",
+      "caution": "Actual viewport padding and 6-unit net-label legibility must be inspected.",
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\18.png",
+      "sha256": "2290d5ad19de429fa337c7fdc3f8e0e487b74d7d0a6fc72e04aaab13d6654715",
+      "nativeBounds": [
+        90,
+        -3580,
+        1280,
+        -3060
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 296399,
+        "capturedAtUTC": "2026-09-23T18:16:35.883Z"
+      }
+    },
+    {
+      "ordinal": 19,
+      "section": 8,
+      "title": "8. Ethernet - analog supply and bypass, left",
+      "requestedNativeBounds": [
+        1330,
+        -3230,
+        2410,
+        -2750
+      ],
+      "expectedAnchorRefs": [
+        "C13",
+        "C20",
+        "C21",
+        "C26",
+        "C27",
+        "C28",
+        "C29",
+        "L2"
+      ],
+      "role": "detail",
+      "maxIntendedPage": "A3 landscape",
+      "caution": "Actual viewport padding and 6-unit net-label legibility must be inspected.",
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\19.png",
+      "sha256": "aa20d6ea871522fa2783523469db4b51f3ad99c8123597548f10fa15c491e47e",
+      "nativeBounds": [
+        1330,
+        -3230,
+        2410,
+        -2750
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 205740,
+        "capturedAtUTC": "2026-09-23T18:16:36.276Z"
+      }
+    },
+    {
+      "ordinal": 20,
+      "section": 8,
+      "title": "8. Ethernet - termination, left",
+      "requestedNativeBounds": [
+        1370,
+        -3570,
+        2490,
+        -3060
+      ],
+      "expectedAnchorRefs": [
+        "C26",
+        "C27",
+        "C28",
+        "C29",
+        "C30",
+        "R42",
+        "R43",
+        "R44",
+        "R45"
+      ],
+      "role": "detail",
+      "maxIntendedPage": "A3 landscape",
+      "caution": "Actual viewport padding and 6-unit net-label legibility must be inspected.",
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\20.png",
+      "sha256": "9a62e73d9ee91472ebeade8a344f35b44cabae1cd90ee49b263d0cf829b6963d",
+      "nativeBounds": [
+        1370,
+        -3570,
+        2490,
+        -3060
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 222658,
+        "capturedAtUTC": "2026-09-23T18:16:36.678Z"
+      }
+    },
+    {
+      "ordinal": 21,
+      "section": 8,
+      "title": "8. Ethernet - analog supply and bypass, right",
+      "requestedNativeBounds": [
+        2370,
+        -3230,
+        3450,
+        -2750
+      ],
+      "expectedAnchorRefs": [
+        "C22",
+        "C30",
+        "C31",
+        "C32",
+        "C33",
+        "C34",
+        "C35",
+        "R59"
+      ],
+      "role": "detail",
+      "maxIntendedPage": "A3 landscape",
+      "caution": "Actual viewport padding and 6-unit net-label legibility must be inspected.",
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\21.png",
+      "sha256": "589b633fdf4639933267d1e30c856721ea257fb9e56ef001162a13caa8ab0c87",
+      "nativeBounds": [
+        2370,
+        -3230,
+        3450,
+        -2750
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 201908,
+        "capturedAtUTC": "2026-09-23T18:16:37.067Z"
+      }
+    },
+    {
+      "ordinal": 22,
+      "section": 8,
+      "title": "8. Ethernet - chassis coupling network",
+      "requestedNativeBounds": [
+        2520,
+        -3610,
+        3410,
+        -3080
+      ],
+      "expectedAnchorRefs": [
+        "C25",
+        "C31",
+        "C33",
+        "C34",
+        "C35"
+      ],
+      "role": "detail",
+      "maxIntendedPage": "A3 landscape",
+      "caution": "Actual viewport padding and 6-unit net-label legibility must be inspected.",
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\22.png",
+      "sha256": "e2f7e643d3c16b7621581e87c723f5c08b322bf6b729213520511be210ce52b5",
+      "nativeBounds": [
+        2520,
+        -3610,
+        3410,
+        -3080
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 214554,
+        "capturedAtUTC": "2026-09-23T18:16:37.461Z"
+      }
+    },
+    {
+      "ordinal": 23,
+      "section": 8,
+      "title": "8. Ethernet - integrated MagJack",
+      "requestedNativeBounds": [
+        3290,
+        -3610,
+        4180,
+        -2910
+      ],
+      "expectedAnchorRefs": [
+        "C25",
+        "C35",
+        "J10"
+      ],
+      "role": "detail",
+      "maxIntendedPage": "A3 landscape",
+      "caution": "Actual viewport padding and 6-unit net-label legibility must be inspected.",
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\23.png",
+      "sha256": "eef098f764b45ac7c640226a35bc53858a377224ebb212a05ac76b020f47916f",
+      "nativeBounds": [
+        3290,
+        -3610,
+        4180,
+        -2910
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 209058,
+        "capturedAtUTC": "2026-09-23T18:16:37.863Z"
+      }
+    },
+    {
+      "ordinal": 24,
+      "section": 9,
+      "title": "9. Output inhibit - input logic and supervisor",
+      "requestedNativeBounds": [
+        100,
+        -4310,
+        1300,
+        -3840
+      ],
+      "expectedAnchorRefs": [
+        "U12",
+        "U13"
+      ],
+      "role": "detail",
+      "maxIntendedPage": "A3 landscape",
+      "caution": "Actual viewport padding and 6-unit net-label legibility must be inspected.",
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\24.png",
+      "sha256": "9ebfb043b07e0e0fddcff17e0ff30d951106db9c661d835e078b4523978e9c16",
+      "nativeBounds": [
+        100,
+        -4310,
+        1300,
+        -3840
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 215649,
+        "capturedAtUTC": "2026-09-23T18:16:38.255Z"
+      }
+    },
+    {
+      "ordinal": 25,
+      "section": 9,
+      "title": "9. Output inhibit - clear buffer and arm latch",
+      "requestedNativeBounds": [
+        1300,
+        -4310,
+        2390,
+        -3840
+      ],
+      "expectedAnchorRefs": [
+        "U11",
+        "U14"
+      ],
+      "role": "detail",
+      "maxIntendedPage": "A3 landscape",
+      "caution": "Actual viewport padding and 6-unit net-label legibility must be inspected.",
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\25.png",
+      "sha256": "909aa3f8b2e4515f7dce11f00e61caf429a1718553b6eb6407bb11aa38c85285",
+      "nativeBounds": [
+        1300,
+        -4310,
+        2390,
+        -3840
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 208604,
+        "capturedAtUTC": "2026-09-23T18:16:38.639Z"
+      }
+    }
+  ]
+}

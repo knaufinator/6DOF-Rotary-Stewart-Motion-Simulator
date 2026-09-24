@@ -1,0 +1,21 @@
+{
+  "status": "PASS_OFFLINE_CAM_STEP_HOLE_CORRECTION; DO_NOT_ORDER",
+  "sourceChecks": 1477,
+  "inputHashes": {
+    "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\202_final_pcb_capture.json": "4bcbd7b23f445253f7220278fb7b193aefef3ee5d6346630237d9ce98210919f",
+    "G:\\My Drive\\projects\\6dof\\pcb\\manufacturing_release\\2026-09-23-r13-rc4\\6DOF2-r13-rc4-20260923-UNTESTED.epro2": "c42dc31219236dca955aaf34b4688501a36ff6eb6fcefcf141cbf48ceb0c9ea4",
+    "G:\\My Drive\\projects\\6dof\\pcb\\manufacturing_release\\2026-09-23-r13-rc4\\6DOF2_r13_Gerber.zip": "44fe2c34b97ee5ce68c5447788e1e77647e0741dcf36d1a453a79871524876c6",
+    "G:\\My Drive\\projects\\6dof\\pcb\\manufacturing_release\\2026-09-23-r13-rc4\\6DOF2_r13_assembly.step": "456de7a4919cc36c6f6c2673de218e552bf4b9c5732ff15f9c2519bbec40a715",
+    "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\205_export_rc4_fabrication.json": "76ba1c1f54577c87152247b8661874700e237b5741b85af7f53e43d1cc6203d3",
+    "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\100_routed_labeled_capture.json": "22c0bede843ee63a5d1dca034326b00e9a1ef2eed144f9599e369c0ddc7cd5e3",
+    "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\6DOF2-r13-20260923-routed-UNTESTED-DO-NOT-ORDER.epro2": "7f4669f15dc1e6cd637061291652e07de49787c1313548b90224c48b986146b0"
+  },
+  "scope": "Artifact revision is defined by these exact input paths and hashes, not this legacy script/output filename.",
+  "separateGates": [
+    "native DRC and complete schematic/PCB comparison are reviewed by the release/electrical owner",
+    "fresh CAM/STEP visual review and final release packaging",
+    "actual JLC allocation/placement/DFM remains unperformed and not authorized",
+    "firmware/physical bench tests and enclosure fit not validated"
+  ],
+  "orderAuthorization": false
+}

@@ -1,0 +1,1201 @@
+{
+  "e1": [],
+  "e61": [
+    {
+      "name": "1A",
+      "number": "1",
+      "api_x": 30,
+      "api_y": -780,
+      "pinRot": 0
+    },
+    {
+      "name": "1Y",
+      "number": "2",
+      "api_x": 130,
+      "api_y": -780,
+      "pinRot": 180
+    },
+    {
+      "name": "1Z",
+      "number": "3",
+      "api_x": 130,
+      "api_y": -770,
+      "pinRot": 180
+    },
+    {
+      "name": "1,2EN",
+      "number": "4",
+      "api_x": 30,
+      "api_y": -700,
+      "pinRot": 0
+    },
+    {
+      "name": "2Z",
+      "number": "5",
+      "api_x": 130,
+      "api_y": -750,
+      "pinRot": 180
+    },
+    {
+      "name": "2Y",
+      "number": "6",
+      "api_x": 130,
+      "api_y": -760,
+      "pinRot": 180
+    },
+    {
+      "name": "2A",
+      "number": "7",
+      "api_x": 30,
+      "api_y": -760,
+      "pinRot": 0
+    },
+    {
+      "name": "GND",
+      "number": "8",
+      "api_x": 130,
+      "api_y": -670,
+      "pinRot": 180
+    },
+    {
+      "name": "3A",
+      "number": "9",
+      "api_x": 30,
+      "api_y": -740,
+      "pinRot": 0
+    },
+    {
+      "name": "3Y",
+      "number": "10",
+      "api_x": 130,
+      "api_y": -740,
+      "pinRot": 180
+    },
+    {
+      "name": "3Z",
+      "number": "11",
+      "api_x": 130,
+      "api_y": -730,
+      "pinRot": 180
+    },
+    {
+      "name": "3,4EN",
+      "number": "12",
+      "api_x": 30,
+      "api_y": -690,
+      "pinRot": 0
+    },
+    {
+      "name": "4Z",
+      "number": "13",
+      "api_x": 130,
+      "api_y": -710,
+      "pinRot": 180
+    },
+    {
+      "name": "4Y",
+      "number": "14",
+      "api_x": 130,
+      "api_y": -720,
+      "pinRot": 180
+    },
+    {
+      "name": "4A",
+      "number": "15",
+      "api_x": 30,
+      "api_y": -720,
+      "pinRot": 0
+    },
+    {
+      "name": "VCC",
+      "number": "16",
+      "api_x": 30,
+      "api_y": -670,
+      "pinRot": 0
+    }
+  ],
+  "e138": [
+    {
+      "name": "1A",
+      "number": "1",
+      "api_x": 25,
+      "api_y": -620,
+      "pinRot": 0
+    },
+    {
+      "name": "1Y",
+      "number": "2",
+      "api_x": 125,
+      "api_y": -620,
+      "pinRot": 180
+    },
+    {
+      "name": "1Z",
+      "number": "3",
+      "api_x": 125,
+      "api_y": -610,
+      "pinRot": 180
+    },
+    {
+      "name": "1,2EN",
+      "number": "4",
+      "api_x": 25,
+      "api_y": -540,
+      "pinRot": 0
+    },
+    {
+      "name": "2Z",
+      "number": "5",
+      "api_x": 125,
+      "api_y": -590,
+      "pinRot": 180
+    },
+    {
+      "name": "2Y",
+      "number": "6",
+      "api_x": 125,
+      "api_y": -600,
+      "pinRot": 180
+    },
+    {
+      "name": "2A",
+      "number": "7",
+      "api_x": 25,
+      "api_y": -600,
+      "pinRot": 0
+    },
+    {
+      "name": "GND",
+      "number": "8",
+      "api_x": 125,
+      "api_y": -510,
+      "pinRot": 180
+    },
+    {
+      "name": "3A",
+      "number": "9",
+      "api_x": 25,
+      "api_y": -580,
+      "pinRot": 0
+    },
+    {
+      "name": "3Y",
+      "number": "10",
+      "api_x": 125,
+      "api_y": -580,
+      "pinRot": 180
+    },
+    {
+      "name": "3Z",
+      "number": "11",
+      "api_x": 125,
+      "api_y": -570,
+      "pinRot": 180
+    },
+    {
+      "name": "3,4EN",
+      "number": "12",
+      "api_x": 25,
+      "api_y": -530,
+      "pinRot": 0
+    },
+    {
+      "name": "4Z",
+      "number": "13",
+      "api_x": 125,
+      "api_y": -550,
+      "pinRot": 180
+    },
+    {
+      "name": "4Y",
+      "number": "14",
+      "api_x": 125,
+      "api_y": -560,
+      "pinRot": 180
+    },
+    {
+      "name": "4A",
+      "number": "15",
+      "api_x": 25,
+      "api_y": -560,
+      "pinRot": 0
+    },
+    {
+      "name": "VCC",
+      "number": "16",
+      "api_x": 25,
+      "api_y": -510,
+      "pinRot": 0
+    }
+  ],
+  "e215": [
+    {
+      "name": "1A",
+      "number": "1",
+      "api_x": 30,
+      "api_y": -450,
+      "pinRot": 0
+    },
+    {
+      "name": "1Y",
+      "number": "2",
+      "api_x": 130,
+      "api_y": -450,
+      "pinRot": 180
+    },
+    {
+      "name": "1Z",
+      "number": "3",
+      "api_x": 130,
+      "api_y": -440,
+      "pinRot": 180
+    },
+    {
+      "name": "1,2EN",
+      "number": "4",
+      "api_x": 30,
+      "api_y": -370,
+      "pinRot": 0
+    },
+    {
+      "name": "2Z",
+      "number": "5",
+      "api_x": 130,
+      "api_y": -420,
+      "pinRot": 180
+    },
+    {
+      "name": "2Y",
+      "number": "6",
+      "api_x": 130,
+      "api_y": -430,
+      "pinRot": 180
+    },
+    {
+      "name": "2A",
+      "number": "7",
+      "api_x": 30,
+      "api_y": -430,
+      "pinRot": 0
+    },
+    {
+      "name": "GND",
+      "number": "8",
+      "api_x": 130,
+      "api_y": -340,
+      "pinRot": 180
+    },
+    {
+      "name": "3A",
+      "number": "9",
+      "api_x": 30,
+      "api_y": -410,
+      "pinRot": 0
+    },
+    {
+      "name": "3Y",
+      "number": "10",
+      "api_x": 130,
+      "api_y": -410,
+      "pinRot": 180
+    },
+    {
+      "name": "3Z",
+      "number": "11",
+      "api_x": 130,
+      "api_y": -400,
+      "pinRot": 180
+    },
+    {
+      "name": "3,4EN",
+      "number": "12",
+      "api_x": 30,
+      "api_y": -360,
+      "pinRot": 0
+    },
+    {
+      "name": "4Z",
+      "number": "13",
+      "api_x": 130,
+      "api_y": -380,
+      "pinRot": 180
+    },
+    {
+      "name": "4Y",
+      "number": "14",
+      "api_x": 130,
+      "api_y": -390,
+      "pinRot": 180
+    },
+    {
+      "name": "4A",
+      "number": "15",
+      "api_x": 30,
+      "api_y": -390,
+      "pinRot": 0
+    },
+    {
+      "name": "VCC",
+      "number": "16",
+      "api_x": 30,
+      "api_y": -340,
+      "pinRot": 0
+    }
+  ],
+  "e369": [
+    {
+      "name": "INPUT",
+      "number": "1",
+      "api_x": 485,
+      "api_y": -710,
+      "pinRot": 0
+    },
+    {
+      "name": "GND",
+      "number": "2",
+      "api_x": 485,
+      "api_y": -700,
+      "pinRot": 0
+    },
+    {
+      "name": "OUTPUT",
+      "number": "3",
+      "api_x": 485,
+      "api_y": -690,
+      "pinRot": 0
+    }
+  ],
+  "e459": [
+    {
+      "name": "GND",
+      "number": "2",
+      "api_x": 720,
+      "api_y": -660,
+      "pinRot": 90
+    },
+    {
+      "name": "OUT",
+      "number": "3",
+      "api_x": 770,
+      "api_y": -700,
+      "pinRot": 180
+    },
+    {
+      "name": "IN",
+      "number": "1",
+      "api_x": 670,
+      "api_y": -700,
+      "pinRot": 0
+    }
+  ],
+  "e1749": [
+    {
+      "name": "1",
+      "number": "1",
+      "api_x": 690,
+      "api_y": -440,
+      "pinRot": 0
+    },
+    {
+      "name": "2",
+      "number": "2",
+      "api_x": 690,
+      "api_y": -430,
+      "pinRot": 0
+    },
+    {
+      "name": "3",
+      "number": "3",
+      "api_x": 690,
+      "api_y": -420,
+      "pinRot": 0
+    },
+    {
+      "name": "4",
+      "number": "4",
+      "api_x": 690,
+      "api_y": -410,
+      "pinRot": 0
+    }
+  ],
+  "e1833": [
+    {
+      "name": "GND",
+      "number": "1",
+      "api_x": 645,
+      "api_y": -315,
+      "pinRot": 0
+    },
+    {
+      "name": "GND",
+      "number": "2",
+      "api_x": 645,
+      "api_y": -305,
+      "pinRot": 0
+    },
+    {
+      "name": "MOSI",
+      "number": "3",
+      "api_x": 645,
+      "api_y": -295,
+      "pinRot": 0
+    },
+    {
+      "name": "SCLK",
+      "number": "4",
+      "api_x": 645,
+      "api_y": -285,
+      "pinRot": 0
+    },
+    {
+      "name": "SCSn",
+      "number": "5",
+      "api_x": 645,
+      "api_y": -275,
+      "pinRot": 0
+    },
+    {
+      "name": "INTn",
+      "number": "6",
+      "api_x": 645,
+      "api_y": -265,
+      "pinRot": 0
+    },
+    {
+      "name": "GND",
+      "number": "7",
+      "api_x": 735,
+      "api_y": -315,
+      "pinRot": 180
+    },
+    {
+      "name": "+3.3V",
+      "number": "8",
+      "api_x": 735,
+      "api_y": -305,
+      "pinRot": 180
+    },
+    {
+      "name": "+3.3V",
+      "number": "9",
+      "api_x": 735,
+      "api_y": -295,
+      "pinRot": 180
+    },
+    {
+      "name": "NC",
+      "number": "10",
+      "api_x": 735,
+      "api_y": -285,
+      "pinRot": 180
+    },
+    {
+      "name": "RSTn",
+      "number": "11",
+      "api_x": 735,
+      "api_y": -275,
+      "pinRot": 180
+    },
+    {
+      "name": "MISO",
+      "number": "12",
+      "api_x": 735,
+      "api_y": -265,
+      "pinRot": 180
+    }
+  ],
+  "e2200": [
+    {
+      "name": "A",
+      "number": "2",
+      "api_x": 525,
+      "api_y": -640,
+      "pinRot": 180
+    },
+    {
+      "name": "C",
+      "number": "1",
+      "api_x": 485,
+      "api_y": -640,
+      "pinRot": 0
+    }
+  ],
+  "e2300": [
+    {
+      "name": "1",
+      "number": "1",
+      "api_x": 705,
+      "api_y": -795,
+      "pinRot": 0
+    },
+    {
+      "name": "2",
+      "number": "2",
+      "api_x": 735,
+      "api_y": -795,
+      "pinRot": 180
+    }
+  ],
+  "e2310": [
+    {
+      "name": "1",
+      "number": "1",
+      "api_x": 755,
+      "api_y": -795,
+      "pinRot": 0
+    },
+    {
+      "name": "2",
+      "number": "2",
+      "api_x": 785,
+      "api_y": -795,
+      "pinRot": 180
+    }
+  ],
+  "e2320": [
+    {
+      "name": "1",
+      "number": "1",
+      "api_x": 805,
+      "api_y": -795,
+      "pinRot": 0
+    },
+    {
+      "name": "2",
+      "number": "2",
+      "api_x": 835,
+      "api_y": -795,
+      "pinRot": 180
+    }
+  ],
+  "e2330": [
+    {
+      "name": "1",
+      "number": "1",
+      "api_x": 850,
+      "api_y": -795,
+      "pinRot": 0
+    },
+    {
+      "name": "2",
+      "number": "2",
+      "api_x": 890,
+      "api_y": -795,
+      "pinRot": 180
+    }
+  ],
+  "e2340": [
+    {
+      "name": "1",
+      "number": "1",
+      "api_x": 900,
+      "api_y": -795,
+      "pinRot": 0
+    },
+    {
+      "name": "2",
+      "number": "2",
+      "api_x": 940,
+      "api_y": -795,
+      "pinRot": 180
+    }
+  ],
+  "e2350": [
+    {
+      "name": "1",
+      "number": "1",
+      "api_x": 950,
+      "api_y": -795,
+      "pinRot": 0
+    },
+    {
+      "name": "2",
+      "number": "2",
+      "api_x": 990,
+      "api_y": -795,
+      "pinRot": 180
+    }
+  ],
+  "e2360": [
+    {
+      "name": "1",
+      "number": "1",
+      "api_x": 1000,
+      "api_y": -795,
+      "pinRot": 0
+    },
+    {
+      "name": "2",
+      "number": "2",
+      "api_x": 1040,
+      "api_y": -795,
+      "pinRot": 180
+    }
+  ],
+  "e2370": [
+    {
+      "name": "1",
+      "number": "1",
+      "api_x": 1050,
+      "api_y": -795,
+      "pinRot": 0
+    },
+    {
+      "name": "2",
+      "number": "2",
+      "api_x": 1090,
+      "api_y": -795,
+      "pinRot": 180
+    }
+  ],
+  "e2380": [
+    {
+      "name": "1",
+      "number": "1",
+      "api_x": 1100,
+      "api_y": -795,
+      "pinRot": 0
+    },
+    {
+      "name": "2",
+      "number": "2",
+      "api_x": 1140,
+      "api_y": -795,
+      "pinRot": 180
+    }
+  ],
+  "e2390": [
+    {
+      "name": "1",
+      "number": "1",
+      "api_x": 1165,
+      "api_y": -795,
+      "pinRot": 0
+    },
+    {
+      "name": "2",
+      "number": "2",
+      "api_x": 1195,
+      "api_y": -795,
+      "pinRot": 180
+    }
+  ],
+  "e2400": [
+    {
+      "name": "1",
+      "number": "1",
+      "api_x": 1225,
+      "api_y": -795,
+      "pinRot": 0
+    },
+    {
+      "name": "2",
+      "number": "2",
+      "api_x": 1255,
+      "api_y": -795,
+      "pinRot": 180
+    }
+  ],
+  "e2500": [
+    {
+      "name": "2",
+      "number": "2",
+      "api_x": 85,
+      "api_y": -280,
+      "pinRot": 180
+    },
+    {
+      "name": "1",
+      "number": "1",
+      "api_x": 45,
+      "api_y": -280,
+      "pinRot": 0
+    }
+  ],
+  "e2510": [
+    {
+      "name": "2",
+      "number": "2",
+      "api_x": 85,
+      "api_y": -265,
+      "pinRot": 180
+    },
+    {
+      "name": "1",
+      "number": "1",
+      "api_x": 45,
+      "api_y": -265,
+      "pinRot": 0
+    }
+  ],
+  "e2520": [
+    {
+      "name": "2",
+      "number": "2",
+      "api_x": 85,
+      "api_y": -250,
+      "pinRot": 180
+    },
+    {
+      "name": "1",
+      "number": "1",
+      "api_x": 45,
+      "api_y": -250,
+      "pinRot": 0
+    }
+  ],
+  "e2530": [
+    {
+      "name": "2",
+      "number": "2",
+      "api_x": 85,
+      "api_y": -235,
+      "pinRot": 180
+    },
+    {
+      "name": "1",
+      "number": "1",
+      "api_x": 45,
+      "api_y": -235,
+      "pinRot": 0
+    }
+  ],
+  "e2540": [
+    {
+      "name": "2",
+      "number": "2",
+      "api_x": 85,
+      "api_y": -220,
+      "pinRot": 180
+    },
+    {
+      "name": "1",
+      "number": "1",
+      "api_x": 45,
+      "api_y": -220,
+      "pinRot": 0
+    }
+  ],
+  "e2550": [
+    {
+      "name": "2",
+      "number": "2",
+      "api_x": 85,
+      "api_y": -205,
+      "pinRot": 180
+    },
+    {
+      "name": "1",
+      "number": "1",
+      "api_x": 45,
+      "api_y": -205,
+      "pinRot": 0
+    }
+  ],
+  "e2560": [
+    {
+      "name": "2",
+      "number": "2",
+      "api_x": 85,
+      "api_y": -190,
+      "pinRot": 180
+    },
+    {
+      "name": "1",
+      "number": "1",
+      "api_x": 45,
+      "api_y": -190,
+      "pinRot": 0
+    }
+  ],
+  "e2570": [
+    {
+      "name": "2",
+      "number": "2",
+      "api_x": 85,
+      "api_y": -175,
+      "pinRot": 180
+    },
+    {
+      "name": "1",
+      "number": "1",
+      "api_x": 45,
+      "api_y": -175,
+      "pinRot": 0
+    }
+  ],
+  "e2580": [
+    {
+      "name": "2",
+      "number": "2",
+      "api_x": 85,
+      "api_y": -160,
+      "pinRot": 180
+    },
+    {
+      "name": "1",
+      "number": "1",
+      "api_x": 45,
+      "api_y": -160,
+      "pinRot": 0
+    }
+  ],
+  "e2590": [
+    {
+      "name": "2",
+      "number": "2",
+      "api_x": 85,
+      "api_y": -145,
+      "pinRot": 180
+    },
+    {
+      "name": "1",
+      "number": "1",
+      "api_x": 45,
+      "api_y": -145,
+      "pinRot": 0
+    }
+  ],
+  "e2600": [
+    {
+      "name": "2",
+      "number": "2",
+      "api_x": 85,
+      "api_y": -130,
+      "pinRot": 180
+    },
+    {
+      "name": "1",
+      "number": "1",
+      "api_x": 45,
+      "api_y": -130,
+      "pinRot": 0
+    }
+  ],
+  "e2610": [
+    {
+      "name": "2",
+      "number": "2",
+      "api_x": 85,
+      "api_y": -115,
+      "pinRot": 180
+    },
+    {
+      "name": "1",
+      "number": "1",
+      "api_x": 45,
+      "api_y": -115,
+      "pinRot": 0
+    }
+  ],
+  "e541": [
+    {
+      "name": "3V3",
+      "number": "J1_1",
+      "api_x": 1050,
+      "api_y": -595,
+      "pinRot": 0
+    },
+    {
+      "name": "RST",
+      "number": "J1_3",
+      "api_x": 870.00036,
+      "api_y": -585.00002,
+      "pinRot": 180
+    },
+    {
+      "name": "GPIO1",
+      "number": "J3_4",
+      "api_x": 870.00036,
+      "api_y": -555.00008,
+      "pinRot": 180
+    },
+    {
+      "name": "GPIO2",
+      "number": "J3_5",
+      "api_x": 870.00036,
+      "api_y": -545.0001,
+      "pinRot": 180
+    },
+    {
+      "name": "GPIO4",
+      "number": "J1_4",
+      "api_x": 870.00036,
+      "api_y": -525.00014,
+      "pinRot": 180
+    },
+    {
+      "name": "GPIO3",
+      "number": "J1_13",
+      "api_x": 870.00036,
+      "api_y": -535.00012,
+      "pinRot": 180
+    },
+    {
+      "name": "GPIO5",
+      "number": "J1_5",
+      "api_x": 870.00036,
+      "api_y": -515.00016,
+      "pinRot": 180
+    },
+    {
+      "name": "GPIO6",
+      "number": "J1_6",
+      "api_x": 870.00036,
+      "api_y": -505.00018,
+      "pinRot": 180
+    },
+    {
+      "name": "GPIO7",
+      "number": "J1_7",
+      "api_x": 870.00036,
+      "api_y": -495.0002,
+      "pinRot": 180
+    },
+    {
+      "name": "GPIO8",
+      "number": "J1_12",
+      "api_x": 870.00036,
+      "api_y": -485.00022,
+      "pinRot": 180
+    },
+    {
+      "name": "GPIO9",
+      "number": "J1_15",
+      "api_x": 870.00036,
+      "api_y": -475.00024,
+      "pinRot": 180
+    },
+    {
+      "name": "GPIO10",
+      "number": "J1_16",
+      "api_x": 870.00036,
+      "api_y": -465.00026,
+      "pinRot": 180
+    },
+    {
+      "name": "GPIO11",
+      "number": "J1_17",
+      "api_x": 870.00036,
+      "api_y": -455.00028000000003,
+      "pinRot": 180
+    },
+    {
+      "name": "GPIO12",
+      "number": "J1_18",
+      "api_x": 870.00036,
+      "api_y": -445.00030000000004,
+      "pinRot": 180
+    },
+    {
+      "name": "GPIO13",
+      "number": "J1_19",
+      "api_x": 870.00036,
+      "api_y": -435.00032,
+      "pinRot": 180
+    },
+    {
+      "name": "GPIO14",
+      "number": "J1_20",
+      "api_x": 870.00036,
+      "api_y": -425.00034,
+      "pinRot": 180
+    },
+    {
+      "name": "GPIO15",
+      "number": "J1_8",
+      "api_x": 870.00036,
+      "api_y": -415.00036,
+      "pinRot": 180
+    },
+    {
+      "name": "GPIO16",
+      "number": "J1_9",
+      "api_x": 870.00036,
+      "api_y": -405.00038,
+      "pinRot": 180
+    },
+    {
+      "name": "GPIO17",
+      "number": "J1_10",
+      "api_x": 870.00036,
+      "api_y": -395.0004,
+      "pinRot": 180
+    },
+    {
+      "name": "GPIO18",
+      "number": "J1_11",
+      "api_x": 870.00036,
+      "api_y": -385.00042,
+      "pinRot": 180
+    },
+    {
+      "name": "GPIO0",
+      "number": "J3_14",
+      "api_x": 870.00036,
+      "api_y": -565.0000600000001,
+      "pinRot": 180
+    },
+    {
+      "name": "GND",
+      "number": "J1_22",
+      "api_x": 1050,
+      "api_y": -365.00046000000003,
+      "pinRot": 0
+    },
+    {
+      "name": "3V3",
+      "number": "J1_2",
+      "api_x": 1050,
+      "api_y": -595,
+      "pinRot": 0
+    },
+    {
+      "name": "GND",
+      "number": "J3_1",
+      "api_x": 1050,
+      "api_y": -365.00046000000003,
+      "pinRot": 0
+    },
+    {
+      "name": "GND",
+      "number": "J3_21",
+      "api_x": 1050,
+      "api_y": -365.00046000000003,
+      "pinRot": 0
+    },
+    {
+      "name": "GND",
+      "number": "J3_22",
+      "api_x": 1050,
+      "api_y": -365.00046000000003,
+      "pinRot": 0
+    },
+    {
+      "name": "5V0",
+      "number": "J1_21",
+      "api_x": 1050,
+      "api_y": -604.99998,
+      "pinRot": 0
+    },
+    {
+      "name": "GPIO48",
+      "number": "J3_16",
+      "api_x": 1050,
+      "api_y": -495.0002,
+      "pinRot": 0
+    },
+    {
+      "name": "GPIO47",
+      "number": "J3_17",
+      "api_x": 1050,
+      "api_y": -505.00018,
+      "pinRot": 0
+    },
+    {
+      "name": "GPIO46",
+      "number": "J1_14",
+      "api_x": 1050,
+      "api_y": -515.00016,
+      "pinRot": 0
+    },
+    {
+      "name": "GPIO45",
+      "number": "J3_15",
+      "api_x": 1050,
+      "api_y": -525.00014,
+      "pinRot": 0
+    },
+    {
+      "name": "GPIO21",
+      "number": "J3_18",
+      "api_x": 870.00036,
+      "api_y": -375.00044,
+      "pinRot": 180
+    },
+    {
+      "name": "USB_D+/GPIO20",
+      "number": "J3_19",
+      "api_x": 1050,
+      "api_y": -385.00042,
+      "pinRot": 0
+    },
+    {
+      "name": "USB_D-/GPIO19",
+      "number": "J3_20",
+      "api_x": 1050,
+      "api_y": -395.0004,
+      "pinRot": 0
+    },
+    {
+      "name": "U0RXD/GPIO44",
+      "number": "J3_3",
+      "api_x": 1050,
+      "api_y": -415.00036,
+      "pinRot": 0
+    },
+    {
+      "name": "U0TXD/GPIO43",
+      "number": "J3_2",
+      "api_x": 1050,
+      "api_y": -425.00034,
+      "pinRot": 0
+    },
+    {
+      "name": "MTMS/GPIO42",
+      "number": "J3_6",
+      "api_x": 1050,
+      "api_y": -445.00030000000004,
+      "pinRot": 0
+    },
+    {
+      "name": "MTDI/GPIO41",
+      "number": "J3_7",
+      "api_x": 1050,
+      "api_y": -455.00028000000003,
+      "pinRot": 0
+    },
+    {
+      "name": "MTDO/GPIO40",
+      "number": "J3_8",
+      "api_x": 1050,
+      "api_y": -465.00026,
+      "pinRot": 0
+    },
+    {
+      "name": "MTCK/GPIO39",
+      "number": "J3_9",
+      "api_x": 1050,
+      "api_y": -475.00024,
+      "pinRot": 0
+    },
+    {
+      "name": "GPIO38",
+      "number": "J3_10",
+      "api_x": 1050,
+      "api_y": -535.00012,
+      "pinRot": 0
+    },
+    {
+      "name": "GPIO37",
+      "number": "J3_11",
+      "api_x": 1050,
+      "api_y": -545.0001,
+      "pinRot": 0
+    },
+    {
+      "name": "GPIO36",
+      "number": "J3_12",
+      "api_x": 1050,
+      "api_y": -555.00008,
+      "pinRot": 0
+    },
+    {
+      "name": "GPIO35",
+      "number": "J3_13",
+      "api_x": 1050,
+      "api_y": -565.0000600000001,
+      "pinRot": 0
+    }
+  ]
+}

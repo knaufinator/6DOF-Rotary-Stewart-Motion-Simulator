@@ -1,0 +1,492 @@
+{
+  "status": "PIXEL_AND_RENDER_PASS_VISUAL_REVIEW_PENDING",
+  "pdf": "G:\\My Drive\\projects\\6dof\\pcb\\manufacturing_release\\2026-09-23-r13-rc3\\6DOF2_r13_Schematic_Review.pdf",
+  "checks": [
+    {
+      "name": "page_count",
+      "passCheck": true
+    },
+    {
+      "name": "pdf_hash",
+      "passCheck": true
+    },
+    {
+      "name": "native_raster_pixel_identity",
+      "page": 2,
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\00.png",
+      "embeddedImages": 1,
+      "sourceSize": [
+        1747,
+        1005
+      ],
+      "embeddedSize": [
+        1747,
+        1005
+      ],
+      "passCheck": true
+    },
+    {
+      "name": "native_raster_pixel_identity",
+      "page": 3,
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\01.png",
+      "embeddedImages": 1,
+      "sourceSize": [
+        1747,
+        1005
+      ],
+      "embeddedSize": [
+        1747,
+        1005
+      ],
+      "passCheck": true
+    },
+    {
+      "name": "native_raster_pixel_identity",
+      "page": 4,
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\02.png",
+      "embeddedImages": 1,
+      "sourceSize": [
+        1747,
+        1005
+      ],
+      "embeddedSize": [
+        1747,
+        1005
+      ],
+      "passCheck": true
+    },
+    {
+      "name": "native_raster_pixel_identity",
+      "page": 5,
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\03.png",
+      "embeddedImages": 1,
+      "sourceSize": [
+        1747,
+        1005
+      ],
+      "embeddedSize": [
+        1747,
+        1005
+      ],
+      "passCheck": true
+    },
+    {
+      "name": "native_raster_pixel_identity",
+      "page": 6,
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\04.png",
+      "embeddedImages": 1,
+      "sourceSize": [
+        1747,
+        1005
+      ],
+      "embeddedSize": [
+        1747,
+        1005
+      ],
+      "passCheck": true
+    },
+    {
+      "name": "native_raster_pixel_identity",
+      "page": 7,
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\05.png",
+      "embeddedImages": 1,
+      "sourceSize": [
+        1747,
+        1005
+      ],
+      "embeddedSize": [
+        1747,
+        1005
+      ],
+      "passCheck": true
+    },
+    {
+      "name": "native_raster_pixel_identity",
+      "page": 8,
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\06.png",
+      "embeddedImages": 1,
+      "sourceSize": [
+        1747,
+        1005
+      ],
+      "embeddedSize": [
+        1747,
+        1005
+      ],
+      "passCheck": true
+    },
+    {
+      "name": "native_raster_pixel_identity",
+      "page": 9,
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\07.png",
+      "embeddedImages": 1,
+      "sourceSize": [
+        1747,
+        1005
+      ],
+      "embeddedSize": [
+        1747,
+        1005
+      ],
+      "passCheck": true
+    },
+    {
+      "name": "native_raster_pixel_identity",
+      "page": 10,
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\08.png",
+      "embeddedImages": 1,
+      "sourceSize": [
+        1747,
+        1005
+      ],
+      "embeddedSize": [
+        1747,
+        1005
+      ],
+      "passCheck": true
+    },
+    {
+      "name": "native_raster_pixel_identity",
+      "page": 11,
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\09.png",
+      "embeddedImages": 1,
+      "sourceSize": [
+        1747,
+        1005
+      ],
+      "embeddedSize": [
+        1747,
+        1005
+      ],
+      "passCheck": true
+    },
+    {
+      "name": "native_raster_pixel_identity",
+      "page": 12,
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\10.png",
+      "embeddedImages": 1,
+      "sourceSize": [
+        1747,
+        1005
+      ],
+      "embeddedSize": [
+        1747,
+        1005
+      ],
+      "passCheck": true
+    },
+    {
+      "name": "native_raster_pixel_identity",
+      "page": 13,
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\11.png",
+      "embeddedImages": 1,
+      "sourceSize": [
+        1747,
+        1005
+      ],
+      "embeddedSize": [
+        1747,
+        1005
+      ],
+      "passCheck": true
+    },
+    {
+      "name": "native_raster_pixel_identity",
+      "page": 14,
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\12.png",
+      "embeddedImages": 1,
+      "sourceSize": [
+        1747,
+        1005
+      ],
+      "embeddedSize": [
+        1747,
+        1005
+      ],
+      "passCheck": true
+    },
+    {
+      "name": "native_raster_pixel_identity",
+      "page": 15,
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\13.png",
+      "embeddedImages": 1,
+      "sourceSize": [
+        1747,
+        1005
+      ],
+      "embeddedSize": [
+        1747,
+        1005
+      ],
+      "passCheck": true
+    },
+    {
+      "name": "native_raster_pixel_identity",
+      "page": 16,
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\14.png",
+      "embeddedImages": 1,
+      "sourceSize": [
+        1747,
+        1005
+      ],
+      "embeddedSize": [
+        1747,
+        1005
+      ],
+      "passCheck": true
+    },
+    {
+      "name": "native_raster_pixel_identity",
+      "page": 17,
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\15.png",
+      "embeddedImages": 1,
+      "sourceSize": [
+        1747,
+        1005
+      ],
+      "embeddedSize": [
+        1747,
+        1005
+      ],
+      "passCheck": true
+    },
+    {
+      "name": "native_raster_pixel_identity",
+      "page": 18,
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\16.png",
+      "embeddedImages": 1,
+      "sourceSize": [
+        1747,
+        1005
+      ],
+      "embeddedSize": [
+        1747,
+        1005
+      ],
+      "passCheck": true
+    },
+    {
+      "name": "native_raster_pixel_identity",
+      "page": 19,
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\17.png",
+      "embeddedImages": 1,
+      "sourceSize": [
+        1747,
+        1005
+      ],
+      "embeddedSize": [
+        1747,
+        1005
+      ],
+      "passCheck": true
+    },
+    {
+      "name": "native_raster_pixel_identity",
+      "page": 20,
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\18.png",
+      "embeddedImages": 1,
+      "sourceSize": [
+        1747,
+        1005
+      ],
+      "embeddedSize": [
+        1747,
+        1005
+      ],
+      "passCheck": true
+    },
+    {
+      "name": "native_raster_pixel_identity",
+      "page": 21,
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\19.png",
+      "embeddedImages": 1,
+      "sourceSize": [
+        1747,
+        1005
+      ],
+      "embeddedSize": [
+        1747,
+        1005
+      ],
+      "passCheck": true
+    },
+    {
+      "name": "native_raster_pixel_identity",
+      "page": 22,
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\20.png",
+      "embeddedImages": 1,
+      "sourceSize": [
+        1747,
+        1005
+      ],
+      "embeddedSize": [
+        1747,
+        1005
+      ],
+      "passCheck": true
+    },
+    {
+      "name": "native_raster_pixel_identity",
+      "page": 23,
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\21.png",
+      "embeddedImages": 1,
+      "sourceSize": [
+        1747,
+        1005
+      ],
+      "embeddedSize": [
+        1747,
+        1005
+      ],
+      "passCheck": true
+    },
+    {
+      "name": "native_raster_pixel_identity",
+      "page": 24,
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\22.png",
+      "embeddedImages": 1,
+      "sourceSize": [
+        1747,
+        1005
+      ],
+      "embeddedSize": [
+        1747,
+        1005
+      ],
+      "passCheck": true
+    },
+    {
+      "name": "native_raster_pixel_identity",
+      "page": 25,
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\23.png",
+      "embeddedImages": 1,
+      "sourceSize": [
+        1747,
+        1005
+      ],
+      "embeddedSize": [
+        1747,
+        1005
+      ],
+      "passCheck": true
+    },
+    {
+      "name": "native_raster_pixel_identity",
+      "page": 26,
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\24.png",
+      "embeddedImages": 1,
+      "sourceSize": [
+        1747,
+        1005
+      ],
+      "embeddedSize": [
+        1747,
+        1005
+      ],
+      "passCheck": true
+    },
+    {
+      "name": "native_raster_pixel_identity",
+      "page": 27,
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\25.png",
+      "embeddedImages": 1,
+      "sourceSize": [
+        1747,
+        1005
+      ],
+      "embeddedSize": [
+        1747,
+        1005
+      ],
+      "passCheck": true
+    },
+    {
+      "name": "native_raster_pixel_identity",
+      "page": 28,
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\26.png",
+      "embeddedImages": 1,
+      "sourceSize": [
+        1747,
+        1005
+      ],
+      "embeddedSize": [
+        1747,
+        1005
+      ],
+      "passCheck": true
+    },
+    {
+      "name": "native_raster_pixel_identity",
+      "page": 29,
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\27.png",
+      "embeddedImages": 1,
+      "sourceSize": [
+        1747,
+        1005
+      ],
+      "embeddedSize": [
+        1747,
+        1005
+      ],
+      "passCheck": true
+    },
+    {
+      "name": "native_raster_pixel_identity",
+      "page": 30,
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\28.png",
+      "embeddedImages": 1,
+      "sourceSize": [
+        1747,
+        1005
+      ],
+      "embeddedSize": [
+        1747,
+        1005
+      ],
+      "passCheck": true
+    },
+    {
+      "name": "all_pages_rendered",
+      "passCheck": true,
+      "rendered": 30
+    }
+  ],
+  "contactSheets": [
+    "G:\\My Drive\\projects\\6dof\\tmp\\pdfs\\rc3_schematic_qa\\contact_001_012.png",
+    "G:\\My Drive\\projects\\6dof\\tmp\\pdfs\\rc3_schematic_qa\\contact_013_024.png",
+    "G:\\My Drive\\projects\\6dof\\tmp\\pdfs\\rc3_schematic_qa\\contact_025_030.png"
+  ],
+  "renderedPages": [
+    "G:\\My Drive\\projects\\6dof\\tmp\\pdfs\\rc3_schematic_qa\\page-01.png",
+    "G:\\My Drive\\projects\\6dof\\tmp\\pdfs\\rc3_schematic_qa\\page-02.png",
+    "G:\\My Drive\\projects\\6dof\\tmp\\pdfs\\rc3_schematic_qa\\page-03.png",
+    "G:\\My Drive\\projects\\6dof\\tmp\\pdfs\\rc3_schematic_qa\\page-04.png",
+    "G:\\My Drive\\projects\\6dof\\tmp\\pdfs\\rc3_schematic_qa\\page-05.png",
+    "G:\\My Drive\\projects\\6dof\\tmp\\pdfs\\rc3_schematic_qa\\page-06.png",
+    "G:\\My Drive\\projects\\6dof\\tmp\\pdfs\\rc3_schematic_qa\\page-07.png",
+    "G:\\My Drive\\projects\\6dof\\tmp\\pdfs\\rc3_schematic_qa\\page-08.png",
+    "G:\\My Drive\\projects\\6dof\\tmp\\pdfs\\rc3_schematic_qa\\page-09.png",
+    "G:\\My Drive\\projects\\6dof\\tmp\\pdfs\\rc3_schematic_qa\\page-10.png",
+    "G:\\My Drive\\projects\\6dof\\tmp\\pdfs\\rc3_schematic_qa\\page-11.png",
+    "G:\\My Drive\\projects\\6dof\\tmp\\pdfs\\rc3_schematic_qa\\page-12.png",
+    "G:\\My Drive\\projects\\6dof\\tmp\\pdfs\\rc3_schematic_qa\\page-13.png",
+    "G:\\My Drive\\projects\\6dof\\tmp\\pdfs\\rc3_schematic_qa\\page-14.png",
+    "G:\\My Drive\\projects\\6dof\\tmp\\pdfs\\rc3_schematic_qa\\page-15.png",
+    "G:\\My Drive\\projects\\6dof\\tmp\\pdfs\\rc3_schematic_qa\\page-16.png",
+    "G:\\My Drive\\projects\\6dof\\tmp\\pdfs\\rc3_schematic_qa\\page-17.png",
+    "G:\\My Drive\\projects\\6dof\\tmp\\pdfs\\rc3_schematic_qa\\page-18.png",
+    "G:\\My Drive\\projects\\6dof\\tmp\\pdfs\\rc3_schematic_qa\\page-19.png",
+    "G:\\My Drive\\projects\\6dof\\tmp\\pdfs\\rc3_schematic_qa\\page-20.png",
+    "G:\\My Drive\\projects\\6dof\\tmp\\pdfs\\rc3_schematic_qa\\page-21.png",
+    "G:\\My Drive\\projects\\6dof\\tmp\\pdfs\\rc3_schematic_qa\\page-22.png",
+    "G:\\My Drive\\projects\\6dof\\tmp\\pdfs\\rc3_schematic_qa\\page-23.png",
+    "G:\\My Drive\\projects\\6dof\\tmp\\pdfs\\rc3_schematic_qa\\page-24.png",
+    "G:\\My Drive\\projects\\6dof\\tmp\\pdfs\\rc3_schematic_qa\\page-25.png",
+    "G:\\My Drive\\projects\\6dof\\tmp\\pdfs\\rc3_schematic_qa\\page-26.png",
+    "G:\\My Drive\\projects\\6dof\\tmp\\pdfs\\rc3_schematic_qa\\page-27.png",
+    "G:\\My Drive\\projects\\6dof\\tmp\\pdfs\\rc3_schematic_qa\\page-28.png",
+    "G:\\My Drive\\projects\\6dof\\tmp\\pdfs\\rc3_schematic_qa\\page-29.png",
+    "G:\\My Drive\\projects\\6dof\\tmp\\pdfs\\rc3_schematic_qa\\page-30.png"
+  ],
+  "remaining": "Inspect every contact sheet and representative full-resolution dense detail pages before declaring visual QA passed."
+}

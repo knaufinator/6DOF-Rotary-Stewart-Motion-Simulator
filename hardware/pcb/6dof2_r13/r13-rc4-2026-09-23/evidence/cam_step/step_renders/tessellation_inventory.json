@@ -1,0 +1,730 @@
+{
+  "geometry": "Actual exported STEP BReps, no surrogate boxes. Technical category colors, not manufacturer material colors.",
+  "parts": [
+    {
+      "ref": "PCB",
+      "triangles": 123216,
+      "vertices": 123244
+    },
+    {
+      "ref": "C2",
+      "triangles": 6854,
+      "vertices": 5855
+    },
+    {
+      "ref": "C4",
+      "triangles": 2674,
+      "vertices": 3119
+    },
+    {
+      "ref": "C5",
+      "triangles": 2674,
+      "vertices": 3119
+    },
+    {
+      "ref": "C6",
+      "triangles": 2674,
+      "vertices": 3119
+    },
+    {
+      "ref": "C8",
+      "triangles": 2674,
+      "vertices": 3119
+    },
+    {
+      "ref": "C9",
+      "triangles": 2674,
+      "vertices": 3119
+    },
+    {
+      "ref": "C10",
+      "triangles": 2674,
+      "vertices": 3119
+    },
+    {
+      "ref": "C13",
+      "triangles": 2674,
+      "vertices": 3119
+    },
+    {
+      "ref": "C14",
+      "triangles": 2674,
+      "vertices": 3119
+    },
+    {
+      "ref": "C16",
+      "triangles": 2674,
+      "vertices": 3119
+    },
+    {
+      "ref": "C17",
+      "triangles": 2674,
+      "vertices": 3119
+    },
+    {
+      "ref": "C18",
+      "triangles": 2674,
+      "vertices": 3119
+    },
+    {
+      "ref": "C20",
+      "triangles": 2674,
+      "vertices": 3119
+    },
+    {
+      "ref": "C21",
+      "triangles": 2674,
+      "vertices": 3119
+    },
+    {
+      "ref": "C12",
+      "triangles": 2674,
+      "vertices": 3119
+    },
+    {
+      "ref": "C26",
+      "triangles": 2674,
+      "vertices": 3119
+    },
+    {
+      "ref": "C27",
+      "triangles": 2674,
+      "vertices": 3119
+    },
+    {
+      "ref": "C28",
+      "triangles": 2674,
+      "vertices": 3119
+    },
+    {
+      "ref": "C29",
+      "triangles": 2674,
+      "vertices": 3119
+    },
+    {
+      "ref": "C30",
+      "triangles": 2674,
+      "vertices": 3119
+    },
+    {
+      "ref": "C32",
+      "triangles": 2674,
+      "vertices": 3119
+    },
+    {
+      "ref": "C33",
+      "triangles": 2674,
+      "vertices": 3119
+    },
+    {
+      "ref": "C34",
+      "triangles": 2674,
+      "vertices": 3119
+    },
+    {
+      "ref": "C35",
+      "triangles": 2674,
+      "vertices": 3119
+    },
+    {
+      "ref": "C23",
+      "triangles": 2674,
+      "vertices": 3119
+    },
+    {
+      "ref": "C24",
+      "triangles": 2674,
+      "vertices": 3119
+    },
+    {
+      "ref": "C36",
+      "triangles": 2674,
+      "vertices": 3119
+    },
+    {
+      "ref": "C37",
+      "triangles": 2674,
+      "vertices": 3119
+    },
+    {
+      "ref": "C38",
+      "triangles": 2674,
+      "vertices": 3119
+    },
+    {
+      "ref": "C39",
+      "triangles": 2674,
+      "vertices": 3119
+    },
+    {
+      "ref": "C40",
+      "triangles": 2674,
+      "vertices": 3119
+    },
+    {
+      "ref": "C41",
+      "triangles": 2674,
+      "vertices": 3119
+    },
+    {
+      "ref": "R1",
+      "triangles": 1286,
+      "vertices": 1761
+    },
+    {
+      "ref": "R2",
+      "triangles": 1286,
+      "vertices": 1761
+    },
+    {
+      "ref": "R3",
+      "triangles": 1286,
+      "vertices": 1761
+    },
+    {
+      "ref": "R4",
+      "triangles": 1286,
+      "vertices": 1761
+    },
+    {
+      "ref": "R5",
+      "triangles": 1286,
+      "vertices": 1761
+    },
+    {
+      "ref": "R6",
+      "triangles": 1286,
+      "vertices": 1761
+    },
+    {
+      "ref": "R7",
+      "triangles": 1286,
+      "vertices": 1761
+    },
+    {
+      "ref": "R10",
+      "triangles": 1286,
+      "vertices": 1761
+    },
+    {
+      "ref": "R11",
+      "triangles": 1286,
+      "vertices": 1761
+    },
+    {
+      "ref": "R12",
+      "triangles": 1286,
+      "vertices": 1761
+    },
+    {
+      "ref": "R13",
+      "triangles": 1286,
+      "vertices": 1761
+    },
+    {
+      "ref": "R14",
+      "triangles": 1286,
+      "vertices": 1761
+    },
+    {
+      "ref": "R15",
+      "triangles": 1286,
+      "vertices": 1761
+    },
+    {
+      "ref": "R16",
+      "triangles": 1286,
+      "vertices": 1761
+    },
+    {
+      "ref": "R17",
+      "triangles": 1286,
+      "vertices": 1761
+    },
+    {
+      "ref": "R18",
+      "triangles": 1286,
+      "vertices": 1761
+    },
+    {
+      "ref": "R19",
+      "triangles": 1286,
+      "vertices": 1761
+    },
+    {
+      "ref": "R20",
+      "triangles": 1286,
+      "vertices": 1761
+    },
+    {
+      "ref": "R21",
+      "triangles": 1286,
+      "vertices": 1761
+    },
+    {
+      "ref": "R22",
+      "triangles": 1286,
+      "vertices": 1761
+    },
+    {
+      "ref": "R23",
+      "triangles": 1286,
+      "vertices": 1761
+    },
+    {
+      "ref": "R24",
+      "triangles": 1286,
+      "vertices": 1761
+    },
+    {
+      "ref": "R25",
+      "triangles": 1286,
+      "vertices": 1761
+    },
+    {
+      "ref": "R30",
+      "triangles": 1286,
+      "vertices": 1761
+    },
+    {
+      "ref": "R31",
+      "triangles": 1286,
+      "vertices": 1761
+    },
+    {
+      "ref": "R32",
+      "triangles": 1286,
+      "vertices": 1761
+    },
+    {
+      "ref": "R33",
+      "triangles": 1286,
+      "vertices": 1761
+    },
+    {
+      "ref": "R34",
+      "triangles": 1286,
+      "vertices": 1761
+    },
+    {
+      "ref": "R35",
+      "triangles": 1286,
+      "vertices": 1761
+    },
+    {
+      "ref": "R36",
+      "triangles": 1286,
+      "vertices": 1761
+    },
+    {
+      "ref": "R37",
+      "triangles": 1286,
+      "vertices": 1761
+    },
+    {
+      "ref": "R38",
+      "triangles": 1286,
+      "vertices": 1761
+    },
+    {
+      "ref": "R39",
+      "triangles": 1286,
+      "vertices": 1761
+    },
+    {
+      "ref": "R40",
+      "triangles": 1286,
+      "vertices": 1761
+    },
+    {
+      "ref": "R41",
+      "triangles": 1286,
+      "vertices": 1761
+    },
+    {
+      "ref": "R42",
+      "triangles": 1286,
+      "vertices": 1761
+    },
+    {
+      "ref": "R43",
+      "triangles": 1286,
+      "vertices": 1761
+    },
+    {
+      "ref": "R44",
+      "triangles": 1286,
+      "vertices": 1761
+    },
+    {
+      "ref": "R45",
+      "triangles": 1286,
+      "vertices": 1761
+    },
+    {
+      "ref": "R46",
+      "triangles": 1286,
+      "vertices": 1761
+    },
+    {
+      "ref": "R47",
+      "triangles": 1286,
+      "vertices": 1761
+    },
+    {
+      "ref": "R48",
+      "triangles": 1286,
+      "vertices": 1761
+    },
+    {
+      "ref": "R49",
+      "triangles": 1286,
+      "vertices": 1761
+    },
+    {
+      "ref": "R50",
+      "triangles": 1286,
+      "vertices": 1761
+    },
+    {
+      "ref": "R51",
+      "triangles": 1286,
+      "vertices": 1761
+    },
+    {
+      "ref": "R52",
+      "triangles": 1286,
+      "vertices": 1761
+    },
+    {
+      "ref": "R53",
+      "triangles": 1286,
+      "vertices": 1761
+    },
+    {
+      "ref": "R54",
+      "triangles": 1286,
+      "vertices": 1761
+    },
+    {
+      "ref": "R55",
+      "triangles": 1286,
+      "vertices": 1761
+    },
+    {
+      "ref": "R56",
+      "triangles": 1286,
+      "vertices": 1761
+    },
+    {
+      "ref": "R57",
+      "triangles": 1286,
+      "vertices": 1761
+    },
+    {
+      "ref": "R58",
+      "triangles": 1286,
+      "vertices": 1761
+    },
+    {
+      "ref": "R59",
+      "triangles": 1286,
+      "vertices": 1761
+    },
+    {
+      "ref": "R60",
+      "triangles": 1286,
+      "vertices": 1761
+    },
+    {
+      "ref": "R61",
+      "triangles": 1286,
+      "vertices": 1761
+    },
+    {
+      "ref": "R62",
+      "triangles": 1286,
+      "vertices": 1761
+    },
+    {
+      "ref": "R63",
+      "triangles": 1286,
+      "vertices": 1761
+    },
+    {
+      "ref": "R64",
+      "triangles": 1286,
+      "vertices": 1761
+    },
+    {
+      "ref": "R65",
+      "triangles": 1286,
+      "vertices": 1761
+    },
+    {
+      "ref": "R66",
+      "triangles": 1286,
+      "vertices": 1761
+    },
+    {
+      "ref": "R67",
+      "triangles": 1286,
+      "vertices": 1761
+    },
+    {
+      "ref": "R68",
+      "triangles": 1286,
+      "vertices": 1761
+    },
+    {
+      "ref": "R69",
+      "triangles": 1286,
+      "vertices": 1761
+    },
+    {
+      "ref": "R70",
+      "triangles": 1286,
+      "vertices": 1761
+    },
+    {
+      "ref": "D1",
+      "triangles": 4672,
+      "vertices": 4540
+    },
+    {
+      "ref": "D2",
+      "triangles": 4672,
+      "vertices": 4540
+    },
+    {
+      "ref": "D3",
+      "triangles": 4672,
+      "vertices": 4540
+    },
+    {
+      "ref": "D8",
+      "triangles": 4672,
+      "vertices": 4540
+    },
+    {
+      "ref": "U6",
+      "triangles": 3436,
+      "vertices": 3384
+    },
+    {
+      "ref": "C7",
+      "triangles": 3818,
+      "vertices": 3939
+    },
+    {
+      "ref": "C11",
+      "triangles": 3818,
+      "vertices": 3939
+    },
+    {
+      "ref": "C19",
+      "triangles": 3818,
+      "vertices": 3939
+    },
+    {
+      "ref": "C22",
+      "triangles": 3818,
+      "vertices": 3939
+    },
+    {
+      "ref": "C15",
+      "triangles": 3818,
+      "vertices": 3939
+    },
+    {
+      "ref": "C31",
+      "triangles": 3818,
+      "vertices": 3939
+    },
+    {
+      "ref": "C42",
+      "triangles": 3818,
+      "vertices": 3939
+    },
+    {
+      "ref": "C1",
+      "triangles": 7760,
+      "vertices": 6912
+    },
+    {
+      "ref": "D7",
+      "triangles": 2568,
+      "vertices": 2818
+    },
+    {
+      "ref": "J1",
+      "triangles": 4150,
+      "vertices": 5045
+    },
+    {
+      "ref": "C3",
+      "triangles": 3656,
+      "vertices": 3654
+    },
+    {
+      "ref": "C25",
+      "triangles": 3656,
+      "vertices": 3654
+    },
+    {
+      "ref": "D4",
+      "triangles": 3398,
+      "vertices": 3879
+    },
+    {
+      "ref": "D5",
+      "triangles": 3398,
+      "vertices": 3879
+    },
+    {
+      "ref": "Y1",
+      "triangles": 5868,
+      "vertices": 5368
+    },
+    {
+      "ref": "U12",
+      "triangles": 3074,
+      "vertices": 3767
+    },
+    {
+      "ref": "U14",
+      "triangles": 3074,
+      "vertices": 3767
+    },
+    {
+      "ref": "L2",
+      "triangles": 2434,
+      "vertices": 2851
+    },
+    {
+      "ref": "U13",
+      "triangles": 3974,
+      "vertices": 4631
+    },
+    {
+      "ref": "U11",
+      "triangles": 5256,
+      "vertices": 5494
+    },
+    {
+      "ref": "J2",
+      "triangles": 17504,
+      "vertices": 14018
+    },
+    {
+      "ref": "J9",
+      "triangles": 17504,
+      "vertices": 14018
+    },
+    {
+      "ref": "U9",
+      "triangles": 10790,
+      "vertices": 11867
+    },
+    {
+      "ref": "U10",
+      "triangles": 10790,
+      "vertices": 11867
+    },
+    {
+      "ref": "U3",
+      "triangles": 19088,
+      "vertices": 17606
+    },
+    {
+      "ref": "U4",
+      "triangles": 19088,
+      "vertices": 17606
+    },
+    {
+      "ref": "U5",
+      "triangles": 19088,
+      "vertices": 17606
+    },
+    {
+      "ref": "SW1",
+      "triangles": 4928,
+      "vertices": 5422
+    },
+    {
+      "ref": "SW2",
+      "triangles": 4928,
+      "vertices": 5422
+    },
+    {
+      "ref": "D6",
+      "triangles": 10716,
+      "vertices": 10634
+    },
+    {
+      "ref": "J11",
+      "triangles": 30524,
+      "vertices": 24060
+    },
+    {
+      "ref": "J10",
+      "triangles": 20144,
+      "vertices": 19908
+    },
+    {
+      "ref": "U7",
+      "triangles": 9404,
+      "vertices": 9648
+    },
+    {
+      "ref": "L1",
+      "triangles": 14402,
+      "vertices": 11994
+    },
+    {
+      "ref": "U2",
+      "triangles": 11172,
+      "vertices": 12602
+    },
+    {
+      "ref": "F1",
+      "triangles": 3172,
+      "vertices": 3756
+    },
+    {
+      "ref": "J3",
+      "triangles": 205381,
+      "vertices": 163166
+    },
+    {
+      "ref": "J4",
+      "triangles": 205381,
+      "vertices": 163166
+    },
+    {
+      "ref": "J5",
+      "triangles": 205381,
+      "vertices": 163166
+    },
+    {
+      "ref": "J6",
+      "triangles": 205381,
+      "vertices": 163166
+    },
+    {
+      "ref": "J7",
+      "triangles": 205381,
+      "vertices": 163166
+    },
+    {
+      "ref": "J8",
+      "triangles": 205381,
+      "vertices": 163166
+    },
+    {
+      "ref": "U8",
+      "triangles": 46588,
+      "vertices": 44290
+    }
+  ]
+}

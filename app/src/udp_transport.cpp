@@ -1,4 +1,5 @@
 #include "udp_transport.h"
+#include "automation.h"
 
 #ifdef _WIN32
 #  define WIN32_LEAN_AND_MEAN
@@ -32,6 +33,7 @@ UdpTransport::UdpTransport(const char* host, int udp_port, int tcp_port)
     : m_host(host ? host : ""), m_udp_port(udp_port), m_tcp_port(tcp_port) {
     snprintf(m_name, sizeof(m_name), "%s:%d", m_host.c_str(), udp_port);
     m_udp_sock = kInvalidSock;
+    if (IsDocumentationMode()) return;  // before DNS, sockets, threads or outbound packets
 
 #ifdef _WIN32
     // Resolve host once for the UDP motion datagrams.

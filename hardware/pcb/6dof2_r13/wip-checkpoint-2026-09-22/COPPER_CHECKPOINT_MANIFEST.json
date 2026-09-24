@@ -1,0 +1,21 @@
+{
+  "status": "OFFLINE_NOT_APPLIED_DO_NOT_ORDER",
+  "createdAt": "2026-09-23T10:43:06.745Z",
+  "files": [
+    {
+      "name": "copper_migration_plan.json",
+      "bytes": 70267,
+      "sha256": "0c642571a9889f4594940376996b7ec9eeef520dab4cf4d1240525799f834d5f"
+    },
+    {
+      "name": "copper_migration_contact_audit.json",
+      "bytes": 453,
+      "sha256": "62933315d15c2fd863e55561c3fd6b595ac136194f81a99170a5ba266db12136"
+    },
+    {
+      "name": "COPPER_MIGRATION_HANDOFF.md",
+      "bytes": 3065,
+      "sha256": "d11aa76e9ca8406703f14a9939c90dae8f2581e2a5295e2b199323e932f47888"
+    }
+  ]
+}

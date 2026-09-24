@@ -1,0 +1,16 @@
+{
+  "args": [
+    "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\reconcile_step_rc1_models.py",
+    "--inventory",
+    "rc4_verified\\step_occ_inventory.json",
+    "--capture",
+    "202_final_pcb_capture.json",
+    "--models",
+    "205_export_rc4_fabrication.json",
+    "--output",
+    "rc4_verified\\step_model_reconciliation.json"
+  ],
+  "exitCode": 0,
+  "stdout": "{\n  \"status\": \"PASS_REAL_MODEL_COVERAGE_AND_PLACEMENT; MECHANICAL_ENCLOSURE_QUALIFICATION_PENDING\",\n  \"checks\": 435,\n  \"failures\": [],\n  \"parts\": 144,\n  \"solids\": 861,\n  \"minimumLid\": 3.1911391728588114,\n  \"minimumFloor\": 3.1698576315934393\n}\n",
+  "stderr": ""
+}

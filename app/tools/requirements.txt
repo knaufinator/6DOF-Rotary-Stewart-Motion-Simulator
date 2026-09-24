@@ -1,0 +1,2 @@
+# Python >=3.10. Pin the SDK used for schema, framing and live capture validation.
+mcp==1.28.1

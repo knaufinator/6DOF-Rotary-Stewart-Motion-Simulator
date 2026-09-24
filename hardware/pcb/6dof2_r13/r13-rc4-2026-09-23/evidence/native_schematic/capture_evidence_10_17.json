@@ -1,0 +1,311 @@
+{
+  "sourceCapture": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\189_schematic_rc3_capture.json",
+  "sourceSha256": "8f77a89e401a212a5dfa327bf64e8802e6e39c0c91044b6fa49c66b74c3ae1cf",
+  "projectUuid": "16231355292e4948ba37840dcdf926b0",
+  "documentUuid": "fd2c3589563945538936811f609de096",
+  "captures": [
+    {
+      "ordinal": 10,
+      "section": 5,
+      "title": "5. Motion drivers - left, axes 2-5",
+      "requestedNativeBounds": [
+        1040,
+        -1750,
+        2170,
+        -1220
+      ],
+      "expectedAnchorRefs": [
+        "R14",
+        "R16",
+        "R22",
+        "R24",
+        "R50",
+        "R54",
+        "U4",
+        "U5"
+      ],
+      "role": "detail",
+      "maxIntendedPage": "A3 landscape",
+      "caution": "Actual viewport padding and 6-unit net-label legibility must be inspected.",
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\10.png",
+      "sha256": "a5a2669c2f165064275435f03b2ae22d7549aae66e01a4694a3325ca404354a0",
+      "nativeBounds": [
+        1040,
+        -1750,
+        2170,
+        -1220
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 278476,
+        "capturedAtUTC": "2026-09-23T18:16:32.566Z"
+      }
+    },
+    {
+      "ordinal": 11,
+      "section": 5,
+      "title": "5. Motion drivers - middle, axes 2-5",
+      "requestedNativeBounds": [
+        2070,
+        -1750,
+        3200,
+        -1220
+      ],
+      "expectedAnchorRefs": [
+        "R15",
+        "R17",
+        "R23",
+        "R25",
+        "R51",
+        "R52",
+        "R55",
+        "R56"
+      ],
+      "role": "detail",
+      "maxIntendedPage": "A3 landscape",
+      "caution": "Actual viewport padding and 6-unit net-label legibility must be inspected.",
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\11.png",
+      "sha256": "646d4cd39d5c164fa1ef0b14be12a25449ff8876ba4fbda126b28b46072bf037",
+      "nativeBounds": [
+        2070,
+        -1750,
+        3200,
+        -1220
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 223625,
+        "capturedAtUTC": "2026-09-23T18:16:32.973Z"
+      }
+    },
+    {
+      "ordinal": 12,
+      "section": 5,
+      "title": "5. Motion drivers - right, axes 2-5",
+      "requestedNativeBounds": [
+        3100,
+        -1750,
+        4220,
+        -1220
+      ],
+      "expectedAnchorRefs": [
+        "C10",
+        "C9",
+        "R53",
+        "R57"
+      ],
+      "role": "detail",
+      "maxIntendedPage": "A3 landscape",
+      "caution": "Actual viewport padding and 6-unit net-label legibility must be inspected.",
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\12.png",
+      "sha256": "d665935e80d0a5f55edceaf3bf7ffcb5b816cdfc8639be3db114875433910cfc",
+      "nativeBounds": [
+        3100,
+        -1750,
+        4220,
+        -1220
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 222586,
+        "capturedAtUTC": "2026-09-23T18:16:33.362Z"
+      }
+    },
+    {
+      "ordinal": 13,
+      "section": 6,
+      "title": "6. DB25 drive connectors - axes 0-2",
+      "requestedNativeBounds": [
+        90,
+        -2470,
+        1130,
+        -1990
+      ],
+      "expectedAnchorRefs": [
+        "J3",
+        "J4",
+        "J5"
+      ],
+      "role": "detail",
+      "maxIntendedPage": "A3 landscape",
+      "caution": "Actual viewport padding and 6-unit net-label legibility must be inspected.",
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\13.png",
+      "sha256": "55dc6ddc65c732959d528765599bde7a7b2ee62cf54aa7611a6df1a9683f89cd",
+      "nativeBounds": [
+        90,
+        -2470,
+        1130,
+        -1990
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 328925,
+        "capturedAtUTC": "2026-09-23T18:16:33.764Z"
+      }
+    },
+    {
+      "ordinal": 14,
+      "section": 6,
+      "title": "6. DB25 drive connectors - axes 3-5",
+      "requestedNativeBounds": [
+        1050,
+        -2470,
+        2140,
+        -1990
+      ],
+      "expectedAnchorRefs": [
+        "J6",
+        "J7",
+        "J8"
+      ],
+      "role": "detail",
+      "maxIntendedPage": "A3 landscape",
+      "caution": "Actual viewport padding and 6-unit net-label legibility must be inspected.",
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\14.png",
+      "sha256": "2e9474c905a436bd618ec3caeceb14171d1f2ac0851ae4b122a8cacaee18e130",
+      "nativeBounds": [
+        1050,
+        -2470,
+        2140,
+        -1990
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 284750,
+        "capturedAtUTC": "2026-09-23T18:16:34.154Z"
+      }
+    },
+    {
+      "ordinal": 15,
+      "section": 7,
+      "title": "7. Drive alarm feedback - input networks",
+      "requestedNativeBounds": [
+        2120,
+        -2470,
+        3250,
+        -1950
+      ],
+      "expectedAnchorRefs": [
+        "R30",
+        "R31",
+        "R32",
+        "R33",
+        "R36",
+        "R37",
+        "R38",
+        "R39"
+      ],
+      "role": "detail",
+      "maxIntendedPage": "A3 landscape",
+      "caution": "Actual viewport padding and 6-unit net-label legibility must be inspected.",
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\15.png",
+      "sha256": "f84362ad3b10e95abf0d5797d1b4e5307d8f1d6654fc6db1fd1fdedfc4793ef0",
+      "nativeBounds": [
+        2120,
+        -2470,
+        3250,
+        -1950
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 247058,
+        "capturedAtUTC": "2026-09-23T18:16:34.543Z"
+      }
+    },
+    {
+      "ordinal": 16,
+      "section": 7,
+      "title": "7. Drive alarm feedback - optocouplers",
+      "requestedNativeBounds": [
+        3140,
+        -2470,
+        4180,
+        -1950
+      ],
+      "expectedAnchorRefs": [
+        "R34",
+        "R35",
+        "R40",
+        "R41",
+        "U10",
+        "U9"
+      ],
+      "role": "detail",
+      "maxIntendedPage": "A3 landscape",
+      "caution": "Actual viewport padding and 6-unit net-label legibility must be inspected.",
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\16.png",
+      "sha256": "13367d2e6ac8099827e2575cfa99a13b6deb97232029e282539115cfe049e1df",
+      "nativeBounds": [
+        3140,
+        -2470,
+        4180,
+        -1950
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 304432,
+        "capturedAtUTC": "2026-09-23T18:16:34.936Z"
+      }
+    },
+    {
+      "ordinal": 17,
+      "section": 8,
+      "title": "8. Ethernet - W5500 upper pins and clock",
+      "requestedNativeBounds": [
+        90,
+        -3190,
+        1280,
+        -2750
+      ],
+      "expectedAnchorRefs": [
+        "C12",
+        "C23",
+        "C24",
+        "R10",
+        "R11",
+        "R58",
+        "Y1"
+      ],
+      "role": "detail",
+      "maxIntendedPage": "A3 landscape",
+      "caution": "Actual viewport padding and 6-unit net-label legibility must be inspected.",
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\17.png",
+      "sha256": "f2e0d31c53602b2658f2cab7f467d7fd517bd53abd2a0d7bee7b79ef16ea9ed4",
+      "nativeBounds": [
+        90,
+        -3190,
+        1280,
+        -2750
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 312652,
+        "capturedAtUTC": "2026-09-23T18:16:35.334Z"
+      }
+    }
+  ]
+}

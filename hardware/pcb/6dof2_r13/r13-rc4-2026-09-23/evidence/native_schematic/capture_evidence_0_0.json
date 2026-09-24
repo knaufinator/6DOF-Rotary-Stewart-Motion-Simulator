@@ -1,0 +1,28 @@
+{
+  "sourceCapture": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\189_schematic_rc3_capture.json",
+  "sourceSha256": "8f77a89e401a212a5dfa327bf64e8802e6e39c0c91044b6fa49c66b74c3ae1cf",
+  "projectUuid": "16231355292e4948ba37840dcdf926b0",
+  "documentUuid": "fd2c3589563945538936811f609de096",
+  "captures": [
+    {
+      "ordinal": 0,
+      "role": "overview",
+      "title": "Nine-section schematic overview",
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\00.png",
+      "sha256": "8a9aa9c63a21cb91a2fe6722f44d00f90b0cc8f0cb49dafc413221f764e7de36",
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": {
+          "left": -1973.3223880597013,
+          "right": 6223.322388059702,
+          "bottom": 35,
+          "top": 4753
+        },
+        "bytes": 380781,
+        "capturedAtUTC": "2026-09-23T18:16:28.680Z"
+      }
+    }
+  ]
+}

@@ -31,6 +31,7 @@
 #include "test_harness_panel.h"
 #include "ui_panels.h"
 #include "control_server.h"
+#include "automation.h"
 
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include "stb_image_write.h"
@@ -41,6 +42,29 @@
 static GLFWwindow* g_window = nullptr;
 static int         g_frame_counter = 0;
 static double      g_fps_timer = 0.0;
+
+bool SetAppWindowSize(int width, int height) {
+    if (!g_window || width < 640 || width > 4096 || height < 480 || height > 2160)
+        return false;
+    glfwRestoreWindow(g_window);
+    glfwSetWindowSize(g_window, width, height);
+    return true;
+}
+
+void GetAppWindowSize(int* width, int* height) {
+    int w = 0, h = 0;
+    if (g_window) glfwGetWindowSize(g_window, &w, &h);
+    if (width) *width = w;
+    if (height) *height = h;
+}
+
+static int windowDimension(const char* name, int fallback, int low, int high) {
+    const char* text = std::getenv(name);
+    if (!text || !text[0]) return fallback;
+    char* end = nullptr;
+    long value = std::strtol(text, &end, 10);
+    return end && !*end && value >= low && value <= high ? (int)value : fallback;
+}
 
 // ── Framebuffer → PNG (called on render thread by the control server) ─
 #ifndef GL_RGB
@@ -161,7 +185,12 @@ int main(int, char**) {
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE);
 
-    GLFWwindow* window = glfwCreateWindow(1600, 900, "Stewart Platform Controller", nullptr, nullptr);
+    const bool documentation = IsDocumentationMode();
+    int initial_width = windowDimension("STEWART_WINDOW_WIDTH", documentation ? 1920 : 1600, 640, 4096);
+    int initial_height = windowDimension("STEWART_WINDOW_HEIGHT", documentation ? 1080 : 900, 480, 2160);
+    GLFWwindow* window = glfwCreateWindow(initial_width, initial_height,
+        documentation ? "Stewart Platform Controller - Documentation (hardware disabled)"
+                      : "Stewart Platform Controller", nullptr, nullptr);
     if (!window) {
         fprintf(stderr, "Failed to create GLFW window\n");
         glfwTerminate();
@@ -177,8 +206,10 @@ int main(int, char**) {
 
     ImGuiIO& io = ImGui::GetIO();
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
-    io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
-    io.IniFilename = "stewart_imgui.ini";  // persist layout
+    if (!documentation) io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
+    // Captures include the complete docked UI; documentation mode neither loads
+    // nor overwrites a user's persistent ImGui layout.
+    io.IniFilename = documentation ? nullptr : "stewart_imgui.ini";
 
     // ── Modern Fluent-Inspired Dark Theme ────────────────────────────
     ImGui::StyleColorsDark();
@@ -335,13 +366,15 @@ int main(int, char**) {
     g_app.loadSettings();  // recreates entities from saved JSON
     if (g_app.entities.empty()) {
         // First launch — create a default SIL entity
-        g_app.addEntity("SIL Default", EntityType::SIL);
+        g_app.addEntity(documentation ? "SIL Documentation" : "SIL Default", EntityType::SIL);
     }
     g_app.loadRecordingsFromDisk();
     g_app.loadMcaPresetsFromDisk();
     TestHarnessInit();
     g_app.log(-1, "system", "Stewart Platform Controller started");
     g_app.log(-1, "system", "Add entities via Entity menu or [+ Add SIL/HIL]");
+    if (documentation)
+        g_app.log(-1, "system", "Documentation mode: hardware disabled; user settings and recordings isolated");
 
     printf("Stewart Platform Controller started\n");
     printf("  OpenGL: %s\n", (const char*)glGetString(GL_VERSION));
@@ -355,7 +388,7 @@ int main(int, char**) {
     {
         int cport = 8770;
         const char* pe = getenv("STEWART_CTRL_PORT");
-        if (pe) { int p = atoi(pe); if (p > 0) cport = p; }
+        if (pe) { int p = atoi(pe); if (p > 0 && p <= 65535) cport = p; }
         if (!g_ctrl.start(cport))
             g_app.log(-1, "system", "Control API failed to start on port %d", cport);
     }

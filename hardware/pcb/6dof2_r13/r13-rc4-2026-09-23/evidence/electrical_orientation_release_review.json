@@ -1,0 +1,1405 @@
+{
+  "status": "PASS_EXPORTED_PIN_IDENTITY_AND_GUARDED_CPL_CONTRACT; ASSEMBLY_PREVIEW_AND_PROTOTYPE_TESTS_PENDING",
+  "sourceHashes": {
+    "100_routed_labeled_capture.json": "22c0bede843ee63a5d1dca034326b00e9a1ef2eed144f9599e369c0ddc7cd5e3",
+    "44_schematic_aligned_reopened.json": "83098d5466c120326d04a132530e04fc601eb62c707a6f182002f42066890bd8",
+    "6DOF2_r13_BOM_raw.csv": "e2852d8e078cec9d49f5cf6fb51ce91fac7dc3da106c0ba5bd31259f03600da1",
+    "6DOF2_r13_CPL_raw.csv": "8c927be3b9fb220facc03115b73be83ba109d11ab65bb8ddf2c8eff6dbd2ebcf",
+    "schematic_contract.json": "f76b27d5453ba416d50dfb66c89edc524c12c891f1df09d4fc0ce3941c5da6fb"
+  },
+  "parts": 144,
+  "schematicPinsComparedToPCB": 640,
+  "contractPinChecks": 73,
+  "newParts": 21,
+  "newPolarizedParts": [
+    "D8",
+    "U11",
+    "U12",
+    "U13",
+    "U14"
+  ],
+  "newNonpolarParts": [
+    "R61",
+    "R62",
+    "R63",
+    "R64",
+    "R65",
+    "R66",
+    "R67",
+    "R68",
+    "R69",
+    "R70",
+    "C37",
+    "C38",
+    "C39",
+    "C40",
+    "C41",
+    "C42"
+  ],
+  "db25": [
+    {
+      "ref": "J3",
+      "rawRotationDeg": 90.0,
+      "normalizedRotationDeg": 270.0,
+      "midpointMm": [
+        6.426073,
+        35.0012
+      ],
+      "all25PadsUnchanged": true,
+      "pins": {
+        "1": {
+          "net": "",
+          "xyMm": [
+            5.005959,
+            18.381218
+          ]
+        },
+        "3": {
+          "net": "M0S_P",
+          "xyMm": [
+            5.006213,
+            23.921212
+          ]
+        },
+        "4": {
+          "net": "M0D_P",
+          "xyMm": [
+            5.006213,
+            26.691336
+          ]
+        },
+        "5": {
+          "net": "M0D_N",
+          "xyMm": [
+            5.006213,
+            29.461206
+          ]
+        },
+        "10": {
+          "net": "GND",
+          "xyMm": [
+            5.006213,
+            43.311318
+          ]
+        },
+        "14": {
+          "net": "M0S_N",
+          "xyMm": [
+            7.846187,
+            19.76628
+          ]
+        },
+        "23": {
+          "net": "M0_ALARM_DRV",
+          "xyMm": [
+            7.846187,
+            44.696126
+          ]
+        }
+      }
+    },
+    {
+      "ref": "J4",
+      "rawRotationDeg": 270.0,
+      "normalizedRotationDeg": 90.0,
+      "midpointMm": [
+        62.407927,
+        35.0012
+      ],
+      "all25PadsUnchanged": true,
+      "pins": {
+        "1": {
+          "net": "",
+          "xyMm": [
+            63.828041,
+            51.621182
+          ]
+        },
+        "3": {
+          "net": "M1S_P",
+          "xyMm": [
+            63.827787,
+            46.081188
+          ]
+        },
+        "4": {
+          "net": "M1D_P",
+          "xyMm": [
+            63.827787,
+            43.311064
+          ]
+        },
+        "5": {
+          "net": "M1D_N",
+          "xyMm": [
+            63.827787,
+            40.541194
+          ]
+        },
+        "10": {
+          "net": "GND",
+          "xyMm": [
+            63.827787,
+            26.691082
+          ]
+        },
+        "14": {
+          "net": "M1S_N",
+          "xyMm": [
+            60.987813,
+            50.23612
+          ]
+        },
+        "23": {
+          "net": "M1_ALARM_DRV",
+          "xyMm": [
+            60.987813,
+            25.306274
+          ]
+        }
+      }
+    },
+    {
+      "ref": "J5",
+      "rawRotationDeg": 90.0,
+      "normalizedRotationDeg": 270.0,
+      "midpointMm": [
+        6.426073,
+        99.9998
+      ],
+      "all25PadsUnchanged": true,
+      "pins": {
+        "1": {
+          "net": "",
+          "xyMm": [
+            5.005959,
+            83.379818
+          ]
+        },
+        "3": {
+          "net": "M2S_P",
+          "xyMm": [
+            5.006213,
+            88.919812
+          ]
+        },
+        "4": {
+          "net": "M2D_P",
+          "xyMm": [
+            5.006213,
+            91.689936
+          ]
+        },
+        "5": {
+          "net": "M2D_N",
+          "xyMm": [
+            5.006213,
+            94.459806
+          ]
+        },
+        "10": {
+          "net": "GND",
+          "xyMm": [
+            5.006213,
+            108.309918
+          ]
+        },
+        "14": {
+          "net": "M2S_N",
+          "xyMm": [
+            7.846187,
+            84.76488
+          ]
+        },
+        "23": {
+          "net": "M2_ALARM_DRV",
+          "xyMm": [
+            7.846187,
+            109.694726
+          ]
+        }
+      }
+    },
+    {
+      "ref": "J6",
+      "rawRotationDeg": 270.0,
+      "normalizedRotationDeg": 90.0,
+      "midpointMm": [
+        62.407927,
+        99.9998
+      ],
+      "all25PadsUnchanged": true,
+      "pins": {
+        "1": {
+          "net": "",
+          "xyMm": [
+            63.828041,
+            116.619782
+          ]
+        },
+        "3": {
+          "net": "M3S_P",
+          "xyMm": [
+            63.827787,
+            111.079788
+          ]
+        },
+        "4": {
+          "net": "M3D_P",
+          "xyMm": [
+            63.827787,
+            108.309664
+          ]
+        },
+        "5": {
+          "net": "M3D_N",
+          "xyMm": [
+            63.827787,
+            105.539794
+          ]
+        },
+        "10": {
+          "net": "GND",
+          "xyMm": [
+            63.827787,
+            91.689682
+          ]
+        },
+        "14": {
+          "net": "M3S_N",
+          "xyMm": [
+            60.987813,
+            115.23472
+          ]
+        },
+        "23": {
+          "net": "M3_ALARM_DRV",
+          "xyMm": [
+            60.987813,
+            90.304874
+          ]
+        }
+      }
+    },
+    {
+      "ref": "J7",
+      "rawRotationDeg": 90.0,
+      "normalizedRotationDeg": 270.0,
+      "midpointMm": [
+        6.426073,
+        164.9984
+      ],
+      "all25PadsUnchanged": true,
+      "pins": {
+        "1": {
+          "net": "",
+          "xyMm": [
+            5.005959,
+            148.378418
+          ]
+        },
+        "3": {
+          "net": "M4S_P",
+          "xyMm": [
+            5.006213,
+            153.918412
+          ]
+        },
+        "4": {
+          "net": "M4D_P",
+          "xyMm": [
+            5.006213,
+            156.688536
+          ]
+        },
+        "5": {
+          "net": "M4D_N",
+          "xyMm": [
+            5.006213,
+            159.458406
+          ]
+        },
+        "10": {
+          "net": "GND",
+          "xyMm": [
+            5.006213,
+            173.308518
+          ]
+        },
+        "14": {
+          "net": "M4S_N",
+          "xyMm": [
+            7.846187,
+            149.76348
+          ]
+        },
+        "23": {
+          "net": "M4_ALARM_DRV",
+          "xyMm": [
+            7.846187,
+            174.693326
+          ]
+        }
+      }
+    },
+    {
+      "ref": "J8",
+      "rawRotationDeg": 270.0,
+      "normalizedRotationDeg": 90.0,
+      "midpointMm": [
+        62.407927,
+        164.9984
+      ],
+      "all25PadsUnchanged": true,
+      "pins": {
+        "1": {
+          "net": "",
+          "xyMm": [
+            63.828041,
+            181.618382
+          ]
+        },
+        "3": {
+          "net": "M5S_P",
+          "xyMm": [
+            63.827787,
+            176.078388
+          ]
+        },
+        "4": {
+          "net": "M5D_P",
+          "xyMm": [
+            63.827787,
+            173.308264
+          ]
+        },
+        "5": {
+          "net": "M5D_N",
+          "xyMm": [
+            63.827787,
+            170.538394
+          ]
+        },
+        "10": {
+          "net": "GND",
+          "xyMm": [
+            63.827787,
+            156.688282
+          ]
+        },
+        "14": {
+          "net": "M5S_N",
+          "xyMm": [
+            60.987813,
+            180.23332
+          ]
+        },
+        "23": {
+          "net": "M5_ALARM_DRV",
+          "xyMm": [
+            60.987813,
+            155.303474
+          ]
+        }
+      }
+    }
+  ],
+  "landmarks": {
+    "U11": {
+      "supplier": "C70285",
+      "mpn": "SN74LVC1G74DCUR",
+      "rawCplRotation": 0.0,
+      "offsetDeg": 0,
+      "midpointMm": [
+        102.50000074,
+        89.20000194
+      ],
+      "instruction": "Pin1 index southeast of body. Native zero-angle is 180deg relative to TI printed top view; this is NOT a new CPL correction.",
+      "pads": {
+        "1": {
+          "net": "ARM_PULSE",
+          "xyMm": [
+            104.05000018,
+            88.4500009
+          ],
+          "sizeMil": [
+            33.5,
+            11.9
+          ]
+        },
+        "2": {
+          "net": "VCC3V3",
+          "xyMm": [
+            104.05000018,
+            88.95000244
+          ],
+          "sizeMil": [
+            33.5,
+            11.9
+          ]
+        },
+        "3": {
+          "net": "",
+          "xyMm": [
+            104.05000018,
+            89.45000144
+          ],
+          "sizeMil": [
+            33.5,
+            11.9
+          ]
+        },
+        "4": {
+          "net": "GND",
+          "xyMm": [
+            104.05000018,
+            89.95000298
+          ],
+          "sizeMil": [
+            33.5,
+            11.9
+          ]
+        },
+        "5": {
+          "net": "DRIVE_ENABLE",
+          "xyMm": [
+            100.9500013,
+            89.95000298
+          ],
+          "sizeMil": [
+            33.5,
+            11.9
+          ]
+        },
+        "6": {
+          "net": "ARM_CLEAR_N",
+          "xyMm": [
+            100.9500013,
+            89.45000144
+          ],
+          "sizeMil": [
+            33.5,
+            11.9
+          ]
+        },
+        "7": {
+          "net": "VCC3V3",
+          "xyMm": [
+            100.9500013,
+            88.95000244
+          ],
+          "sizeMil": [
+            33.5,
+            11.9
+          ]
+        },
+        "8": {
+          "net": "VCC3V3",
+          "xyMm": [
+            100.9500013,
+            88.4500009
+          ],
+          "sizeMil": [
+            33.5,
+            11.9
+          ]
+        }
+      }
+    },
+    "U12": {
+      "supplier": "C485081",
+      "mpn": "SN74LVC1G98DCKR",
+      "rawCplRotation": 0.0,
+      "offsetDeg": 0,
+      "midpointMm": [
+        97.99999958,
+        89.20000194
+      ],
+      "instruction": "Pin1 index southwest. Native zero-angle is 90deg counterclockwise relative to TI printed top view; do not infer a CPL offset.",
+      "pads": {
+        "1": {
+          "net": "ESTOP_MCU",
+          "xyMm": [
+            97.34999834,
+            88.1000016
+          ],
+          "sizeMil": [
+            15.8,
+            35.5
+          ]
+        },
+        "2": {
+          "net": "GND",
+          "xyMm": [
+            97.99999958,
+            88.1000016
+          ],
+          "sizeMil": [
+            15.8,
+            35.5
+          ]
+        },
+        "3": {
+          "net": "VCC3V3",
+          "xyMm": [
+            98.65000082,
+            88.1000016
+          ],
+          "sizeMil": [
+            15.8,
+            35.5
+          ]
+        },
+        "4": {
+          "net": "CONTROL_PERMIT",
+          "xyMm": [
+            98.65000082,
+            90.30000228
+          ],
+          "sizeMil": [
+            15.8,
+            35.5
+          ]
+        },
+        "6": {
+          "net": "MCU_INHIBIT",
+          "xyMm": [
+            97.34999834,
+            90.30000228
+          ],
+          "sizeMil": [
+            15.8,
+            35.5
+          ]
+        },
+        "5": {
+          "net": "VCC3V3",
+          "xyMm": [
+            97.99999958,
+            90.30000228
+          ],
+          "sizeMil": [
+            15.8,
+            35.5
+          ]
+        }
+      }
+    },
+    "U14": {
+      "supplier": "C485081",
+      "mpn": "SN74LVC1G98DCKR",
+      "rawCplRotation": 0.0,
+      "offsetDeg": 0,
+      "midpointMm": [
+        102.99999974,
+        92.60000022
+      ],
+      "instruction": "Pin1 index southwest; same device/land orientation as U12.",
+      "pads": {
+        "1": {
+          "net": "VCC3V3",
+          "xyMm": [
+            102.3499985,
+            91.49999988
+          ],
+          "sizeMil": [
+            15.8,
+            35.5
+          ]
+        },
+        "2": {
+          "net": "GND",
+          "xyMm": [
+            102.99999974,
+            91.49999988
+          ],
+          "sizeMil": [
+            15.8,
+            35.5
+          ]
+        },
+        "3": {
+          "net": "GND",
+          "xyMm": [
+            103.65000098,
+            91.49999988
+          ],
+          "sizeMil": [
+            15.8,
+            35.5
+          ]
+        },
+        "4": {
+          "net": "ARM_CLEAR_N",
+          "xyMm": [
+            103.65000098,
+            93.70000056
+          ],
+          "sizeMil": [
+            15.8,
+            35.5
+          ]
+        },
+        "6": {
+          "net": "SUPERVISOR_RELEASE_N",
+          "xyMm": [
+            102.3499985,
+            93.70000056
+          ],
+          "sizeMil": [
+            15.8,
+            35.5
+          ]
+        },
+        "5": {
+          "net": "VCC3V3",
+          "xyMm": [
+            102.99999974,
+            93.70000056
+          ],
+          "sizeMil": [
+            15.8,
+            35.5
+          ]
+        }
+      }
+    },
+    "U13": {
+      "supplier": "C1509297",
+      "mpn": "TPS389001DSER",
+      "rawCplRotation": 0.0,
+      "offsetDeg": 0,
+      "midpointMm": [
+        97.99999958,
+        96.20000064
+      ],
+      "instruction": "Pin1 index northwest; long asymmetric pin1 land belongs to SENSE, no center exposed-pad land.",
+      "pads": {
+        "1": {
+          "net": "DRIVE_5V_SENSE",
+          "xyMm": [
+            97.41897458,
+            96.69999964
+          ],
+          "sizeMil": [
+            33.1,
+            11
+          ]
+        },
+        "2": {
+          "net": "GND",
+          "xyMm": [
+            97.36385658,
+            96.20012764
+          ],
+          "sizeMil": [
+            29.5,
+            11
+          ]
+        },
+        "3": {
+          "net": "CONTROL_PERMIT",
+          "xyMm": [
+            97.36385658,
+            95.70000164
+          ],
+          "sizeMil": [
+            29.5,
+            11
+          ]
+        },
+        "4": {
+          "net": "VCC3V3",
+          "xyMm": [
+            98.63614258,
+            95.70000164
+          ],
+          "sizeMil": [
+            29.5,
+            11
+          ]
+        },
+        "5": {
+          "net": "SUPERVISOR_CT",
+          "xyMm": [
+            98.63614258,
+            96.20012764
+          ],
+          "sizeMil": [
+            29.5,
+            11
+          ]
+        },
+        "6": {
+          "net": "SUPERVISOR_RELEASE_N",
+          "xyMm": [
+            98.63614258,
+            96.69999964
+          ],
+          "sizeMil": [
+            29.5,
+            11
+          ]
+        }
+      }
+    },
+    "U7": {
+      "supplier": "C435835",
+      "mpn": "LDL1117S33R",
+      "rawCplRotation": 0.0,
+      "offsetDeg": 0,
+      "midpointMm": [
+        129.99999908,
+        111.99999952
+      ],
+      "instruction": "Pin1 GND southeast; three small lands east; large OUT tab west.",
+      "pads": {
+        "1": {
+          "net": "GND",
+          "xyMm": [
+            132.96994488,
+            109.70002952
+          ],
+          "sizeMil": [
+            98.4,
+            43.3
+          ]
+        },
+        "2": {
+          "net": "VCC3V3",
+          "xyMm": [
+            132.96994488,
+            111.99999952
+          ],
+          "sizeMil": [
+            98.4,
+            43.3
+          ]
+        },
+        "3": {
+          "net": "LOGIC_5V",
+          "xyMm": [
+            132.96994488,
+            114.29996952
+          ],
+          "sizeMil": [
+            98.4,
+            43.3
+          ]
+        },
+        "4": {
+          "net": "VCC3V3",
+          "xyMm": [
+            127.03002788,
+            111.99999952
+          ],
+          "sizeMil": [
+            92.1,
+            141.7
+          ]
+        }
+      }
+    },
+    "D3": {
+      "supplier": "C8678",
+      "mpn": "SS34",
+      "rawCplRotation": 270.0,
+      "offsetDeg": 0,
+      "midpointMm": [
+        137.49999932,
+        105.99999882
+      ],
+      "instruction": "Cathode stripe at pin1 LOGIC_5V, north; anode VBUS south.",
+      "pads": {
+        "2": {
+          "net": "VBUS",
+          "xyMm": [
+            137.49999932,
+            103.80010482
+          ],
+          "sizeMil": [
+            78.7,
+            78.7
+          ]
+        },
+        "1": {
+          "net": "LOGIC_5V",
+          "xyMm": [
+            137.49999932,
+            108.19989282
+          ],
+          "sizeMil": [
+            78.7,
+            78.7
+          ]
+        }
+      }
+    },
+    "D8": {
+      "supplier": "C8678",
+      "mpn": "SS34",
+      "rawCplRotation": 90.0,
+      "offsetDeg": 0,
+      "midpointMm": [
+        137.49999932,
+        119.99999876
+      ],
+      "instruction": "Cathode stripe at pin1 LOGIC_5V, south; anode VCC5 north. D3/D8 stripes face each other.",
+      "pads": {
+        "2": {
+          "net": "VCC5",
+          "xyMm": [
+            137.49999932,
+            122.19989276
+          ],
+          "sizeMil": [
+            78.7,
+            78.7
+          ]
+        },
+        "1": {
+          "net": "LOGIC_5V",
+          "xyMm": [
+            137.49999932,
+            117.80010476
+          ],
+          "sizeMil": [
+            78.7,
+            78.7
+          ]
+        }
+      }
+    }
+  },
+  "usb": {
+    "segments": [
+      {
+        "id": "f725670f0f3c4d2c",
+        "net": "USB_DN",
+        "layer": 1,
+        "lengthMm": 3.048175263783064,
+        "fullWidthUnsupportedLengthMm": 0.0,
+        "newLossSince85Mm": 0.0,
+        "classifiedTransitionRegions": [],
+        "unclassifiedUnsupportedLengthMm": 0.0,
+        "unclassifiedSegmentsMil": [],
+        "interpretation": "Geometry classification only; antipad proximity is not impedance/return-transition validation."
+      },
+      {
+        "id": "69da6c37ea089157",
+        "net": "USB_DP",
+        "layer": 1,
+        "lengthMm": 3.0518252439303946,
+        "fullWidthUnsupportedLengthMm": 0.0,
+        "newLossSince85Mm": 0.0,
+        "classifiedTransitionRegions": [],
+        "unclassifiedUnsupportedLengthMm": 0.0,
+        "unclassifiedSegmentsMil": [],
+        "interpretation": "Geometry classification only; antipad proximity is not impedance/return-transition validation."
+      },
+      {
+        "id": "0c41b38925ec107b",
+        "net": "USB_DN",
+        "layer": 1,
+        "lengthMm": 4.925913440377201,
+        "fullWidthUnsupportedLengthMm": 0.7829758292893474,
+        "newLossSince85Mm": 0.0,
+        "classifiedTransitionRegions": [
+          {
+            "category": "own_net_signal_via_antipad",
+            "lengthMm": 0.7829758292893474,
+            "ids": [
+              "bd8842cd9ea4307d"
+            ]
+          }
+        ],
+        "unclassifiedUnsupportedLengthMm": 0.0,
+        "unclassifiedSegmentsMil": [],
+        "interpretation": "Geometry classification only; antipad proximity is not impedance/return-transition validation."
+      },
+      {
+        "id": "72f18b8b5ce56f02",
+        "net": "USB_DN",
+        "layer": 2,
+        "lengthMm": 3.1515877715845,
+        "fullWidthUnsupportedLengthMm": 1.5659296223111474,
+        "newLossSince85Mm": 1.4438228390645235e-15,
+        "classifiedTransitionRegions": [
+          {
+            "category": "own_net_signal_via_antipad",
+            "lengthMm": 1.5659296223111474,
+            "ids": [
+              "bd8842cd9ea4307d",
+              "003ee3bcb19b95a7"
+            ]
+          }
+        ],
+        "unclassifiedUnsupportedLengthMm": 0.0,
+        "unclassifiedSegmentsMil": [],
+        "interpretation": "Geometry classification only; antipad proximity is not impedance/return-transition validation."
+      },
+      {
+        "id": "08982686c2a6c022",
+        "net": "USB_DN",
+        "layer": 1,
+        "lengthMm": 1.1076432132917802,
+        "fullWidthUnsupportedLengthMm": 0.7829559543104655,
+        "newLossSince85Mm": 0.0,
+        "classifiedTransitionRegions": [
+          {
+            "category": "own_net_signal_via_antipad",
+            "lengthMm": 0.7829559543104655,
+            "ids": [
+              "003ee3bcb19b95a7"
+            ]
+          }
+        ],
+        "unclassifiedUnsupportedLengthMm": 0.0,
+        "unclassifiedSegmentsMil": [],
+        "interpretation": "Geometry classification only; antipad proximity is not impedance/return-transition validation."
+      },
+      {
+        "id": "6b7539fd6f10bbd5",
+        "net": "USB_DP",
+        "layer": 1,
+        "lengthMm": 4.8509047006876465,
+        "fullWidthUnsupportedLengthMm": 0.26922184117480746,
+        "newLossSince85Mm": 0.0,
+        "classifiedTransitionRegions": [
+          {
+            "category": "other_USB_net_signal_via_antipad",
+            "lengthMm": 0.26922184117480746,
+            "ids": [
+              "003ee3bcb19b95a7"
+            ]
+          }
+        ],
+        "unclassifiedUnsupportedLengthMm": 0.0,
+        "unclassifiedSegmentsMil": [],
+        "interpretation": "Geometry classification only; antipad proximity is not impedance/return-transition validation."
+      },
+      {
+        "id": "eeaa89249d12a300",
+        "net": "USB_DP_MCU",
+        "layer": 1,
+        "lengthMm": 1.3293981990020567,
+        "fullWidthUnsupportedLengthMm": 0.7829650066524578,
+        "newLossSince85Mm": 0.0,
+        "classifiedTransitionRegions": [
+          {
+            "category": "own_net_signal_via_antipad",
+            "lengthMm": 0.7829650066524578,
+            "ids": [
+              "fb46376150d103b7"
+            ]
+          }
+        ],
+        "unclassifiedUnsupportedLengthMm": 0.0,
+        "unclassifiedSegmentsMil": [],
+        "interpretation": "Geometry classification only; antipad proximity is not impedance/return-transition validation."
+      },
+      {
+        "id": "2ae47c44c4ff173d",
+        "net": "USB_DN_MCU",
+        "layer": 1,
+        "lengthMm": 0.7500396850713466,
+        "fullWidthUnsupportedLengthMm": 0.7500396850713466,
+        "newLossSince85Mm": 0.0,
+        "classifiedTransitionRegions": [
+          {
+            "category": "own_net_signal_via_antipad",
+            "lengthMm": 0.7500396850713466,
+            "ids": [
+              "4356896c33bd10a3"
+            ]
+          }
+        ],
+        "unclassifiedUnsupportedLengthMm": 0.0,
+        "unclassifiedSegmentsMil": [],
+        "interpretation": "Geometry classification only; antipad proximity is not impedance/return-transition validation."
+      },
+      {
+        "id": "da905e14ea19a98d",
+        "net": "USB_DP_MCU",
+        "layer": 2,
+        "lengthMm": 5.32046557570655,
+        "fullWidthUnsupportedLengthMm": 1.565931155972831,
+        "newLossSince85Mm": 0.0,
+        "classifiedTransitionRegions": [
+          {
+            "category": "own_net_signal_via_antipad",
+            "lengthMm": 1.565931155972831,
+            "ids": [
+              "fb46376150d103b7",
+              "8874e266e828d58e"
+            ]
+          }
+        ],
+        "unclassifiedUnsupportedLengthMm": 0.0,
+        "unclassifiedSegmentsMil": [],
+        "interpretation": "Geometry classification only; antipad proximity is not impedance/return-transition validation."
+      },
+      {
+        "id": "ec358d6e8d541f2e",
+        "net": "USB_DN_MCU",
+        "layer": 2,
+        "lengthMm": 9.561521636106741,
+        "fullWidthUnsupportedLengthMm": 2.519054009041304,
+        "newLossSince85Mm": 0.0,
+        "classifiedTransitionRegions": [
+          {
+            "category": "own_net_signal_via_antipad",
+            "lengthMm": 1.5659310854503803,
+            "ids": [
+              "4356896c33bd10a3",
+              "a7738934471d8896"
+            ]
+          },
+          {
+            "category": "other_USB_net_signal_via_antipad",
+            "lengthMm": 0.9531229235909235,
+            "ids": [
+              "8874e266e828d58e"
+            ]
+          }
+        ],
+        "unclassifiedUnsupportedLengthMm": 0.0,
+        "unclassifiedSegmentsMil": [],
+        "interpretation": "Geometry classification only; antipad proximity is not impedance/return-transition validation."
+      },
+      {
+        "id": "63524ba48522cc31",
+        "net": "USB_DN_MCU",
+        "layer": 1,
+        "lengthMm": 27.15420660724777,
+        "fullWidthUnsupportedLengthMm": 2.0265036594194044,
+        "newLossSince85Mm": 0.0,
+        "classifiedTransitionRegions": [
+          {
+            "category": "own_net_signal_via_antipad",
+            "lengthMm": 1.5659789174735106,
+            "ids": [
+              "a7738934471d8896",
+              "06a35cc6c860f776"
+            ]
+          },
+          {
+            "category": "other_USB_net_signal_via_antipad",
+            "lengthMm": 0.46052474194589393,
+            "ids": [
+              "ada2ff0a4b5eb992"
+            ]
+          }
+        ],
+        "unclassifiedUnsupportedLengthMm": 0.0,
+        "unclassifiedSegmentsMil": [],
+        "interpretation": "Geometry classification only; antipad proximity is not impedance/return-transition validation."
+      },
+      {
+        "id": "8ef4d38504e5769b",
+        "net": "USB_DP_MCU",
+        "layer": 1,
+        "lengthMm": 29.324570290227495,
+        "fullWidthUnsupportedLengthMm": 1.565951879308737,
+        "newLossSince85Mm": 0.0,
+        "classifiedTransitionRegions": [
+          {
+            "category": "own_net_signal_via_antipad",
+            "lengthMm": 1.565951879308737,
+            "ids": [
+              "8874e266e828d58e",
+              "ada2ff0a4b5eb992"
+            ]
+          }
+        ],
+        "unclassifiedUnsupportedLengthMm": 0.0,
+        "unclassifiedSegmentsMil": [],
+        "interpretation": "Geometry classification only; antipad proximity is not impedance/return-transition validation."
+      },
+      {
+        "id": "c8638845e683cf52",
+        "net": "USB_DN_MCU",
+        "layer": 2,
+        "lengthMm": 14.989520849867175,
+        "fullWidthUnsupportedLengthMm": 2.029771962583561,
+        "newLossSince85Mm": 0.0,
+        "classifiedTransitionRegions": [
+          {
+            "category": "own_net_signal_via_antipad",
+            "lengthMm": 1.5659742376022183,
+            "ids": [
+              "06a35cc6c860f776",
+              "9c2edd37fa3e0d8c"
+            ]
+          },
+          {
+            "category": "other_USB_net_signal_via_antipad",
+            "lengthMm": 0.46379772498134275,
+            "ids": [
+              "5aa5e33f5364cc61"
+            ]
+          }
+        ],
+        "unclassifiedUnsupportedLengthMm": 0.0,
+        "unclassifiedSegmentsMil": [],
+        "interpretation": "Geometry classification only; antipad proximity is not impedance/return-transition validation."
+      },
+      {
+        "id": "5ae72975366a6c9e",
+        "net": "USB_DP_MCU",
+        "layer": 2,
+        "lengthMm": 14.966833938208934,
+        "fullWidthUnsupportedLengthMm": 2.0303639428213924,
+        "newLossSince85Mm": 1.1550582712516188e-14,
+        "classifiedTransitionRegions": [
+          {
+            "category": "own_net_signal_via_antipad",
+            "lengthMm": 1.5659650521275434,
+            "ids": [
+              "ada2ff0a4b5eb992",
+              "5aa5e33f5364cc61"
+            ]
+          },
+          {
+            "category": "other_USB_net_signal_via_antipad",
+            "lengthMm": 0.46439889069384943,
+            "ids": [
+              "06a35cc6c860f776"
+            ]
+          }
+        ],
+        "unclassifiedUnsupportedLengthMm": 0.0,
+        "unclassifiedSegmentsMil": [],
+        "interpretation": "Geometry classification only; antipad proximity is not impedance/return-transition validation."
+      },
+      {
+        "id": "66b9d8a146fb8bb3",
+        "net": "USB_DN_MCU",
+        "layer": 1,
+        "lengthMm": 9.678989824822503,
+        "fullWidthUnsupportedLengthMm": 0.7829757340562494,
+        "newLossSince85Mm": 0.0,
+        "classifiedTransitionRegions": [
+          {
+            "category": "own_net_signal_via_antipad",
+            "lengthMm": 0.7829757340562494,
+            "ids": [
+              "9c2edd37fa3e0d8c"
+            ]
+          }
+        ],
+        "unclassifiedUnsupportedLengthMm": 0.0,
+        "unclassifiedSegmentsMil": [],
+        "interpretation": "Geometry classification only; antipad proximity is not impedance/return-transition validation."
+      },
+      {
+        "id": "56c401548bd3bcb6",
+        "net": "USB_DP_MCU",
+        "layer": 1,
+        "lengthMm": 11.108219735694103,
+        "fullWidthUnsupportedLengthMm": 1.2438856297879024,
+        "newLossSince85Mm": 0.0,
+        "classifiedTransitionRegions": [
+          {
+            "category": "own_net_signal_via_antipad",
+            "lengthMm": 0.7830027966710098,
+            "ids": [
+              "5aa5e33f5364cc61"
+            ]
+          },
+          {
+            "category": "other_USB_net_signal_via_antipad",
+            "lengthMm": 0.46088283311689265,
+            "ids": [
+              "9c2edd37fa3e0d8c"
+            ]
+          }
+        ],
+        "unclassifiedUnsupportedLengthMm": 0.0,
+        "unclassifiedSegmentsMil": [],
+        "interpretation": "Geometry classification only; antipad proximity is not impedance/return-transition validation."
+      },
+      {
+        "id": "04b10feb1c66d4fe",
+        "net": "USB_DN_PIN",
+        "layer": 1,
+        "lengthMm": 1.796590259999994,
+        "fullWidthUnsupportedLengthMm": 0.0,
+        "newLossSince85Mm": 0.0,
+        "classifiedTransitionRegions": [],
+        "unclassifiedUnsupportedLengthMm": 0.0,
+        "unclassifiedSegmentsMil": [],
+        "interpretation": "Geometry classification only; antipad proximity is not impedance/return-transition validation."
+      },
+      {
+        "id": "f780cd033dda22c6",
+        "net": "USB_DP_PIN",
+        "layer": 1,
+        "lengthMm": 1.796590259999994,
+        "fullWidthUnsupportedLengthMm": 0.0,
+        "newLossSince85Mm": 0.0,
+        "classifiedTransitionRegions": [],
+        "unclassifiedUnsupportedLengthMm": 0.0,
+        "unclassifiedSegmentsMil": [],
+        "interpretation": "Geometry classification only; antipad proximity is not impedance/return-transition validation."
+      },
+      {
+        "id": "0674a291ecb96f99",
+        "net": "USB_DN_MCU",
+        "layer": 1,
+        "lengthMm": 54.66736991778256,
+        "fullWidthUnsupportedLengthMm": 0.0,
+        "newLossSince85Mm": 0.0,
+        "classifiedTransitionRegions": [],
+        "unclassifiedUnsupportedLengthMm": 0.0,
+        "unclassifiedSegmentsMil": [],
+        "interpretation": "Geometry classification only; antipad proximity is not impedance/return-transition validation."
+      },
+      {
+        "id": "bcb5be8af9272700",
+        "net": "USB_DP_MCU",
+        "layer": 1,
+        "lengthMm": 54.75215816382026,
+        "fullWidthUnsupportedLengthMm": 0.0,
+        "newLossSince85Mm": 0.0,
+        "classifiedTransitionRegions": [],
+        "unclassifiedUnsupportedLengthMm": 0.0,
+        "unclassifiedSegmentsMil": [],
+        "interpretation": "Geometry classification only; antipad proximity is not impedance/return-transition validation."
+      }
+    ],
+    "totals": {
+      "DN": {
+        "sumCopperPolylineLengthMm": 130.83155846993463,
+        "fullWidthUnsupportedProjectedLengthMm": 11.240206456082825,
+        "segments": 11,
+        "signalViaCount": 6,
+        "note": "Sum of all copper pieces, not a measured end-to-end electrical path or delay; excludes package/component electrical lengths."
+      },
+      "DP": {
+        "sumCopperPolylineLengthMm": 126.50096610727743,
+        "fullWidthUnsupportedProjectedLengthMm": 7.4583194557181285,
+        "segments": 9,
+        "signalViaCount": 4,
+        "note": "Sum of all copper pieces, not a measured end-to-end electrical path or delay; excludes package/component electrical lengths."
+      }
+    },
+    "nearestGroundVias": [
+      {
+        "signalViaId": "bd8842cd9ea4307d",
+        "net": "USB_DN",
+        "xyMm": [
+          94.24999946,
+          12.4000006
+        ],
+        "nearestGroundViaId": "ca704ff3040ed089",
+        "centerDistanceMm": 3.88505886
+      },
+      {
+        "signalViaId": "003ee3bcb19b95a7",
+        "net": "USB_DN",
+        "xyMm": [
+          96.59999984,
+          10.29999972
+        ],
+        "nearestGroundViaId": "ca704ff3040ed089",
+        "centerDistanceMm": 2.51522856
+      },
+      {
+        "signalViaId": "fb46376150d103b7",
+        "net": "USB_DP_MCU",
+        "xyMm": [
+          94.59999876,
+          14.90000068
+        ],
+        "nearestGroundViaId": "a7067c49b7ba45b3",
+        "centerDistanceMm": 4.04475164
+      },
+      {
+        "signalViaId": "4356896c33bd10a3",
+        "net": "USB_DN_MCU",
+        "xyMm": [
+          97.70000018,
+          13.65000064
+        ],
+        "nearestGroundViaId": "ca704ff3040ed089",
+        "centerDistanceMm": 1.4240198
+      },
+      {
+        "signalViaId": "8874e266e828d58e",
+        "net": "USB_DP_MCU",
+        "xyMm": [
+          95.5999993,
+          19.90000084
+        ],
+        "nearestGroundViaId": "a65369b0b90b2432",
+        "centerDistanceMm": 2.90688614
+      },
+      {
+        "signalViaId": "a7738934471d8896",
+        "net": "USB_DN_MCU",
+        "xyMm": [
+          94.39999916,
+          21.40000038
+        ],
+        "nearestGroundViaId": "a65369b0b90b2432",
+        "centerDistanceMm": 0.98994751
+      },
+      {
+        "signalViaId": "06a35cc6c860f776",
+        "net": "USB_DN_MCU",
+        "xyMm": [
+          99.34999942,
+          45.80999982
+        ],
+        "nearestGroundViaId": "7ae212b11caddb18",
+        "centerDistanceMm": 0.95634767
+      },
+      {
+        "signalViaId": "ada2ff0a4b5eb992",
+        "net": "USB_DP_MCU",
+        "xyMm": [
+          98.65000082,
+          45.19000106
+        ],
+        "nearestGroundViaId": "7ae212b11caddb18",
+        "centerDistanceMm": 1.55003163
+      },
+      {
+        "signalViaId": "9c2edd37fa3e0d8c",
+        "net": "USB_DN_MCU",
+        "xyMm": [
+          113.34999936,
+          50.21000118
+        ],
+        "nearestGroundViaId": "da6fcbb00dc6daf9",
+        "centerDistanceMm": 0.9563453
+      },
+      {
+        "signalViaId": "5aa5e33f5364cc61",
+        "net": "USB_DP_MCU",
+        "xyMm": [
+          112.65000076,
+          49.58999988
+        ],
+        "nearestGroundViaId": "da6fcbb00dc6daf9",
+        "centerDistanceMm": 1.55003163
+      }
+    ],
+    "status": "UNTESTED_FULL_SPEED_PROTOTYPE_LIMITATION_NOT_USB_COMPLIANCE",
+    "limitations": "14 retained pieces approach own or opposite USB net antipads. All unsupported geometry is classified, not validated for impedance. No stackup-specific90ohm proof or paired ground-transition qualification; preserve actual-source binding100."
+  },
+  "blockers": [
+    "Actual JLC processed-BOM/placement preview with six DB25 and all polarized parts has not been reviewed.",
+    "DB25 retained flange holes are3.050mm vs CONNFLY generic recommended3.20+/-0.05mm; exact FUNSi44 post/seating compatibility requires resolution before order.",
+    "No measured USB signal integrity/enumeration, power/thermal or disable/startup tests; firmware deferred.",
+    "Not machine safety; external stop/brake strategy and all six cable continuity/receiver idle checks required before motion."
+  ],
+  "claimsNotMade": [
+    "SAFE TO ORDER",
+    "Functional USB compliance",
+    "Guaranteed reset behavior under every partial-rail/reset mode",
+    "Machine E-stop/STO",
+    "Continuous1.2A regulator capability"
+  ]
+}

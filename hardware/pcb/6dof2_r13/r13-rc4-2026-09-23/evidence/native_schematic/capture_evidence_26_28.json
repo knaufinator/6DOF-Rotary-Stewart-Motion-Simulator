@@ -1,0 +1,117 @@
+{
+  "sourceCapture": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\189_schematic_rc3_capture.json",
+  "sourceSha256": "8f77a89e401a212a5dfa327bf64e8802e6e39c0c91044b6fa49c66b74c3ae1cf",
+  "projectUuid": "16231355292e4948ba37840dcdf926b0",
+  "documentUuid": "fd2c3589563945538936811f609de096",
+  "captures": [
+    {
+      "ordinal": 26,
+      "section": 9,
+      "title": "9. Output inhibit - input bias and supervisor timing",
+      "requestedNativeBounds": [
+        100,
+        -4710,
+        1300,
+        -4330
+      ],
+      "expectedAnchorRefs": [
+        "C38",
+        "C39",
+        "C41",
+        "R61",
+        "R67",
+        "R68"
+      ],
+      "role": "detail",
+      "maxIntendedPage": "A3 landscape",
+      "caution": "Actual viewport padding and 6-unit net-label legibility must be inspected.",
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\26.png",
+      "sha256": "f068ab21b0ad6faf60d85da0b4569ef20a71c3d400de9d9bffadcb292d30566e",
+      "nativeBounds": [
+        100,
+        -4710,
+        1300,
+        -4330
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 187558,
+        "capturedAtUTC": "2026-09-23T18:16:39.219Z"
+      }
+    },
+    {
+      "ordinal": 27,
+      "section": 9,
+      "title": "9. Output inhibit - latch bias and bypass",
+      "requestedNativeBounds": [
+        1300,
+        -4710,
+        2390,
+        -4330
+      ],
+      "expectedAnchorRefs": [
+        "C37",
+        "C40",
+        "R62",
+        "R66"
+      ],
+      "role": "detail",
+      "maxIntendedPage": "A3 landscape",
+      "caution": "Actual viewport padding and 6-unit net-label legibility must be inspected.",
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\27.png",
+      "sha256": "6600b73673f5e3cc192e5a15699010a6ede07a830e075c0eac384adad47eae79",
+      "nativeBounds": [
+        1300,
+        -4710,
+        2390,
+        -4330
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 189154,
+        "capturedAtUTC": "2026-09-23T18:16:39.612Z"
+      }
+    },
+    {
+      "ordinal": 28,
+      "section": 9,
+      "title": "9. Driver-enable bias and prototype operating notes",
+      "requestedNativeBounds": [
+        2470,
+        -4460,
+        3590,
+        -3840
+      ],
+      "expectedAnchorRefs": [
+        "R63",
+        "R64",
+        "R65"
+      ],
+      "role": "detail",
+      "maxIntendedPage": "A3 landscape",
+      "caution": "Actual viewport padding and 6-unit net-label legibility must be inspected.",
+      "file": "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\schematic_rc3_native_captures\\28.png",
+      "sha256": "cc32b3b15f7ec756df5284bada29c3d1dab41268b15b15d7f05367d05aa3e175",
+      "nativeBounds": [
+        2470,
+        -4460,
+        3590,
+        -3840
+      ],
+      "captureEvidence": {
+        "windowId": "08927315-6b2e-41aa-856d-eb59b0315525",
+        "projectUuid": "16231355292e4948ba37840dcdf926b0",
+        "documentUuid": "fd2c3589563945538936811f609de096",
+        "zoom": true,
+        "bytes": 264233,
+        "capturedAtUTC": "2026-09-23T18:16:39.998Z"
+      }
+    }
+  ]
+}

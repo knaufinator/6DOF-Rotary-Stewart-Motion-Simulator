@@ -6,18 +6,16 @@ on:
     tags:
       - 'v*.*.*'
     paths:
-      - 'Controller/**'
-      - 'mini/**'
+      - 'controller/**'
       - 'app/**'
-      - 'stewart-core'          # shared submodule gitlink — a bump must trigger firmware + SIL
+      - 'controller/stewart-core' # shared submodule gitlink — a bump must trigger firmware + SIL
       - '.github/workflows/ci.yml'
   pull_request:
     branches: [ phoenix, main ]
     paths:
-      - 'Controller/**'
-      - 'mini/**'
+      - 'controller/**'
       - 'app/**'
-      - 'stewart-core'          # shared submodule gitlink — a bump must trigger firmware + SIL
+      - 'controller/stewart-core' # shared submodule gitlink — a bump must trigger firmware + SIL
       - '.github/workflows/ci.yml'
 
 jobs:
@@ -99,16 +97,16 @@ jobs:
         with:
           esp_idf_version: v5.5.2
           target: esp32s3
-          path: 'Controller'
+          path: 'controller'
           command: idf.py build
 
       - name: Package firmware with version
         run: |
           VERSION="${{ needs.version.outputs.version }}"
-          cp Controller/build/stewart_platform.bin "firmware-${VERSION}.bin"
-          cp Controller/build/stewart_platform.elf "firmware-${VERSION}.elf"
-          cp Controller/build/bootloader/bootloader.bin "bootloader-${VERSION}.bin"
-          cp Controller/build/partition_table/partition-table.bin "partition-table-${VERSION}.bin"
+          cp controller/build/stewart_platform.bin "firmware-${VERSION}.bin"
+          cp controller/build/stewart_platform.elf "firmware-${VERSION}.elf"
+          cp controller/build/bootloader/bootloader.bin "bootloader-${VERSION}.bin"
+          cp controller/build/partition_table/partition-table.bin "partition-table-${VERSION}.bin"
 
       - name: Upload firmware artifacts
         uses: actions/upload-artifact@v4
@@ -130,7 +128,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          submodules: 'recursive'   # root stewart-core supplies the shared math
+          submodules: 'recursive'   # controller/stewart-core supplies the shared math
 
       - name: Install ESP-IDF prerequisites
         run: |
@@ -143,16 +141,16 @@ jobs:
         with:
           esp_idf_version: v5.5.2
           target: esp32
-          path: 'mini'
+          path: 'controller/mini'
           command: idf.py build
 
       - name: Package mini firmware with version
         run: |
           VERSION="${{ needs.version.outputs.version }}"
-          cp mini/build/mini_6dof.bin "mini-firmware-${VERSION}.bin"
-          cp mini/build/mini_6dof.elf "mini-firmware-${VERSION}.elf"
-          cp mini/build/bootloader/bootloader.bin "mini-bootloader-${VERSION}.bin"
-          cp mini/build/partition_table/partition-table.bin "mini-partition-table-${VERSION}.bin"
+          cp controller/mini/build/mini_6dof.bin "mini-firmware-${VERSION}.bin"
+          cp controller/mini/build/mini_6dof.elf "mini-firmware-${VERSION}.elf"
+          cp controller/mini/build/bootloader/bootloader.bin "mini-bootloader-${VERSION}.bin"
+          cp controller/mini/build/partition_table/partition-table.bin "mini-partition-table-${VERSION}.bin"
 
       - name: Upload mini firmware artifacts
         uses: actions/upload-artifact@v4
@@ -275,7 +273,7 @@ jobs:
           \`\`\`
           
           ## Safety Notice
-          ⚠️ This firmware controls a motion platform capable of causing serious injury. Verify E-stop functionality before energizing actuators. See docs/hardware/servo_driver_interface.md for safety checklist.
+          ⚠️ This firmware controls a motion platform capable of causing serious injury. The r13 board/firmware combination is untested. See hardware/pcb/6DOF2_FIRMWARE_TODO.md for the required firmware and commissioning gates before connecting drives.
           EOF
           
           echo "changelog<<EOF" >> $GITHUB_OUTPUT

@@ -1,0 +1,174 @@
+{
+  "status": "PASS_EXACT_PAINTED_CAM_GEOMETRY_AND_DRILLS",
+  "oldZip": "..\\..\\manufacturing_release\\2026-09-23-r13-rc3\\6DOF2_r13_Gerber.zip",
+  "newZip": "..\\..\\manufacturing_release\\2026-09-23-r13-rc4\\6DOF2_r13_Gerber.zip",
+  "oldZipSha256": "a8b2fcb97876dff361048881e2ace08fa0fd3aeaee20aee014d976813bf25a9b",
+  "newZipSha256": "44fe2c34b97ee5ce68c5447788e1e77647e0741dcf36d1a453a79871524876c6",
+  "checks": [
+    {
+      "name": "identical_archive_member_set",
+      "pass": true
+    },
+    {
+      "name": "actual_painted_geometry_Gerber_TopLayer.GTL",
+      "pass": true,
+      "polarityRunsBefore": 1,
+      "polarityRunsAfter": 1,
+      "primitiveCount": 2817
+    },
+    {
+      "name": "actual_painted_geometry_Gerber_BottomLayer.GBL",
+      "pass": true,
+      "polarityRunsBefore": 1,
+      "polarityRunsAfter": 1,
+      "primitiveCount": 1349
+    },
+    {
+      "name": "actual_painted_geometry_Gerber_TopSilkscreenLayer.GTO",
+      "pass": true,
+      "polarityRunsBefore": 1,
+      "polarityRunsAfter": 1,
+      "primitiveCount": 6550
+    },
+    {
+      "name": "actual_painted_geometry_Gerber_BottomSilkscreenLayer.GBO",
+      "pass": true,
+      "polarityRunsBefore": 0,
+      "polarityRunsAfter": 0,
+      "primitiveCount": 0
+    },
+    {
+      "name": "actual_painted_geometry_Gerber_TopSolderMaskLayer.GTS",
+      "pass": true,
+      "polarityRunsBefore": 1,
+      "polarityRunsAfter": 1,
+      "primitiveCount": 3742
+    },
+    {
+      "name": "actual_painted_geometry_Gerber_BottomSolderMaskLayer.GBS",
+      "pass": true,
+      "polarityRunsBefore": 1,
+      "polarityRunsAfter": 1,
+      "primitiveCount": 223
+    },
+    {
+      "name": "actual_painted_geometry_Gerber_TopPasteMaskLayer.GTP",
+      "pass": true,
+      "polarityRunsBefore": 1,
+      "polarityRunsAfter": 1,
+      "primitiveCount": 491
+    },
+    {
+      "name": "actual_painted_geometry_Gerber_BoardOutlineLayer.GKO",
+      "pass": true,
+      "polarityRunsBefore": 1,
+      "polarityRunsAfter": 1,
+      "primitiveCount": 4
+    },
+    {
+      "name": "actual_painted_geometry_Gerber_DocumentLayer.GDL",
+      "pass": true,
+      "polarityRunsBefore": 1,
+      "polarityRunsAfter": 1,
+      "primitiveCount": 98
+    },
+    {
+      "name": "actual_painted_geometry_Gerber_InnerLayer1.G1",
+      "pass": true,
+      "polarityRunsBefore": 1,
+      "polarityRunsAfter": 1,
+      "primitiveCount": 1699
+    },
+    {
+      "name": "actual_painted_geometry_Gerber_InnerLayer2.G2",
+      "pass": true,
+      "polarityRunsBefore": 1,
+      "polarityRunsAfter": 1,
+      "primitiveCount": 1024
+    },
+    {
+      "name": "actual_drills_Drill_PTH_Through.DRL",
+      "pass": true,
+      "count": 559
+    },
+    {
+      "name": "actual_drills_Drill_NPTH_Through.DRL",
+      "pass": true,
+      "count": 22
+    },
+    {
+      "name": "actual_drills_Drill_PTH_Through_Via.DRL",
+      "pass": true,
+      "count": 398
+    },
+    {
+      "name": "auxiliary_content_FlyingProbeTesting.json",
+      "pass": true
+    },
+    {
+      "name": "auxiliary_content_PCB\u4e0b\u5355\u5fc5\u8bfb.txt",
+      "pass": true
+    },
+    {
+      "name": "expected_eleven_render_witnesses",
+      "pass": true
+    },
+    {
+      "name": "fresh_render_bytes_Gerber_BoardOutlineLayer.GKO.png",
+      "pass": true,
+      "sha256": "9612405f2bba3f37fc5e91bc974511942304881a538dc48681b4d6298fd9dd10"
+    },
+    {
+      "name": "fresh_render_bytes_Gerber_BottomLayer.GBL.png",
+      "pass": true,
+      "sha256": "a7bb713242659d08043d5744d83f7a6b735dcb9a5bdf022e0ed8b5d8bdc96d2b"
+    },
+    {
+      "name": "fresh_render_bytes_Gerber_BottomSolderMaskLayer.GBS.png",
+      "pass": true,
+      "sha256": "76a1b2f1749271b34fdf3e8d50ed35a32b02817a30fa5a9092aee8ed3eb64823"
+    },
+    {
+      "name": "fresh_render_bytes_Gerber_DocumentLayer.GDL.png",
+      "pass": true,
+      "sha256": "0a43cb923b24fe1475ed07015d4e8cd9597471a6618c844fa0e0e54b3e9cde41"
+    },
+    {
+      "name": "fresh_render_bytes_Gerber_InnerLayer1.G1.png",
+      "pass": true,
+      "sha256": "41c3959f0440a921fecf00b9aef60175c4813ec471d29b0e3e62408055fcd6a2"
+    },
+    {
+      "name": "fresh_render_bytes_Gerber_InnerLayer2.G2.png",
+      "pass": true,
+      "sha256": "e341a81b89f8a4d53af373ed270e4735ce85fa62ff1d28bca17eaf18318c4b0a"
+    },
+    {
+      "name": "fresh_render_bytes_Gerber_TopLayer.GTL.png",
+      "pass": true,
+      "sha256": "a44ae511f7899c45994b4cfb4d7a16b9167d639ce775618a7ee1cd19e7144dab"
+    },
+    {
+      "name": "fresh_render_bytes_Gerber_TopPasteMaskLayer.GTP.png",
+      "pass": true,
+      "sha256": "a05e26b0affd040b1008bbfdb80746f427954ff451058e5235f49c11948e1e84"
+    },
+    {
+      "name": "fresh_render_bytes_Gerber_TopSilkscreenLayer.GTO.png",
+      "pass": true,
+      "sha256": "d494866225a7b3b003d62f3f4d47f740d9abef6ed69c38486c1495dc5503198e"
+    },
+    {
+      "name": "fresh_render_bytes_Gerber_TopSolderMaskLayer.GTS.png",
+      "pass": true,
+      "sha256": "fb4c1b33312407fec12d1d0ce6b72c469bc9ffb7db25c03b1a2262cd5af0eef6"
+    },
+    {
+      "name": "fresh_render_bytes_registered_copper_outline_drill.png",
+      "pass": true,
+      "sha256": "e76e0b94f7258c620dce9ce74ca48b0b6967bda599b6e190320d2a157444357e"
+    }
+  ],
+  "interpretation": "Native exports may change timestamps, unused aperture definitions and aperture numbers. This check compares actual expanded primitives exactly, preserving dark/clear painting-order groups, as well as actual drill multisets. It separately compares all ten rendered nonempty Gerber layers plus the registered composite byte-for-byte. This is additional equivalence evidence, not a replacement for fresh source/format/outline/drill audits.",
+  "orderAuthorization": false
+}

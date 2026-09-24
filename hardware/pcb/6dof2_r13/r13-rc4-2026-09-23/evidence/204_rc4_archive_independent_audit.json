@@ -1,0 +1,3375 @@
+{
+  "status": "PASS_RC4_ACTIVE_SOURCE_AND_ALL_CACHES",
+  "inputHashes": {
+    "G:\\My Drive\\projects\\6dof\\pcb\\manufacturing_release\\2026-09-23-r13-rc3\\6DOF2-r13-rc3-20260923-UNTESTED.epro2": "40e86578e9681aaa4215337213b9b8667a9d163cd7b8d5068c1c86b3176a338f",
+    "G:\\My Drive\\projects\\6dof\\pcb\\manufacturing_release\\2026-09-23-r13-rc4\\6DOF2-r13-rc4-20260923-UNTESTED.epro2": "c42dc31219236dca955aaf34b4688501a36ff6eb6fcefcf141cbf48ceb0c9ea4",
+    "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\190_rc3_archive_independent_audit.json": "7c4308d98395fcbd01bf2f45335049569e518ae5bdd8012c8be441be9867f07b",
+    "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\202_rc4_board_display_cache_independent_audit.json": "fe2ff6e6bd35045609fd150e09121825f7749f8810c33ab033c2f1bf52b4e1ab",
+    "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\202_final_pcb_capture.json": "4bcbd7b23f445253f7220278fb7b193aefef3ee5d6346630237d9ce98210919f",
+    "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\189_schematic_rc3_capture.json": "957dde997969d646cb0445e567bfcc4813728e97eac44e4f4219773319581589"
+  },
+  "checks": [
+    {
+      "name": "archive_document_inventory_unchanged",
+      "passed": true,
+      "counts": {
+        "FOOTPRINT": 41,
+        "SYMBOL": 62,
+        "DEVICE": 62,
+        "BOARD": 1,
+        "SCH": 1,
+        "SCH_PAGE": 1,
+        "PCB": 1,
+        "CONFIG": 1,
+        "BLOB": 1
+      }
+    },
+    {
+      "name": "active_PCB_matches_frozen_source",
+      "passed": true,
+      "unexplainedChanged": [],
+      "added": [
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder1"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder10"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder100"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder101"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder102"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder103"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder104"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder105"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder106"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder107"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder108"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder109"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder11"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder110"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder111"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder112"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder113"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder114"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder115"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder116"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder117"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder118"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder119"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder12"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder120"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder121"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder122"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder123"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder124"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder125"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder126"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder127"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder128"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder129"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder13"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder130"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder131"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder132"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder133"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder134"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder135"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder136"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder137"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder138"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder139"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder14"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder140"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder141"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder142"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder143"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder144"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder145"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder146"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder147"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder148"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder149"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder15"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder150"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder151"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder152"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder153"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder154"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder155"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder156"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder157"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder158"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder159"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder16"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder160"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder161"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder162"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder163"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder164"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder165"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder166"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder167"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder168"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder169"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder17"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder170"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder171"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder172"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder173"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder174"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder175"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder176"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder177"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder178"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder179"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder18"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder180"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder181"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder182"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder183"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder184"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder185"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder186"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder187"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder188"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder189"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder19"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder190"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder191"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder192"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder193"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder194"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder195"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder196"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder197"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder198"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder199"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder2"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder20"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder200"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder201"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder202"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder203"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder204"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder205"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder206"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder207"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder208"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder209"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder21"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder210"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder211"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder212"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder213"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder214"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder215"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder216"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder217"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder218"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder219"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder22"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder220"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder221"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder222"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder223"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder224"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder225"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder226"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder227"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder228"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder229"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder23"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder230"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder231"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder232"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder233"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder234"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder235"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder236"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder237"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder238"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder239"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder24"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder240"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder241"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder242"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder243"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder244"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder245"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder246"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder247"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder248"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder249"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder25"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder250"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder251"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder252"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder253"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder254"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder255"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder256"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder257"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder258"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder259"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder26"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder260"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder261"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder262"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder263"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder264"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder265"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder266"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder267"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder268"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder269"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder27"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder270"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder271"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder272"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder273"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder274"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder275"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder276"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder277"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder278"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder279"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder28"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder280"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder281"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder282"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder283"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder284"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder285"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder286"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder287"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder288"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder289"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder29"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder290"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder291"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder292"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder293"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder294"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder295"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder296"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder297"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder298"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder299"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder3"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder30"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder300"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder301"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder302"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder303"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder304"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder305"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder306"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder307"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder308"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder309"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder31"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder310"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder311"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder312"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder313"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder314"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder315"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder316"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder317"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder318"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder319"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder32"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder320"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder321"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder322"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder323"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder324"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder325"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder326"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder327"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder328"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder329"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder33"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder330"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder331"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder332"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder333"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder334"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder335"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder336"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder337"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder338"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder339"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder34"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder340"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder341"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder342"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder343"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder344"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder345"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder346"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder347"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder348"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder349"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder35"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder350"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder351"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder352"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder353"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder354"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder355"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder356"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder357"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder358"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder359"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder36"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder360"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder361"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder362"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder363"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder364"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder365"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder366"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder367"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder368"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder369"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder37"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder370"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder371"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder372"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder373"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder374"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder375"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder376"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder377"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder378"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder379"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder38"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder380"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder381"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder382"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder383"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder384"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder385"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder386"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder387"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder388"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder389"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder39"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder390"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder4"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder40"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder41"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder42"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder43"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder44"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder45"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder46"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder47"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder48"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder49"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder5"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder50"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder51"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder52"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder53"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder54"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder55"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder56"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder57"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder58"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder59"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder6"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder60"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder61"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder62"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder63"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder64"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder65"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder66"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder67"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder68"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder69"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder7"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder70"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder71"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder72"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder73"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder74"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder75"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder76"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder77"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder78"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder79"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder8"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder80"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder81"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder82"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder83"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder84"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder85"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder86"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder87"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder88"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder89"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder9"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder90"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder91"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder92"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder93"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder94"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder95"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder96"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder97"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder98"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder99"
+        ],
+        [
+          "META",
+          "META"
+        ],
+        [
+          "POURED",
+          "[\"POURED\",\"0b2ad533d4f6eed6\"]"
+        ],
+        [
+          "POURED",
+          "[\"POURED\",\"3c712958a7c33b63\"]"
+        ],
+        [
+          "POURED",
+          "[\"POURED\",\"441a18e3dd19961c\"]"
+        ],
+        [
+          "POURED",
+          "[\"POURED\",\"5efbe3c061c05ddc\"]"
+        ],
+        [
+          "POURED",
+          "[\"POURED\",\"6f894fc0cf0df5ce\"]"
+        ],
+        [
+          "POURED",
+          "[\"POURED\",\"72355fae5e948676\"]"
+        ],
+        [
+          "POURED",
+          "[\"POURED\",\"8a6348360b8985bd\"]"
+        ],
+        [
+          "POURED",
+          "[\"POURED\",\"8af1b67ccf2ce016\"]"
+        ],
+        [
+          "POURED",
+          "[\"POURED\",\"932c395be98993dc\"]"
+        ],
+        [
+          "POURED",
+          "[\"POURED\",\"95f0aecbf3dbd4f9\"]"
+        ],
+        [
+          "POURED",
+          "[\"POURED\",\"976001193b3fd574\"]"
+        ],
+        [
+          "POURED",
+          "[\"POURED\",\"a03de1863b694f70\"]"
+        ],
+        [
+          "POURED",
+          "[\"POURED\",\"a0dc75f1adabcd0a\"]"
+        ],
+        [
+          "POURED",
+          "[\"POURED\",\"a1d0b788090e49a0\"]"
+        ],
+        [
+          "POURED",
+          "[\"POURED\",\"c247863a643d5f94\"]"
+        ],
+        [
+          "POURED",
+          "[\"POURED\",\"c2502bb75080e10b\"]"
+        ],
+        [
+          "POURED",
+          "[\"POURED\",\"c2d36dcaf39f2906\"]"
+        ],
+        [
+          "POURED",
+          "[\"POURED\",\"d53bb39b81f751e2\"]"
+        ],
+        [
+          "POURED",
+          "[\"POURED\",\"d64fe41118371a5e\"]"
+        ],
+        [
+          "POURED",
+          "[\"POURED\",\"f534c37a24bfe80e\"]"
+        ],
+        [
+          "POURED",
+          "[\"POURED\",\"f6a737d79b7f3500\"]"
+        ]
+      ],
+      "removed": [
+        [
+          "LAYER_PHYS",
+          "[\"LAYER_PHYS\",15]"
+        ],
+        [
+          "LAYER_PHYS",
+          "[\"LAYER_PHYS\",16]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"ACTLED\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"ARM_CLEAR_N\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"ARM_PULSE\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"CC1\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"CC2\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"CHASSIS\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"CONTROL_PERMIT\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"DRIVE_5V_SENSE\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"DRIVE_ENABLE\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"ESP_EN\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"ESP_IO0\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"ESTOP\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"ESTOP_MCU\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"ETH_JRXN\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"ETH_JRXP\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"ETH_RXN\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"ETH_RXP\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"ETH_RX_BIAS\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"ETH_TCT\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"ETH_TXN\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"ETH_TXP\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"EXRES\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"GND\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"INTN\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"LED1A\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"LED2A\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"LED_G\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"LED_Y\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"LINKLED\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"LOGIC_5V\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"M0D_G\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"M0D_I\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"M0D_N\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"M0D_P\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"M0S_G\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"M0S_I\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"M0S_N\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"M0S_P\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"M0_ALARM\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"M0_ALARM_DRV\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"M0_ALARM_LED\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"M1D_G\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"M1D_I\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"M1D_N\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"M1D_P\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"M1S_G\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"M1S_I\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"M1S_N\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"M1S_P\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"M1_ALARM\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"M1_ALARM_DRV\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"M1_ALARM_LED\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"M2D_G\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"M2D_I\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"M2D_N\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"M2D_P\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"M2S_G\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"M2S_I\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"M2S_N\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"M2S_P\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"M2_ALARM\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"M2_ALARM_DRV\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"M2_ALARM_LED\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"M3D_G\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"M3D_I\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"M3D_N\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"M3D_P\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"M3S_G\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"M3S_I\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"M3S_N\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"M3S_P\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"M3_ALARM\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"M3_ALARM_DRV\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"M3_ALARM_LED\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"M4D_G\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"M4D_I\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"M4D_N\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"M4D_P\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"M4S_G\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"M4S_I\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"M4S_N\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"M4S_P\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"M4_ALARM\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"M4_ALARM_DRV\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"M4_ALARM_LED\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"M5D_G\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"M5D_I\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"M5D_N\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"M5D_P\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"M5S_G\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"M5S_I\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"M5S_N\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"M5S_P\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"M5_ALARM\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"M5_ALARM_DRV\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"M5_ALARM_LED\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"MCU_INHIBIT\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"MISO\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"MOSI\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"RSTN\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"SCLK\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"SCSN\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"SUPERVISOR_CT\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"SUPERVISOR_RELEASE_N\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"SWNODE\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"TOCAP\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"U0RXD\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"U0TXD\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"USB_DN\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"USB_DN_MCU\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"USB_DN_PIN\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"USB_DP\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"USB_DP_MCU\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"USB_DP_PIN\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"V1V2\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"VBUS\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"VCC3V3\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"VCC3V3A\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"VCC5\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"VIN12\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"VINRAW\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"VIN_J\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"XI\"]]"
+        ],
+        [
+          "RULE_SELECTOR",
+          "[\"RULE_SELECTOR\",[\"NET\",\"XO\"]]"
+        ]
+      ],
+      "nativeActiveCount": 3697,
+      "archiveActiveCount": 3982,
+      "normalization": "Highest-ticket active records; DOCHEAD ignored; angles modulo360; FILL refs null/[null]; layer display visibility; SCH false/missing strikeout and attr zIndex. Only archive META/placeholders/empty historical POURED additions and exact known generated default rules/layer omissions allowed.",
+      "importRoundtripForThisArchiveTested": false
+    },
+    {
+      "name": "active_SCH_PAGE_matches_frozen_source",
+      "passed": true,
+      "unexplainedChanged": [],
+      "added": [
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder1"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder10"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder11"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder12"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder13"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder14"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder15"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder16"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder17"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder18"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder19"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder2"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder20"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder21"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder22"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder23"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder24"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder25"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder26"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder27"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder28"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder29"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder3"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder30"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder31"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder32"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder33"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder34"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder35"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder36"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder37"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder38"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder39"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder4"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder40"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder41"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder42"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder43"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder44"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder45"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder46"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder47"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder48"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder49"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder5"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder50"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder51"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder52"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder53"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder54"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder55"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder56"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder57"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder58"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder59"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder6"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder60"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder61"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder62"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder63"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder64"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder65"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder66"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder67"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder68"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder69"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder7"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder70"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder71"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder72"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder73"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder74"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder75"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder76"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder77"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder78"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder79"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder8"
+        ],
+        [
+          "ELE_PLACEHOLDER",
+          "placeholder9"
+        ],
+        [
+          "META",
+          "META"
+        ]
+      ],
+      "removed": [],
+      "nativeActiveCount": 6503,
+      "archiveActiveCount": 6583,
+      "normalization": "Highest-ticket active records; DOCHEAD ignored; angles modulo360; FILL refs null/[null]; layer display visibility; SCH false/missing strikeout and attr zIndex. Only archive META/placeholders/empty historical POURED additions and exact known generated default rules/layer omissions allowed.",
+      "importRoundtripForThisArchiveTested": false
+    },
+    {
+      "name": "cached_BLOB_BLOB",
+      "passed": true,
+      "activeRecords": 1
+    },
+    {
+      "name": "cached_BOARD_6b497e65a4ee7d5b",
+      "passed": true,
+      "activeRecords": 1
+    },
+    {
+      "name": "cached_CONFIG_CONFIG",
+      "passed": true,
+      "activeRecords": 1
+    },
+    {
+      "name": "cached_DEVICE_002f481888b1aef8",
+      "passed": true,
+      "activeRecords": 1
+    },
+    {
+      "name": "cached_DEVICE_0302da44c69b818a",
+      "passed": true,
+      "activeRecords": 1
+    },
+    {
+      "name": "cached_DEVICE_0a68bc4873fd2f0e",
+      "passed": true,
+      "activeRecords": 1
+    },
+    {
+      "name": "cached_DEVICE_0c8a55ed0787d174",
+      "passed": true,
+      "activeRecords": 1
+    },
+    {
+      "name": "cached_DEVICE_0cf1c2b8352aafe2",
+      "passed": true,
+      "activeRecords": 1
+    },
+    {
+      "name": "cached_DEVICE_0eaf1b1a54a36667",
+      "passed": true,
+      "activeRecords": 1
+    },
+    {
+      "name": "cached_DEVICE_141f564b5c9c101f",
+      "passed": true,
+      "activeRecords": 1
+    },
+    {
+      "name": "cached_DEVICE_155667f3f940dc2a",
+      "passed": true,
+      "activeRecords": 1
+    },
+    {
+      "name": "cached_DEVICE_15667e8cf71211a9",
+      "passed": true,
+      "activeRecords": 1
+    },
+    {
+      "name": "cached_DEVICE_1e8644878ee4a7ff",
+      "passed": true,
+      "activeRecords": 1
+    },
+    {
+      "name": "cached_DEVICE_1f09a12592fcff75",
+      "passed": true,
+      "activeRecords": 1
+    },
+    {
+      "name": "cached_DEVICE_208bcc2793804162",
+      "passed": true,
+      "activeRecords": 1
+    },
+    {
+      "name": "cached_DEVICE_2a6189595b187746",
+      "passed": true,
+      "activeRecords": 1
+    },
+    {
+      "name": "cached_DEVICE_2c836f8856d6ebbc",
+      "passed": true,
+      "activeRecords": 1
+    },
+    {
+      "name": "cached_DEVICE_2f24c4bc493870d4",
+      "passed": true,
+      "activeRecords": 1
+    },
+    {
+      "name": "cached_DEVICE_316798074251e99e",
+      "passed": true,
+      "activeRecords": 1
+    },
+    {
+      "name": "cached_DEVICE_35db244c731d10c8",
+      "passed": true,
+      "activeRecords": 1
+    },
+    {
+      "name": "cached_DEVICE_3a2db8f5aee9c7f6",
+      "passed": true,
+      "activeRecords": 1
+    },
+    {
+      "name": "cached_DEVICE_3c391af8c48ab49a",
+      "passed": true,
+      "activeRecords": 1
+    },
+    {
+      "name": "cached_DEVICE_3c9002588c29bb7a",
+      "passed": true,
+      "activeRecords": 1
+    },
+    {
+      "name": "cached_DEVICE_4435a10dc4ae0012",
+      "passed": true,
+      "activeRecords": 1
+    },
+    {
+      "name": "cached_DEVICE_452ccf76e55ec4e1",
+      "passed": true,
+      "activeRecords": 1
+    },
+    {
+      "name": "cached_DEVICE_491001de77a17649",
+      "passed": true,
+      "activeRecords": 1
+    },
+    {
+      "name": "cached_DEVICE_52a6e1ef75f12bb0",
+      "passed": true,
+      "activeRecords": 1
+    },
+    {
+      "name": "cached_DEVICE_57587b4861e069b3",
+      "passed": true,
+      "activeRecords": 1
+    },
+    {
+      "name": "cached_DEVICE_670c060d4b0e2236",
+      "passed": true,
+      "activeRecords": 1
+    },
+    {
+      "name": "cached_DEVICE_69e5a5e51f7e0f61",
+      "passed": true,
+      "activeRecords": 1
+    },
+    {
+      "name": "cached_DEVICE_69e94bf0878b5da6",
+      "passed": true,
+      "activeRecords": 1
+    },
+    {
+      "name": "cached_DEVICE_6b930bc65e55d111",
+      "passed": true,
+      "activeRecords": 1
+    },
+    {
+      "name": "cached_DEVICE_6fe2d89d698f9063",
+      "passed": true,
+      "activeRecords": 1
+    },
+    {
+      "name": "cached_DEVICE_7290fd0211bd5e0f",
+      "passed": true,
+      "activeRecords": 1
+    },
+    {
+      "name": "cached_DEVICE_739ce00dc81f0d5e",
+      "passed": true,
+      "activeRecords": 1
+    },
+    {
+      "name": "cached_DEVICE_73ab9339ca9ef804",
+      "passed": true,
+      "activeRecords": 1
+    },
+    {
+      "name": "cached_DEVICE_78e8c9d4e6a4dac3",
+      "passed": true,
+      "activeRecords": 1
+    },
+    {
+      "name": "cached_DEVICE_7e27e05b961df32f",
+      "passed": true,
+      "activeRecords": 1
+    },
+    {
+      "name": "cached_DEVICE_81022354a086bac1",
+      "passed": true,
+      "activeRecords": 1
+    },
+    {
+      "name": "cached_DEVICE_81ba6f4fb6b524e5",
+      "passed": true,
+      "activeRecords": 1
+    },
+    {
+      "name": "cached_DEVICE_83ab707daa2c7ebb",
+      "passed": true,
+      "activeRecords": 1
+    },
+    {
+      "name": "cached_DEVICE_8aeb42424763b4a6",
+      "passed": true,
+      "activeRecords": 1
+    },
+    {
+      "name": "cached_DEVICE_8b6da38211d85aa2",
+      "passed": true,
+      "activeRecords": 1
+    },
+    {
+      "name": "cached_DEVICE_956e558358151a53",
+      "passed": true,
+      "activeRecords": 1
+    },
+    {
+      "name": "cached_DEVICE_9d0804d02d8f1196",
+      "passed": true,
+      "activeRecords": 1
+    },
+    {
+      "name": "cached_DEVICE_9d986524a6f9fd51",
+      "passed": true,
+      "activeRecords": 1
+    },
+    {
+      "name": "cached_DEVICE_a65e332c22165496",
+      "passed": true,
+      "activeRecords": 1
+    },
+    {
+      "name": "cached_DEVICE_a73ddd039fff8f43",
+      "passed": true,
+      "activeRecords": 1
+    },
+    {
+      "name": "cached_DEVICE_a7803d5d91c54292b514ef18bcb17a61",
+      "passed": true,
+      "activeRecords": 1
+    },
+    {
+      "name": "cached_DEVICE_af80cda524fe09b8",
+      "passed": true,
+      "activeRecords": 1
+    },
+    {
+      "name": "cached_DEVICE_b62e65587e639245",
+      "passed": true,
+      "activeRecords": 1
+    },
+    {
+      "name": "cached_DEVICE_bd76042684b6458d",
+      "passed": true,
+      "activeRecords": 1
+    },
+    {
+      "name": "cached_DEVICE_bdcd0c2303abb512",
+      "passed": true,
+      "activeRecords": 1
+    },
+    {
+      "name": "cached_DEVICE_c0d958a8291f7dfb",
+      "passed": true,
+      "activeRecords": 1
+    },
+    {
+      "name": "cached_DEVICE_c49ddab434ddae50",
+      "passed": true,
+      "activeRecords": 1
+    },
+    {
+      "name": "cached_DEVICE_c4d2479f3d64c278",
+      "passed": true,
+      "activeRecords": 1
+    },
+    {
+      "name": "cached_DEVICE_c65265e3d44825a4",
+      "passed": true,
+      "activeRecords": 1
+    },
+    {
+      "name": "cached_DEVICE_d665c8338bbcede9",
+      "passed": true,
+      "activeRecords": 1
+    },
+    {
+      "name": "cached_DEVICE_d70268346305f841",
+      "passed": true,
+      "activeRecords": 1
+    },
+    {
+      "name": "cached_DEVICE_dc9ef40046431c19",
+      "passed": true,
+      "activeRecords": 1
+    },
+    {
+      "name": "cached_DEVICE_ea2d8a42594c0a24",
+      "passed": true,
+      "activeRecords": 1
+    },
+    {
+      "name": "cached_DEVICE_f5aa3bb62ad836da",
+      "passed": true,
+      "activeRecords": 1
+    },
+    {
+      "name": "cached_DEVICE_fd951c61e2482dbc",
+      "passed": true,
+      "activeRecords": 1
+    },
+    {
+      "name": "cached_DEVICE_fee6fbebc0bf65ad",
+      "passed": true,
+      "activeRecords": 1
+    },
+    {
+      "name": "cached_DEVICE_ff97f2dbfd29412098199639f76a40f3",
+      "passed": true,
+      "activeRecords": 1
+    },
+    {
+      "name": "cached_FOOTPRINT_0810a04659b27ef5",
+      "passed": true,
+      "activeRecords": 104
+    },
+    {
+      "name": "cached_FOOTPRINT_0a993f460267f0ba",
+      "passed": true,
+      "activeRecords": 53
+    },
+    {
+      "name": "cached_FOOTPRINT_165ae5bb369840b4",
+      "passed": true,
+      "activeRecords": 100
+    },
+    {
+      "name": "cached_FOOTPRINT_19700284111bc16b",
+      "passed": true,
+      "activeRecords": 119
+    },
+    {
+      "name": "cached_FOOTPRINT_227ca2fe97bb46e6",
+      "passed": true,
+      "activeRecords": 87
+    },
+    {
+      "name": "cached_FOOTPRINT_2470ffd604459d7e",
+      "passed": true,
+      "activeRecords": 55
+    },
+    {
+      "name": "cached_FOOTPRINT_2c302890482fc905",
+      "passed": true,
+      "activeRecords": 44
+    },
+    {
+      "name": "cached_FOOTPRINT_2fa12c8f68575cc0",
+      "passed": true,
+      "activeRecords": 62
+    },
+    {
+      "name": "cached_FOOTPRINT_306abdcb1d66a9a2",
+      "passed": true,
+      "activeRecords": 46
+    },
+    {
+      "name": "cached_FOOTPRINT_35af123ab238c9c7",
+      "passed": true,
+      "activeRecords": 48
+    },
+    {
+      "name": "cached_FOOTPRINT_35f7b3feff522c91",
+      "passed": true,
+      "activeRecords": 68
+    },
+    {
+      "name": "cached_FOOTPRINT_3b56d2ff6327f88a",
+      "passed": true,
+      "activeRecords": 67
+    },
+    {
+      "name": "cached_FOOTPRINT_3f8ef6e6914f2768",
+      "passed": true,
+      "activeRecords": 170
+    },
+    {
+      "name": "cached_FOOTPRINT_45022d8debd20f10",
+      "passed": true,
+      "activeRecords": 50
+    },
+    {
+      "name": "cached_FOOTPRINT_4bff053263457a61",
+      "passed": true,
+      "activeRecords": 61
+    },
+    {
+      "name": "cached_FOOTPRINT_4e0851dd3b3ae7d8",
+      "passed": true,
+      "activeRecords": 113
+    },
+    {
+      "name": "cached_FOOTPRINT_51b21741d692445891fac2e618e095ea",
+      "passed": true,
+      "activeRecords": 224
+    },
+    {
+      "name": "cached_FOOTPRINT_556dd03c72a679ea",
+      "passed": true,
+      "activeRecords": 48
+    },
+    {
+      "name": "cached_FOOTPRINT_62d36a6bac2cd9d0",
+      "passed": true,
+      "activeRecords": 75
+    },
+    {
+      "name": "cached_FOOTPRINT_6327bc039c3fd8bf",
+      "passed": true,
+      "activeRecords": 93
+    },
+    {
+      "name": "cached_FOOTPRINT_64f54e8abfeacddc",
+      "passed": true,
+      "activeRecords": 88
+    },
+    {
+      "name": "cached_FOOTPRINT_65dc40e1571e0ae5",
+      "passed": true,
+      "activeRecords": 47
+    },
+    {
+      "name": "cached_FOOTPRINT_67b1b4198cfce355",
+      "passed": true,
+      "activeRecords": 183
+    },
+    {
+      "name": "cached_FOOTPRINT_6b120e8e0d9a1448",
+      "passed": true,
+      "activeRecords": 157
+    },
+    {
+      "name": "cached_FOOTPRINT_75893619cc0831f9",
+      "passed": true,
+      "activeRecords": 53
+    },
+    {
+      "name": "cached_FOOTPRINT_75fa07ef949e7c9f",
+      "passed": true,
+      "activeRecords": 46
+    },
+    {
+      "name": "cached_FOOTPRINT_78bc380563145310",
+      "passed": true,
+      "activeRecords": 46
+    },
+    {
+      "name": "cached_FOOTPRINT_870c74ef719071bf",
+      "passed": true,
+      "activeRecords": 46
+    },
+    {
+      "name": "cached_FOOTPRINT_a1f8871bd65961ea",
+      "passed": true,
+      "activeRecords": 50
+    },
+    {
+      "name": "cached_FOOTPRINT_ab2d01f002c76b2d",
+      "passed": true,
+      "activeRecords": 54
+    },
+    {
+      "name": "cached_FOOTPRINT_ab3a4d05c5de78dc",
+      "passed": true,
+      "activeRecords": 45
+    },
+    {
+      "name": "cached_FOOTPRINT_addfa3fb81474c89",
+      "passed": true,
+      "activeRecords": 46
+    },
+    {
+      "name": "cached_FOOTPRINT_afdfb76d38aded99",
+      "passed": true,
+      "activeRecords": 92
+    },
+    {
+      "name": "cached_FOOTPRINT_b14781be45fe686b",
+      "passed": true,
+      "activeRecords": 42
+    },
+    {
+      "name": "cached_FOOTPRINT_c9468a6bfee303e7",
+      "passed": true,
+      "activeRecords": 51
+    },
+    {
+      "name": "cached_FOOTPRINT_c9e82b54fdbeed5e",
+      "passed": true,
+      "activeRecords": 41
+    },
+    {
+      "name": "cached_FOOTPRINT_d11fa1664e812c80",
+      "passed": true,
+      "activeRecords": 65
+    },
+    {
+      "name": "cached_FOOTPRINT_db04b666419fea79",
+      "passed": true,
+      "activeRecords": 88
+    },
+    {
+      "name": "cached_FOOTPRINT_e4f4e0d059d03007",
+      "passed": true,
+      "activeRecords": 88
+    },
+    {
+      "name": "cached_FOOTPRINT_eb161ec05c11f738",
+      "passed": true,
+      "activeRecords": 47
+    },
+    {
+      "name": "cached_FOOTPRINT_fcf636a5f4d7988d",
+      "passed": true,
+      "activeRecords": 48
+    },
+    {
+      "name": "cached_SCH_d897bc7d6ee2454dbccbd8e2a193104a",
+      "passed": true,
+      "activeRecords": 3
+    },
+    {
+      "name": "cached_SYMBOL_0e928ba6a0144589",
+      "passed": true,
+      "activeRecords": 145
+    },
+    {
+      "name": "cached_SYMBOL_1017cc2b40cb03de",
+      "passed": true,
+      "activeRecords": 21
+    },
+    {
+      "name": "cached_SYMBOL_12718aebeae06858",
+      "passed": true,
+      "activeRecords": 29
+    },
+    {
+      "name": "cached_SYMBOL_158664526a5b1a85",
+      "passed": true,
+      "activeRecords": 17
+    },
+    {
+      "name": "cached_SYMBOL_1715dc363fb7c8c5",
+      "passed": true,
+      "activeRecords": 30
+    },
+    {
+      "name": "cached_SYMBOL_1a870c10bccb5714",
+      "passed": true,
+      "activeRecords": 17
+    },
+    {
+      "name": "cached_SYMBOL_2151338de8cdf1f6",
+      "passed": true,
+      "activeRecords": 18
+    },
+    {
+      "name": "cached_SYMBOL_266a1bc47536482ea8438b1540398eb1",
+      "passed": true,
+      "activeRecords": 29
+    },
+    {
+      "name": "cached_SYMBOL_279783510026ec37",
+      "passed": true,
+      "activeRecords": 47
+    },
+    {
+      "name": "cached_SYMBOL_2b4efc10027f2a44",
+      "passed": true,
+      "activeRecords": 23
+    },
+    {
+      "name": "cached_SYMBOL_2bf022d99061ca0e",
+      "passed": true,
+      "activeRecords": 89
+    },
+    {
+      "name": "cached_SYMBOL_2c7e99a133e829b1",
+      "passed": true,
+      "activeRecords": 91
+    },
+    {
+      "name": "cached_SYMBOL_2fecc1df6b3dbabd",
+      "passed": true,
+      "activeRecords": 96
+    },
+    {
+      "name": "cached_SYMBOL_3065484cada267ef",
+      "passed": true,
+      "activeRecords": 61
+    },
+    {
+      "name": "cached_SYMBOL_39b50f8eb93e898f",
+      "passed": true,
+      "activeRecords": 25
+    },
+    {
+      "name": "cached_SYMBOL_3bec2cfab668b257",
+      "passed": true,
+      "activeRecords": 29
+    },
+    {
+      "name": "cached_SYMBOL_3c0f61295a08da45",
+      "passed": true,
+      "activeRecords": 217
+    },
+    {
+      "name": "cached_SYMBOL_3e372c5b3100fe70",
+      "passed": true,
+      "activeRecords": 25
+    },
+    {
+      "name": "cached_SYMBOL_4115224f986f1eae",
+      "passed": true,
+      "activeRecords": 17
+    },
+    {
+      "name": "cached_SYMBOL_4423e50d1caeb6cb",
+      "passed": true,
+      "activeRecords": 22
+    },
+    {
+      "name": "cached_SYMBOL_44428671b4512c7c",
+      "passed": true,
+      "activeRecords": 39
+    },
+    {
+      "name": "cached_SYMBOL_49173d3e01b5cb39",
+      "passed": true,
+      "activeRecords": 219
+    },
+    {
+      "name": "cached_SYMBOL_4ef31c9260c4ec84",
+      "passed": true,
+      "activeRecords": 25
+    },
+    {
+      "name": "cached_SYMBOL_50bb0a585169e69d",
+      "passed": true,
+      "activeRecords": 29
+    },
+    {
+      "name": "cached_SYMBOL_513f113b350c7d98",
+      "passed": true,
+      "activeRecords": 214
+    },
+    {
+      "name": "cached_SYMBOL_550264359ed23e34",
+      "passed": true,
+      "activeRecords": 19
+    },
+    {
+      "name": "cached_SYMBOL_57181dfb4585744d",
+      "passed": true,
+      "activeRecords": 77
+    },
+    {
+      "name": "cached_SYMBOL_58a10d5d8a523e6d",
+      "passed": true,
+      "activeRecords": 17
+    },
+    {
+      "name": "cached_SYMBOL_5d05105bb0f04471",
+      "passed": true,
+      "activeRecords": 17
+    },
+    {
+      "name": "cached_SYMBOL_6272bea7c7a60910",
+      "passed": true,
+      "activeRecords": 19
+    },
+    {
+      "name": "cached_SYMBOL_68d279c8efb035df",
+      "passed": true,
+      "activeRecords": 30
+    },
+    {
+      "name": "cached_SYMBOL_6b49f305e3bdb6f8",
+      "passed": true,
+      "activeRecords": 24
+    },
+    {
+      "name": "cached_SYMBOL_6d84c5057f4c1e06",
+      "passed": true,
+      "activeRecords": 29
+    },
+    {
+      "name": "cached_SYMBOL_700a87cf493c0eee",
+      "passed": true,
+      "activeRecords": 37
+    },
+    {
+      "name": "cached_SYMBOL_7fbb1a027d824de1",
+      "passed": true,
+      "activeRecords": 58
+    },
+    {
+      "name": "cached_SYMBOL_82c174cc63f90945",
+      "passed": true,
+      "activeRecords": 17
+    },
+    {
+      "name": "cached_SYMBOL_8d0f31efcfeb3ac2",
+      "passed": true,
+      "activeRecords": 91
+    },
+    {
+      "name": "cached_SYMBOL_8e2a0a374837d1e1",
+      "passed": true,
+      "activeRecords": 20
+    },
+    {
+      "name": "cached_SYMBOL_912d635ddc57317c",
+      "passed": true,
+      "activeRecords": 21
+    },
+    {
+      "name": "cached_SYMBOL_914d4c5bf7c59a92",
+      "passed": true,
+      "activeRecords": 21
+    },
+    {
+      "name": "cached_SYMBOL_95bee84023279b00",
+      "passed": true,
+      "activeRecords": 136
+    },
+    {
+      "name": "cached_SYMBOL_96132c140020f8c6",
+      "passed": true,
+      "activeRecords": 22
+    },
+    {
+      "name": "cached_SYMBOL_983de75fa8601c1e",
+      "passed": true,
+      "activeRecords": 17
+    },
+    {
+      "name": "cached_SYMBOL_9a777545551d0af4",
+      "passed": true,
+      "activeRecords": 17
+    },
+    {
+      "name": "cached_SYMBOL_9e8c259ff7a5fb4a",
+      "passed": true,
+      "activeRecords": 22
+    },
+    {
+      "name": "cached_SYMBOL_a74375f11ed856b8",
+      "passed": true,
+      "activeRecords": 21
+    },
+    {
+      "name": "cached_SYMBOL_a9cc4cdfac8ff0fa",
+      "passed": true,
+      "activeRecords": 136
+    },
+    {
+      "name": "cached_SYMBOL_b2141f2963bf2560",
+      "passed": true,
+      "activeRecords": 19
+    },
+    {
+      "name": "cached_SYMBOL_b4c79f1018d1efe1",
+      "passed": true,
+      "activeRecords": 58
+    },
+    {
+      "name": "cached_SYMBOL_b60bb1b5090d56cf",
+      "passed": true,
+      "activeRecords": 21
+    },
+    {
+      "name": "cached_SYMBOL_b6b5c05bafa780ad",
+      "passed": true,
+      "activeRecords": 119
+    },
+    {
+      "name": "cached_SYMBOL_b7aa60c9a46fc397",
+      "passed": true,
+      "activeRecords": 191
+    },
+    {
+      "name": "cached_SYMBOL_c3a1d431f8191cc0",
+      "passed": true,
+      "activeRecords": 39
+    },
+    {
+      "name": "cached_SYMBOL_d979b53f353e1429",
+      "passed": true,
+      "activeRecords": 17
+    },
+    {
+      "name": "cached_SYMBOL_dcf61c36d3464c4f",
+      "passed": true,
+      "activeRecords": 249
+    },
+    {
+      "name": "cached_SYMBOL_e8770d40d887f93b",
+      "passed": true,
+      "activeRecords": 87
+    },
+    {
+      "name": "cached_SYMBOL_e979973aa12147708f8bc3e1fe27a436",
+      "passed": true,
+      "activeRecords": 294
+    },
+    {
+      "name": "cached_SYMBOL_ec86d94f60a10563",
+      "passed": true,
+      "activeRecords": 22
+    },
+    {
+      "name": "cached_SYMBOL_eee36057981822a8",
+      "passed": true,
+      "activeRecords": 39
+    },
+    {
+      "name": "cached_SYMBOL_f54eaa7350fe6733",
+      "passed": true,
+      "activeRecords": 17
+    },
+    {
+      "name": "cached_SYMBOL_f5ed46623792fce9",
+      "passed": true,
+      "activeRecords": 25
+    },
+    {
+      "name": "cached_SYMBOL_fcb4cd6f3ea36580",
+      "passed": true,
+      "activeRecords": 20
+    }
+  ],
+  "scope": "Only BOARD display-cache correction versus RC3; source and all cached devices/footprints independently compared. Corrected12 DB25 NPTH and all TI land patterns unchanged. Actual import and manufacturing exports are separate gates, not order approval."
+}

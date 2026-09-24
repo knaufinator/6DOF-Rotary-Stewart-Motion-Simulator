@@ -1,0 +1,64 @@
+{
+  "status": "RC4_NORMALIZATION_PASS_NOT_VENDOR_APPROVAL",
+  "createdAt": "2026-09-23T18:31:49.127Z",
+  "population": 144,
+  "skuCount": 46,
+  "bomRows": 46,
+  "cplRows": 144,
+  "totalBomQuantity": 144,
+  "allTop": true,
+  "contractSha256": "368447945a0bfb25b0eeb2f62183aa6730872653c7e65532a3ae12bcb5fff477",
+  "sourceHashes": {
+    "202_final_pcb_capture.json": "4bcbd7b23f445253f7220278fb7b193aefef3ee5d6346630237d9ce98210919f",
+    "189_schematic_rc3_capture.json": "957dde997969d646cb0445e567bfcc4813728e97eac44e4f4219773319581589",
+    "6DOF2_r13_BOM_raw.csv": "dbd461331c67ed3d60fe169285e394695a01cfa82c8c1f69030078e83ecb4a60",
+    "6DOF2_r13_CPL_raw.csv": "7e244c74fb5a56a9ce55da0b6bd23070444537a424daf0370836e02ca9a72950",
+    "schematic_contract.json": "f76b27d5453ba416d50dfb66c89edc524c12c891f1df09d4fc0ce3941c5da6fb",
+    "204_rc4_archive_independent_audit.json": "01dc529047afe9a03e85d28fce7f638c4a063a6c5028585f34c4c647bc039434"
+  },
+  "files": [
+    {
+      "name": "6DOF2_r13_BOM_JLC.csv",
+      "sha256": "5c7ce157d1b4507a3196eff41fd2579f1ca568a7fc468eeb57c241228d70fffc",
+      "dataRows": 46
+    },
+    {
+      "name": "6DOF2_r13_CPL_JLC.csv",
+      "sha256": "43e663b34e681b8c1de7c1f2084aa8874206f02b15479567abcc260b41c70f4d",
+      "dataRows": 144
+    }
+  ],
+  "offsets": [
+    {
+      "ref": "J3",
+      "from": 90,
+      "to": 270
+    },
+    {
+      "ref": "J4",
+      "from": 270,
+      "to": 90
+    },
+    {
+      "ref": "J5",
+      "from": 90,
+      "to": 270
+    },
+    {
+      "ref": "J6",
+      "from": 270,
+      "to": 90
+    },
+    {
+      "ref": "J7",
+      "from": 90,
+      "to": 270
+    },
+    {
+      "ref": "J8",
+      "from": 270,
+      "to": 90
+    }
+  ],
+  "remainingGate": "Actual JLC processed BOM allocation and pin1/polarity assembly preview; no order placed."
+}

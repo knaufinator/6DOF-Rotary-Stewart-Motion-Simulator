@@ -1,0 +1,11 @@
+{
+  "checkedAtUTC": "2026-09-23T18:30:21.741Z",
+  "project": "16231355292e4948ba37840dcdf926b0",
+  "pcb": "bc0fa261f3c54e66b7be29928385553a",
+  "sourceCapture": "202_final_pcb_capture.json",
+  "path": "Export > Order PCB/FPC at JLCPCB",
+  "result": "Local order data generated successfully; no missing-outline warning. Stopped at Confirm/Cancel and cancelled.",
+  "screenshotSha256": "75727ddf58709daa049e4b241c81cef6da67ac52c1fb338658b01b7508bb5fa7",
+  "confirmed": false,
+  "orderSubmitted": false
+}

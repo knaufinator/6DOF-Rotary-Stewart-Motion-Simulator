@@ -1,0 +1,245 @@
+{
+  "archiveSha256": "c42dc31219236dca955aaf34b4688501a36ff6eb6fcefcf141cbf48ceb0c9ea4",
+  "drills": [
+    {
+      "family": "cachedFootprintMechanical",
+      "ref": "J10",
+      "id": "e44",
+      "footprint": "62d36a6bac2cd9d0",
+      "kind": "round",
+      "pointsMm": [
+        [
+          144.290415,
+          43.3578
+        ]
+      ],
+      "diameterMm": 2.79999948,
+      "plated": false
+    },
+    {
+      "family": "cachedFootprintMechanical",
+      "ref": "J10",
+      "id": "e45",
+      "footprint": "62d36a6bac2cd9d0",
+      "kind": "round",
+      "pointsMm": [
+        [
+          144.290415,
+          30.657799999999998
+        ]
+      ],
+      "diameterMm": 2.79999948,
+      "plated": false
+    },
+    {
+      "family": "cachedFootprintMechanical",
+      "ref": "J11",
+      "id": "e55",
+      "footprint": "3f8ef6e6914f2768",
+      "kind": "round",
+      "pointsMm": [
+        [
+          92.10008249999998,
+          6.20561116
+        ]
+      ],
+      "diameterMm": 0.5999987999999999,
+      "plated": false
+    },
+    {
+      "family": "cachedFootprintMechanical",
+      "ref": "J11",
+      "id": "e56",
+      "footprint": "3f8ef6e6914f2768",
+      "kind": "round",
+      "pointsMm": [
+        [
+          97.8999185,
+          6.20561116
+        ]
+      ],
+      "diameterMm": 0.5999987999999999,
+      "plated": false
+    },
+    {
+      "family": "cachedFootprintMechanical",
+      "ref": "J3",
+      "id": "e59",
+      "footprint": "6327bc039c3fd8bf",
+      "kind": "round",
+      "pointsMm": [
+        [
+          6.4260730000000015,
+          58.521091999999996
+        ]
+      ],
+      "diameterMm": 3.1999986799999998,
+      "plated": false
+    },
+    {
+      "family": "cachedFootprintMechanical",
+      "ref": "J3",
+      "id": "e60",
+      "footprint": "6327bc039c3fd8bf",
+      "kind": "round",
+      "pointsMm": [
+        [
+          6.426072999999999,
+          11.481307999999999
+        ]
+      ],
+      "diameterMm": 3.1999986799999998,
+      "plated": false
+    },
+    {
+      "family": "cachedFootprintMechanical",
+      "ref": "J4",
+      "id": "e59",
+      "footprint": "6327bc039c3fd8bf",
+      "kind": "round",
+      "pointsMm": [
+        [
+          62.407927,
+          11.481307999999999
+        ]
+      ],
+      "diameterMm": 3.1999986799999998,
+      "plated": false
+    },
+    {
+      "family": "cachedFootprintMechanical",
+      "ref": "J4",
+      "id": "e60",
+      "footprint": "6327bc039c3fd8bf",
+      "kind": "round",
+      "pointsMm": [
+        [
+          62.407927,
+          58.521091999999996
+        ]
+      ],
+      "diameterMm": 3.1999986799999998,
+      "plated": false
+    },
+    {
+      "family": "cachedFootprintMechanical",
+      "ref": "J5",
+      "id": "e59",
+      "footprint": "6327bc039c3fd8bf",
+      "kind": "round",
+      "pointsMm": [
+        [
+          6.4260730000000015,
+          123.51969199999998
+        ]
+      ],
+      "diameterMm": 3.1999986799999998,
+      "plated": false
+    },
+    {
+      "family": "cachedFootprintMechanical",
+      "ref": "J5",
+      "id": "e60",
+      "footprint": "6327bc039c3fd8bf",
+      "kind": "round",
+      "pointsMm": [
+        [
+          6.426072999999999,
+          76.479908
+        ]
+      ],
+      "diameterMm": 3.1999986799999998,
+      "plated": false
+    },
+    {
+      "family": "cachedFootprintMechanical",
+      "ref": "J6",
+      "id": "e59",
+      "footprint": "6327bc039c3fd8bf",
+      "kind": "round",
+      "pointsMm": [
+        [
+          62.407927,
+          76.479908
+        ]
+      ],
+      "diameterMm": 3.1999986799999998,
+      "plated": false
+    },
+    {
+      "family": "cachedFootprintMechanical",
+      "ref": "J6",
+      "id": "e60",
+      "footprint": "6327bc039c3fd8bf",
+      "kind": "round",
+      "pointsMm": [
+        [
+          62.407927,
+          123.51969199999998
+        ]
+      ],
+      "diameterMm": 3.1999986799999998,
+      "plated": false
+    },
+    {
+      "family": "cachedFootprintMechanical",
+      "ref": "J7",
+      "id": "e59",
+      "footprint": "6327bc039c3fd8bf",
+      "kind": "round",
+      "pointsMm": [
+        [
+          6.4260730000000015,
+          188.51829199999997
+        ]
+      ],
+      "diameterMm": 3.1999986799999998,
+      "plated": false
+    },
+    {
+      "family": "cachedFootprintMechanical",
+      "ref": "J7",
+      "id": "e60",
+      "footprint": "6327bc039c3fd8bf",
+      "kind": "round",
+      "pointsMm": [
+        [
+          6.426072999999999,
+          141.478508
+        ]
+      ],
+      "diameterMm": 3.1999986799999998,
+      "plated": false
+    },
+    {
+      "family": "cachedFootprintMechanical",
+      "ref": "J8",
+      "id": "e59",
+      "footprint": "6327bc039c3fd8bf",
+      "kind": "round",
+      "pointsMm": [
+        [
+          62.407927,
+          141.478508
+        ]
+      ],
+      "diameterMm": 3.1999986799999998,
+      "plated": false
+    },
+    {
+      "family": "cachedFootprintMechanical",
+      "ref": "J8",
+      "id": "e60",
+      "footprint": "6327bc039c3fd8bf",
+      "kind": "round",
+      "pointsMm": [
+        [
+          62.407927,
+          188.51829199999997
+        ]
+      ],
+      "diameterMm": 3.1999986799999998,
+      "plated": false
+    }
+  ]
+}

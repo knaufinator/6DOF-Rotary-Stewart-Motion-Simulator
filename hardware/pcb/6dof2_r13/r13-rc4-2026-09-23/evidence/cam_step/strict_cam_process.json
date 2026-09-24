@@ -1,0 +1,13 @@
+{
+  "args": [
+    "G:\\My Drive\\projects\\6dof\\pcb\\revisions\\2026-09-22-r13\\audit_r13_manufacturing_cam.py",
+    "..\\..\\manufacturing_release\\2026-09-23-r13-rc4\\6DOF2_r13_Gerber.zip",
+    "202_final_pcb_capture.json",
+    "rc4_verified\\cam",
+    "--extra-drills",
+    "rc4_verified\\archive_mechanical_drills.json"
+  ],
+  "exitCode": 0,
+  "stdout": "{\n  \"status\": \"PASS_STRICT_CAM_SOURCE_DRILL_OUTLINE\",\n  \"checks\": 51,\n  \"issues\": [],\n  \"gerbers\": 11,\n  \"drills\": 3,\n  \"uniqueDrillShapes\": 581,\n  \"sourceDrills\": 581,\n  \"unmatchedDrills\": [],\n  \"missingSourceDrills\": []\n}\n",
+  "stderr": ""
+}

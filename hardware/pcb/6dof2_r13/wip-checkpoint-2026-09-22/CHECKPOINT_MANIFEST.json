@@ -1,0 +1,81 @@
+{
+  "status": "PAUSED_UNTESTED_INCOMPLETE_DO_NOT_ORDER",
+  "createdAt": "2026-09-23T00:49:40.688Z",
+  "files": [
+    {
+      "name": "SCHEMATIC_WIP.native-source.txt",
+      "bytes": 1973916,
+      "sha256": "d098ad8e07f4136b97564cbc4a92f1c5c6413ce0846a76337b932e4d4eea8faf"
+    },
+    {
+      "name": "PCB_UNROUTED_WIP.native-source.txt",
+      "bytes": 1006020,
+      "sha256": "f6323fb53278c949b727b8278c7b4a9e70e00380f6c4c3cdf1880e9ac736dd59"
+    },
+    {
+      "name": "FOOTPRINT_19dd43e481dc47618ab886e576371f22.native-source.txt",
+      "bytes": 37438,
+      "sha256": "026f51ad217d96a4004b97f8e07bc204bb58976002df37fb5b0629433c63b0ed"
+    },
+    {
+      "name": "FOOTPRINT_ee9d76f865d2477fa5cf33121b9a2118.native-source.txt",
+      "bytes": 34794,
+      "sha256": "7d29693290a89bcae182656a6cb6ed67cb2aeb52f30756164af3b001256bfb23"
+    },
+    {
+      "name": "SESSION_HANDOFF.md",
+      "bytes": 6412,
+      "sha256": "263dafff6c563e2dc2d9dc2524cdff2610c4d35b238ffd5da16f57218e10fa07"
+    },
+    {
+      "name": "inhibit_design.md",
+      "bytes": 14060,
+      "sha256": "da2d8690e70af2a0365346b0e08ccc7b0a037c8c15ed2302b602135228f842b0"
+    },
+    {
+      "name": "schematic_contract.json",
+      "bytes": 3439,
+      "sha256": "f76b27d5453ba416d50dfb66c89edc524c12c891f1df09d4fc0ce3941c5da6fb"
+    },
+    {
+      "name": "schematic_audit_r13.json",
+      "bytes": 111413,
+      "sha256": "f2ccccdb8244e9af26e37411ff376ca439d5d3c7d85105017d713a45c7021587"
+    },
+    {
+      "name": "placement_plan_r13.json",
+      "bytes": 444291,
+      "sha256": "f83d6a8bdd6737e82b72b4aa82eb7e323cbb184aaa0da8ce65c6cdefc1cb827e"
+    },
+    {
+      "name": "placement_audit_r13.json",
+      "bytes": 6409,
+      "sha256": "1f5e951bf505c52ec9b9009e01b32c47fe3d9ffbd46dc068ef2abbe0bd875aab"
+    },
+    {
+      "name": "placement_report_r13.md",
+      "bytes": 5999,
+      "sha256": "3585a51019fe3bc9cecaf69c825157109ff29ab0159b1a3ca1f9aa13f408fb50"
+    },
+    {
+      "name": "placement_preview_r13.png",
+      "bytes": 106661,
+      "sha256": "98cedd62bd9a15601c16192658733ca71817a34b2600a5a7239bf41a5a12aa35"
+    },
+    {
+      "name": "SOURCING_PREFLIGHT.md",
+      "bytes": 13352,
+      "sha256": "ef4fa9522c867503c52f6013c76e9181c421f633f1cf26b10d5f4fed123490b4"
+    },
+    {
+      "name": "source_supplier_plan.json",
+      "bytes": 11358,
+      "sha256": "71c441507ad7afe88fa388082b3f9566fe5d3ea6207f54af7eef359e1854f74c"
+    },
+    {
+      "name": "new_ic_footprint_audit.md",
+      "bytes": 3923,
+      "sha256": "35d0b54ca740db77daa6a9b4f3e95af595ca056343e18c6821bc3637a67822ab"
+    }
+  ]
+}

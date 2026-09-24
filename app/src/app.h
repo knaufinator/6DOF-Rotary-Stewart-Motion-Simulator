@@ -213,6 +213,16 @@ struct Entity {
     bool            hil_cap_raw;         // device advertises raw-HIL (fingerprint caps=raw / network)
     bool            hil_raw_mode;        // user: stream pre-cueing raw telemetry (ESP cues) vs baked
 
+    // Cue auto-sync (raw-HIL): snapshot of the cue params last pushed to the
+    // device, so ANY change path (UI slider, control API, preset) syncs live.
+    // 46 floats: intensity + gain[6] + invert[6] + (chgain,hpfc,lpfc)*6 + tilt*3.
+    float           cue_pushed[46];      // last pushed to device
+    float           cue_prev[46];        // previous frame's snapshot (debounce)
+    double          cue_change_time;     // frame_time of last observed change
+    bool            cue_sync_valid;      // snapshots initialized
+    double          cue_push_time;       // frame_time of last push (auto-persist timer)
+    bool            cue_persisted;       // MCA:SAVE queued since last push
+
     // Device fingerprint / handshake
     char            hil_fingerprint[16]; // stored MAC fingerprint (12 hex chars + NUL)
     char            hil_fw_version[16];  // firmware version string from device
@@ -456,6 +466,12 @@ struct App {
     void    saveSettings();
     void    loadSettings();
     bool    settings_dirty;    // set true when any setting changes, checked each frame
+
+    // Push the entity's cue settings (intensity/gain/invert/washout/tilt) to a
+    // raw-HIL device as MCA:* commands so device feel tracks app tuning live.
+    void    pushCueSettingsToDevice(Entity& e);
+    // Per-frame change watcher: auto-push when any cue param changes (debounced).
+    void    syncCueSettings(Entity& e);
 
     // Background HIL TX thread (runs independently of UI frame rate)
     std::thread       hil_tx_thread;

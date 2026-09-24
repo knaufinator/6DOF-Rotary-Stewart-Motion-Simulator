@@ -1,4 +1,5 @@
 #include "app.h"
+#include "automation.h"
 #include "serial_port.h"
 #include "dev_log.h"
 #include <cstdarg>
@@ -125,7 +126,7 @@ App::App()
 
     // Start background HIL TX thread
     hil_tx_stop.store(false);
-    hil_tx_thread = std::thread(&App::hilTxLoop, this);
+    if (!IsDocumentationMode()) hil_tx_thread = std::thread(&App::hilTxLoop, this);
 
 #ifdef _WIN32
     WSADATA wsa;
@@ -133,7 +134,7 @@ App::App()
 #endif
 
     // Scan for plugins in the plugins/ directory next to the executable
-    plugin_mgr.scanDirectory("plugins");
+    if (!IsDocumentationMode()) plugin_mgr.scanDirectory("plugins");
 }
 
 App::~App() {
@@ -153,7 +154,20 @@ void App::hilTxLoop() {
         return std::chrono::duration<double>(clock::now().time_since_epoch()).count();
     };
 
+    double last_motion_true = 0.0;
     while (!hil_tx_stop.load()) {
+        // Gate the stream on motion: incoming frames auto-switch the device
+        // DEMO->LIVE, so streaming while stopped locks out on-device demo
+        // playback. 3s grace after STOP lets the ramp-home frames land; the
+        // device cue washout settles the rest.
+        {
+            double now = now_sec();
+            if (motion_started) last_motion_true = now;
+            if (!motion_started && now - last_motion_true > 3.0) {
+                std::this_thread::sleep_for(std::chrono::milliseconds(50));
+                continue;
+            }
+        }
         int ei = 0;
         for (auto& e : entities) {
             if (ei >= 8) break;
@@ -425,6 +439,7 @@ static void loadEntityFromJSON(Entity& e, cJSON* ej) {
 }
 
 void App::saveSettings() {
+    if (IsDocumentationMode()) { settings_dirty = false; return; }
     cJSON* root = cJSON_CreateObject();
 
     // Console
@@ -472,6 +487,7 @@ void App::saveSettings() {
 }
 
 void App::loadSettings() {
+    if (IsDocumentationMode()) return;
     FILE* f = fopen(SETTINGS_FILE, "r");
     if (!f) return;
 
@@ -602,7 +618,7 @@ Entity& App::addEntity(const char* name, EntityType type) {
     e.hil_tick_rate_us = 4;
     memset(e.hil_port, 0, sizeof(e.hil_port));
     e.hil_baud = 921600;
-    e.hil_auto_connect = true;
+    e.hil_auto_connect = !IsDocumentationMode();
     e.hil_last_reconnect = 0.0;
     memset(e.hil_tx_raw_f, 0, sizeof(e.hil_tx_raw_f));
     e.hil_network = false;
@@ -641,6 +657,13 @@ Entity& App::addEntity(const char* name, EntityType type) {
     e.dyn_transition_active = false;
     e.dyn_transition_start = 0.0;
     e.dyn_transition_duration = 1.5f;
+    // Init cue auto-sync snapshots
+    memset(e.cue_pushed, 0, sizeof(e.cue_pushed));
+    memset(e.cue_prev, 0, sizeof(e.cue_prev));
+    e.cue_change_time = 0.0;
+    e.cue_sync_valid = false;
+    e.cue_push_time = 0.0;
+    e.cue_persisted = true;
     entities.push_back(e);
     log(e.id, "system", "Entity '%s' created (type: %s)", name, type == EntityType::SIL ? "SIL" : "HIL");
     return entities.back();
@@ -1404,6 +1427,7 @@ void App::updateCapturePlayback() {
 static const char* RECORDINGS_DIR = "recordings";
 
 void App::saveRecordingsToDisk() {
+    if (IsDocumentationMode()) return;
 #ifdef _WIN32
     CreateDirectoryA(RECORDINGS_DIR, NULL);
 #else
@@ -1469,6 +1493,7 @@ void App::saveRecordingsToDisk() {
 }
 
 void App::loadRecordingsFromDisk() {
+    if (IsDocumentationMode()) return;
     char path[256];
     snprintf(path, sizeof(path), "%s/manifest.json", RECORDINGS_DIR);
     FILE* f = fopen(path, "r");
@@ -1564,6 +1589,107 @@ void App::loadRecordingsFromDisk() {
     cJSON_Delete(root);
     if (!saved_recordings.empty()) {
         log(-1, "capture", "Loaded %d saved recording(s) from disk", (int)saved_recordings.size());
+    }
+}
+
+// ── Device cue sync (raw-HIL) ────────────────────────────────────────
+// In RAW mode the ESP is the single cue engine, so app-side tuning changes
+// must be forwarded as MCA:* commands or the device feel never updates.
+// Queued (one per frame) to interleave safely with the COBS data stream.
+
+// Build the cue snapshot used for change detection (must list every parameter
+// pushCueSettingsToDevice sends). 34 floats used; array is 46 with zeroed
+// tail — keep the memset or memcmp compares stack garbage.
+static void cueSnapshot(const Entity& e, float s[46]) {
+    memset(s, 0, 46 * sizeof(float));
+    int k = 0;
+    s[k++] = e.config.intensity;
+    for (int i = 0; i < 6; i++) s[k++] = e.config.axis_gain[i];
+    for (int i = 0; i < 6; i++) s[k++] = e.config.axis_invert[i] ? 1.0f : 0.0f;
+    for (int i = 0; i < 6; i++) {
+        s[k++] = e.config.mca.channels[i].gain;
+        s[k++] = e.config.mca.channels[i].hp_enabled ? e.config.mca.channels[i].hp.fc : 0.0f;
+        s[k++] = e.config.mca.channels[i].lp_enabled ? e.config.mca.channels[i].lp.fc : 0.0f;
+    }
+    s[k++] = e.config.mca.tilt.enabled ? 1.0f : 0.0f;
+    s[k++] = e.config.mca.tilt.surge_gain;
+    s[k++] = e.config.mca.tilt.sway_gain;
+}
+
+void App::pushCueSettingsToDevice(Entity& e) {
+    if (e.type != EntityType::HIL || !e.serial || !e.serial->isOpen()) return;
+    if (!e.hil_handshake_ok || !e.hil_cap_raw || !e.hil_raw_mode) return;
+
+    char c[64];
+    snprintf(c, sizeof(c), "MCA:INTENSITY=%.4f", e.config.intensity / 100.0f);
+    e.hil_cmd_queue.push_back(c);
+    for (int i = 0; i < 6; i++) {
+        snprintf(c, sizeof(c), "MCA:GAIN=%d,%.4f", i, e.config.axis_gain[i] / 100.0f);
+        e.hil_cmd_queue.push_back(c);
+        snprintf(c, sizeof(c), "MCA:INVERT=%d,%d", i, e.config.axis_invert[i] ? 1 : 0);
+        e.hil_cmd_queue.push_back(c);
+        snprintf(c, sizeof(c), "MCA:CHGAIN=%d,%.4f", i, e.config.mca.channels[i].gain);
+        e.hil_cmd_queue.push_back(c);
+        snprintf(c, sizeof(c), "MCA:HPFC=%d,%.4f", i,
+                 e.config.mca.channels[i].hp_enabled ? e.config.mca.channels[i].hp.fc : 0.0f);
+        e.hil_cmd_queue.push_back(c);
+        snprintf(c, sizeof(c), "MCA:LPFC=%d,%.4f", i,
+                 e.config.mca.channels[i].lp_enabled ? e.config.mca.channels[i].lp.fc : 0.0f);
+        e.hil_cmd_queue.push_back(c);
+    }
+    snprintf(c, sizeof(c), "MCA:TILT=%.4f,%.4f",
+             e.config.mca.tilt.enabled ? e.config.mca.tilt.surge_gain : 0.0f,
+             e.config.mca.tilt.enabled ? e.config.mca.tilt.sway_gain  : 0.0f);
+    e.hil_cmd_queue.push_back(c);
+    cueSnapshot(e, e.cue_pushed);
+    memcpy(e.cue_prev, e.cue_pushed, sizeof(e.cue_prev));
+    e.cue_sync_valid = true;
+    e.cue_push_time = frame_time;
+    e.cue_persisted = false;             // arm the auto-persist timer
+    log(e.id, "hil", "Cue settings pushed to device (%d cmds queued)", 32);
+}
+
+// Per-frame cue auto-sync: detect ANY cue-parameter change (UI slider, API,
+// preset load) on a raw-HIL entity and push it once the value settles for
+// 0.3s (debounce, so slider drags don't spam 32-command bursts).
+void App::syncCueSettings(Entity& e) {
+    if (e.type != EntityType::HIL || !e.serial || !e.serial->isOpen()) return;
+    if (!e.hil_handshake_ok || !e.hil_cap_raw || !e.hil_raw_mode) return;
+
+    float snap[46];
+    cueSnapshot(e, snap);
+    if (!e.cue_sync_valid) {
+        // First sight of a connected device: push so device == app from the start.
+        pushCueSettingsToDevice(e);
+        return;
+    }
+    if (memcmp(snap, e.cue_prev, sizeof(snap)) != 0) {
+        e.cue_change_time = frame_time;               // still moving
+        memcpy(e.cue_prev, snap, sizeof(e.cue_prev));
+        return;
+    }
+    if (memcmp(snap, e.cue_pushed, sizeof(snap)) != 0 &&
+        frame_time - e.cue_change_time > 0.3) {
+        for (int i = 0; i < 46; i++) {
+            if (snap[i] != e.cue_pushed[i]) {
+                DEV_LOG("hil", "cue-sync diff [%d]: pushed=%.6f now=%.6f",
+                        i, e.cue_pushed[i], snap[i]);
+                break;
+            }
+        }
+        pushCueSettingsToDevice(e);
+        return;
+    }
+
+    // Auto-persist: once tuning has settled for 5s after a push, save to the
+    // device's NVS so a power-cycle boots with EXACTLY the feel that was last
+    // heard/felt. Without this, boot reverts to the last explicit save — the
+    // "cue resets on boot" surprise (dangerous if that save was stronger).
+    if (!e.cue_persisted && frame_time - e.cue_push_time > 5.0) {
+        e.hil_cmd_queue.push_back("MCA:SAVE");
+        e.cue_persisted = true;
+        saveSettings();
+        log(e.id, "hil", "Cue settings auto-persisted (device NVS + app settings)");
     }
 }
 
@@ -1739,6 +1865,7 @@ void App::loadMcaPreset(int idx, MotionCueingConfig& mca, float& intensity, floa
 }
 
 void App::saveMcaPresetsToDisk() {
+    if (IsDocumentationMode()) return;
     cJSON* root = cJSON_CreateArray();
     for (auto& p : mca_presets) {
         cJSON* pj = mcaConfigToJSON(p.mca, p.intensity, p.axis_gain);
@@ -1771,6 +1898,8 @@ void App::loadMcaPresetsFromDisk() {
         for (int j = 0; j < 6; j++) p.axis_gain[j] = 100.0f;
         mca_presets.push_back(p);
     }
+
+    if (IsDocumentationMode()) return;  // built-ins only; no user preset file access
 
     // Load user presets from file (may also override built-in presets if user saved over them)
     FILE* f = fopen(MCA_PRESETS_FILE, "r");
@@ -2237,6 +2366,7 @@ skip_input_processing:
                         snprintf(e.transport.usb_port, sizeof(e.transport.usb_port), "%s", e.hil_port);
                         e.hil_tel_seq = 0;
                         e.hil_handshake_ok = false;
+                        e.cue_sync_valid = false;   // re-push cue settings after handshake
                         e.hil_handshake_pending = true;
                         e.hil_handshake_phase = HandshakePhase::WaitFingerprint;
                         e.hil_device_params.clear();
@@ -2386,6 +2516,9 @@ skip_input_processing:
                     // untouched so the device's single cue engine owns the feel.
                     memcpy(e.hil_tx_raw_f, e.state.input_pct, sizeof(e.hil_tx_raw_f));
                 }
+
+                // Cue auto-sync: any cue-param change (UI/API/preset) → device
+                if (e.hil_handshake_ok) syncCueSettings(e);
 
                 // Retry TELRATE if telemetry isn't flowing after handshake
                 if (e.hil_handshake_ok && !e.hil_tel_active && e.hil_cmd_queue.empty()) {

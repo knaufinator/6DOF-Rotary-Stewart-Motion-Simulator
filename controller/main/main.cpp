@@ -33,6 +33,10 @@
 #include "R14DriveAlarmLatch.h"
 #include "R14MotionAdmission.h"
 #endif
+#if defined(R13_BENCH_ONE_AXIS) && defined(R14_FAIL_CLOSED) && PCB_VERSION == 2
+#include "R13BenchAxis.h"
+#define R13_BENCH_ACTIVE 1
+#endif
 #include "debug_uart.h"
 #include "InverseKinematics.h"
 #include "AxisScaling.h"
@@ -405,6 +409,9 @@ extern "C" void r14_report_normalized_drive_alarm(int axis) {
     r14DriveAlarms.assert_alarm(axis);
     r14MotionAdmission.report_alarm(axis);
     isPausedEStop.store(true);
+#if defined(R13_BENCH_ACTIVE)
+    r13_bench_stop("DRIVE_ALARM");
+#endif
     gpio_set_level(GPIO_NUM_47, 1); // existing output-latch inhibit
     gpio_set_level(GPIO_NUM_48, 0);
     if (StepDriver_isInitialized()) {
@@ -426,6 +433,9 @@ extern "C" bool r14_request_local_home(uint64_t now_us) {
 extern "C" void r14_report_transport_reconnect(void) {
     r14MotionAdmission.report_reconnect_or_reset();
     isPausedEStop.store(true);
+#if defined(R13_BENCH_ACTIVE)
+    r13_bench_stop("TRANSPORT_RECONNECT");
+#endif
     gpio_set_level(GPIO_NUM_47, 1);
     gpio_set_level(GPIO_NUM_48, 0);
     if (StepDriver_isInitialized()) {
@@ -514,6 +524,24 @@ void setupMotorPins() {
         for (int i = 0; i < 6; i++) motor_emergencyStop(i);
     }
     StepDriver_report();
+#if defined(R13_BENCH_ACTIVE)
+    // Bench step 12: the six-axis gate stays closed; only console BENCH: commands
+    // start the engine, after an explicit BENCH:ARM with the stop loop closed.
+    static const R13BenchOps benchOps = {
+        [](int i, int32_t p) { return StepDriver_setTarget(i, p); },
+        [](int i) { return StepDriver_getPosition(i); },
+        []() {
+            static bool started = false;
+            if (!started) { started = StepDriver_start(); return started; }
+            StepDriver_resume();
+            return true;
+        },
+        []() { StepDriver_stop(); },
+        []() { StepDriver_emergencyStop(); },
+        []() { return gpio_get_level((gpio_num_t)ESTOP_PIN) == ESTOP_ACTIVE_STATE; },
+    };
+    r13_bench_init(&benchOps);
+#endif
 }
 #endif
 
@@ -581,6 +609,12 @@ void handleStepDirection() {
     // SSE:   no-op here — the ISR drives all motors autonomously.
     // MCPWM: starts continuous moves + polls completion.
     xSemaphoreTake(xMutex, portMAX_DELAY);
+#if defined(R13_BENCH_ACTIVE)
+    if (r13_bench_owns_engine()) {          // armed bench axis drives the engine
+        xSemaphoreGive(xMutex);
+        return;
+    }
+#endif
     if (estop_motion_is_blocked()) {
         StepDriver_stop();
         xSemaphoreGive(xMutex);
@@ -720,6 +754,9 @@ void EStopMonitorTask(void * pvParameters) {
             StepDriver_stop();
 #endif
             for (int i = 0; i < 6; i++) motor_emergencyStop(i);
+#if defined(R13_BENCH_ACTIVE)
+            r13_bench_stop("LOOP_OPEN");
+#endif
             if (newly_active) DEBUG_PRINTLN("E-STOP raw NC loop opened");
         }
         
@@ -1622,6 +1659,9 @@ void process_data(char * data) {
     // Requires ESTOP:RESET to resume operation.
     if (strcmp(data, "ESTOP:FULL") == 0) {
         isPausedEStop = true;
+#if defined(R13_BENCH_ACTIVE)
+        r13_bench_stop("ESTOP_FULL");
+#endif
 #if PCB_VERSION == 1
         GPTimerScheduler::stop();
 #else
@@ -2118,6 +2158,9 @@ extern "C" void app_main(void)
     });
     cobs_set_cmd_handler([](const char *cmd, int source) {
         (void)source;   // replies go to the console and are mirrored to the Ethernet peer
+#if defined(R13_BENCH_ACTIVE)
+        if (r13_bench_command(cmd, source)) return;   // console-only, refuses network sources
+#endif
         // process_data takes non-const char* for legacy reasons
         char buf[256];
         int n = snprintf(buf, sizeof(buf), "%s", cmd);

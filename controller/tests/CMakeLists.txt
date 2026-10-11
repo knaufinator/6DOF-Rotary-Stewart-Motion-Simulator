@@ -30,6 +30,7 @@ add_executable(stewart-tests
     test_r14_seek_interlock.cpp
     test_r14_drive_alarm_latch.cpp
     test_r14_motion_admission.cpp
+    test_r13_bench_pulse.cpp
 )
 target_include_directories(stewart-tests PRIVATE
     ${CMAKE_SOURCE_DIR}

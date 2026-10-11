@@ -30,6 +30,15 @@ elseif(IDF_TARGET STREQUAL "esp32s3")
     set(PCB_SRCS ${COMMON_SRCS} "EthernetTransport.cpp" "LedStatus.cpp")
     list(APPEND PRIV_REQS esp_eth)
     set(PCB_VERSION 2)
+    # R13_BENCH_ONE_AXIS: console-only axis-0 bench mode, M1_OUTPUT_TEST_PLAN.md step 12
+    # (hardware/pcb/6dof2_r13/bringup/). Bench builds only: idf.py -DR13_BENCH_ONE_AXIS=ON build
+    option(R13_BENCH_ONE_AXIS "R13 console-only one-axis bench mode (never a release image)" OFF)
+    if(R13_BENCH_ONE_AXIS)
+        if(DEFINED ENV{CI} OR "$ENV{GITHUB_REF}" MATCHES "^refs/tags/")
+            message(FATAL_ERROR "R13_BENCH_ONE_AXIS is a bench-only option and must not be built for CI or a release")
+        endif()
+        list(APPEND PCB_SRCS "R13BenchAxis.cpp")
+    endif()
 else()
     message(FATAL_ERROR "Unsupported target '${IDF_TARGET}': only esp32 (PCBv1) and esp32s3 (PCBv2) are supported")
 endif()
@@ -83,5 +92,29 @@ if(PCB_VERSION EQUAL 2)
     )
     if(R14_FAIL_CLOSED)
         target_compile_definitions(${COMPONENT_LIB} PRIVATE R14_FAIL_CLOSED=1)
+    endif()
+    if(R13_BENCH_ONE_AXIS)
+        if(NOT R14_FAIL_CLOSED)
+            message(FATAL_ERROR "R13_BENCH_ONE_AXIS requires R14_FAIL_CLOSED=ON (the six-axis gate must stay closed)")
+        endif()
+        execute_process(COMMAND git rev-parse --short=12 HEAD
+                        WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}
+                        OUTPUT_VARIABLE R13_BENCH_SHA OUTPUT_STRIP_TRAILING_WHITESPACE
+                        ERROR_QUIET)
+        execute_process(COMMAND git status --porcelain --untracked-files=no
+                        WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}
+                        OUTPUT_VARIABLE R13_BENCH_DIRTY OUTPUT_STRIP_TRAILING_WHITESPACE
+                        ERROR_QUIET)
+        if(NOT R13_BENCH_SHA)
+            set(R13_BENCH_SHA "unknown")
+        endif()
+        if(R13_BENCH_DIRTY)
+            set(R13_BENCH_SHA "${R13_BENCH_SHA}-dirty")
+        endif()
+        message(STATUS "R13_BENCH_ONE_AXIS=ON (R14_FAIL_CLOSED=ON), firmware ${R13_BENCH_SHA}")
+        target_compile_definitions(${COMPONENT_LIB} PRIVATE
+            R13_BENCH_ONE_AXIS=1
+            FW_GIT_SHA="${R13_BENCH_SHA}"
+        )
     endif()
 endif()

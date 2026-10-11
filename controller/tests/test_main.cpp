@@ -36,5 +36,8 @@ int main(int argc, char* argv[]) {
     printf("\n--- R14 motion admission ---\n");
     register_r14_motion_admission_tests();
 
+    printf("\n--- R13 bench pulse schedule ---\n");
+    register_r13_bench_pulse_tests();
+
     PRINT_RESULTS();
 }

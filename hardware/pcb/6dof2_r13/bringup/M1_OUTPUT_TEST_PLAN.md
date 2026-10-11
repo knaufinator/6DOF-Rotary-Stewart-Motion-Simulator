@@ -389,3 +389,37 @@ the J2 link pins, VCC5 and DRIVE_ENABLE readings, VINRAW at R30 and the resistor
 which DB25 is M0, scope captures from steps 5, 9 and 10, drive nameplate and parameter
 readbacks, DIR-to-rotation mapping, alarm output polarity, and stop-loop timing. Commit
 `BRINGUP_LOG.md` and this file with the results.
+
+## Step 12 implementation (2026-10-11, second workstation)
+
+Implemented on `r13-single-motor-sim-20261011` as specified above:
+
+- Build: `controller\tools\idf_build.ps1 -ProjDir controller -Action "-B build-bench -DR13_BENCH_ONE_AXIS=ON build"`.
+  Run `-B build-bench set-target esp32s3` once first. The option is OFF by default and
+  is refused when `R14_FAIL_CLOSED` is OFF, when `CI` is set, or for a `refs/tags/` build.
+  The git SHA, with `-dirty` if the tree has local changes, is compiled in as `FW_GIT_SHA`.
+- Code: `controller/include/R13BenchAxis.h`, `controller/main/R13BenchAxis.cpp`,
+  `controller/include/R13BenchPulse.h` (pure schedule, host tests in
+  `controller/tests/test_r13_bench_pulse.cpp`). Hooks in `controller/main/main.cpp` are
+  guarded by `R13_BENCH_ONE_AXIS && R14_FAIL_CLOSED`:
+  - the console command handler, which checks the source tag
+  - `handleStepDirection`, which leaves the engine alone while the bench is armed
+  - the E-stop raw-open path
+  - `r14_report_transport_reconnect`
+  - `r14_report_normalized_drive_alarm`
+  - `ESTOP:FULL`
+- Commands, from the USB console only:
+  - `BENCH:ARM` refuses while GPIO21 is high, then GPIO47 low, 300 ms wait, 50 µs on GPIO48.
+  - `BENCH:PULSE <hz> <n>` drives axis 0 only, hz 1–5000, |n| 1–10000, sign = direction.
+    It runs on a 200 µs esp_timer schedule (one step per tick at 5 kHz) through the shared
+    MCPWM engine.
+  - `BENCH:STOP` sets GPIO47 high, stops the engine and clears targets.
+  - `BENCH:STATUS` reports state.
+  - Every bench command is echoed with the source and SHA. Commands from Ethernet, Wi-Fi
+    or BLE get `BENCH:ERR console only`.
+- Host console: `python controller/tools/cobs_console.py --port COMx -i`. An empty line
+  sends `BENCH:STOP`.
+- Verified on the second workstation: host tests pass (79/79). Bench and default
+  firmware images both build with ESP-IDF v5.5.2. **Not yet run on hardware.**
+  Measurement is still step 5 and step 9 with this image, compared against the probe
+  captures.

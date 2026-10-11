@@ -1,9 +1,15 @@
 # AASD-15A drive settings — R13 bench and 1:1 firmware
 
 Status: **bench trial values, 11 October 2026.** For one unloaded drive on the R13
-board running the `MOTOR_TESTER` firmware (`controller/include/MotorTester.h`). Values
-marked *Target* are where we expect to land after bench tuning; they are not yet
-verified on hardware.
+board, used with the bring-up sequence in
+`hardware/pcb/6dof2_r13/bringup/M1_OUTPUT_TEST_PLAN.md`. That means the probe firmware
+for steps 0–11, then the controller `R13_BENCH_ONE_AXIS` build for step 12
+(`controller/include/R13BenchAxis.h`). Values marked *Target* are where we expect to
+land after bench tuning; they are not yet verified on hardware.
+
+**Wiring hold from the bring-up plan:** DB25 pin 23 (ALARM) must not reach the drive
+until step 7 passes. Bench "motor 1" is axis 0 = DB25 **J3, silkscreen `MOTOR 0`**.
+The silkscreen is zero-based.
 
 Manuals (Drive-synced): `G:\My Drive\projects\6dof\docs\`
 - `AASD_Servo_Drive_Technical_Manual_cncdrive.pdf` — parameter detail pages used here
@@ -85,20 +91,26 @@ Verify the cable against the drive's CN2 pinout; do not wire the drive's open-co
 
 ## Bench tuning procedure
 
-1. Board: J2 jumpered (the NC stop loop gates the output latch in hardware; pulling the
-   jumper is the hardware stop), 12 V applied, USB on J11.
-2. `python controller/tools/mt_console.py --port COM9 -i`, then `STATUS` (expect
-   `loop=CLOSED`), `ARM`.
-3. `JOG:1000` (0.1 motor rev) to confirm direction, then `JOG:10000` (1 rev).
-4. `OSC:5000:5` at default speed (10 000 steps/s). Listen and watch: grinding, buzz or
-   end-of-move overshoot = too sharp.
-5. Step Pn111 → 10 → 5, Pn112 → 5, re-save with Fn001 each time; then raise Pn113 in
-   ~20 % steps. Watch position deviation on the drive `dn` monitor; it should stay small
-   and settle quickly.
-6. Record each combination tried and the result in this file.
+Run this only after bring-up plan steps 0–9 have passed with the probe firmware.
 
-Tester defaults (1:1): speed 10 000 steps/s (60 r/min), accel 50 000 steps/s², range
-±40 000 steps (≈ ±29 ° at the arm). Change with `SPEED:`, `ACCEL:`, `RANGE:`.
+1. Board: J2 link in, wire clamped across both screws of the `E-STOP LOOP` terminal
+   (pulling it is the hardware stop). 12 V applied, USB on J11.
+2. Controller built with `-DR13_BENCH_ONE_AXIS=ON`. Run
+   `python controller/tools/cobs_console.py --port COMx -i`, then `BENCH:STATUS`
+   (expect `loop=CLOSED`), then `BENCH:ARM`.
+3. `BENCH:PULSE 1000 1000` (0.1 motor rev at 1:1) to confirm direction, then
+   `BENCH:PULSE 1000 -1000` back. Limits: ≤5000 Hz, ≤10 000 pulses; the sign is the
+   direction.
+4. Repeat at `BENCH:PULSE 5000 10000` (1 motor rev in 2 s), both directions. Listen and
+   watch: grinding, buzz, or overshoot at the end of a move means the drive filter is
+   too sharp.
+5. Step Pn111 → 10 → 5 and Pn112 → 5, saving with Fn001 each time. Then raise Pn113 in
+   ~20 % steps. Watch position deviation on the drive `dn` monitor: it should stay small
+   and settle quickly.
+6. Record each combination tried and the result in this file. `BENCH:STOP` ends a run.
+
+At 1:1 the bench cap of 5000 Hz is 30 r/min (3.6 °/s at the arm). Profiles faster
+than that need the controller's platform path, after the bench gates pass.
 
 ## Trial log
 

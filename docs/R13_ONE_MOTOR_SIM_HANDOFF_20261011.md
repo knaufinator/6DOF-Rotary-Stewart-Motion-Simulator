@@ -91,8 +91,11 @@ git switch --track origin/r13-single-motor-sim-20261011
   `export.ps1`; or (b) run `<IDF_PATH>\install.ps1 esp32s3` once so a venv for
   the default Python exists, then `export.ps1` works. With (a) the r13 probe
   firmware built and flashed clean on the source workstation on 2026-10-11
-  (`IDF_EXIT=0`, fresh `build/r13probe.bin`, self-test 0 failures on COM10);
-  that probe project is not on this branch. Flash with
+  (`IDF_EXIT=0`, fresh `build/r13probe.bin`, self-test 0 failures on COM10).
+  That probe project, its host driver, the bench log and the motor-1 test
+  sequence with circled test points are on this branch under
+  `hardware/pcb/6dof2_r13/bringup/` (start with `M1_OUTPUT_TEST_PLAN.md`
+  and `TEST_POINTS.md`). Flash with
   `-Action '-p COMx flash'`. Confirm success by the binary timestamp and
   "Project build complete", not by the exit code alone.
 

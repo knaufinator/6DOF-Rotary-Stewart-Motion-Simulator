@@ -255,6 +255,16 @@ manual, external enable/stop arrangement, pulse units, gearing and limits must b
 verified before power-up. Do not copy automatic enable or power-on homing settings
 into an untested assembly. See the [single-axis commissioning gate](../hardware/pcb/single_motor_test_plan.md).
 
+For the one-motor r13 simulator bench with no Hall switch, disable the
+drive's own power-on origin routine **on the physical drive before connecting
+the motor to the mechanism**. The [candidate AASD manual](https://aqtronic.com/wp-content/uploads/2025/04/AASD-15A-manual.pdf)
+identifies
+`Pn033=0` as origin return disabled and `Pn033=3` as automatic power-on
+origin return; confirm the installed drive model and parameter readback.
+The ESP32 STEP/DIR interface cannot set this drive parameter. The r13
+firmware also rejects `ESTOP:SOFT` and `ZERO` until a physical home
+reference is qualified.
+
 ```
 pn002 = 002  (Step/Dir control mode)
 pn003 = 001  (Servo enable)
@@ -265,7 +275,7 @@ pn111 = 050  (S-curve filter Ta)
 pn112 = 050  (S-curve filter Ts)
 
 Homing:
-pn033 = 3    (Power-on homing enabled)
+pn033 = 3    (Historical power-on homing; DO NOT use for the no-Hall bench)
 pn034 = 0/1  (Homing direction: 0=CW, 1=CCW)
 pn036 = 11   (Coarse position ×1000 pulses)
 pn037 = 5000 (Fine position)

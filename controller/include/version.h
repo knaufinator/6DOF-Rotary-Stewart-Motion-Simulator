@@ -13,7 +13,7 @@
 
 // Protocol version — bump when wire format changes (binary packet, telemetry, commands)
 // App checks this on connect to ensure compatibility
-#define FW_PROTOCOL_VERSION  1
+#define FW_PROTOCOL_VERSION  2   // 2: DATA18_SEQ frames, Ethernet COBS-over-UDP, INPUT_STAT age/gaps
 
 #define FW_BUILD_DATE     __DATE__
 #define FW_BUILD_TIME     __TIME__

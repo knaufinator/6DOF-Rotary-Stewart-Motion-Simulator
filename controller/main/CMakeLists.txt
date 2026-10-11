@@ -18,7 +18,7 @@ set(COMMON_SRCS
 set(PRIV_REQS
     stewart-core
     driver esp_timer nvs_flash freertos
-    esp_netif esp_event esp_wifi bt
+    esp_netif esp_event esp_wifi bt esp_driver_usb_serial_jtag
 )
 
 if(IDF_TARGET STREQUAL "esp32")
@@ -73,8 +73,15 @@ target_compile_definitions(${COMPONENT_LIB} PRIVATE
     ENABLE_BLE=1
 )
 if(PCB_VERSION EQUAL 2)
+    # R14 integration is intentionally locked until the installed Hall, local
+    # enable and drive-alarm IO adapter is electrically qualified. Existing
+    # PCBv2/R13 bench firmware can opt out explicitly at configure time.
+    option(R14_FAIL_CLOSED "Keep ESP32-S3 STEP outputs disarmed for R14 bringup" ON)
     target_compile_definitions(${COMPONENT_LIB} PRIVATE
         ENABLE_ETHERNET=1
         ${STEP_DRIVER_BACKEND}=1
     )
+    if(R14_FAIL_CLOSED)
+        target_compile_definitions(${COMPONENT_LIB} PRIVATE R14_FAIL_CLOSED=1)
+    endif()
 endif()

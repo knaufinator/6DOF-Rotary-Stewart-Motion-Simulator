@@ -3137,28 +3137,9 @@ static void DrawEntitySettingsContent(Entity& e) {
                 ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.2f, 0.55f, 0.85f, 1.0f));
                 if (ImGui::Button("Connect (Network)", ImVec2(-1, 28))) {
                     auto up = std::make_shared<UdpTransport>(e.hil_host, e.hil_udp_port, e.hil_tcp_port);
-                    up->setCobsMode(true);
-                    e.serial = up;
-                    e.hil_network = true;
-                    e.transport.udp_connected = true;
-                    snprintf(e.transport.udp_ip, sizeof(e.transport.udp_ip), "%s", e.hil_host);
-                    // The bridge/ESP own device identity + cueing; the app streams
-                    // raw and drives source over TCP. Bypass the serial FINGERPRINT
-                    // handshake and enable motion. Network = the raw-HIL path.
-                    e.hil_tel_seq = 0;
-                    e.hil_cap_raw = true;
-                    e.hil_raw_mode = true;
-                    e.hil_handshake_ok = true;
-                    e.hil_handshake_pending = false;
-                    e.hil_handshake_phase = HandshakePhase::Ready;
-                    e.hil_last_error[0] = '\0';
-                    snprintf(e.hil_handshake_msg, sizeof(e.hil_handshake_msg),
-                             up->controlConnected() ? "Bridge connected"
-                                                    : "Motion UDP up (control offline)");
-                    g_app.log(e.id, "hil", "Network HIL: UDP %s:%d, control %s:%d (%s)",
-                              e.hil_host, e.hil_udp_port, e.hil_host, e.hil_tcp_port,
-                              up->controlConnected() ? "connected" : "control unreachable");
-                    g_app.settings_dirty = true;
+                    // Bridge reachable -> raw-HIL bridge mode; otherwise direct ESP32 mode
+                    // with the normal FINGERPRINT handshake carried over UDP.
+                    g_app.beginNetworkHil(e, up);
                 }
                 ImGui::PopStyleColor(2);
             } else {

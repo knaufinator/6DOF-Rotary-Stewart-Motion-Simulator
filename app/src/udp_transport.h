@@ -53,9 +53,9 @@ public:
 
     void setCobsMode(bool v) override { m_cobs_mode = v; }
     bool isCobsMode() const  override { return m_cobs_mode; }
-    int  cobsDelimiters() const override { return 0; }   // bridge frames upstream
-    int  cobsDecodeOk()   const override { return m_ctrl_msgs.load(); }
-    int  cobsDecodeFail() const override { return 0; }
+    int  cobsDelimiters() const override { return m_udp_rx_frames.load(); }
+    int  cobsDecodeOk()   const override { return m_ctrl_msgs.load() + m_udp_rx_frames.load(); }
+    int  cobsDecodeFail() const override { return m_cobs_fail.load(); }
     int  cobsTel()  const override { return m_cobs_tel.load(); }
     int  cobsResp() const override { return m_cobs_resp.load(); }
     int  cobsLog()  const override { return m_cobs_log.load(); }
@@ -64,6 +64,14 @@ public:
 
     // ── Network-specific control surface (used by the HIL device card) ──
     bool controlConnected() const { return m_ctrl_connected.load(); }
+    // Direct mode: no bridge answered on the TCP control port, so the peer is the ESP32's own
+    // Ethernet (COBS frames both ways on the UDP socket). The app then runs the normal
+    // FINGERPRINT handshake over UDP, streams DATA18_SEQ and reads RESP/LOG/TEL back.
+    bool direct() const { return m_direct.load(); }
+    int  udpRxFrames() const { return m_udp_rx_frames.load(); }
+    // MAC of the local adapter that routes to the host ("aa:bb:cc:dd:ee:ff"), empty if unknown.
+    // Sent to the ESP32 as PEERMAC so it can answer without ARP (Wi-Fi hosts often never reply).
+    const std::string& localMac() const { return m_local_mac; }
     // Send a raw line-JSON request to the bridge control plane. Returns false
     // if the control channel is down. `\n` is appended by the transport.
     bool controlSend(const std::string& json_line);
@@ -81,6 +89,18 @@ private:
     void ctrlReaderThread();
     void handleControlLine(const char* line);
     void parseStatusBody(void* cjson_obj);   // void* = cJSON* (avoid header leak)
+    void udpReaderThread();                  // direct mode: COBS frames from the ESP32
+    void handleFrame(const uint8_t* frame, int len);
+    void ingestTelemetry(const uint8_t* bytes, int nb);
+
+    // Direct (bridge-less) mode
+    std::atomic<bool> m_direct{false};
+    std::thread m_udp_reader;
+    std::atomic<bool> m_udp_stop{false};
+    std::atomic<int>  m_udp_rx_frames{0};
+    std::atomic<int>  m_cobs_fail{0};
+    uint16_t m_seq = 0;                      // DATA18_SEQ counter (direct mode only)
+    std::string m_local_mac;
 
     char m_name[64] = {};
     std::string m_host;

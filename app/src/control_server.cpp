@@ -753,20 +753,7 @@ std::string handle(const std::string& line) {
         e->hil_udp_port = (int)num(a, "udp_port", 8767);
         e->hil_tcp_port = (int)num(a, "tcp_port", 8789);
         auto up = std::make_shared<UdpTransport>(e->hil_host, e->hil_udp_port, e->hil_tcp_port);
-        up->setCobsMode(true);
-        e->serial = up;
-        e->hil_network = true;
-        e->enabled = true;
-        snprintf(e->transport.udp_ip, sizeof(e->transport.udp_ip), "%s", e->hil_host);
-        e->hil_tel_seq = 0;
-        e->hil_cap_raw = true;
-        e->hil_raw_mode = true;
-        e->hil_handshake_ok = true;
-        e->hil_handshake_pending = false;
-        e->hil_handshake_phase = HandshakePhase::Ready;
-        e->hil_last_error[0] = '\0';
-        snprintf(e->hil_handshake_msg, sizeof(e->hil_handshake_msg), "%s",
-                 up->controlConnected() ? "Bridge connected" : "control unreachable");
+        g_app.beginNetworkHil(*e, up);   // bridge mode, or direct ESP32 mode with handshake
         cJSON* r = cJSON_CreateObject();
         cJSON_AddNumberToObject(r, "id", e->id);
         cJSON_AddStringToObject(r, "host", e->hil_host);
@@ -774,6 +761,7 @@ std::string handle(const std::string& line) {
         cJSON_AddNumberToObject(r, "tcp_port", e->hil_tcp_port);
         cJSON_AddBoolToObject(r, "open", up->isOpen());
         cJSON_AddBoolToObject(r, "control_connected", up->controlConnected());
+        cJSON_AddBoolToObject(r, "direct", up->direct());
         RESULT(r);
     }
     else if (!strcmp(cmd, "hil_stream_test")) {

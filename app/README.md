@@ -265,20 +265,27 @@ The ESP32 STEP/DIR interface cannot set this drive parameter. The r13
 firmware also rejects `ESTOP:SOFT` and `ZERO` until a physical home
 reference is qualified.
 
-```
-pn002 = 002  (Step/Dir control mode)
-pn003 = 001  (Servo enable)
-pn098 = 80   (Electronic gear numerator)
-pn109 = 002  (Position command deceleration mode)
-pn110 = 050  (Position command filter time constant)
-pn111 = 050  (S-curve filter Ta)
-pn112 = 050  (S-curve filter Ts)
+**Current bench and 1:1-firmware settings:
+[docs/AASD15A_DRIVE_SETTINGS.md](../docs/AASD15A_DRIVE_SETTINGS.md).**
 
-Homing:
-pn033 = 3    (Historical power-on homing; DO NOT use for the no-Hall bench)
+Original 2020 settings (README commit `8e46615`), for reference only. An earlier
+version of this table listed pn110/111/112 = 50/50/50; that was a transcription error.
+
+```
+pn002 = 002  (Position mode, step/dir)
+pn003 = 001  (Servo enable at power-on; without this the motor is limp)
+pn098 = 80   (Electronic gear numerator — new firmware uses 1)
+pn109 = 002  (Command filter: S-curve)
+pn110 = 050  (First-order filter time; unused while pn109 = 2)
+pn111 = 300  (S-curve Ta, ms)
+pn112 = 150  (S-curve Ts, ms; total filter delay Ta + Ts = 450 ms)
+
+Homing (historical — DO NOT use for the no-Hall bench; set pn033 = 0):
+pn052 = 22   (SigIn1 = homing trigger)
+pn033 = 3    (Power-on homing @ 200 rpm)
 pn034 = 0/1  (Homing direction: 0=CW, 1=CCW)
-pn036 = 11   (Coarse position ×1000 pulses)
-pn037 = 5000 (Fine position)
+pn036 = -8   (Origin offset high)
+pn037 = -5000 (Origin offset low)
 pn038 = 100  (Initial speed)
 pn039 = 100  (Return speed)
 ```

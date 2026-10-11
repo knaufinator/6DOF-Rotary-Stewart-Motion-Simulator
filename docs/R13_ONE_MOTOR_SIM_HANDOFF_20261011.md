@@ -101,3 +101,82 @@ git switch --track origin/r13-single-motor-sim-20261011
 
 R13 physical waveforms, cable mapping, J2/enable behavior, and one-axis
 motion remain commissioning items. R14 PCB order readiness is separate.
+
+## Second-workstation report and plan (2026-10-11 evening)
+
+Second workstation (user `knauf`, board enumerated as COM9). The owner was present for all
+powered work.
+
+### Do this first when the board is plugged in on the source workstation
+
+1. **Reflash before anything else.** The board still carries a local experimental image
+   (`MOTOR_TESTER`, not on this branch). It **holds GPIO21/ESTOP_MCU low in firmware**,
+   which means the J2 stop loop is ignored. The owner approved that for one session,
+   but it contradicts the standing rules in `M1_OUTPUT_TEST_PLAN.md`. Flash the probe
+   image (bring-up step 0) or the step-12 bench image before any other test.
+2. Resume `BRINGUP_LOG.md` at "Resume tomorrow": probe image, the DB25-first static
+   test at **J3 (silkscreen `MOTOR 0`)**, pin 23 measured at the board, then the drive
+   end of the cable.
+3. Step 12 is now implemented. Build and test details are in
+   `M1_OUTPUT_TEST_PLAN.md` § "Step 12 implementation". After step 9 passes on the probe
+   image:
+   `idf_build.ps1 -ProjDir controller -Action "-B build-bench -DR13_BENCH_ONE_AXIS=ON build"`
+   then flash, then:
+   `python controller/tools/cobs_console.py --port COMx BENCH:STATUS BENCH:ARM "BENCH:PULSE 1000 10"`.
+   Verified image SHA `45f99185c615` (clean tree). Host tests 79/79. Not yet run on
+   hardware.
+
+### Drive state (owner, at the drive panel)
+
+- AASD-15A on bench motor 1.
+- `Pn033=0` set and read back.
+- Owner also applied the bench values in `docs/AASD15A_DRIVE_SETTINGS.md` except
+  `Pn051`, which stays at 3000:
+  - `Pn098=1` / `Pn102=1` (1:1 = 10 000 pulses per motor rev)
+  - `Pn111=20` / `Pn112=10`
+  - `Pn103=20`
+  - `Pn052=1`
+- `Pn003=1` and `Pn096=0` are carried over from the original setup. Confirm their
+  readback in step 8.
+- That doc also corrects the old README 50/50/50 transcription of Pn110–112; the original
+  2020 values were 50/300/150.
+
+### What happened
+
+- Experimental image arms (GPIO47 low, 250 ms, 20 µs GPIO48). It ran JOG ±10 and
+  OSC ±1000 ×3 with correct firmware positions, but **the motor did not move**.
+- **Likely cause:** the motor cable was probably on **J4 (`MOTOR 1`)** while axis 0
+  drives **J3 (`MOTOR 0`)**. The silkscreen is zero-based; the same mix-up appears in
+  `BRINGUP_LOG.md`.
+- **Other possible causes,** not proven:
+  - the U11 latch not setting (VCC5 or DRIVE_ENABLE not measured)
+  - DB25 pin 23 connected through to the drive, contrary to the step-7 hold
+- **The owner's first J2 attempt** linked the J1 `UART 3.3V` TX/RX pins instead of the
+  `E-STOP LOOP` screw terminal. That is harmless: it loops the unused UART0 back on
+  itself.
+
+### Flashing trouble here (second workstation only)
+
+The owner reports the source workstation flashes this board without problems, so treat
+these as second-workstation symptoms, not a board defect, until they are reproduced
+there.
+
+- esptool auto-reset flashing over native USB repeatedly dropped at erase or the first
+  write. Errors seen: "Lost connection", pySerial "Write timeout", "device not
+  functioning", "ClearCommError". It was worse with the drive and 12 V powered.
+- Once the bootloader region was rewritten (verified) and the app region erased, the
+  board boot-looped with `No bootable app partitions` until a later flash completed.
+  The latch stayed inhibited throughout.
+- **What worked:** 12 V unplugged, manual download mode (hold BOOT while plugging USB),
+  esptool `--no-stub --no-compress`, with the app split into 64 KB chunks
+  (re-run the remaining chunks after a drop). Then press RESET (EN): after a
+  USB-JTAG `hard_reset` the chip stayed in download mode, because the strap latched
+  from the manual entry persists until a real chip reset.
+- After USB-JTAG resets, the experimental image's console sometimes did not answer until
+  a physical RESET.
+- One manual BOOT attempt booted normally (`boot:0xb`); recheck the BOOT button
+  (GPIO0) on the source workstation.
+- Environment step 0 on this machine:
+  - Python 3.12.10, venv `idf5.5_py3.12_env`, ESP-IDF v5.5.2
+  - `export.ps1` passes
+  - `idf_build.ps1` verified

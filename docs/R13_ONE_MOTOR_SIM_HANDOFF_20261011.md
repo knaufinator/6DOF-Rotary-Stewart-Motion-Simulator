@@ -54,6 +54,16 @@ git fetch origin r13-single-motor-sim-20261011
 git switch --track origin/r13-single-motor-sim-20261011
 ```
 
+0. **Bring the ESP-IDF Python environment to spec before anything else.** The
+   required spec is IDF v5.5 with a venv created by IDF's own installer for the
+   Python that is first on your PATH. Run `<IDF_PATH>\install.ps1 esp32s3` from
+   PowerShell, then `<IDF_PATH>\export.ps1` must succeed without "Python
+   environment is missing". If it still names a venv you do not have, your
+   default `python` and the installed venv disagree: either install the matching
+   venv (preferred, that is the spec) or build through
+   `controller\tools\idf_build.ps1`, which picks an existing IDF 5.5 venv and
+   bypasses `export.ps1`. Record the venv name, Python version and IDF version
+   in your report. A build that was never verified is not a handoff.
 1. Read this file, `app/README.md`, and
    `hardware/pcb/single_motor_test_plan.md`. Record the fetched commit SHA.
 2. Build the full controller and desktop app. Verify protocol-2 handshake
@@ -72,8 +82,19 @@ git switch --track origin/r13-single-motor-sim-20261011
 - Desktop Release build succeeded; desktop CTest passed 2/2.
 - Controller Visual Studio host test build succeeded; CTest passed 1/1.
 - `git diff --check` passed.
-- ESP-IDF firmware build not verified: local IDF 5.5 Python environment is
-  missing at `C:\Users\Chris\.espressif\python_env\idf5.5_py3.12_env`.
+- ESP-IDF firmware build: the first attempt failed with "Python environment is
+  missing at `...\python_env\idf5.5_py3.12_env`". That is not a missing install.
+  IDF's `export.ps1` names the venv after whatever `python` is first on PATH
+  (3.12 here) while the venv that `install.ps1` created is `idf5.5_py3.11_env`.
+  Fix, either: (a) run `controller\tools\idf_build.ps1 -ProjDir <project> -Clean`
+  from PowerShell (not Git Bash); it finds the existing venv and never calls
+  `export.ps1`; or (b) run `<IDF_PATH>\install.ps1 esp32s3` once so a venv for
+  the default Python exists, then `export.ps1` works. With (a) the r13 probe
+  firmware built and flashed clean on the source workstation on 2026-10-11
+  (`IDF_EXIT=0`, fresh `build/r13probe.bin`, self-test 0 failures on COM10);
+  that probe project is not on this branch. Flash with
+  `-Action '-p COMx flash'`. Confirm success by the binary timestamp and
+  "Project build complete", not by the exit code alone.
 
 R13 physical waveforms, cable mapping, J2/enable behavior, and one-axis
 motion remain commissioning items. R14 PCB order readiness is separate.

@@ -317,3 +317,17 @@ GPIO47 high, GPIO48 low, STEP/DIR low.
    at the drive end of the cable. Pin 23 vs 10 at the board = about VINRAW; if ~11 V the
    alarm-resistor hold stands and pin 23 must not reach the drive.
 3. Before expecting motion: Pn003=1, Pn096=0, Pn033=0 on the drive, cable pin 23 lifted.
+
+### 2026-10-12 — second workstation: alarm polarity observed, R30 overstress accepted
+
+- Cable on J3 (`MOTOR 0`) with pin 23 connected through to the AASD-15A, 12 V and USB on,
+  J2 shorted, board disarmed.
+- Drive powered, no alarm on its display: `in` showed `alarm.gpio[...]=0,1,1,1,1,1`, so the
+  axis-0 opto was conducting. Drive switched off: `alarm=1,1,1,1,1,1`.
+- **Conclusion (to confirm in step 10 with a provoked alarm):** the AASD ALM output
+  conducts when the drive is healthy. Healthy operation therefore drives about 49 mA
+  continuously through R30 (220 Ω 0603, about 0.53 W at 12 V).
+- The owner chose to leave pin 23 connected and accept the risk of R30/U9 damage on this
+  first article, so that motion testing can continue. Logged for R14 as S2/S2b in
+  `R14_TEST_ENHANCEMENTS.md`. The step-7 hold no longer gates motion on this board, but
+  still applies to any board that is meant to survive.

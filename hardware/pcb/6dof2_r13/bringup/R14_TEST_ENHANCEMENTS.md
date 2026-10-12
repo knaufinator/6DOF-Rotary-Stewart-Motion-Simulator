@@ -27,7 +27,8 @@ value. **P3** = nice to have.
 | Id | P | Request | R13 evidence |
 |---|---|---|---|
 | S1 | P1 | Silkscreen naming that cannot be misread: `AXIS 0 / M1` (or switch all docs to one convention), and the same on the lid | Bench "motor 1" cable went on `MOTOR 1` (J4) instead of `MOTOR 0` (J3), twice |
-| S2 | P1 | Alarm LED resistors: the 1.5 k 1206 already in the R14 schematic, synced to the PCB | R30–R35 220 Ω 0603: about 49 mA, 0.53 W at 12 V (K4) |
+| S2 | P1 | Alarm LED resistors: the 1.5 k 1206 already in the R14 schematic, synced to the PCB. Size for **continuous** current: the AASD-15A ALM output conducts while the drive is healthy, so this is the normal state, not a fault state | R30–R35 220 Ω 0603: about 49 mA, 0.53 W at 12 V (K4). 2026-10-12: with pin 23 connected and the drive powered with no alarm shown, the probe read alarm0=0 (opto conducting); with the drive off, it read alarm0=1. The owner accepted the R13 overstress to continue motion testing |
+| S2b | P1 | Firmware/docs: on the AASD-15A, alarm input **0 = healthy** (output conducting), 1 = fault or drive unpowered. Name it `drive_ok` or similar, not "alarm asserted" | Same observation; probe `in` text labels 0 as "alarm asserted" |
 | S3 | P1 | SRV-ON (DB25 pin 6) driven from the latch or a separate supervised output, with a jumper to opt out | Drives must self-enable today (Pn003=1). Pulse inhibit is not torque-off (F05) |
 | S4 | P2 | Keyed E-STOP connector (2-pin) distinct from the 12 V terminal; keep J2 and J9 visually different | J9 and J2 are the identical KF128 part; the owner's first "J2" link went on J1 instead |
 | S5 | P2 | DB25 shell bonded to a defined chassis/shield point; cable-shield strategy documented | K1: link drops only with the drive powered and cabled |

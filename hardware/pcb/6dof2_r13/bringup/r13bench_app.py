@@ -9,7 +9,8 @@ Tabs:
   Motion    axis, inhibit, arm, DIR, bounded pulse / tone (caps follow the "Drive connected" switch)
   Console   any firmware command
 
-STOP (button or Esc) sends `safe` (probe) or `BENCH:STOP` (controller). The probe runs one command at
+STOP (button or Esc) sends `safe` (probe) or `BENCH:STOP` (controller). The J2 wire stays IN to run;
+pulling it OUT is the hardware stop (re-arm needed after refitting). The probe runs one command at
 a time, so during a probe tone/pulse STOP is only processed when that command ends: the immediate
 stop is the J2 link. Every TX/RX and step result goes to logs/r13_session_*.md and .jsonl.
 """
@@ -130,7 +131,9 @@ class App:
                   foreground="#a60").pack(anchor="w")
         ttk.Label(f, text="Axis N = DB25 J(3+N), 'MOTOR N'.\nBench motor 1 = axis 0 = J3.",
                   foreground="#555").pack(anchor="w", pady=6)
-        ttk.Label(f, text="Hardware stop: pull the J2 link.", foreground="#c00").pack(anchor="w")
+        ttk.Label(f, text="J2 wire IN = run (loop closed).\nHardware STOP: pull the J2 wire OUT.\n"
+                          "Refitting it does not restart:\nre-arm is required.",
+                  foreground="#c00", justify="left").pack(anchor="w")
 
     def _build_steps(self, nb):
         f = ttk.Frame(nb, padding=6); nb.add(f, text="Bring-up")

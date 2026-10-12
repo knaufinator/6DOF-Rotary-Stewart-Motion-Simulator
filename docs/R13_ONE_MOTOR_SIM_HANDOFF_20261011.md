@@ -180,3 +180,20 @@ there.
   - Python 3.12.10, venv `idf5.5_py3.12_env`, ESP-IDF v5.5.2
   - `export.ps1` passes
   - `idf_build.ps1` verified
+
+### Update 2026-10-12 (second workstation)
+
+- **Resolved: the board no longer has the bypass image.** The probe image (`r13probe.bin`,
+  built from this branch) was flashed normally:
+  `idf_build.ps1 -Action "-p COM9 flash"`, all three hashes verified, about 5 s.
+- Probe readback: `estop.gpio21=0` (J2 shorted by the owner, loop genuinely closed),
+  `inhibit=1`, `arm=0`, STEP/DIR all low, alarms idle.
+- Second-workstation link qualification, with the board on a root USB port, 12 V and drive
+  state as the owner left them:
+  - drivers: `usbser` (CDC) and `WinUSB` (JTAG)
+  - esptool v4.12.0, pyserial 3.5, IDF v5.5.2, venv `idf5.5_py3.12_env`
+  - 5/5 stub connect and reset cycles
+  - 1 MB read_flash
+  - 4/4 full-speed 1 MB erase/write/verify rounds at the unused offset `0x600000`
+  - All passed. Yesterday's drops happened with the drive powered and the board cabled to
+    it, so suspect drive EMI or ground coupling during that session rather than this PC.

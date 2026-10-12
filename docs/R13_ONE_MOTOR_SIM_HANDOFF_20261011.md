@@ -197,3 +197,22 @@ there.
   - 4/4 full-speed 1 MB erase/write/verify rounds at the unused offset `0x600000`
   - All passed. Yesterday's drops happened with the drive powered and the board cabled to
     it, so suspect drive EMI or ground coupling during that session rather than this PC.
+
+### Bench tool and plans (2026-10-12)
+
+- `hardware/pcb/6dof2_r13/bringup/r13bench_app.py` is a Tkinter bench app.
+  - It auto-detects the probe text console or the controller `R13_BENCH_ONE_AXIS` COBS console.
+  - Guided steps 0–10 plus the full-board phases F1–F5, with meter-entry fields checked
+    against expected ranges.
+  - Motion caps follow a "Drive connected" switch; STOP is on Esc.
+  - Paste-ready session logs go to `logs/`, which is git-ignored.
+- Headless use: `r13bench_core.py --port COMx cmd in`. Host tests:
+  `test_r13bench_core.py`, 10/10.
+- Verified live on COM9 with the probe image (read-only commands): detection, `in`
+  parsing, cap refusal, GUI live status.
+- Plans:
+  - `R13_FULL_BRINGUP_PLAN.md`: phases A–I mapped to tool steps, known issues K1–K7,
+    and near-term enhancements E1–E12.
+  - `R14_TEST_ENHANCEMENTS.md`: P1–P3 DFT, safety, USB and firmware requests for the R14
+    teams. Top items: DRIVE_ENABLE readback, VCC5 ADC sense, silkscreen axis naming,
+    SRV-ON, USB ESD and choke, BOOT button.

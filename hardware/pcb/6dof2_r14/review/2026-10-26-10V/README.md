@@ -1,3 +1,5 @@
+> **27 October correction:** the original placement has confirmed J12 housing interference. See [R14C1 correction](../../MECHANICAL_CORRECTION.md) and [current review](../../review/2026-10-27-clearance/README.md). Original ordered technical artifacts stay frozen; the earlier geometry review does not approve assembly.
+
 # R14 corrected final design review — 2026-10-26
 
 **Static circuit, source-coherence and manufacturing-geometry checks complete.**

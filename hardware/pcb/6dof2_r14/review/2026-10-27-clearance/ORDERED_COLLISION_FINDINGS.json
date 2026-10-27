@@ -1,0 +1,37 @@
+{
+  "sourceSha256": "b416ef666e47783eb1c9d55e8a021e81f9a73c2a3af305b233d3c39646cdd5c8",
+  "stepSha256": "5ea5cd58b4854ca3e579a0029b99ca1b57e82426ecaa53e761064146e5f8ee39",
+  "components": 324,
+  "totalPairs": 52326,
+  "interferences": [
+    {
+      "a": "C53",
+      "b": "J12",
+      "aabbGapMm": 0.0,
+      "exactModelDistanceMm": 0.0,
+      "commonVolumeMm3": 0.07385865516493914
+    },
+    {
+      "a": "D13",
+      "b": "J12",
+      "aabbGapMm": 0.0,
+      "exactModelDistanceMm": 0.0,
+      "commonVolumeMm3": 1.02200760849817
+    },
+    {
+      "a": "J12",
+      "b": "R87",
+      "aabbGapMm": 0.0,
+      "exactModelDistanceMm": 0.0,
+      "commonVolumeMm3": 0.19718437018169901
+    },
+    {
+      "a": "J12",
+      "b": "U20",
+      "aabbGapMm": 0.0,
+      "exactModelDistanceMm": 0.0,
+      "commonVolumeMm3": 52.93870267549969
+    }
+  ],
+  "scope": "Original ordered nominal STEP; superseded for manufacture, preserved to explain the factory finding."
+}

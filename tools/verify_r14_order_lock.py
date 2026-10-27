@@ -9,7 +9,8 @@ ROOT = Path(__file__).resolve().parents[1]
 
 def verify(root=ROOT):
     record = json.loads((root / 'hardware/pcb/6dof2_r14/ORDER_RECORD.json').read_text(encoding='utf8'))
-    assert record['status'] == 'ORDERED_HARDWARE_TESTS_PENDING'
+    assert record['status'] in {'ORDERED_HARDWARE_TESTS_PENDING',
+                                'ORDERED_FACTORY_CLEARANCE_HOLD'}
     required = {'R14-Gerber-FS36.zip', 'R14-BOM-JLC.csv', 'R14-CPL-JLC.csv',
                 'R14-project.epro2', 'R14-schematic.svg', 'R14-assembly.step.zip'}
     assert required <= {Path(item['path']).name for item in record['frozenFiles']}, 'Incomplete order lock'
@@ -23,7 +24,9 @@ def verify(root=ROOT):
     if failures:
         raise ValueError('\n'.join(failures))
     return {'status': 'PASS_ORDERED_ARTIFACT_HASHES', 'files': len(record['frozenFiles']),
-            'orderedDate': record['orderedDate'], 'hardwareTests': 'NOT_RUN'}
+            'orderedDate': record['orderedDate'], 'hardwareTests': 'NOT_RUN',
+            'orderStatus': record['status'],
+            'scope': 'Original artifact integrity only; does not approve assembly or release a hold'}
 
 
 if __name__ == '__main__':

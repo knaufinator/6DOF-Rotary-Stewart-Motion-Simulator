@@ -1,2 +1,6 @@
 gerbonara>=1.5,<2
 PyMuPDF>=1.24,<3
+
+shapely>=2,<3
+# OCCT bindings used for the complete STEP interference audit.
+cadquery-ocp==8.0.1.0.0

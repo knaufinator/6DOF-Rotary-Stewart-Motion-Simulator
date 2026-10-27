@@ -25,10 +25,12 @@ learned along the way—not just the latest PCB package.
 
 ## Current development status
 
-> **2026-10-26: R14 is ordered; hardware testing is next.**
-> The corrected PCB/schematic, manufacturing files and design review are retained
-> with the recovered R13 firmware baseline. The owner confirmed the order;
-> R14 hardware and subsequent firmware changes still need qualification.
+> **2026-10-27: R14 engineering hold following a JLCPCB component-clearance query.**
+> The ordered placement has confirmed J12 interference. J12 remains required;
+> R14C1 now passes the documented internal mechanical and exported electrical checks.
+> Complete replacement files are prepared; factory acceptance and physical tests remain pending.
+> See the [mechanical correction](hardware/pcb/6dof2_r14/MECHANICAL_CORRECTION.md).
+> The recovered R13 firmware baseline and original ordered exports are preserved.
 > See the [R14 board, schematic and status](hardware/pcb/6dof2_r14/README.md),
 > [design philosophy](hardware/pcb/6dof2_r14/DESIGN_PHILOSOPHY.md) and
 > [firmware evidence](hardware/pcb/6dof2_r14/FIRMWARE_STATUS.md).
@@ -38,24 +40,25 @@ stop hardware must be in place before powered operation; the app's E-STOP button
 is not a substitute for a physical safety system. Earlier working builds and
 signal captures do **not** validate the current PCB/firmware combination.
 
-## Ordered R14 hardware
+## R14C1 corrected hardware
 
-[![R14 top copper and silkscreen](hardware/pcb/6dof2_r14/images/r14-pcb-top.png)](hardware/pcb/6dof2_r14/drawings/R14-PCB.pdf)
+[![R14 top copper and silkscreen](hardware/pcb/6dof2_r14/images/r14c1-pcb-top.png)](hardware/pcb/6dof2_r14/drawings/R14C1-PCB.pdf)
 
-[PCB PDF](hardware/pcb/6dof2_r14/drawings/R14-PCB.pdf) ?
-[Schematic PDF](hardware/pcb/6dof2_r14/drawings/R14-schematic.pdf) ?
-[Native schematic SVG](hardware/pcb/6dof2_r14/exports/2026-10-26/R14-schematic.svg) ?
-[Editable EasyEDA project](hardware/pcb/6dof2_r14/exports/2026-10-26/R14-project.epro2) ?
-[Manufacturing files](hardware/pcb/6dof2_r14/exports/2026-10-26/README.md)
+[PCB PDF](hardware/pcb/6dof2_r14/drawings/R14C1-PCB.pdf) ·
+[Schematic PDF](hardware/pcb/6dof2_r14/drawings/R14-schematic.pdf) ·
+[Native schematic SVG](hardware/pcb/6dof2_r14/exports/2026-10-27-clearance/R14-schematic.svg) ·
+[Editable EasyEDA project](hardware/pcb/6dof2_r14/exports/2026-10-27-clearance/R14-project.epro2) ·
+[Manufacturing files](hardware/pcb/6dof2_r14/exports/2026-10-27-clearance/README.md)
 
 The owner confirmed the R14 order on 26 October 2026. Read the
 [design decisions](hardware/pcb/6dof2_r14/DECISIONS.md),
 [review methodology](hardware/pcb/6dof2_r14/REVIEW_METHOD.md) and
 [hardware-test plan](hardware/pcb/6dof2_r14/BRINGUP.md). Testing the manufactured
-board is the next stage; the current firmware keeps normal motion admission locked.
+board follows correction of the factory clearance issue; the current firmware
+keeps normal motion admission locked.
 
 <details>
-<summary>R14 schematic preview ? full sheet and detail pages in the PDF</summary>
+<summary>R14 schematic preview — full sheet and detail pages in the PDF</summary>
 
 ![R14 schematic detail regions](hardware/pcb/6dof2_r14/images/r14-schematic-details.png)
 

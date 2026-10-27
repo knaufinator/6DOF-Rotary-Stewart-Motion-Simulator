@@ -1,5 +1,15 @@
 # R14 review method and evidence limits
 
+## Current R14C1 acceptance — 27 October 2026
+
+Use the [R14C1 final report](review/2026-10-27-clearance/README.md) for current physical geometry: 324 components, 91 codes, 1,214 unchanged logical pins, 2,684 copper-register rows, 903 vias and 1,098 holes. All 348 board-level text envelopes and twelve internal DB25 glyph regions are checked. The earlier 26 October quantities below describe the frozen ordered baseline, not the corrected layout.
+
+The original review missed J12's four-LINE body. Whole-assembly collision testing and manufacturer-bound screening are now mandatory separate gates; missing/open body geometry fails explicitly. The source-bound register checks dimensional maxima/conservative family bounds with 0.15 mm placement allowance, expanded body/foreign-land separation, eleven 2 mm probe shafts and six 6.1 mm mounting-head envelopes. All 324 exported STEP shapes are valid, and all 52,326 pairs are screened, with exact solid distances/intersections for nearby candidates. Source-to-STEP pose parity prevents accepting a stale export. Six regression cases cover J12’s actual closed outline, broken/missing geometry, duplicate edges and self-crossing polygons.
+
+Rebuild all pours after copper edits, save/close/reopen the master, export a complete dated package, compare all selected parts/pin nets and inspect actual Gerber copper, drill, mask/paste and ink geometry. The R14C1 reports bind source/CAM hashes. Original manufacturing inputs remain frozen and their verifier checks integrity only. Exact D-sub nut heights and external mating/enclosure swept volumes remain unqualified; bench acceptance is still required.
+
+## Earlier ordered-baseline electrical methodology
+
 The review compares three representations: the intended circuit and firmware
 contract, the saved/reopened EasyEDA master, and the actual manufacturing output.
 A check in one representation does not replace the others. The ordered revision

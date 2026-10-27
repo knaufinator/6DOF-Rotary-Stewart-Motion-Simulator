@@ -1,5 +1,11 @@
 # R14 bench qualification plan
 
+## R14C1 entry condition — 27 October 2026
+
+Identify the physical board and file set before applying power. The original ordered R14 placement has confirmed J12 interference and is not assembly-approved. R14C1 carries the corrected positions, matching rerouted pads and R14C1 board marking. Retain J12. Verify the complete replacement package was used; a CPL-only change cannot repair an already fabricated board. See [factory disposition](MECHANICAL_CORRECTION.md).
+
+Inspect J12 versus U20/D13/R87/C53, U19 solder joints and via locations, J1/J2 room, all probe sites, mounting heads, actual D-sub nut stacks and mated connector/hood/cable fit. Confirm every part's polarity and orientation against the native source/BOM. Static internal clearance checks pass, but physical fit, cable loss, temperature and motion behavior remain untested. The electrical acceptance sequence below remains required.
+
 **R14 was ordered on 26 October 2026, as confirmed by the owner.**
 The [ordered package](exports/2026-10-26/README.md) is the design baseline.
 All hardware acceptance steps below remain NOT RUN on R14. Record the actual

@@ -1,9 +1,10 @@
-"""Render repository previews/PDFs from the ordered Gerbers and native schematic SVG.
+"""Render repository previews/PDFs from retained Gerbers and native schematic SVG.
 
 Read-only with respect to the EasyEDA project and manufacturing inputs. Generated
 drawings are documentation, not a replacement fabrication package.
 """
 from pathlib import Path
+import argparse
 import json
 import re
 import zipfile
@@ -58,6 +59,17 @@ def drill_objects(data):
 
 
 def main():
+    global EXPORT
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--directory', type=Path, default=EXPORT)
+    parser.add_argument('--prefix', default='R14')
+    parser.add_argument('--caption', default='R14 ordered 2026-10-26')
+    parser.add_argument('--expected-drills', type=int, default=1086)
+    parser.add_argument('--pcb-only', action='store_true')
+    args = parser.parse_args()
+    if not re.fullmatch(r'[A-Za-z0-9_-]+', args.prefix):
+        raise ValueError('Use a filename prefix, not a path')
+    EXPORT = args.directory
     DRAWINGS.mkdir(exist_ok=True)
     IMAGES.mkdir(exist_ok=True)
     pdf = fitz.open()
@@ -71,9 +83,9 @@ def main():
             # The separate VIA drill file duplicates PTH operations.
             if name.upper().endswith('.DRL') and 'VIA' not in name.upper():
                 drills.extend(drill_objects(archive.read(name).decode('ascii')))
-        assert len(drills) == 1086
+        assert len(drills) == args.expected_drills
         for extension, title, filename in [
-                ('.GTL', 'Top copper and silkscreen', 'R14-PCB-top.svg'),
+                ('.GTL', 'Top copper and silkscreen', args.prefix+'-PCB-top.svg'),
                 ('.G1', 'Inner 1 copper', None),
                 ('.G2', 'Inner 2 copper', None),
                 ('.GBL', 'Bottom copper (viewed through top)', None)]:
@@ -88,12 +100,16 @@ def main():
             source = fitz.open(stream=svg.encode(), filetype='svg')
             vector = fitz.open('pdf', source.convert_to_pdf())
             page = pdf.new_page(width=1000, height=410)
-            page.insert_text((28, 27), 'R14 ordered 2026-10-26 | ' + title, fontsize=14)
+            page.insert_text((28, 27), args.caption+' | ' + title, fontsize=14)
             page.show_pdf_page(fitz.Rect(15, 42, 985, 383), vector, 0)
-            page.insert_text((28, 400), 'Derived from frozen production Gerbers. Board 300 x 101.6 mm. Gerber ZIP remains fabrication authority.', fontsize=9)
+            page.insert_text((28, 400), 'Derived from retained manufacturing export. Board 300 x 101.6 mm. Gerber ZIP remains fabrication authority.', fontsize=9)
             if filename:
-                source[0].get_pixmap(matrix=fitz.Matrix(3200/source[0].rect.width, 3200/source[0].rect.width), alpha=False).save(IMAGES / 'r14-pcb-top.png')
-    pdf.save(DRAWINGS / 'R14-PCB.pdf', garbage=4, deflate=True)
+                source[0].get_pixmap(matrix=fitz.Matrix(3200/source[0].rect.width, 3200/source[0].rect.width), alpha=False).save(IMAGES / (args.prefix.lower()+'-pcb-top.png'))
+    pdf.save(DRAWINGS / (args.prefix+'-PCB.pdf'), garbage=4, deflate=True)
+
+    if args.pcb_only:
+        print(json.dumps({'pcbPdfPages': len(pdf), 'drills': len(drills), 'prefix': args.prefix, 'source': str(EXPORT)}, indent=2))
+        return
 
     native = fitz.open(stream=(EXPORT / 'R14-schematic.svg').read_bytes(), filetype='svg')
     full = fitz.open('pdf', native.convert_to_pdf())

@@ -1,5 +1,9 @@
 # R14 design decisions
 
+## 27 October 2026: R14C1 housing-clearance correction
+
+Retain required J12 and every selected part. Move and reroute the interfering Hall-bank components rather than omit the interface. Use manufacturer maximum/conservative body bounds with placement allowance, closed LINE-loop coverage and complete STEP pair screening as independent gates. Relocate labels and test points with the parts. Keep the original order tag immutable and publish a complete replacement Gerber/BOM/CPL set. Circuit nets, sensor monitor and recovered firmware remain unchanged. [Decision, measurements and factory disposition](MECHANICAL_CORRECTION.md); [final acceptance evidence and remaining limits](review/2026-10-27-clearance/README.md).
+
 This record explains the ordered 26 October 2026 design. Reference numbers and
 net names refer to the [current schematic](drawings/R14-schematic.pdf), not an
 earlier experimental checkpoint. Static review is complete; hardware qualification

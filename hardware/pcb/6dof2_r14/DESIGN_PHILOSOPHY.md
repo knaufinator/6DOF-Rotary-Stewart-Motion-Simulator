@@ -1,5 +1,13 @@
 # R14 design philosophy and checkable boundaries
 
+## Physical room is a separate design constraint
+
+The R14C1 correction makes the assembly envelope explicit. Electrical DRC alone cannot establish housing clearance. Every selected part has a documented maximum or conservative family body bound, with 0.15 mm placement allowance per side; connector and SMT spacing, foreign lands, probes and mounting heads are screened independently. Complete exported STEP interference and actual Gerber checks then verify the persisted design. This complements the existing hardware inhibition and firmware admission checks; none substitutes for the other.
+
+![J12 body envelope and corrected surrounding placement](images/r14c1-clearance-before-after.png)
+
+See the [root cause](MECHANICAL_CORRECTION.md) and [current evidence](review/2026-10-27-clearance/README.md). External plug/hood/enclosure fit and exact D-sub nut-stack heights remain separate qualifications. The electrical philosophy below is unchanged.
+
 Pulse permission and healthy-axis holding torque have separate hardware paths.
 An ordinary pulse stop need not release all healthy drives. The controller still
 requires an independently designed machine emergency stop and mechanical support.

@@ -1,0 +1,4200 @@
+{
+ "mainInner1Region": 1940,
+ "mainInner1AreaMm2": 27639.29987904368,
+ "groundThroughContacts": [
+  {
+   "id": "J1.1@e12",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "J2.2@e24",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "J9.2@e24",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "J11.2@e57",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "J11.1@e58",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "J11.4@e59",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "J11.3@e60",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "J3.10@e55",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "J4.10@e55",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "J5.10@e55",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "J6.10@e55",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "J7.10@e55",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "J8.10@e55",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "J12.1@e1f3d8a2236bb737",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "d95684fdb6e85650",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "6e62cc26227e5ceb",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "40f414ee5cc1557f",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "993e915c43a057b7",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "52fa5a66258b5013",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "33be06dacf945650",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "d0513b649e625155",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "ca8f159801865dbb",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "5f78f9063ffb512c",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "5cb4ab1470e4525e",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "2d848bf549fe5820",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "1b426224da2b5d81",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "bbc254e5e2b85dee",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "832b706ff0785aab",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "235a0673b2fd508e",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "fc8849759c805eaf",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "fa3123f065515c10",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "103556b4551b5d04",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "b5f7259995f95b1a",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "a38c81e76e585928",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "6b13a4210e8f5d48",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "556bfdf0b7005d42",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "ff6040e64ccd56bd",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "0e387594dbe65c02",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "80a376da433752b1",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "a1db8434c89e5ab1",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "23d61b8070c655a3",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "0c3aa8a1293f5fb3",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "0e0c6361e20e5d2c",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "78423a01255a5c14",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "c87054276dd352c1",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "6cf07a4848305cef",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "b2c3e6b6d68c5b7a",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "fa2d1546fa605bc1",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "55763da3d48c5948",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "d28d500d5b99590c",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "9985d2416a895e2f",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "3b10d58a21915411",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "b6f3f3825efb5241",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "34848be1a2ff522f",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "5073152997865e1c",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "96f6121e11dc5b00",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "718ea83753db5783",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "87c5ced7b43b5733",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "fc303e1e98125c86",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "55f2cd9f9f6d5d32",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "dbca4c4b74ec5bdb",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "eda50e1bd62857b0",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "f5871d07ca6f5602",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "008e798397ff50b3",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "7d0e6ed825755875",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "d4609150d212536a",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "2249ab684ab35ca9",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "4027b8b74e1c524b",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "4ee76a1a9c865c2a",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "561b4f415c1553a0",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "94222cdbb5ed5ebf",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "0a88dc85752f56de",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "8874c5ae0a4b592b",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "24e0ed9c7f8a5d42",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "60c427fbd2ae5fc9",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "64efd524590e56db",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "9f911cc91c115b47",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "f1a895abdd6e5e2e",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "9fb6e010fe015170",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "c6e5b3646c855d02",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "282f6a0481205184",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "0293fd31d3d1566c",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "f28703078d6506b0",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "931e22bce27960dc",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "c86ec9331c9d543f",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "c92952ab331e5d26",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "5e29c8774fe75618",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "bf6886afa7c0527a",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "42d39383411d50ba",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "22a3c9f6999456f4",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "27b4c930b85b5181",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "e0c51fa00c90590b",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "8a3946a04dfa5dfb",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "036d6f320dca5566",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "79c613f3c38c506c",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "fc4913ba027b58bb",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "a9510664c5325d1b",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "13cb3cac79465df5",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "70266f86585f58d6",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "0250414da83a55d0",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "5ea177ef8a6a5971",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "148709e4566d515f",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "931eb1c0ad045abc",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "0a7e7e9f677c524b",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "425fb36f9af15797",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "4305e7b688105a9b",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "e51cd3f8977c5833",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "087172e9ab4b582e",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "6cf76cc8f787597c",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "4a321489d1d150c6",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "b372e99c92485466",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "80b0b0e67b3f5a64",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "5ef5f625ba2d5bf7",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "c45379d88d8a5c82",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "ce9e4256397451f6",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "933e175a30625a41",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "f8a8642e81eb5cbc",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "ae89a472469456bc",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "4728195e481558a8",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "e3a32bc14432503b",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "05f4a14399205695",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "0b0aadeb88115f81",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "f55c6327573d5e23",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "d0a177f7581356d0",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "2a487445d3f95f82",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "9debd5d49e925532",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "21cc9f277b6d529a",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "59d0162bc7915827",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "65ffe75b270a5ae9",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "919432c4c58f5036",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "85c9205d064b5c88",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "c84ac590332e5a03",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "df09b94e7b2e57df",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "e07be42d7c775542",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "8189528640815d90",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "032d630356b858aa",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "2b6deed198095d44",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "42d9ceb1ca3e55ef",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "bc959fbfe0175a84",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "61936adcb1475a5e",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "c2c3d60202185567",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "4be2bb8f7beb5e05",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "1298e8fe4a1e536c",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "5a4f2b87503f5aa7",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "13936579d878538d",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "dc4a7b87c3b95d18",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "61694b41fd545f9e",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "8b863a2c2a245ddd",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "e20afa9111a55bbb",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "87742cd002695afe",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "2cb57a37f41d51bf",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "1fb20013174258a9",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "09d8f72869d65bdc",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "4b4f2e0ad06d5a00",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "2e066d918bc35f94",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "c7f90e113d5b59a6",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "361fea49636a5f36",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "50875bd0594f55c1",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "c454793373fb58b5",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "46587348ff675564",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "f178bfd0c7de51d1",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "e9a02606c13855ba",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "b659d0ddcf1955c5",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "57c28d76c77b50ad",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "cf9aecdb66655134",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "66561cf0bb89577b",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "e09f18944c9e58e0",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "0d3c18918a9a5b57",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "72eda51cc7315508",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "14d397c18dde5b0a",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "ea0f173bbdc25f79",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "7eb608f0e31a5751",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "1e399876a9f75a75",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "fe9cc84f8ec45636",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "0072ed79e0445362",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "e4c83495b7ac511f",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "9a060b6e9bd356a6",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "082df4dd84675d72",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "320d68e8e44b5cde",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "4cccaaa660fe554a",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "1ed71e888aa2548a",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "8c591077579e50ec",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "fb6f20a214fa54db",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "194059471fb6554c",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "5f769e9da3e35298",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "5b98579f04e157a9",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "9ac76f61e6745860",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "519c23b72239541c",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "01e824dad4f15ddc",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "84ab07723ddc5a3f",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "e57107079f6a5ba5",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "c3d3361bf7585feb",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "6ba9c01da0f35fd4",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "fafe297381de5dd4",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "5b2bd52eb64d56db",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "8225898361765dc9",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "18f8cad49bb65021",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "8baf51cd3c8257d4",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "5f38273efb3f5287",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "13e1833213005626",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "f4f7c9d2e05d55bd",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "98b4c37e8f8c5640",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "c47cc76bfa1d5ea6",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "4023ae39ab4d5d77",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "9539aa57e5ae51ac",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "2f055e47afad5094",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "de990256db7d503c",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "d13ee8de48ea5af9",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "9b10b0e3bedd57f7",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "3d6757ab99775d42",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "14f9e1ffe6f150c4",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "cf28d6b6c0495e8a",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "075df65887f25658",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "39fc1f8c63935c99",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "d16bbb91d9425da0",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "22c663bb30b85d9a",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "97f5296afd6a5fcd",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "bb53eeb3ea0c57ed",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "0ddac078ebda5568",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "84f79406953151b4",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "d883dc2f5eca5e05",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "8bcdc4acca6550b8",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "b4fcedffb4755bd0",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "2b05a3c019c15f06",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "e7dd68a3454a568e",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "8d2d269e7d125c82",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "060daf481b7957f9",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "11df450a6e6a54ef",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "d36c6c93ea845f1b",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "393a3f34d6c057eb",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "73be95ea4c615992",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "f88ce4cdb7025760",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "a99faf95a0e953c1",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "7efc93ca557850e4",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "22cbcab5755f5b7f",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "decb7184096759f3",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "46ffce9f83205891",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "2634dcb507555099",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "a6f288af41b058ed",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "9252ecc68454555d",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "897a9af5afc8564f",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "5b334d7b44ba5457",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "a4d1757056cd52c6",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "59d7c49809e45d8b",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "7aa2b53360095542",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "8deba5d51bfd5965",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "c736c803c9d75aa2",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "149e97df7c5a5281",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "31d9a1c07b09541e",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "787f592bab655418",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "e03f59e281da5d4f",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "1996875ea52c5122",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "660b5c667d5c55ea",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "d1a7e7606b4653bb",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "18f163263159568f",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "07beacc6080e5ec4",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "344c9994d0dd5d05",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "62c9f13d0f065b63",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "5ece54c971715c86",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "cc85bc779b785fa6",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "b9837f0afb505600",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "c69f4b77eece54e4",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "b933f325ae005443",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "f276ab16b2fc598c",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "6cf7617721bd5b8b",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "d4b756c682d45c9a",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "bb9b239c904658d2",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "b3ec14c3674e50d3",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "9a8e8a73efa15f33",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "6c3fb676eda55964",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "345770ec67045dea",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "f9956b4990ca5697",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "f822a338c8505355",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "8a16cbb7f2ad5dae",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "3c9aaa73412e5d77",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "54d1c9ed4aca5132",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "c434367f71ad5e9d",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "520de8e07e5f5eea",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "7b76c3f36f1d53a6",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "150a861c1dfa54c2",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "6267b6d37daa5758",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "d4b50ec312705498",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "c9904c0c86b055da",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "c576bd9b103450f2",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "ead0b06f55eb5e39",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "a8e2d8f567565e20",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "a5db79f58fb55edc",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "441ccefb49475a9d",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "c345cffc936f51f5",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "4491f693514d53c9",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "dcf4d90ce41a522b",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "e7070382baaf5bb4",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "cd005ccfa2695301",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "38ecb8a3660f5fc8",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "c0e1704e978b5e9f",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "ff97ded7dc68582d",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "6068e2e920315413",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "4987f8aafff65672",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "457b73923fcc5014",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "d69a429a47135271",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "df89cd70003f55a7",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "d324b78261c15023",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "958997c092a35b20",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "6ebee2c9caf45abb",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "a0e71b6f0f8b57df",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "505ffb4dfbae5b40",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "4cd197603e175339",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "445e1224a25c57a3",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "b6904acd1eaa5ddb",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "82543f3ad5ff5b38",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "7fc65099b31f59c5",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "0ece88dc75195f7c",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "f571deeb3c5e5357",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "ea4c1a035bb2508c",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "173198b55d9b556d",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "fed7035aaf0f57c1",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "3dbb594c797e5456",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "340944cff9b45932",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "918382604a03573f",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "7a6a3a8b769a5e1c",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "36de0a171c415f5e",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "eac0be9357145fd1",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "87ae5090e6fcc080",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "7200305c42c3b25b",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "95900240fa6525fe",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "58f3e5ccf90be5d0",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "209561ba31c7f0b5",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "277ecab69f936f1b",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "a0cf6d9eeb56fef9",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "63f60089e8b0c775",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "2cb5dfd098adc3bd",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "212b65dc6816e75e",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "68799746560c0789",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "0834ecb2763a32a4",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "17c1cba68a3f8ff0",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "3ef2da696f4f9428",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "1daff0af1677a4e3",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "9dab2a881c9c4794",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "6af2b2be9bc5612e",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  },
+  {
+   "id": "b752fe45d2143048",
+   "directMainInner1": true,
+   "globalActualMainGround": true,
+   "layersWithCopper": [
+    1,
+    2,
+    15,
+    16
+   ]
+  }
+ ],
+ "pours": [
+  {
+   "id": "d94cf7018b539e1a",
+   "name": "R14_INNER1_GND_NATIVE_G1",
+   "layer": 15,
+   "boundaryAreaMm2": 29206.511445349475,
+   "actualMainGroundCopperWithinBoundaryMm2": 27639.29987768296,
+   "actualCopperRegionIds": [
+    1940
+   ],
+   "returnVias": [
+    "J1.1@e12",
+    "J2.2@e24",
+    "J9.2@e24",
+    "J11.2@e57",
+    "J11.1@e58",
+    "J11.4@e59",
+    "J11.3@e60",
+    "J3.10@e55",
+    "J4.10@e55",
+    "J5.10@e55",
+    "J6.10@e55",
+    "J7.10@e55",
+    "J8.10@e55",
+    "J12.1@e1f3d8a2236bb737",
+    "d95684fdb6e85650",
+    "6e62cc26227e5ceb",
+    "40f414ee5cc1557f",
+    "993e915c43a057b7",
+    "52fa5a66258b5013",
+    "33be06dacf945650",
+    "d0513b649e625155",
+    "ca8f159801865dbb",
+    "5f78f9063ffb512c",
+    "5cb4ab1470e4525e",
+    "2d848bf549fe5820",
+    "1b426224da2b5d81",
+    "bbc254e5e2b85dee",
+    "832b706ff0785aab",
+    "235a0673b2fd508e",
+    "fc8849759c805eaf",
+    "fa3123f065515c10",
+    "103556b4551b5d04",
+    "b5f7259995f95b1a",
+    "a38c81e76e585928",
+    "6b13a4210e8f5d48",
+    "556bfdf0b7005d42",
+    "ff6040e64ccd56bd",
+    "0e387594dbe65c02",
+    "80a376da433752b1",
+    "a1db8434c89e5ab1",
+    "23d61b8070c655a3",
+    "0c3aa8a1293f5fb3",
+    "0e0c6361e20e5d2c",
+    "78423a01255a5c14",
+    "c87054276dd352c1",
+    "6cf07a4848305cef",
+    "b2c3e6b6d68c5b7a",
+    "fa2d1546fa605bc1",
+    "55763da3d48c5948",
+    "d28d500d5b99590c",
+    "9985d2416a895e2f",
+    "3b10d58a21915411",
+    "b6f3f3825efb5241",
+    "34848be1a2ff522f",
+    "5073152997865e1c",
+    "96f6121e11dc5b00",
+    "718ea83753db5783",
+    "87c5ced7b43b5733",
+    "fc303e1e98125c86",
+    "55f2cd9f9f6d5d32",
+    "dbca4c4b74ec5bdb",
+    "eda50e1bd62857b0",
+    "f5871d07ca6f5602",
+    "008e798397ff50b3",
+    "7d0e6ed825755875",
+    "d4609150d212536a",
+    "2249ab684ab35ca9",
+    "4027b8b74e1c524b",
+    "4ee76a1a9c865c2a",
+    "561b4f415c1553a0",
+    "94222cdbb5ed5ebf",
+    "0a88dc85752f56de",
+    "8874c5ae0a4b592b",
+    "24e0ed9c7f8a5d42",
+    "60c427fbd2ae5fc9",
+    "64efd524590e56db",
+    "9f911cc91c115b47",
+    "f1a895abdd6e5e2e",
+    "9fb6e010fe015170",
+    "c6e5b3646c855d02",
+    "282f6a0481205184",
+    "0293fd31d3d1566c",
+    "f28703078d6506b0",
+    "931e22bce27960dc",
+    "c86ec9331c9d543f",
+    "c92952ab331e5d26",
+    "5e29c8774fe75618",
+    "bf6886afa7c0527a",
+    "42d39383411d50ba",
+    "22a3c9f6999456f4",
+    "27b4c930b85b5181",
+    "e0c51fa00c90590b",
+    "8a3946a04dfa5dfb",
+    "036d6f320dca5566",
+    "79c613f3c38c506c",
+    "fc4913ba027b58bb",
+    "a9510664c5325d1b",
+    "13cb3cac79465df5",
+    "70266f86585f58d6",
+    "0250414da83a55d0",
+    "5ea177ef8a6a5971",
+    "148709e4566d515f",
+    "931eb1c0ad045abc",
+    "0a7e7e9f677c524b",
+    "425fb36f9af15797",
+    "4305e7b688105a9b",
+    "e51cd3f8977c5833",
+    "087172e9ab4b582e",
+    "6cf76cc8f787597c",
+    "4a321489d1d150c6",
+    "b372e99c92485466",
+    "80b0b0e67b3f5a64",
+    "5ef5f625ba2d5bf7",
+    "c45379d88d8a5c82",
+    "ce9e4256397451f6",
+    "933e175a30625a41",
+    "f8a8642e81eb5cbc",
+    "ae89a472469456bc",
+    "4728195e481558a8",
+    "e3a32bc14432503b",
+    "05f4a14399205695",
+    "0b0aadeb88115f81",
+    "f55c6327573d5e23",
+    "d0a177f7581356d0",
+    "2a487445d3f95f82",
+    "9debd5d49e925532",
+    "21cc9f277b6d529a",
+    "59d0162bc7915827",
+    "65ffe75b270a5ae9",
+    "919432c4c58f5036",
+    "85c9205d064b5c88",
+    "c84ac590332e5a03",
+    "df09b94e7b2e57df",
+    "e07be42d7c775542",
+    "8189528640815d90",
+    "032d630356b858aa",
+    "2b6deed198095d44",
+    "42d9ceb1ca3e55ef",
+    "bc959fbfe0175a84",
+    "61936adcb1475a5e",
+    "c2c3d60202185567",
+    "4be2bb8f7beb5e05",
+    "1298e8fe4a1e536c",
+    "5a4f2b87503f5aa7",
+    "13936579d878538d",
+    "dc4a7b87c3b95d18",
+    "61694b41fd545f9e",
+    "8b863a2c2a245ddd",
+    "e20afa9111a55bbb",
+    "87742cd002695afe",
+    "2cb57a37f41d51bf",
+    "1fb20013174258a9",
+    "09d8f72869d65bdc",
+    "4b4f2e0ad06d5a00",
+    "2e066d918bc35f94",
+    "c7f90e113d5b59a6",
+    "361fea49636a5f36",
+    "50875bd0594f55c1",
+    "c454793373fb58b5",
+    "46587348ff675564",
+    "f178bfd0c7de51d1",
+    "e9a02606c13855ba",
+    "b659d0ddcf1955c5",
+    "57c28d76c77b50ad",
+    "cf9aecdb66655134",
+    "66561cf0bb89577b",
+    "e09f18944c9e58e0",
+    "0d3c18918a9a5b57",
+    "72eda51cc7315508",
+    "14d397c18dde5b0a",
+    "ea0f173bbdc25f79",
+    "7eb608f0e31a5751",
+    "1e399876a9f75a75",
+    "fe9cc84f8ec45636",
+    "0072ed79e0445362",
+    "e4c83495b7ac511f",
+    "9a060b6e9bd356a6",
+    "082df4dd84675d72",
+    "320d68e8e44b5cde",
+    "4cccaaa660fe554a",
+    "1ed71e888aa2548a",
+    "8c591077579e50ec",
+    "fb6f20a214fa54db",
+    "194059471fb6554c",
+    "5f769e9da3e35298",
+    "5b98579f04e157a9",
+    "9ac76f61e6745860",
+    "519c23b72239541c",
+    "01e824dad4f15ddc",
+    "84ab07723ddc5a3f",
+    "e57107079f6a5ba5",
+    "c3d3361bf7585feb",
+    "6ba9c01da0f35fd4",
+    "fafe297381de5dd4",
+    "5b2bd52eb64d56db",
+    "8225898361765dc9",
+    "18f8cad49bb65021",
+    "8baf51cd3c8257d4",
+    "5f38273efb3f5287",
+    "13e1833213005626",
+    "f4f7c9d2e05d55bd",
+    "98b4c37e8f8c5640",
+    "c47cc76bfa1d5ea6",
+    "4023ae39ab4d5d77",
+    "9539aa57e5ae51ac",
+    "2f055e47afad5094",
+    "de990256db7d503c",
+    "d13ee8de48ea5af9",
+    "9b10b0e3bedd57f7",
+    "3d6757ab99775d42",
+    "14f9e1ffe6f150c4",
+    "cf28d6b6c0495e8a",
+    "075df65887f25658",
+    "39fc1f8c63935c99",
+    "d16bbb91d9425da0",
+    "22c663bb30b85d9a",
+    "97f5296afd6a5fcd",
+    "bb53eeb3ea0c57ed",
+    "0ddac078ebda5568",
+    "84f79406953151b4",
+    "d883dc2f5eca5e05",
+    "8bcdc4acca6550b8",
+    "b4fcedffb4755bd0",
+    "2b05a3c019c15f06",
+    "e7dd68a3454a568e",
+    "8d2d269e7d125c82",
+    "060daf481b7957f9",
+    "11df450a6e6a54ef",
+    "d36c6c93ea845f1b",
+    "393a3f34d6c057eb",
+    "73be95ea4c615992",
+    "f88ce4cdb7025760",
+    "a99faf95a0e953c1",
+    "7efc93ca557850e4",
+    "22cbcab5755f5b7f",
+    "decb7184096759f3",
+    "46ffce9f83205891",
+    "2634dcb507555099",
+    "a6f288af41b058ed",
+    "9252ecc68454555d",
+    "897a9af5afc8564f",
+    "5b334d7b44ba5457",
+    "a4d1757056cd52c6",
+    "59d7c49809e45d8b",
+    "7aa2b53360095542",
+    "8deba5d51bfd5965",
+    "c736c803c9d75aa2",
+    "149e97df7c5a5281",
+    "31d9a1c07b09541e",
+    "787f592bab655418",
+    "e03f59e281da5d4f",
+    "1996875ea52c5122",
+    "660b5c667d5c55ea",
+    "d1a7e7606b4653bb",
+    "18f163263159568f",
+    "07beacc6080e5ec4",
+    "344c9994d0dd5d05",
+    "62c9f13d0f065b63",
+    "5ece54c971715c86",
+    "cc85bc779b785fa6",
+    "b9837f0afb505600",
+    "c69f4b77eece54e4",
+    "b933f325ae005443",
+    "f276ab16b2fc598c",
+    "6cf7617721bd5b8b",
+    "d4b756c682d45c9a",
+    "bb9b239c904658d2",
+    "b3ec14c3674e50d3",
+    "9a8e8a73efa15f33",
+    "6c3fb676eda55964",
+    "345770ec67045dea",
+    "f9956b4990ca5697",
+    "f822a338c8505355",
+    "8a16cbb7f2ad5dae",
+    "3c9aaa73412e5d77",
+    "54d1c9ed4aca5132",
+    "c434367f71ad5e9d",
+    "520de8e07e5f5eea",
+    "7b76c3f36f1d53a6",
+    "150a861c1dfa54c2",
+    "6267b6d37daa5758",
+    "d4b50ec312705498",
+    "c9904c0c86b055da",
+    "c576bd9b103450f2",
+    "ead0b06f55eb5e39",
+    "a8e2d8f567565e20",
+    "a5db79f58fb55edc",
+    "441ccefb49475a9d",
+    "c345cffc936f51f5",
+    "4491f693514d53c9",
+    "dcf4d90ce41a522b",
+    "e7070382baaf5bb4",
+    "cd005ccfa2695301",
+    "38ecb8a3660f5fc8",
+    "c0e1704e978b5e9f",
+    "ff97ded7dc68582d",
+    "6068e2e920315413",
+    "4987f8aafff65672",
+    "457b73923fcc5014",
+    "d69a429a47135271",
+    "df89cd70003f55a7",
+    "d324b78261c15023",
+    "958997c092a35b20",
+    "6ebee2c9caf45abb",
+    "a0e71b6f0f8b57df",
+    "505ffb4dfbae5b40",
+    "4cd197603e175339",
+    "445e1224a25c57a3",
+    "b6904acd1eaa5ddb",
+    "82543f3ad5ff5b38",
+    "7fc65099b31f59c5",
+    "0ece88dc75195f7c",
+    "f571deeb3c5e5357",
+    "ea4c1a035bb2508c",
+    "173198b55d9b556d",
+    "fed7035aaf0f57c1",
+    "3dbb594c797e5456",
+    "340944cff9b45932",
+    "918382604a03573f",
+    "7a6a3a8b769a5e1c",
+    "36de0a171c415f5e",
+    "eac0be9357145fd1",
+    "87ae5090e6fcc080",
+    "7200305c42c3b25b",
+    "95900240fa6525fe",
+    "58f3e5ccf90be5d0",
+    "209561ba31c7f0b5",
+    "277ecab69f936f1b",
+    "a0cf6d9eeb56fef9",
+    "63f60089e8b0c775",
+    "2cb5dfd098adc3bd",
+    "212b65dc6816e75e",
+    "68799746560c0789",
+    "0834ecb2763a32a4",
+    "17c1cba68a3f8ff0",
+    "3ef2da696f4f9428",
+    "1daff0af1677a4e3",
+    "9dab2a881c9c4794",
+    "6af2b2be9bc5612e",
+    "b752fe45d2143048"
+   ],
+   "actualNativeBoundaryUsed": true
+  },
+  {
+   "id": "82ac44b99a5952cd",
+   "name": "USB_INNER2_LOCAL_GND_DEVELOPMENT",
+   "layer": 16,
+   "boundaryAreaMm2": 201.61000000000013,
+   "actualMainGroundCopperWithinBoundaryMm2": 197.14656022740812,
+   "actualCopperRegionIds": [
+    3321
+   ],
+   "returnVias": [
+    "148709e4566d515f",
+    "931eb1c0ad045abc",
+    "0a7e7e9f677c524b",
+    "6cf76cc8f787597c",
+    "59d0162bc7915827",
+    "65ffe75b270a5ae9",
+    "919432c4c58f5036",
+    "9b10b0e3bedd57f7",
+    "7a6a3a8b769a5e1c"
+   ],
+   "actualNativeBoundaryUsed": true
+  },
+  {
+   "id": "c758bf7389d8587a",
+   "name": "USB_PORT_INNER2_GND_DEVELOPMENT",
+   "layer": 16,
+   "boundaryAreaMm2": 34.309999999999974,
+   "actualMainGroundCopperWithinBoundaryMm2": 19.664602444428052,
+   "actualCopperRegionIds": [
+    3509,
+    3514
+   ],
+   "returnVias": [
+    "425fb36f9af15797",
+    "4305e7b688105a9b",
+    "85c9205d064b5c88",
+    "c84ac590332e5a03",
+    "df09b94e7b2e57df"
+   ],
+   "actualNativeBoundaryUsed": true
+  },
+  {
+   "id": "1472b7d935c15356",
+   "name": "MDI_TX_SHORT_CROSSOVER_INNER2_GND",
+   "layer": 16,
+   "boundaryAreaMm2": 12.808311566781004,
+   "actualMainGroundCopperWithinBoundaryMm2": 9.699833331607362,
+   "actualCopperRegionIds": [
+    3185
+   ],
+   "returnVias": [
+    "e07be42d7c775542",
+    "8189528640815d90",
+    "032d630356b858aa",
+    "2b6deed198095d44"
+   ],
+   "actualNativeBoundaryUsed": true
+  },
+  {
+   "id": "d88ed4d0f32e5bb5",
+   "name": "SPI_WEST_GND_REFERENCE_20261022",
+   "layer": 16,
+   "boundaryAreaMm2": 54.41423885895703,
+   "actualMainGroundCopperWithinBoundaryMm2": 41.59173449222596,
+   "actualCopperRegionIds": [
+    3159
+   ],
+   "returnVias": [
+    "bc959fbfe0175a84",
+    "61936adcb1475a5e",
+    "c2c3d60202185567",
+    "4be2bb8f7beb5e05",
+    "1298e8fe4a1e536c",
+    "5a4f2b87503f5aa7",
+    "13936579d878538d",
+    "173198b55d9b556d",
+    "fed7035aaf0f57c1"
+   ],
+   "actualNativeBoundaryUsed": true
+  },
+  {
+   "id": "3267233db0945da8",
+   "name": "SPI_EAST_GND_REFERENCE_20261022",
+   "layer": 16,
+   "boundaryAreaMm2": 43.19999999999985,
+   "actualMainGroundCopperWithinBoundaryMm2": 35.4440094382712,
+   "actualCopperRegionIds": [
+    3460
+   ],
+   "returnVias": [
+    "dc4a7b87c3b95d18",
+    "61694b41fd545f9e",
+    "8b863a2c2a245ddd",
+    "e20afa9111a55bbb",
+    "87742cd002695afe",
+    "2cb57a37f41d51bf"
+   ],
+   "actualNativeBoundaryUsed": true
+  }
+ ]
+}

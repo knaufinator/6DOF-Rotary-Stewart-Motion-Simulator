@@ -1,0 +1,11 @@
+{
+  "status": "PASS_324_FRESH_STEP_POSES",
+  "sourceSha256": "979ab2f72b642353866ec91bb8908640fa747aaf745201abe8dcb54c569d22d0",
+  "stepSha256": "5ad1ebcea91ee7d002b4ceceb46b7ba851210b91aae6179e3fac100a7f4569b7",
+  "parts": 324,
+  "moved": 30,
+  "unchanged": 294,
+  "maximumBoundingBoxTranslationErrorMm": 4.756429400742945e-05,
+  "gateMm": 0.0001,
+  "baselineStepSha256": "5ea5cd58b4854ca3e579a0029b99ca1b57e82426ecaa53e761064146e5f8ee39"
+}

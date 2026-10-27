@@ -1,0 +1,27 @@
+{
+  "status": "PASS_IDENTITIES_AND_EXPORT_COHERENCE",
+  "profile": "sensor-10v",
+  "components": 324,
+  "bomGroups": 91,
+  "logicalPins": 1214,
+  "nativeDrc": [],
+  "nativeDrcEvidence": "NATIVE_DRC.json",
+  "logicalPinMembershipsAgree": true,
+  "supplierIdentitiesAgree": true,
+  "nonSmtRequiredRefs": [
+    "J1",
+    "J2",
+    "J9",
+    "J11",
+    "J3",
+    "J4",
+    "J5",
+    "J6",
+    "J7",
+    "J8",
+    "J12"
+  ],
+  "plottedMembers": 15,
+  "geometryQualification": "See pinned complete-review evidence; not inferred from DRC.",
+  "stepPlacementRefs": 324
+}

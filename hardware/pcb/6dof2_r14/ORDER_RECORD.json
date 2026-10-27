@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "status": "ORDERED_HARDWARE_TESTS_PENDING",
+  "status": "ORDERED_FACTORY_CLEARANCE_HOLD",
   "orderedDate": "2026-10-26",
   "timezone": "America/New_York",
   "confirmationSource": "Owner confirmation in this conversation: order placed, testing to come.",
@@ -23,9 +23,9 @@
   },
   "hardwareTests": "NOT_RUN",
   "motionAdmission": "Locked pending physical R14 qualification",
-  "nextStage": "BRINGUP.md",
+  "nextStage": "MECHANICAL_CORRECTION.md",
   "expectedGitTag": "r14-ordered-2026-10-26",
-  "changePolicy": "Keep ordered manufacturing inputs unchanged; create a new revision/export directory for later electrical changes. Documentation and new dated test reports can evolve.",
+  "changePolicy": "Keep ordered manufacturing inputs unchanged. Mechanical/electrical corrections require a new dated export directory; the original order tag stays fixed.",
   "frozenFiles": [
     {
       "path": "hardware/pcb/6dof2_r14/exports/2026-10-26/EXPORT_VALIDATION.json",
@@ -104,5 +104,19 @@
     }
   ],
   "firmwareSourceSnapshot": "review/2026-10-26-10V/FIRMWARE_SOURCE_FREEZE.json",
-  "testEvidenceScope": "R13 retained physical tests cover axis 0. Later R14 source/build checks do not establish manufactured-board behavior."
+  "testEvidenceScope": "R13 retained physical tests cover axis 0. Later R14 source/build checks do not establish manufactured-board behavior.",
+  "factoryClearanceIssue": {
+    "reportedDate": "2026-10-27",
+    "source": "Owner-supplied JLCPCB email screenshot",
+    "factoryQuestion": "J12 will affect other part, could we remove J12?",
+    "requiredResponse": "Keep J12 fitted. Correct placement and copper before any replacement fabrication/assembly. Do not approve omission.",
+    "engineeringDisposition": "Original ordered geometry has confirmed physical interference. Corrected master and independent release validation in progress.",
+    "factoryProcessingStage": "UNKNOWN; owner confirmation still needed to distinguish replacement Gerbers from a re-spin",
+    "factoryHoldCommunicatedByAgent": false,
+    "originalOrderedFilesPreserved": true,
+    "review": "MECHANICAL_CORRECTION.md"
+  },
+  "privateFactoryReferenceCaptured": true,
+  "replacementPackage": "exports/2026-10-27-clearance/README.md",
+  "replacementStatus": "STATIC_REVIEW_COMPLETE_FACTORY_DISPOSITION_PENDING"
 }

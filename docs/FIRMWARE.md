@@ -2,15 +2,14 @@
 
 Paths and commands in this guide start at the repository root unless noted otherwise.
 
-> **6DOF 2 PCBv2 prototype status — 2026-09-23:** r13 RC4 routed PCB files are complete
-> for prototype review, but nothing is ordered or hardware-validated. Firmware
-> changes are deliberately deferred. The current full-size firmware must not be
-> treated as a safe drive-connected commissioning image. The actionable backlog is
-> [6DOF2_FIRMWARE_TODO.md](../hardware/pcb/6DOF2_FIRMWARE_TODO.md); the current package
-> state is [6DOF2_BOARD.md](../hardware/pcb/6DOF2_BOARD.md).
+> **2026-10-25:** R13 has retained single-axis bench evidence and its tested source
+> is integrated. R14 adds board diagnostics and remains locked against motion pending
+> physical qualification. The owner confirmed the R14 order; hardware tests are next.
+> [Current R14 status](../hardware/pcb/6dof2_r14/README.md) ?
+> [Firmware evidence and build variants](../hardware/pcb/6dof2_r14/FIRMWARE_STATUS.md).
 
 This repo carries **one firmware codebase in two build-time variants**, both sharing the single
-[`stewart-core`](../controller/stewart-core) submodule under `controller/` (IK / AxisScaling / MotionCueing —
+[`stewart-core`](https://github.com/knaufinator/stewart-core) submodule under `controller/` (IK / AxisScaling / MotionCueing —
 the single source of truth, canonical `atan2f`). The variant is selected at build time via the
 IDF target + the actuator backend. Shared math does not mean identical application
 behavior: full-size `controller/` and `controller/mini/` transport, playback, cueing, command

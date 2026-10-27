@@ -29,9 +29,13 @@
 // Project headers
 #include "helpers.h"
 #include "EStopSafety.h"
+#include "DriveScaleValidation.h"
 #if defined(R14_FAIL_CLOSED) && PCB_VERSION == 2
 #include "R14DriveAlarmLatch.h"
 #include "R14MotionAdmission.h"
+#endif
+#if defined(R14_BOARD_IO)
+#include "R14Hardware.h"
 #endif
 #if defined(R13_BENCH_ONE_AXIS) && defined(R14_FAIL_CLOSED) && PCB_VERSION == 2
 #include "R13BenchAxis.h"
@@ -60,6 +64,49 @@
 #include "GPTimerScheduler.h"
 #else
 #include "StepDriver.h"  // selects SSE or MCPWM backend via define
+#if defined(R13_BENCH_ONE_AXIS) && !defined(STEP_DRIVER_SHARED_MCPWM)
+#error "R13_BENCH_ONE_AXIS requires STEP_DRIVER_SHARED_MCPWM (the bench hooks read that engine)"
+#endif
+#if defined(R13_BENCH_ONE_AXIS) && defined(STEP_DRIVER_SHARED_MCPWM)
+// Bench: step-engine ISR cost (see R13BenchAxis.cpp BENCH:STATUS isr=...).
+void r13_engine_isr_stats(uint32_t *count, uint32_t *cycles, uint32_t *maxc, bool reset) {
+    SharedMcpwmStepEngine &e = SharedMcpwmStepEngine::instance();
+    *count = e.isrCount(); *cycles = e.isrCycles(); *maxc = e.isrMaxCycles();
+    if (reset) e.resetIsrStats();
+}
+void r13_engine_isr_gap(uint32_t *gap_min, uint32_t *gap_sum) {
+    SharedMcpwmStepEngine &e = SharedMcpwmStepEngine::instance();
+    *gap_min = e.isrGapMin(); *gap_sum = e.isrGapSum();
+}
+uint32_t r13_engine_isr_missed(void) { return SharedMcpwmStepEngine::instance().isrMissed(); }
+void r13_engine_latch_stats(uint32_t *dneg, uint32_t *dpos, uint32_t *dbig, uint32_t *mpos, uint32_t *smax) {
+    SharedMcpwmStepEngine::instance().latchStats(dneg, dpos, dbig, mpos, smax);
+}
+// Latch-event ring (bench diagnostics): returns the event count; reset=true clears the ring.
+uint32_t r13_engine_latch_events(bool reset) {
+    SharedMcpwmStepEngine &e = SharedMcpwmStepEngine::instance();
+    uint32_t n = e._ringN; if (reset) e._ringN = 0; return n;
+}
+// k-th of the last LATCH_RING events (tick, since, m, skip, hist0; d separately); false past the end.
+bool r13_engine_latch_event(uint32_t k, uint32_t n, uint32_t out[5], int32_t *d) {
+    SharedMcpwmStepEngine &e = SharedMcpwmStepEngine::instance();
+    if (k >= n) return false;
+    uint32_t first = n > (uint32_t)SharedMcpwmStepEngine::LATCH_RING ? n - SharedMcpwmStepEngine::LATCH_RING : 0;
+    if (k < first) return false;
+    volatile SharedMcpwmStepEngine::LatchEvent &ev = e._ring[k % SharedMcpwmStepEngine::LATCH_RING];
+    out[0] = ev.tick; out[1] = ev.since; out[2] = ev.m; out[3] = ev.skip; out[4] = ev.hist0; *d = ev.d;
+    return true;
+}
+uint32_t r13_engine_period_cycles(void) { return SharedMcpwmStepEngine::instance().periodCycles(); }
+void r13_engine_resync_stats(uint32_t *resyncs, uint32_t *skipmax) {
+    SharedMcpwmStepEngine &e = SharedMcpwmStepEngine::instance(); *resyncs = e.resyncs(); *skipmax = e.skipMax();
+}
+void r13_engine_isr_delay(uint32_t cyc) { SharedMcpwmStepEngine::instance().setIsrDelay(cyc); }
+bool r13_engine_latch_comp(int set) {
+    if (set >= 0) SharedMcpwmStepEngine::instance().setLatchComp(set != 0);
+    return SharedMcpwmStepEngine::instance().latchComp();
+}
+#endif
 #endif
 
 #ifdef ENABLE_ETHERNET
@@ -80,6 +127,24 @@ static const char *TAG = "stewart_main";
 
 // Platform configuration (single source of truth for geometry)
 static StewartConfig stewartConfig;
+
+#if defined(R13_BENCH_ONE_AXIS)
+// Bench: run the production IK on a pose and report the six arm angles (deg) and axis steps
+// relative to the home pose, exactly as setPos() would compute them. pos = x y z (mm), roll
+// pitch yaw (rad). Returns validatePosition()'s verdict (1 = reachable).
+int r13_bench_ik(const float pos[6], float angles_deg[6], long steps[6]) {
+    static const float home[6] = {0, 0, 0, 0, 0, 0};
+    float a[6], h[6];
+    calculateAllServoAngles(home, &stewartConfig, h);
+    calculateAllServoAngles(pos, &stewartConfig, a);
+    for (int i = 0; i < 6; i++) {
+        angles_deg[i] = a[i] * IK_RAD_TO_DEG;
+        steps[i] = (long)((a[i] - h[i]) * IK_RAD_TO_DEG * stewartConfig.steps_per_degree);
+    }
+    return validatePosition(pos, &stewartConfig);
+}
+float r13_bench_steps_per_degree() { return stewartConfig.steps_per_degree; }
+#endif
 
 // Per-axis scaling (derived from platform geometry at boot, read-only via SCALE?)
 static AxisScaleConfig axisScales;
@@ -318,6 +383,36 @@ static int configSaveToNVS(const StewartConfig* cfg) {
     return (err == ESP_OK) ? 0 : -1;
 }
 
+// ── NVS persistence for the drive train (DRIVE:gear/planetary/encoder) ───
+// Stored as separate keys so the geometry blob version stays untouched.
+static int driveSaveToNVS(const StewartConfig* cfg) {
+    nvs_handle_t handle;
+    if (nvs_open(CONFIG_NVS_NAMESPACE, NVS_READWRITE, &handle) != ESP_OK) return -1;
+    uint32_t g, p; memcpy(&g, &cfg->virtual_gear, 4); memcpy(&p, &cfg->planetary_ratio, 4);
+    esp_err_t err = nvs_set_u32(handle, "drv_gear", g);
+    if (err == ESP_OK) err = nvs_set_u32(handle, "drv_planet", p);
+    if (err == ESP_OK) err = nvs_set_i32(handle, "drv_enc", cfg->encoder_ppr);
+    if (err == ESP_OK) err = nvs_commit(handle);
+    nvs_close(handle);
+    return (err == ESP_OK) ? 0 : -1;
+}
+
+static int driveLoadFromNVS(StewartConfig* cfg) {
+    nvs_handle_t handle;
+    if (nvs_open(CONFIG_NVS_NAMESPACE, NVS_READONLY, &handle) != ESP_OK) return -1;
+    uint32_t g = 0, p = 0; int32_t e = 0;
+    bool ok = nvs_get_u32(handle, "drv_gear", &g) == ESP_OK &&
+              nvs_get_u32(handle, "drv_planet", &p) == ESP_OK &&
+              nvs_get_i32(handle, "drv_enc", &e) == ESP_OK;
+    nvs_close(handle);
+    if (!ok) return -1;
+    float gf, pf; memcpy(&gf, &g, 4); memcpy(&pf, &p, 4);
+    if (!valid_drive_scale(e, gf, pf)) return -1;
+    cfg->virtual_gear = gf; cfg->planetary_ratio = pf; cfg->encoder_ppr = (int)e;
+    computeStepsPerDegree(cfg);
+    return 0;
+}
+
 static int configLoadFromNVS(StewartConfig* cfg) {
     nvs_handle_t handle;
     esp_err_t err = nvs_open(CONFIG_NVS_NAMESPACE, NVS_READONLY, &handle);
@@ -402,9 +497,9 @@ static bool estop_motion_is_blocked() {
 }
 
 #if defined(R14_FAIL_CLOSED) && PCB_VERSION == 2
-// Task-context ingress for a future measured, normalized drive-alarm adapter.
-// No GPIO is assigned here: the installed alarm polarity is still unknown.
-// The physical alarm OR/pulse inhibit must act faster than this task callback.
+// Task-context ingress: R14Hardware samples GPIO1/2/15/16/18/40. The measured
+// R13 interface is LOW healthy / HIGH alarm, off or open; verify all R14 cables.
+// Hardware clears only the faulted torque latch; common pulse stop uses GPIO47.
 extern "C" void r14_report_normalized_drive_alarm(int axis) {
     r14DriveAlarms.assert_alarm(axis);
     r14MotionAdmission.report_alarm(axis);
@@ -489,6 +584,12 @@ void setupMotorPins() {
     DEBUG_PRINTLN("Motors initialized: 6 via MCP23S17 SPI expander (PCBv1)");
 }
 #else
+// Step-engine soft limits, ±MOTOR_SOFT_LIMIT_DEG at the arm, converted with the drive's
+// electronic gear (steps_per_degree) so they follow DRIVE:gear= instead of a step count
+// that would be ±144° at 2:1. R13 arm: hard stop near −100°/+80°, test window ±60°.
+#define MOTOR_SOFT_LIMIT_DEG 72.0f
+static int32_t motorSoftLimitSteps() { return (int32_t)(MOTOR_SOFT_LIMIT_DEG * stewartConfig.steps_per_degree); }
+
 void setupMotorPins() {
     // PCBv2: Initialize via whichever StepDriver backend is selected.
     // Change STEP_DRIVER_SSE / STEP_DRIVER_MCPWM in main/CMakeLists.txt to switch.
@@ -497,8 +598,9 @@ void setupMotorPins() {
         cfg[i].stepPin          = stepPins[i];
         cfg[i].dirPin           = dirPins[i];
         cfg[i].invertDir        = false;
-        cfg[i].softLimitMin     = -100000;
-        cfg[i].softLimitMax     =  100000;
+        // stewartConfig (incl. the drive gear from NVS) is loaded before this task starts
+        cfg[i].softLimitMin     = -motorSoftLimitSteps();
+        cfg[i].softLimitMax     =  motorSoftLimitSteps();
         cfg[i].enableSoftLimits = true;
     }
     if (!StepDriver_init(cfg)) {
@@ -506,7 +608,7 @@ void setupMotorPins() {
         return;
     }
 #if defined(R14_FAIL_CLOSED)
-    // R14 has no qualified local-arm and drive-alarm IO adapter yet. The
+    // R14 diagnostics do not grant measured homing/field qualification. The
     // backend is initialized with all STEP pins low but its timer never starts.
     for (int i = 0; i < STEP_DRIVER_NUM_MOTORS; ++i)
         gpio_set_level(stepPins[i], 0);
@@ -525,17 +627,17 @@ void setupMotorPins() {
     }
     StepDriver_report();
 #if defined(R13_BENCH_ACTIVE)
-    // Bench step 12: the six-axis gate stays closed; only console BENCH: commands
-    // start the engine, after an explicit BENCH:ARM with the stop loop closed.
+    // Bench step 12: the six-axis gate stays closed; only console BENCH: commands drive the
+    // engine, after an explicit BENCH:ARM with the stop loop closed. Initialise the engine
+    // here, on core 1 like the production path, so its level-3 MCPWM ISR is allocated on
+    // core 1 (a core-0 start from the console task crashed the board on 2026-10-20). In
+    // bench builds start() leaves the period timer stopped (the ISR would starve this task
+    // during the rest of boot); BENCH:ARM resumes it. The bench owns the engine from here on.
+    if (!StepDriver_start()) DEBUG_PRINTLN("bench: StepDriver_start failed");
     static const R13BenchOps benchOps = {
         [](int i, int32_t p) { return StepDriver_setTarget(i, p); },
         [](int i) { return StepDriver_getPosition(i); },
-        []() {
-            static bool started = false;
-            if (!started) { started = StepDriver_start(); return started; }
-            StepDriver_resume();
-            return true;
-        },
+        []() { StepDriver_resetPosition(0); StepDriver_resume(); return true; },   // ARM: axis 0 position := 0, then resume (soft limits ±72 deg)
         []() { StepDriver_stop(); },
         []() { StepDriver_emergencyStop(); },
         []() { return gpio_get_level((gpio_num_t)ESTOP_PIN) == ESTOP_ACTIVE_STATE; },
@@ -1837,17 +1939,55 @@ void process_data(char * data) {
         char *param = data + 6;
         char *eq = strchr(param, '=');
         if (eq) {
-            *eq = '\0';
-            float val = atof(eq + 1);
-            bool changed = true;
-            if (strcmp(param, "encoder") == 0) stewartConfig.encoder_ppr = (int)val;
-            else if (strcmp(param, "gear") == 0) stewartConfig.virtual_gear = val;
-            else if (strcmp(param, "planetary") == 0) stewartConfig.planetary_ratio = val;
-            else { changed = false; serial_printf("DRIVE:ERR unknown key '%s'\r\n", param); }
-            if (changed) {
-                computeStepsPerDegree(&stewartConfig);
-                serial_printf("DRIVE:OK %s=%.4f → steps_deg=%.4f\r\n", param, val, stewartConfig.steps_per_degree);
+#if defined(STEP_DRIVER_SHARED_MCPWM)
+            if (SharedMcpwmStepEngine::instance().isRunning()) {
+                serial_printf("DRIVE:ERR disarm before changing scale\r\n"); return;
             }
+#endif
+            *eq = '\0';
+            char* end = nullptr;
+            float val = strtof(eq + 1, &end);
+            if (end == eq + 1 || *end || !drive_finite(val)) {
+                serial_printf("DRIVE:ERR invalid numeric value\r\n"); return;
+            }
+            StewartConfig next = stewartConfig;
+            bool changed = true;
+            // Same ranges as driveLoadFromNVS(): a 0 or absurd value would give an infinite
+            // steps_per_degree and, because the value is persisted, survive a reboot.
+            if (strcmp(param, "encoder") == 0) {
+                if (val >= 1 && val <= 100000 && val == floorf(val)) next.encoder_ppr = (int)val; else changed = false;
+            } else if (strcmp(param, "gear") == 0) {
+                if (val > 0 && val <= 1000) next.virtual_gear = val; else changed = false;
+            } else if (strcmp(param, "planetary") == 0) {
+                if (val > 0 && val <= 1000) next.planetary_ratio = val; else changed = false;
+            } else { serial_printf("DRIVE:ERR unknown key '%s'\r\n", param); return; }
+            if (!changed || !valid_drive_scale(next.encoder_ppr,next.virtual_gear,next.planetary_ratio)) { serial_printf("DRIVE:ERR %s=%.4f out of range\r\n", param, val); return; }
+            computeStepsPerDegree(&next);
+#if defined(STEP_DRIVER_SHARED_MCPWM)
+            const int32_t next_limit = (int32_t)(72.0f * next.steps_per_degree);
+            if (StepDriver_isInitialized()) for (int i=0;i<6;++i) {
+                if (StepDriver_getPosition(i) < -next_limit || StepDriver_getPosition(i) > next_limit ||
+                    StepDriver_getTarget(i) < -next_limit || StepDriver_getTarget(i) > next_limit) {
+                    serial_printf("DRIVE:ERR new limit excludes existing count; recalibration required\r\n"); return;
+                }
+            }
+#endif
+            stewartConfig = next;
+            int saved = driveSaveToNVS(&stewartConfig);
+#if defined(STEP_DRIVER_SHARED_MCPWM)
+            // Soft limits are in degrees: follow the new scale now, not at the next boot.
+            if (StepDriver_isInitialized()) for (int i = 0; i < STEP_DRIVER_NUM_MOTORS; i++)
+                StepDriver_setSoftLimits(i, -motorSoftLimitSteps(), motorSoftLimitSteps());
+#endif
+            serial_printf("DRIVE:OK %s=%.4f → steps_deg=%.4f soft_limit=±%ld steps (±%.0f deg)%s\r\n", param, val,
+                          stewartConfig.steps_per_degree, (long)motorSoftLimitSteps(), (double)MOTOR_SOFT_LIMIT_DEG,
+                          saved == 0 ? " (saved)" : " (NVS save failed)");
+        } else if (strcmp(param, "?") == 0) {
+            serial_printf("DRIVE:encoder=%d,gear=%.4f,planetary=%.2f,steps_deg=%.4f,pulses_per_motor_rev=%.1f,pulses_per_output_rev=%.1f\r\n",
+                stewartConfig.encoder_ppr, stewartConfig.virtual_gear, stewartConfig.planetary_ratio,
+                stewartConfig.steps_per_degree,
+                stewartConfig.encoder_ppr * 4.0f / stewartConfig.virtual_gear,
+                stewartConfig.encoder_ppr * 4.0f / stewartConfig.virtual_gear * stewartConfig.planetary_ratio);
         }
         return;
     }
@@ -2125,7 +2265,7 @@ extern "C" void app_main(void)
     {
         gpio_config_t io = {};
         io.pin_bit_mask = (1ULL << 47) | (1ULL << 48);
-        io.mode = GPIO_MODE_OUTPUT;
+        io.mode = GPIO_MODE_INPUT_OUTPUT;
         io.pull_up_en = GPIO_PULLUP_DISABLE;
         io.pull_down_en = GPIO_PULLDOWN_DISABLE;
         io.intr_type = GPIO_INTR_DISABLE;
@@ -2161,6 +2301,9 @@ extern "C" void app_main(void)
 #if defined(R13_BENCH_ACTIVE)
         if (r13_bench_command(cmd, source)) return;   // console-only, refuses network sources
 #endif
+#if defined(R14_BOARD_IO)
+        if (r14_hardware_command(cmd, source)) return;
+#endif
         // process_data takes non-const char* for legacy reasons
         char buf[256];
         int n = snprintf(buf, sizeof(buf), "%s", cmd);
@@ -2180,10 +2323,22 @@ extern "C" void app_main(void)
   
     // Initialize Stewart platform configuration (NVS overrides defaults)
     initDefaultStewartConfig(&stewartConfig);
+#if PCB_VERSION == 2
+    // R13 bench and onward: AASD-15A electronic gear 2:1 (Pn098=2/Pn102=1, owner 2026-10-20),
+    // 2500-line encoder, 50:1 planetary — 5 000 pulses per motor turn, 250 000 per arm turn
+    // (694.4 per degree), confirmed with the camera against the 1:1 sweep table. At 2:1 the
+    // 250 kHz engine ceiling is the motor's rated 3000 r/min = 360 deg/s at the arm.
+    // stewart-core's default of 80 is the pre-R13 drive setting. DRIVE:gear= overrides (and persists).
+    stewartConfig.virtual_gear = 2.0f;
+    computeStepsPerDegree(&stewartConfig);
+#endif
     if (configLoadFromNVS(&stewartConfig) == 0) {
         ESP_LOGI(TAG, "Geometry: Loaded from NVS (RD=%.2f, PD=%.2f)", stewartConfig.RD, stewartConfig.PD);
     } else {
         ESP_LOGI(TAG, "Geometry: Using factory defaults");
+    }
+    if (driveLoadFromNVS(&stewartConfig) == 0) {
+        ESP_LOGI(TAG, "Drive train: loaded from NVS");
     }
     // Load saved input source + tick rate from NVS
     {
@@ -2260,6 +2415,10 @@ extern "C" void app_main(void)
         3,                       /* priority of the task */
         NULL,                    /* Task handle */
         1);                      /* pin task to core 1 */
+
+#if defined(R14_BOARD_IO)
+    r14_hardware_start();
+#endif
     
 #ifdef ENABLE_ETHERNET
     // Initialize W5500 SPI Ethernet + UDP listener

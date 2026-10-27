@@ -25,7 +25,7 @@ def open_port(port):
     s.baudrate = 115200
     s.timeout = 0.2
     # Both lines in the same state == no-op on the ESP32-S3 USB-serial-JTAG reset logic.
-    s.dtr = False
+    s.dtr = True
     s.rts = False
     s.open()
     return s

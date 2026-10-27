@@ -1,4 +1,24 @@
-# AASD-15A drive settings — R13 bench and 1:1 firmware
+# AASD-15A drive settings ? tested R13 configuration and history
+
+
+## Verified capture update ? 2026-10-25
+
+The recovered final R13 bench capture uses **Pn098=2, Pn102=1 and Pn051=3000**.
+With the 2,500-line encoder and 50:1 gearbox this is 5,000 input pulses per motor
+revolution, 694.444 pulses per arm degree, and **?50,000 pulses for ?72?**. The
+current main firmware defaults agree. This is one-axis bench evidence, not a
+six-axis or loaded-platform acceptance result.
+
+R14 adds externally controlled SRV-ON. Do not carry the historical automatic
+power-on servo-enable setting into R14: its exact drive polarity/parameter
+configuration must be qualified with the new latch circuit. Use the
+[R14 firmware evidence](../hardware/pcb/6dof2_r14/FIRMWARE_STATUS.md) and
+[qualification plan](../hardware/pcb/6dof2_r14/BRINGUP.md).
+
+## Historical October 11 trial
+
+The table and procedure below describe the earlier 1:1 trial. They are retained
+for history and must not override the captured 2:1 configuration above.
 
 Status: **bench trial values, 11 October 2026.** For one unloaded drive on the R13
 board, used with the bring-up sequence in
@@ -62,7 +82,7 @@ AASD differential input accepts up to 500 kHz.
 
 | Electronic gear | Pulses / motor rev | Motor speed at 250 kHz | Arm speed (50:1) | Arm resolution |
 |---|---|---|---|---|
-| **1:1 (chosen)** | 10 000 | 1500 r/min | 180 °/s | 0.00072 ° |
+| **1:1 (earlier trial)** | 10 000 | 1500 r/min | 180 °/s | 0.00072 ° |
 | 2:1 | 5 000 | 3000 r/min (rated) | 360 °/s | 0.0014 ° |
 | 80:1 (2020) | 125 | 3000 r/min at 6.25 kHz | 360 °/s | 0.058 ° |
 
@@ -70,7 +90,7 @@ At 1:1 the motor cannot reach its rated 3000 r/min (that would need 500 kHz). If
 platform needs more than 180 °/s at the arm, switch to 2:1.
 
 Platform firmware soft limits are ±100 000 steps per motor, ≈ ±72 ° at the arm at 1:1.
-Raise them before running the full platform if arm travel exceeds that.
+This is the earlier 1:1 count calculation. The captured 2:1 configuration uses ?50,000 pulses. Do not increase limits to bypass a calibration or mechanical-travel mismatch.
 
 ## Differential STEP/DIR — nothing to set
 

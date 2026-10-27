@@ -96,7 +96,7 @@ def usb_test(port, size, n, window, secs):
     ser.port = port
     ser.baudrate = 115200
     ser.timeout = 0.5
-    ser.dtr = False
+    ser.dtr = True
     ser.rts = False
     ser.open()
     ser.reset_input_buffer()
@@ -179,7 +179,7 @@ def usb_sink(port, size, rate, secs):
     ser.port = port
     ser.baudrate = 115200
     ser.timeout = 0.5
-    ser.dtr = False
+    ser.dtr = True
     ser.rts = False
     ser.open()
     ser.reset_input_buffer()

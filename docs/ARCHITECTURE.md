@@ -11,7 +11,7 @@ The [app guide](APP_GUIDE.md) documents the user interface.
 | Desktop application | [`app/src/main.cpp`](../app/src/main.cpp) creates the GLFW/OpenGL window and drives update/render; [`app.cpp`](../app/src/app.cpp) owns entities, input processing, HIL sessions, recordings and settings. |
 | Desktop presentation | [`ui_panels.cpp`](../app/src/ui_panels.cpp) builds the Dear ImGui/ImPlot interface; [`platform_viz.cpp`](../app/src/platform_viz.cpp) renders the platform geometry. |
 | Input plugins | [`plugin_api.h`](../app/src/plugin_api.h) defines the plugin interface; [`plugin_manager.cpp`](../app/src/plugin_manager.cpp) loads and runs plugins. Implementations live in [`app/plugins/`](../app/plugins/). |
-| Shared math | [`controller/stewart-core/`](../controller/stewart-core/) contains inverse kinematics, axis scaling, filters and motion cueing. |
+| Shared math | `controller/stewart-core/` is a Git submodule of [`knaufinator/stewart-core`](https://github.com/knaufinator/stewart-core); it contains inverse kinematics, axis scaling, filters and motion cueing. |
 | Full-size firmware | [`controller/main/main.cpp`](../controller/main/main.cpp), `app_main()`: ESP-IDF application, commands, input selection, step targets and telemetry. |
 | Mini firmware | [`controller/mini/main/main.cpp`](../controller/mini/main/main.cpp), `app_main()` and `CueTask()`: hobby-servo output, live input and embedded playback. |
 | Signal analyzer | [`controller/test_harness/main/main.c`](../controller/test_harness/main/main.c): a separate ESP-IDF application for measuring step/direction signals. |
@@ -98,7 +98,7 @@ The desktop swaps surge/sway into IK X/Y order before SIL IK and before encoding
 baked HIL packets. Raw HIL retains app order; Mini swaps those channels after
 cueing. Preserve this boundary when adding sources or transport formats.
 
-[`InverseKinematics.cpp`](../controller/stewart-core/src/InverseKinematics.cpp)
+[`InverseKinematics.cpp`](https://github.com/knaufinator/stewart-core/blob/main/src/InverseKinematics.cpp)
 contains two implementations: desktop SIL calls `calcAllActuatorAngles()` with
 `PlatformDef`; both current firmware actuator paths call
 `calculateAllServoAngles()` with compact `StewartConfig`. The generalized solver
@@ -113,7 +113,7 @@ way around; check this mapping when changing geometry or importing measurements.
 `computeHomeHeight()` averages the heights implied by horizontal arms using
 the XY joint offsets. It does not validate a general asymmetric/non-planar build.
 
-[`AxisScaling.cpp`](../controller/stewart-core/src/AxisScaling.cpp) probes positive
+[`AxisScaling.cpp`](https://github.com/knaufinator/stewart-core/blob/main/src/AxisScaling.cpp) probes positive
 single-axis motion from home using compact IK, takes the smallest translation
 and rotation limits within each group, applies the requested margin and rounds
 down. These are input scaling estimates, not a validated combined-pose workspace.

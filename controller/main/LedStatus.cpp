@@ -149,14 +149,12 @@ static void LedStatusTask(void *pvParameters) {
 // ── Public API ──────────────────────────────────────────────────────
 
 void led_status_init(int gpio_num) {
-    led_strip_config_t strip_config = {
-        .strip_gpio_num = gpio_num,
-        .max_leds = 1,
-    };
-    led_strip_rmt_config_t rmt_config = {
-        .resolution_hz = 10 * 1000 * 1000,
-        .flags = { .with_dma = false },
-    };
+    led_strip_config_t strip_config = {};
+    strip_config.strip_gpio_num = gpio_num;
+    strip_config.max_leds = 1;
+    led_strip_rmt_config_t rmt_config = {};
+    rmt_config.resolution_hz = 10 * 1000 * 1000;
+    rmt_config.flags.with_dma = false;
 
     esp_err_t ret = led_strip_new_rmt_device(&strip_config, &rmt_config, &strip);
     if (ret != ESP_OK) {

@@ -195,8 +195,10 @@ def open_serial(port: str, timeout: float = 0.1):
         raise RuntimeError("pyserial missing: run with the ESP-IDF venv python")
     s = serial.Serial()
     s.port, s.baudrate, s.timeout = port, 115200, timeout
-    # Equal DTR/RTS is a no-op for the ESP32-S3 USB-Serial/JTAG reset logic: opening never resets.
-    s.dtr = False; s.rts = False
+    # DTR asserted, RTS de-asserted = a terminal is attached: the controller image's USB-Serial/JTAG
+    # console transmits only in that state (measured 2026-10-20: DTR off -> silent; DTR on + RTS on
+    # also stays silent on a fresh boot). This is not the chip's reset sequence, so nothing resets.
+    s.dtr = True; s.rts = False
     s.open()
     return s
 
@@ -283,9 +285,12 @@ class BenchLink(Link):
         with self.lock:
             try: self.ser.reset_input_buffer()
             except Exception: pass
-            self.ser.write(cobs_encode(bytes([CH_CMD]) + cmd.encode()) + b"\x00"); self.ser.flush()
+            # leading 0x00 resynchronises the firmware's COBS decoder after any non-COBS bytes
+            # (e.g. the probe "info" text that detect() sends first)
+            self.ser.write(b"\x00" + cobs_encode(bytes([CH_CMD]) + cmd.encode()) + b"\x00"); self.ser.flush()
             head = cmd.split()[0].split(":")
             key = ":".join(head[:2]) if len(head) >= 2 else head[0]
+            key = key.rstrip("?")      # "DRIVE:?" / "CONFIG?" are answered by "DRIVE:..." / "CONFIG:..."
 
             def done(line: str) -> bool:
                 if "ERR" in line and line.startswith(key):
@@ -306,17 +311,41 @@ class BenchLink(Link):
         return BoardStatus(raw="\n".join(lines))
 
 
+def steps_per_degree(link, default: float = 250000 / 360.0) -> float:
+    """Pulses per arm degree as the controller computes it (DRIVE:? steps_deg); the drive's
+    electronic gear is part of it (1:1 -> 1388.9, 2:1 -> 694.4). Falls back to `default`."""
+    try:
+        ok, lines = link.command("DRIVE:?", 1.5)
+        for l in lines:
+            if "steps_deg=" in l:
+                return float(l.split("steps_deg=")[1].split(",")[0])
+    except Exception:
+        pass
+    return default
+
+
 def detect(port: str, on_rx=None) -> Tuple[Optional[Link], str]:
     """Open the port and identify the firmware. Returns (link, info text)."""
     ser = open_serial(port)
+    # Ask the controller first: a COBS frame is harmless to the probe's text console, whereas
+    # the probe's "info" text sent first to a freshly booted controller leaves it silent (2026-10-20).
+    bench = BenchLink(ser, on_rx)
+    ok, lines = bench.command("BENCH:STATUS", 1.5)
+    if any(l.startswith("BENCH:STATUS") for l in lines):
+        return bench, "\n".join(lines)
     probe = ProbeLink(ser, on_rx)
     ok, lines = probe.command("info", 2.0)
     if ok:
         return probe, "\n".join(lines)
-    bench = BenchLink(ser, on_rx)
-    ok, lines = bench.command("BENCH:STATUS", 2.0)
-    if any(l.startswith("BENCH:STATUS") for l in lines):
-        return bench, "\n".join(lines)
+    for _ in range(3):
+        try: ser.write(b"\x00"); ser.flush()      # resync the firmware's COBS decoder after the text probe
+        except Exception: pass
+        ok, lines = bench.command("BENCH:STATUS", 2.0)
+        if any(l.startswith("BENCH:STATUS") for l in lines):
+            return bench, "\n".join(lines)
+        # the controller console transmits only after the host has shown DTR; toggle it and retry
+        try: ser.dtr = False; time.sleep(0.2); ser.dtr = True; time.sleep(0.3)
+        except Exception: pass
     ok, lines = bench.command("VERSION", 1.5)
     if lines:
         return bench, "controller without bench mode?\n" + "\n".join(lines)

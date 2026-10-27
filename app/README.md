@@ -9,15 +9,11 @@ otherwise. `app/` contains the desktop application and `app/bridge/` its optiona
 Linux HIL bridge. Controller firmware is separate in `controller/`; shared guides
 are in `docs/`. The detailed project overview and demos are preserved below.
 
-> **UNTESTED PCB PROTOTYPE — 2026-09-23.** The 6DOF 2 r13 PCB is placed, routed and
-> saved/reopened with zero native DRC errors. The complete RC4 prototype file package
-> is provided; actual JLC stackup, allocation and assembly approval remain pending.
-> It is intended for an upcoming prototype order and bench testing, but has not been ordered,
-> manufactured or validated as a working controller. Firmware corrections are
-> deferred and required before drive-connected operation. Do not use the current
-> firmware/PCB combination on a powered motion platform. See the
-> [hardware status and files](../hardware/pcb/6DOF2_BOARD.md) and
-> [required firmware and commissioning work](../hardware/pcb/6DOF2_FIRMWARE_TODO.md).
+> **2026-10-26:** R14 is ordered; hardware testing is pending. The recovered R13
+> single-axis evidence is retained separately from new R14 changes. Desktop examples remain
+> synthetic and do not qualify hardware or firmware. See the
+> [R14 status](../hardware/pcb/6dof2_r14/README.md) and
+> [firmware qualification boundary](../hardware/pcb/6dof2_r14/FIRMWARE_STATUS.md).
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Platform: ESP32-S3](https://img.shields.io/badge/Platform-ESP32--S3-blue.svg)](https://www.espressif.com/en/products/socs/esp32s3)
@@ -58,20 +54,20 @@ Everything runs in a single native executable — no browser, no server, no Pyth
 ## Demo Videos
 
 <div align="center">
-  <a href="http://www.youtube.com/watch?feature=player_embedded&v=fEcdGIq_Jzc" target="_blank">
-    <img src="http://img.youtube.com/vi/fEcdGIq_Jzc/0.jpg" alt="Motion Sim Demo 1" width="400"/>
+  <a href="https://www.youtube.com/watch?feature=player_embedded&v=fEcdGIq_Jzc" target="_blank">
+    <img src="https://img.youtube.com/vi/fEcdGIq_Jzc/0.jpg" alt="Motion Sim Demo 1" width="400"/>
   </a>
-  <a href="http://www.youtube.com/watch?feature=player_embedded&v=1WXx59tWYc4" target="_blank">
-    <img src="http://img.youtube.com/vi/1WXx59tWYc4/0.jpg" alt="Motion Sim Demo 2" width="400"/>
+  <a href="https://www.youtube.com/watch?feature=player_embedded&v=1WXx59tWYc4" target="_blank">
+    <img src="https://img.youtube.com/vi/1WXx59tWYc4/0.jpg" alt="Motion Sim Demo 2" width="400"/>
   </a>
 </div>
 
 <div align="center">
-  <a href="http://www.youtube.com/watch?feature=player_embedded&v=_NR_MUGvmUo" target="_blank">
-    <img src="http://img.youtube.com/vi/_NR_MUGvmUo/0.jpg" alt="Motion Sim Demo 3" width="400"/>
+  <a href="https://www.youtube.com/watch?feature=player_embedded&v=_NR_MUGvmUo" target="_blank">
+    <img src="https://img.youtube.com/vi/_NR_MUGvmUo/0.jpg" alt="Motion Sim Demo 3" width="400"/>
   </a>
-  <a href="http://www.youtube.com/watch?feature=player_embedded&v=CdDkL8X6qOE" target="_blank">
-    <img src="http://img.youtube.com/vi/CdDkL8X6qOE/0.jpg" alt="Motion Sim Demo 4" width="400"/>
+  <a href="https://www.youtube.com/watch?feature=player_embedded&v=CdDkL8X6qOE" target="_blank">
+    <img src="https://img.youtube.com/vi/CdDkL8X6qOE/0.jpg" alt="Motion Sim Demo 4" width="400"/>
   </a>
 </div>
 
@@ -265,7 +261,7 @@ The ESP32 STEP/DIR interface cannot set this drive parameter. The r13
 firmware also rejects `ESTOP:SOFT` and `ZERO` until a physical home
 reference is qualified.
 
-**Current bench and 1:1-firmware settings:
+**Tested R13 2:1 configuration and dated bench history:
 [docs/AASD15A_DRIVE_SETTINGS.md](../docs/AASD15A_DRIVE_SETTINGS.md).**
 
 Original 2020 settings (README commit `8e46615`), for reference only. An earlier

@@ -1,0 +1,1679 @@
+{
+ "traceProjections": [
+  {
+   "id": "c11f65f147985ad4",
+   "net": "USB_DP_MCU",
+   "layer": 1,
+   "adjacentLayer": 15,
+   "widthMm": 0.1651,
+   "actualUnsupportedOutsideTransitionAreaMm2": 0.0,
+   "actualUnsupportedCenterlineMm": 0.0,
+   "actualReferenceEdgeMarginMm": 0.08949130213023364,
+   "unsupportedBoundsMm": [],
+   "transitionRadiusMm": 0.6
+  },
+  {
+   "id": "2e93a27add6e5441",
+   "net": "USB_DN_MCU",
+   "layer": 1,
+   "adjacentLayer": 15,
+   "widthMm": 0.1651,
+   "actualUnsupportedOutsideTransitionAreaMm2": 0.0,
+   "actualUnsupportedCenterlineMm": 0.0,
+   "actualReferenceEdgeMarginMm": 0.08949010896107368,
+   "unsupportedBoundsMm": [],
+   "transitionRadiusMm": 0.6
+  },
+  {
+   "id": "024b9cf9d1e55c24",
+   "net": "USB_DP_MCU",
+   "layer": 2,
+   "adjacentLayer": 16,
+   "widthMm": 0.1651,
+   "actualUnsupportedOutsideTransitionAreaMm2": 0.0,
+   "actualUnsupportedCenterlineMm": 0.0,
+   "actualReferenceEdgeMarginMm": 0.08948458797971044,
+   "unsupportedBoundsMm": [],
+   "transitionRadiusMm": 0.6
+  },
+  {
+   "id": "08dbf61d1de65eec",
+   "net": "USB_DN_MCU",
+   "layer": 2,
+   "adjacentLayer": 16,
+   "widthMm": 0.1651,
+   "actualUnsupportedOutsideTransitionAreaMm2": 0.0,
+   "actualUnsupportedCenterlineMm": 0.0,
+   "actualReferenceEdgeMarginMm": 0.08948458797971044,
+   "unsupportedBoundsMm": [],
+   "transitionRadiusMm": 0.6
+  },
+  {
+   "id": "15e0c21002ee50e1",
+   "net": "USB_DP_MCU",
+   "layer": 1,
+   "adjacentLayer": 15,
+   "widthMm": 0.1651,
+   "actualUnsupportedOutsideTransitionAreaMm2": 0.0,
+   "actualUnsupportedCenterlineMm": 0.0,
+   "actualReferenceEdgeMarginMm": 0.08948838098165197,
+   "unsupportedBoundsMm": [],
+   "transitionRadiusMm": 0.6
+  },
+  {
+   "id": "ec06344e3b515290",
+   "net": "USB_DN_MCU",
+   "layer": 1,
+   "adjacentLayer": 15,
+   "widthMm": 0.1651,
+   "actualUnsupportedOutsideTransitionAreaMm2": 0.0,
+   "actualUnsupportedCenterlineMm": 0.0,
+   "actualReferenceEdgeMarginMm": 0.08948878570940302,
+   "unsupportedBoundsMm": [],
+   "transitionRadiusMm": 0.6
+  },
+  {
+   "id": "283ddb98623d5bb7",
+   "net": "USB_DP_PIN",
+   "layer": 1,
+   "adjacentLayer": 15,
+   "widthMm": 0.1651,
+   "actualUnsupportedOutsideTransitionAreaMm2": 0.0,
+   "actualUnsupportedCenterlineMm": 0.0,
+   "actualReferenceEdgeMarginMm": 0.5851151012506394,
+   "unsupportedBoundsMm": [],
+   "transitionRadiusMm": 0.6
+  },
+  {
+   "id": "7fd840640a475200",
+   "net": "USB_DN_PIN",
+   "layer": 1,
+   "adjacentLayer": 15,
+   "widthMm": 0.1651,
+   "actualUnsupportedOutsideTransitionAreaMm2": 0.0,
+   "actualUnsupportedCenterlineMm": 0.0,
+   "actualReferenceEdgeMarginMm": 2.20810654685374,
+   "unsupportedBoundsMm": [],
+   "transitionRadiusMm": 0.6
+  },
+  {
+   "id": "643e376f5b775329",
+   "net": "USB_DP",
+   "layer": 1,
+   "adjacentLayer": 15,
+   "widthMm": 0.1651,
+   "actualUnsupportedOutsideTransitionAreaMm2": 0.0,
+   "actualUnsupportedCenterlineMm": 0.0,
+   "actualReferenceEdgeMarginMm": 0.0894881750912731,
+   "unsupportedBoundsMm": [],
+   "transitionRadiusMm": 0.6
+  },
+  {
+   "id": "0fba769f64755ef7",
+   "net": "USB_DN",
+   "layer": 1,
+   "adjacentLayer": 15,
+   "widthMm": 0.1651,
+   "actualUnsupportedOutsideTransitionAreaMm2": 0.0,
+   "actualUnsupportedCenterlineMm": 0.0,
+   "actualReferenceEdgeMarginMm": 0.08949018387367727,
+   "unsupportedBoundsMm": [],
+   "transitionRadiusMm": 0.6
+  },
+  {
+   "id": "fa4a587e999357ed",
+   "net": "USB_DP",
+   "layer": 1,
+   "adjacentLayer": 15,
+   "widthMm": 0.1651,
+   "actualUnsupportedOutsideTransitionAreaMm2": 0.0,
+   "actualUnsupportedCenterlineMm": 0.0,
+   "actualReferenceEdgeMarginMm": 0.08948813050961521,
+   "unsupportedBoundsMm": [],
+   "transitionRadiusMm": 0.6
+  },
+  {
+   "id": "e3bfe2af2680537b",
+   "net": "ETH_TXN",
+   "layer": 1,
+   "adjacentLayer": 15,
+   "widthMm": 0.16002,
+   "actualUnsupportedOutsideTransitionAreaMm2": 0.2601407150635181,
+   "actualUnsupportedCenterlineMm": 1.5,
+   "actualReferenceEdgeMarginMm": 0.9199899999999985,
+   "unsupportedBoundsMm": [
+    237.26999,
+    27.41999,
+    237.43000999999998,
+    29.08001
+   ],
+   "transitionRadiusMm": 0.6
+  },
+  {
+   "id": "bd366de39b4b523f",
+   "net": "ETH_TXP",
+   "layer": 1,
+   "adjacentLayer": 15,
+   "widthMm": 0.16002,
+   "actualUnsupportedOutsideTransitionAreaMm2": 0.606236472395348,
+   "actualUnsupportedCenterlineMm": 3.6800000000000352,
+   "actualReferenceEdgeMarginMm": 0.9199899999999986,
+   "unsupportedBoundsMm": [
+    238.48998999999998,
+    27.41999,
+    240.83001000000002,
+    29.08001
+   ],
+   "transitionRadiusMm": 0.6
+  },
+  {
+   "id": "9e5c503b87625f64",
+   "net": "ETH_JRXN",
+   "layer": 1,
+   "adjacentLayer": 15,
+   "widthMm": 0.16002,
+   "actualUnsupportedOutsideTransitionAreaMm2": 0.8766702723953149,
+   "actualUnsupportedCenterlineMm": 5.369999999999994,
+   "actualReferenceEdgeMarginMm": 0.6199899999999978,
+   "unsupportedBoundsMm": [
+    229.81999000000002,
+    27.41999,
+    233.55001,
+    29.380010000000002
+   ],
+   "transitionRadiusMm": 0.6
+  },
+  {
+   "id": "d0687058a0005e0f",
+   "net": "ETH_JRXP",
+   "layer": 1,
+   "adjacentLayer": 15,
+   "widthMm": 0.16002,
+   "actualUnsupportedOutsideTransitionAreaMm2": 0.4651925937294559,
+   "actualUnsupportedCenterlineMm": 2.7900000000000382,
+   "actualReferenceEdgeMarginMm": 0.6199899869669957,
+   "unsupportedBoundsMm": [
+    233.41999,
+    27.41999,
+    234.57001000000002,
+    29.380010000000002
+   ],
+   "transitionRadiusMm": 0.6
+  },
+  {
+   "id": "ea52744d42845929",
+   "net": "ETH_TXN",
+   "layer": 1,
+   "adjacentLayer": 15,
+   "widthMm": 0.16002,
+   "actualUnsupportedOutsideTransitionAreaMm2": 0.0,
+   "actualUnsupportedCenterlineMm": 0.0,
+   "actualReferenceEdgeMarginMm": 0.08948880474857845,
+   "unsupportedBoundsMm": [],
+   "transitionRadiusMm": 0.6
+  },
+  {
+   "id": "901bd91a68a35f11",
+   "net": "ETH_TXP",
+   "layer": 1,
+   "adjacentLayer": 15,
+   "widthMm": 0.16002,
+   "actualUnsupportedOutsideTransitionAreaMm2": 0.0,
+   "actualUnsupportedCenterlineMm": 0.0,
+   "actualReferenceEdgeMarginMm": 0.08948880613808957,
+   "unsupportedBoundsMm": [],
+   "transitionRadiusMm": 0.6
+  },
+  {
+   "id": "41bc77f8b7f45a1e",
+   "net": "ETH_TXN",
+   "layer": 2,
+   "adjacentLayer": 16,
+   "widthMm": 0.16002,
+   "actualUnsupportedOutsideTransitionAreaMm2": 0.0,
+   "actualUnsupportedCenterlineMm": 0.0,
+   "actualReferenceEdgeMarginMm": 0.08137230292866197,
+   "unsupportedBoundsMm": [],
+   "transitionRadiusMm": 0.6
+  },
+  {
+   "id": "d21830680a1355c4",
+   "net": "ETH_TXP",
+   "layer": 2,
+   "adjacentLayer": 16,
+   "widthMm": 0.16002,
+   "actualUnsupportedOutsideTransitionAreaMm2": 0.0,
+   "actualUnsupportedCenterlineMm": 0.0,
+   "actualReferenceEdgeMarginMm": 0.08948948262565978,
+   "unsupportedBoundsMm": [],
+   "transitionRadiusMm": 0.6
+  },
+  {
+   "id": "02fd48b81d715d8e",
+   "net": "ETH_TXN",
+   "layer": 1,
+   "adjacentLayer": 15,
+   "widthMm": 0.16002,
+   "actualUnsupportedOutsideTransitionAreaMm2": 0.12206935753178007,
+   "actualUnsupportedCenterlineMm": 0.6999999999999993,
+   "actualReferenceEdgeMarginMm": 0.0,
+   "unsupportedBoundsMm": [
+    237.07339,
+    29.21999,
+    237.23341,
+    30.0
+   ],
+   "transitionRadiusMm": 0.6
+  },
+  {
+   "id": "13feeef65b585f5b",
+   "net": "ETH_TXP",
+   "layer": 1,
+   "adjacentLayer": 15,
+   "widthMm": 0.16002,
+   "actualUnsupportedOutsideTransitionAreaMm2": 0.12206935753176011,
+   "actualUnsupportedCenterlineMm": 0.6999999999999993,
+   "actualReferenceEdgeMarginMm": 0.0,
+   "unsupportedBoundsMm": [
+    240.67339,
+    29.21999,
+    240.83341,
+    30.0
+   ],
+   "transitionRadiusMm": 0.6
+  },
+  {
+   "id": "a2f939c800025ded",
+   "net": "ETH_RXN",
+   "layer": 1,
+   "adjacentLayer": 15,
+   "widthMm": 0.16002,
+   "actualUnsupportedOutsideTransitionAreaMm2": 0.0,
+   "actualUnsupportedCenterlineMm": 0.0,
+   "actualReferenceEdgeMarginMm": 0.536073649793553,
+   "unsupportedBoundsMm": [],
+   "transitionRadiusMm": 0.6
+  },
+  {
+   "id": "db79b193134c5c16",
+   "net": "ETH_RXP",
+   "layer": 1,
+   "adjacentLayer": 15,
+   "widthMm": 0.16002,
+   "actualUnsupportedOutsideTransitionAreaMm2": 0.0,
+   "actualUnsupportedCenterlineMm": 0.0,
+   "actualReferenceEdgeMarginMm": 0.20629145011233163,
+   "unsupportedBoundsMm": [],
+   "transitionRadiusMm": 0.6
+  },
+  {
+   "id": "7830e96ecdc055ed",
+   "net": "ETH_RXN",
+   "layer": 1,
+   "adjacentLayer": 15,
+   "widthMm": 0.16002,
+   "actualUnsupportedOutsideTransitionAreaMm2": 0.12206935753176004,
+   "actualUnsupportedCenterlineMm": 0.6999999999999993,
+   "actualReferenceEdgeMarginMm": 0.0,
+   "unsupportedBoundsMm": [
+    228.41999,
+    29.21999,
+    228.58001,
+    30.0
+   ],
+   "transitionRadiusMm": 0.6
+  },
+  {
+   "id": "8cd86d1a33dd5850",
+   "net": "ETH_RXP",
+   "layer": 1,
+   "adjacentLayer": 15,
+   "widthMm": 0.16002,
+   "actualUnsupportedOutsideTransitionAreaMm2": 0.12206935753176003,
+   "actualUnsupportedCenterlineMm": 0.6999999999999993,
+   "actualReferenceEdgeMarginMm": 0.0,
+   "unsupportedBoundsMm": [
+    232.01999,
+    29.21999,
+    232.18000999999998,
+    30.0
+   ],
+   "transitionRadiusMm": 0.6
+  },
+  {
+   "id": "60ee1ce85f9b5c0a",
+   "net": "INTN",
+   "layer": 1,
+   "adjacentLayer": 15,
+   "widthMm": 0.1524,
+   "actualUnsupportedOutsideTransitionAreaMm2": 0.0,
+   "actualUnsupportedCenterlineMm": 0.0,
+   "actualReferenceEdgeMarginMm": 0.08949015845877502,
+   "unsupportedBoundsMm": [],
+   "transitionRadiusMm": 0.6
+  },
+  {
+   "id": "4b3b8b0f86d25b56",
+   "net": "SCSN",
+   "layer": 1,
+   "adjacentLayer": 15,
+   "widthMm": 0.1524,
+   "actualUnsupportedOutsideTransitionAreaMm2": 0.0,
+   "actualUnsupportedCenterlineMm": 0.0,
+   "actualReferenceEdgeMarginMm": 0.08948948878419179,
+   "unsupportedBoundsMm": [],
+   "transitionRadiusMm": 0.6
+  },
+  {
+   "id": "087a44ddf09251d7",
+   "net": "MISO",
+   "layer": 1,
+   "adjacentLayer": 15,
+   "widthMm": 0.1524,
+   "actualUnsupportedOutsideTransitionAreaMm2": 0.0,
+   "actualUnsupportedCenterlineMm": 0.0,
+   "actualReferenceEdgeMarginMm": 0.08644314936181194,
+   "unsupportedBoundsMm": [],
+   "transitionRadiusMm": 0.6
+  },
+  {
+   "id": "7665f4c5c4fd5a45",
+   "net": "SCLK",
+   "layer": 1,
+   "adjacentLayer": 15,
+   "widthMm": 0.1524,
+   "actualUnsupportedOutsideTransitionAreaMm2": 0.0,
+   "actualUnsupportedCenterlineMm": 0.0,
+   "actualReferenceEdgeMarginMm": 0.08948885171003755,
+   "unsupportedBoundsMm": [],
+   "transitionRadiusMm": 0.6
+  },
+  {
+   "id": "1d79f14419495afc",
+   "net": "MOSI",
+   "layer": 1,
+   "adjacentLayer": 15,
+   "widthMm": 0.1524,
+   "actualUnsupportedOutsideTransitionAreaMm2": 0.0,
+   "actualUnsupportedCenterlineMm": 0.0,
+   "actualReferenceEdgeMarginMm": 0.08948969149933436,
+   "unsupportedBoundsMm": [],
+   "transitionRadiusMm": 0.6
+  },
+  {
+   "id": "b8be96c2616550f7",
+   "net": "INTN",
+   "layer": 2,
+   "adjacentLayer": 16,
+   "widthMm": 0.1524,
+   "actualUnsupportedOutsideTransitionAreaMm2": 0.0,
+   "actualUnsupportedCenterlineMm": 0.0,
+   "actualReferenceEdgeMarginMm": 0.06750511471096841,
+   "unsupportedBoundsMm": [],
+   "transitionRadiusMm": 0.6
+  },
+  {
+   "id": "1df43113628a594b",
+   "net": "SCSN",
+   "layer": 2,
+   "adjacentLayer": 16,
+   "widthMm": 0.1524,
+   "actualUnsupportedOutsideTransitionAreaMm2": 0.0,
+   "actualUnsupportedCenterlineMm": 0.0,
+   "actualReferenceEdgeMarginMm": 0.08948814298330693,
+   "unsupportedBoundsMm": [],
+   "transitionRadiusMm": 0.6
+  },
+  {
+   "id": "9a86ea7aa75f517c",
+   "net": "MISO",
+   "layer": 2,
+   "adjacentLayer": 16,
+   "widthMm": 0.1524,
+   "actualUnsupportedOutsideTransitionAreaMm2": 0.0,
+   "actualUnsupportedCenterlineMm": 0.0,
+   "actualReferenceEdgeMarginMm": 0.07849800382063012,
+   "unsupportedBoundsMm": [],
+   "transitionRadiusMm": 0.6
+  },
+  {
+   "id": "6eb9ed10276955ad",
+   "net": "SCLK",
+   "layer": 2,
+   "adjacentLayer": 16,
+   "widthMm": 0.1524,
+   "actualUnsupportedOutsideTransitionAreaMm2": 0.0,
+   "actualUnsupportedCenterlineMm": 0.0,
+   "actualReferenceEdgeMarginMm": 0.08948893980081815,
+   "unsupportedBoundsMm": [],
+   "transitionRadiusMm": 0.6
+  },
+  {
+   "id": "ac0b95b040335cc2",
+   "net": "MOSI",
+   "layer": 2,
+   "adjacentLayer": 16,
+   "widthMm": 0.1524,
+   "actualUnsupportedOutsideTransitionAreaMm2": 0.0,
+   "actualUnsupportedCenterlineMm": 0.0,
+   "actualReferenceEdgeMarginMm": 0.08948920587458394,
+   "unsupportedBoundsMm": [],
+   "transitionRadiusMm": 0.6
+  },
+  {
+   "id": "641bc6c847a454c9",
+   "net": "INTN",
+   "layer": 1,
+   "adjacentLayer": 15,
+   "widthMm": 0.2,
+   "actualUnsupportedOutsideTransitionAreaMm2": 0.0,
+   "actualUnsupportedCenterlineMm": 0.0,
+   "actualReferenceEdgeMarginMm": 0.019501450112329625,
+   "unsupportedBoundsMm": [],
+   "transitionRadiusMm": 0.6
+  },
+  {
+   "id": "5886629ba4125c75",
+   "net": "INTN",
+   "layer": 2,
+   "adjacentLayer": 16,
+   "widthMm": 0.2,
+   "actualUnsupportedOutsideTransitionAreaMm2": 0.0,
+   "actualUnsupportedCenterlineMm": 0.0,
+   "actualReferenceEdgeMarginMm": 0.08948904669342997,
+   "unsupportedBoundsMm": [],
+   "transitionRadiusMm": 0.6
+  },
+  {
+   "id": "f81e1ad0ed4c50fc",
+   "net": "INTN",
+   "layer": 1,
+   "adjacentLayer": 15,
+   "widthMm": 0.2,
+   "actualUnsupportedOutsideTransitionAreaMm2": 0.0,
+   "actualUnsupportedCenterlineMm": 0.0,
+   "actualReferenceEdgeMarginMm": 0.08948953488861387,
+   "unsupportedBoundsMm": [],
+   "transitionRadiusMm": 0.6
+  },
+  {
+   "id": "03765ed43e5451c6",
+   "net": "SCSN",
+   "layer": 1,
+   "adjacentLayer": 15,
+   "widthMm": 0.2,
+   "actualUnsupportedOutsideTransitionAreaMm2": 0.0,
+   "actualUnsupportedCenterlineMm": 0.0,
+   "actualReferenceEdgeMarginMm": 0.08293391232174228,
+   "unsupportedBoundsMm": [],
+   "transitionRadiusMm": 0.6
+  },
+  {
+   "id": "4dd80aecc2a45aa3",
+   "net": "SCSN",
+   "layer": 2,
+   "adjacentLayer": 16,
+   "widthMm": 0.2,
+   "actualUnsupportedOutsideTransitionAreaMm2": 0.0,
+   "actualUnsupportedCenterlineMm": 0.0,
+   "actualReferenceEdgeMarginMm": 0.08816949734959856,
+   "unsupportedBoundsMm": [],
+   "transitionRadiusMm": 0.6
+  },
+  {
+   "id": "e56ff29529635c50",
+   "net": "SCSN",
+   "layer": 1,
+   "adjacentLayer": 15,
+   "widthMm": 0.2,
+   "actualUnsupportedOutsideTransitionAreaMm2": 0.0,
+   "actualUnsupportedCenterlineMm": 0.0,
+   "actualReferenceEdgeMarginMm": 0.08948910600389053,
+   "unsupportedBoundsMm": [],
+   "transitionRadiusMm": 0.6
+  },
+  {
+   "id": "1e79341f00755c41",
+   "net": "MISO",
+   "layer": 1,
+   "adjacentLayer": 15,
+   "widthMm": 0.2,
+   "actualUnsupportedOutsideTransitionAreaMm2": 0.0,
+   "actualUnsupportedCenterlineMm": 0.0,
+   "actualReferenceEdgeMarginMm": 0.08948814298322129,
+   "unsupportedBoundsMm": [],
+   "transitionRadiusMm": 0.6
+  },
+  {
+   "id": "aee73863b7605348",
+   "net": "MISO",
+   "layer": 2,
+   "adjacentLayer": 16,
+   "widthMm": 0.2,
+   "actualUnsupportedOutsideTransitionAreaMm2": 0.0,
+   "actualUnsupportedCenterlineMm": 0.0,
+   "actualReferenceEdgeMarginMm": 0.08948919924254951,
+   "unsupportedBoundsMm": [],
+   "transitionRadiusMm": 0.6
+  },
+  {
+   "id": "d8a335d1efbc5b2b",
+   "net": "MISO",
+   "layer": 1,
+   "adjacentLayer": 15,
+   "widthMm": 0.2,
+   "actualUnsupportedOutsideTransitionAreaMm2": 0.0,
+   "actualUnsupportedCenterlineMm": 0.0,
+   "actualReferenceEdgeMarginMm": 0.0894887026561961,
+   "unsupportedBoundsMm": [],
+   "transitionRadiusMm": 0.6
+  },
+  {
+   "id": "913789b3b6b356ba",
+   "net": "SCLK",
+   "layer": 1,
+   "adjacentLayer": 15,
+   "widthMm": 0.2,
+   "actualUnsupportedOutsideTransitionAreaMm2": 0.0,
+   "actualUnsupportedCenterlineMm": 0.0,
+   "actualReferenceEdgeMarginMm": 0.0396963629586935,
+   "unsupportedBoundsMm": [],
+   "transitionRadiusMm": 0.6
+  },
+  {
+   "id": "b81d6cc651f25e6e",
+   "net": "SCLK",
+   "layer": 2,
+   "adjacentLayer": 16,
+   "widthMm": 0.2,
+   "actualUnsupportedOutsideTransitionAreaMm2": 0.0,
+   "actualUnsupportedCenterlineMm": 0.0,
+   "actualReferenceEdgeMarginMm": 0.08949107339602679,
+   "unsupportedBoundsMm": [],
+   "transitionRadiusMm": 0.6
+  },
+  {
+   "id": "80e0faa55113548a",
+   "net": "SCLK",
+   "layer": 1,
+   "adjacentLayer": 15,
+   "widthMm": 0.2,
+   "actualUnsupportedOutsideTransitionAreaMm2": 0.0,
+   "actualUnsupportedCenterlineMm": 0.0,
+   "actualReferenceEdgeMarginMm": 0.08949087007661474,
+   "unsupportedBoundsMm": [],
+   "transitionRadiusMm": 0.6
+  },
+  {
+   "id": "64e2b1eceaff5fbe",
+   "net": "MOSI",
+   "layer": 1,
+   "adjacentLayer": 15,
+   "widthMm": 0.2,
+   "actualUnsupportedOutsideTransitionAreaMm2": 0.0,
+   "actualUnsupportedCenterlineMm": 0.0,
+   "actualReferenceEdgeMarginMm": 0.03953256092091805,
+   "unsupportedBoundsMm": [],
+   "transitionRadiusMm": 0.6
+  },
+  {
+   "id": "421749770855537f",
+   "net": "USB_DP",
+   "layer": 2,
+   "adjacentLayer": 16,
+   "widthMm": 0.1651,
+   "actualUnsupportedOutsideTransitionAreaMm2": 0.0,
+   "actualUnsupportedCenterlineMm": 0.0,
+   "actualReferenceEdgeMarginMm": 0.08948818139150674,
+   "unsupportedBoundsMm": [],
+   "transitionRadiusMm": 0.6
+  },
+  {
+   "id": "929a7b6f92a25271",
+   "net": "USB_DN",
+   "layer": 2,
+   "adjacentLayer": 16,
+   "widthMm": 0.1651,
+   "actualUnsupportedOutsideTransitionAreaMm2": 0.0,
+   "actualUnsupportedCenterlineMm": 0.0,
+   "actualReferenceEdgeMarginMm": 0.08948904182061254,
+   "unsupportedBoundsMm": [],
+   "transitionRadiusMm": 0.6
+  },
+  {
+   "id": "2e4f84b6dbca57b6",
+   "net": "USB_DN",
+   "layer": 1,
+   "adjacentLayer": 15,
+   "widthMm": 0.1651,
+   "actualUnsupportedOutsideTransitionAreaMm2": 0.0,
+   "actualUnsupportedCenterlineMm": 0.0,
+   "actualReferenceEdgeMarginMm": 0.08949087007667295,
+   "unsupportedBoundsMm": [],
+   "transitionRadiusMm": 0.6
+  }
+ ],
+ "transitions": [
+  {
+   "signalVia": "0214bade69e9550b",
+   "net": "USB_DP_MCU",
+   "xyMm": [
+    255.49999999999991,
+    74.0
+   ],
+   "nearestActualBothReferenceGroundReturns": [
+    {
+     "id": "65ffe75b270a5ae9",
+     "distanceMm": 0.6999999999999602,
+     "xyMm": [
+      256.1999999999999,
+      73.99999999999997
+     ]
+    },
+    {
+     "id": "59d0162bc7915827",
+     "distanceMm": 0.6999999999999886,
+     "xyMm": [
+      254.79999999999993,
+      74.0
+     ]
+    },
+    {
+     "id": "6cf76cc8f787597c",
+     "distanceMm": 0.8139410298050045,
+     "xyMm": [
+      256.05,
+      74.59999999999994
+     ]
+    }
+   ]
+  },
+  {
+   "signalVia": "39cbf14b327e5510",
+   "net": "USB_DN_MCU",
+   "xyMm": [
+    256.8200000000001,
+    74.40000000000003
+   ],
+   "nearestActualBothReferenceGroundReturns": [
+    {
+     "id": "65ffe75b270a5ae9",
+     "distanceMm": 0.7378346698280974,
+     "xyMm": [
+      256.1999999999999,
+      73.99999999999997
+     ]
+    },
+    {
+     "id": "6cf76cc8f787597c",
+     "distanceMm": 0.7955501241280202,
+     "xyMm": [
+      256.05,
+      74.59999999999994
+     ]
+    },
+    {
+     "id": "59d0162bc7915827",
+     "distanceMm": 2.0592231544931594,
+     "xyMm": [
+      254.79999999999993,
+      74.0
+     ]
+    }
+   ]
+  },
+  {
+   "signalVia": "a391ea5acac451f2",
+   "net": "USB_DP_MCU",
+   "xyMm": [
+    287.5000000000001,
+    77.05000000000003
+   ],
+   "nearestActualBothReferenceGroundReturns": [
+    {
+     "id": "919432c4c58f5036",
+     "distanceMm": 1.0547511554864137,
+     "xyMm": [
+      286.60000000000014,
+      77.6
+     ]
+    },
+    {
+     "id": "7a6a3a8b769a5e1c",
+     "distanceMm": 1.511621645783154,
+     "xyMm": [
+      286.65000000000003,
+      75.80000000000001
+     ]
+    },
+    {
+     "id": "9b10b0e3bedd57f7",
+     "distanceMm": 2.0597225638421035,
+     "xyMm": [
+      286.66979999999995,
+      75.16500000000002
+     ]
+    }
+   ]
+  },
+  {
+   "signalVia": "0bc75dc411d15540",
+   "net": "USB_DN_MCU",
+   "xyMm": [
+    287.5000000000001,
+    76.35000000000002
+   ],
+   "nearestActualBothReferenceGroundReturns": [
+    {
+     "id": "7a6a3a8b769a5e1c",
+     "distanceMm": 1.0124228365659023,
+     "xyMm": [
+      286.65000000000003,
+      75.80000000000001
+     ]
+    },
+    {
+     "id": "9b10b0e3bedd57f7",
+     "distanceMm": 1.4468783777499314,
+     "xyMm": [
+      286.66979999999995,
+      75.16500000000002
+     ]
+    },
+    {
+     "id": "919432c4c58f5036",
+     "distanceMm": 1.5402921800749,
+     "xyMm": [
+      286.60000000000014,
+      77.6
+     ]
+    }
+   ]
+  },
+  {
+   "signalVia": "d7e4258d49415ff8",
+   "net": "USB_DP",
+   "xyMm": [
+    291.3999999999999,
+    81.84999999999998
+   ],
+   "nearestActualBothReferenceGroundReturns": [
+    {
+     "id": "425fb36f9af15797",
+     "distanceMm": 0.7499999999999432,
+     "xyMm": [
+      290.65,
+      81.84999999999998
+     ]
+    },
+    {
+     "id": "c84ac590332e5a03",
+     "distanceMm": 2.5223996511257525,
+     "xyMm": [
+      289.80000000000007,
+      79.90000000000003
+     ]
+    },
+    {
+     "id": "4305e7b688105a9b",
+     "distanceMm": 2.7658633371880357,
+     "xyMm": [
+      294.1000000000001,
+      82.45000000000005
+     ]
+    }
+   ]
+  },
+  {
+   "signalVia": "0dd990b1ec715ca3",
+   "net": "USB_DN",
+   "xyMm": [
+    293.65,
+    81.35000000000001
+   ],
+   "nearestActualBothReferenceGroundReturns": [
+    {
+     "id": "85c9205d064b5c88",
+     "distanceMm": 0.6670832032063481,
+     "xyMm": [
+      294.3,
+      81.20000000000002
+     ]
+    },
+    {
+     "id": "4305e7b688105a9b",
+     "distanceMm": 1.1884864324005442,
+     "xyMm": [
+      294.1000000000001,
+      82.45000000000005
+     ]
+    },
+    {
+     "id": "425fb36f9af15797",
+     "distanceMm": 3.0413812651491052,
+     "xyMm": [
+      290.65,
+      81.84999999999998
+     ]
+    }
+   ]
+  },
+  {
+   "signalVia": "c5f25d478d055f0b",
+   "net": "USB_DP",
+   "xyMm": [
+    290.74999999999994,
+    81.1
+   ],
+   "nearestActualBothReferenceGroundReturns": [
+    {
+     "id": "425fb36f9af15797",
+     "distanceMm": 0.7566372975210591,
+     "xyMm": [
+      290.65,
+      81.84999999999998
+     ]
+    },
+    {
+     "id": "c84ac590332e5a03",
+     "distanceMm": 1.5305227865012878,
+     "xyMm": [
+      289.80000000000007,
+      79.90000000000003
+     ]
+    },
+    {
+     "id": "85c9205d064b5c88",
+     "distanceMm": 3.5514081714160213,
+     "xyMm": [
+      294.3,
+      81.20000000000002
+     ]
+    }
+   ]
+  },
+  {
+   "signalVia": "bf1ffae6fb3653c4",
+   "net": "ETH_TXN",
+   "xyMm": [
+    226.8000000000001,
+    30.49999999999998
+   ],
+   "nearestActualBothReferenceGroundReturns": [
+    {
+     "id": "8189528640815d90",
+     "distanceMm": 1.8000000000000043,
+     "xyMm": [
+      226.80000000000004,
+      32.29999999999998
+     ]
+    },
+    {
+     "id": "e07be42d7c775542",
+     "distanceMm": 1.9313207915827206,
+     "xyMm": [
+      227.49999999999986,
+      32.29999999999999
+     ]
+    },
+    {
+     "id": "2b6deed198095d44",
+     "distanceMm": 4.702393007820438,
+     "xyMm": [
+      231.49999999999994,
+      30.35000000000001
+     ]
+    }
+   ]
+  },
+  {
+   "signalVia": "38277e3b9e165999",
+   "net": "ETH_TXP",
+   "xyMm": [
+    226.29999999999993,
+    31.6
+   ],
+   "nearestActualBothReferenceGroundReturns": [
+    {
+     "id": "8189528640815d90",
+     "distanceMm": 0.8602325267043137,
+     "xyMm": [
+      226.80000000000004,
+      32.29999999999998
+     ]
+    },
+    {
+     "id": "e07be42d7c775542",
+     "distanceMm": 1.3892443989449157,
+     "xyMm": [
+      227.49999999999986,
+      32.29999999999999
+     ]
+    },
+    {
+     "id": "2b6deed198095d44",
+     "distanceMm": 5.348130514488232,
+     "xyMm": [
+      231.49999999999994,
+      30.35000000000001
+     ]
+    }
+   ]
+  },
+  {
+   "signalVia": "3b6ae99c442b5cbd",
+   "net": "ETH_TXN",
+   "xyMm": [
+    234.4999999999999,
+    30.449999999999996
+   ],
+   "nearestActualBothReferenceGroundReturns": [
+    {
+     "id": "032d630356b858aa",
+     "distanceMm": 1.9026297590439936,
+     "xyMm": [
+      232.59999999999994,
+      30.35
+     ]
+    },
+    {
+     "id": "2b6deed198095d44",
+     "distanceMm": 3.00166620396067,
+     "xyMm": [
+      231.49999999999994,
+      30.35000000000001
+     ]
+    },
+    {
+     "id": "e07be42d7c775542",
+     "distanceMm": 7.24033838988209,
+     "xyMm": [
+      227.49999999999986,
+      32.29999999999999
+     ]
+    }
+   ]
+  },
+  {
+   "signalVia": "6d2317964a8e5daf",
+   "net": "ETH_TXP",
+   "xyMm": [
+    233.79999999999987,
+    31.120000000000005
+   ],
+   "nearestActualBothReferenceGroundReturns": [
+    {
+     "id": "032d630356b858aa",
+     "distanceMm": 1.4257980221615687,
+     "xyMm": [
+      232.59999999999994,
+      30.35
+     ]
+    },
+    {
+     "id": "2b6deed198095d44",
+     "distanceMm": 2.425469026806909,
+     "xyMm": [
+      231.49999999999994,
+      30.35000000000001
+     ]
+    },
+    {
+     "id": "e07be42d7c775542",
+     "distanceMm": 6.409555366794183,
+     "xyMm": [
+      227.49999999999986,
+      32.29999999999999
+     ]
+    }
+   ]
+  },
+  {
+   "signalVia": "93fb1794f6a0549c",
+   "net": "INTN",
+   "xyMm": [
+    225.30000000000007,
+    47.550000000000004
+   ],
+   "nearestActualBothReferenceGroundReturns": [
+    {
+     "id": "bc959fbfe0175a84",
+     "distanceMm": 2.0000000000000284,
+     "xyMm": [
+      223.30000000000004,
+      47.550000000000004
+     ]
+    },
+    {
+     "id": "4be2bb8f7beb5e05",
+     "distanceMm": 2.934706118166039,
+     "xyMm": [
+      222.59999999999985,
+      48.70000000000001
+     ]
+    },
+    {
+     "id": "c2c3d60202185567",
+     "distanceMm": 2.9841246622753346,
+     "xyMm": [
+      225.75000000000006,
+      50.499999999999986
+     ]
+    }
+   ]
+  },
+  {
+   "signalVia": "58fcf7d960d050cf",
+   "net": "SCSN",
+   "xyMm": [
+    227.59999999999997,
+    50.349999999999994
+   ],
+   "nearestActualBothReferenceGroundReturns": [
+    {
+     "id": "61936adcb1475a5e",
+     "distanceMm": 1.6999999999999589,
+     "xyMm": [
+      226.80000000000004,
+      51.84999999999999
+     ]
+    },
+    {
+     "id": "c2c3d60202185567",
+     "distanceMm": 1.8560711193269672,
+     "xyMm": [
+      225.75000000000006,
+      50.499999999999986
+     ]
+    },
+    {
+     "id": "173198b55d9b556d",
+     "distanceMm": 3.0074125124432394,
+     "xyMm": [
+      229.2101,
+      47.80989999999999
+     ]
+    }
+   ]
+  },
+  {
+   "signalVia": "da81362cc1e651df",
+   "net": "MISO",
+   "xyMm": [
+    226.30000000000007,
+    51.3
+   ],
+   "nearestActualBothReferenceGroundReturns": [
+    {
+     "id": "61936adcb1475a5e",
+     "distanceMm": 0.7433034373658989,
+     "xyMm": [
+      226.80000000000004,
+      51.84999999999999
+     ]
+    },
+    {
+     "id": "c2c3d60202185567",
+     "distanceMm": 0.9708243919473958,
+     "xyMm": [
+      225.75000000000006,
+      50.499999999999986
+     ]
+    },
+    {
+     "id": "13936579d878538d",
+     "distanceMm": 3.501428280002376,
+     "xyMm": [
+      222.8,
+      51.4
+     ]
+    }
+   ]
+  },
+  {
+   "signalVia": "b8a6b3b6fdd45ed7",
+   "net": "SCLK",
+   "xyMm": [
+    226.95000000000007,
+    50.499999999999986
+   ],
+   "nearestActualBothReferenceGroundReturns": [
+    {
+     "id": "c2c3d60202185567",
+     "distanceMm": 1.200000000000017,
+     "xyMm": [
+      225.75000000000006,
+      50.499999999999986
+     ]
+    },
+    {
+     "id": "61936adcb1475a5e",
+     "distanceMm": 1.3583077707206177,
+     "xyMm": [
+      226.80000000000004,
+      51.84999999999999
+     ]
+    },
+    {
+     "id": "173198b55d9b556d",
+     "distanceMm": 3.5135011057348033,
+     "xyMm": [
+      229.2101,
+      47.80989999999999
+     ]
+    }
+   ]
+  },
+  {
+   "signalVia": "d67ded95d0065306",
+   "net": "MOSI",
+   "xyMm": [
+    223.2,
+    49.10000000000001
+   ],
+   "nearestActualBothReferenceGroundReturns": [
+    {
+     "id": "4be2bb8f7beb5e05",
+     "distanceMm": 0.7211102550929106,
+     "xyMm": [
+      222.59999999999985,
+      48.70000000000001
+     ]
+    },
+    {
+     "id": "bc959fbfe0175a84",
+     "distanceMm": 1.5532224567009143,
+     "xyMm": [
+      223.30000000000004,
+      47.550000000000004
+     ]
+    },
+    {
+     "id": "13936579d878538d",
+     "distanceMm": 2.3345235059857368,
+     "xyMm": [
+      222.8,
+      51.4
+     ]
+    }
+   ]
+  },
+  {
+   "signalVia": "764952f8221558b5",
+   "net": "INTN",
+   "xyMm": [
+    231.59999999999997,
+    48.3
+   ],
+   "nearestActualBothReferenceGroundReturns": [
+    {
+     "id": "1298e8fe4a1e536c",
+     "distanceMm": 0.7211102550927845,
+     "xyMm": [
+      230.99999999999997,
+      47.90000000000001
+     ]
+    },
+    {
+     "id": "fed7035aaf0f57c1",
+     "distanceMm": 1.9865799757372105,
+     "xyMm": [
+      231.08999999999992,
+      50.22
+     ]
+    },
+    {
+     "id": "173198b55d9b556d",
+     "distanceMm": 2.4396352227330604,
+     "xyMm": [
+      229.2101,
+      47.80989999999999
+     ]
+    }
+   ]
+  },
+  {
+   "signalVia": "787dceb6d94450d7",
+   "net": "SCSN",
+   "xyMm": [
+    229.29999999999993,
+    50.349999999999994
+   ],
+   "nearestActualBothReferenceGroundReturns": [
+    {
+     "id": "fed7035aaf0f57c1",
+     "distanceMm": 1.7947144619688031,
+     "xyMm": [
+      231.08999999999992,
+      50.22
+     ]
+    },
+    {
+     "id": "173198b55d9b556d",
+     "distanceMm": 2.541690386337407,
+     "xyMm": [
+      229.2101,
+      47.80989999999999
+     ]
+    },
+    {
+     "id": "61936adcb1475a5e",
+     "distanceMm": 2.915475947422549,
+     "xyMm": [
+      226.80000000000004,
+      51.84999999999999
+     ]
+    }
+   ]
+  },
+  {
+   "signalVia": "c1d57c2d907f5a18",
+   "net": "MISO",
+   "xyMm": [
+    229.95,
+    51.09999999999999
+   ],
+   "nearestActualBothReferenceGroundReturns": [
+    {
+     "id": "fed7035aaf0f57c1",
+     "distanceMm": 1.4401388821915124,
+     "xyMm": [
+      231.08999999999992,
+      50.22
+     ]
+    },
+    {
+     "id": "5a4f2b87503f5aa7",
+     "distanceMm": 2.462722071204997,
+     "xyMm": [
+      232.40000000000003,
+      51.35
+     ]
+    },
+    {
+     "id": "61936adcb1475a5e",
+     "distanceMm": 3.2380549717383857,
+     "xyMm": [
+      226.80000000000004,
+      51.84999999999999
+     ]
+    }
+   ]
+  },
+  {
+   "signalVia": "9a99e8fd06cb5a6e",
+   "net": "SCLK",
+   "xyMm": [
+    232.24999999999997,
+    50.65
+   ],
+   "nearestActualBothReferenceGroundReturns": [
+    {
+     "id": "5a4f2b87503f5aa7",
+     "distanceMm": 0.7158910531638335,
+     "xyMm": [
+      232.40000000000003,
+      51.35
+     ]
+    },
+    {
+     "id": "fed7035aaf0f57c1",
+     "distanceMm": 1.2371337841964076,
+     "xyMm": [
+      231.08999999999992,
+      50.22
+     ]
+    },
+    {
+     "id": "1298e8fe4a1e536c",
+     "distanceMm": 3.02076149339863,
+     "xyMm": [
+      230.99999999999997,
+      47.90000000000001
+     ]
+    }
+   ]
+  },
+  {
+   "signalVia": "d2562fb9d6a35a74",
+   "net": "MOSI",
+   "xyMm": [
+    222.19999999999996,
+    50.79999999999999
+   ],
+   "nearestActualBothReferenceGroundReturns": [
+    {
+     "id": "13936579d878538d",
+     "distanceMm": 0.8485281374238993,
+     "xyMm": [
+      222.8,
+      51.4
+     ]
+    },
+    {
+     "id": "4be2bb8f7beb5e05",
+     "distanceMm": 2.1377558326431556,
+     "xyMm": [
+      222.59999999999985,
+      48.70000000000001
+     ]
+    },
+    {
+     "id": "bc959fbfe0175a84",
+     "distanceMm": 3.4311076928595643,
+     "xyMm": [
+      223.30000000000004,
+      47.550000000000004
+     ]
+    }
+   ]
+  },
+  {
+   "signalVia": "fe4fe28083825bb7",
+   "net": "INTN",
+   "xyMm": [
+    283.65,
+    84.32999999999998
+   ],
+   "nearestActualBothReferenceGroundReturns": [
+    {
+     "id": "dc4a7b87c3b95d18",
+     "distanceMm": 0.7211102550928593,
+     "xyMm": [
+      283.24999999999994,
+      84.93000000000004
+     ]
+    },
+    {
+     "id": "8b863a2c2a245ddd",
+     "distanceMm": 1.0113851887386667,
+     "xyMm": [
+      284.34999999999997,
+      83.60000000000001
+     ]
+    },
+    {
+     "id": "87742cd002695afe",
+     "distanceMm": 2.7793704323100905,
+     "xyMm": [
+      281.65000000000003,
+      82.40000000000003
+     ]
+    }
+   ]
+  },
+  {
+   "signalVia": "2b104936c8a7571a",
+   "net": "INTN",
+   "xyMm": [
+    275.55000000000007,
+    84.32999999999998
+   ],
+   "nearestActualBothReferenceGroundReturns": [
+    {
+     "id": "61694b41fd545f9e",
+     "distanceMm": 0.7211102550928199,
+     "xyMm": [
+      275.15,
+      83.73000000000002
+     ]
+    },
+    {
+     "id": "e20afa9111a55bbb",
+     "distanceMm": 0.9689685237405932,
+     "xyMm": [
+      276.25000000000006,
+      85.00000000000001
+     ]
+    },
+    {
+     "id": "2cb57a37f41d51bf",
+     "distanceMm": 3.428833620927054,
+     "xyMm": [
+      276.95000000000005,
+      81.20000000000002
+     ]
+    }
+   ]
+  },
+  {
+   "signalVia": "d9ab4303f3c3509e",
+   "net": "SCSN",
+   "xyMm": [
+    282.95000000000016,
+    83.60000000000001
+   ],
+   "nearestActualBothReferenceGroundReturns": [
+    {
+     "id": "dc4a7b87c3b95d18",
+     "distanceMm": 1.363414830489951,
+     "xyMm": [
+      283.24999999999994,
+      84.93000000000004
+     ]
+    },
+    {
+     "id": "8b863a2c2a245ddd",
+     "distanceMm": 1.3999999999998067,
+     "xyMm": [
+      284.34999999999997,
+      83.60000000000001
+     ]
+    },
+    {
+     "id": "87742cd002695afe",
+     "distanceMm": 1.7691806012954878,
+     "xyMm": [
+      281.65000000000003,
+      82.40000000000003
+     ]
+    }
+   ]
+  },
+  {
+   "signalVia": "76e9af3179465a7c",
+   "net": "SCSN",
+   "xyMm": [
+    276.25000000000006,
+    83.60000000000001
+   ],
+   "nearestActualBothReferenceGroundReturns": [
+    {
+     "id": "61694b41fd545f9e",
+     "distanceMm": 1.1076551810018214,
+     "xyMm": [
+      275.15,
+      83.73000000000002
+     ]
+    },
+    {
+     "id": "e20afa9111a55bbb",
+     "distanceMm": 1.4000000000000057,
+     "xyMm": [
+      276.25000000000006,
+      85.00000000000001
+     ]
+    },
+    {
+     "id": "2cb57a37f41d51bf",
+     "distanceMm": 2.4999999999999885,
+     "xyMm": [
+      276.95000000000005,
+      81.20000000000002
+     ]
+    }
+   ]
+  },
+  {
+   "signalVia": "7918d3a060255f6e",
+   "net": "MISO",
+   "xyMm": [
+    282.25,
+    82.99999999999999
+   ],
+   "nearestActualBothReferenceGroundReturns": [
+    {
+     "id": "87742cd002695afe",
+     "distanceMm": 0.8485281374237987,
+     "xyMm": [
+      281.65000000000003,
+      82.40000000000003
+     ]
+    },
+    {
+     "id": "dc4a7b87c3b95d18",
+     "distanceMm": 2.173683509621416,
+     "xyMm": [
+      283.24999999999994,
+      84.93000000000004
+     ]
+    },
+    {
+     "id": "8b863a2c2a245ddd",
+     "distanceMm": 2.184032966784129,
+     "xyMm": [
+      284.34999999999997,
+      83.60000000000001
+     ]
+    }
+   ]
+  },
+  {
+   "signalVia": "aeb2d4aec8ce5d66",
+   "net": "MISO",
+   "xyMm": [
+    276.95000000000005,
+    82.99999999999999
+   ],
+   "nearestActualBothReferenceGroundReturns": [
+    {
+     "id": "2cb57a37f41d51bf",
+     "distanceMm": 1.7999999999999687,
+     "xyMm": [
+      276.95000000000005,
+      81.20000000000002
+     ]
+    },
+    {
+     "id": "61694b41fd545f9e",
+     "distanceMm": 1.9423954283307745,
+     "xyMm": [
+      275.15,
+      83.73000000000002
+     ]
+    },
+    {
+     "id": "e20afa9111a55bbb",
+     "distanceMm": 2.118962010041732,
+     "xyMm": [
+      276.25000000000006,
+      85.00000000000001
+     ]
+    }
+   ]
+  },
+  {
+   "signalVia": "3dcd97bd151e5ce0",
+   "net": "SCLK",
+   "xyMm": [
+    281.54999999999995,
+    81.40000000000003
+   ],
+   "nearestActualBothReferenceGroundReturns": [
+    {
+     "id": "87742cd002695afe",
+     "distanceMm": 1.004987562112097,
+     "xyMm": [
+      281.65000000000003,
+      82.40000000000003
+     ]
+    },
+    {
+     "id": "931eb1c0ad045abc",
+     "distanceMm": 3.181587653986709,
+     "xyMm": [
+      284.30000000000007,
+      79.80000000000003
+     ]
+    },
+    {
+     "id": "8b863a2c2a245ddd",
+     "distanceMm": 3.5608987629529643,
+     "xyMm": [
+      284.34999999999997,
+      83.60000000000001
+     ]
+    }
+   ]
+  },
+  {
+   "signalVia": "cdd72e5a6e60593a",
+   "net": "SCLK",
+   "xyMm": [
+    277.65000000000003,
+    81.40000000000003
+   ],
+   "nearestActualBothReferenceGroundReturns": [
+    {
+     "id": "2cb57a37f41d51bf",
+     "distanceMm": 0.7280109889280456,
+     "xyMm": [
+      276.95000000000005,
+      81.20000000000002
+     ]
+    },
+    {
+     "id": "61694b41fd545f9e",
+     "distanceMm": 3.4174405627604134,
+     "xyMm": [
+      275.15,
+      83.73000000000002
+     ]
+    },
+    {
+     "id": "e20afa9111a55bbb",
+     "distanceMm": 3.8626415831655665,
+     "xyMm": [
+      276.25000000000006,
+      85.00000000000001
+     ]
+    }
+   ]
+  },
+  {
+   "signalVia": "f4e341b2c6f55358",
+   "net": "USB_DN",
+   "xyMm": [
+    289.7000000000001,
+    83.14999999999999
+   ],
+   "nearestActualBothReferenceGroundReturns": [
+    {
+     "id": "425fb36f9af15797",
+     "distanceMm": 1.6101242188103972,
+     "xyMm": [
+      290.65,
+      81.84999999999998
+     ]
+    },
+    {
+     "id": "c84ac590332e5a03",
+     "distanceMm": 3.251538097577778,
+     "xyMm": [
+      289.80000000000007,
+      79.90000000000003
+     ]
+    },
+    {
+     "id": "4305e7b688105a9b",
+     "distanceMm": 4.455333881989062,
+     "xyMm": [
+      294.1000000000001,
+      82.45000000000005
+     ]
+    }
+   ]
+  }
+ ],
+ "scope": "Actual copper under trace projections; uniform impedance/SI performance is not inferred."
+}

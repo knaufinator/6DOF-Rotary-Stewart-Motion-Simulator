@@ -52,7 +52,7 @@ def frame(text):
 
 
 def bench_script(b):
-    d = core.cobs_decode(b.rstrip(b"\x00"))
+    d = core.cobs_decode(b.strip(b"\x00"))   # the link sends a leading 0x00 to resync the decoder
     cmd = d[1:].decode()
     out = frame(f"BENCH:CMD '{cmd}' src=0 sha=abc")
     if cmd == "BENCH:STATUS":

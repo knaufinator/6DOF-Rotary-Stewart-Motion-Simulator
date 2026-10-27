@@ -1,6 +1,6 @@
 # Platform Geometry Reference
 
-Single source of truth for all Stewart platform dimensions and motor layout. These values are defined in [`controller/stewart-core/include/InverseKinematics.h`](../../controller/stewart-core/include/InverseKinematics.h) (`StewartConfig` struct) and initialized by `initDefaultStewartConfig()`.
+Single source of truth for all Stewart platform dimensions and motor layout. These values are defined in [`controller/stewart-core/include/InverseKinematics.h`](https://github.com/knaufinator/stewart-core/blob/main/include/InverseKinematics.h) (`StewartConfig` struct, in the `knaufinator/stewart-core` submodule) and initialized by `initDefaultStewartConfig()`.
 
 ## Dimensions (mm)
 

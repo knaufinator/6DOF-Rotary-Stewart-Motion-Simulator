@@ -1,0 +1,108 @@
+{
+  "schemaVersion": 1,
+  "status": "ORDERED_HARDWARE_TESTS_PENDING",
+  "orderedDate": "2026-10-26",
+  "timezone": "America/New_York",
+  "confirmationSource": "Owner confirmation in this conversation: order placed, testing to come.",
+  "orderIdentifier": null,
+  "plannedBoardQuantity": 5,
+  "finalFactoryReceiptCaptured": false,
+  "packageBinding": "Last prepared Q11 C155242 revision at owner confirmation; actual order-upload/factory allocation receipt was not independently captured.",
+  "projectUuid": "df6039acdfad4375ae07aa6257cd0186",
+  "selectedQ11": {
+    "mpn": "DMN6075S-7",
+    "supplierPart": "C155242"
+  },
+  "selectedY1": "C9006",
+  "inventory": {
+    "components": 324,
+    "supplierGroups": 91,
+    "logicalPins": 1214,
+    "copperRegisterRows": 2667,
+    "labels": 360
+  },
+  "hardwareTests": "NOT_RUN",
+  "motionAdmission": "Locked pending physical R14 qualification",
+  "nextStage": "BRINGUP.md",
+  "expectedGitTag": "r14-ordered-2026-10-26",
+  "changePolicy": "Keep ordered manufacturing inputs unchanged; create a new revision/export directory for later electrical changes. Documentation and new dated test reports can evolve.",
+  "frozenFiles": [
+    {
+      "path": "hardware/pcb/6dof2_r14/exports/2026-10-26/EXPORT_VALIDATION.json",
+      "bytes": 588,
+      "sha256": "317baaa2970429a0f933be790709989d02b9c1305e560e44d8637f67afd51d3f"
+    },
+    {
+      "path": "hardware/pcb/6dof2_r14/exports/2026-10-26/NATIVE_COMPARISON.json",
+      "bytes": 4,
+      "sha256": "a5338d955b09046ec0b16f3a9625b7955c763aae07dc722e474e6078745f932f"
+    },
+    {
+      "path": "hardware/pcb/6dof2_r14/exports/2026-10-26/NATIVE_DRC.json",
+      "bytes": 4,
+      "sha256": "a5338d955b09046ec0b16f3a9625b7955c763aae07dc722e474e6078745f932f"
+    },
+    {
+      "path": "hardware/pcb/6dof2_r14/exports/2026-10-26/R14-assembly.step.zip",
+      "bytes": 15619061,
+      "sha256": "d2e3e7ac1c32aecf8242aa58fe61bdee20198b2c35084b5a781065b25f77a8f5"
+    },
+    {
+      "path": "hardware/pcb/6dof2_r14/exports/2026-10-26/R14-BOM-JLC.csv",
+      "bytes": 5165,
+      "sha256": "811d35d8d9af3b070002002a248d7f40eb37e9ed71548e28039766ab07c6f498"
+    },
+    {
+      "path": "hardware/pcb/6dof2_r14/exports/2026-10-26/R14-BOM-native.tsv",
+      "bytes": 16610,
+      "sha256": "a8bcdbe81ad0120ebe952c02c396fe22835fbeb3a532e40dcccdadb4c2938644"
+    },
+    {
+      "path": "hardware/pcb/6dof2_r14/exports/2026-10-26/R14-CPL-JLC.csv",
+      "bytes": 8781,
+      "sha256": "b62fbea84fefa05366441ea7c806641b85a76875d700f0a77875ba16e6a69893"
+    },
+    {
+      "path": "hardware/pcb/6dof2_r14/exports/2026-10-26/R14-CPL-native.tsv",
+      "bytes": 105604,
+      "sha256": "0352c0467876b62a79c0495e9df64d1d33d0e0d35d05370edefc1e20c7a720c8"
+    },
+    {
+      "path": "hardware/pcb/6dof2_r14/exports/2026-10-26/R14-Gerber-FS36.zip",
+      "bytes": 491211,
+      "sha256": "458af4a38ef40c70a0a55db70be31dc5c71da68a1458bc4638b8e81e763547ac"
+    },
+    {
+      "path": "hardware/pcb/6dof2_r14/exports/2026-10-26/R14-PCB.net",
+      "bytes": 613957,
+      "sha256": "a991944276a5c4848e37f9557900170b0ead3fef2b89196005b3a4d57e9ab4ae"
+    },
+    {
+      "path": "hardware/pcb/6dof2_r14/exports/2026-10-26/R14-project.epro2",
+      "bytes": 1232051,
+      "sha256": "b416ef666e47783eb1c9d55e8a021e81f9a73c2a3af305b233d3c39646cdd5c8"
+    },
+    {
+      "path": "hardware/pcb/6dof2_r14/exports/2026-10-26/R14-schematic.net",
+      "bytes": 874181,
+      "sha256": "c0cce59b054d6376c005c644724aa9702d5b472157f6eafca43585d1fd55b261"
+    },
+    {
+      "path": "hardware/pcb/6dof2_r14/exports/2026-10-26/R14-schematic.svg",
+      "bytes": 1783144,
+      "sha256": "6b2bfa0feeb77f5ecee45752355c9a85911c67d44608c2891f0de72b6f03f6e8"
+    },
+    {
+      "path": "hardware/pcb/6dof2_r14/exports/2026-10-26/SOURCE_FREEZE.json",
+      "bytes": 637,
+      "sha256": "c4075154cd56299735e1bce57e6e82664cccfc1016125eb3f7f6dd0cab983aa5"
+    },
+    {
+      "path": "hardware/pcb/6dof2_r14/exports/2026-10-26/STEP_VERIFICATION.json",
+      "bytes": 808,
+      "sha256": "16c2961cd7001c8a7d921295b572f4947c32ef2c9ee4019c79c560ea40d670d7"
+    }
+  ],
+  "firmwareSourceSnapshot": "review/2026-10-26-10V/FIRMWARE_SOURCE_FREEZE.json",
+  "testEvidenceScope": "R13 retained physical tests cover axis 0. Later R14 source/build checks do not establish manufactured-board behavior."
+}

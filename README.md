@@ -25,17 +25,44 @@ learned along the way—not just the latest PCB package.
 
 ## Current development status
 
-> **UNTESTED PCB PROTOTYPE — 2026-09-23. DO NOT ORDER.** The r13 RC4 design
-> package is complete for review; actual JLC stackup, processed allocation and
-> complete assembly approval remain pending. Nothing has been ordered or paid for.
-> The board has not been manufactured or validated as a working controller.
-> Firmware corrections and physical testing are required before drive-connected
-> operation. Do not use the current firmware/PCB combination on a powered platform.
+> **2026-10-26: R14 is ordered; hardware testing is next.**
+> The corrected PCB/schematic, manufacturing files and design review are retained
+> with the recovered R13 firmware baseline. The owner confirmed the order;
+> R14 hardware and subsequent firmware changes still need qualification.
+> See the [R14 board, schematic and status](hardware/pcb/6dof2_r14/README.md),
+> [design philosophy](hardware/pcb/6dof2_r14/DESIGN_PHILOSOPHY.md) and
+> [firmware evidence](hardware/pcb/6dof2_r14/FIRMWARE_STATUS.md).
 
 Heavy rotating machinery can cause serious injury or death. Independent emergency
 stop hardware must be in place before powered operation; the app's E-STOP button
 is not a substitute for a physical safety system. Earlier working builds and
 signal captures do **not** validate the current PCB/firmware combination.
+
+## Ordered R14 hardware
+
+[![R14 top copper and silkscreen](hardware/pcb/6dof2_r14/images/r14-pcb-top.png)](hardware/pcb/6dof2_r14/drawings/R14-PCB.pdf)
+
+[PCB PDF](hardware/pcb/6dof2_r14/drawings/R14-PCB.pdf) ?
+[Schematic PDF](hardware/pcb/6dof2_r14/drawings/R14-schematic.pdf) ?
+[Native schematic SVG](hardware/pcb/6dof2_r14/exports/2026-10-26/R14-schematic.svg) ?
+[Editable EasyEDA project](hardware/pcb/6dof2_r14/exports/2026-10-26/R14-project.epro2) ?
+[Manufacturing files](hardware/pcb/6dof2_r14/exports/2026-10-26/README.md)
+
+The owner confirmed the R14 order on 26 October 2026. Read the
+[design decisions](hardware/pcb/6dof2_r14/DECISIONS.md),
+[review methodology](hardware/pcb/6dof2_r14/REVIEW_METHOD.md) and
+[hardware-test plan](hardware/pcb/6dof2_r14/BRINGUP.md). Testing the manufactured
+board is the next stage; the current firmware keeps normal motion admission locked.
+
+<details>
+<summary>R14 schematic preview ? full sheet and detail pages in the PDF</summary>
+
+![R14 schematic detail regions](hardware/pcb/6dof2_r14/images/r14-schematic-details.png)
+
+These are crops of the native schematic, retaining named-net stubs and source
+label placement. Use the linked vector PDF/SVG to inspect the complete sheet.
+
+</details>
 
 ## Demo and build videos
 
@@ -87,14 +114,15 @@ controller and its development tools evolved alongside the mechanical project.
 arrived in February, bringing 3D visualization, motion cueing, recording and
 software/hardware-in-the-loop workflows together. In July, the shared math was
 extracted into `stewart-core`, and the desktop-scale Mini-6DOF hobby-servo firmware
-joined this repository. The current September work includes the r13 controller
-PCB prototype, a clearer hardware/controller/app split, and illustrated app
-documentation with repeatable, hardware-disabled captures.
+joined this repository. October work includes manufactured R13 single-axis bench testing, recovery of the
+exact tested firmware, and R14 power, torque-latch and Hall-interface review. The
+hardware/controller/app split and illustrated app documentation remain separate
+from physical hardware qualification.
 
 The project has evolved through several hardware and software generations. Old
 videos, timing measurements and design files are preserved as history; use the
-[current hardware status](hardware/pcb/6DOF2_BOARD.md) and
-[firmware TODO](hardware/pcb/6DOF2_FIRMWARE_TODO.md) for today's implementation
+[current R14 status](hardware/pcb/6dof2_r14/README.md) and
+[firmware evidence](hardware/pcb/6dof2_r14/FIRMWARE_STATUS.md) for today's implementation
 and testing requirements.
 
 ## The hardware behind the project
@@ -111,8 +139,11 @@ all historical controller revisions are interchangeable.
 
 The newer **“6DOF 2” controller** is an ESP32-S3 PCB design with W5500 Ethernet,
 six matching DB25 servo connectors, differential STEP/DIR outputs, conditioned
-alarm inputs and a supervised stop/inhibit circuit. Its r13 revision remains an
-**untested prototype**, with hardware-specific firmware work still required.
+alarm inputs and a supervised stop/inhibit circuit. R13 has one-axis bench evidence. R14 adds independent torque latches, protected
+remote Hall power and additional monitoring; its new circuits and six-axis
+firmware still need physical qualification.
+
+![R14 control boundaries](hardware/pcb/6dof2_r14/images/r14-permission-paths.svg)
 
 The [Mini-6DOF variant](controller/mini/README.md) uses an ESP32 and six hobby
 servos for desktop-scale development. Mechanical assets live under
@@ -151,9 +182,9 @@ hardware acceptance tests.
 2. **Choose the right controller:** read the [firmware variant map](docs/FIRMWARE.md)
    before working with the full-size, Mini or analyzer firmware. Their outputs
    and hardware requirements differ.
-3. **Review the PCB:** use the [board overview](hardware/pcb/6DOF2_BOARD.md),
-   [exact RC4 files and remaining gates](hardware/pcb/6dof2_r13/r13-rc4-2026-09-23/README.md),
-   and [firmware/commissioning TODO](hardware/pcb/6DOF2_FIRMWARE_TODO.md).
+3. **Review the PCB:** use the [R14 overview](hardware/pcb/6dof2_r14/README.md),
+   [review evidence](hardware/pcb/6dof2_r14/review/README.md),
+   and [bench qualification plan](hardware/pcb/6dof2_r14/BRINGUP.md).
    Buying and bench-use guidance is indexed in [Hardware](hardware/README.md);
    the current **do-not-order** status still applies.
 

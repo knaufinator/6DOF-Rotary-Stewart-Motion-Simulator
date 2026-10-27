@@ -2,14 +2,15 @@
 //
 // Pure and allocation-free for host tests. The bench timer calls due(now_us) and
 // advances the axis-0 target by the returned count; the production step engine
-// emits each step. Limits come from M1_OUTPUT_TEST_PLAN.md step 12.
+// emits each step. Limits (R13_BENCH_MAX_*) were raised 2026-10-20 for the camera-calibrated
+// bench; the step-12 envelope is now enforced by the host scripts and the firmware runaway guard.
 #ifndef R13_BENCH_PULSE_H
 #define R13_BENCH_PULSE_H
 
 #include <stdint.h>
 
-#define R13_BENCH_MAX_HZ     5000
-#define R13_BENCH_MAX_COUNT  10000
+#define R13_BENCH_MAX_HZ     250000   // raised 2026-10-20 for the camera-calibrated bench (was 5000)
+#define R13_BENCH_MAX_COUNT  1000000  // raised 2026-10-20 (was 10000); envelope is enforced by the host scripts
 
 class R13BenchPulse {
 public:

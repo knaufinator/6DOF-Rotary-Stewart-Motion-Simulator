@@ -18,7 +18,7 @@ public:
         uint64_t sampled_us;
         bool estop_closed;
         bool field_good;
-        bool local_hold;
+        bool local_hold; // reserved legacy telemetry; never a motion requirement
         bool bottom_verified;
         bool calibration_valid;
         bool hall_closed[kAxes];
@@ -40,11 +40,10 @@ public:
     enum AxisState { NOT_STARTED, SEEKING, EDGE_FOUND };
 
     explicit SeekInterlock(uint64_t max_input_age_us,
-                           uint64_t arm_edge_window_us)
+                           uint64_t arm_request_window_us)
         : state_(DISARMED), fault_(NONE), fault_axis_(-1),
-          max_age_us_(max_input_age_us), arm_window_us_(arm_edge_window_us),
-          have_sample_(false), released_seen_(false), edge_pending_(false),
-          last_local_hold_(false), edge_time_us_(0), last_now_us_(0) {
+          max_age_us_(max_input_age_us), arm_window_us_(arm_request_window_us),
+          have_sample_(false), armed_at_us_(0), last_now_us_(0) {
         for (int i = 0; i < kAxes; ++i) {
             configured_[i] = false;
             axis_[i] = NOT_STARTED;
@@ -67,7 +66,7 @@ public:
     }
 
     // Observe fresh normalized inputs periodically, including while idle.
-    // A boot with local_hold already true never creates a valid arm edge.
+    // Sampling alone never arms: an explicit operator request is required.
     bool observe(const Inputs& in, uint64_t now_us) {
         if (state_ == GLOBAL_FAULT) return false;
         if (in.sampled_us > now_us || now_us - in.sampled_us > max_age_us_ ||
@@ -75,14 +74,6 @@ public:
              (now_us < last_now_us_ || in.sampled_us < last_input_.sampled_us)))
             return trip(CLOCK_OR_INPUT_STALE, -1);
 
-        if (!in.local_hold) {
-            released_seen_ = true;
-            edge_pending_ = false;
-        } else if (released_seen_ && !last_local_hold_ && state_ == DISARMED) {
-            edge_pending_ = true;
-            edge_time_us_ = now_us;
-        }
-        last_local_hold_ = in.local_hold;
         last_input_ = in;
         last_now_us_ = now_us;
         have_sample_ = true;
@@ -91,7 +82,6 @@ public:
             if (in.drive_alarm[i] && state_ != DISARMED) return trip(DRIVE_FAULT, i);
 
         if (state_ == DISARMED) {
-            if (!base_healthy(in, true)) edge_pending_ = false;
             return true; // unhealthy boot stays disarmed and cannot arm
         }
         if (!base_healthy(in, false)) return trip(INPUT_LOST, -1);
@@ -122,26 +112,25 @@ public:
         return true;
     }
 
-    // Operator request must follow a new physical local-hold rising edge.
+    // Deliberate operator request; no physical hold-to-run input is required.
     // This admits only a bounded seek; no normal platform move is permitted.
     bool request_arm(uint64_t now_us) {
-        if (state_ != DISARMED || !fresh(now_us) || !edge_pending_ ||
-            now_us - edge_time_us_ > arm_window_us_ ||
+        if (state_ != DISARMED || !fresh(now_us) ||
             !base_healthy(last_input_, true) || !all_configured()) return false;
-        edge_pending_ = false;
+        armed_at_us_ = now_us;
         state_ = ARMED_FOR_SEEK;
         return true;
     }
 
     bool ready_for_seek(uint64_t now_us) const {
         return state_ == ARMED_FOR_SEEK && fresh(now_us) &&
+               now_us >= armed_at_us_ && now_us - armed_at_us_ <= arm_window_us_ &&
                base_healthy(last_input_, false);
     }
 
     bool begin_seek(int axis, uint64_t now_us) {
-        if (state_ != ARMED_FOR_SEEK || axis < 0 || axis >= kAxes ||
-            axis_[axis] != NOT_STARTED || !fresh(now_us) ||
-            !base_healthy(last_input_, false) ||
+        if (!ready_for_seek(now_us) || axis < 0 || axis >= kAxes ||
+            axis_[axis] != NOT_STARTED ||
             !last_input_.hall_closed[axis]) return false;
         axis_[axis] = SEEKING;
         seek_start_us_[axis] = now_us;
@@ -184,7 +173,7 @@ public:
 
 private:
     bool base_healthy(const Inputs& in, bool require_away_halls) const {
-        if (!in.estop_closed || !in.field_good || !in.local_hold ||
+        if (!in.estop_closed || !in.field_good ||
             !in.bottom_verified || !in.calibration_valid) return false;
         for (int i = 0; i < kAxes; ++i) {
             if (!in.drive_ready[i] || in.drive_alarm[i]) return false;
@@ -206,7 +195,6 @@ private:
             state_ = GLOBAL_FAULT;
             fault_ = reason;
             fault_axis_ = axis;
-            edge_pending_ = false;
         }
         return false;
     }
@@ -218,10 +206,7 @@ private:
     uint64_t arm_window_us_;
     Inputs last_input_;
     bool have_sample_;
-    bool released_seen_;
-    bool edge_pending_;
-    bool last_local_hold_;
-    uint64_t edge_time_us_;
+    uint64_t armed_at_us_;
     uint64_t last_now_us_;
     SeekLimits limits_[kAxes];
     bool configured_[kAxes];

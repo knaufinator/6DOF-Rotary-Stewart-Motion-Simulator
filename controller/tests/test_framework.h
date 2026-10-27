@@ -108,5 +108,7 @@ void register_r14_seek_interlock_tests(void);
 void register_r14_drive_alarm_latch_tests(void);
 void register_r14_motion_admission_tests(void);
 void register_r13_bench_pulse_tests(void);
+void register_step_quiescence_tests(void);
+void register_r14_board_io_tests(void);
 
 #endif /* TEST_FRAMEWORK_H */

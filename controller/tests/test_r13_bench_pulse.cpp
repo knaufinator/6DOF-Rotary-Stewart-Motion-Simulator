@@ -19,13 +19,13 @@ static int32_t run(R13BenchPulse &p, int64_t t0, int64_t span_us, int *max_per_t
 TEST(r13_bench_pulse_rejects_out_of_range) {
     R13BenchPulse p;
     ASSERT_TRUE(!p.start(0, 10, 0));
-    ASSERT_TRUE(!p.start(5001, 10, 0));
+    ASSERT_TRUE(!p.start(250001, 10, 0));
     ASSERT_TRUE(!p.start(1000, 0, 0));
-    ASSERT_TRUE(!p.start(1000, 10001, 0));
-    ASSERT_TRUE(!p.start(1000, -10001, 0));
+    ASSERT_TRUE(!p.start(1000, 1000001, 0));
+    ASSERT_TRUE(!p.start(1000, -1000001, 0));
     ASSERT_TRUE(!p.active());
-    ASSERT_TRUE(p.start(5000, 10000, 0));
-    ASSERT_TRUE(p.start(1, -10000, 0));
+    ASSERT_TRUE(p.start(250000, 1000000, 0));
+    ASSERT_TRUE(p.start(1, -1000000, 0));
 }
 
 TEST(r13_bench_pulse_emits_exact_count_and_stops) {
@@ -40,6 +40,10 @@ TEST(r13_bench_pulse_emits_exact_count_and_stops) {
     sum = run(p, 0, 3000000, &mx);
     ASSERT_EQ(sum, -10000);
     ASSERT_TRUE(mx <= 1);                      // 5 kHz at a 200 us tick: one step per tick
+    ASSERT_TRUE(p.start(250000, 100000, 0));   // production rate: 50 steps per 200 us tick (continuous at 250 kHz)
+    sum = run(p, 0, 600000, &mx);
+    ASSERT_EQ(sum, 100000);
+    ASSERT_TRUE(mx <= 51);
 }
 
 TEST(r13_bench_pulse_rate_matches_hz) {

@@ -38,6 +38,8 @@ int main(int argc, char* argv[]) {
 
     printf("\n--- R13 bench pulse schedule ---\n");
     register_r13_bench_pulse_tests();
+    register_step_quiescence_tests();
+    register_r14_board_io_tests();
 
     PRINT_RESULTS();
 }

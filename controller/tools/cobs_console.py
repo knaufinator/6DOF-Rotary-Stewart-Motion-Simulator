@@ -2,7 +2,7 @@
 """COBS command console for the full controller over native USB (R13 J11).
 
 Sends COBS CH_CMD frames and prints CH_RESP/CH_LOG replies. The port is opened with
-DTR/RTS deasserted so the ESP32-S3 is not reset. Used for the R13_BENCH_ONE_AXIS bench
+DTR asserted, RTS deasserted so the ESP32-S3 is not reset. Used for the R13_BENCH_ONE_AXIS bench
 mode (M1_OUTPUT_TEST_PLAN.md step 12); any controller command works.
 
 One-shot (scriptable; "@N" waits N seconds):
@@ -56,7 +56,7 @@ def frame(text: str) -> bytes:
 def open_port(port: str) -> serial.Serial:
     s = serial.Serial()
     s.port, s.baudrate, s.timeout = port, 115200, 0.1
-    s.dtr = False; s.rts = False
+    s.dtr = True; s.rts = False
     s.open()
     return s
 

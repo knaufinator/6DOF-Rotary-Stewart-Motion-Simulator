@@ -1,0 +1,312 @@
+{
+  "schemaVersion": 1,
+  "createdUtc": "2026-10-27T00:48:57.275394+00:00",
+  "status": "ORDERED_HARDWARE_TESTS_PENDING",
+  "project": {
+    "uuid": "df6039acdfad4375ae07aa6257cd0186",
+    "pcb": "6567ed8798fb578fbfd0297236c2ee0e",
+    "schematicPage": "2d5089592f955b849d84cabed91b1f32",
+    "historicalEditorTitle": "R14 G1SOL7C4 BOOST ROUTED TRIAL DO NOT ORDER 20261023"
+  },
+  "inventory": {
+    "components": 324,
+    "supplierGroups": 91,
+    "logicalPins": 1214,
+    "copperRegisterRows": 2667,
+    "labels": 360
+  },
+  "nativeDrc": [],
+  "nativeComparison": [],
+  "sourceFreeze": "SOURCE_FREEZE.json",
+  "camSha256": "458af4a38ef40c70a0a55db70be31dc5c71da68a1458bc4638b8e81e763547ac",
+  "projectSha256": "b416ef666e47783eb1c9d55e8a021e81f9a73c2a3af305b233d3c39646cdd5c8",
+  "review": "../../review/2026-10-26-10V/README.md",
+  "physicalQualification": "No manufactured R14 tests. Confirm hot cable loop <=2.0 ohm and board loop <=0.4 ohm; 10.133708 V remote floor is conditional, not measured. See BRINGUP.md.",
+  "readmeAudit": {
+    "checkedUtc": "2026-10-27T00:42:50.106260+00:00",
+    "readmes": 27,
+    "linkOccurrences": 310,
+    "uniqueExternalUrls": 44,
+    "externalChecked": true,
+    "brokenOwned": [],
+    "brokenVendor": [
+      {
+        "readme": "controller/managed_components/espressif__led_strip/README.md",
+        "kind": "link",
+        "target": "http://www.world-semi.com/Certifications/WS2812B.html",
+        "vendor": true,
+        "status": "HTTP_BROKEN",
+        "httpStatus": 404
+      },
+      {
+        "readme": "controller/test_harness/managed_components/espressif__led_strip/README.md",
+        "kind": "link",
+        "target": "http://www.world-semi.com/Certifications/WS2812B.html",
+        "vendor": true,
+        "status": "HTTP_BROKEN",
+        "httpStatus": 404
+      }
+    ],
+    "unverifiedHttp": [],
+    "externalChecksReusedFromUtc": "2026-10-26T16:40:10.129515+00:00",
+    "externalScope": "All 44 external URLs unchanged from the earlier live HTTP/primary-web audit. Current published README local targets rescanned after curation.",
+    "manualFallbacks": [
+      {
+        "url": "https://www.st.com/resource/en/datasheet/ldl1117.pdf",
+        "result": "PASS_WEB_PRIMARY_DOCUMENT",
+        "title": "Datasheet - LDL1117 - 1.2 A high PSRR low-dropout linear voltage regulator",
+        "pages": 23
+      }
+    ]
+  },
+  "exportFiles": [
+    {
+      "path": "EXPORT_VALIDATION.json",
+      "bytes": 588,
+      "sha256": "317baaa2970429a0f933be790709989d02b9c1305e560e44d8637f67afd51d3f"
+    },
+    {
+      "path": "NATIVE_COMPARISON.json",
+      "bytes": 4,
+      "sha256": "a5338d955b09046ec0b16f3a9625b7955c763aae07dc722e474e6078745f932f"
+    },
+    {
+      "path": "NATIVE_DRC.json",
+      "bytes": 4,
+      "sha256": "a5338d955b09046ec0b16f3a9625b7955c763aae07dc722e474e6078745f932f"
+    },
+    {
+      "path": "R14-assembly.step.zip",
+      "bytes": 15619061,
+      "sha256": "d2e3e7ac1c32aecf8242aa58fe61bdee20198b2c35084b5a781065b25f77a8f5"
+    },
+    {
+      "path": "R14-BOM-JLC.csv",
+      "bytes": 5165,
+      "sha256": "811d35d8d9af3b070002002a248d7f40eb37e9ed71548e28039766ab07c6f498"
+    },
+    {
+      "path": "R14-BOM-native.tsv",
+      "bytes": 16610,
+      "sha256": "a8bcdbe81ad0120ebe952c02c396fe22835fbeb3a532e40dcccdadb4c2938644"
+    },
+    {
+      "path": "R14-CPL-JLC.csv",
+      "bytes": 8781,
+      "sha256": "b62fbea84fefa05366441ea7c806641b85a76875d700f0a77875ba16e6a69893"
+    },
+    {
+      "path": "R14-CPL-native.tsv",
+      "bytes": 105604,
+      "sha256": "0352c0467876b62a79c0495e9df64d1d33d0e0d35d05370edefc1e20c7a720c8"
+    },
+    {
+      "path": "R14-Gerber-FS36.zip",
+      "bytes": 491211,
+      "sha256": "458af4a38ef40c70a0a55db70be31dc5c71da68a1458bc4638b8e81e763547ac"
+    },
+    {
+      "path": "R14-PCB.net",
+      "bytes": 613957,
+      "sha256": "a991944276a5c4848e37f9557900170b0ead3fef2b89196005b3a4d57e9ab4ae"
+    },
+    {
+      "path": "R14-project.epro2",
+      "bytes": 1232051,
+      "sha256": "b416ef666e47783eb1c9d55e8a021e81f9a73c2a3af305b233d3c39646cdd5c8"
+    },
+    {
+      "path": "R14-schematic.net",
+      "bytes": 874181,
+      "sha256": "c0cce59b054d6376c005c644724aa9702d5b472157f6eafca43585d1fd55b261"
+    },
+    {
+      "path": "R14-schematic.svg",
+      "bytes": 1783144,
+      "sha256": "6b2bfa0feeb77f5ecee45752355c9a85911c67d44608c2891f0de72b6f03f6e8"
+    },
+    {
+      "path": "README.md",
+      "bytes": 2816,
+      "sha256": "aa875a8ce16b60b3eb625a062c36923e77096710884a405c887a3b39906edc23"
+    },
+    {
+      "path": "SOURCE_FREEZE.json",
+      "bytes": 637,
+      "sha256": "c4075154cd56299735e1bce57e6e82664cccfc1016125eb3f7f6dd0cab983aa5"
+    },
+    {
+      "path": "STEP_VERIFICATION.json",
+      "bytes": 808,
+      "sha256": "16c2961cd7001c8a7d921295b572f4947c32ef2c9ee4019c79c560ea40d670d7"
+    }
+  ],
+  "reviewFiles": [
+    {
+      "path": "review/2026-10-26-10V/ACTUAL_CAM_REVIEW.json",
+      "bytes": 33433,
+      "sha256": "03a07c03c345ad6d43204a7faf3148d15f667173b5727358d610574fb2597be5"
+    },
+    {
+      "path": "review/2026-10-26-10V/APERTURE_REVIEW.json",
+      "bytes": 535868,
+      "sha256": "ac3d77c2d4f8eebe8bb0178e2c68ed4387eaa48879044db5e4d35cdf7a403dad"
+    },
+    {
+      "path": "review/2026-10-26-10V/BEFORE_Q11_STOCK_Gerber.zip",
+      "bytes": 491179,
+      "sha256": "2564dedea72da616833756ed0aa69f36c9b7f471ff8e71b6dcc32d902956f701"
+    },
+    {
+      "path": "review/2026-10-26-10V/BEFORE_Q11_STOCK_project.epro2",
+      "bytes": 1231913,
+      "sha256": "6fe9b8fa442f41b75a5e7bfec5390aae638f031ef29f49d7334cf4b0c26f7ad8"
+    },
+    {
+      "path": "review/2026-10-26-10V/board-strings.json",
+      "bytes": 7720,
+      "sha256": "3276d6695c71e45075fd7c02e7bed71f3e826ea21eddcf7eeea80ade88306326"
+    },
+    {
+      "path": "review/2026-10-26-10V/COVERAGE.json",
+      "bytes": 934,
+      "sha256": "61092563b50a47a3dde0e02cd931d0431914d4cc27a917543d02491cb5d33f9c"
+    },
+    {
+      "path": "review/2026-10-26-10V/DB25_DIGITS.png",
+      "bytes": 147868,
+      "sha256": "6437f4c995b59f9aa6fb1fdc375d5da571815a3df45d40af301c8c4ad70a5dad"
+    },
+    {
+      "path": "review/2026-10-26-10V/DELTA_SUPPLEMENT.json",
+      "bytes": 1341,
+      "sha256": "68a7a8ad5824fb833499848fca95ee93238bfed85094465978083cd25a0b0b2f"
+    },
+    {
+      "path": "review/2026-10-26-10V/DEVICE_RELINK_PROOF.json",
+      "bytes": 325,
+      "sha256": "457194d3b5acab34355565c514239e1682883542fed105979f1af1242cd3bd44"
+    },
+    {
+      "path": "review/2026-10-26-10V/DRILL_REVIEW.json",
+      "bytes": 2983,
+      "sha256": "2ea318e48be16abc1befc964f4771a45dec2991b24e665599635049e5b14e473"
+    },
+    {
+      "path": "review/2026-10-26-10V/every-component.csv",
+      "bytes": 98203,
+      "sha256": "afaa66f151508d3b669317c6969a8c438b2f8eb56f607379a1d3b2a585fb2f59"
+    },
+    {
+      "path": "review/2026-10-26-10V/every-label.csv",
+      "bytes": 35874,
+      "sha256": "a17fdb68ea58798f306d0199c0b9fa1246314c4724b7db5852fcd32e3f8e571b"
+    },
+    {
+      "path": "review/2026-10-26-10V/every-pin.csv",
+      "bytes": 55343,
+      "sha256": "4ee6bca11ce07085a2395262a8b020d13c785db9914ac75813031fe8ec047e01"
+    },
+    {
+      "path": "review/2026-10-26-10V/every-trace-via-fill.csv",
+      "bytes": 453742,
+      "sha256": "20782ebb56241d5a0cc4c1c92534d10a89a6b1a751d50e99778773d5d4f48a1e"
+    },
+    {
+      "path": "review/2026-10-26-10V/FIRMWARE_SOURCE_FREEZE.json",
+      "bytes": 7262,
+      "sha256": "62a7df44545a68bea7b4041d18fd2374b0a8094da49649cdf8c17c1ce1f79d4e"
+    },
+    {
+      "path": "review/2026-10-26-10V/HOST_TESTS.log",
+      "bytes": 16040,
+      "sha256": "55ebf3b6782c31a12faee96d66b0c5f0ab9b5c1d9da4e206498dd982c7ad68a5"
+    },
+    {
+      "path": "review/2026-10-26-10V/interface-contract.csv",
+      "bytes": 4149,
+      "sha256": "7ae31bf0aefc537f9443d69e7d94b804f2428bb892b9408f6bd2dbcbc383a3fa"
+    },
+    {
+      "path": "review/2026-10-26-10V/LABEL_PLAN.json",
+      "bytes": 14432,
+      "sha256": "187f7be0493396d5444710571469fc1c6e3eff3576087b8812aa0271beeed730"
+    },
+    {
+      "path": "review/2026-10-26-10V/NATIVE_VERIFICATION.json",
+      "bytes": 65,
+      "sha256": "faf9a65218b61e42fe250a6f7b2b0e96c78a1dea208adf8c4888a44052f5d53c"
+    },
+    {
+      "path": "review/2026-10-26-10V/PLACEMENT_CONTRACT.json",
+      "bytes": 3653,
+      "sha256": "08607f1b4f966d8ffc403254bef5cbc3c310dfb61a96f6fce8ac40b2180de645"
+    },
+    {
+      "path": "review/2026-10-26-10V/Q11_PERSISTENCE.json",
+      "bytes": 570,
+      "sha256": "32f1d70dd9e096e7999d14ffe39a1be48c7b5f7b57a56e18db6f75138681684a"
+    },
+    {
+      "path": "review/2026-10-26-10V/Q11_SOURCE_CAM_PARITY.json",
+      "bytes": 7454,
+      "sha256": "7e2f20ce302b826bc378999a9ce8e66846f75aa90337a0dd9e33e74c45b170b5"
+    },
+    {
+      "path": "review/2026-10-26-10V/Q11_SOURCING_PREFLIGHT.json",
+      "bytes": 1403,
+      "sha256": "c261bc521bbad6f362b3d685f393b9aadd00ef7630ef6372471ffbbae3bfef2e"
+    },
+    {
+      "path": "review/2026-10-26-10V/Q11_STOCK_REFRESH.md",
+      "bytes": 2408,
+      "sha256": "ddcca288a59733031d6752d39c1116491e009119dc92b168e1f714de1b69374e"
+    },
+    {
+      "path": "review/2026-10-26-10V/README.md",
+      "bytes": 17861,
+      "sha256": "0b3e6bafb4c25c0e9a5683d54474c0bc1a8674a3121272c86af350d5d31702e4"
+    },
+    {
+      "path": "review/2026-10-26-10V/README_LINK_AUDIT.json",
+      "bytes": 69268,
+      "sha256": "4fc92e74f8a8072bac3a4105c7165f3b376bc8d42fbc761bed678e3bb20aa9ef"
+    },
+    {
+      "path": "review/2026-10-26-10V/SAVED_ROUTE_VERIFICATION.json",
+      "bytes": 5733,
+      "sha256": "6a0eadcf589ac515b69416e4d88be4156cf8e1e214d59bd2db72beb1082700ae"
+    },
+    {
+      "path": "review/2026-10-26-10V/SIGNAL_REFERENCE_REVIEW.json",
+      "bytes": 37996,
+      "sha256": "d95e9dfc5640e75dc4caada6213e0b4567d9b2b0deb2c18efed57ff3def1773a"
+    },
+    {
+      "path": "review/2026-10-26-10V/SILK_REVIEW.json",
+      "bytes": 52666,
+      "sha256": "a62fd57c664b193e7379a34196dc714c4087eb92740c7d9318f9ae692d5cd16a"
+    },
+    {
+      "path": "review/2026-10-26-10V/VOLTAGE_CONTRACT.json",
+      "bytes": 2482,
+      "sha256": "a39f44fdc4c63f257d2c6d63b0a637a739c7daa22657275e3419ab160d7662a0"
+    }
+  ],
+  "hashExclusions": [
+    "RELEASE_MANIFEST.json",
+    "JLC_UNZIP_BEFORE_UPLOAD.zip"
+  ],
+  "orderStatus": {
+    "state": "ORDERED",
+    "reportedBy": "Owner",
+    "date": "2026-10-26",
+    "timezone": "America/New_York",
+    "orderIdentifier": null,
+    "independentFactoryReceiptCaptured": false
+  },
+  "orderRecord": "../../ORDER_RECORD.json",
+  "factoryChecksNotIndependentlyCaptured": [],
+  "hardwareTests": "NOT_RUN",
+  "curation": "One current manufacturing package, current detailed registers/receipts, exact R13 source provenance and a dated historical review appendix. Duplicate baseline exports and experimental working history are not published."
+}

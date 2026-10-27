@@ -1,0 +1,21 @@
+{
+  "null": false,
+  "valid": true,
+  "solids": 1620,
+  "faces": 121597,
+  "volumeMm3": 85755.51240229562,
+  "boundsMm": {
+    "xmin": 0.012700025400022241,
+    "ymin": -0.3905214960142791,
+    "zmin": -3.0142568466740007,
+    "xmax": 300.050590127934,
+    "ymax": 102.00065870246901,
+    "zmax": 16.354760345325456,
+    "xlength": 300.037890102534,
+    "ylength": 102.39118019848328,
+    "zlength": 19.369017191999458
+  },
+  "scope": "Fresh native STEP, OCCT topology validity and full assembly bounds. Connector hood/cable/enclosure fit requires measured mating hardware.",
+  "nativeExportReceipt": "Bridge timed out at 30s; reconciled by new file mtime, complete ISO terminator, 324 references and successful OCCT read. Not retried.",
+  "geometryUnchangedFromPreStockRefresh": true
+}

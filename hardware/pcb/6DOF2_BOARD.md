@@ -1,4 +1,23 @@
-# 6DOF 2 controller board — untested prototype
+# 6DOF 2 controller board — R13 first article, R14 planning
+
+> **Current status — 2026-10-26:** R14 is ordered, confirmed by the owner.
+> See [current PCB/schematic and decisions](6dof2_r14/README.md) and
+> [firmware evidence](6dof2_r14/FIRMWARE_STATUS.md). Hardware testing is pending.
+> Dated sections below are history and do not establish current qualification.
+
+
+**Current 2026-10-10:** R13 assembled first articles arrived 2026-10-08.
+USB-only bringup, W5500 Ethernet, controller/app handshake and wired 1–2 kHz
+streaming have bench evidence in
+[the R13 bringup log](6dof2_r13/bringup/BRINGUP_LOG.md). R13's 12 V power,
+supervisor/latch, drive-connected outputs and alarm optos remain untested.
+The R13 alarm-opto R30–R35 path has a calculated resistor power overrating
+when active; the [bringup hold](6dof2_r13/bringup/BRINGUP_LOG.md) applies
+before drive-alarm testing. R14 now has a distinct EasyEDA import project with
+its unchanged RC4 netlist and PCB primitives verified; see the
+[current R14 handoff](6dof2_r14/README.md). No R14 circuit/placement edit
+or order exists.
+The September 23 package/order statements below are historical RC4 status.
 
 **Status, 2026-09-23: r13 RC4 manufacturing handoff; placed/routed/labeled, native DRC empty. UNTESTED PCB.**
 The owner intends to order assembled prototypes for testing shortly. Nothing has
@@ -8,6 +27,26 @@ be completed before drive-connected operation. Do not use the current firmware/P
 combination on a powered motion platform.
 
 ## Files and revision authority
+
+- [R14 ordered design](6dof2_r14/README.md): the new spin. r13 has **no limit/home switch inputs**
+  or drive-side limit path. R14 planning is active: narrow the DB25 column spacing
+  subject to physical plug clearance, reuse the original **switch collector PCB**
+  and its Ethernet cable/plug scheme, and add a straight mating field I/O jack
+  arrangement for limits and home. R13's W5500 network circuit remains. Git
+  commit `64332d7` preserves the original collector design: one 8P8C cable,
+  contacts 1=ground, 2=+12 V, 3–8=M1–M6 sensor outputs. The physical collector
+  still needs a continuity check. The six-jack proposal is superseded; drive
+  connector contact map and expander architecture are provisional. Six existing
+  collector outputs cannot by themselves report 18 POT/NOT/HOME states. The candidate AASD-15A manual
+  calls the DB25 control connector **CN2** and assigns limit functions to
+  programmable 12–24 V digital inputs. The owner confirms the six retained Hall
+  switches mark the 12 o'clock end position, one per arm; the arm then moves a
+  calibrated step offset to horizontal. There are no opposite-end physical
+  sensors. A missed switch may bring an arm to a welded stop; the owner reports
+  that contact trips a servo-drive alarm and the servo stops working. On **any
+  one** drive alarm, R14 must stop STEP/DIR commands to **all six** arms while
+  the five healthy drives remain enabled and hold position. See the R14 plan
+  for automatic Hall-health gating, bounded homing and fault/recovery tests.
 
 - [r13 package/status](6dof2_r13/README.md) and
   [RC4 release handoff](6dof2_r13/r13-rc4-2026-09-23/README.md): fabrication, assembly,

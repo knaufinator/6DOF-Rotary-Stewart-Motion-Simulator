@@ -13,11 +13,12 @@ Shared build instructions, user guides and developer references live here.
 | [App automation](APP_AUTOMATION.md) | Repository-local MCP setup, isolated documentation mode and real UI captures |
 | [Architecture](ARCHITECTURE.md) | Implemented software boundaries, data flow and shared kinematics |
 
-**The r13 PCB is untested. DO NOT ORDER.** Documentation and successful software
-builds do not establish safe drive-connected operation. Read the
-[current board status](../hardware/pcb/6DOF2_BOARD.md) and
-[firmware/commissioning TODO](../hardware/pcb/6DOF2_FIRMWARE_TODO.md).
-Board-specific build/buy/bench guidance stays with the hardware package, not here.
+R13 one-axis bench evidence and the recovered firmware are documented in the
+[R14 firmware status](../hardware/pcb/6dof2_r14/FIRMWARE_STATUS.md). The
+[current R14 release](../hardware/pcb/6dof2_r14/README.md) is ordered, with PCB and
+schematic drawings, design decisions and a pending hardware-test plan. [Design philosophy](../hardware/pcb/6dof2_r14/DESIGN_PHILOSOPHY.md)
+explains pulse permission, holding torque and the new hardware checks.
+Board-specific build/buy/bench guidance stays with the hardware package.
 
 Unless stated otherwise, command examples start at the repository root. The app
 normally runs with `app/` as its working directory to retain its existing settings

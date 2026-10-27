@@ -1,7 +1,7 @@
 {
-  "checkedUtc": "2026-10-27T19:26:48.514480+00:00",
+  "checkedUtc": "2026-10-27T23:54:41.354202+00:00",
   "readmes": 30,
-  "linkOccurrences": 360,
+  "linkOccurrences": 364,
   "uniqueExternalUrls": 44,
   "externalChecked": true,
   "brokenOwned": [],
@@ -24,14 +24,6 @@
     }
   ],
   "unverifiedHttp": [
-    {
-      "readme": "controller/mini/README.md",
-      "kind": "link",
-      "target": "https://github.com/knaufinator/stewart-core",
-      "vendor": false,
-      "status": "HTTP_UNVERIFIED",
-      "error": "URLError"
-    },
     {
       "readme": "hardware/pcb/6dof2_r14/review/2026-10-26-10V/README.md",
       "kind": "link",
@@ -187,7 +179,7 @@
     {
       "readme": "app/README.md",
       "kind": "html",
-      "target": "https://img.shields.io/badge/ðŸ’›_Support_This_Project-PayPal-00457C?style=for-the-badge&logo=paypal&logoColor=white",
+      "target": "https://img.shields.io/badge/💛_Support_This_Project-PayPal-00457C?style=for-the-badge&logo=paypal&logoColor=white",
       "vendor": false,
       "status": "PASS_HTTP",
       "httpStatus": 200,
@@ -478,8 +470,9 @@
       "kind": "link",
       "target": "https://github.com/knaufinator/stewart-core",
       "vendor": false,
-      "status": "HTTP_UNVERIFIED",
-      "error": "URLError"
+      "status": "PASS_HTTP",
+      "httpStatus": 200,
+      "resolvedUrl": "https://github.com/knaufinator/stewart-core"
     },
     {
       "readme": "controller/mini/README.md",
@@ -1764,6 +1757,34 @@
     },
     {
       "readme": "hardware/pcb/6dof2_r14/review/2026-10-27-clearance/README.md",
+      "kind": "image",
+      "target": "../../images/r14c1-j12-clearance-proof.png",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-27-clearance/README.md",
+      "kind": "link",
+      "target": "LIVE_CURRENT_PARITY.json",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-27-clearance/README.md",
+      "kind": "link",
+      "target": "../../images/r14c1-live-editor.png",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-27-clearance/README.md",
+      "kind": "link",
+      "target": "J12_CLEARANCE_PROOF.json",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-27-clearance/README.md",
       "kind": "link",
       "target": "every-component-dimensions.csv",
       "vendor": false,
@@ -2692,7 +2713,5 @@
       "vendor": false,
       "status": "PASS"
     }
-  ],
-  "externalCheckedUtc": "2026-10-27T19:24:22.073055+00:00",
-  "externalCheckNote": "Final local links/anchors rechecked at checkedUtc; identical set of44 external URLs retains HTTP results from externalCheckedUtc."
+  ]
 }

@@ -4,6 +4,14 @@
 
 ![Physical-body correction](../../images/r14c1-clearance-before-after.png)
 
+## J12 close-up and live editor confirmation
+
+![Actual component solids and allowance-inclusive body clearances](../../images/r14c1-j12-clearance-proof.png)
+
+The open EasyEDA board was freshly read through the bridge after the release commit. All physical records match the final saved raw source exactly; all 324 anchors additionally match the committed archive within serialization tolerance. U20 is at Y=22.0 mm rather than the ordered Y=16.4 mm. J12 itself remains fixed. [Live-source parity](LIVE_CURRENT_PARITY.json) and the [unaltered current editor capture](../../images/r14c1-live-editor.png) establish which placement is open.
+
+The image above is rendered from actual STEP component meshes, not an invented housing sketch. Exact solid distances are 2.021614 mm to U19, 2.021614 mm to U20 and 2.031021 mm to C53. The independent manufacturer-bound check, after 0.15 mm allowance on every edge, gives 2.824030 mm body clearance to either optocoupler and 1.294001 mm to C53, versus the 1.0 mm connector-body rule. The lower image omits leads; the upper solid-distance check includes them. [Machine-readable distances and image/source hashes](J12_CLEARANCE_PROOF.json) bind this witness. External connector/enclosure fit remains a separate qualification.
+
 ## Results
 
 | Scope | Coverage and result | Evidence |
@@ -40,6 +48,6 @@ The [replacement export manifest](../../exports/2026-10-27-clearance/RELEASE_MAN
 
 ## Repository link check
 
-The final audit checked 30 READMEs, 360 link occurrences and 44 unique external URLs. Owned local links and anchors pass. One obsolete Worldsemi URL returns 404 in two vendor-managed LED-strip READMEs; those vendor files are unchanged. The stewart-core GitHub URL and ST LDL1117 PDF could not be freshly verified because of a network error/timeout. These exceptions are retained in the [link audit](README_LINK_AUDIT.json), rather than reported as successful checks.
+The final audit checked 30 READMEs, 364 link occurrences and 44 unique external URLs. Owned local links and anchors pass. One obsolete Worldsemi URL returns 404 in two vendor-managed LED-strip READMEs; those vendor files are unchanged. The stewart-core GitHub URL now passes; the ST LDL1117 PDF could not be freshly verified because of a timeout. These exceptions are retained in the [link audit](README_LINK_AUDIT.json), rather than reported as successful checks.
 
 For an independent outline audit, run `tools/audit_pcb_outline_coverage.py --source hardware/pcb/6dof2_r14/exports/2026-10-27-clearance/R14-project.epro2 --output outline-review.json --csv component-outlines.csv`. It reconstructs the actual original LINE segments with polygonize_full, checks explicit polygon closure/validity/nonzero area, and enumerates every fitted component. Six regression tests include the actual J12 body and malformed or missing geometry.

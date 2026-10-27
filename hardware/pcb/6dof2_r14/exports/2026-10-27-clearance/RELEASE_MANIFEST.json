@@ -146,8 +146,16 @@
       "sha256": "10a690e981d95bb28be88555f00b3d4d34604abca4c502a6573feb31885c8ea2"
     },
     {
+      "path": "J12_CLEARANCE_PROOF.json",
+      "sha256": "f25cc105935dcabf1ff6f70fd48f8c8ed6067d4868b6507a8a7c0a4c366c505a"
+    },
+    {
       "path": "LABEL_ENVELOPE_REVIEW.json",
       "sha256": "3ed43558008e1fc7469e08c536f270fff00bad57fa4685bee730ec0bbd6cd38c"
+    },
+    {
+      "path": "LIVE_CURRENT_PARITY.json",
+      "sha256": "282cb09b30a64b0dd2e3d47adc8fefdf67dbd967d413485d64b2b631a9d7c279"
     },
     {
       "path": "MECHANICAL_REVIEW.json",
@@ -163,11 +171,11 @@
     },
     {
       "path": "README.md",
-      "sha256": "7f1f2be7f5b72f83192c6facd329cc1950a54e0d26fe035b62521d11166afd53"
+      "sha256": "5e40a026d1fb2826ccec832977b37975415830a62ff1e428cf574daa5c7e1063"
     },
     {
       "path": "README_LINK_AUDIT.json",
-      "sha256": "f8cf40aa90cfe5acc10abd9b1cf59219019e31626edba14fe3f5316935eae18e"
+      "sha256": "93b9b1f23440ea370ba11055bdec4bd7845f57a03f311c2b73bf422e1d9b1e09"
     },
     {
       "path": "SIGNAL_REFERENCES.json",

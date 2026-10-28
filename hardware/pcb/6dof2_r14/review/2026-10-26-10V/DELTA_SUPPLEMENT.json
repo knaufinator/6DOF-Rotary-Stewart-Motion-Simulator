@@ -1,0 +1,51 @@
+{
+  "newViasChecked": 27,
+  "minNewViaMaskGapMm": 0.14679937999999026,
+  "minNewViaPasteGapMm": 0.19693839999999344,
+  "referenceExceptions": [
+    {
+      "id": "e3bfe2af2680537b",
+      "net": "ETH_TXN",
+      "unsupportedCenterlineMm": 1.5
+    },
+    {
+      "id": "bd366de39b4b523f",
+      "net": "ETH_TXP",
+      "unsupportedCenterlineMm": 3.6800000000000352
+    },
+    {
+      "id": "9e5c503b87625f64",
+      "net": "ETH_JRXN",
+      "unsupportedCenterlineMm": 5.369999999999994
+    },
+    {
+      "id": "d0687058a0005e0f",
+      "net": "ETH_JRXP",
+      "unsupportedCenterlineMm": 2.7900000000000382
+    },
+    {
+      "id": "02fd48b81d715d8e",
+      "net": "ETH_TXN",
+      "unsupportedCenterlineMm": 0.6999999999999993
+    },
+    {
+      "id": "13feeef65b585f5b",
+      "net": "ETH_TXP",
+      "unsupportedCenterlineMm": 0.6999999999999993
+    },
+    {
+      "id": "7830e96ecdc055ed",
+      "net": "ETH_RXN",
+      "unsupportedCenterlineMm": 0.6999999999999993
+    },
+    {
+      "id": "8cd86d1a33dd5850",
+      "net": "ETH_RXP",
+      "unsupportedCenterlineMm": 0.6999999999999993
+    }
+  ],
+  "sameSignalTraceInventoryAsBaseline": true,
+  "maxReferenceUnsupportedLengthDeltaMm": 0.0,
+  "inheritedArchiveOnlyStubCount": 3,
+  "allArchiveOnlyStubsByteSemanticEqualToBaseline": true
+}

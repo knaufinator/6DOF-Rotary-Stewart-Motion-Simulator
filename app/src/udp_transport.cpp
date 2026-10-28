@@ -5,7 +5,9 @@
 #  define WIN32_LEAN_AND_MEAN
 #  include <winsock2.h>
 #  include <ws2tcpip.h>
+#  include <iphlpapi.h>
 #  pragma comment(lib, "ws2_32.lib")
+#  pragma comment(lib, "iphlpapi.lib")
 #endif
 
 #include "cobs.h"
@@ -86,6 +88,49 @@ UdpTransport::UdpTransport(const char* host, int udp_port, int tcp_port)
             freeaddrinfo(tres);
         }
     }
+
+#ifdef _WIN32
+    // MAC of the adapter Windows will use to reach the host (for the PEERMAC hint).
+    if (m_udp_addr) {
+        DWORD ifidx = 0;
+        if (GetBestInterfaceEx((sockaddr*)m_udp_addr, &ifidx) == NO_ERROR) {
+            ULONG sz = 16 * 1024;
+            std::vector<uint8_t> buf(sz);
+            IP_ADAPTER_ADDRESSES* aa = (IP_ADAPTER_ADDRESSES*)buf.data();
+            if (GetAdaptersAddresses(AF_INET, GAA_FLAG_SKIP_ANYCAST | GAA_FLAG_SKIP_MULTICAST | GAA_FLAG_SKIP_DNS_SERVER,
+                                     nullptr, aa, &sz) == NO_ERROR) {
+                for (IP_ADAPTER_ADDRESSES* p = aa; p; p = p->Next) {
+                    if (p->IfIndex == ifidx && p->PhysicalAddressLength == 6) {
+                        char mac[32];
+                        snprintf(mac, sizeof(mac), "%02x:%02x:%02x:%02x:%02x:%02x",
+                                 p->PhysicalAddress[0], p->PhysicalAddress[1], p->PhysicalAddress[2],
+                                 p->PhysicalAddress[3], p->PhysicalAddress[4], p->PhysicalAddress[5]);
+                        m_local_mac = mac;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+#endif
+
+    // No bridge on the control port -> the peer is the ESP32 itself (direct mode).
+    // Either way, listen on the UDP socket: the ESP32 mirrors RESP/LOG/TEL frames to the
+    // address it last heard from; a bridge never sends anything back on UDP.
+    if (m_udp_sock != kInvalidSock) {
+        m_direct.store(!m_ctrl_connected.load());
+        // Windows reports ICMP port-unreachable as WSAECONNRESET on the next recvfrom; off.
+        BOOL off = FALSE; DWORD br = 0;
+        WSAIoctl((SOCKET)m_udp_sock, _WSAIOW(IOC_VENDOR, 12) /* SIO_UDP_CONNRESET */,
+                 &off, sizeof(off), nullptr, 0, &br, nullptr, nullptr);
+        DWORD tmo = 200;   // ms; lets the reader notice m_udp_stop
+        setsockopt((SOCKET)m_udp_sock, SOL_SOCKET, SO_RCVTIMEO, (const char*)&tmo, sizeof(tmo));
+        // bind to an ephemeral port now so the ESP32 has somewhere to answer before our first send
+        sockaddr_in any = {}; any.sin_family = AF_INET; any.sin_addr.s_addr = htonl(INADDR_ANY); any.sin_port = 0;
+        bind((SOCKET)m_udp_sock, (sockaddr*)&any, sizeof(any));
+        m_udp_stop.store(false);
+        m_udp_reader = std::thread(&UdpTransport::udpReaderThread, this);
+    }
 #endif
 }
 
@@ -102,8 +147,98 @@ void UdpTransport::close() {
     if (cs != kInvalidSock) { shutdown((SOCKET)cs, SD_BOTH); closesocket((SOCKET)cs); }
     if (m_ctrl_reader.joinable()) m_ctrl_reader.join();
     m_ctrl_connected.store(false);
+    m_udp_stop.store(true);
     if (m_udp_sock != kInvalidSock) { closesocket((SOCKET)m_udp_sock); m_udp_sock = kInvalidSock; }
+    if (m_udp_reader.joinable()) m_udp_reader.join();
 #endif
+}
+
+// ── Direct mode: COBS frames back from the ESP32 on the motion socket ──
+void UdpTransport::udpReaderThread() {
+#ifdef _WIN32
+    uint8_t rx[2048];
+    uint8_t acc[512]; int acc_len = 0;
+    uint8_t dec[512];
+    while (!m_udp_stop.load()) {
+        uintptr_t us = m_udp_sock;
+        if (us == kInvalidSock) break;
+        sockaddr_in from = {}; int flen = sizeof(from);
+        int n = recvfrom((SOCKET)us, (char*)rx, sizeof(rx), 0, (sockaddr*)&from, &flen);
+        if (n <= 0) continue;   // timeout or reset; loop re-checks the stop flag
+        m_rx_bytes.fetch_add(n);
+        for (int i = 0; i < n; i++) {
+            if (rx[i] == 0x00) {
+                if (acc_len > 0) {
+                    int dl = cobs_decode(acc, acc_len, dec);
+                    if (dl > 0) { m_udp_rx_frames.fetch_add(1); handleFrame(dec, dl); }
+                    else m_cobs_fail.fetch_add(1);
+                }
+                acc_len = 0;
+            } else if (acc_len < (int)sizeof(acc)) {
+                acc[acc_len++] = rx[i];
+            } else {
+                acc_len = 0; m_cobs_fail.fetch_add(1);
+            }
+        }
+        // a datagram without a trailing delimiter still holds one whole frame
+        if (acc_len > 0) {
+            int dl = cobs_decode(acc, acc_len, dec);
+            if (dl > 0) { m_udp_rx_frames.fetch_add(1); handleFrame(dec, dl); }
+            else m_cobs_fail.fetch_add(1);
+            acc_len = 0;
+        }
+    }
+#endif
+}
+
+void UdpTransport::handleFrame(const uint8_t* frame, int len) {
+    if (len < 1) return;
+    uint8_t ch = frame[0];
+    const uint8_t* p = frame + 1;
+    int plen = len - 1;
+    switch (ch) {
+        case COBS_CH_TEL:
+            m_cobs_tel.fetch_add(1);
+            ingestTelemetry(p, plen);
+            break;
+        case COBS_CH_RESP:
+        case COBS_CH_LOG: {
+            if (ch == COBS_CH_RESP) m_cobs_resp.fetch_add(1); else m_cobs_log.fetch_add(1);
+            if (plen <= 0) break;
+            std::string text((const char*)p, (size_t)plen);
+            while (!text.empty() && (text.back() == '\n' || text.back() == '\r')) text.pop_back();
+            if (text.empty()) break;
+            std::lock_guard<std::mutex> lk(m_line_mutex);
+            m_line_queue.emplace_back(std::move(text));
+            break;
+        }
+        default:
+            break;
+    }
+}
+
+void UdpTransport::ingestTelemetry(const uint8_t* bytes, int nb) {
+    if (nb < 24) return;
+    float vals[12] = {};
+    memcpy(vals, bytes, nb < 48 ? nb : 48);
+    for (int i = 0; i < 6; i++)
+        if (vals[i] != vals[i] || vals[i] > 1e10f || vals[i] < -1e10f) { m_tel_rejected.fetch_add(1); return; }
+    double t = now_seconds();
+    std::lock_guard<std::mutex> lk(m_tel_mutex);
+    memcpy(m_telemetry.angles, vals, 6 * sizeof(float));
+    if (nb >= 48) memcpy(m_telemetry.positions, vals + 6, 6 * sizeof(float));
+    m_telemetry.timestamp = t;
+    m_telemetry.seq++;
+    m_tel_seq.store(m_telemetry.seq);
+    m_tel_times[m_tel_time_idx % 16] = t;
+    m_tel_time_idx++;
+    if (m_tel_time_idx >= 2) {
+        int oldest = (m_tel_time_idx >= 16) ? m_tel_time_idx - 16 : 0;
+        double dt = t - m_tel_times[oldest % 16];
+        int count = m_tel_time_idx - oldest;
+        if (dt > 0.001 && count > 1)
+            m_tel_rate.store((float)((count - 1) / dt));
+    }
 }
 
 // ── UDP motion plane ────────────────────────────────────────────────
@@ -122,16 +257,21 @@ bool UdpTransport::write(const uint8_t* data, int len) {
 
 bool UdpTransport::sendCobsData(const uint32_t raw[6], int bit_depth) {
     (void)bit_depth;
-    uint8_t frame[1 + 18];
-    frame[0] = COBS_CH_DATA18;
+    // Direct to the ESP32: DATA18_SEQ ([seq16 LE][18 bytes]) so the firmware can count lost
+    // frames. Through a bridge: plain DATA18, relayed verbatim to firmware that predates 0x08.
+    const bool seq = m_direct.load();
+    uint8_t frame[1 + 2 + 18];
+    int o = 0;
+    frame[o++] = seq ? COBS_CH_DATA18_SEQ : COBS_CH_DATA18;
+    if (seq) { frame[o++] = (uint8_t)(m_seq & 0xFF); frame[o++] = (uint8_t)(m_seq >> 8); m_seq++; }
     for (int i = 0; i < 6; i++) {
         uint32_t v = raw[i] & 0x3FFFFu;
-        frame[1 + i * 3]     = (uint8_t)(v & 0xFFu);
-        frame[1 + i * 3 + 1] = (uint8_t)((v >> 8) & 0xFFu);
-        frame[1 + i * 3 + 2] = (uint8_t)((v >> 16) & 0xFFu);
+        frame[o++] = (uint8_t)(v & 0xFFu);
+        frame[o++] = (uint8_t)((v >> 8) & 0xFFu);
+        frame[o++] = (uint8_t)((v >> 16) & 0xFFu);
     }
     uint8_t enc[64];
-    int enc_len = cobs_encode(frame, sizeof(frame), enc);
+    int enc_len = cobs_encode(frame, o, enc);
     enc[enc_len++] = 0x00;
     return write(enc, enc_len);   // one datagram = one COBS frame
 }
@@ -240,35 +380,7 @@ void UdpTransport::handleControlLine(const char* line) {
                     };
                     bytes[nb++] = (uint8_t)((hv(h[i]) << 4) | hv(h[i + 1]));
                 }
-                if (nb >= 24) {
-                    float vals[12] = {};
-                    memcpy(vals, bytes, nb < 48 ? nb : 48);
-                    bool valid = true;
-                    for (int i = 0; i < 6; i++)
-                        if (vals[i] != vals[i] || vals[i] > 1e10f || vals[i] < -1e10f) { valid = false; break; }
-                    if (valid) {
-                        double t = now_seconds();
-                        {
-                            std::lock_guard<std::mutex> lk(m_tel_mutex);
-                            memcpy(m_telemetry.angles, vals, 6 * sizeof(float));
-                            if (nb >= 48) memcpy(m_telemetry.positions, vals + 6, 6 * sizeof(float));
-                            m_telemetry.timestamp = t;
-                            m_telemetry.seq++;
-                            m_tel_seq.store(m_telemetry.seq);
-                            m_tel_times[m_tel_time_idx % 16] = t;
-                            m_tel_time_idx++;
-                            if (m_tel_time_idx >= 2) {
-                                int oldest = (m_tel_time_idx >= 16) ? m_tel_time_idx - 16 : 0;
-                                double dt = t - m_tel_times[oldest % 16];
-                                int count = m_tel_time_idx - oldest;
-                                if (dt > 0.001 && count > 1)
-                                    m_tel_rate.store((float)((count - 1) / dt));
-                            }
-                        }
-                    } else {
-                        m_tel_rejected.fetch_add(1);
-                    }
-                }
+                ingestTelemetry(bytes, nb);
             }
         } else if (strcmp(es, "resp") == 0 || strcmp(es, "log") == 0) {
             if (strcmp(es, "resp") == 0) m_cobs_resp.fetch_add(1); else m_cobs_log.fetch_add(1);

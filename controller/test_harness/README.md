@@ -7,11 +7,11 @@ The current [firmware](main/main.c) uses four PCNT counters (channels 0–3) and
 two RMT RX channels (4–5). It observes STEP/DIR inputs; it does not prove motor
 position, drive behavior or platform safety.
 
-**r13 is UNTESTED. Keep all servo drives disconnected.** Complete the applicable
+**R13 has one-axis bench evidence; this analyzer is a separate image.** Complete the applicable
 [firmware and commissioning gates](../../hardware/pcb/6DOF2_FIRMWARE_TODO.md)
 before any drive connection. Do not flash this analyzer image onto the r13
 controller: it drives a status LED on GPIO48, which r13 assigns to its hardware
-arm input. No hardware or receiver fixture is approved by this guide.
+arm input. See the [current R14 qualification scope](../../hardware/pcb/6dof2_r14/FIRMWARE_STATUS.md). This guide does not qualify a controller or receiver fixture.
 
 ## Analyzer input map
 

@@ -1,0 +1,20 @@
+{
+  "status": "PASS",
+  "changes": [
+    {
+      "type": "ATTR",
+      "id": "acaba88ee6a8dbe9e0",
+      "fields": [
+        "value"
+      ]
+    },
+    {
+      "type": "ATTR",
+      "id": "653d88bd1e86dfede0",
+      "fields": [
+        "value"
+      ]
+    }
+  ],
+  "allOtherSourcePayloadsIdentical": true
+}

@@ -80,7 +80,7 @@
 #define ETH_SPI_SCLK   36
 #define ETH_SPI_CS     38
 #define ETH_SPI_INT    39
-#define ETH_SPI_CLOCK_MHZ 20
+#define ETH_SPI_CLOCK_MHZ 26   // GPIO-matrix full-duplex limit is ~40; 26 is the safe margin
 #define ETH_UDP_PORT   4210
 
 #endif // PCB_VERSION

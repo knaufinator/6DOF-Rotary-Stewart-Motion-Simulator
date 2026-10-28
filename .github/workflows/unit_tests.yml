@@ -5,20 +5,26 @@ on:
     branches: [ phoenix, main ]
     paths:
       - 'controller/include/**'
+      - 'controller/main/**'
       - 'controller/stewart-core' # shared submodule gitlink — the math under test lives here now
       - 'controller/tests/**'
+      - 'hardware/pcb/6dof2_r13/bringup/r13bench_core.py'
+      - 'hardware/pcb/6dof2_r13/bringup/test_r13bench_core.py'
       - '.github/workflows/unit_tests.yml'
   pull_request:
     branches: [ phoenix, main ]
     paths:
       - 'controller/include/**'
+      - 'controller/main/**'
       - 'controller/stewart-core' # shared submodule gitlink — the math under test lives here now
       - 'controller/tests/**'
+      - 'hardware/pcb/6dof2_r13/bringup/r13bench_core.py'
+      - 'hardware/pcb/6dof2_r13/bringup/test_r13bench_core.py'
       - '.github/workflows/unit_tests.yml'
 
 jobs:
   unit-tests:
-    name: C Math Module Tests
+    name: Controller Unit Tests
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -49,3 +55,18 @@ jobs:
       - name: Run tests (Windows)
         if: runner.os == 'Windows'
         run: .\controller\tests\build\Release\stewart-tests.exe
+
+  host-contracts:
+    name: Firmware Contracts and R13 Bench Host
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: E-stop and R14 motion-lock source contracts
+        run: |
+          python controller/tests/test_estop_source_contract.py
+          python controller/tests/test_r14_failclosed_source_contract.py
+      - name: R13 bench-host regressions without hardware
+        run: python hardware/pcb/6dof2_r13/bringup/test_r13bench_core.py

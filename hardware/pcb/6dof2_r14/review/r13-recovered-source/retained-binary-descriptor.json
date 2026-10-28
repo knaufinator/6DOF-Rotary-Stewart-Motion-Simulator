@@ -1,0 +1,9 @@
+{
+  "version": "v0.1.21-dev.3+cc25066-26-g7cc29",
+  "project": "stewart_platform",
+  "time": "09:14:47",
+  "date": "Oct 20 2026",
+  "idf": "v5.5.2",
+  "embeddedElfSha256": "37d1b33e8511b60669cfb9e1e451849c459a87a72dc8b8a27304eb6d223af0d2",
+  "retainedElfSha256": "37d1b33e8511b60669cfb9e1e451849c459a87a72dc8b8a27304eb6d223af0d2"
+}

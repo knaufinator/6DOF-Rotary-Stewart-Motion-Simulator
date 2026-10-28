@@ -1,0 +1,239 @@
+{
+  "status": "PASS_Q11_METADATA_ONLY_ALL_CAM_GEOMETRY_IDENTICAL",
+  "scope": "Exact persisted Q11 supplier-reel metadata delta; every geometry/net/model/pose record preserved",
+  "documents": {
+    "SCH": {
+      "changedRecords": [
+        {
+          "type": "ATTR",
+          "id": "b20b3d93f7e36ae8",
+          "before": {
+            "x": null,
+            "y": null,
+            "rotation": null,
+            "color": null,
+            "fontFamily": null,
+            "fontSize": null,
+            "fontWeight": null,
+            "italic": null,
+            "underline": null,
+            "strikeout": false,
+            "align": null,
+            "value": "DMN6075S-13",
+            "keyVisible": null,
+            "valueVisible": null,
+            "key": "Manufacturer Part",
+            "fillColor": null,
+            "parentId": "aa9052d3e1f75b44",
+            "zIndex": 22
+          },
+          "after": {
+            "x": null,
+            "y": null,
+            "rotation": null,
+            "color": null,
+            "fontFamily": null,
+            "fontSize": null,
+            "fontWeight": null,
+            "italic": null,
+            "underline": null,
+            "strikeout": false,
+            "align": null,
+            "value": "DMN6075S-7",
+            "keyVisible": null,
+            "valueVisible": null,
+            "key": "Manufacturer Part",
+            "fillColor": null,
+            "parentId": "aa9052d3e1f75b44",
+            "zIndex": 22
+          }
+        },
+        {
+          "type": "ATTR",
+          "id": "a03e914f3c58c133",
+          "before": {
+            "x": null,
+            "y": null,
+            "rotation": null,
+            "color": null,
+            "fontFamily": null,
+            "fontSize": null,
+            "fontWeight": null,
+            "italic": null,
+            "underline": null,
+            "strikeout": false,
+            "align": null,
+            "value": "C3280148",
+            "keyVisible": null,
+            "valueVisible": null,
+            "key": "Supplier Part",
+            "fillColor": null,
+            "parentId": "aa9052d3e1f75b44",
+            "zIndex": 20
+          },
+          "after": {
+            "x": null,
+            "y": null,
+            "rotation": null,
+            "color": null,
+            "fontFamily": null,
+            "fontSize": null,
+            "fontWeight": null,
+            "italic": null,
+            "underline": null,
+            "strikeout": false,
+            "align": null,
+            "value": "C155242",
+            "keyVisible": null,
+            "valueVisible": null,
+            "key": "Supplier Part",
+            "fillColor": null,
+            "parentId": "aa9052d3e1f75b44",
+            "zIndex": 20
+          }
+        },
+        {
+          "type": "ATTR",
+          "id": "6da0156b88d4f306",
+          "before": {
+            "x": null,
+            "y": null,
+            "rotation": null,
+            "color": null,
+            "fontFamily": null,
+            "fontSize": null,
+            "fontWeight": null,
+            "italic": null,
+            "underline": null,
+            "strikeout": false,
+            "align": null,
+            "value": "https://item.szlcsc.com/datasheet/DMN6075S-13/3843046.html",
+            "keyVisible": null,
+            "valueVisible": null,
+            "key": "Datasheet",
+            "fillColor": null,
+            "parentId": "aa9052d3e1f75b44",
+            "zIndex": 25
+          },
+          "after": {
+            "x": null,
+            "y": null,
+            "rotation": null,
+            "color": null,
+            "fontFamily": null,
+            "fontSize": null,
+            "fontWeight": null,
+            "italic": null,
+            "underline": null,
+            "strikeout": false,
+            "align": null,
+            "value": "https://www.diodes.com/datasheet/download/DMN6075S.pdf",
+            "keyVisible": null,
+            "valueVisible": null,
+            "key": "Datasheet",
+            "fillColor": null,
+            "parentId": "aa9052d3e1f75b44",
+            "zIndex": 25
+          }
+        },
+        {
+          "type": "ATTR",
+          "id": "24d58777a9f46deb",
+          "before": {
+            "x": null,
+            "y": null,
+            "rotation": null,
+            "color": null,
+            "fontFamily": null,
+            "fontSize": null,
+            "fontWeight": null,
+            "italic": null,
+            "underline": null,
+            "align": null,
+            "value": "DMN6075S-13",
+            "keyVisible": null,
+            "valueVisible": null,
+            "key": "Comment",
+            "fillColor": null,
+            "parentId": "aa9052d3e1f75b44",
+            "zIndex": 48
+          },
+          "after": {
+            "x": null,
+            "y": null,
+            "rotation": null,
+            "color": null,
+            "fontFamily": null,
+            "fontSize": null,
+            "fontWeight": null,
+            "italic": null,
+            "underline": null,
+            "align": null,
+            "value": "DMN6075S-7",
+            "keyVisible": null,
+            "valueVisible": null,
+            "key": "Comment",
+            "fillColor": null,
+            "parentId": "aa9052d3e1f75b44",
+            "zIndex": 48
+          }
+        }
+      ],
+      "sameRecordInventory": true,
+      "allPhysicalConnectivityAndModelRecordsIdentical": true
+    },
+    "PCB": {
+      "changedRecords": [
+        {
+          "type": "COMPONENT",
+          "id": "f71d2e163f55fb37",
+          "before": {
+            "partitionId": "",
+            "groupId": 0,
+            "layerId": 1,
+            "x": 11267.7165,
+            "y": 1818.8976,
+            "angle": 0,
+            "attrs": {
+              "Unique ID": "R14-10V-20261026-Q11",
+              "Reuse Block": "",
+              "Group ID": "",
+              "Channel ID": "$1I447",
+              "Comment": "DMN6075S-13"
+            },
+            "locked": false,
+            "zIndex": -1
+          },
+          "after": {
+            "partitionId": "",
+            "groupId": 0,
+            "layerId": 1,
+            "x": 11267.7165,
+            "y": 1818.8976,
+            "angle": 0,
+            "attrs": {
+              "Supplier Part": "C155242",
+              "Manufacturer Part": "DMN6075S-7",
+              "Datasheet": "https://www.diodes.com/datasheet/download/DMN6075S.pdf",
+              "Unique ID": "R14-10V-20261026-Q11",
+              "Reuse Block": "",
+              "Group ID": "",
+              "Channel ID": "$1I447",
+              "Comment": "DMN6075S-7"
+            },
+            "locked": false,
+            "zIndex": -1
+          }
+        }
+      ],
+      "sameRecordInventory": true,
+      "allPhysicalConnectivityAndModelRecordsIdentical": true
+    }
+  },
+  "apertureResolvedManufacturingStreamsIdentical": true,
+  "manufacturingMembersCompared": 15,
+  "beforeArchiveSha256": "6fe9b8fa442f41b75a5e7bfec5390aae638f031ef29f49d7334cf4b0c26f7ad8",
+  "afterArchiveSha256": "b416ef666e47783eb1c9d55e8a021e81f9a73c2a3af305b233d3c39646cdd5c8",
+  "beforeCamSha256": "2564dedea72da616833756ed0aa69f36c9b7f471ff8e71b6dcc32d902956f701",
+  "afterCamSha256": "458af4a38ef40c70a0a55db70be31dc5c71da68a1458bc4638b8e81e763547ac"
+}

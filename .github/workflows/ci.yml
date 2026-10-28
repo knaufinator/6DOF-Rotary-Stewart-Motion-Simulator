@@ -98,7 +98,7 @@ jobs:
           esp_idf_version: v5.5.2
           target: esp32s3
           path: 'controller'
-          command: idf.py build
+          command: idf.py -D R13_BENCH_ONE_AXIS=OFF -D R14_BOARD_IO=ON -D R14_FAIL_CLOSED=ON build
 
       - name: Package firmware with version
         run: |
@@ -179,6 +179,9 @@ jobs:
 
       - name: Build
         run: cmake --build app/build --config Release
+
+      - name: App recording and documentation transport regressions
+        run: ctest --test-dir app/build -C Release --output-on-failure --no-tests=error
 
       - name: Upload desktop app artifact
         uses: actions/upload-artifact@v4

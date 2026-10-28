@@ -1,0 +1,31 @@
+{
+  "components": 324,
+  "logicalPins": 1214,
+  "sectionCounts": {
+    "12V input / 5V buck": 12,
+    "Logic 5V / 3V3 power": 7,
+    "Differential motion outputs": 31,
+    "Ethernet / magnetics": 32,
+    "MCU / boot / reset": 9,
+    "5V ADC / readback": 7,
+    "Hall status indicators": 46,
+    "USB / recovery": 8,
+    "Input ideal-diode bypass": 7,
+    "Common pulse permission": 25,
+    "Auxiliary boost / fault monitoring": 40,
+    "Drive alarm inputs": 14,
+    "Protected Hall field supply": 15,
+    "I2C I/O and initialization": 4,
+    "Hall input conditioning": 17,
+    "Six stored torque enables": 50
+  },
+  "copperPrimitiveRows": 2667,
+  "nativeCopperTraceCount": 1757,
+  "unmappedCopperObjects": [],
+  "labels": 360,
+  "labelFindings": [],
+  "boardOutlineContours": 1,
+  "entireSilkMaskOverlapMm2": 0.0,
+  "allICPinNetsAndAllComponentBOMIdentityMatch": true,
+  "GPIOandDB25contractChecks": 78
+}

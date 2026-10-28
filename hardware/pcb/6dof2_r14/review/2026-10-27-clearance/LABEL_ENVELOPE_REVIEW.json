@@ -1,0 +1,2100 @@
+{
+  "status": "PASS",
+  "sourceSha256": "979ab2f72b642353866ec91bb8908640fa747aaf745201abe8dcb54c569d22d0",
+  "boardTexts": 348,
+  "reflowedDesignators": 62,
+  "bodyAndLandHullGateMm": 0.15,
+  "landGateMm": 0.25,
+  "errors": [],
+  "texts": [
+    {
+      "id": "820e80318722ca7ce22",
+      "text": "C1",
+      "conservativeBodyAndLandHullGapMm": 0.2673990200000276,
+      "landGapMm": 0.88086998505753
+    },
+    {
+      "id": "0b330e8b22217486e22",
+      "text": "C2",
+      "conservativeBodyAndLandHullGapMm": 0.2674010600001111,
+      "landGapMm": 3.2195771212191993
+    },
+    {
+      "id": "73e5820e1c1df48ae20",
+      "text": "C3",
+      "conservativeBodyAndLandHullGapMm": 0.29240055999997594,
+      "landGapMm": 0.46538671128379583
+    },
+    {
+      "id": "87917aec88d4c5d0e18",
+      "text": "C4",
+      "conservativeBodyAndLandHullGapMm": 0.40483904000006987,
+      "landGapMm": 0.554839940000022
+    },
+    {
+      "id": "1be8c8417db6bc81e18",
+      "text": "C5",
+      "conservativeBodyAndLandHullGapMm": 0.40483904000001303,
+      "landGapMm": 0.5548399399999653
+    },
+    {
+      "id": "89ba45058210ce8ee18",
+      "text": "C6",
+      "conservativeBodyAndLandHullGapMm": 0.6373774400000087,
+      "landGapMm": 0.6373774400000087
+    },
+    {
+      "id": "288938601d9cf9c7e20",
+      "text": "C7",
+      "conservativeBodyAndLandHullGapMm": 0.2698400000000163,
+      "landGapMm": 0.46983499999998907
+    },
+    {
+      "id": "bd6fa2115599190fe18",
+      "text": "C8",
+      "conservativeBodyAndLandHullGapMm": 0.6433769199999944,
+      "landGapMm": 0.6433769199999944
+    },
+    {
+      "id": "6a3dfbf94b4367a8e18",
+      "text": "C9",
+      "conservativeBodyAndLandHullGapMm": 0.6433769199999944,
+      "landGapMm": 0.6433769199999944
+    },
+    {
+      "id": "90e785604dbb5861e18",
+      "text": "C10",
+      "conservativeBodyAndLandHullGapMm": 0.3703602799999999,
+      "landGapMm": 0.6433769199999944
+    },
+    {
+      "id": "abb947a3397b7311e20",
+      "text": "C11",
+      "conservativeBodyAndLandHullGapMm": 0.5583995999999871,
+      "landGapMm": 0.5583995999999871
+    },
+    {
+      "id": "3c727551f2945120e18",
+      "text": "C13",
+      "conservativeBodyAndLandHullGapMm": 0.5757227417441996,
+      "landGapMm": 0.6903770800000046
+    },
+    {
+      "id": "fc45f5b51d5f860be18",
+      "text": "C14",
+      "conservativeBodyAndLandHullGapMm": 0.6373774399999377,
+      "landGapMm": 0.6373774399999377
+    },
+    {
+      "id": "76c82060c5a3dcbae18",
+      "text": "C16",
+      "conservativeBodyAndLandHullGapMm": 0.651337079999962,
+      "landGapMm": 0.651337079999962
+    },
+    {
+      "id": "23a73e6d32294901e18",
+      "text": "C17",
+      "conservativeBodyAndLandHullGapMm": 0.6003364199999623,
+      "landGapMm": 0.6003364199999623
+    },
+    {
+      "id": "a528d9d97dab6965e18",
+      "text": "C18",
+      "conservativeBodyAndLandHullGapMm": 0.6373774399999377,
+      "landGapMm": 0.6373774399999377
+    },
+    {
+      "id": "c7a74b68b273ca05e20",
+      "text": "C19",
+      "conservativeBodyAndLandHullGapMm": 0.3323999999999927,
+      "landGapMm": 0.532394999999994
+    },
+    {
+      "id": "4108b343f3950e1fe18",
+      "text": "C20",
+      "conservativeBodyAndLandHullGapMm": 0.6903770800000046,
+      "landGapMm": 0.6903770800000046
+    },
+    {
+      "id": "0f6aa4719bb95629e18",
+      "text": "C21",
+      "conservativeBodyAndLandHullGapMm": 0.6302199449793681,
+      "landGapMm": 0.6903770800000046
+    },
+    {
+      "id": "d89fc10ac90f154ae20",
+      "text": "C22",
+      "conservativeBodyAndLandHullGapMm": 0.2993600000000356,
+      "landGapMm": 0.49935500000000843
+    },
+    {
+      "id": "09e1f6496c6b8063e20",
+      "text": "C25",
+      "conservativeBodyAndLandHullGapMm": 0.3924000000000021,
+      "landGapMm": 0.578406300000001
+    },
+    {
+      "id": "39295eeaaef13b39e18",
+      "text": "D2",
+      "conservativeBodyAndLandHullGapMm": 0.2705079999999924,
+      "landGapMm": 0.2705079999999924
+    },
+    {
+      "id": "15795de520b67ea1e18",
+      "text": "D3",
+      "conservativeBodyAndLandHullGapMm": 0.4275079999999889,
+      "landGapMm": 0.4275079999999889
+    },
+    {
+      "id": "fe8e3c022f54f0c4e24",
+      "text": "D4",
+      "conservativeBodyAndLandHullGapMm": 0.592386040000008,
+      "landGapMm": 0.7176287400000021
+    },
+    {
+      "id": "383c497f126b4a18e24",
+      "text": "D5",
+      "conservativeBodyAndLandHullGapMm": 0.4923862400000089,
+      "landGapMm": 0.617628940000003
+    },
+    {
+      "id": "7148e8e04a58f5efe2",
+      "text": "J1",
+      "conservativeBodyAndLandHullGapMm": 0.3223852400000169,
+      "landGapMm": 1.0173995400000422
+    },
+    {
+      "id": "4405575c47dfa4d5e26",
+      "text": "J2",
+      "conservativeBodyAndLandHullGapMm": 0.33740112000000266,
+      "landGapMm": 1.9774035199999993
+    },
+    {
+      "id": "96aac19c5f9d52fae26",
+      "text": "J9",
+      "conservativeBodyAndLandHullGapMm": 0.3374001199999981,
+      "landGapMm": 1.9774025199999985
+    },
+    {
+      "id": "17b576a3926efb79e47",
+      "text": "J10",
+      "conservativeBodyAndLandHullGapMm": 0.5973992499999952,
+      "landGapMm": 0.5973992499999952
+    },
+    {
+      "id": "26b1b787dc4c1f8de2",
+      "text": "J11",
+      "conservativeBodyAndLandHullGapMm": 0.1922900600000048,
+      "landGapMm": 0.32433431213654046
+    },
+    {
+      "id": "763c44fd1fd842bee14",
+      "text": "L1",
+      "conservativeBodyAndLandHullGapMm": 0.27035830000000516,
+      "landGapMm": 0.27035830000000516
+    },
+    {
+      "id": "8630e4c6c54af631e16",
+      "text": "R1",
+      "conservativeBodyAndLandHullGapMm": 0.3573996600000555,
+      "landGapMm": 0.5253964600000245
+    },
+    {
+      "id": "feeb6ae365146b94e16",
+      "text": "R2",
+      "conservativeBodyAndLandHullGapMm": 0.5307983000000007,
+      "landGapMm": 0.5307983000000007
+    },
+    {
+      "id": "b58136d625a6564ee16",
+      "text": "R3",
+      "conservativeBodyAndLandHullGapMm": 0.3048400000000129,
+      "landGapMm": 0.4728367999999818
+    },
+    {
+      "id": "49fb6253c68fbb29e16",
+      "text": "R4",
+      "conservativeBodyAndLandHullGapMm": 0.5307990399999767,
+      "landGapMm": 0.5307990399999767
+    },
+    {
+      "id": "f19f457de484afbee16",
+      "text": "R5",
+      "conservativeBodyAndLandHullGapMm": 0.4682386399999814,
+      "landGapMm": 0.4682386399999814
+    },
+    {
+      "id": "a2da5c53e9e1df9ee16",
+      "text": "R6",
+      "conservativeBodyAndLandHullGapMm": 0.41039929999999814,
+      "landGapMm": 0.5783960999999955
+    },
+    {
+      "id": "82aa04e87e547d07e16",
+      "text": "R7",
+      "conservativeBodyAndLandHullGapMm": 0.41039929999999814,
+      "landGapMm": 0.5783960999999955
+    },
+    {
+      "id": "52eda216f8725b80e16",
+      "text": "R10",
+      "conservativeBodyAndLandHullGapMm": 0.5307983000000007,
+      "landGapMm": 0.5307983000000007
+    },
+    {
+      "id": "858ec470ca01ecf5e16",
+      "text": "R11",
+      "conservativeBodyAndLandHullGapMm": 0.4103993000000017,
+      "landGapMm": 0.5783960999999991
+    },
+    {
+      "id": "998b0a9e57b32398e16",
+      "text": "R12",
+      "conservativeBodyAndLandHullGapMm": 0.49375830000005294,
+      "landGapMm": 0.49375830000005294
+    },
+    {
+      "id": "4110e2748d84d03fe16",
+      "text": "R13",
+      "conservativeBodyAndLandHullGapMm": 0.49375829999999615,
+      "landGapMm": 0.49375829999999615
+    },
+    {
+      "id": "e4b3176442b67c49e16",
+      "text": "R14",
+      "conservativeBodyAndLandHullGapMm": 0.49375829999999615,
+      "landGapMm": 0.49375829999999615
+    },
+    {
+      "id": "5137461042b6aaf9e16",
+      "text": "R15",
+      "conservativeBodyAndLandHullGapMm": 0.49375829999999615,
+      "landGapMm": 0.49375829999999615
+    },
+    {
+      "id": "3fded3eeee2f87a6e16",
+      "text": "R16",
+      "conservativeBodyAndLandHullGapMm": 0.49375829999999615,
+      "landGapMm": 0.49375829999999615
+    },
+    {
+      "id": "bdfbbc5572f61533e16",
+      "text": "R17",
+      "conservativeBodyAndLandHullGapMm": 0.5557983000000206,
+      "landGapMm": 0.5557983000000206
+    },
+    {
+      "id": "5a2cba588e26a65fe16",
+      "text": "R18",
+      "conservativeBodyAndLandHullGapMm": 0.24739976000000752,
+      "landGapMm": 0.5307990400000335
+    },
+    {
+      "id": "512fab8702bae1f8e16",
+      "text": "R19",
+      "conservativeBodyAndLandHullGapMm": 0.2473997600000643,
+      "landGapMm": 0.5307990400000335
+    },
+    {
+      "id": "99387e98f65f5193e16",
+      "text": "R20",
+      "conservativeBodyAndLandHullGapMm": 0.5557982999999922,
+      "landGapMm": 0.5557982999999922
+    },
+    {
+      "id": "674c238f1801aaf3e16",
+      "text": "R21",
+      "conservativeBodyAndLandHullGapMm": 0.4673999999999836,
+      "landGapMm": 0.49375830000005294
+    },
+    {
+      "id": "14b565827a1cca64e16",
+      "text": "R22",
+      "conservativeBodyAndLandHullGapMm": 0.6117982999999754,
+      "landGapMm": 0.6117982999999754
+    },
+    {
+      "id": "5fc5e66f6fae47e0e16",
+      "text": "R23",
+      "conservativeBodyAndLandHullGapMm": 0.5307982999999865,
+      "landGapMm": 0.5307982999999865
+    },
+    {
+      "id": "dc04883ca789f18ee16",
+      "text": "R24",
+      "conservativeBodyAndLandHullGapMm": 0.6117983000000038,
+      "landGapMm": 0.6117983000000038
+    },
+    {
+      "id": "898b960ff129cf3de16",
+      "text": "R25",
+      "conservativeBodyAndLandHullGapMm": 0.4997983000000375,
+      "landGapMm": 0.4997983000000375
+    },
+    {
+      "id": "76e4cf3bcc14d3b9e59",
+      "text": "U3",
+      "conservativeBodyAndLandHullGapMm": 0.43632492000000406,
+      "landGapMm": 0.4363249200000041
+    },
+    {
+      "id": "904bc3dc0904315be59",
+      "text": "U4",
+      "conservativeBodyAndLandHullGapMm": 0.43632492000000406,
+      "landGapMm": 0.4363249200000041
+    },
+    {
+      "id": "d614abbb1a6527c8e59",
+      "text": "U5",
+      "conservativeBodyAndLandHullGapMm": 0.4363249200000041,
+      "landGapMm": 0.4363249200000041
+    },
+    {
+      "id": "3172c48ec7462319e36",
+      "text": "U6",
+      "conservativeBodyAndLandHullGapMm": 0.5496599208817837,
+      "landGapMm": 0.6796153191027092
+    },
+    {
+      "id": "466393572b732e6ae21",
+      "text": "U7",
+      "conservativeBodyAndLandHullGapMm": 0.21740019999998594,
+      "landGapMm": 0.7314761486500819
+    },
+    {
+      "id": "b13ebe8501c9dd95e156",
+      "text": "U8",
+      "conservativeBodyAndLandHullGapMm": 0.2734735000000015,
+      "landGapMm": 0.2734735000000015
+    },
+    {
+      "id": "388527658888a258e19",
+      "text": "Y1",
+      "conservativeBodyAndLandHullGapMm": 0.554841060000058,
+      "landGapMm": 0.5773902000000106
+    },
+    {
+      "id": "49c4cac043d8f6c7e16",
+      "text": "R36",
+      "conservativeBodyAndLandHullGapMm": 0.5267985400000015,
+      "landGapMm": 0.5267985400000015
+    },
+    {
+      "id": "2ac52d814cba3e61e16",
+      "text": "R37",
+      "conservativeBodyAndLandHullGapMm": 0.5267985400000015,
+      "landGapMm": 0.5267985400000015
+    },
+    {
+      "id": "36f3a62352be493ce16",
+      "text": "R38",
+      "conservativeBodyAndLandHullGapMm": 0.5267985400000015,
+      "landGapMm": 0.5267985400000015
+    },
+    {
+      "id": "3c795c6e5aae86e4e16",
+      "text": "R39",
+      "conservativeBodyAndLandHullGapMm": 0.5267985400000015,
+      "landGapMm": 0.5267985400000015
+    },
+    {
+      "id": "f6af9f6f343c1244e16",
+      "text": "R40",
+      "conservativeBodyAndLandHullGapMm": 0.5267985400000015,
+      "landGapMm": 0.5267985400000015
+    },
+    {
+      "id": "26c23a9b458747f1e16",
+      "text": "R41",
+      "conservativeBodyAndLandHullGapMm": 0.5267985400000015,
+      "landGapMm": 0.5267985400000015
+    },
+    {
+      "id": "05dcc47e7470a18ee59",
+      "text": "U9",
+      "conservativeBodyAndLandHullGapMm": 0.43742757999999066,
+      "landGapMm": 0.4374275799999907
+    },
+    {
+      "id": "6ea64811dab050dbe59",
+      "text": "U10",
+      "conservativeBodyAndLandHullGapMm": 0.43742715999999854,
+      "landGapMm": 0.43742715999999854
+    },
+    {
+      "id": "9d0b66f16fc6b519e18",
+      "text": "C12",
+      "conservativeBodyAndLandHullGapMm": 0.5113998600000045,
+      "landGapMm": 0.6614007600000064
+    },
+    {
+      "id": "991b6bc606947d5ae20",
+      "text": "C15",
+      "conservativeBodyAndLandHullGapMm": 0.5693585799999994,
+      "landGapMm": 0.5693585799999994
+    },
+    {
+      "id": "e95ce8f8003720a2e18",
+      "text": "C26",
+      "conservativeBodyAndLandHullGapMm": 0.5673367399999734,
+      "landGapMm": 0.5673367399999734
+    },
+    {
+      "id": "75c6f92f6416e7a7e18",
+      "text": "C27",
+      "conservativeBodyAndLandHullGapMm": 0.6513370799999905,
+      "landGapMm": 0.6513370799999905
+    },
+    {
+      "id": "6b6099291ad99294e18",
+      "text": "C28",
+      "conservativeBodyAndLandHullGapMm": 0.5236883970183033,
+      "landGapMm": 0.6783563600000093
+    },
+    {
+      "id": "d0133fc9f0ece32ee18",
+      "text": "C29",
+      "conservativeBodyAndLandHullGapMm": 0.6513370799999905,
+      "landGapMm": 0.6513370799999905
+    },
+    {
+      "id": "6015cbd6e4fc59cde18",
+      "text": "C30",
+      "conservativeBodyAndLandHullGapMm": 0.4723598599999832,
+      "landGapMm": 0.6223607599999639
+    },
+    {
+      "id": "697a526b34a2c8d4e20",
+      "text": "C31",
+      "conservativeBodyAndLandHullGapMm": 0.3783999999999992,
+      "landGapMm": 0.5783950000000004
+    },
+    {
+      "id": "1ddf309f73cc7ca9e20",
+      "text": "L2",
+      "conservativeBodyAndLandHullGapMm": 0.3752729999999999,
+      "landGapMm": 0.5683968000000021
+    },
+    {
+      "id": "59e9d9837f5915bae16",
+      "text": "R42",
+      "conservativeBodyAndLandHullGapMm": 0.4103999999999957,
+      "landGapMm": 0.578396799999993
+    },
+    {
+      "id": "b143df8434e5d6a3e16",
+      "text": "R43",
+      "conservativeBodyAndLandHullGapMm": 0.7174000000000014,
+      "landGapMm": 0.8853967999999988
+    },
+    {
+      "id": "ed94fb2dfdfecbc9e16",
+      "text": "R44",
+      "conservativeBodyAndLandHullGapMm": 0.6377983000000073,
+      "landGapMm": 0.6377983000000073
+    },
+    {
+      "id": "83e058865b058d0be16",
+      "text": "R45",
+      "conservativeBodyAndLandHullGapMm": 0.5397583000000097,
+      "landGapMm": 0.5397583000000097
+    },
+    {
+      "id": "da39e41941b024dbe16",
+      "text": "R46",
+      "conservativeBodyAndLandHullGapMm": 0.5267985399999872,
+      "landGapMm": 0.5267985399999872
+    },
+    {
+      "id": "e7d603b4dfbb1775e16",
+      "text": "R47",
+      "conservativeBodyAndLandHullGapMm": 0.5267985399999872,
+      "landGapMm": 0.5267985399999872
+    },
+    {
+      "id": "43365bb4286de9a6e16",
+      "text": "R48",
+      "conservativeBodyAndLandHullGapMm": 0.5267985399999872,
+      "landGapMm": 0.5267985399999872
+    },
+    {
+      "id": "1b0449c8d30574ede16",
+      "text": "R49",
+      "conservativeBodyAndLandHullGapMm": 0.5267985399999872,
+      "landGapMm": 0.5267985399999872
+    },
+    {
+      "id": "d69b57d190b71ba6e16",
+      "text": "R50",
+      "conservativeBodyAndLandHullGapMm": 0.5267985399999872,
+      "landGapMm": 0.5267985399999872
+    },
+    {
+      "id": "0fae41a6d5185058e16",
+      "text": "R51",
+      "conservativeBodyAndLandHullGapMm": 0.5267985399999872,
+      "landGapMm": 0.5267985399999872
+    },
+    {
+      "id": "0f53d399193be538e16",
+      "text": "R52",
+      "conservativeBodyAndLandHullGapMm": 0.5267985399999872,
+      "landGapMm": 0.5267985399999872
+    },
+    {
+      "id": "62f9fee66bc18db6e16",
+      "text": "R53",
+      "conservativeBodyAndLandHullGapMm": 0.5267985399999872,
+      "landGapMm": 0.5267985399999872
+    },
+    {
+      "id": "b8f45c03a100faede16",
+      "text": "R54",
+      "conservativeBodyAndLandHullGapMm": 0.5267985399999872,
+      "landGapMm": 0.5267985399999872
+    },
+    {
+      "id": "1bb26bdd678003a6e16",
+      "text": "R55",
+      "conservativeBodyAndLandHullGapMm": 0.5267985399999872,
+      "landGapMm": 0.5267985399999872
+    },
+    {
+      "id": "84dd6508fc2bd59be16",
+      "text": "R56",
+      "conservativeBodyAndLandHullGapMm": 0.5267985399999872,
+      "landGapMm": 0.5267985399999872
+    },
+    {
+      "id": "a7583152436bb34ee16",
+      "text": "R57",
+      "conservativeBodyAndLandHullGapMm": 0.5267985399999872,
+      "landGapMm": 0.5267985399999872
+    },
+    {
+      "id": "2bd5e7c79bcd4816e16",
+      "text": "R58",
+      "conservativeBodyAndLandHullGapMm": 0.5787983000000096,
+      "landGapMm": 0.5787983000000096
+    },
+    {
+      "id": "f103eb31dcac7817e18",
+      "text": "C32",
+      "conservativeBodyAndLandHullGapMm": 0.6903768000000099,
+      "landGapMm": 0.6903768000000099
+    },
+    {
+      "id": "a1f9a1ff5be67322e18",
+      "text": "C33",
+      "conservativeBodyAndLandHullGapMm": 0.6674000000000008,
+      "landGapMm": 0.8674008999999998
+    },
+    {
+      "id": "73e96b8d011b4c57e18",
+      "text": "C34",
+      "conservativeBodyAndLandHullGapMm": 0.4613999999999976,
+      "landGapMm": 0.6614008999999967
+    },
+    {
+      "id": "ed6960dbf1bd6427e18",
+      "text": "C35",
+      "conservativeBodyAndLandHullGapMm": 0.7333767400000042,
+      "landGapMm": 0.7333767400000042
+    },
+    {
+      "id": "cd0bbd9326fd6857e16",
+      "text": "R59",
+      "conservativeBodyAndLandHullGapMm": 0.5787983000000096,
+      "landGapMm": 0.5787983000000096
+    },
+    {
+      "id": "1a8091faa00fba6ae18",
+      "text": "D7",
+      "conservativeBodyAndLandHullGapMm": 0.16740010000006578,
+      "landGapMm": 0.7737381284942376
+    },
+    {
+      "id": "dae839eb98e01352e26",
+      "text": "D6",
+      "conservativeBodyAndLandHullGapMm": 0.42230050000000574,
+      "landGapMm": 0.4223005000000057
+    },
+    {
+      "id": "6aeec7da6f167c8ee15",
+      "text": "SW1",
+      "conservativeBodyAndLandHullGapMm": 0.7274944999999776,
+      "landGapMm": 0.7274944999999776
+    },
+    {
+      "id": "ccd7543e6e884531e15",
+      "text": "SW2",
+      "conservativeBodyAndLandHullGapMm": 0.7274945000000345,
+      "landGapMm": 0.7274945000000345
+    },
+    {
+      "id": "9d0d80f25c8cce15e18",
+      "text": "C23",
+      "conservativeBodyAndLandHullGapMm": 0.6903768000000099,
+      "landGapMm": 0.6903768000000099
+    },
+    {
+      "id": "c8b972c3bcf1f39be18",
+      "text": "C24",
+      "conservativeBodyAndLandHullGapMm": 0.6903768000000099,
+      "landGapMm": 0.6903768000000099
+    },
+    {
+      "id": "2385a8582572e3f2e18",
+      "text": "C36",
+      "conservativeBodyAndLandHullGapMm": 0.4203584400000864,
+      "landGapMm": 0.5703593400000386
+    },
+    {
+      "id": "f5d5817305270817e18",
+      "text": "F1",
+      "conservativeBodyAndLandHullGapMm": 0.3548427599999968,
+      "landGapMm": 0.3548427599999968
+    },
+    {
+      "id": "b4ed2f0a484b6c2be16",
+      "text": "R60",
+      "conservativeBodyAndLandHullGapMm": 0.5307965000000009,
+      "landGapMm": 0.5307965000000009
+    },
+    {
+      "id": "b022b909d7789aece18",
+      "text": "C37",
+      "conservativeBodyAndLandHullGapMm": 0.6213371400000085,
+      "landGapMm": 0.6213371400000085
+    },
+    {
+      "id": "308f54823067b321e18",
+      "text": "C38",
+      "conservativeBodyAndLandHullGapMm": 0.6213371400000085,
+      "landGapMm": 0.6213371400000085
+    },
+    {
+      "id": "e31ab36fe54e49e7e18",
+      "text": "C39",
+      "conservativeBodyAndLandHullGapMm": 0.6213371399999801,
+      "landGapMm": 0.6213371399999801
+    },
+    {
+      "id": "d2a336c984693694e18",
+      "text": "C40",
+      "conservativeBodyAndLandHullGapMm": 0.4803991599999975,
+      "landGapMm": 0.6304000599999995
+    },
+    {
+      "id": "28bdf3a73fbcdb16e18",
+      "text": "C41",
+      "conservativeBodyAndLandHullGapMm": 0.6213371399999801,
+      "landGapMm": 0.6213371399999801
+    },
+    {
+      "id": "7bafec0474db07eae20",
+      "text": "C42",
+      "conservativeBodyAndLandHullGapMm": 0.5623991799999928,
+      "landGapMm": 0.5623991799999928
+    },
+    {
+      "id": "9282237d95d6a260e18",
+      "text": "D8",
+      "conservativeBodyAndLandHullGapMm": 0.4275079999999889,
+      "landGapMm": 0.4275079999999889
+    },
+    {
+      "id": "5d10edb092115312e16",
+      "text": "R61",
+      "conservativeBodyAndLandHullGapMm": 0.3173997400000417,
+      "landGapMm": 0.45951034000000135
+    },
+    {
+      "id": "657cea9c507d5969e16",
+      "text": "R62",
+      "conservativeBodyAndLandHullGapMm": 0.5097574800000189,
+      "landGapMm": 0.5097574800000189
+    },
+    {
+      "id": "3e964e659f0ed20ce16",
+      "text": "R63",
+      "conservativeBodyAndLandHullGapMm": 0.5267985399999872,
+      "landGapMm": 0.5267985399999872
+    },
+    {
+      "id": "0cd1fc9025284cfbe16",
+      "text": "R64",
+      "conservativeBodyAndLandHullGapMm": 0.5267985399999872,
+      "landGapMm": 0.5267985399999872
+    },
+    {
+      "id": "3c55b5751732adc7e16",
+      "text": "R65",
+      "conservativeBodyAndLandHullGapMm": 0.5267985399999872,
+      "landGapMm": 0.5267985399999872
+    },
+    {
+      "id": "6dd745146c3983c0e16",
+      "text": "R66",
+      "conservativeBodyAndLandHullGapMm": 0.5097574799999903,
+      "landGapMm": 0.5097574799999903
+    },
+    {
+      "id": "ad502b5c63666fc2e16",
+      "text": "R67",
+      "conservativeBodyAndLandHullGapMm": 0.5487983000000085,
+      "landGapMm": 0.5487983000000085
+    },
+    {
+      "id": "fc97bc0fefe1a830e16",
+      "text": "R68",
+      "conservativeBodyAndLandHullGapMm": 0.5487983000000085,
+      "landGapMm": 0.5487983000000085
+    },
+    {
+      "id": "761c980b68ee060ae16",
+      "text": "R69",
+      "conservativeBodyAndLandHullGapMm": 0.6884065073697955,
+      "landGapMm": 0.6884065073697955
+    },
+    {
+      "id": "dbeca255eccb2b9ee16",
+      "text": "R70",
+      "conservativeBodyAndLandHullGapMm": 1.0767983000000072,
+      "landGapMm": 1.0767983000000072
+    },
+    {
+      "id": "0975e70c4abf0978e20",
+      "text": "U13",
+      "conservativeBodyAndLandHullGapMm": 0.2847514376058352,
+      "landGapMm": 0.5543914469762397
+    },
+    {
+      "id": "0e9f1326b31a2b9fe34",
+      "text": "U11",
+      "conservativeBodyAndLandHullGapMm": 0.16740021999999755,
+      "landGapMm": 0.6235345576404212
+    },
+    {
+      "id": "d9628d33ac5e493be26",
+      "text": "U12",
+      "conservativeBodyAndLandHullGapMm": 0.34239929999998253,
+      "landGapMm": 0.8667380599999603
+    },
+    {
+      "id": "31c6ff4cc5ae839de26",
+      "text": "U14",
+      "conservativeBodyAndLandHullGapMm": 0.2865496599999986,
+      "landGapMm": 0.2865496599999986
+    },
+    {
+      "id": "e9f9711a2555d878e62",
+      "text": "J3",
+      "conservativeBodyAndLandHullGapMm": 0.32740000000000785,
+      "landGapMm": 3.685397759999993
+    },
+    {
+      "id": "be4d953d8744481fe62",
+      "text": "J4",
+      "conservativeBodyAndLandHullGapMm": 0.32739988000000153,
+      "landGapMm": 3.6853977600000003
+    },
+    {
+      "id": "6546de9a0b603630e62",
+      "text": "J5",
+      "conservativeBodyAndLandHullGapMm": 0.3273997599999916,
+      "landGapMm": 3.6853977599999865
+    },
+    {
+      "id": "15750519d39fbedce62",
+      "text": "J6",
+      "conservativeBodyAndLandHullGapMm": 0.3273996399999817,
+      "landGapMm": 3.6853977600000434
+    },
+    {
+      "id": "4b4b0da9806144bfe62",
+      "text": "J7",
+      "conservativeBodyAndLandHullGapMm": 0.32739952000000017,
+      "landGapMm": 3.6853977600000003
+    },
+    {
+      "id": "cb6cf9d3603ec5fbe62",
+      "text": "J8",
+      "conservativeBodyAndLandHullGapMm": 0.32739939999999024,
+      "landGapMm": 4.7049318413182135
+    },
+    {
+      "id": "ddb5522450c05a39e18",
+      "text": "C43",
+      "conservativeBodyAndLandHullGapMm": 0.6213371399999801,
+      "landGapMm": 0.6213371399999801
+    },
+    {
+      "id": "b19ff3b55f0d6ee2e18",
+      "text": "C44",
+      "conservativeBodyAndLandHullGapMm": 0.6603771400000014,
+      "landGapMm": 0.6603771400000014
+    },
+    {
+      "id": "401c785350ef00f3e18",
+      "text": "C45",
+      "conservativeBodyAndLandHullGapMm": 0.42035844000002953,
+      "landGapMm": 0.5703593399999818
+    },
+    {
+      "id": "5f885180be1959e0e18",
+      "text": "C46",
+      "conservativeBodyAndLandHullGapMm": 0.6373748999999976,
+      "landGapMm": 0.6373748999999976
+    },
+    {
+      "id": "d046fd9d08acf27de18",
+      "text": "C47",
+      "conservativeBodyAndLandHullGapMm": 0.6373774399999377,
+      "landGapMm": 0.6373774399999377
+    },
+    {
+      "id": "883bd4d94e7fb973e18",
+      "text": "C48",
+      "conservativeBodyAndLandHullGapMm": 0.7153757599999935,
+      "landGapMm": 0.7153757599999935
+    },
+    {
+      "id": "8f094847ec9eb78de18",
+      "text": "C49",
+      "conservativeBodyAndLandHullGapMm": 0.7153757599999936,
+      "landGapMm": 0.7153757599999936
+    },
+    {
+      "id": "4a2309aba3f42318e18",
+      "text": "C50",
+      "conservativeBodyAndLandHullGapMm": 0.7153757599999934,
+      "landGapMm": 0.7153757599999934
+    },
+    {
+      "id": "234475b32e0fbf27e18",
+      "text": "C51",
+      "conservativeBodyAndLandHullGapMm": 0.5724005000000147,
+      "landGapMm": 0.722401399999967
+    },
+    {
+      "id": "e7c576c305c69c9ee18",
+      "text": "C52",
+      "conservativeBodyAndLandHullGapMm": 0.4089000000000169,
+      "landGapMm": 0.5709009000000265
+    },
+    {
+      "id": "a9f633ef18043581e18",
+      "text": "C53",
+      "conservativeBodyAndLandHullGapMm": 0.7173772800000008,
+      "landGapMm": 0.7173772800000008
+    },
+    {
+      "id": "4a4402f2ba894999e18",
+      "text": "C54",
+      "conservativeBodyAndLandHullGapMm": 0.42080059999997843,
+      "landGapMm": 0.5708014999999591
+    },
+    {
+      "id": "896e1462d4c02c68e18",
+      "text": "D10",
+      "conservativeBodyAndLandHullGapMm": 0.28381000000001677,
+      "landGapMm": 0.28381000000001677
+    },
+    {
+      "id": "3fc12deb74164e7ae18",
+      "text": "D11",
+      "conservativeBodyAndLandHullGapMm": 0.28381000000001677,
+      "landGapMm": 0.28381000000001677
+    },
+    {
+      "id": "161eec908cdffdf6e18",
+      "text": "D12",
+      "conservativeBodyAndLandHullGapMm": 0.1798135800000011,
+      "landGapMm": 0.6297952799999997
+    },
+    {
+      "id": "d0f155a0cced2b80e18",
+      "text": "D13",
+      "conservativeBodyAndLandHullGapMm": 0.29241204000000204,
+      "landGapMm": 0.6173774800000018
+    },
+    {
+      "id": "9d7fa8afd5c73326e18",
+      "text": "D14",
+      "conservativeBodyAndLandHullGapMm": 0.1924122400000012,
+      "landGapMm": 0.6423939399999997
+    },
+    {
+      "id": "70788be3cb8b71f5e18",
+      "text": "D15",
+      "conservativeBodyAndLandHullGapMm": 0.1923893799999998,
+      "landGapMm": 0.6423964800000003
+    },
+    {
+      "id": "8b8ddf4bcef088fde24",
+      "text": "D16",
+      "conservativeBodyAndLandHullGapMm": 0.5284872999999664,
+      "landGapMm": 0.6537299999999674
+    },
+    {
+      "id": "957423a3356a25f1e24",
+      "text": "D17",
+      "conservativeBodyAndLandHullGapMm": 0.5284872999999664,
+      "landGapMm": 0.6537299999999674
+    },
+    {
+      "id": "2cab187d7059f549e24",
+      "text": "D18",
+      "conservativeBodyAndLandHullGapMm": 0.5284872999999379,
+      "landGapMm": 0.653729999999939
+    },
+    {
+      "id": "85e90f99950ef036e24",
+      "text": "D19",
+      "conservativeBodyAndLandHullGapMm": 0.5284872999999379,
+      "landGapMm": 0.6537299999999674
+    },
+    {
+      "id": "86bf910a78d41e26e24",
+      "text": "D20",
+      "conservativeBodyAndLandHullGapMm": 0.5284873000000231,
+      "landGapMm": 0.6537300000000242
+    },
+    {
+      "id": "521e754f38444854e24",
+      "text": "D21",
+      "conservativeBodyAndLandHullGapMm": 0.5284872999999664,
+      "landGapMm": 0.6537299999999958
+    },
+    {
+      "id": "f00e45daa958a516e24",
+      "text": "D22",
+      "conservativeBodyAndLandHullGapMm": 0.5284872999999664,
+      "landGapMm": 0.6537299999999674
+    },
+    {
+      "id": "602a7e75421ba239e24",
+      "text": "D23",
+      "conservativeBodyAndLandHullGapMm": 0.5284872999999664,
+      "landGapMm": 0.6537299999999674
+    },
+    {
+      "id": "9a6a77650ebe6cb0e24",
+      "text": "D24",
+      "conservativeBodyAndLandHullGapMm": 0.5284872999999379,
+      "landGapMm": 0.653729999999939
+    },
+    {
+      "id": "6baeed3aad5b8154e24",
+      "text": "D25",
+      "conservativeBodyAndLandHullGapMm": 0.5284872999999379,
+      "landGapMm": 0.6537299999999674
+    },
+    {
+      "id": "0fcb88a8fa4a83c8e24",
+      "text": "D26",
+      "conservativeBodyAndLandHullGapMm": 0.5284873000000232,
+      "landGapMm": 0.6537300000000242
+    },
+    {
+      "id": "a709eb1a7c12e51de24",
+      "text": "D27",
+      "conservativeBodyAndLandHullGapMm": 0.5284872999999664,
+      "landGapMm": 0.6537299999999958
+    },
+    {
+      "id": "1217695f7e849fafe19",
+      "text": "Q1",
+      "conservativeBodyAndLandHullGapMm": 0.28340303999999605,
+      "landGapMm": 0.283403039999996
+    },
+    {
+      "id": "9b99b0e9446e3e45e19",
+      "text": "Q2",
+      "conservativeBodyAndLandHullGapMm": 0.4174032799999736,
+      "landGapMm": 0.41740327999997356
+    },
+    {
+      "id": "926dd8899709ad89e19",
+      "text": "Q3",
+      "conservativeBodyAndLandHullGapMm": 0.28341600000001677,
+      "landGapMm": 0.28341600000001677
+    },
+    {
+      "id": "3da6aeda4008f103e16",
+      "text": "R30",
+      "conservativeBodyAndLandHullGapMm": 0.3783999999999921,
+      "landGapMm": 0.5278936999999928
+    },
+    {
+      "id": "24ff68440f72def7e16",
+      "text": "R31",
+      "conservativeBodyAndLandHullGapMm": 0.3784000000000205,
+      "landGapMm": 0.5278937000000212
+    },
+    {
+      "id": "0dc88933f487aee8e16",
+      "text": "R32",
+      "conservativeBodyAndLandHullGapMm": 0.3783999999999992,
+      "landGapMm": 0.527893700000007
+    },
+    {
+      "id": "383f37be55b24aeae16",
+      "text": "R33",
+      "conservativeBodyAndLandHullGapMm": 0.37839999999998497,
+      "landGapMm": 0.5278936999999928
+    },
+    {
+      "id": "f7802f381b5cc8a0e16",
+      "text": "R34",
+      "conservativeBodyAndLandHullGapMm": 0.3783999999999992,
+      "landGapMm": 0.527893700000007
+    },
+    {
+      "id": "23c6ea80fd8eb467e16",
+      "text": "R35",
+      "conservativeBodyAndLandHullGapMm": 0.3784000000000134,
+      "landGapMm": 0.5278937000000212
+    },
+    {
+      "id": "f6da83b20d744d44e16",
+      "text": "R71",
+      "conservativeBodyAndLandHullGapMm": 0.5097574799999904,
+      "landGapMm": 0.5097574799999904
+    },
+    {
+      "id": "513f289c504487d5e16",
+      "text": "R72",
+      "conservativeBodyAndLandHullGapMm": 0.5097574799999904,
+      "landGapMm": 0.5097574799999904
+    },
+    {
+      "id": "aa5be3ea10599387e16",
+      "text": "R73",
+      "conservativeBodyAndLandHullGapMm": 0.5097600199999874,
+      "landGapMm": 0.5097600199999874
+    },
+    {
+      "id": "fb43974544653464e16",
+      "text": "R74",
+      "conservativeBodyAndLandHullGapMm": 0.5307965000001218,
+      "landGapMm": 0.5307965000001218
+    },
+    {
+      "id": "0c1a1431ae50ba21e16",
+      "text": "R75",
+      "conservativeBodyAndLandHullGapMm": 0.5307990400000904,
+      "landGapMm": 0.5307990400000904
+    },
+    {
+      "id": "34117e4edcf633fbe16",
+      "text": "R76",
+      "conservativeBodyAndLandHullGapMm": 0.5307990400000335,
+      "landGapMm": 0.5307990400000335
+    },
+    {
+      "id": "7c7f9f480bd0d2c3e16",
+      "text": "R77",
+      "conservativeBodyAndLandHullGapMm": 0.31727892869114993,
+      "landGapMm": 0.49375802000002983
+    },
+    {
+      "id": "6e9cf5afac88ac85e16",
+      "text": "R78",
+      "conservativeBodyAndLandHullGapMm": 0.49375802000002983,
+      "landGapMm": 0.49375802000002983
+    },
+    {
+      "id": "762323f584843673e16",
+      "text": "R79",
+      "conservativeBodyAndLandHullGapMm": 0.530796500000065,
+      "landGapMm": 0.530796500000065
+    },
+    {
+      "id": "21932877430feba2e16",
+      "text": "R82",
+      "conservativeBodyAndLandHullGapMm": 0.41535884000001033,
+      "landGapMm": 0.49375802000000135
+    },
+    {
+      "id": "4ae40b14c297010fe16",
+      "text": "R84",
+      "conservativeBodyAndLandHullGapMm": 0.3675999999999817,
+      "landGapMm": 0.48860229999999655
+    },
+    {
+      "id": "d5ca8bc417037947e16",
+      "text": "R85",
+      "conservativeBodyAndLandHullGapMm": 0.3675999999999817,
+      "landGapMm": 0.48860229999999655
+    },
+    {
+      "id": "cd3f9ab0af24b851e16",
+      "text": "R86",
+      "conservativeBodyAndLandHullGapMm": 0.3676000000000954,
+      "landGapMm": 0.4886023000000818
+    },
+    {
+      "id": "241314305ea81134e16",
+      "text": "R87",
+      "conservativeBodyAndLandHullGapMm": 0.3924002800000608,
+      "landGapMm": 0.5134025800000472
+    },
+    {
+      "id": "e9a273ee15e3d425e16",
+      "text": "R88",
+      "conservativeBodyAndLandHullGapMm": 0.4024002600000358,
+      "landGapMm": 0.5234025600000223
+    },
+    {
+      "id": "50237ba485f4194de16",
+      "text": "R89",
+      "conservativeBodyAndLandHullGapMm": 0.4824001000000635,
+      "landGapMm": 0.60340240000005
+    },
+    {
+      "id": "e769d57f33dfab9be16",
+      "text": "R90",
+      "conservativeBodyAndLandHullGapMm": 0.407399560000016,
+      "landGapMm": 0.5724017000000288
+    },
+    {
+      "id": "e8a49fce98b8931ee16",
+      "text": "R91",
+      "conservativeBodyAndLandHullGapMm": 0.3273997200000167,
+      "landGapMm": 0.4953965200000141
+    },
+    {
+      "id": "0a042e92a5785500e16",
+      "text": "R92",
+      "conservativeBodyAndLandHullGapMm": 0.5144998599999973,
+      "landGapMm": 0.5144998599999973
+    },
+    {
+      "id": "543218ca1ed94ff1e16",
+      "text": "R93",
+      "conservativeBodyAndLandHullGapMm": 0.36739964000014425,
+      "landGapMm": 0.5353964400001132
+    },
+    {
+      "id": "7681bb2e73744399e16",
+      "text": "R94",
+      "conservativeBodyAndLandHullGapMm": 0.32060000000006994,
+      "landGapMm": 0.4885968000000389
+    },
+    {
+      "id": "586333c1030d0f1ae16",
+      "text": "R95",
+      "conservativeBodyAndLandHullGapMm": 0.4273995200000513,
+      "landGapMm": 0.5953963200000203
+    },
+    {
+      "id": "354839954c25e14de16",
+      "text": "R96",
+      "conservativeBodyAndLandHullGapMm": 0.32060013999998205,
+      "landGapMm": 0.4885969399999795
+    },
+    {
+      "id": "c564aff86856515ee16",
+      "text": "R97",
+      "conservativeBodyAndLandHullGapMm": 0.32060014000001047,
+      "landGapMm": 0.48859694000000786
+    },
+    {
+      "id": "f6d344e53dcbbf6fe16",
+      "text": "R98",
+      "conservativeBodyAndLandHullGapMm": 0.32060013999998205,
+      "landGapMm": 0.4885969399999795
+    },
+    {
+      "id": "377382f0cad601a8e16",
+      "text": "R99",
+      "conservativeBodyAndLandHullGapMm": 0.32060013999998205,
+      "landGapMm": 0.4885969399999795
+    },
+    {
+      "id": "d371e324db3f1256e16",
+      "text": "R100",
+      "conservativeBodyAndLandHullGapMm": 0.3206001400000105,
+      "landGapMm": 0.48859694000000786
+    },
+    {
+      "id": "86fd0f7445371940e16",
+      "text": "R101",
+      "conservativeBodyAndLandHullGapMm": 0.32059760000001347,
+      "landGapMm": 0.4885944000000109
+    },
+    {
+      "id": "fc449c23d3bd61c1e16",
+      "text": "R102",
+      "conservativeBodyAndLandHullGapMm": 0.3206001400000105,
+      "landGapMm": 0.48859694000000786
+    },
+    {
+      "id": "0686d9d25e068266e16",
+      "text": "R103",
+      "conservativeBodyAndLandHullGapMm": 0.3206001400000389,
+      "landGapMm": 0.4885969400000363
+    },
+    {
+      "id": "fe5cf120d2963873e16",
+      "text": "R104",
+      "conservativeBodyAndLandHullGapMm": 0.3206001400000105,
+      "landGapMm": 0.48859694000000786
+    },
+    {
+      "id": "1e908ab1b6533fe2e16",
+      "text": "R105",
+      "conservativeBodyAndLandHullGapMm": 0.3206001400000105,
+      "landGapMm": 0.48859694000000786
+    },
+    {
+      "id": "c3e0885dda12087fe16",
+      "text": "R106",
+      "conservativeBodyAndLandHullGapMm": 0.3206001400000389,
+      "landGapMm": 0.4885969400000363
+    },
+    {
+      "id": "68e6508595321353e16",
+      "text": "R107",
+      "conservativeBodyAndLandHullGapMm": 0.3205976000000419,
+      "landGapMm": 0.4885944000000393
+    },
+    {
+      "id": "551e356ec3c069dde16",
+      "text": "R108",
+      "conservativeBodyAndLandHullGapMm": 0.4884978799999829,
+      "landGapMm": 0.4884978799999829
+    },
+    {
+      "id": "387f015eb643f793e96",
+      "text": "U15",
+      "conservativeBodyAndLandHullGapMm": 0.25588130000000575,
+      "landGapMm": 0.25588130000000575
+    },
+    {
+      "id": "93abba51a0647339e19",
+      "text": "U16",
+      "conservativeBodyAndLandHullGapMm": 0.2543629999999552,
+      "landGapMm": 0.25436299999995526
+    },
+    {
+      "id": "f49c68daac70568fe38",
+      "text": "U17",
+      "conservativeBodyAndLandHullGapMm": 0.2525307999999882,
+      "landGapMm": 0.2525307999999882
+    },
+    {
+      "id": "33df4473280db46fe59",
+      "text": "U19",
+      "conservativeBodyAndLandHullGapMm": 0.4374261000000014,
+      "landGapMm": 0.4374261000000014
+    },
+    {
+      "id": "4622db7dc3283cc6e59",
+      "text": "U20",
+      "conservativeBodyAndLandHullGapMm": 0.43742864000000026,
+      "landGapMm": 0.4374286400000002
+    },
+    {
+      "id": "feba68f8f7f215f0e54",
+      "text": "U21",
+      "conservativeBodyAndLandHullGapMm": 0.26740064000000524,
+      "landGapMm": 1.3013999146526523
+    },
+    {
+      "id": "253a697521631104ee0",
+      "text": "J12",
+      "conservativeBodyAndLandHullGapMm": 0.3114009000001374,
+      "landGapMm": 1.0434013999999934
+    },
+    {
+      "id": "6a3c16464a4f1b1cee0",
+      "text": "U2",
+      "conservativeBodyAndLandHullGapMm": 0.7547955000000001,
+      "landGapMm": 0.7547955000000002
+    },
+    {
+      "id": "83e9216af81b5c8c",
+      "text": "AXIS 0",
+      "conservativeBodyAndLandHullGapMm": 9.728312699999996,
+      "landGapMm": 19.128319599999998
+    },
+    {
+      "id": "480c611c49945838",
+      "text": "AXIS 1",
+      "conservativeBodyAndLandHullGapMm": 9.728312699999996,
+      "landGapMm": 19.128319599999998
+    },
+    {
+      "id": "764469d5bb8e5ff4",
+      "text": "AXIS 2",
+      "conservativeBodyAndLandHullGapMm": 9.728312699999998,
+      "landGapMm": 19.128319599999998
+    },
+    {
+      "id": "cb2a242ed21f52d2",
+      "text": "AXIS 3",
+      "conservativeBodyAndLandHullGapMm": 9.728312699999998,
+      "landGapMm": 19.128319599999998
+    },
+    {
+      "id": "f3de3f89ef905ff6",
+      "text": "AXIS 4",
+      "conservativeBodyAndLandHullGapMm": 9.728312699999998,
+      "landGapMm": 19.128319599999998
+    },
+    {
+      "id": "88a5032346165b1a",
+      "text": "AXIS 5",
+      "conservativeBodyAndLandHullGapMm": 7.9566999599999795,
+      "landGapMm": 8.106700859999961
+    },
+    {
+      "id": "ab7742ca4031588b",
+      "text": "R14C1 DEV",
+      "conservativeBodyAndLandHullGapMm": 7.940605236360109,
+      "landGapMm": 7.940605236360109
+    },
+    {
+      "id": "0809279107045e94",
+      "text": "USB",
+      "conservativeBodyAndLandHullGapMm": 2.714077312689012,
+      "landGapMm": 2.714077312689012
+    },
+    {
+      "id": "71718ddc917a519b",
+      "text": "12V IN",
+      "conservativeBodyAndLandHullGapMm": 2.045299999999997,
+      "landGapMm": 0.36678000000000566
+    },
+    {
+      "id": "27010bcfc86250f9",
+      "text": "HALL COLLECTOR",
+      "conservativeBodyAndLandHullGapMm": 0.4841443199999986,
+      "landGapMm": 0.4841443199999986
+    },
+    {
+      "id": "7abac34877f25daf",
+      "text": "NETWORK",
+      "conservativeBodyAndLandHullGapMm": 0.2816377719397692,
+      "landGapMm": 1.8248421979309313
+    },
+    {
+      "id": "3d4e83495fba50ae",
+      "text": "https://github.com/knaufinator/6DOF-Rotary-Stewart-Motion-Simulator",
+      "conservativeBodyAndLandHullGapMm": 7.999199140000003,
+      "landGapMm": 6.4546403800000025
+    },
+    {
+      "id": "35dfc92cc3ca5645",
+      "text": "R14C1",
+      "conservativeBodyAndLandHullGapMm": 2.5978032608034596,
+      "landGapMm": 2.5978032608034596
+    },
+    {
+      "id": "16cb56572a075c56",
+      "text": "TP1 GND",
+      "conservativeBodyAndLandHullGapMm": 5.396587299999993,
+      "landGapMm": 1.011618093045983
+    },
+    {
+      "id": "8c4dc519ff3b50d7",
+      "text": "TP2 GND",
+      "conservativeBodyAndLandHullGapMm": 4.1865999999999985,
+      "landGapMm": 0.4417200000000037
+    },
+    {
+      "id": "ef99492ec5a55a5b",
+      "text": "TP3 12V RAW",
+      "conservativeBodyAndLandHullGapMm": 1.1588155428794107,
+      "landGapMm": 1.3086007199999583
+    },
+    {
+      "id": "fabe8d315bbb5474",
+      "text": "TP4 DRV5V",
+      "conservativeBodyAndLandHullGapMm": 4.903439700000007,
+      "landGapMm": 2.1809800000000337
+    },
+    {
+      "id": "2381d194562d51ed",
+      "text": "TP5 LOG5V",
+      "conservativeBodyAndLandHullGapMm": 3.849998760000005,
+      "landGapMm": 2.3054400000000044
+    },
+    {
+      "id": "c716c94f962c5b6a",
+      "text": "TP6 3V3",
+      "conservativeBodyAndLandHullGapMm": 0.5625199999999779,
+      "landGapMm": 0.7305167999999896
+    },
+    {
+      "id": "d728141fa03e5a9c",
+      "text": "TP7 ENABLE",
+      "conservativeBodyAndLandHullGapMm": 4.173376879999978,
+      "landGapMm": 1.704960000000014
+    },
+    {
+      "id": "266548a68f545eab",
+      "text": "TP8 STOP",
+      "conservativeBodyAndLandHullGapMm": 0.657887413163263,
+      "landGapMm": 0.6747497660789515
+    },
+    {
+      "id": "8ced4878b334523d",
+      "text": "TP9 STEP",
+      "conservativeBodyAndLandHullGapMm": 3.18518008176062,
+      "landGapMm": 1.7053399999999928
+    },
+    {
+      "id": "2113f54f57cc59a3",
+      "text": "TP10 DIR",
+      "conservativeBodyAndLandHullGapMm": 2.8699985799999865,
+      "landGapMm": 1.7053399999999928
+    },
+    {
+      "id": "21eb8da10ce553ac",
+      "text": "R109",
+      "conservativeBodyAndLandHullGapMm": 0.5292799200000219,
+      "landGapMm": 0.5292799200000219
+    },
+    {
+      "id": "f798ee805d2258f8",
+      "text": "R110",
+      "conservativeBodyAndLandHullGapMm": 0.5488000200000158,
+      "landGapMm": 0.5488000200000158
+    },
+    {
+      "id": "ae01eb13bd035a01",
+      "text": "C55",
+      "conservativeBodyAndLandHullGapMm": 0.417399539999991,
+      "landGapMm": 0.56740044
+    },
+    {
+      "id": "66b6c1e32121501c",
+      "text": "Q4",
+      "conservativeBodyAndLandHullGapMm": 0.19040007999997502,
+      "landGapMm": 0.5674029799999971
+    },
+    {
+      "id": "1870c73a4fcc5602",
+      "text": "D28",
+      "conservativeBodyAndLandHullGapMm": 0.32097423157553207,
+      "landGapMm": 0.6856298200000026
+    },
+    {
+      "id": "9ede91a78fef5057",
+      "text": "R111",
+      "conservativeBodyAndLandHullGapMm": 0.23166363981259655,
+      "landGapMm": 0.44587612000000826
+    },
+    {
+      "id": "6b2ab1a1b6105ad9",
+      "text": "U22",
+      "conservativeBodyAndLandHullGapMm": 0.2674000400000125,
+      "landGapMm": 1.1446938441485341
+    },
+    {
+      "id": "6dc3aeb7fc2856fa",
+      "text": "C56",
+      "conservativeBodyAndLandHullGapMm": 0.6603771399999943,
+      "landGapMm": 0.6603771399999943
+    },
+    {
+      "id": "9cc5c3efb4c35968",
+      "text": "R112",
+      "conservativeBodyAndLandHullGapMm": 0.4713552104305128,
+      "landGapMm": 0.5487983000000014
+    },
+    {
+      "id": "c896bbc827265b7e",
+      "text": "C57",
+      "conservativeBodyAndLandHullGapMm": 0.6213371400000227,
+      "landGapMm": 0.6213371400000227
+    },
+    {
+      "id": "77257c82941a5273",
+      "text": "U23",
+      "conservativeBodyAndLandHullGapMm": 0.7519505599999832,
+      "landGapMm": 0.7519505599999832
+    },
+    {
+      "id": "6a3977c13c915862",
+      "text": "Q5",
+      "conservativeBodyAndLandHullGapMm": 0.17740000000000578,
+      "landGapMm": 0.5524343000000016
+    },
+    {
+      "id": "bd1211397c095411",
+      "text": "R115",
+      "conservativeBodyAndLandHullGapMm": 0.6707983000000084,
+      "landGapMm": 0.6707983000000084
+    },
+    {
+      "id": "811c44fa74225c9b",
+      "text": "R121",
+      "conservativeBodyAndLandHullGapMm": 0.530796500000001,
+      "landGapMm": 0.530796500000001
+    },
+    {
+      "id": "089112f712df520f",
+      "text": "R127",
+      "conservativeBodyAndLandHullGapMm": 0.5307983000000078,
+      "landGapMm": 0.5307983000000078
+    },
+    {
+      "id": "83734bd7aed85658",
+      "text": "C58",
+      "conservativeBodyAndLandHullGapMm": 0.5974017200000148,
+      "landGapMm": 0.6213371399999801
+    },
+    {
+      "id": "1baf69513fa95864",
+      "text": "U24",
+      "conservativeBodyAndLandHullGapMm": 0.7519505600000116,
+      "landGapMm": 0.7519505600000116
+    },
+    {
+      "id": "1ea8bb14eb6857fd",
+      "text": "Q6",
+      "conservativeBodyAndLandHullGapMm": 0.1774000000000058,
+      "landGapMm": 0.5524343000000016
+    },
+    {
+      "id": "f5af82412eec5c75",
+      "text": "R116",
+      "conservativeBodyAndLandHullGapMm": 0.6707983000000085,
+      "landGapMm": 0.6707983000000085
+    },
+    {
+      "id": "20913fe5ada755ce",
+      "text": "R122",
+      "conservativeBodyAndLandHullGapMm": 0.530796500000001,
+      "landGapMm": 0.530796500000001
+    },
+    {
+      "id": "aaef842e99a55f42",
+      "text": "R128",
+      "conservativeBodyAndLandHullGapMm": 0.5307983000000078,
+      "landGapMm": 0.5307983000000078
+    },
+    {
+      "id": "2ff3bdbb8de9527c",
+      "text": "C59",
+      "conservativeBodyAndLandHullGapMm": 0.6213371399999801,
+      "landGapMm": 0.6213371399999801
+    },
+    {
+      "id": "d43f36dc3ac45a09",
+      "text": "U25",
+      "conservativeBodyAndLandHullGapMm": 0.7519505600000116,
+      "landGapMm": 0.7519505600000116
+    },
+    {
+      "id": "89fd8bb6a3a7570e",
+      "text": "Q7",
+      "conservativeBodyAndLandHullGapMm": 0.1774000000000058,
+      "landGapMm": 0.5524343000000016
+    },
+    {
+      "id": "56ead9fdfd005f50",
+      "text": "R117",
+      "conservativeBodyAndLandHullGapMm": 0.6707983000000084,
+      "landGapMm": 0.6707983000000084
+    },
+    {
+      "id": "238c890f8c1059fc",
+      "text": "R123",
+      "conservativeBodyAndLandHullGapMm": 0.530796500000001,
+      "landGapMm": 0.530796500000001
+    },
+    {
+      "id": "5336b0c77a6555ee",
+      "text": "R129",
+      "conservativeBodyAndLandHullGapMm": 0.5307983000000078,
+      "landGapMm": 0.5307983000000078
+    },
+    {
+      "id": "8c67bffcefe5515a",
+      "text": "C60",
+      "conservativeBodyAndLandHullGapMm": 0.6213371399999801,
+      "landGapMm": 0.6213371399999801
+    },
+    {
+      "id": "801d93b386ae5945",
+      "text": "U26",
+      "conservativeBodyAndLandHullGapMm": 0.7519505600000116,
+      "landGapMm": 0.7519505600000116
+    },
+    {
+      "id": "348fc8e7d9195f31",
+      "text": "Q8",
+      "conservativeBodyAndLandHullGapMm": 0.17740000000000578,
+      "landGapMm": 0.5524343000000016
+    },
+    {
+      "id": "39b6c8cf6e505208",
+      "text": "R118",
+      "conservativeBodyAndLandHullGapMm": 0.6707983000000084,
+      "landGapMm": 0.6707983000000084
+    },
+    {
+      "id": "7512c8b717e6584d",
+      "text": "R124",
+      "conservativeBodyAndLandHullGapMm": 0.530796500000001,
+      "landGapMm": 0.530796500000001
+    },
+    {
+      "id": "131d81c211945f3a",
+      "text": "R130",
+      "conservativeBodyAndLandHullGapMm": 0.5307983000000078,
+      "landGapMm": 0.5307983000000078
+    },
+    {
+      "id": "44bc947335745bbe",
+      "text": "C61",
+      "conservativeBodyAndLandHullGapMm": 0.6213371399999801,
+      "landGapMm": 0.6213371399999801
+    },
+    {
+      "id": "0fe4d682ca2f5a37",
+      "text": "U27",
+      "conservativeBodyAndLandHullGapMm": 0.7519505600000116,
+      "landGapMm": 0.7519505600000116
+    },
+    {
+      "id": "8eeda2031cc25b2c",
+      "text": "Q9",
+      "conservativeBodyAndLandHullGapMm": 0.17740000000000578,
+      "landGapMm": 0.5524343000000016
+    },
+    {
+      "id": "5db7d08f8e1a5c68",
+      "text": "R119",
+      "conservativeBodyAndLandHullGapMm": 0.6707983000000084,
+      "landGapMm": 0.6707983000000084
+    },
+    {
+      "id": "75294f0f4ee85bb3",
+      "text": "R125",
+      "conservativeBodyAndLandHullGapMm": 0.530796500000001,
+      "landGapMm": 0.530796500000001
+    },
+    {
+      "id": "b8cd9f1fa5f15e49",
+      "text": "R131",
+      "conservativeBodyAndLandHullGapMm": 0.5307983000000078,
+      "landGapMm": 0.5307983000000078
+    },
+    {
+      "id": "324fe3c14c185063",
+      "text": "C62",
+      "conservativeBodyAndLandHullGapMm": 0.6213371399999801,
+      "landGapMm": 0.6213371399999801
+    },
+    {
+      "id": "9c7c52f10e67530f",
+      "text": "U28",
+      "conservativeBodyAndLandHullGapMm": 0.7519505599999832,
+      "landGapMm": 0.7519505599999832
+    },
+    {
+      "id": "2ce739e63df65623",
+      "text": "Q10",
+      "conservativeBodyAndLandHullGapMm": 0.17740000000000578,
+      "landGapMm": 0.5524343000000016
+    },
+    {
+      "id": "c34f1f11a89e5058",
+      "text": "R120",
+      "conservativeBodyAndLandHullGapMm": 0.6707983000000084,
+      "landGapMm": 0.6707983000000084
+    },
+    {
+      "id": "2a5ca24b0a995b83",
+      "text": "R126",
+      "conservativeBodyAndLandHullGapMm": 0.530796500000001,
+      "landGapMm": 0.530796500000001
+    },
+    {
+      "id": "b48e233cf3675cbd",
+      "text": "R132",
+      "conservativeBodyAndLandHullGapMm": 0.5307983000000078,
+      "landGapMm": 0.5307983000000078
+    },
+    {
+      "id": "b239fb30e85d5f58",
+      "text": "C63",
+      "conservativeBodyAndLandHullGapMm": 0.6213371399999801,
+      "landGapMm": 0.6213371399999801
+    },
+    {
+      "id": "456441b06e05527c",
+      "text": "U29",
+      "conservativeBodyAndLandHullGapMm": 0.2744038000000159,
+      "landGapMm": 0.2744038000000159
+    },
+    {
+      "id": "1646e0fd754d5fb0",
+      "text": "U30",
+      "conservativeBodyAndLandHullGapMm": 0.27440380000000175,
+      "landGapMm": 0.27440380000000175
+    },
+    {
+      "id": "343a9975c304547e",
+      "text": "C64",
+      "conservativeBodyAndLandHullGapMm": 0.4008498020610102,
+      "landGapMm": 0.4008498020610102
+    },
+    {
+      "id": "4c31878f2a9857f5",
+      "text": "C65",
+      "conservativeBodyAndLandHullGapMm": 0.40084994287145065,
+      "landGapMm": 0.40084994287145065
+    },
+    {
+      "id": "da4c80a0de9d596f",
+      "text": "U35",
+      "conservativeBodyAndLandHullGapMm": 0.7514474999999834,
+      "landGapMm": 0.7514474999999834
+    },
+    {
+      "id": "330ed41561ae5c7e",
+      "text": "C70",
+      "conservativeBodyAndLandHullGapMm": 0.517399339999983,
+      "landGapMm": 0.667400239999992
+    },
+    {
+      "id": "c7c244b76cd6518b",
+      "text": "R113",
+      "conservativeBodyAndLandHullGapMm": 0.5292773800000248,
+      "landGapMm": 0.5292773800000248
+    },
+    {
+      "id": "306f29e65b665945",
+      "text": "R114",
+      "conservativeBodyAndLandHullGapMm": 0.5292773799999964,
+      "landGapMm": 0.5292773799999964
+    },
+    {
+      "id": "2fa54ee2a2855ab5",
+      "text": "U31",
+      "conservativeBodyAndLandHullGapMm": 0.7514176999999905,
+      "landGapMm": 0.7514176999999905
+    },
+    {
+      "id": "e82d9fe3926551d9",
+      "text": "U32",
+      "conservativeBodyAndLandHullGapMm": 0.7514176999999905,
+      "landGapMm": 0.7514176999999905
+    },
+    {
+      "id": "1f7bc2722bfd509f",
+      "text": "U33",
+      "conservativeBodyAndLandHullGapMm": 0.17438729999999225,
+      "landGapMm": 0.7993636000000065
+    },
+    {
+      "id": "796f7a76d27b59ce",
+      "text": "C66",
+      "conservativeBodyAndLandHullGapMm": 0.6603771399999943,
+      "landGapMm": 0.6603771399999943
+    },
+    {
+      "id": "c71c87f070fb568b",
+      "text": "C67",
+      "conservativeBodyAndLandHullGapMm": 0.6603771399999943,
+      "landGapMm": 0.6603771399999943
+    },
+    {
+      "id": "fa7ec877e6d75d02",
+      "text": "C68",
+      "conservativeBodyAndLandHullGapMm": 0.44235992000000124,
+      "landGapMm": 0.5923608199999818
+    },
+    {
+      "id": "3f31752d9a785a91",
+      "text": "U39",
+      "conservativeBodyAndLandHullGapMm": 0.26627737898892445,
+      "landGapMm": 0.5853963399999954
+    },
+    {
+      "id": "94b0d8ad846b5012",
+      "text": "R142",
+      "conservativeBodyAndLandHullGapMm": 0.4103992999999999,
+      "landGapMm": 0.5783960999999973
+    },
+    {
+      "id": "9cb550cd67ca5188",
+      "text": "R143",
+      "conservativeBodyAndLandHullGapMm": 0.4104018399999987,
+      "landGapMm": 0.5783986399999961
+    },
+    {
+      "id": "a60f1d5046215ae5",
+      "text": "R144",
+      "conservativeBodyAndLandHullGapMm": 0.4104018399999987,
+      "landGapMm": 0.5783986399999961
+    },
+    {
+      "id": "c67e1727881f552d",
+      "text": "R145",
+      "conservativeBodyAndLandHullGapMm": 0.3173997400000026,
+      "landGapMm": 0.48539653999999643
+    },
+    {
+      "id": "c9b76a39d83e5c89",
+      "text": "C79",
+      "conservativeBodyAndLandHullGapMm": 0.5113998600000009,
+      "landGapMm": 0.6614007599999958
+    },
+    {
+      "id": "bbe239a595d4592e",
+      "text": "C80",
+      "conservativeBodyAndLandHullGapMm": 0.5113998599999974,
+      "landGapMm": 0.6614007599999958
+    },
+    {
+      "id": "ab25e88141f25085",
+      "text": "D30",
+      "conservativeBodyAndLandHullGapMm": 0.27350799999999964,
+      "landGapMm": 0.27350799999999964
+    },
+    {
+      "id": "2a9f4df36273516b",
+      "text": "U36",
+      "conservativeBodyAndLandHullGapMm": 0.6714493999999984,
+      "landGapMm": 0.6714493999999984
+    },
+    {
+      "id": "40a02811e0e65bfc",
+      "text": "L3",
+      "conservativeBodyAndLandHullGapMm": 0.26740083999999964,
+      "landGapMm": 0.5430410386520754
+    },
+    {
+      "id": "0414c5a4545a5d7d",
+      "text": "D31",
+      "conservativeBodyAndLandHullGapMm": 0.22639999999999996,
+      "landGapMm": 0.7227234464502688
+    },
+    {
+      "id": "cd7e1e96415f5ae7",
+      "text": "C71",
+      "conservativeBodyAndLandHullGapMm": 0.6083996000000003,
+      "landGapMm": 0.6083996000000003
+    },
+    {
+      "id": "daf379a791b75787",
+      "text": "C72",
+      "conservativeBodyAndLandHullGapMm": 0.6513345400000042,
+      "landGapMm": 0.6513345400000042
+    },
+    {
+      "id": "5729cb43ad265d71",
+      "text": "C73",
+      "conservativeBodyAndLandHullGapMm": 0.5381879666047681,
+      "landGapMm": 0.5381879666047681
+    },
+    {
+      "id": "8e63921d39655c6c",
+      "text": "C74",
+      "conservativeBodyAndLandHullGapMm": 0.6903770799999993,
+      "landGapMm": 0.6903770799999993
+    },
+    {
+      "id": "7869554128cf5dd6",
+      "text": "R133",
+      "conservativeBodyAndLandHullGapMm": 0.4104000000000028,
+      "landGapMm": 0.5783968000000019
+    },
+    {
+      "id": "db3edca54a895fa4",
+      "text": "R134",
+      "conservativeBodyAndLandHullGapMm": 0.4103992999999999,
+      "landGapMm": 0.5783960999999991
+    },
+    {
+      "id": "a620a64a19b65fb3",
+      "text": "R135",
+      "conservativeBodyAndLandHullGapMm": 0.4104000000000028,
+      "landGapMm": 0.5783968000000019
+    },
+    {
+      "id": "ff6293fef57c55a3",
+      "text": "C75",
+      "conservativeBodyAndLandHullGapMm": 0.5113998600000009,
+      "landGapMm": 0.6614007600000011
+    },
+    {
+      "id": "a8be2d2d2c8857b7",
+      "text": "R136",
+      "conservativeBodyAndLandHullGapMm": 0.578797419999999,
+      "landGapMm": 0.578797419999999
+    },
+    {
+      "id": "1c18a6bb94d45d28",
+      "text": "U37",
+      "conservativeBodyAndLandHullGapMm": 0.2754000000000012,
+      "landGapMm": 0.7004406000000003
+    },
+    {
+      "id": "e32d8575d0ca5c6f",
+      "text": "R137",
+      "conservativeBodyAndLandHullGapMm": 0.5787983000000025,
+      "landGapMm": 0.5787983000000025
+    },
+    {
+      "id": "5bd22b7f53805505",
+      "text": "R138",
+      "conservativeBodyAndLandHullGapMm": 0.5787974200000008,
+      "landGapMm": 0.5787974200000008
+    },
+    {
+      "id": "551f2e62393a5096",
+      "text": "R141",
+      "conservativeBodyAndLandHullGapMm": 0.5592773200000032,
+      "landGapMm": 0.5592773200000032
+    },
+    {
+      "id": "ee3524ff6bd15a2e",
+      "text": "C77",
+      "conservativeBodyAndLandHullGapMm": 0.6903770799999975,
+      "landGapMm": 0.6903770799999975
+    },
+    {
+      "id": "c095c5fab84959b6",
+      "text": "U38",
+      "conservativeBodyAndLandHullGapMm": 0.37139999999999995,
+      "landGapMm": 0.7964405999999999
+    },
+    {
+      "id": "8bee5ae2b74d54e8",
+      "text": "R146",
+      "conservativeBodyAndLandHullGapMm": 0.41040000000000104,
+      "landGapMm": 0.5783968000000002
+    },
+    {
+      "id": "ac64ef87caab5bec",
+      "text": "R147",
+      "conservativeBodyAndLandHullGapMm": 0.4173995399999999,
+      "landGapMm": 0.5853963400000008
+    },
+    {
+      "id": "0d8f7738903d5e8f",
+      "text": "C81",
+      "conservativeBodyAndLandHullGapMm": 0.6443992999999999,
+      "landGapMm": 0.6903770800000003
+    },
+    {
+      "id": "ca2175febbc4561a",
+      "text": "R148",
+      "conservativeBodyAndLandHullGapMm": 0.5787999600000004,
+      "landGapMm": 0.5787999600000004
+    },
+    {
+      "id": "6ae4c8b37f4f54ef",
+      "text": "TP11",
+      "conservativeBodyAndLandHullGapMm": 0.27340000000000053,
+      "landGapMm": 0.2514216538594551
+    },
+    {
+      "id": "b093b747719f3b71",
+      "text": "R149",
+      "conservativeBodyAndLandHullGapMm": 0.21088083999999796,
+      "landGapMm": 0.26079704000002835
+    },
+    {
+      "id": "e5e13c06a49f0624",
+      "text": "R150",
+      "conservativeBodyAndLandHullGapMm": 0.640023945589077,
+      "landGapMm": 0.6716527211621679
+    },
+    {
+      "id": "ddc03df69529548f",
+      "text": "R151",
+      "conservativeBodyAndLandHullGapMm": 0.31739973999999904,
+      "landGapMm": 0.48539653999999643
+    },
+    {
+      "id": "4597d103c0210b74",
+      "text": "U40",
+      "conservativeBodyAndLandHullGapMm": 0.24245042000000083,
+      "landGapMm": 0.8924076199999965
+    },
+    {
+      "id": "7ec15f2e27ba5b72",
+      "text": "C82",
+      "conservativeBodyAndLandHullGapMm": 0.5673992399999861,
+      "landGapMm": 0.6703388200000084
+    },
+    {
+      "id": "350eafca1d6e9799e26",
+      "text": "U41",
+      "conservativeBodyAndLandHullGapMm": 0.5424002799999812,
+      "landGapMm": 0.623965312878789
+    },
+    {
+      "id": "830da62f5afa067ae26",
+      "text": "U18",
+      "conservativeBodyAndLandHullGapMm": 0.44240241999995084,
+      "landGapMm": 0.867443019999996
+    },
+    {
+      "id": "840e5ebe8f073936e16",
+      "text": "R80",
+      "conservativeBodyAndLandHullGapMm": 0.31739973999999893,
+      "landGapMm": 0.4853965399999964
+    },
+    {
+      "id": "3894cb921b30e34ce16",
+      "text": "R81",
+      "conservativeBodyAndLandHullGapMm": 0.31740228000000315,
+      "landGapMm": 0.4853990800000005
+    },
+    {
+      "id": "5cd51430fa33a65ce16",
+      "text": "R83",
+      "conservativeBodyAndLandHullGapMm": 0.31739973999999904,
+      "landGapMm": 0.48539654000000354
+    },
+    {
+      "id": "9b0382d231cdb0dae26",
+      "text": "U42",
+      "conservativeBodyAndLandHullGapMm": 0.3055532030173323,
+      "landGapMm": 0.5553381730599587
+    },
+    {
+      "id": "3eae842b9481968ae18",
+      "text": "C83",
+      "conservativeBodyAndLandHullGapMm": 0.27033707999999024,
+      "landGapMm": 0.27033707999999024
+    },
+    {
+      "id": "acaba88ee6a8dbe9e18",
+      "text": "C84",
+      "conservativeBodyAndLandHullGapMm": 0.6173774799999592,
+      "landGapMm": 0.6173774799999592
+    },
+    {
+      "id": "653d88bd1e86dfede18",
+      "text": "C85",
+      "conservativeBodyAndLandHullGapMm": 0.7173747400000038,
+      "landGapMm": 0.7173747400000038
+    },
+    {
+      "id": "f71d2e163f55fb37e19",
+      "text": "Q11",
+      "conservativeBodyAndLandHullGapMm": 0.16740048000000482,
+      "landGapMm": 0.5424347800000078
+    },
+    {
+      "id": "1c41556b07548fdae18",
+      "text": "D1",
+      "conservativeBodyAndLandHullGapMm": 0.16740068000000718,
+      "landGapMm": 0.8493829730852643
+    }
+  ],
+  "method": "Conservative stroke-expanded character boxes against manufacturer body plus native land convex hull; actual ink checked separately in SILK_REVIEW.json"
+}

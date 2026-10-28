@@ -1,0 +1,1956 @@
+{
+  "status": "PASS_FULL_ACTUAL_INK_GEOMETRY_AND_12_FIXED_INTERNAL_REGIONS_PENDING_VISUAL_READ",
+  "source": "C:\\Users\\Chris\\Documents\\GitHub\\6DOF-Rotary-Stewart-Motion-Simulator\\hardware\\pcb\\6dof2_r14\\exports\\2026-10-27-clearance\\R14-project.epro2",
+  "sourceSha256": "979ab2f72b642353866ec91bb8908640fa747aaf745201abe8dcb54c569d22d0",
+  "cam": "C:\\Users\\Chris\\Documents\\GitHub\\6DOF-Rotary-Stewart-Motion-Simulator\\hardware\\pcb\\6dof2_r14\\exports\\2026-10-27-clearance\\R14-Gerber-FS36.zip",
+  "camSha256": "da1c75f7a0922da437b12b4c1c304326d559ebd719677bde67469423f514712e",
+  "scriptSha256": "729a1a611c024be1383cada2d3286bbcbe00bd2e3bc4584c21a693d908ea4089",
+  "contractSha256": "b081cb6cc7ae3049202a469db3de5e844c36446e76dbf3cbc9db66b7078b9cdd",
+  "baselineCamSha256": "533b2678570f76d35fbc9a2e92fee308b8fbdbbc833c8862c8214540f422aad0",
+  "scope": {
+    "entireActualGTO": true,
+    "entireActualGTS": true,
+    "actualGKOBoardEdge": true,
+    "internalDB25Strings": 12,
+    "externalLabelRegions": "Independent current-native verifier:324 designators+24 board strings=348; four callout POLYs separately checked"
+  },
+  "layers": {
+    "GTO": {
+      "file": "Gerber_TopSilkscreenLayer.GTO",
+      "objects": 15895,
+      "primitives": 15895,
+      "clearPrimitives": 0,
+      "batches": 1,
+      "areaMm2": 1004.0935204742574
+    },
+    "GTS": {
+      "file": "Gerber_TopSolderMaskLayer.GTS",
+      "objects": 1235,
+      "primitives": 8483,
+      "clearPrimitives": 0,
+      "batches": 1,
+      "areaMm2": 1882.8979341551915
+    },
+    "GKO": {
+      "file": "Gerber_BoardOutlineLayer.GKO",
+      "objects": 4,
+      "primitives": 4,
+      "clearPrimitives": 0,
+      "batches": 1,
+      "areaMm2": 203.99895347610072
+    }
+  },
+  "nativeToCamBoardSymmetricDifferenceAreaMm2": 0.0,
+  "outlinePolygonCount": 1,
+  "actualInkMaskOverlapAreaMm2": 0.0,
+  "actualInkMaskOverlapComponents": [],
+  "actualInkOutsideBoardAreaMm2": 0.0,
+  "actualInkOutsideBoardComponents": [],
+  "internalTexts": [
+    {
+      "ref": "J3",
+      "id": "d5e37803f6565d88",
+      "text": "1",
+      "anchorMm": [
+        9.872000000000002,
+        55.869982
+      ],
+      "regionBoundsMm": [
+        9.224300000000001,
+        55.293732,
+        10.519700000000002,
+        56.446232
+      ],
+      "actualInkAreaMm2": 0.14110293397651585,
+      "actualInkMaskOverlapMm2": 0.0,
+      "maskOpeningInConservativeEnvelopeMm2": 0.0,
+      "sourceBaselineDeltaAreaMm2": 0.0,
+      "classification": "ACTUAL_INK_CLEAR"
+    },
+    {
+      "ref": "J3",
+      "id": "37d43ad4c26e5602",
+      "text": "13",
+      "anchorMm": [
+        9.872000000000002,
+        22.630017999999996
+      ],
+      "regionBoundsMm": [
+        9.224300000000001,
+        21.653717999999998,
+        10.519700000000002,
+        23.606317999999995
+      ],
+      "actualInkAreaMm2": 0.39328252901272404,
+      "actualInkMaskOverlapMm2": 0.0,
+      "maskOpeningInConservativeEnvelopeMm2": 0.0,
+      "sourceBaselineDeltaAreaMm2": 0.0,
+      "classification": "ACTUAL_INK_CLEAR"
+    },
+    {
+      "ref": "J4",
+      "id": "d5e37803f6565d88",
+      "text": "1",
+      "anchorMm": [
+        37.872,
+        55.869982
+      ],
+      "regionBoundsMm": [
+        37.2243,
+        55.293732,
+        38.5197,
+        56.446232
+      ],
+      "actualInkAreaMm2": 0.1411029339765169,
+      "actualInkMaskOverlapMm2": 0.0,
+      "maskOpeningInConservativeEnvelopeMm2": 0.0,
+      "sourceBaselineDeltaAreaMm2": 0.0,
+      "classification": "ACTUAL_INK_CLEAR"
+    },
+    {
+      "ref": "J4",
+      "id": "37d43ad4c26e5602",
+      "text": "13",
+      "anchorMm": [
+        37.872,
+        22.630017999999996
+      ],
+      "regionBoundsMm": [
+        37.2243,
+        21.653717999999998,
+        38.5197,
+        23.606317999999995
+      ],
+      "actualInkAreaMm2": 0.393282529012725,
+      "actualInkMaskOverlapMm2": 0.0,
+      "maskOpeningInConservativeEnvelopeMm2": 0.0,
+      "sourceBaselineDeltaAreaMm2": 1.5339276650794411e-16,
+      "classification": "ACTUAL_INK_CLEAR"
+    },
+    {
+      "ref": "J5",
+      "id": "d5e37803f6565d88",
+      "text": "1",
+      "anchorMm": [
+        65.872,
+        55.869982
+      ],
+      "regionBoundsMm": [
+        65.2243,
+        55.293732,
+        66.5197,
+        56.446232
+      ],
+      "actualInkAreaMm2": 0.14110293397651524,
+      "actualInkMaskOverlapMm2": 0.0,
+      "maskOpeningInConservativeEnvelopeMm2": 0.0,
+      "sourceBaselineDeltaAreaMm2": 0.0,
+      "classification": "ACTUAL_INK_CLEAR"
+    },
+    {
+      "ref": "J5",
+      "id": "37d43ad4c26e5602",
+      "text": "13",
+      "anchorMm": [
+        65.872,
+        22.630017999999996
+      ],
+      "regionBoundsMm": [
+        65.2243,
+        21.653717999999998,
+        66.5197,
+        23.606317999999995
+      ],
+      "actualInkAreaMm2": 0.39328252901271965,
+      "actualInkMaskOverlapMm2": 0.0,
+      "maskOpeningInConservativeEnvelopeMm2": 0.0,
+      "sourceBaselineDeltaAreaMm2": 3.5480238479473734e-16,
+      "classification": "ACTUAL_INK_CLEAR"
+    },
+    {
+      "ref": "J6",
+      "id": "d5e37803f6565d88",
+      "text": "1",
+      "anchorMm": [
+        93.872,
+        55.869982
+      ],
+      "regionBoundsMm": [
+        93.2243,
+        55.293732,
+        94.5197,
+        56.446232
+      ],
+      "actualInkAreaMm2": 0.14110293397651524,
+      "actualInkMaskOverlapMm2": 0.0,
+      "maskOpeningInConservativeEnvelopeMm2": 0.0,
+      "sourceBaselineDeltaAreaMm2": 0.0,
+      "classification": "ACTUAL_INK_CLEAR"
+    },
+    {
+      "ref": "J6",
+      "id": "37d43ad4c26e5602",
+      "text": "13",
+      "anchorMm": [
+        93.872,
+        22.630017999999996
+      ],
+      "regionBoundsMm": [
+        93.2243,
+        21.653717999999998,
+        94.5197,
+        23.606317999999995
+      ],
+      "actualInkAreaMm2": 0.39328252901272,
+      "actualInkMaskOverlapMm2": 0.0,
+      "maskOpeningInConservativeEnvelopeMm2": 0.0,
+      "sourceBaselineDeltaAreaMm2": 0.0,
+      "classification": "ACTUAL_INK_CLEAR"
+    },
+    {
+      "ref": "J7",
+      "id": "d5e37803f6565d88",
+      "text": "1",
+      "anchorMm": [
+        121.872,
+        55.869982
+      ],
+      "regionBoundsMm": [
+        121.2243,
+        55.293732,
+        122.5197,
+        56.446232
+      ],
+      "actualInkAreaMm2": 0.14110293397651524,
+      "actualInkMaskOverlapMm2": 0.0,
+      "maskOpeningInConservativeEnvelopeMm2": 0.0,
+      "sourceBaselineDeltaAreaMm2": 0.0,
+      "classification": "ACTUAL_INK_CLEAR"
+    },
+    {
+      "ref": "J7",
+      "id": "37d43ad4c26e5602",
+      "text": "13",
+      "anchorMm": [
+        121.872,
+        22.630017999999996
+      ],
+      "regionBoundsMm": [
+        121.2243,
+        21.653717999999998,
+        122.5197,
+        23.606317999999995
+      ],
+      "actualInkAreaMm2": 0.39328252901271976,
+      "actualInkMaskOverlapMm2": 0.0,
+      "maskOpeningInConservativeEnvelopeMm2": 0.0,
+      "sourceBaselineDeltaAreaMm2": 7.744440432533453e-17,
+      "classification": "ACTUAL_INK_CLEAR"
+    },
+    {
+      "ref": "J8",
+      "id": "d5e37803f6565d88",
+      "text": "1",
+      "anchorMm": [
+        149.87199999999999,
+        55.869982
+      ],
+      "regionBoundsMm": [
+        149.2243,
+        55.293732,
+        150.51969999999997,
+        56.446232
+      ],
+      "actualInkAreaMm2": 0.14110293397651452,
+      "actualInkMaskOverlapMm2": 0.0,
+      "maskOpeningInConservativeEnvelopeMm2": 0.0,
+      "sourceBaselineDeltaAreaMm2": 0.0,
+      "classification": "ACTUAL_INK_CLEAR"
+    },
+    {
+      "ref": "J8",
+      "id": "37d43ad4c26e5602",
+      "text": "13",
+      "anchorMm": [
+        149.87199999999999,
+        22.630017999999996
+      ],
+      "regionBoundsMm": [
+        149.2243,
+        21.653717999999998,
+        150.51969999999997,
+        23.606317999999995
+      ],
+      "actualInkAreaMm2": 0.39328252901272287,
+      "actualInkMaskOverlapMm2": 0.0,
+      "maskOpeningInConservativeEnvelopeMm2": 0.0,
+      "sourceBaselineDeltaAreaMm2": 1.322221310761049e-16,
+      "classification": "ACTUAL_INK_CLEAR"
+    }
+  ],
+  "errors": [],
+  "limits": [
+    "All CAM primitives are composed in export order with dark/clear polarity; arc approximation error <=0.001mm.",
+    "Actual exported ink overlap is a collision; conservative native text envelope overlap alone is not. Export clipping and glyph whitespace require actual glyph review.",
+    "The unchanged source CAM is a footprint glyph witness only; old designator or testpoint poses are not applied to the final board.",
+    "No claim of OCR, a native-font renderer, or missing footprint-outline reconstruction. Native text identity/pose and source-baseline regions are bound separately.",
+    "No automatic footprint edits; all 12 glyphs need visual reading of the emitted actual-CAM montage.",
+    "Clipped native straight-outline exposure is classified separately from surviving actual exported ink; no unprovided factory preprocessing is assumed."
+  ],
+  "nativeFootprintOutlineClippingDiagnostics": {
+    "method": "Only native straight POLY strokes, exact pose/width. Native text envelopes and unsupported arcs never establish clipping.",
+    "rows": [],
+    "unsupportedArcPaths": [
+      {
+        "ref": "C3",
+        "id": "e15",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C3",
+        "id": "e16",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C3",
+        "id": "e17",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C3",
+        "id": "e18",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C4",
+        "id": "e10",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C4",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C4",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C4",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C5",
+        "id": "e10",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C5",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C5",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C5",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C6",
+        "id": "e10",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C6",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C6",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C6",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C7",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C7",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C7",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C7",
+        "id": "e14",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C8",
+        "id": "e10",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C8",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C8",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C8",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C9",
+        "id": "e10",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C9",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C9",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C9",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C10",
+        "id": "e10",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C10",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C10",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C10",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C11",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C11",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C11",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C11",
+        "id": "e14",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C13",
+        "id": "e10",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C13",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C13",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C13",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C14",
+        "id": "e10",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C14",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C14",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C14",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C16",
+        "id": "e10",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C16",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C16",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C16",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C17",
+        "id": "e10",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C17",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C17",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C17",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C18",
+        "id": "e10",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C18",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C18",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C18",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C19",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C19",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C19",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C19",
+        "id": "e14",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C20",
+        "id": "e10",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C20",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C20",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C20",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C21",
+        "id": "e10",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C21",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C21",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C21",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C22",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C22",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C22",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C22",
+        "id": "e14",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C25",
+        "id": "e15",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C25",
+        "id": "e16",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C25",
+        "id": "e17",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C25",
+        "id": "e18",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "U6",
+        "id": "e34",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "U8",
+        "id": "e105",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C12",
+        "id": "e10",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C12",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C12",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C12",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C15",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C15",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C15",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C15",
+        "id": "e14",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C26",
+        "id": "e10",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C26",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C26",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C26",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C27",
+        "id": "e10",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C27",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C27",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C27",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C28",
+        "id": "e10",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C28",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C28",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C28",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C29",
+        "id": "e10",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C29",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C29",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C29",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C30",
+        "id": "e10",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C30",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C30",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C30",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C31",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C31",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C31",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C31",
+        "id": "e14",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C32",
+        "id": "e10",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C32",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C32",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C32",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C33",
+        "id": "e10",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C33",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C33",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C33",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C34",
+        "id": "e10",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C34",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C34",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C34",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C35",
+        "id": "e10",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C35",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C35",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C35",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C23",
+        "id": "e10",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C23",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C23",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C23",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C24",
+        "id": "e10",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C24",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C24",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C24",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C36",
+        "id": "e10",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C36",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C36",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C36",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "F1",
+        "id": "e15",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "F1",
+        "id": "e16",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C37",
+        "id": "e10",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C37",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C37",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C37",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C38",
+        "id": "e10",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C38",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C38",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C38",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C39",
+        "id": "e10",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C39",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C39",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C39",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C40",
+        "id": "e10",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C40",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C40",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C40",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C41",
+        "id": "e10",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C41",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C41",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C41",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C42",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C42",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C42",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C42",
+        "id": "e14",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "U11",
+        "id": "e7",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C43",
+        "id": "e10",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C43",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C43",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C43",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C44",
+        "id": "e10",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C44",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C44",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C44",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C45",
+        "id": "e10",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C45",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C45",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C45",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C46",
+        "id": "e10",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C46",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C46",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C46",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C47",
+        "id": "e10",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C47",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C47",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C47",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C48",
+        "id": "e10",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C48",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C48",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C48",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C49",
+        "id": "e10",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C49",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C49",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C49",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C50",
+        "id": "e10",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C50",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C50",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C50",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C51",
+        "id": "e10",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C51",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C51",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C51",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C52",
+        "id": "e10",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C52",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C52",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C52",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C53",
+        "id": "e10",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C53",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C53",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C53",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C54",
+        "id": "e10",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C54",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C54",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C54",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "U15",
+        "id": "e64",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "U15",
+        "id": "e65",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "U21",
+        "id": "e51",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C55",
+        "id": "e10",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C55",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C55",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C55",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C56",
+        "id": "e10",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C56",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C56",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C56",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C57",
+        "id": "e10",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C57",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C57",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C57",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "U23",
+        "id": "e7",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C58",
+        "id": "e10",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C58",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C58",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C58",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "U24",
+        "id": "e7",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C59",
+        "id": "e10",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C59",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C59",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C59",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "U25",
+        "id": "e7",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C60",
+        "id": "e10",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C60",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C60",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C60",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "U26",
+        "id": "e7",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C61",
+        "id": "e10",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C61",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C61",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C61",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "U27",
+        "id": "e7",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C62",
+        "id": "e10",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C62",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C62",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C62",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "U28",
+        "id": "e7",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C63",
+        "id": "e10",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C63",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C63",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C63",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C64",
+        "id": "e10",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C64",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C64",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C64",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C65",
+        "id": "e10",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C65",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C65",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C65",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C70",
+        "id": "e10",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C70",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C70",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C70",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C66",
+        "id": "e10",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C66",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C66",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C66",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C67",
+        "id": "e10",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C67",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C67",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C67",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C68",
+        "id": "e10",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C68",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C68",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C68",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C79",
+        "id": "e10",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C79",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C79",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C79",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C80",
+        "id": "e10",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C80",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C80",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C80",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C71",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C71",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C71",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C71",
+        "id": "e14",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C72",
+        "id": "e10",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C72",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C72",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C72",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C73",
+        "id": "e15",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C73",
+        "id": "e16",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C73",
+        "id": "e17",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C73",
+        "id": "e18",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C74",
+        "id": "e10",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C74",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C74",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C74",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C75",
+        "id": "e10",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C75",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C75",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C75",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C77",
+        "id": "e10",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C77",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C77",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C77",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C81",
+        "id": "e10",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C81",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C81",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C81",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C82",
+        "id": "e10",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C82",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C83",
+        "id": "e10",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C83",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C84",
+        "id": "e10",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C84",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C84",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C84",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C85",
+        "id": "e10",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C85",
+        "id": "e11",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C85",
+        "id": "e12",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      },
+      {
+        "ref": "C85",
+        "id": "e13",
+        "reason": "ARC_PATH_NOT_USED_FOR_NATIVE_CLIP_ATTRIBUTION"
+      }
+    ]
+  }
+}

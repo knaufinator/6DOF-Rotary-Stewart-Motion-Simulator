@@ -1,0 +1,203 @@
+{
+  "revision": "R14C1",
+  "date": "2026-10-27",
+  "status": "STATIC_INTERNAL_REVIEW_COMPLETE_FACTORY_DISPOSITION_PENDING",
+  "projectUuid": "df6039acdfad4375ae07aa6257cd0186",
+  "pcbUuid": "6567ed8798fb578fbfd0297236c2ee0e",
+  "master": "Saved, closed, reopened and exported through EasyEDA bridge; project title retains its historical trial name. Board marking R14C1 identifies this correction.",
+  "components": 324,
+  "supplierCodes": 91,
+  "logicalPins": 1214,
+  "copperObjects": 2684,
+  "vias": 903,
+  "uniqueDrills": 1098,
+  "nativeDrc": [],
+  "schematicPcbComparison": [],
+  "originalOrderTag": "r14-ordered-2026-10-26",
+  "firmwareChanged": false,
+  "hardwareTests": "NOT_RUN",
+  "factorySubmission": "NOT_PERFORMED",
+  "factoryAcceptance": "NOT_CONFIRMED",
+  "externalMatingAndEnclosureQualification": "NOT_COMPLETE",
+  "files": [
+    {
+      "path": "EXPORT_VALIDATION.json",
+      "bytes": 588,
+      "sha256": "317baaa2970429a0f933be790709989d02b9c1305e560e44d8637f67afd51d3f"
+    },
+    {
+      "path": "NATIVE_COMPARISON.json",
+      "bytes": 2,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "path": "NATIVE_DRC.json",
+      "bytes": 2,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "path": "R14-assembly.step.zip",
+      "bytes": 15620879,
+      "sha256": "af4a7d5e35bc51813b0f6dab178764abb4816fbd464aebec7438865a413bda9f"
+    },
+    {
+      "path": "R14-BOM-JLC.csv",
+      "bytes": 5165,
+      "sha256": "811d35d8d9af3b070002002a248d7f40eb37e9ed71548e28039766ab07c6f498"
+    },
+    {
+      "path": "R14-BOM-native.tsv",
+      "bytes": 16610,
+      "sha256": "a8bcdbe81ad0120ebe952c02c396fe22835fbeb3a532e40dcccdadb4c2938644"
+    },
+    {
+      "path": "R14-CPL-JLC.csv",
+      "bytes": 8754,
+      "sha256": "ee8ab8b1bdd339f18d8c618fb4d4855c56c72a05dc87398e7becdd2d488633f2"
+    },
+    {
+      "path": "R14-CPL-native.tsv",
+      "bytes": 105476,
+      "sha256": "8f696c909b3ef2712d9d5764480ecc9265cce508fadd22f4b535008cc73c787e"
+    },
+    {
+      "path": "R14-Gerber-FS36.zip",
+      "bytes": 496770,
+      "sha256": "da1c75f7a0922da437b12b4c1c304326d559ebd719677bde67469423f514712e"
+    },
+    {
+      "path": "R14-PCB.net",
+      "bytes": 613957,
+      "sha256": "a991944276a5c4848e37f9557900170b0ead3fef2b89196005b3a4d57e9ab4ae"
+    },
+    {
+      "path": "R14-project.epro2",
+      "bytes": 1234956,
+      "sha256": "979ab2f72b642353866ec91bb8908640fa747aaf745201abe8dcb54c569d22d0"
+    },
+    {
+      "path": "R14-schematic.net",
+      "bytes": 874181,
+      "sha256": "b5dc2e86b717980f98246a069c899e3b0993398d5a7128b3b5c1da3af940e2d5"
+    },
+    {
+      "path": "R14-schematic.svg",
+      "bytes": 1783214,
+      "sha256": "b844b31f6558fda2886d50c41fa5f88aeb1e5af573861f1d9a986ce99c9ff1a8"
+    },
+    {
+      "path": "README.md",
+      "bytes": 2450,
+      "sha256": "175fe2b6193665565dccd88715358ca3d82ff65524aabe797f64b169df269c7e"
+    }
+  ],
+  "reviewDirectory": "../../review/2026-10-27-clearance",
+  "reviewFiles": [
+    {
+      "path": "ACTUAL_CAM_REVIEW.json",
+      "sha256": "7053da25cc1c1fcc18f87d1a049bae12a7c46436147b966f92d800beb4a4fcfe"
+    },
+    {
+      "path": "ALL_BODY_OUTLINES_REVIEW.json",
+      "sha256": "399fe08eb323cc4a2a65a929fcdaa5154eddf25c95cd5a3039f2582ffc5225bc"
+    },
+    {
+      "path": "APERTURE_REVIEW.json",
+      "sha256": "a1d7a313629a585030da87e5f02523cbb5c18ee12f4f7c87208fe56f36c622f2"
+    },
+    {
+      "path": "board-labels.csv",
+      "sha256": "9edfcb96e95b75944a2dd469e0c8afcbb8de84a3a387de11df3b1a3766c17cf0"
+    },
+    {
+      "path": "BODY_LIMITS.json",
+      "sha256": "9a863cc314904782bae601df57d4d33c9f017492065c1727e99fb9a28a642008"
+    },
+    {
+      "path": "DB25_DIGITS.png",
+      "sha256": "6437f4c995b59f9aa6fb1fdc375d5da571815a3df45d40af301c8c4ad70a5dad"
+    },
+    {
+      "path": "DRILL_REVIEW.json",
+      "sha256": "a99dcb8b672c21323a7b833f193d72dff2e29e4a06c137ddadf144bb728ccfae"
+    },
+    {
+      "path": "ELECTRICAL_FIRMWARE_PARITY.json",
+      "sha256": "290b8321c5ba97096935588677badb8ce7defe37b7285c1159bb8b026cce535a"
+    },
+    {
+      "path": "every-component-dimensions.csv",
+      "sha256": "b2853ca39332ea69900766d8b98b5509ca2285a50c7e895fd4c780ad7edeabfc"
+    },
+    {
+      "path": "every-component-outline.csv",
+      "sha256": "b2038ef8743c83a00e04c043a87bd0b5d7c41572566cfa15afd1b03665a47bf5"
+    },
+    {
+      "path": "every-trace-via-fill.csv",
+      "sha256": "1f583d48e37925e006315648dabf9075923f132953d7e5d0cc5623e8624a89e8"
+    },
+    {
+      "path": "GROUND_JOINS.json",
+      "sha256": "7591cea8a66a2b48272c6311869922bc912df5975eae5e9a1fb043a687f52915"
+    },
+    {
+      "path": "INTERNAL_CLEARANCE_REVIEW.json",
+      "sha256": "10a690e981d95bb28be88555f00b3d4d34604abca4c502a6573feb31885c8ea2"
+    },
+    {
+      "path": "J12_CLEARANCE_PROOF.json",
+      "sha256": "f25cc105935dcabf1ff6f70fd48f8c8ed6067d4868b6507a8a7c0a4c366c505a"
+    },
+    {
+      "path": "LABEL_ENVELOPE_REVIEW.json",
+      "sha256": "3ed43558008e1fc7469e08c536f270fff00bad57fa4685bee730ec0bbd6cd38c"
+    },
+    {
+      "path": "LIVE_CURRENT_PARITY.json",
+      "sha256": "282cb09b30a64b0dd2e3d47adc8fefdf67dbd967d413485d64b2b631a9d7c279"
+    },
+    {
+      "path": "MECHANICAL_REVIEW.json",
+      "sha256": "6fc9c4fbdc6114f1e9f54de1b0b068cd632ad358b2f16066af791fd2245d0a96"
+    },
+    {
+      "path": "ORDERED_COLLISION_FINDINGS.json",
+      "sha256": "c9c7a5afe060615150fe48d6e99bbf251ec7fba3d8b654f7cbdbcbc334bf7212"
+    },
+    {
+      "path": "placement-changes.csv",
+      "sha256": "e8b1f9d5c688fac1278fff65ca4a7de51d55e3fde1e97065d9b63ef18e48ab28"
+    },
+    {
+      "path": "README.md",
+      "sha256": "5e40a026d1fb2826ccec832977b37975415830a62ff1e428cf574daa5c7e1063"
+    },
+    {
+      "path": "README_LINK_AUDIT.json",
+      "sha256": "93b9b1f23440ea370ba11055bdec4bd7845f57a03f311c2b73bf422e1d9b1e09"
+    },
+    {
+      "path": "SIGNAL_REFERENCES.json",
+      "sha256": "d95e9dfc5640e75dc4caada6213e0b4567d9b2b0deb2c18efed57ff3def1773a"
+    },
+    {
+      "path": "SILK_REVIEW.json",
+      "sha256": "f10c621aba8bf8ffd1a1abd9b23b36d27198292f4ca208b17e0d14de6b470176"
+    },
+    {
+      "path": "STEP_POSE_PARITY.json",
+      "sha256": "f7886ed0495d9e4079e98fba44de292a3e10806fde1c11dbcdc52fbf507f045f"
+    },
+    {
+      "path": "VISUAL_REVIEW.json",
+      "sha256": "5a07dc1fb52a854f9c40078472f9c926c7b75989c1355126b76c0e4f7cfeeb1d"
+    }
+  ],
+  "limits": [
+    "Exact D-sub nut-stack heights, mated connectors/hoods and enclosure fit require qualification.",
+    "Fifty inherited reduced positive mask/paste gaps retain process-review limitations; no opening intersections.",
+    "Eight inherited Ethernet MDI entry reference limitations remain; no SI/EMI qualification claimed.",
+    "Use the complete replacement set. Already fabricated boards require replacement fabrication."
+  ]
+}

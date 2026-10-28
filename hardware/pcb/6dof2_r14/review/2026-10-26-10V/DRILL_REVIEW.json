@@ -1,0 +1,164 @@
+{
+ "status": "PASS_ACTUAL_CAM_ALL_ANALYTIC_HOLE_PAIRS_0302",
+ "camSha256": "2564dedea72da616833756ed0aa69f36c9b7f471ff8e71b6dcc32d902956f701",
+ "nativeSha256": "6fe9b8fa442f41b75a5e7bfec5390aae638f031ef29f49d7334cf4b0c26f7ad8",
+ "planSha256": "e3566b3a06430868d71e9287dfd6c6c520a3da027aabea01951d407ee131dc2f",
+ "holeCount": 1086,
+ "shapeCounts": {
+  "Point": 1082,
+  "LineString": 4
+ },
+ "pairsChecked": 589155,
+ "minimumAnalyticGapMm": 0.30275658172716613,
+ "minimumGateMm": 0.302,
+ "findings": [],
+ "closestPairsBelow0350Mm": [
+  {
+   "a": "Drill_PTH_Through.DRL:148",
+   "b": "Drill_PTH_Through.DRL:880",
+   "centresMm": [
+    [
+     221.2,
+     40.3
+    ],
+    [
+     220.815,
+     40.77
+    ]
+   ],
+   "gapMm": 0.30275658172716613
+  },
+  {
+   "a": "Drill_PTH_Through.DRL:856",
+   "b": "Drill_PTH_Through.DRL:881",
+   "centresMm": [
+    [
+     243.53,
+     63.31
+    ],
+    [
+     242.956,
+     63.512
+    ]
+   ],
+   "gapMm": 0.30370636808501306
+  },
+  {
+   "a": "Drill_PTH_Through.DRL:515",
+   "b": "Drill_PTH_Through.DRL:882",
+   "centresMm": [
+    [
+     243.1,
+     64.6
+    ],
+    [
+     243.492,
+     64.134
+    ]
+   ],
+   "gapMm": 0.30414991583872575
+  },
+  {
+   "a": "Drill_PTH_Through.DRL:696",
+   "b": "Drill_PTH_Through.DRL:879",
+   "centresMm": [
+    [
+     229.7102,
+     34.78
+    ],
+    [
+     230.32,
+     34.779976
+    ]
+   ],
+   "gapMm": 0.30500000047229303
+  },
+  {
+   "a": "Drill_PTH_Through.DRL:211",
+   "b": "Drill_PTH_Through.DRL:842",
+   "centresMm": [
+    [
+     252.7,
+     65.0
+    ],
+    [
+     252.114,
+     65.1826
+    ]
+   ],
+   "gapMm": 0.30899048542640295
+  },
+  {
+   "a": "Drill_PTH_Through.DRL:212",
+   "b": "Drill_PTH_Through.DRL:468",
+   "centresMm": [
+    [
+     256.05,
+     74.6
+    ],
+    [
+     256.2,
+     74.0
+    ]
+   ],
+   "gapMm": 0.31366584384263807
+  },
+  {
+   "a": "Drill_PTH_Through.DRL:728",
+   "b": "Drill_PTH_Through.DRL:875",
+   "centresMm": [
+    [
+     286.6698,
+     75.165
+    ],
+    [
+     286.65,
+     75.8
+    ]
+   ],
+   "gapMm": 0.3305086179172999
+  },
+  {
+   "a": "Drill_PTH_Through.DRL:115",
+   "b": "Drill_PTH_Through.DRL:736",
+   "centresMm": [
+    [
+     210.0,
+     49.46
+    ],
+    [
+     209.6002,
+     49.96
+    ]
+   ],
+   "gapMm": 0.3353875037830708
+  }
+ ],
+ "files": [
+  {
+   "file": "Drill_PTH_Through.DRL",
+   "operations": 1062,
+   "toolsMm": {
+    "1": 0.3048,
+    "2": 0.3048,
+    "3": 0.799998,
+    "4": 0.890016,
+    "5": 1.016,
+    "6": 1.039978,
+    "7": 1.100023,
+    "8": 1.599997
+   }
+  },
+  {
+   "file": "Drill_NPTH_Through.DRL",
+   "operations": 24,
+   "toolsMm": {
+    "1": 0.599999,
+    "2": 2.799999,
+    "3": 3.199999,
+    "4": 3.24993
+   }
+  }
+ ],
+ "duplicateViaDrillFilePolicy": "Via-only DRL repeats the891 operations already present in PTH_Through. Count complete PTH_Through plusNPTH only; no genuine hole omission."
+}

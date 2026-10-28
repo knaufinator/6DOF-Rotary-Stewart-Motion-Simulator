@@ -475,6 +475,9 @@ struct App {
 
     // Background HIL TX thread (runs independently of UI frame rate)
     std::thread       hil_tx_thread;
+    // Attach a UdpTransport to a HIL entity. Bridge reachable on TCP: raw-HIL bridge mode as
+    // before. No bridge: direct ESP32-over-Ethernet mode, runs the normal FINGERPRINT handshake.
+    void              beginNetworkHil(Entity& e, std::shared_ptr<class UdpTransport> up);
     std::atomic<bool> hil_tx_stop{false};
     void              hilTxLoop();
 };

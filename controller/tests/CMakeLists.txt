@@ -25,9 +25,18 @@ add_executable(stewart-tests
     test_inverse_kinematics.cpp
     test_axis_scaling.cpp
     test_motion_cueing.cpp
+    test_estop_safety.cpp
+    test_r14_six_axis_trajectory.cpp
+    test_r14_seek_interlock.cpp
+    test_r14_drive_alarm_latch.cpp
+    test_r14_motion_admission.cpp
+    test_r13_bench_pulse.cpp
+    test_step_quiescence.cpp
+    test_r14_board_io.cpp
 )
 target_include_directories(stewart-tests PRIVATE
     ${CMAKE_SOURCE_DIR}
+    ${CMAKE_SOURCE_DIR}/../include
 )
 target_link_libraries(stewart-tests PRIVATE stewart_math)
 target_compile_definitions(stewart-tests PRIVATE

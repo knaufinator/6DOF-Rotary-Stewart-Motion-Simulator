@@ -9,6 +9,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <math.h>
+#include <atomic>
 
 // ESP-IDF headers
 #include "freertos/FreeRTOS.h"
@@ -27,6 +28,19 @@
 
 // Project headers
 #include "helpers.h"
+#include "EStopSafety.h"
+#include "DriveScaleValidation.h"
+#if defined(R14_FAIL_CLOSED) && PCB_VERSION == 2
+#include "R14DriveAlarmLatch.h"
+#include "R14MotionAdmission.h"
+#endif
+#if defined(R14_BOARD_IO)
+#include "R14Hardware.h"
+#endif
+#if defined(R13_BENCH_ONE_AXIS) && defined(R14_FAIL_CLOSED) && PCB_VERSION == 2
+#include "R13BenchAxis.h"
+#define R13_BENCH_ACTIVE 1
+#endif
 #include "debug_uart.h"
 #include "InverseKinematics.h"
 #include "AxisScaling.h"
@@ -50,6 +64,49 @@
 #include "GPTimerScheduler.h"
 #else
 #include "StepDriver.h"  // selects SSE or MCPWM backend via define
+#if defined(R13_BENCH_ONE_AXIS) && !defined(STEP_DRIVER_SHARED_MCPWM)
+#error "R13_BENCH_ONE_AXIS requires STEP_DRIVER_SHARED_MCPWM (the bench hooks read that engine)"
+#endif
+#if defined(R13_BENCH_ONE_AXIS) && defined(STEP_DRIVER_SHARED_MCPWM)
+// Bench: step-engine ISR cost (see R13BenchAxis.cpp BENCH:STATUS isr=...).
+void r13_engine_isr_stats(uint32_t *count, uint32_t *cycles, uint32_t *maxc, bool reset) {
+    SharedMcpwmStepEngine &e = SharedMcpwmStepEngine::instance();
+    *count = e.isrCount(); *cycles = e.isrCycles(); *maxc = e.isrMaxCycles();
+    if (reset) e.resetIsrStats();
+}
+void r13_engine_isr_gap(uint32_t *gap_min, uint32_t *gap_sum) {
+    SharedMcpwmStepEngine &e = SharedMcpwmStepEngine::instance();
+    *gap_min = e.isrGapMin(); *gap_sum = e.isrGapSum();
+}
+uint32_t r13_engine_isr_missed(void) { return SharedMcpwmStepEngine::instance().isrMissed(); }
+void r13_engine_latch_stats(uint32_t *dneg, uint32_t *dpos, uint32_t *dbig, uint32_t *mpos, uint32_t *smax) {
+    SharedMcpwmStepEngine::instance().latchStats(dneg, dpos, dbig, mpos, smax);
+}
+// Latch-event ring (bench diagnostics): returns the event count; reset=true clears the ring.
+uint32_t r13_engine_latch_events(bool reset) {
+    SharedMcpwmStepEngine &e = SharedMcpwmStepEngine::instance();
+    uint32_t n = e._ringN; if (reset) e._ringN = 0; return n;
+}
+// k-th of the last LATCH_RING events (tick, since, m, skip, hist0; d separately); false past the end.
+bool r13_engine_latch_event(uint32_t k, uint32_t n, uint32_t out[5], int32_t *d) {
+    SharedMcpwmStepEngine &e = SharedMcpwmStepEngine::instance();
+    if (k >= n) return false;
+    uint32_t first = n > (uint32_t)SharedMcpwmStepEngine::LATCH_RING ? n - SharedMcpwmStepEngine::LATCH_RING : 0;
+    if (k < first) return false;
+    volatile SharedMcpwmStepEngine::LatchEvent &ev = e._ring[k % SharedMcpwmStepEngine::LATCH_RING];
+    out[0] = ev.tick; out[1] = ev.since; out[2] = ev.m; out[3] = ev.skip; out[4] = ev.hist0; *d = ev.d;
+    return true;
+}
+uint32_t r13_engine_period_cycles(void) { return SharedMcpwmStepEngine::instance().periodCycles(); }
+void r13_engine_resync_stats(uint32_t *resyncs, uint32_t *skipmax) {
+    SharedMcpwmStepEngine &e = SharedMcpwmStepEngine::instance(); *resyncs = e.resyncs(); *skipmax = e.skipMax();
+}
+void r13_engine_isr_delay(uint32_t cyc) { SharedMcpwmStepEngine::instance().setIsrDelay(cyc); }
+bool r13_engine_latch_comp(int set) {
+    if (set >= 0) SharedMcpwmStepEngine::instance().setLatchComp(set != 0);
+    return SharedMcpwmStepEngine::instance().latchComp();
+}
+#endif
 #endif
 
 #ifdef ENABLE_ETHERNET
@@ -70,6 +127,24 @@ static const char *TAG = "stewart_main";
 
 // Platform configuration (single source of truth for geometry)
 static StewartConfig stewartConfig;
+
+#if defined(R13_BENCH_ONE_AXIS)
+// Bench: run the production IK on a pose and report the six arm angles (deg) and axis steps
+// relative to the home pose, exactly as setPos() would compute them. pos = x y z (mm), roll
+// pitch yaw (rad). Returns validatePosition()'s verdict (1 = reachable).
+int r13_bench_ik(const float pos[6], float angles_deg[6], long steps[6]) {
+    static const float home[6] = {0, 0, 0, 0, 0, 0};
+    float a[6], h[6];
+    calculateAllServoAngles(home, &stewartConfig, h);
+    calculateAllServoAngles(pos, &stewartConfig, a);
+    for (int i = 0; i < 6; i++) {
+        angles_deg[i] = a[i] * IK_RAD_TO_DEG;
+        steps[i] = (long)((a[i] - h[i]) * IK_RAD_TO_DEG * stewartConfig.steps_per_degree);
+    }
+    return validatePosition(pos, &stewartConfig);
+}
+float r13_bench_steps_per_degree() { return stewartConfig.steps_per_degree; }
+#endif
 
 // Per-axis scaling (derived from platform geometry at boot, read-only via SCALE?)
 static AxisScaleConfig axisScales;
@@ -114,20 +189,22 @@ static const gpio_num_t dirPins[6] = {
 };
 #endif
 
+static bool estop_motion_is_blocked();
+
 // ── Motor abstraction layer ─────────────────────────────────────────
 // PCBv1: direct MCP23S17 arrays.
 // PCBv2: delegates to whichever StepDriver backend is selected.
 #if PCB_VERSION == 1
 static inline int32_t motor_getPos(int i)    { return motorCurrentPos[i]; }
 static inline int32_t motor_getTarget(int i) { return motorTargetPos[i]; }
-static inline bool    motor_setTarget(int i, int32_t pos) { motorTargetPos[i] = pos; return true; }
+static inline bool    motor_setTarget(int i, int32_t pos) { if (estop_motion_is_blocked()) return false; motorTargetPos[i] = pos; return true; }
 static inline void    motor_resetPosition(int i) { motorCurrentPos[i] = 0; motorTargetPos[i] = 0; }
 static inline void    motor_emergencyStop(int i) { motorTargetPos[i] = motorCurrentPos[i]; }
 static inline bool    motor_isInit(int)      { return motorInitialized; }
 #else
 static inline int32_t motor_getPos(int i)    { return StepDriver_getPosition(i); }
 static inline int32_t motor_getTarget(int i) { return StepDriver_getTarget(i); }
-static inline bool    motor_setTarget(int i, int32_t pos) { return StepDriver_setTarget(i, pos); }
+static inline bool    motor_setTarget(int i, int32_t pos) { return !estop_motion_is_blocked() && StepDriver_setTarget(i, pos); }
 static inline void    motor_resetPosition(int i) { StepDriver_resetPosition(i); }
 static inline void    motor_emergencyStop(int i) { StepDriver_setTarget(i, StepDriver_getPosition(i)); }
 static inline bool    motor_isInit(int)      { return StepDriver_isInitialized(); }
@@ -151,7 +228,7 @@ const int64_t DEBUG_OUTPUT_INTERVAL = 100000; // 100ms = 10Hz debug output
 typedef struct {
     gpio_num_t pin;
     bool current_state;
-    bool debounced_state;
+    std::atomic<bool> debounced_state;
     int64_t last_change_time;
     int debounce_time_us;
 } debounce_button_t;
@@ -159,7 +236,14 @@ typedef struct {
 static debounce_button_t estop_button;
 
 // State variables
-bool isPausedEStop = false;
+static std::atomic<bool> isPausedEStop{true};  // Boot disarmed; explicit reset is required.
+#if defined(R14_FAIL_CLOSED) && PCB_VERSION == 2
+static r14::DriveAlarmLatch r14DriveAlarms;
+// Compile-time false: there is no qualified local-enable, Hall, drive-ready or
+// gravity-bottom adapter. The separate operator arm and home requests in this
+// admission core therefore cannot open the live motion gate.
+static r14::MotionAdmission<false> r14MotionAdmission(1, 1, 1);
+#endif
 bool isRateLimiting = false;
 bool debugEnabled = false;  // Debug output state, default disabled for safety
 SemaphoreHandle_t xMutex = NULL;
@@ -226,10 +310,10 @@ static void serial_packet_handler(const uint8_t *payload, int len) {
         pktDrop_serial++;
 }
 #ifdef ENABLE_ETHERNET
-static void ethernet_packet_handler(const uint8_t *payload) {
+static void ethernet_packet_handler(const uint8_t *payload, int len) {
     pktCount_eth++;
     if (activeInputSource == INPUT_SOURCE_ETHERNET)
-        process_binary_packet(payload, 12);
+        process_binary_packet(payload, len);
     else
         pktDrop_eth++;
 }
@@ -297,6 +381,36 @@ static int configSaveToNVS(const StewartConfig* cfg) {
     if (err == ESP_OK) err = nvs_commit(handle);
     nvs_close(handle);
     return (err == ESP_OK) ? 0 : -1;
+}
+
+// ── NVS persistence for the drive train (DRIVE:gear/planetary/encoder) ───
+// Stored as separate keys so the geometry blob version stays untouched.
+static int driveSaveToNVS(const StewartConfig* cfg) {
+    nvs_handle_t handle;
+    if (nvs_open(CONFIG_NVS_NAMESPACE, NVS_READWRITE, &handle) != ESP_OK) return -1;
+    uint32_t g, p; memcpy(&g, &cfg->virtual_gear, 4); memcpy(&p, &cfg->planetary_ratio, 4);
+    esp_err_t err = nvs_set_u32(handle, "drv_gear", g);
+    if (err == ESP_OK) err = nvs_set_u32(handle, "drv_planet", p);
+    if (err == ESP_OK) err = nvs_set_i32(handle, "drv_enc", cfg->encoder_ppr);
+    if (err == ESP_OK) err = nvs_commit(handle);
+    nvs_close(handle);
+    return (err == ESP_OK) ? 0 : -1;
+}
+
+static int driveLoadFromNVS(StewartConfig* cfg) {
+    nvs_handle_t handle;
+    if (nvs_open(CONFIG_NVS_NAMESPACE, NVS_READONLY, &handle) != ESP_OK) return -1;
+    uint32_t g = 0, p = 0; int32_t e = 0;
+    bool ok = nvs_get_u32(handle, "drv_gear", &g) == ESP_OK &&
+              nvs_get_u32(handle, "drv_planet", &p) == ESP_OK &&
+              nvs_get_i32(handle, "drv_enc", &e) == ESP_OK;
+    nvs_close(handle);
+    if (!ok) return -1;
+    float gf, pf; memcpy(&gf, &g, 4); memcpy(&pf, &p, 4);
+    if (!valid_drive_scale(e, gf, pf)) return -1;
+    cfg->virtual_gear = gf; cfg->planetary_ratio = pf; cfg->encoder_ppr = (int)e;
+    computeStepsPerDegree(cfg);
+    return 0;
 }
 
 static int configLoadFromNVS(StewartConfig* cfg) {
@@ -367,6 +481,65 @@ bool updateDebounceButton(debounce_button_t *btn) {
     return false;  // No change
 }
 
+static bool estop_input_active() {
+    return gpio_get_level((gpio_num_t)ESTOP_PIN) == ESTOP_ACTIVE_STATE ||
+           estop_button.debounced_state == ESTOP_ACTIVE_STATE;
+}
+
+static bool estop_motion_is_blocked() {
+#if defined(R14_FAIL_CLOSED) && PCB_VERSION == 2
+    if (!r14MotionAdmission.normal_motion_permitted() ||
+        r14DriveAlarms.faulted()) return true;
+#endif
+    return estop_motion_blocked(isPausedEStop.load(),
+                                gpio_get_level((gpio_num_t)ESTOP_PIN) == ESTOP_ACTIVE_STATE,
+                                estop_button.debounced_state == ESTOP_ACTIVE_STATE);
+}
+
+#if defined(R14_FAIL_CLOSED) && PCB_VERSION == 2
+// Task-context ingress: R14Hardware samples GPIO1/2/15/16/18/40. The measured
+// R13 interface is LOW healthy / HIGH alarm, off or open; verify all R14 cables.
+// Hardware clears only the faulted torque latch; common pulse stop uses GPIO47.
+extern "C" void r14_report_normalized_drive_alarm(int axis) {
+    r14DriveAlarms.assert_alarm(axis);
+    r14MotionAdmission.report_alarm(axis);
+    isPausedEStop.store(true);
+#if defined(R13_BENCH_ACTIVE)
+    r13_bench_stop("DRIVE_ALARM");
+#endif
+    gpio_set_level(GPIO_NUM_47, 1); // existing output-latch inhibit
+    gpio_set_level(GPIO_NUM_48, 0);
+    if (StepDriver_isInitialized()) {
+        StepDriver_stop();
+        StepDriver_emergencyStop(); // discard all six commanded targets
+    }
+}
+
+// These task-context entrypoints are reserved for a *local*, qualified IO
+// task. They are deliberately absent from the network/serial command parser.
+// MotionAdmission<false> denies both requests in the current R14 image.
+extern "C" bool r14_request_local_arm(uint64_t now_us) {
+    return r14MotionAdmission.request_operator_arm(now_us);
+}
+extern "C" bool r14_request_local_home(uint64_t now_us) {
+    return r14MotionAdmission.request_operator_home(now_us);
+}
+
+extern "C" void r14_report_transport_reconnect(void) {
+    r14MotionAdmission.report_reconnect_or_reset();
+    isPausedEStop.store(true);
+#if defined(R13_BENCH_ACTIVE)
+    r13_bench_stop("TRANSPORT_RECONNECT");
+#endif
+    gpio_set_level(GPIO_NUM_47, 1);
+    gpio_set_level(GPIO_NUM_48, 0);
+    if (StepDriver_isInitialized()) {
+        StepDriver_stop();
+        StepDriver_emergencyStop();
+    }
+}
+#endif
+
 void setPos() {  
     float position[6];
     // Copy volatile arr under implicit atomicity (single writer)
@@ -411,6 +584,12 @@ void setupMotorPins() {
     DEBUG_PRINTLN("Motors initialized: 6 via MCP23S17 SPI expander (PCBv1)");
 }
 #else
+// Step-engine soft limits, ±MOTOR_SOFT_LIMIT_DEG at the arm, converted with the drive's
+// electronic gear (steps_per_degree) so they follow DRIVE:gear= instead of a step count
+// that would be ±144° at 2:1. R13 arm: hard stop near −100°/+80°, test window ±60°.
+#define MOTOR_SOFT_LIMIT_DEG 72.0f
+static int32_t motorSoftLimitSteps() { return (int32_t)(MOTOR_SOFT_LIMIT_DEG * stewartConfig.steps_per_degree); }
+
 void setupMotorPins() {
     // PCBv2: Initialize via whichever StepDriver backend is selected.
     // Change STEP_DRIVER_SSE / STEP_DRIVER_MCPWM in main/CMakeLists.txt to switch.
@@ -419,19 +598,52 @@ void setupMotorPins() {
         cfg[i].stepPin          = stepPins[i];
         cfg[i].dirPin           = dirPins[i];
         cfg[i].invertDir        = false;
-        cfg[i].softLimitMin     = -100000;
-        cfg[i].softLimitMax     =  100000;
+        // stewartConfig (incl. the drive gear from NVS) is loaded before this task starts
+        cfg[i].softLimitMin     = -motorSoftLimitSteps();
+        cfg[i].softLimitMax     =  motorSoftLimitSteps();
         cfg[i].enableSoftLimits = true;
     }
     if (!StepDriver_init(cfg)) {
         DEBUG_PRINTLN("FATAL: StepDriver_init failed");
         return;
     }
+#if defined(R14_FAIL_CLOSED)
+    // R14 diagnostics do not grant measured homing/field qualification. The
+    // backend is initialized with all STEP pins low but its timer never starts.
+    for (int i = 0; i < STEP_DRIVER_NUM_MOTORS; ++i)
+        gpio_set_level(stepPins[i], 0);
+    DEBUG_PRINTLN("R14 fail-closed: six STEP outputs locked at boot");
+#else
     if (!StepDriver_start()) {
         DEBUG_PRINTLN("FATAL: StepDriver_start failed");
         return;
     }
+#endif
+    // setupMotorPins may race the E-stop task at boot. Never leave a newly
+    // started pulse engine running while the boot pause or NC input is active.
+    if (estop_motion_is_blocked()) {
+        StepDriver_stop();
+        for (int i = 0; i < 6; i++) motor_emergencyStop(i);
+    }
     StepDriver_report();
+#if defined(R13_BENCH_ACTIVE)
+    // Bench step 12: the six-axis gate stays closed; only console BENCH: commands drive the
+    // engine, after an explicit BENCH:ARM with the stop loop closed. Initialise the engine
+    // here, on core 1 like the production path, so its level-3 MCPWM ISR is allocated on
+    // core 1 (a core-0 start from the console task crashed the board on 2026-10-20). In
+    // bench builds start() leaves the period timer stopped (the ISR would starve this task
+    // during the rest of boot); BENCH:ARM resumes it. The bench owns the engine from here on.
+    if (!StepDriver_start()) DEBUG_PRINTLN("bench: StepDriver_start failed");
+    static const R13BenchOps benchOps = {
+        [](int i, int32_t p) { return StepDriver_setTarget(i, p); },
+        [](int i) { return StepDriver_getPosition(i); },
+        []() { StepDriver_resetPosition(0); StepDriver_resume(); return true; },   // ARM: axis 0 position := 0, then resume (soft limits ±72 deg)
+        []() { StepDriver_stop(); },
+        []() { StepDriver_emergencyStop(); },
+        []() { return gpio_get_level((gpio_num_t)ESTOP_PIN) == ESTOP_ACTIVE_STATE; },
+    };
+    r13_bench_init(&benchOps);
+#endif
 }
 #endif
 
@@ -499,6 +711,17 @@ void handleStepDirection() {
     // SSE:   no-op here — the ISR drives all motors autonomously.
     // MCPWM: starts continuous moves + polls completion.
     xSemaphoreTake(xMutex, portMAX_DELAY);
+#if defined(R13_BENCH_ACTIVE)
+    if (r13_bench_owns_engine()) {          // armed bench axis drives the engine
+        xSemaphoreGive(xMutex);
+        return;
+    }
+#endif
+    if (estop_motion_is_blocked()) {
+        StepDriver_stop();
+        xSemaphoreGive(xMutex);
+        return;
+    }
     StepDriver_handleStep();
     xSemaphoreGive(xMutex);
 }
@@ -554,6 +777,7 @@ void GPIOLoopTask(void * pvParameters) {
         DEBUG_PRINTLN("ERROR: GPTimer start failed");
         return;
     }
+    if (estop_motion_is_blocked()) GPTimerScheduler::stop();
     DEBUG_PRINTLN("GPIOLoop: GPTimer started (PCBv1)");
     for (;;) {
         ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
@@ -604,16 +828,39 @@ void EStopMonitorTask(void * pvParameters) {
     
     TickType_t xLastWakeTime = xTaskGetTickCount();
     bool prev_state = estop_button.debounced_state;
-    // Boot-safe: if the loop is already in the stop state when monitoring starts, hold the
-    // machine paused until a real release edge is seen.
+    // Boot-active NC loop must stop an already initialized engine too.
     if (prev_state == ESTOP_ACTIVE_STATE) {
         isPausedEStop = true;
+#if PCB_VERSION == 1
+        GPTimerScheduler::stop();
+#else
+        if (StepDriver_isInitialized()) StepDriver_stop();
+#endif
+        if (motor_isInit(0)) {
+            for (int i = 0; i < 6; i++) motor_emergencyStop(i);
+        }
         DEBUG_PRINTLN("E-STOP active at boot - holding");
     }
     
     for(;;) {
         // Update watchdog to indicate E-stop monitoring is alive
         esp_task_wdt_reset();
+
+        // Latch an open NC loop on the raw sample. Debounce is still required
+        // before reset, but must not delay stopping an active pulse engine.
+        if (gpio_get_level((gpio_num_t)ESTOP_PIN) == ESTOP_ACTIVE_STATE) {
+            bool newly_active = !isPausedEStop.exchange(true);
+#if PCB_VERSION == 1
+            GPTimerScheduler::stop();
+#else
+            StepDriver_stop();
+#endif
+            for (int i = 0; i < 6; i++) motor_emergencyStop(i);
+#if defined(R13_BENCH_ACTIVE)
+            r13_bench_stop("LOOP_OPEN");
+#endif
+            if (newly_active) DEBUG_PRINTLN("E-STOP raw NC loop opened");
+        }
         
         // Update button status through debounce filter
         if (updateDebounceButton(&estop_button)) {
@@ -632,19 +879,10 @@ void EStopMonitorTask(void * pvParameters) {
                 DEBUG_PRINTLN("E-STOP ACTIVATED");
             }
 
-            // Transition OUT of the active state (E-stop released)
+            // Releasing the switch never restarts motion. An explicit reset
+            // must first discard targets and recheck both input states.
             if (prev_state == ESTOP_ACTIVE_STATE && current_state != ESTOP_ACTIVE_STATE) {
-                isRateLimiting = true;
                 DEBUG_PRINTLN("E-STOP RELEASED - Reset required");
-#if PCB_VERSION == 1
-                if (xGPIOLoopHandle != NULL) {
-                    GPTimerScheduler::start(xGPIOLoopHandle);
-                    DEBUG_PRINTLN("GPTimer restarted after E-stop release");
-                }
-#else
-                StepDriver_resume();
-                DEBUG_PRINTLN("StepDriver resumed after E-stop release");
-#endif
             }
             
             prev_state = current_state;
@@ -657,7 +895,7 @@ void EStopMonitorTask(void * pvParameters) {
 
 // Shared motion-value handler: applies rate limiting, updates arr[], calls setPos()
 void applyMotionValues(float values[6]) {
-    if (isPausedEStop) {
+    if (estop_motion_is_blocked()) {
         DEBUG_PRINTLN("Motion paused - E-Stop active");
         return;
     }
@@ -717,6 +955,20 @@ void process_binary_packet(const uint8_t *payload, int len) {
 
 // ASCII command parser (fed from COBS CH_CMD)
 void process_data(char * data) {
+    // These commands can create motion or change its position reference.
+    // Keep them out of a physical/software E-stop regardless of transport.
+    if (estop_motion_is_blocked() &&
+        (strncmp(data, "RATETEST", 8) == 0 ||
+         strncmp(data, "FREQTEST:", 9) == 0 ||
+         strcmp(data, "PINTEST") == 0 ||
+         strncmp(data, "SIGTEST:", 8) == 0 ||
+         strcmp(data, "MTEST") == 0 ||
+         (strncmp(data, "MTEST:", 6) == 0 && strcmp(data, "MTEST:RESET") != 0) ||
+         strcmp(data, "ESTOP:SOFT") == 0 ||
+         strcmp(data, "ZERO") == 0)) {
+        serial_printf("ERROR:ESTOP_ACTIVE\r\n");
+        return;
+    }
     // ── DBG:1 / DBG:0 — Toggle verbose debug output ──────────────────
     // Tests:  Serial RX command parsing, bidirectional USB Serial JTAG link
     // Proves: VFS stdin→cobs_read_process pipeline, printf→USB TX path,
@@ -774,13 +1026,51 @@ void process_data(char * data) {
         serial_printf("INPUT:%s\r\n", inputSourceName(activeInputSource));
         return;
     }
+#ifdef ENABLE_ETHERNET
+    // PEERMAC:aa:bb:cc:dd:ee:ff — the host's own MAC, so replies can use the W5500's SEND_MAC
+    // (no ARP). Needed for hosts on Wi-Fi that never answer the board's ARP requests.
+    if (strncmp(data, "PEERMAC:", 8) == 0) {
+        unsigned m[6];
+        if (sscanf(data + 8, "%x:%x:%x:%x:%x:%x", &m[0], &m[1], &m[2], &m[3], &m[4], &m[5]) == 6) {
+            uint8_t mac[6];
+            for (int i = 0; i < 6; i++) mac[i] = (uint8_t)m[i];
+            ethernet_transport_set_peer_mac(mac);
+            serial_printf("PEERMAC:%02x:%02x:%02x:%02x:%02x:%02x\r\n", mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]);
+        } else {
+            serial_printf("PEERMAC:ERR\r\n");
+        }
+        return;
+    }
+#endif
     if (strcmp(data, "INPUT_STAT") == 0) {
-        serial_printf("INPUT_STAT:active=%s,serial=%lu/%lu,eth=%lu/%lu,wifi=%lu/%lu,ble=%lu/%lu\r\n",
+        cobs_motion_stats_t ms;
+        cobs_motion_stats(&ms);
+        serial_printf("INPUT_STAT:active=%s,serial=%lu/%lu,eth=%lu/%lu,wifi=%lu/%lu,ble=%lu/%lu,seq=%lu,gaps=%lu,lost=%lu,age_ms=%lu\r\n",
             inputSourceName(activeInputSource),
             (unsigned long)pktCount_serial, (unsigned long)pktDrop_serial,
             (unsigned long)pktCount_eth, (unsigned long)pktDrop_eth,
             (unsigned long)pktCount_wifi, (unsigned long)pktDrop_wifi,
-            (unsigned long)pktCount_ble, (unsigned long)pktDrop_ble);
+            (unsigned long)pktCount_ble, (unsigned long)pktDrop_ble,
+            (unsigned long)ms.seq_frames, (unsigned long)ms.seq_gaps, (unsigned long)ms.seq_lost,
+            (unsigned long)ms.last_rx_age_ms);
+#ifdef ENABLE_ETHERNET
+        eth_stats_t es;
+        ethernet_transport_stats(&es);
+        serial_printf("ETH_STAT:link=%d,sock=%d,ip=%u.%u.%u.%u,rx=%lu,bad=%lu,tx=%lu,txfail=%lu,reopens=%lu,age_ms=%lu,peer=%u.%u.%u.%u:%u,polls=%lu,rxmax_us=%lu,txmax_us=%lu\r\n",
+            es.link ? 1 : 0, es.sock_open ? 1 : 0,
+            (unsigned)(es.ip & 0xff), (unsigned)((es.ip >> 8) & 0xff), (unsigned)((es.ip >> 16) & 0xff), (unsigned)((es.ip >> 24) & 0xff),
+            (unsigned long)es.rx_frames, (unsigned long)es.rx_bad, (unsigned long)es.tx_frames, (unsigned long)es.tx_fail,
+            (unsigned long)es.sock_reopens, (unsigned long)es.rx_age_ms,
+            es.peer_ip[0], es.peer_ip[1], es.peer_ip[2], es.peer_ip[3], es.peer_port,
+            (unsigned long)es.polls, (unsigned long)es.rx_max_us, (unsigned long)es.tx_max_us);
+        serial_printf("SPI_STAT:calls=%lu,eth_calls=%lu,wait_max_us=%lu,xfer_max_us=%lu,wait_sum_us=%lu,slow=%lu,phycfgr=0x%02x,lwip_stopped=%d\r\n",
+            (unsigned long)es.spi_calls, (unsigned long)es.eth_spi_calls, (unsigned long)es.spi_wait_max_us,
+            (unsigned long)es.spi_xfer_max_us, (unsigned long)es.spi_wait_sum_us, (unsigned long)es.spi_slow,
+            es.phycfgr, es.lwip_stopped ? 1 : 0);
+        serial_printf("TX_STAT:timeout=%lu,dropped=%lu,pending=%d,sn_ir=0x%02x,dhar=%02x:%02x:%02x:%02x:%02x:%02x\r\n",
+            (unsigned long)es.tx_timeout, (unsigned long)es.tx_dropped, es.send_pending ? 1 : 0, es.sn_ir,
+            es.dhar[0], es.dhar[1], es.dhar[2], es.dhar[3], es.dhar[4], es.dhar[5]);
+#endif
         return;
     }
     if (strncmp(data, "INPUT:", 6) == 0) {
@@ -1116,7 +1406,7 @@ void process_data(char * data) {
             motor, freq_hz, dur_ms, period_us);
 
         // Pulse generation — busy-wait for accuracy at high frequencies
-        while (esp_timer_get_time() < end_time) {
+        while (esp_timer_get_time() < end_time && !estop_motion_is_blocked()) {
             gpio_set_level(stepPins[motor], 1);
             int64_t t0 = esp_timer_get_time();
             while ((esp_timer_get_time() - t0) < pulse_us) {}
@@ -1161,11 +1451,13 @@ void process_data(char * data) {
         }
         // Test STEP pins (take from MCPWM, use as GPIO)
         for (int i = 0; i < 6; i++) {
+            if (estop_motion_is_blocked()) break;
             gpio_reset_pin(stepPins[i]);
             gpio_set_direction(stepPins[i], GPIO_MODE_OUTPUT);
             gpio_set_level(stepPins[i], 1);
             serial_printf("PINTEST:STEP_%d:GPIO%d:ON\r\n", i, stepPins[i]);
-            vTaskDelay(pdMS_TO_TICKS(500));
+            for (int ms = 0; ms < 500 && !estop_motion_is_blocked(); ms += 10)
+                vTaskDelay(pdMS_TO_TICKS(10));
             gpio_set_level(stepPins[i], 0);
             serial_printf("PINTEST:STEP_%d:OFF\r\n", i);
             vTaskDelay(pdMS_TO_TICKS(200));
@@ -1209,7 +1501,10 @@ void process_data(char * data) {
         int32_t target    = start_pos + (dir ? steps : -steps);
 
         // Clamp to soft limits — report if clamped
-        StepDriver_setTarget(motor, target);
+        if (estop_motion_is_blocked() || !StepDriver_setTarget(motor, target)) {
+            serial_printf("SIGTEST:ERR stopped or target outside limits\r\n");
+            return;
+        }
         int32_t actual_target = StepDriver_getTarget(motor);
         int32_t commanded = abs(actual_target - start_pos);
 
@@ -1245,7 +1540,7 @@ void process_data(char * data) {
             (pos_error == 0 && hw_steps == commanded) ? "PASS" : "FAIL");
 
         // Return to start
-        StepDriver_setTarget(motor, start_pos);
+        if (!estop_motion_is_blocked()) StepDriver_setTarget(motor, start_pos);
         t_start = esp_timer_get_time();
         while (StepDriver_getPosition(motor) != start_pos) {
             if ((esp_timer_get_time() - t_start) > timeout_us) break;
@@ -1441,6 +1736,12 @@ void process_data(char * data) {
     // Motors smoothly travel to center. GPTimer keeps running.
     // Use when you want to safely park the platform without a hard cut.
     if (strcmp(data, "ESTOP:SOFT") == 0) {
+#if PCB_VERSION == 2
+        // R13/R14 have no qualified home reference in this firmware. A
+        // "soft stop" must never command an unreferenced arm toward zero.
+        serial_printf("ESTOP:SOFT:ERR no qualified home; use ESTOP:FULL\r\n");
+        return;
+#else
         // Set all motor targets to home (position 0 = center)
         if (xSemaphoreTake(xMutex, pdMS_TO_TICKS(10)) == pdTRUE) {
             for (int i = 0; i < 6; i++) {
@@ -1451,6 +1752,7 @@ void process_data(char * data) {
         }
         serial_printf("ESTOP:SOFT — Motors homing to center\r\n");
         return;
+#endif
     }
 
     // ── ESTOP:FULL — Hard emergency stop: kill all motion immediately ───
@@ -1458,13 +1760,16 @@ void process_data(char * data) {
     // Identical to pressing the physical E-Stop button.
     // Requires ESTOP:RESET to resume operation.
     if (strcmp(data, "ESTOP:FULL") == 0) {
+        isPausedEStop = true;
+#if defined(R13_BENCH_ACTIVE)
+        r13_bench_stop("ESTOP_FULL");
+#endif
 #if PCB_VERSION == 1
         GPTimerScheduler::stop();
 #else
         StepDriver_stop();
 #endif
         for (int i = 0; i < 6; i++) motor_emergencyStop(i);
-        isPausedEStop = true;
         serial_printf("ESTOP:FULL — motor engine stopped, all motors killed. Send ESTOP:RESET to recover.\r\n");
         return;
     }
@@ -1473,8 +1778,32 @@ void process_data(char * data) {
     // Clears E-Stop flag, enables rate limiting for safe ramp-up,
     // restarts GPTimer. Does nothing if not in E-Stop state.
     if (strcmp(data, "ESTOP:RESET") == 0) {
+#if defined(R14_FAIL_CLOSED) && PCB_VERSION == 2
+        // Serial reset supplies neither a fresh physical local-arm edge nor
+        // proof of six sensors, six drives, bottom start and complete homing.
+        serial_printf("ESTOP:RESET - R14 motion gate unqualified; reset denied\r\n");
+        return;
+#endif
         if (!isPausedEStop) {
             serial_printf("ESTOP:RESET — Not in E-Stop state, nothing to do\r\n");
+            return;
+        }
+        if (!estop_reset_allowed(
+                gpio_get_level((gpio_num_t)ESTOP_PIN) == ESTOP_ACTIVE_STATE,
+                estop_button.debounced_state == ESTOP_ACTIVE_STATE)) {
+            serial_printf("ESTOP:RESET — NC loop still active; reset denied\r\n");
+            return;
+        }
+        // A diagnostic may have queued a target while the engine was stopped.
+        // Discard every target before allowing another STEP pulse.
+        if (xSemaphoreTake(xMutex, pdMS_TO_TICKS(100)) != pdTRUE) {
+            serial_printf("ESTOP:RESET — Motor mutex timeout; reset denied\r\n");
+            return;
+        }
+        for (int i = 0; i < 6; i++) motor_emergencyStop(i);
+        if (estop_input_active()) {
+            xSemaphoreGive(xMutex);
+            serial_printf("ESTOP:RESET — NC loop active; reset denied\r\n");
             return;
         }
         isPausedEStop = false;
@@ -1484,6 +1813,18 @@ void process_data(char * data) {
 #else
         StepDriver_resume();
 #endif
+        xSemaphoreGive(xMutex);
+        if (estop_input_active()) {
+#if PCB_VERSION == 1
+            GPTimerScheduler::stop();
+#else
+            StepDriver_stop();
+#endif
+            for (int i = 0; i < 6; i++) motor_emergencyStop(i);
+            isPausedEStop = true;
+            serial_printf("ESTOP:RESET — NC loop changed; reset denied\r\n");
+            return;
+        }
         serial_printf("ESTOP:RESET — E-Stop cleared, motor engine restarted (rate-limited)\r\n");
         return;
     }
@@ -1501,6 +1842,12 @@ void process_data(char * data) {
     // Tests:  Position counter reset, mutex safety
     // Proves: All 6 motors report pos=0/tgt=0 after reset
     if (strcmp(data, "ZERO") == 0) {
+#if PCB_VERSION == 2
+        // Without a proven Hall edge or other physical reference, resetting
+        // counts would falsely label the present arm position as home.
+        serial_printf("ZERO:ERR no qualified physical home reference\r\n");
+        return;
+#else
         if (xSemaphoreTake(xMutex, pdMS_TO_TICKS(100)) == pdTRUE) {
             for (int i = 0; i < 6; i++) {
                 motor_resetPosition(i);
@@ -1515,6 +1862,7 @@ void process_data(char * data) {
             serial_printf("ZERO:ERR — Mutex timeout\r\n");
         }
         return;
+#endif
     }
 
     // ── ZERO? — Query sync state (all motor current/target positions) ──
@@ -1591,17 +1939,55 @@ void process_data(char * data) {
         char *param = data + 6;
         char *eq = strchr(param, '=');
         if (eq) {
-            *eq = '\0';
-            float val = atof(eq + 1);
-            bool changed = true;
-            if (strcmp(param, "encoder") == 0) stewartConfig.encoder_ppr = (int)val;
-            else if (strcmp(param, "gear") == 0) stewartConfig.virtual_gear = val;
-            else if (strcmp(param, "planetary") == 0) stewartConfig.planetary_ratio = val;
-            else { changed = false; serial_printf("DRIVE:ERR unknown key '%s'\r\n", param); }
-            if (changed) {
-                computeStepsPerDegree(&stewartConfig);
-                serial_printf("DRIVE:OK %s=%.4f → steps_deg=%.4f\r\n", param, val, stewartConfig.steps_per_degree);
+#if defined(STEP_DRIVER_SHARED_MCPWM)
+            if (SharedMcpwmStepEngine::instance().isRunning()) {
+                serial_printf("DRIVE:ERR disarm before changing scale\r\n"); return;
             }
+#endif
+            *eq = '\0';
+            char* end = nullptr;
+            float val = strtof(eq + 1, &end);
+            if (end == eq + 1 || *end || !drive_finite(val)) {
+                serial_printf("DRIVE:ERR invalid numeric value\r\n"); return;
+            }
+            StewartConfig next = stewartConfig;
+            bool changed = true;
+            // Same ranges as driveLoadFromNVS(): a 0 or absurd value would give an infinite
+            // steps_per_degree and, because the value is persisted, survive a reboot.
+            if (strcmp(param, "encoder") == 0) {
+                if (val >= 1 && val <= 100000 && val == floorf(val)) next.encoder_ppr = (int)val; else changed = false;
+            } else if (strcmp(param, "gear") == 0) {
+                if (val > 0 && val <= 1000) next.virtual_gear = val; else changed = false;
+            } else if (strcmp(param, "planetary") == 0) {
+                if (val > 0 && val <= 1000) next.planetary_ratio = val; else changed = false;
+            } else { serial_printf("DRIVE:ERR unknown key '%s'\r\n", param); return; }
+            if (!changed || !valid_drive_scale(next.encoder_ppr,next.virtual_gear,next.planetary_ratio)) { serial_printf("DRIVE:ERR %s=%.4f out of range\r\n", param, val); return; }
+            computeStepsPerDegree(&next);
+#if defined(STEP_DRIVER_SHARED_MCPWM)
+            const int32_t next_limit = (int32_t)(72.0f * next.steps_per_degree);
+            if (StepDriver_isInitialized()) for (int i=0;i<6;++i) {
+                if (StepDriver_getPosition(i) < -next_limit || StepDriver_getPosition(i) > next_limit ||
+                    StepDriver_getTarget(i) < -next_limit || StepDriver_getTarget(i) > next_limit) {
+                    serial_printf("DRIVE:ERR new limit excludes existing count; recalibration required\r\n"); return;
+                }
+            }
+#endif
+            stewartConfig = next;
+            int saved = driveSaveToNVS(&stewartConfig);
+#if defined(STEP_DRIVER_SHARED_MCPWM)
+            // Soft limits are in degrees: follow the new scale now, not at the next boot.
+            if (StepDriver_isInitialized()) for (int i = 0; i < STEP_DRIVER_NUM_MOTORS; i++)
+                StepDriver_setSoftLimits(i, -motorSoftLimitSteps(), motorSoftLimitSteps());
+#endif
+            serial_printf("DRIVE:OK %s=%.4f → steps_deg=%.4f soft_limit=±%ld steps (±%.0f deg)%s\r\n", param, val,
+                          stewartConfig.steps_per_degree, (long)motorSoftLimitSteps(), (double)MOTOR_SOFT_LIMIT_DEG,
+                          saved == 0 ? " (saved)" : " (NVS save failed)");
+        } else if (strcmp(param, "?") == 0) {
+            serial_printf("DRIVE:encoder=%d,gear=%.4f,planetary=%.2f,steps_deg=%.4f,pulses_per_motor_rev=%.1f,pulses_per_output_rev=%.1f\r\n",
+                stewartConfig.encoder_ppr, stewartConfig.virtual_gear, stewartConfig.planetary_ratio,
+                stewartConfig.steps_per_degree,
+                stewartConfig.encoder_ppr * 4.0f / stewartConfig.virtual_gear,
+                stewartConfig.encoder_ppr * 4.0f / stewartConfig.virtual_gear * stewartConfig.planetary_ratio);
         }
         return;
     }
@@ -1872,6 +2258,24 @@ void outputDebugData() {
 // ESP-IDF entry point (replaces Arduino setup/loop)
 extern "C" void app_main(void)
 {
+#if PCB_VERSION == 2
+    // r13 drive-enable latch (F02, minimal): GPIO47 MCU_INHIBIT must be HIGH and GPIO48
+    // ARM_PULSE LOW before any peripheral takes ownership. Nothing in this firmware arms the
+    // outputs yet; the latch stays cleared, so the AM26LS31s stay high-impedance.
+    {
+        gpio_config_t io = {};
+        io.pin_bit_mask = (1ULL << 47) | (1ULL << 48);
+        io.mode = GPIO_MODE_INPUT_OUTPUT;
+        io.pull_up_en = GPIO_PULLUP_DISABLE;
+        io.pull_down_en = GPIO_PULLDOWN_DISABLE;
+        io.intr_type = GPIO_INTR_DISABLE;
+        gpio_set_level(GPIO_NUM_47, 1);
+        gpio_set_level(GPIO_NUM_48, 0);
+        gpio_config(&io);
+        gpio_set_level(GPIO_NUM_47, 1);
+        gpio_set_level(GPIO_NUM_48, 0);
+    }
+#endif
     // Initialize NVS (Non-Volatile Storage)
     esp_err_t ret = nvs_flash_init();
     if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {
@@ -1885,10 +2289,21 @@ extern "C" void app_main(void)
     // Register COBS channel handlers:
     //   DATA / DATA18 channels → serial_packet_handler (gates on activeInputSource → IK)
     //   CMD channel  → process_data (ASCII command handler)
-    cobs_set_data_handler([](const uint8_t *payload, int len) {
+    cobs_set_data_handler([](const uint8_t *payload, int len, int source) {
+#ifdef ENABLE_ETHERNET
+        if (source == COBS_SRC_ETHERNET) { ethernet_packet_handler(payload, len); return; }
+#endif
+        (void)source;
         serial_packet_handler(payload, len);
     });
-    cobs_set_cmd_handler([](const char *cmd) {
+    cobs_set_cmd_handler([](const char *cmd, int source) {
+        (void)source;   // replies go to the console and are mirrored to the Ethernet peer
+#if defined(R13_BENCH_ACTIVE)
+        if (r13_bench_command(cmd, source)) return;   // console-only, refuses network sources
+#endif
+#if defined(R14_BOARD_IO)
+        if (r14_hardware_command(cmd, source)) return;
+#endif
         // process_data takes non-const char* for legacy reasons
         char buf[256];
         int n = snprintf(buf, sizeof(buf), "%s", cmd);
@@ -1908,10 +2323,22 @@ extern "C" void app_main(void)
   
     // Initialize Stewart platform configuration (NVS overrides defaults)
     initDefaultStewartConfig(&stewartConfig);
+#if PCB_VERSION == 2
+    // R13 bench and onward: AASD-15A electronic gear 2:1 (Pn098=2/Pn102=1, owner 2026-10-20),
+    // 2500-line encoder, 50:1 planetary — 5 000 pulses per motor turn, 250 000 per arm turn
+    // (694.4 per degree), confirmed with the camera against the 1:1 sweep table. At 2:1 the
+    // 250 kHz engine ceiling is the motor's rated 3000 r/min = 360 deg/s at the arm.
+    // stewart-core's default of 80 is the pre-R13 drive setting. DRIVE:gear= overrides (and persists).
+    stewartConfig.virtual_gear = 2.0f;
+    computeStepsPerDegree(&stewartConfig);
+#endif
     if (configLoadFromNVS(&stewartConfig) == 0) {
         ESP_LOGI(TAG, "Geometry: Loaded from NVS (RD=%.2f, PD=%.2f)", stewartConfig.RD, stewartConfig.PD);
     } else {
         ESP_LOGI(TAG, "Geometry: Using factory defaults");
+    }
+    if (driveLoadFromNVS(&stewartConfig) == 0) {
+        ESP_LOGI(TAG, "Drive train: loaded from NVS");
     }
     // Load saved input source + tick rate from NVS
     {
@@ -1988,11 +2415,15 @@ extern "C" void app_main(void)
         3,                       /* priority of the task */
         NULL,                    /* Task handle */
         1);                      /* pin task to core 1 */
+
+#if defined(R14_BOARD_IO)
+    r14_hardware_start();
+#endif
     
 #ifdef ENABLE_ETHERNET
     // Initialize W5500 SPI Ethernet + UDP listener
     // UDP packets gated by activeInputSource
-    if (!ethernet_transport_init(ethernet_packet_handler)) {
+    if (!ethernet_transport_init()) {
         ESP_LOGW(TAG, "Ethernet init failed — serial-only mode");
     }
 #endif
@@ -2015,8 +2446,12 @@ extern "C" void app_main(void)
     }
 #endif
 
-    // LED status indicator — white solid during boot, green breathe when ready
+    // LED status indicator — white solid during boot, green breathe when ready.
+    // Not on the r13 board: GPIO48 is the drive-enable ARM input there (F02), so the WS2812
+    // waveform must never be generated. led_status_set/clear stay harmless no-ops.
+#if PCB_VERSION != 2
     led_status_init(STATUS_LED_GPIO);
+#endif
 
     led_status_clear(LED_STATE_BOOT);
     led_status_set(LED_STATE_READY);

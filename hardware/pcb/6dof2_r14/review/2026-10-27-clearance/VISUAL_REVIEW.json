@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-27",
+  "reviewer": "Codex visual inspection",
+  "sourceSha256": "979ab2f72b642353866ec91bb8908640fa747aaf745201abe8dcb54c569d22d0",
+  "camSha256": "da1c75f7a0922da437b12b4c1c304326d559ebd719677bde67469423f514712e",
+  "pcbPdfSha256": "b213b31ec635f495b8a97548a1027742740ef42a1a75737ef3e3dfebba197e06",
+  "pdfPages": 4,
+  "pdfResult": "All four rendered pages inspected: full board, unclipped layer images, readable headings and footer; detailed dimensions remain in native/vector files.",
+  "db25Digits": "All twelve actual Gerber glyph regions inspected; 1 and 13 legible for J3 through J8.",
+  "changedLabelEnvelopeReceipt": "LABEL_ENVELOPE_REVIEW.json",
+  "bodyDiagram": "Before/after physical-body diagram visually inspected; copper/leads intentionally omitted and caption states this."
+}

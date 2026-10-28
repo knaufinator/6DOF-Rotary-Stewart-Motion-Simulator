@@ -13,6 +13,9 @@
 #define WIN32_LEAN_AND_MEAN
 #include <winsock2.h>
 #include <ws2tcpip.h>
+#include <timeapi.h>
+#pragma comment(lib, "winmm.lib")
+#include "udp_transport.h"
 #pragma comment(lib, "ws2_32.lib")
 #else
 #include <sys/socket.h>
@@ -131,6 +134,9 @@ App::App()
 #ifdef _WIN32
     WSADATA wsa;
     WSAStartup(MAKEWORD(2, 2), &wsa);
+    // 1 ms scheduler granularity: the HIL TX loop paces datagrams at up to 1 kHz and the
+    // default 15.6 ms timer resolution would turn that into bursts.
+    timeBeginPeriod(1);
 #endif
 
     // Scan for plugins in the plugins/ directory next to the executable
@@ -149,7 +155,7 @@ App::~App() {
 
 void App::hilTxLoop() {
     using clock = std::chrono::steady_clock;
-    double last_send[8] = {};
+    double last_send[32] = {};   // per-entity send schedule (entities beyond 32 are not streamed)
     auto now_sec = []() -> double {
         return std::chrono::duration<double>(clock::now().time_since_epoch()).count();
     };
@@ -169,14 +175,16 @@ void App::hilTxLoop() {
             }
         }
         int ei = 0;
+        double next_due = 1e300;   // earliest upcoming send across entities, for pacing
         for (auto& e : entities) {
-            if (ei >= 8) break;
+            if (ei >= 32) break;
             if (e.type != EntityType::HIL || !e.serial || !e.serial->isOpen() || !e.hil_handshake_ok) { ei++; continue; }
 
             double interval = 1.0 / (double)e.hil_tx_hz;
             double now = now_sec();
             if (now - last_send[ei] >= interval) {
-                last_send[ei] = now;
+                // schedule on the grid, not on "now", so a late wake-up does not drift the rate
+                last_send[ei] = (now - last_send[ei] < 2.0 * interval) ? last_send[ei] + interval : now;
                 if (e.hil_raw_mode && e.hil_cap_raw) {
                     // RAW HIL: stream pre-cueing input_pct (app axis order, no swap).
                     // The ESP runs the single cue engine and swaps axes after cueing.
@@ -191,10 +199,67 @@ void App::hilTxLoop() {
                     e.serial->sendCobsData(raw, e.config.bit_depth);
                 }
             }
+            double due = last_send[ei] + interval;
+            if (due < next_due) next_due = due;
             ei++;
         }
-        std::this_thread::sleep_for(std::chrono::microseconds(500));
+        // Pace to the next due send: coarse sleep (1 ms granularity, see timeBeginPeriod) until
+        // ~1.2 ms before, then spin. Idle (no HIL) falls back to a 2 ms nap.
+        double wait = (next_due < 1e299) ? next_due - now_sec() : 0.002;
+        if (wait > 0.0012) {
+            std::this_thread::sleep_for(std::chrono::duration<double>(wait - 0.0010));
+        } else if (wait > 0) {
+            double until = next_due;
+            while (now_sec() < until) std::this_thread::yield();
+        }
     }
+}
+
+void App::beginNetworkHil(Entity& e, std::shared_ptr<UdpTransport> up) {
+    up->setCobsMode(true);
+    e.serial = up;
+    e.hil_network = true;
+    e.enabled = true;
+    e.transport.udp_connected = true;
+    snprintf(e.transport.udp_ip, sizeof(e.transport.udp_ip), "%s", e.hil_host);
+    e.hil_tel_seq = 0;
+    e.hil_last_error[0] = '\0';
+    if (up->controlConnected()) {
+        // Bridge mode (Voron relay): the bridge/mini own identity + cueing. Raw-HIL path,
+        // FINGERPRINT handshake bypassed, source driven over the TCP control plane.
+        e.hil_cap_raw = true;
+        e.hil_raw_mode = true;
+        e.hil_handshake_ok = true;
+        e.hil_handshake_pending = false;
+        e.hil_handshake_phase = HandshakePhase::Ready;
+        snprintf(e.hil_handshake_msg, sizeof(e.hil_handshake_msg), "Bridge connected");
+        log(e.id, "hil", "Network HIL (bridge): UDP %s:%d, control %s:%d",
+            e.hil_host, e.hil_udp_port, e.hil_host, e.hil_tcp_port);
+    } else {
+        // Direct mode: the peer is the controller's own Ethernet. Same handshake as USB,
+        // carried as COBS frames in UDP datagrams; motion is baked DATA18_SEQ.
+        e.hil_cap_raw = false;
+        e.hil_raw_mode = false;
+        e.hil_handshake_ok = false;
+        e.cue_sync_valid = false;
+        e.hil_handshake_pending = true;
+        e.hil_handshake_phase = HandshakePhase::WaitFingerprint;
+        e.hil_device_params.clear();
+        e.hil_handshake_start = frame_time;
+        e.hil_hs_attempts = 1;
+        e.hil_hs_last_send = frame_time;
+        snprintf(e.hil_handshake_msg, sizeof(e.hil_handshake_msg), "Requesting fingerprint (direct)...");
+        log(e.id, "hil", "Network HIL (direct ESP32): UDP %s:%d — handshaking...", e.hil_host, e.hil_udp_port);
+        up->write((const uint8_t*)"\0\0\0\0", 4);
+        if (!up->localMac().empty()) {
+            // Let the board answer us without ARP (Wi-Fi hosts frequently ignore the W5500's ARP).
+            std::string pm = "PEERMAC:" + up->localMac();
+            up->sendCommand(pm.c_str());
+            log(e.id, "hil", "Sent %s", pm.c_str());
+        }
+        up->sendCommand("FINGERPRINT?");
+    }
+    settings_dirty = true;
 }
 
 static const char* SETTINGS_FILE = "stewart_settings.json";
@@ -606,7 +671,7 @@ Entity& App::addEntity(const char* name, EntityType type) {
     e.rate_tel_hz = 0.0f;
     // HIL fields
     e.serial = nullptr;
-    e.hil_tx_hz = 60;
+    e.hil_tx_hz = 1000;   // motion stream default: 1 kHz (the board ingests 2 kHz lossless over Ethernet)
     e.hil_last_tx_time = 0.0;
     e.hil_tel_seq = 0;
     memset(e.hil_fk_pose, 0, sizeof(e.hil_fk_pose));
@@ -747,8 +812,8 @@ static void advanceHandshake(App& app, Entity& e) {
             auto& dp = e.hil_device_params;
 
             // Check protocol version compatibility
-            if (dp.proto_ver != 1) {
-                app.log(e.id, "hil", "WARNING: Unknown protocol version %d (expected 1)", dp.proto_ver);
+            if (dp.proto_ver != 1 && dp.proto_ver != 2) {
+                app.log(e.id, "hil", "WARNING: Unknown protocol version %d (expected 1 or 2)", dp.proto_ver);
             }
 
             // Send BITS:N immediately — firmware will echo it back as "BITS:N,max_raw=..."
@@ -869,7 +934,7 @@ static void advanceHandshake(App& app, Entity& e) {
                 }
 
                 // Lock input source to serial, query stats, set telemetry rate + tick rate
-                e.hil_cmd_queue.push_back("INPUT:SERIAL");
+                e.hil_cmd_queue.push_back(e.hil_network ? "INPUT:ETHERNET" : "INPUT:SERIAL");
                 e.hil_cmd_queue.push_back("INPUT_STAT");
                 {
                     char telcmd[32];
@@ -2414,7 +2479,8 @@ skip_input_processing:
                 // Retry every 0.5s — first attempt was sent on connect
                 bool should_try = since_last > 0.5;
 
-                if (should_try && e.hil_hs_attempts < 10) {
+                const int hs_max_attempts = e.hil_network ? 30 : 10;   // Wi-Fi hosts can take seconds to answer the first ARP
+                if (should_try && e.hil_hs_attempts < hs_max_attempts) {
                     e.hil_hs_attempts++;
                     e.hil_hs_last_send = frame_time;
                     e.serial->write((const uint8_t*)"\0\0\0\0", 4);
@@ -2426,7 +2492,7 @@ skip_input_processing:
                 }
 
                 // Give up after 10 attempts
-                if (e.hil_hs_attempts >= 10 && since_last > 1.0) {
+                if (e.hil_hs_attempts >= hs_max_attempts && since_last > 1.0) {
                     e.hil_handshake_phase = HandshakePhase::Failed;
                     e.hil_handshake_ok = false;
                     e.hil_handshake_pending = false;

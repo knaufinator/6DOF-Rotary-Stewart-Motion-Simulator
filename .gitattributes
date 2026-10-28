@@ -1,0 +1,14 @@
+# Keep source diffs portable and readable.
+*.cpp text eol=lf
+*.h text eol=lf
+*.py text eol=lf
+CMakeLists.txt text eol=lf
+*.pdf binary
+*.png binary
+*.zip binary
+*.epro2 binary
+
+# Preserve native engineering files and recovered-source evidence exactly.
+hardware/pcb/6dof2_r14/** -text
+hardware/pcb/6dof2_r14/exports/** -whitespace
+hardware/pcb/6dof2_r14/review/r13-recovered-source/** -whitespace

@@ -1,4 +1,10 @@
-# 6DOF 2 r13 RC4 — untested prototype manufacturing handoff
+# R13 ? historical manufacturing handoff
+
+> **2026-10-25 update:** R13 was manufactured and tested on one bench axis. The
+> [recovered source and evidence](../6dof2_r14/FIRMWARE_STATUS.md) supersede the
+> pre-manufacture status below. [R14](../6dof2_r14/README.md) is the active design.
+> The September package and its manifests remain frozen historical records.
+
 
 **2026-09-23: ROUTED; NATIVE DRC EMPTY; UNTESTED PCB. Nothing ordered or paid for.**
 The owner intends to order fully assembled prototypes for testing shortly.

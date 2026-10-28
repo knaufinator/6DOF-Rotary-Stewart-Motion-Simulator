@@ -1,0 +1,18 @@
+{
+  "status": "PASS",
+  "mode": "Fresh read-only source capture after Q11 stock refresh; only generated DOCHEAD fields differ",
+  "sourceComparison": {
+    "zlength": {
+      "nonHeaderLinesIdentical": true,
+      "nonHeaderLines": 5867,
+      "headerChangedFields": [
+        "client",
+        "updateTime",
+        "version"
+      ],
+      "exportSha256": "0006f0d6782405b952598e272f97809ab36ea67e077ea88be24a3158218a645e",
+      "freshSha256": "738f23cf352d468a2c2a380dfcbf3b847bfe7e540120d65cc52f4de60e06e4c3",
+      "nonHeaderSha256": "b2e6c2b2e1cff79ce7b2523288f931a01827e98bd5aeb67f550bdc443d656b19"
+    }
+  }
+}

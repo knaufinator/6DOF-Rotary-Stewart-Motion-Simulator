@@ -1,0 +1,13 @@
+{
+  "status": "PASS_UNCHANGED_ORDERED_INTERFACES_AND_FIRMWARE",
+  "sourceSha256": "979ab2f72b642353866ec91bb8908640fa747aaf745201abe8dcb54c569d22d0",
+  "baselineTag": "r14-ordered-2026-10-26",
+  "componentCount": 324,
+  "logicalPins": 1214,
+  "sameSelectedSupplierAndManufacturerParts": true,
+  "samePinNets": true,
+  "sameFootprintsSidesRotations": true,
+  "movedComponents": 30,
+  "controllerDiffAgainstOrderedTag": "EMPTY",
+  "physicalR14Tests": "NOT_RUN"
+}

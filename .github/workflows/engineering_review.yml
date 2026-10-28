@@ -1,0 +1,87 @@
+name: Engineering Review
+
+on:
+  push:
+    branches: [ phoenix, main ]
+    paths:
+      - 'hardware/**'
+      - 'tools/**'
+      - '**/README*'
+      - 'controller/stewart-core'
+      - '.github/workflows/engineering_review.yml'
+  pull_request:
+    branches: [ phoenix, main ]
+    paths:
+      - 'hardware/**'
+      - 'tools/**'
+      - '**/README*'
+      - 'controller/stewart-core'
+      - '.github/workflows/engineering_review.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  documentation:
+    name: README Local Links
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r tools/requirements-docs.txt
+      - name: Check owned local links and anchors
+        run: python tools/audit_readme_links.py --output "$RUNNER_TEMP/readme-links.json"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: readme-local-links
+          path: ${{ runner.temp }}/readme-links.json
+
+  pcb-review:
+    name: R14C1 Artifact and Mechanical Regressions
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: tools/requirements-review.txt
+      - run: python -m pip install -r tools/requirements-review.txt
+      - name: Original order and replacement evidence integrity
+        run: |
+          python tools/verify_r14_order_lock.py
+          python tools/test_r14_release_manifest.py
+          python tools/verify_r14_release_manifest.py
+      - name: J12 outline regression and complete outline coverage
+        run: |
+          mkdir -p "$RUNNER_TEMP/pcb-review"
+          python tools/test_pcb_body_coverage.py
+          python tools/audit_pcb_outline_coverage.py \
+            --source hardware/pcb/6dof2_r14/exports/2026-10-27-clearance/R14-project.epro2 \
+            --output "$RUNNER_TEMP/pcb-review/outlines.json" \
+            --csv "$RUNNER_TEMP/pcb-review/outlines.csv"
+      - name: Reviewed maximum body bounds and access
+        run: |
+          python tools/verify_pcb_body_bounds.py \
+            --source hardware/pcb/6dof2_r14/exports/2026-10-27-clearance/R14-project.epro2 \
+            --bounds hardware/pcb/6dof2_r14/review/2026-10-27-clearance/BODY_LIMITS.json \
+            --output "$RUNNER_TEMP/pcb-review/internal-clearance.json"
+      - name: All 324 STEP components and interference pairs
+        run: |
+          python tools/audit_pcb_mechanical.py \
+            --source hardware/pcb/6dof2_r14/exports/2026-10-27-clearance/R14-project.epro2 \
+            --step hardware/pcb/6dof2_r14/exports/2026-10-27-clearance/R14-assembly.step.zip \
+            --internal-clearance "$RUNNER_TEMP/pcb-review/internal-clearance.json" \
+            --output "$RUNNER_TEMP/pcb-review/mechanical.json"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: r14c1-mechanical-ci-evidence
+          path: ${{ runner.temp }}/pcb-review/

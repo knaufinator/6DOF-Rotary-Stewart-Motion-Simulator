@@ -353,9 +353,11 @@ static inline void StepDriver_report() {
 // ════════════════════════════════════════════════════════════════════
 //  SharedMcpwmStepEngine backend
 //  1 MCPWM timer (group 0) → 3 operators → 6 comparator/generator chains.
-//  Hybrid: TEZ ISR (250 kHz) drives rising edge via w1ts GPIO register write;
-//          hardware comparator/generator drives falling edge (zero CPU).
-//  DIR/STEP sync: dirPending 2-tick guard = 8µs setup (meets AASD-15A ≥2µs).
+//  Both STEP edges come from the hardware generator (fixed comparators); a direct
+//  level-3 TEP ISR (250 kHz) gates each generator's next period through its software
+//  force and keeps the count exact (latch accounting). Verified on the R13 bench
+//  2026-10-20 against a PCNT counter on the STEP pad.
+//  DIR/STEP sync: dirPending 2-tick guard ≥ 8µs setup (meets AASD-15A ≥2µs).
 //  Max 250 kHz/motor. One ISR per tick (not per pulse-edge).
 // ════════════════════════════════════════════════════════════════════
 
@@ -376,6 +378,7 @@ static inline bool    StepDriver_start()                        { return SharedM
 static inline void    StepDriver_stop()                         { SharedMcpwmStepEngine::instance().stop(); }
 static inline void    StepDriver_resume()                       { SharedMcpwmStepEngine::instance().resume(); }
 static inline bool    StepDriver_setTarget(int i, int32_t pos)  { return SharedMcpwmStepEngine::instance().setTarget(i, pos); }
+static inline bool    StepDriver_setSoftLimits(int i, int32_t lo, int32_t hi) { return SharedMcpwmStepEngine::instance().setSoftLimits(i, lo, hi); }
 static inline int32_t StepDriver_getPosition(int i)             { return SharedMcpwmStepEngine::instance().getPosition(i); }
 static inline int32_t StepDriver_getTarget(int i)               { return SharedMcpwmStepEngine::instance().getTarget(i); }
 static inline void    StepDriver_resetPosition(int i)           { SharedMcpwmStepEngine::instance().resetPosition(i); }

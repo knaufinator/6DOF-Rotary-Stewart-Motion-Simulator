@@ -1,0 +1,1215 @@
+﻿Designator,Pin,Net,PCBmatch,Section
+C1,1,VINRAW,True,12V input / 5V buck
+C1,2,GND,True,12V input / 5V buck
+C2,1,VCC5,True,Logic 5V / 3V3 power
+C2,2,GND,True,Logic 5V / 3V3 power
+C3,1,VCC3V3,True,Logic 5V / 3V3 power
+C3,2,GND,True,Logic 5V / 3V3 power
+C4,1,VINRAW,True,12V input / 5V buck
+C4,2,GND,True,12V input / 5V buck
+C5,1,VCC5,True,12V input / 5V buck
+C5,2,GND,True,12V input / 5V buck
+C6,1,LOGIC_5V,True,Logic 5V / 3V3 power
+C6,2,GND,True,Logic 5V / 3V3 power
+C7,1,VCC3V3,True,Logic 5V / 3V3 power
+C7,2,GND,True,Logic 5V / 3V3 power
+C8,1,VCC5,True,Differential motion outputs
+C8,2,GND,True,Differential motion outputs
+C9,1,VCC5,True,Differential motion outputs
+C9,2,GND,True,Differential motion outputs
+C10,1,VCC5,True,Differential motion outputs
+C10,2,GND,True,Differential motion outputs
+C11,1,VCC5,True,Differential motion outputs
+C11,2,GND,True,Differential motion outputs
+C13,1,VCC3V3A,True,Ethernet / magnetics
+C13,2,GND,True,Ethernet / magnetics
+C14,1,ESP_EN,True,MCU / boot / reset
+C14,2,GND,True,MCU / boot / reset
+C16,1,RSTN,True,Ethernet / magnetics
+C16,2,GND,True,Ethernet / magnetics
+C17,1,VCC3V3,True,MCU / boot / reset
+C17,2,GND,True,MCU / boot / reset
+C18,1,VCC3V3,True,MCU / boot / reset
+C18,2,GND,True,MCU / boot / reset
+C19,1,VCC3V3,True,5V ADC / readback
+C19,2,GND,True,5V ADC / readback
+C20,1,VCC3V3A,True,Ethernet / magnetics
+C20,2,GND,True,Ethernet / magnetics
+C21,1,VCC3V3A,True,Ethernet / magnetics
+C21,2,GND,True,Ethernet / magnetics
+C22,1,VCC3V3A,True,Ethernet / magnetics
+C22,2,GND,True,Ethernet / magnetics
+C25,1,CHASSIS,True,Hall status indicators
+C25,2,GND,True,Hall status indicators
+D2,1,SWNODE,True,12V input / 5V buck
+D2,2,GND,True,12V input / 5V buck
+D3,1,LOGIC_5V,True,USB / recovery
+D3,2,VBUS,True,USB / recovery
+D4,1,LED1A,True,12V input / 5V buck
+D4,2,GND,True,12V input / 5V buck
+D5,1,LED2A,True,Input ideal-diode bypass
+D5,2,GND,True,Input ideal-diode bypass
+J1,1,GND,True,MCU / boot / reset
+J1,2,U0TXD,True,MCU / boot / reset
+J1,3,U0RXD,True,MCU / boot / reset
+J2,1,ESTOP,True,Common pulse permission
+J2,2,GND,True,Common pulse permission
+J9,1,VIN_J,True,12V input / 5V buck
+J9,2,GND,True,12V input / 5V buck
+J10,1,LED_Y,True,Ethernet / magnetics
+J10,2,ACTLED,True,Ethernet / magnetics
+J10,3,ETH_TXP,True,Ethernet / magnetics
+J10,4,ETH_TXN,True,Ethernet / magnetics
+J10,5,ETH_TCT,True,Ethernet / magnetics
+J10,6,ETH_RX_BIAS,True,Ethernet / magnetics
+J10,7,ETH_JRXP,True,Ethernet / magnetics
+J10,8,ETH_JRXN,True,Ethernet / magnetics
+J10,9,,True,Ethernet / magnetics
+J10,10,CHASSIS,True,Ethernet / magnetics
+J10,11,LINKLED,True,Ethernet / magnetics
+J10,12,LED_G,True,Ethernet / magnetics
+J10,13,CHASSIS,True,Ethernet / magnetics
+J10,14,CHASSIS,True,Ethernet / magnetics
+J11,1,GND,True,USB / recovery
+J11,2,GND,True,USB / recovery
+J11,3,GND,True,USB / recovery
+J11,4,GND,True,USB / recovery
+J11,A1B12,GND,True,USB / recovery
+J11,A4B9,VBUS,True,USB / recovery
+J11,B8,,True,USB / recovery
+J11,A5,CC1,True,USB / recovery
+J11,B7,USB_DN,True,USB / recovery
+J11,A6,USB_DP,True,USB / recovery
+J11,A7,USB_DN,True,USB / recovery
+J11,B6,USB_DP,True,USB / recovery
+J11,A8,,True,USB / recovery
+J11,B5,CC2,True,USB / recovery
+J11,B4A9,VBUS,True,USB / recovery
+J11,B1A12,GND,True,USB / recovery
+L1,1,SWNODE,True,12V input / 5V buck
+L1,2,VCC5,True,12V input / 5V buck
+R1,1,VCC3V3,True,Common pulse permission
+R1,2,ESTOP,True,Common pulse permission
+R2,1,CC1,True,USB / recovery
+R2,2,GND,True,USB / recovery
+R3,1,CC2,True,USB / recovery
+R3,2,GND,True,USB / recovery
+R4,1,VCC3V3,True,MCU / boot / reset
+R4,2,ESP_EN,True,MCU / boot / reset
+R5,1,VCC3V3,True,MCU / boot / reset
+R5,2,ESP_IO0,True,MCU / boot / reset
+R6,1,VCC3V3,True,Ethernet / magnetics
+R6,2,LED_G,True,Ethernet / magnetics
+R7,1,VCC3V3,True,Ethernet / magnetics
+R7,2,LED_Y,True,Ethernet / magnetics
+R10,1,EXRES,True,Ethernet / magnetics
+R10,2,GND,True,Ethernet / magnetics
+R11,1,VCC3V3,True,Ethernet / magnetics
+R11,2,RSTN,True,Ethernet / magnetics
+R12,1,M0D_G,True,Differential motion outputs
+R12,2,M0D_I,True,Differential motion outputs
+R13,1,M1D_G,True,Differential motion outputs
+R13,2,M1D_I,True,Differential motion outputs
+R14,1,M2D_G,True,Differential motion outputs
+R14,2,M2D_I,True,Differential motion outputs
+R15,1,M3D_G,True,Differential motion outputs
+R15,2,M3D_I,True,Differential motion outputs
+R16,1,M4D_G,True,Differential motion outputs
+R16,2,M4D_I,True,Differential motion outputs
+R17,1,M5D_G,True,Differential motion outputs
+R17,2,M5D_I,True,Differential motion outputs
+R18,1,VCC5,True,Input ideal-diode bypass
+R18,2,LED1A,True,Input ideal-diode bypass
+R19,1,VCC3V3,True,Input ideal-diode bypass
+R19,2,LED2A,True,Input ideal-diode bypass
+R20,1,M0S_G,True,Differential motion outputs
+R20,2,M0S_I,True,Differential motion outputs
+R21,1,M1S_G,True,Differential motion outputs
+R21,2,M1S_I,True,Differential motion outputs
+R22,1,M2S_G,True,Differential motion outputs
+R22,2,M2S_I,True,Differential motion outputs
+R23,1,M3S_G,True,Differential motion outputs
+R23,2,M3S_I,True,Differential motion outputs
+R24,1,M4S_G,True,Differential motion outputs
+R24,2,M4S_I,True,Differential motion outputs
+R25,1,M5S_G,True,Differential motion outputs
+R25,2,M5S_I,True,Differential motion outputs
+U3,1,M0S_I,True,Differential motion outputs
+U3,2,M0S_P,True,Differential motion outputs
+U3,3,M0S_N,True,Differential motion outputs
+U3,4,DRIVE_ENABLE,True,Differential motion outputs
+U3,5,M0D_N,True,Differential motion outputs
+U3,6,M0D_P,True,Differential motion outputs
+U3,7,M0D_I,True,Differential motion outputs
+U3,8,GND,True,Differential motion outputs
+U3,9,M1S_I,True,Differential motion outputs
+U3,10,M1S_P,True,Differential motion outputs
+U3,11,M1S_N,True,Differential motion outputs
+U3,12,LOGIC_5V,True,Differential motion outputs
+U3,13,M1D_N,True,Differential motion outputs
+U3,14,M1D_P,True,Differential motion outputs
+U3,15,M1D_I,True,Differential motion outputs
+U3,16,VCC5,True,Differential motion outputs
+U4,1,M2S_I,True,Differential motion outputs
+U4,2,M2S_P,True,Differential motion outputs
+U4,3,M2S_N,True,Differential motion outputs
+U4,4,DRIVE_ENABLE,True,Differential motion outputs
+U4,5,M2D_N,True,Differential motion outputs
+U4,6,M2D_P,True,Differential motion outputs
+U4,7,M2D_I,True,Differential motion outputs
+U4,8,GND,True,Differential motion outputs
+U4,9,M3S_I,True,Differential motion outputs
+U4,10,M3S_P,True,Differential motion outputs
+U4,11,M3S_N,True,Differential motion outputs
+U4,12,LOGIC_5V,True,Differential motion outputs
+U4,13,M3D_N,True,Differential motion outputs
+U4,14,M3D_P,True,Differential motion outputs
+U4,15,M3D_I,True,Differential motion outputs
+U4,16,VCC5,True,Differential motion outputs
+U5,1,M4S_I,True,Differential motion outputs
+U5,2,M4S_P,True,Differential motion outputs
+U5,3,M4S_N,True,Differential motion outputs
+U5,4,DRIVE_ENABLE,True,Differential motion outputs
+U5,5,M4D_N,True,Differential motion outputs
+U5,6,M4D_P,True,Differential motion outputs
+U5,7,M4D_I,True,Differential motion outputs
+U5,8,GND,True,Differential motion outputs
+U5,9,M5S_I,True,Differential motion outputs
+U5,10,M5S_P,True,Differential motion outputs
+U5,11,M5S_N,True,Differential motion outputs
+U5,12,LOGIC_5V,True,Differential motion outputs
+U5,13,M5D_N,True,Differential motion outputs
+U5,14,M5D_P,True,Differential motion outputs
+U5,15,M5D_I,True,Differential motion outputs
+U5,16,VCC5,True,Differential motion outputs
+U6,1,VINRAW,True,12V input / 5V buck
+U6,2,SWNODE,True,12V input / 5V buck
+U6,3,VCC5,True,12V input / 5V buck
+U6,4,GND,True,12V input / 5V buck
+U6,5,GND,True,12V input / 5V buck
+U6,6,GND,True,12V input / 5V buck
+U6,7,GND,True,12V input / 5V buck
+U6,8,GND,True,12V input / 5V buck
+U7,1,GND,True,Logic 5V / 3V3 power
+U7,2,VCC3V3,True,Logic 5V / 3V3 power
+U7,3,LOGIC_5V,True,Logic 5V / 3V3 power
+U7,4,VCC3V3,True,Logic 5V / 3V3 power
+U8,1,ETH_TXN,True,Ethernet / magnetics
+U8,2,ETH_TXP,True,Ethernet / magnetics
+U8,3,GND,True,Ethernet / magnetics
+U8,4,VCC3V3A,True,Ethernet / magnetics
+U8,5,ETH_RXN,True,Ethernet / magnetics
+U8,6,ETH_RXP,True,Ethernet / magnetics
+U8,7,,True,Ethernet / magnetics
+U8,8,VCC3V3A,True,Ethernet / magnetics
+U8,9,GND,True,Ethernet / magnetics
+U8,10,EXRES,True,Ethernet / magnetics
+U8,11,VCC3V3A,True,Ethernet / magnetics
+U8,12,,True,Ethernet / magnetics
+U8,13,,True,Ethernet / magnetics
+U8,14,GND,True,Ethernet / magnetics
+U8,15,VCC3V3A,True,Ethernet / magnetics
+U8,16,GND,True,Ethernet / magnetics
+U8,17,VCC3V3A,True,Ethernet / magnetics
+U8,18,,True,Ethernet / magnetics
+U8,19,GND,True,Ethernet / magnetics
+U8,20,TOCAP,True,Ethernet / magnetics
+U8,21,VCC3V3A,True,Ethernet / magnetics
+U8,22,V1V2,True,Ethernet / magnetics
+U8,23,GND,True,Ethernet / magnetics
+U8,24,,True,Ethernet / magnetics
+U8,25,LINKLED,True,Ethernet / magnetics
+U8,26,,True,Ethernet / magnetics
+U8,27,ACTLED,True,Ethernet / magnetics
+U8,28,VCC3V3,True,Ethernet / magnetics
+U8,29,GND,True,Ethernet / magnetics
+U8,30,XI,True,Ethernet / magnetics
+U8,31,XO,True,Ethernet / magnetics
+U8,32,SCSN,True,Ethernet / magnetics
+U8,33,SCLK,True,Ethernet / magnetics
+U8,34,MISO,True,Ethernet / magnetics
+U8,35,MOSI,True,Ethernet / magnetics
+U8,36,INTN,True,Ethernet / magnetics
+U8,37,RSTN,True,Ethernet / magnetics
+U8,38,,True,Ethernet / magnetics
+U8,39,,True,Ethernet / magnetics
+U8,40,,True,Ethernet / magnetics
+U8,41,,True,Ethernet / magnetics
+U8,42,,True,Ethernet / magnetics
+U8,43,VCC3V3,True,Ethernet / magnetics
+U8,44,VCC3V3,True,Ethernet / magnetics
+U8,45,VCC3V3,True,Ethernet / magnetics
+U8,46,,True,Ethernet / magnetics
+U8,47,,True,Ethernet / magnetics
+U8,48,GND,True,Ethernet / magnetics
+Y1,1,XI,True,Ethernet / magnetics
+Y1,2,GND,True,Ethernet / magnetics
+Y1,3,XO,True,Ethernet / magnetics
+Y1,4,GND,True,Ethernet / magnetics
+J3,1,,True,Auxiliary boost / fault monitoring
+J3,2,,True,Auxiliary boost / fault monitoring
+J3,3,M0S_P,True,Auxiliary boost / fault monitoring
+J3,4,M0D_P,True,Auxiliary boost / fault monitoring
+J3,5,M0D_N,True,Auxiliary boost / fault monitoring
+J3,6,M0_SRV_ON,True,Auxiliary boost / fault monitoring
+J3,7,,True,Auxiliary boost / fault monitoring
+J3,8,,True,Auxiliary boost / fault monitoring
+J3,9,AUX15V,True,Auxiliary boost / fault monitoring
+J3,10,GND,True,Auxiliary boost / fault monitoring
+J3,11,,True,Auxiliary boost / fault monitoring
+J3,12,,True,Auxiliary boost / fault monitoring
+J3,13,,True,Auxiliary boost / fault monitoring
+J3,14,M0S_N,True,Auxiliary boost / fault monitoring
+J3,15,,True,Auxiliary boost / fault monitoring
+J3,16,,True,Auxiliary boost / fault monitoring
+J3,17,,True,Auxiliary boost / fault monitoring
+J3,18,,True,Auxiliary boost / fault monitoring
+J3,19,,True,Auxiliary boost / fault monitoring
+J3,20,,True,Auxiliary boost / fault monitoring
+J3,21,,True,Auxiliary boost / fault monitoring
+J3,22,,True,Auxiliary boost / fault monitoring
+J3,23,M0_ALARM_DRV,True,Auxiliary boost / fault monitoring
+J3,24,,True,Auxiliary boost / fault monitoring
+J3,25,,True,Auxiliary boost / fault monitoring
+J4,1,,True,Auxiliary boost / fault monitoring
+J4,2,,True,Auxiliary boost / fault monitoring
+J4,3,M1S_P,True,Auxiliary boost / fault monitoring
+J4,4,M1D_P,True,Auxiliary boost / fault monitoring
+J4,5,M1D_N,True,Auxiliary boost / fault monitoring
+J4,6,M1_SRV_ON,True,Auxiliary boost / fault monitoring
+J4,7,,True,Auxiliary boost / fault monitoring
+J4,8,,True,Auxiliary boost / fault monitoring
+J4,9,AUX15V,True,Auxiliary boost / fault monitoring
+J4,10,GND,True,Auxiliary boost / fault monitoring
+J4,11,,True,Auxiliary boost / fault monitoring
+J4,12,,True,Auxiliary boost / fault monitoring
+J4,13,,True,Auxiliary boost / fault monitoring
+J4,14,M1S_N,True,Auxiliary boost / fault monitoring
+J4,15,,True,Auxiliary boost / fault monitoring
+J4,16,,True,Auxiliary boost / fault monitoring
+J4,17,,True,Auxiliary boost / fault monitoring
+J4,18,,True,Auxiliary boost / fault monitoring
+J4,19,,True,Auxiliary boost / fault monitoring
+J4,20,,True,Auxiliary boost / fault monitoring
+J4,21,,True,Auxiliary boost / fault monitoring
+J4,22,,True,Auxiliary boost / fault monitoring
+J4,23,M1_ALARM_DRV,True,Auxiliary boost / fault monitoring
+J4,24,,True,Auxiliary boost / fault monitoring
+J4,25,,True,Auxiliary boost / fault monitoring
+J5,1,,True,Auxiliary boost / fault monitoring
+J5,2,,True,Auxiliary boost / fault monitoring
+J5,3,M2S_P,True,Auxiliary boost / fault monitoring
+J5,4,M2D_P,True,Auxiliary boost / fault monitoring
+J5,5,M2D_N,True,Auxiliary boost / fault monitoring
+J5,6,M2_SRV_ON,True,Auxiliary boost / fault monitoring
+J5,7,,True,Auxiliary boost / fault monitoring
+J5,8,,True,Auxiliary boost / fault monitoring
+J5,9,AUX15V,True,Auxiliary boost / fault monitoring
+J5,10,GND,True,Auxiliary boost / fault monitoring
+J5,11,,True,Auxiliary boost / fault monitoring
+J5,12,,True,Auxiliary boost / fault monitoring
+J5,13,,True,Auxiliary boost / fault monitoring
+J5,14,M2S_N,True,Auxiliary boost / fault monitoring
+J5,15,,True,Auxiliary boost / fault monitoring
+J5,16,,True,Auxiliary boost / fault monitoring
+J5,17,,True,Auxiliary boost / fault monitoring
+J5,18,,True,Auxiliary boost / fault monitoring
+J5,19,,True,Auxiliary boost / fault monitoring
+J5,20,,True,Auxiliary boost / fault monitoring
+J5,21,,True,Auxiliary boost / fault monitoring
+J5,22,,True,Auxiliary boost / fault monitoring
+J5,23,M2_ALARM_DRV,True,Auxiliary boost / fault monitoring
+J5,24,,True,Auxiliary boost / fault monitoring
+J5,25,,True,Auxiliary boost / fault monitoring
+J6,1,,True,Auxiliary boost / fault monitoring
+J6,2,,True,Auxiliary boost / fault monitoring
+J6,3,M3S_P,True,Auxiliary boost / fault monitoring
+J6,4,M3D_P,True,Auxiliary boost / fault monitoring
+J6,5,M3D_N,True,Auxiliary boost / fault monitoring
+J6,6,M3_SRV_ON,True,Auxiliary boost / fault monitoring
+J6,7,,True,Auxiliary boost / fault monitoring
+J6,8,,True,Auxiliary boost / fault monitoring
+J6,9,AUX15V,True,Auxiliary boost / fault monitoring
+J6,10,GND,True,Auxiliary boost / fault monitoring
+J6,11,,True,Auxiliary boost / fault monitoring
+J6,12,,True,Auxiliary boost / fault monitoring
+J6,13,,True,Auxiliary boost / fault monitoring
+J6,14,M3S_N,True,Auxiliary boost / fault monitoring
+J6,15,,True,Auxiliary boost / fault monitoring
+J6,16,,True,Auxiliary boost / fault monitoring
+J6,17,,True,Auxiliary boost / fault monitoring
+J6,18,,True,Auxiliary boost / fault monitoring
+J6,19,,True,Auxiliary boost / fault monitoring
+J6,20,,True,Auxiliary boost / fault monitoring
+J6,21,,True,Auxiliary boost / fault monitoring
+J6,22,,True,Auxiliary boost / fault monitoring
+J6,23,M3_ALARM_DRV,True,Auxiliary boost / fault monitoring
+J6,24,,True,Auxiliary boost / fault monitoring
+J6,25,,True,Auxiliary boost / fault monitoring
+J7,1,,True,Auxiliary boost / fault monitoring
+J7,2,,True,Auxiliary boost / fault monitoring
+J7,3,M4S_P,True,Auxiliary boost / fault monitoring
+J7,4,M4D_P,True,Auxiliary boost / fault monitoring
+J7,5,M4D_N,True,Auxiliary boost / fault monitoring
+J7,6,M4_SRV_ON,True,Auxiliary boost / fault monitoring
+J7,7,,True,Auxiliary boost / fault monitoring
+J7,8,,True,Auxiliary boost / fault monitoring
+J7,9,AUX15V,True,Auxiliary boost / fault monitoring
+J7,10,GND,True,Auxiliary boost / fault monitoring
+J7,11,,True,Auxiliary boost / fault monitoring
+J7,12,,True,Auxiliary boost / fault monitoring
+J7,13,,True,Auxiliary boost / fault monitoring
+J7,14,M4S_N,True,Auxiliary boost / fault monitoring
+J7,15,,True,Auxiliary boost / fault monitoring
+J7,16,,True,Auxiliary boost / fault monitoring
+J7,17,,True,Auxiliary boost / fault monitoring
+J7,18,,True,Auxiliary boost / fault monitoring
+J7,19,,True,Auxiliary boost / fault monitoring
+J7,20,,True,Auxiliary boost / fault monitoring
+J7,21,,True,Auxiliary boost / fault monitoring
+J7,22,,True,Auxiliary boost / fault monitoring
+J7,23,M4_ALARM_DRV,True,Auxiliary boost / fault monitoring
+J7,24,,True,Auxiliary boost / fault monitoring
+J7,25,,True,Auxiliary boost / fault monitoring
+J8,1,,True,Auxiliary boost / fault monitoring
+J8,2,,True,Auxiliary boost / fault monitoring
+J8,3,M5S_P,True,Auxiliary boost / fault monitoring
+J8,4,M5D_P,True,Auxiliary boost / fault monitoring
+J8,5,M5D_N,True,Auxiliary boost / fault monitoring
+J8,6,M5_SRV_ON,True,Auxiliary boost / fault monitoring
+J8,7,,True,Auxiliary boost / fault monitoring
+J8,8,,True,Auxiliary boost / fault monitoring
+J8,9,AUX15V,True,Auxiliary boost / fault monitoring
+J8,10,GND,True,Auxiliary boost / fault monitoring
+J8,11,,True,Auxiliary boost / fault monitoring
+J8,12,,True,Auxiliary boost / fault monitoring
+J8,13,,True,Auxiliary boost / fault monitoring
+J8,14,M5S_N,True,Auxiliary boost / fault monitoring
+J8,15,,True,Auxiliary boost / fault monitoring
+J8,16,,True,Auxiliary boost / fault monitoring
+J8,17,,True,Auxiliary boost / fault monitoring
+J8,18,,True,Auxiliary boost / fault monitoring
+J8,19,,True,Auxiliary boost / fault monitoring
+J8,20,,True,Auxiliary boost / fault monitoring
+J8,21,,True,Auxiliary boost / fault monitoring
+J8,22,,True,Auxiliary boost / fault monitoring
+J8,23,M5_ALARM_DRV,True,Auxiliary boost / fault monitoring
+J8,24,,True,Auxiliary boost / fault monitoring
+J8,25,,True,Auxiliary boost / fault monitoring
+R36,1,VCC3V3,True,Drive alarm inputs
+R36,2,M0_ALARM,True,Drive alarm inputs
+R37,1,VCC3V3,True,Drive alarm inputs
+R37,2,M1_ALARM,True,Drive alarm inputs
+R38,1,VCC3V3,True,Drive alarm inputs
+R38,2,M2_ALARM,True,Drive alarm inputs
+R39,1,VCC3V3,True,Drive alarm inputs
+R39,2,M3_ALARM,True,Drive alarm inputs
+R40,1,VCC3V3,True,Drive alarm inputs
+R40,2,M4_ALARM,True,Drive alarm inputs
+R41,1,VCC3V3,True,Drive alarm inputs
+R41,2,M5_ALARM,True,Drive alarm inputs
+U9,1,M0_ALARM_LED,True,Drive alarm inputs
+U9,2,M0_ALARM_DRV,True,Drive alarm inputs
+U9,3,M1_ALARM_LED,True,Drive alarm inputs
+U9,4,M1_ALARM_DRV,True,Drive alarm inputs
+U9,5,M2_ALARM_LED,True,Drive alarm inputs
+U9,6,M2_ALARM_DRV,True,Drive alarm inputs
+U9,7,M3_ALARM_LED,True,Drive alarm inputs
+U9,8,M3_ALARM_DRV,True,Drive alarm inputs
+U9,9,GND,True,Drive alarm inputs
+U9,10,M3_ALARM,True,Drive alarm inputs
+U9,11,GND,True,Drive alarm inputs
+U9,12,M2_ALARM,True,Drive alarm inputs
+U9,13,GND,True,Drive alarm inputs
+U9,14,M1_ALARM,True,Drive alarm inputs
+U9,15,GND,True,Drive alarm inputs
+U9,16,M0_ALARM,True,Drive alarm inputs
+U10,1,M4_ALARM_LED,True,Drive alarm inputs
+U10,2,M4_ALARM_DRV,True,Drive alarm inputs
+U10,3,M5_ALARM_LED,True,Drive alarm inputs
+U10,4,M5_ALARM_DRV,True,Drive alarm inputs
+U10,5,,True,Drive alarm inputs
+U10,6,,True,Drive alarm inputs
+U10,7,,True,Drive alarm inputs
+U10,8,,True,Drive alarm inputs
+U10,9,,True,Drive alarm inputs
+U10,10,,True,Drive alarm inputs
+U10,11,,True,Drive alarm inputs
+U10,12,,True,Drive alarm inputs
+U10,13,GND,True,Drive alarm inputs
+U10,14,M5_ALARM,True,Drive alarm inputs
+U10,15,GND,True,Drive alarm inputs
+U10,16,M4_ALARM,True,Drive alarm inputs
+C12,1,V1V2,True,Ethernet / magnetics
+C12,2,GND,True,Ethernet / magnetics
+C15,1,TOCAP,True,Ethernet / magnetics
+C15,2,GND,True,Ethernet / magnetics
+C26,1,VCC3V3A,True,Ethernet / magnetics
+C26,2,GND,True,Ethernet / magnetics
+C27,1,VCC3V3A,True,Ethernet / magnetics
+C27,2,GND,True,Ethernet / magnetics
+C28,1,VCC3V3A,True,Ethernet / magnetics
+C28,2,GND,True,Ethernet / magnetics
+C29,1,VCC3V3A,True,Ethernet / magnetics
+C29,2,GND,True,Ethernet / magnetics
+C30,1,VCC3V3,True,Ethernet / magnetics
+C30,2,GND,True,Ethernet / magnetics
+C31,1,VCC3V3,True,Ethernet / magnetics
+C31,2,GND,True,Ethernet / magnetics
+L2,1,VCC3V3,True,Protected Hall field supply
+L2,2,VCC3V3A,True,Protected Hall field supply
+R42,1,VCC3V3A,True,Ethernet / magnetics
+R42,2,ETH_TXP,True,Ethernet / magnetics
+R43,1,VCC3V3A,True,Ethernet / magnetics
+R43,2,ETH_TXN,True,Ethernet / magnetics
+R44,1,ETH_RX_BIAS,True,Ethernet / magnetics
+R44,2,ETH_RXN,True,Ethernet / magnetics
+R45,1,ETH_RX_BIAS,True,Ethernet / magnetics
+R45,2,ETH_RXP,True,Ethernet / magnetics
+R58,1,XI,True,Ethernet / magnetics
+R58,2,XO,True,Ethernet / magnetics
+R46,1,M0S_I,True,Differential motion outputs
+R46,2,GND,True,Differential motion outputs
+R47,1,M0D_I,True,Differential motion outputs
+R47,2,GND,True,Differential motion outputs
+R48,1,M1S_I,True,Differential motion outputs
+R48,2,GND,True,Differential motion outputs
+R49,1,M1D_I,True,Differential motion outputs
+R49,2,GND,True,Differential motion outputs
+R50,1,M2S_I,True,Differential motion outputs
+R50,2,GND,True,Differential motion outputs
+R51,1,M2D_I,True,Differential motion outputs
+R51,2,GND,True,Differential motion outputs
+R52,1,M3S_I,True,Differential motion outputs
+R52,2,GND,True,Differential motion outputs
+R53,1,M3D_I,True,Differential motion outputs
+R53,2,GND,True,Differential motion outputs
+R54,1,M4S_I,True,Differential motion outputs
+R54,2,GND,True,Differential motion outputs
+R55,1,M4D_I,True,Differential motion outputs
+R55,2,GND,True,Differential motion outputs
+R56,1,M5S_I,True,Differential motion outputs
+R56,2,GND,True,Differential motion outputs
+R57,1,M5D_I,True,Differential motion outputs
+R57,2,GND,True,Differential motion outputs
+R59,1,VCC3V3A,True,Ethernet / magnetics
+R59,2,ETH_TCT,True,Ethernet / magnetics
+C32,1,ETH_TCT,True,Ethernet / magnetics
+C32,2,GND,True,Ethernet / magnetics
+C33,1,ETH_RXP,True,Ethernet / magnetics
+C33,2,ETH_JRXP,True,Ethernet / magnetics
+C34,1,ETH_RXN,True,Ethernet / magnetics
+C34,2,ETH_JRXN,True,Ethernet / magnetics
+C35,1,ETH_RX_BIAS,True,Ethernet / magnetics
+C35,2,GND,True,Ethernet / magnetics
+D7,1,VBUS,True,USB / recovery
+D7,2,GND,True,USB / recovery
+D6,1,USB_DP,True,USB / recovery
+D6,2,GND,True,USB / recovery
+D6,3,USB_DN,True,USB / recovery
+D6,4,USB_DN_MCU,True,USB / recovery
+D6,5,VBUS,True,USB / recovery
+D6,6,USB_DP_MCU,True,USB / recovery
+SW1,1,ESP_EN,True,MCU / boot / reset
+SW1,2,GND,True,MCU / boot / reset
+SW2,1,ESP_IO0,True,MCU / boot / reset
+SW2,2,GND,True,MCU / boot / reset
+C23,1,XI,True,Ethernet / magnetics
+C23,2,GND,True,Ethernet / magnetics
+C24,1,XO,True,Ethernet / magnetics
+C24,2,GND,True,Ethernet / magnetics
+F1,1,VIN_J,True,12V input / 5V buck
+F1,2,VIN12,True,12V input / 5V buck
+R60,1,ESTOP,True,Common pulse permission
+R60,2,ESTOP_MCU,True,Common pulse permission
+C36,1,ESTOP_MCU,True,Common pulse permission
+C36,2,GND,True,Common pulse permission
+U11,1,ARM_PULSE,True,Common pulse permission
+U11,2,VCC3V3,True,Common pulse permission
+U11,3,,True,Common pulse permission
+U11,4,GND,True,Common pulse permission
+U11,5,DRIVE_ENABLE,True,Common pulse permission
+U11,6,PULSE_CLEAR_N,True,Common pulse permission
+U11,7,VCC3V3,True,Common pulse permission
+U11,8,VCC3V3,True,Common pulse permission
+U12,1,ESTOP_MCU,True,Common pulse permission
+U12,2,GND,True,Common pulse permission
+U12,3,VCC3V3,True,Common pulse permission
+U12,4,CONTROL_PERMIT,True,Common pulse permission
+U12,5,VCC3V3,True,Common pulse permission
+U12,6,MCU_INHIBIT,True,Common pulse permission
+U13,1,DRIVE_5V_SENSE,True,Common pulse permission
+U13,2,GND,True,Common pulse permission
+U13,3,CONTROL_PERMIT,True,Common pulse permission
+U13,4,VCC3V3,True,Common pulse permission
+U13,5,SUPERVISOR_CT,True,Common pulse permission
+U13,6,SUPERVISOR_RELEASE_N,True,Common pulse permission
+U14,1,VCC3V3,True,Common pulse permission
+U14,2,GND,True,Common pulse permission
+U14,3,GND,True,Common pulse permission
+U14,4,ARM_CLEAR_N,True,Common pulse permission
+U14,5,VCC3V3,True,Common pulse permission
+U14,6,SUPERVISOR_RELEASE_N,True,Common pulse permission
+D8,1,LOGIC_5V,True,Logic 5V / 3V3 power
+D8,2,VCC5,True,Logic 5V / 3V3 power
+R61,1,VCC3V3,True,Common pulse permission
+R61,2,MCU_INHIBIT,True,Common pulse permission
+R62,1,ARM_PULSE,True,Common pulse permission
+R62,2,GND,True,Common pulse permission
+R63,1,DRIVE_ENABLE,True,Common pulse permission
+R63,2,GND,True,Common pulse permission
+R64,1,DRIVE_ENABLE,True,Common pulse permission
+R64,2,GND,True,Common pulse permission
+R65,1,DRIVE_ENABLE,True,Common pulse permission
+R65,2,GND,True,Common pulse permission
+R66,1,VCC3V3,True,Common pulse permission
+R66,2,SUPERVISOR_RELEASE_N,True,Common pulse permission
+R67,1,VCC5,True,Common pulse permission
+R67,2,DRIVE_5V_SENSE,True,Common pulse permission
+R68,1,DRIVE_5V_SENSE,True,Common pulse permission
+R68,2,GND,True,Common pulse permission
+R69,1,USB_DN_MCU,True,USB / recovery
+R69,2,USB_DN_PIN,True,USB / recovery
+R70,1,USB_DP_MCU,True,USB / recovery
+R70,2,USB_DP_PIN,True,USB / recovery
+C37,1,VCC3V3,True,Common pulse permission
+C37,2,GND,True,Common pulse permission
+C38,1,VCC3V3,True,Common pulse permission
+C38,2,GND,True,Common pulse permission
+C39,1,VCC3V3,True,Common pulse permission
+C39,2,GND,True,Common pulse permission
+C40,1,VCC3V3,True,Common pulse permission
+C40,2,GND,True,Common pulse permission
+C41,1,SUPERVISOR_CT,True,Common pulse permission
+C41,2,GND,True,Common pulse permission
+C42,1,LOGIC_5V,True,Logic 5V / 3V3 power
+C42,2,GND,True,Logic 5V / 3V3 power
+R30,1,VINRAW,True,Drive alarm inputs
+R30,2,M0_ALARM_LED,True,Drive alarm inputs
+R31,1,VINRAW,True,Drive alarm inputs
+R31,2,M1_ALARM_LED,True,Drive alarm inputs
+R32,1,VINRAW,True,Drive alarm inputs
+R32,2,M2_ALARM_LED,True,Drive alarm inputs
+R33,1,VINRAW,True,Drive alarm inputs
+R33,2,M3_ALARM_LED,True,Drive alarm inputs
+R34,1,VINRAW,True,Drive alarm inputs
+R34,2,M4_ALARM_LED,True,Drive alarm inputs
+R35,1,VINRAW,True,Drive alarm inputs
+R35,2,M5_ALARM_LED,True,Drive alarm inputs
+U15,1,,True,I2C I/O and initialization
+U15,2,FIELD_FEED_ENABLE_3V3,True,I2C I/O and initialization
+U15,3,LOCAL_HOLD_A,True,I2C I/O and initialization
+U15,4,LOCAL_HOLD_B,True,I2C I/O and initialization
+U15,5,FIELD_EFUSE_FLT_N,True,I2C I/O and initialization
+U15,6,DRIVE_ENABLE_SENSE,True,I2C I/O and initialization
+U15,7,ALL_TORQUE_ENABLED,True,I2C I/O and initialization
+U15,8,SRV_ARM_CLOCK,True,I2C I/O and initialization
+U15,9,VCC3V3,True,I2C I/O and initialization
+U15,10,GND,True,I2C I/O and initialization
+U15,11,,True,I2C I/O and initialization
+U15,12,HALL_I2C_SCL,True,I2C I/O and initialization
+U15,13,HALL_I2C_SDA,True,I2C I/O and initialization
+U15,14,,True,I2C I/O and initialization
+U15,15,GND,True,I2C I/O and initialization
+U15,16,GND,True,I2C I/O and initialization
+U15,17,GND,True,I2C I/O and initialization
+U15,18,IOX_RESET_N,True,I2C I/O and initialization
+U15,19,,True,I2C I/O and initialization
+U15,20,,True,I2C I/O and initialization
+U15,21,HALL_0_NC_SENSE,True,I2C I/O and initialization
+U15,22,HALL_1_NC_SENSE,True,I2C I/O and initialization
+U15,23,HALL_2_NC_SENSE,True,I2C I/O and initialization
+U15,24,HALL_3_NC_SENSE,True,I2C I/O and initialization
+U15,25,HALL_4_NC_SENSE,True,I2C I/O and initialization
+U15,26,HALL_5_NC_SENSE,True,I2C I/O and initialization
+U15,27,FIELD_VGOOD_3V3,True,I2C I/O and initialization
+U15,28,SRV_RELEASE_CLEAR_N,True,I2C I/O and initialization
+R71,1,VCC3V3,True,Hall input conditioning
+R71,2,HALL_I2C_SCL,True,Hall input conditioning
+R72,1,VCC3V3,True,Hall input conditioning
+R72,2,HALL_I2C_SDA,True,Hall input conditioning
+C43,1,VCC3V3,True,Common pulse permission
+C43,2,GND,True,Common pulse permission
+U16,1,GND,True,I2C I/O and initialization
+U16,2,IOX_RESET_N,True,I2C I/O and initialization
+U16,3,VCC3V3,True,I2C I/O and initialization
+R73,1,IOX_RESET_N,True,I2C I/O and initialization
+R73,2,GND,True,I2C I/O and initialization
+C44,1,VCC3V3,True,I2C I/O and initialization
+C44,2,GND,True,I2C I/O and initialization
+U17,1,VINRAW,True,Protected Hall field supply
+U17,2,EFUSE_UVLO,True,Protected Hall field supply
+U17,3,EFUSE_OVP,True,Protected Hall field supply
+U17,4,FIELD_FEED_ENABLE_3V3,True,Protected Hall field supply
+U17,5,EFUSE_RTN,True,Protected Hall field supply
+U17,6,GND,True,Protected Hall field supply
+U17,7,EFUSE_ILIM,True,Protected Hall field supply
+U17,8,,True,Protected Hall field supply
+U17,9,FIELD_EFUSE_FLT_N,True,Protected Hall field supply
+U17,10,FIELD_12V,True,Protected Hall field supply
+U17,11,EFUSE_RTN,True,Protected Hall field supply
+R74,1,EFUSE_ILIM,True,Protected Hall field supply
+R74,2,EFUSE_RTN,True,Protected Hall field supply
+R76,1,VINRAW,True,Protected Hall field supply
+R76,2,EFUSE_OVP,True,Protected Hall field supply
+R77,1,EFUSE_OVP,True,Protected Hall field supply
+R77,2,EFUSE_RTN,True,Protected Hall field supply
+R78,1,FIELD_FEED_ENABLE_3V3,True,Protected Hall field supply
+R78,2,EFUSE_RTN,True,Protected Hall field supply
+R79,1,VCC3V3,True,Protected Hall field supply
+R79,2,FIELD_EFUSE_FLT_N,True,Protected Hall field supply
+C45,1,VINRAW,True,12V input / 5V buck
+C45,2,GND,True,12V input / 5V buck
+C46,1,FIELD_12V,True,Protected Hall field supply
+C46,2,GND,True,Protected Hall field supply
+R82,1,FIELD_VDIV,True,Protected Hall field supply
+R82,2,FIELD_VSENSE,True,Protected Hall field supply
+C47,1,VCC3V3,True,Protected Hall field supply
+C47,2,GND,True,Protected Hall field supply
+R75,1,VINRAW,True,Protected Hall field supply
+R75,2,EFUSE_UVLO,True,Protected Hall field supply
+U19,1,HALL_0_LED_A,True,Hall input conditioning
+U19,2,HALL_0_FIELD,True,Hall input conditioning
+U19,3,HALL_1_LED_A,True,Hall input conditioning
+U19,4,HALL_1_FIELD,True,Hall input conditioning
+U19,5,HALL_2_LED_A,True,Hall input conditioning
+U19,6,HALL_2_FIELD,True,Hall input conditioning
+U19,7,HALL_3_LED_A,True,Hall input conditioning
+U19,8,HALL_3_FIELD,True,Hall input conditioning
+U19,9,GND,True,Hall input conditioning
+U19,10,HALL_3_NC_SENSE,True,Hall input conditioning
+U19,11,GND,True,Hall input conditioning
+U19,12,HALL_2_NC_SENSE,True,Hall input conditioning
+U19,13,GND,True,Hall input conditioning
+U19,14,HALL_1_NC_SENSE,True,Hall input conditioning
+U19,15,GND,True,Hall input conditioning
+U19,16,HALL_0_NC_SENSE,True,Hall input conditioning
+U20,1,HALL_4_LED_A,True,Hall input conditioning
+U20,2,HALL_4_FIELD,True,Hall input conditioning
+U20,3,HALL_5_LED_A,True,Hall input conditioning
+U20,4,HALL_5_FIELD,True,Hall input conditioning
+U20,5,,True,Hall input conditioning
+U20,6,,True,Hall input conditioning
+U20,7,,True,Hall input conditioning
+U20,8,,True,Hall input conditioning
+U20,9,,True,Hall input conditioning
+U20,10,,True,Hall input conditioning
+U20,11,,True,Hall input conditioning
+U20,12,,True,Hall input conditioning
+U20,13,GND,True,Hall input conditioning
+U20,14,HALL_5_NC_SENSE,True,Hall input conditioning
+U20,15,GND,True,Hall input conditioning
+U20,16,HALL_4_NC_SENSE,True,Hall input conditioning
+R84,1,FIELD_12V,True,Hall status indicators
+R84,2,HALL_0_LED_A,True,Hall status indicators
+R90,1,VCC3V3,True,Hall input conditioning
+R90,2,HALL_0_NC_SENSE,True,Hall input conditioning
+D10,1,HALL_0_LED_A,True,Hall status indicators
+D10,2,HALL_0_FIELD,True,Hall status indicators
+C48,1,HALL_0_NC_SENSE,True,Hall input conditioning
+C48,2,GND,True,Hall input conditioning
+R85,1,FIELD_12V,True,Hall status indicators
+R85,2,HALL_1_LED_A,True,Hall status indicators
+R91,1,VCC3V3,True,Hall input conditioning
+R91,2,HALL_1_NC_SENSE,True,Hall input conditioning
+D11,1,HALL_1_LED_A,True,Hall status indicators
+D11,2,HALL_1_FIELD,True,Hall status indicators
+C49,1,HALL_1_NC_SENSE,True,Hall input conditioning
+C49,2,GND,True,Hall input conditioning
+R86,1,FIELD_12V,True,Hall status indicators
+R86,2,HALL_2_LED_A,True,Hall status indicators
+R92,1,VCC3V3,True,Hall input conditioning
+R92,2,HALL_2_NC_SENSE,True,Hall input conditioning
+D12,1,HALL_2_LED_A,True,Hall status indicators
+D12,2,HALL_2_FIELD,True,Hall status indicators
+C50,1,HALL_2_NC_SENSE,True,Hall input conditioning
+C50,2,GND,True,Hall input conditioning
+R87,1,FIELD_12V,True,Hall status indicators
+R87,2,HALL_3_LED_A,True,Hall status indicators
+R93,1,VCC3V3,True,Hall input conditioning
+R93,2,HALL_3_NC_SENSE,True,Hall input conditioning
+D13,1,HALL_3_LED_A,True,Hall status indicators
+D13,2,HALL_3_FIELD,True,Hall status indicators
+C51,1,HALL_3_NC_SENSE,True,Hall input conditioning
+C51,2,GND,True,Hall input conditioning
+R88,1,FIELD_12V,True,Hall status indicators
+R88,2,HALL_4_LED_A,True,Hall status indicators
+R94,1,VCC3V3,True,Hall input conditioning
+R94,2,HALL_4_NC_SENSE,True,Hall input conditioning
+D14,1,HALL_4_LED_A,True,Hall status indicators
+D14,2,HALL_4_FIELD,True,Hall status indicators
+C52,1,HALL_4_NC_SENSE,True,Hall input conditioning
+C52,2,GND,True,Hall input conditioning
+R89,1,FIELD_12V,True,Hall status indicators
+R89,2,HALL_5_LED_A,True,Hall status indicators
+R95,1,VCC3V3,True,Hall input conditioning
+R95,2,HALL_5_NC_SENSE,True,Hall input conditioning
+D15,1,HALL_5_LED_A,True,Hall status indicators
+D15,2,HALL_5_FIELD,True,Hall status indicators
+C53,1,HALL_5_NC_SENSE,True,Hall input conditioning
+C53,2,GND,True,Hall input conditioning
+U21,1,HALL_0_NC_SENSE,True,Hall status indicators
+U21,2,HALL_0_LED_Y,True,Hall status indicators
+U21,3,HALL_1_NC_SENSE,True,Hall status indicators
+U21,4,HALL_1_LED_Y,True,Hall status indicators
+U21,5,HALL_2_NC_SENSE,True,Hall status indicators
+U21,6,HALL_2_LED_Y,True,Hall status indicators
+U21,7,GND,True,Hall status indicators
+U21,8,HALL_3_LED_Y,True,Hall status indicators
+U21,9,HALL_3_NC_SENSE,True,Hall status indicators
+U21,10,HALL_4_LED_Y,True,Hall status indicators
+U21,11,HALL_4_NC_SENSE,True,Hall status indicators
+U21,12,HALL_5_LED_Y,True,Hall status indicators
+U21,13,HALL_5_NC_SENSE,True,Hall status indicators
+U21,14,VCC5,True,Hall status indicators
+Q1,1,IOX_RESET_N,True,Hall status indicators
+Q1,2,GND,True,Hall status indicators
+Q1,3,LED_GREEN_RETURN,True,Hall status indicators
+Q2,1,IOX_RESET_N,True,Hall status indicators
+Q2,2,GND,True,Hall status indicators
+Q2,3,LED_RED_PMOS_GATE,True,Hall status indicators
+Q3,1,LED_RED_PMOS_GATE,True,Hall status indicators
+Q3,2,VCC5,True,Hall status indicators
+Q3,3,LED_RED_5V,True,Hall status indicators
+R108,1,VCC5,True,Hall status indicators
+R108,2,LED_RED_PMOS_GATE,True,Hall status indicators
+C54,1,VCC5,True,Hall status indicators
+C54,2,GND,True,Hall status indicators
+R96,1,HALL_0_LED_Y,True,Hall status indicators
+R96,2,LED_GREEN_0_A,True,Hall status indicators
+D16,1,LED_GREEN_0_A,True,Hall status indicators
+D16,2,LED_GREEN_RETURN,True,Hall status indicators
+R102,1,LED_RED_5V,True,Hall status indicators
+R102,2,LED_RED_0_A,True,Hall status indicators
+D22,1,LED_RED_0_A,True,Hall status indicators
+D22,2,HALL_0_LED_Y,True,Hall status indicators
+R97,1,HALL_1_LED_Y,True,Hall status indicators
+R97,2,LED_GREEN_1_A,True,Hall status indicators
+D17,1,LED_GREEN_1_A,True,Hall status indicators
+D17,2,LED_GREEN_RETURN,True,Hall status indicators
+R103,1,LED_RED_5V,True,Hall status indicators
+R103,2,LED_RED_1_A,True,Hall status indicators
+D23,1,LED_RED_1_A,True,Hall status indicators
+D23,2,HALL_1_LED_Y,True,Hall status indicators
+R98,1,HALL_2_LED_Y,True,Hall status indicators
+R98,2,LED_GREEN_2_A,True,Hall status indicators
+D18,1,LED_GREEN_2_A,True,Hall status indicators
+D18,2,LED_GREEN_RETURN,True,Hall status indicators
+R104,1,LED_RED_5V,True,Hall status indicators
+R104,2,LED_RED_2_A,True,Hall status indicators
+D24,1,LED_RED_2_A,True,Hall status indicators
+D24,2,HALL_2_LED_Y,True,Hall status indicators
+R99,1,HALL_3_LED_Y,True,Hall status indicators
+R99,2,LED_GREEN_3_A,True,Hall status indicators
+D19,1,LED_GREEN_3_A,True,Hall status indicators
+D19,2,LED_GREEN_RETURN,True,Hall status indicators
+R105,1,LED_RED_5V,True,Hall status indicators
+R105,2,LED_RED_3_A,True,Hall status indicators
+D25,1,LED_RED_3_A,True,Hall status indicators
+D25,2,HALL_3_LED_Y,True,Hall status indicators
+R100,1,HALL_4_LED_Y,True,Hall status indicators
+R100,2,LED_GREEN_4_A,True,Hall status indicators
+D20,1,LED_GREEN_4_A,True,Hall status indicators
+D20,2,LED_GREEN_RETURN,True,Hall status indicators
+R106,1,LED_RED_5V,True,Hall status indicators
+R106,2,LED_RED_4_A,True,Hall status indicators
+D26,1,LED_RED_4_A,True,Hall status indicators
+D26,2,HALL_4_LED_Y,True,Hall status indicators
+R101,1,HALL_5_LED_Y,True,Hall status indicators
+R101,2,LED_GREEN_5_A,True,Hall status indicators
+D21,1,LED_GREEN_5_A,True,Hall status indicators
+D21,2,LED_GREEN_RETURN,True,Hall status indicators
+R107,1,LED_RED_5V,True,Hall status indicators
+R107,2,LED_RED_5_A,True,Hall status indicators
+D27,1,LED_RED_5_A,True,Hall status indicators
+D27,2,HALL_5_LED_Y,True,Hall status indicators
+J12,1,GND,True,Hall input conditioning
+J12,2,FIELD_12V,True,Hall input conditioning
+J12,3,HALL_0_FIELD,True,Hall input conditioning
+J12,4,HALL_1_FIELD,True,Hall input conditioning
+J12,5,HALL_2_FIELD,True,Hall input conditioning
+J12,6,HALL_3_FIELD,True,Hall input conditioning
+J12,7,HALL_4_FIELD,True,Hall input conditioning
+J12,8,HALL_5_FIELD,True,Hall input conditioning
+U2,1,GND,True,MCU / boot / reset
+U2,2,VCC3V3,True,MCU / boot / reset
+U2,3,ESP_EN,True,MCU / boot / reset
+U2,4,M0S_G,True,MCU / boot / reset
+U2,5,M1S_G,True,MCU / boot / reset
+U2,6,M2S_G,True,MCU / boot / reset
+U2,7,M3S_G,True,MCU / boot / reset
+U2,8,M2_ALARM,True,MCU / boot / reset
+U2,9,M3_ALARM,True,MCU / boot / reset
+U2,10,M5D_G,True,MCU / boot / reset
+U2,11,M4_ALARM,True,MCU / boot / reset
+U2,12,M4S_G,True,MCU / boot / reset
+U2,13,USB_DN_PIN,True,MCU / boot / reset
+U2,14,USB_DP_PIN,True,MCU / boot / reset
+U2,15,,True,MCU / boot / reset
+U2,16,,True,MCU / boot / reset
+U2,17,M5S_G,True,MCU / boot / reset
+U2,18,M0D_G,True,MCU / boot / reset
+U2,19,M1D_G,True,MCU / boot / reset
+U2,20,M2D_G,True,MCU / boot / reset
+U2,21,M3D_G,True,MCU / boot / reset
+U2,22,M4D_G,True,MCU / boot / reset
+U2,23,ESTOP_MCU,True,MCU / boot / reset
+U2,24,MCU_INHIBIT,True,MCU / boot / reset
+U2,25,ARM_PULSE,True,MCU / boot / reset
+U2,26,,True,MCU / boot / reset
+U2,27,ESP_IO0,True,MCU / boot / reset
+U2,28,MOSI,True,MCU / boot / reset
+U2,29,SCLK,True,MCU / boot / reset
+U2,30,MISO,True,MCU / boot / reset
+U2,31,SCSN,True,MCU / boot / reset
+U2,32,INTN,True,MCU / boot / reset
+U2,33,M5_ALARM,True,MCU / boot / reset
+U2,34,HALL_I2C_SDA,True,MCU / boot / reset
+U2,35,HALL_I2C_SCL,True,MCU / boot / reset
+U2,36,U0RXD,True,MCU / boot / reset
+U2,37,U0TXD,True,MCU / boot / reset
+U2,38,M1_ALARM,True,MCU / boot / reset
+U2,39,M0_ALARM,True,MCU / boot / reset
+U2,40,GND,True,MCU / boot / reset
+U2,41,GND,True,MCU / boot / reset
+R109,1,DRIVE_ENABLE,True,Common pulse permission
+R109,2,DRIVE_ENABLE_SENSE,True,Common pulse permission
+R110,1,DRIVE_ENABLE_SENSE,True,5V ADC / readback
+R110,2,GND,True,5V ADC / readback
+C55,1,DRIVE_ENABLE_SENSE,True,5V ADC / readback
+C55,2,GND,True,5V ADC / readback
+Q4,1,DRIVE_ENABLE_SENSE,True,Hall status indicators
+Q4,2,GND,True,Hall status indicators
+Q4,3,OUTPUTS_LED_K,True,Hall status indicators
+D28,1,OUTPUTS_LED_A,True,Hall status indicators
+D28,2,OUTPUTS_LED_K,True,Hall status indicators
+R111,1,VCC3V3,True,Hall status indicators
+R111,2,OUTPUTS_LED_A,True,Hall status indicators
+U22,1,GND,True,5V ADC / readback
+U22,2,GND,True,5V ADC / readback
+U22,3,,True,5V ADC / readback
+U22,4,HALL_I2C_SDA,True,5V ADC / readback
+U22,5,HALL_I2C_SCL,True,5V ADC / readback
+U22,6,VCC3V3,True,5V ADC / readback
+U22,7,GND,True,5V ADC / readback
+U22,8,VCC5_ADC_FILTERED,True,5V ADC / readback
+U22,9,GND,True,5V ADC / readback
+U22,10,GND,True,5V ADC / readback
+C56,1,VCC3V3,True,5V ADC / readback
+C56,2,GND,True,5V ADC / readback
+R112,1,VCC5,True,5V ADC / readback
+R112,2,VCC5_ADC_FILTERED,True,5V ADC / readback
+C57,1,VCC5_ADC_FILTERED,True,5V ADC / readback
+C57,2,GND,True,5V ADC / readback
+U23,1,SRV_ARM_CLOCK,True,Six stored torque enables
+U23,2,VCC3V3,True,Six stored torque enables
+U23,3,,True,Six stored torque enables
+U23,4,GND,True,Six stored torque enables
+U23,5,SRV_0_LATCHED,True,Six stored torque enables
+U23,6,SRV_0_CLEAR_N,True,Six stored torque enables
+U23,7,VCC3V3,True,Six stored torque enables
+U23,8,VCC3V3,True,Six stored torque enables
+Q5,1,SRV_0_BASE,True,Six stored torque enables
+Q5,2,GND,True,Six stored torque enables
+Q5,3,SRV_0_SINK,True,Six stored torque enables
+R115,1,SRV_0_LATCHED,True,Six stored torque enables
+R115,2,SRV_0_BASE,True,Six stored torque enables
+R121,1,SRV_0_BASE,True,Six stored torque enables
+R121,2,GND,True,Six stored torque enables
+R127,1,SRV_0_SINK,True,Six stored torque enables
+R127,2,M0_SRV_ON,True,Six stored torque enables
+C58,1,VCC3V3,True,Six stored torque enables
+C58,2,GND,True,Six stored torque enables
+U24,1,SRV_ARM_CLOCK,True,Six stored torque enables
+U24,2,VCC3V3,True,Six stored torque enables
+U24,3,,True,Six stored torque enables
+U24,4,GND,True,Six stored torque enables
+U24,5,SRV_1_LATCHED,True,Six stored torque enables
+U24,6,SRV_1_CLEAR_N,True,Six stored torque enables
+U24,7,VCC3V3,True,Six stored torque enables
+U24,8,VCC3V3,True,Six stored torque enables
+Q6,1,SRV_1_BASE,True,Six stored torque enables
+Q6,2,GND,True,Six stored torque enables
+Q6,3,SRV_1_SINK,True,Six stored torque enables
+R116,1,SRV_1_LATCHED,True,Six stored torque enables
+R116,2,SRV_1_BASE,True,Six stored torque enables
+R122,1,SRV_1_BASE,True,Six stored torque enables
+R122,2,GND,True,Six stored torque enables
+R128,1,SRV_1_SINK,True,Six stored torque enables
+R128,2,M1_SRV_ON,True,Six stored torque enables
+C59,1,VCC3V3,True,Six stored torque enables
+C59,2,GND,True,Six stored torque enables
+U25,1,SRV_ARM_CLOCK,True,Six stored torque enables
+U25,2,VCC3V3,True,Six stored torque enables
+U25,3,,True,Six stored torque enables
+U25,4,GND,True,Six stored torque enables
+U25,5,SRV_2_LATCHED,True,Six stored torque enables
+U25,6,SRV_2_CLEAR_N,True,Six stored torque enables
+U25,7,VCC3V3,True,Six stored torque enables
+U25,8,VCC3V3,True,Six stored torque enables
+Q7,1,SRV_2_BASE,True,Six stored torque enables
+Q7,2,GND,True,Six stored torque enables
+Q7,3,SRV_2_SINK,True,Six stored torque enables
+R117,1,SRV_2_LATCHED,True,Six stored torque enables
+R117,2,SRV_2_BASE,True,Six stored torque enables
+R123,1,SRV_2_BASE,True,Six stored torque enables
+R123,2,GND,True,Six stored torque enables
+R129,1,SRV_2_SINK,True,Six stored torque enables
+R129,2,M2_SRV_ON,True,Six stored torque enables
+C60,1,VCC3V3,True,Six stored torque enables
+C60,2,GND,True,Six stored torque enables
+U26,1,SRV_ARM_CLOCK,True,Six stored torque enables
+U26,2,VCC3V3,True,Six stored torque enables
+U26,3,,True,Six stored torque enables
+U26,4,GND,True,Six stored torque enables
+U26,5,SRV_3_LATCHED,True,Six stored torque enables
+U26,6,SRV_3_CLEAR_N,True,Six stored torque enables
+U26,7,VCC3V3,True,Six stored torque enables
+U26,8,VCC3V3,True,Six stored torque enables
+Q8,1,SRV_3_BASE,True,Six stored torque enables
+Q8,2,GND,True,Six stored torque enables
+Q8,3,SRV_3_SINK,True,Six stored torque enables
+R118,1,SRV_3_LATCHED,True,Six stored torque enables
+R118,2,SRV_3_BASE,True,Six stored torque enables
+R124,1,SRV_3_BASE,True,Six stored torque enables
+R124,2,GND,True,Six stored torque enables
+R130,1,SRV_3_SINK,True,Six stored torque enables
+R130,2,M3_SRV_ON,True,Six stored torque enables
+C61,1,VCC3V3,True,Six stored torque enables
+C61,2,GND,True,Six stored torque enables
+U27,1,SRV_ARM_CLOCK,True,Six stored torque enables
+U27,2,VCC3V3,True,Six stored torque enables
+U27,3,,True,Six stored torque enables
+U27,4,GND,True,Six stored torque enables
+U27,5,SRV_4_LATCHED,True,Six stored torque enables
+U27,6,SRV_4_CLEAR_N,True,Six stored torque enables
+U27,7,VCC3V3,True,Six stored torque enables
+U27,8,VCC3V3,True,Six stored torque enables
+Q9,1,SRV_4_BASE,True,Six stored torque enables
+Q9,2,GND,True,Six stored torque enables
+Q9,3,SRV_4_SINK,True,Six stored torque enables
+R119,1,SRV_4_LATCHED,True,Six stored torque enables
+R119,2,SRV_4_BASE,True,Six stored torque enables
+R125,1,SRV_4_BASE,True,Six stored torque enables
+R125,2,GND,True,Six stored torque enables
+R131,1,SRV_4_SINK,True,Six stored torque enables
+R131,2,M4_SRV_ON,True,Six stored torque enables
+C62,1,VCC3V3,True,Six stored torque enables
+C62,2,GND,True,Six stored torque enables
+U28,1,SRV_ARM_CLOCK,True,Six stored torque enables
+U28,2,VCC3V3,True,Six stored torque enables
+U28,3,,True,Six stored torque enables
+U28,4,GND,True,Six stored torque enables
+U28,5,SRV_5_LATCHED,True,Six stored torque enables
+U28,6,SRV_5_CLEAR_N,True,Six stored torque enables
+U28,7,VCC3V3,True,Six stored torque enables
+U28,8,VCC3V3,True,Six stored torque enables
+Q10,1,SRV_5_BASE,True,Six stored torque enables
+Q10,2,GND,True,Six stored torque enables
+Q10,3,SRV_5_SINK,True,Six stored torque enables
+R120,1,SRV_5_LATCHED,True,Six stored torque enables
+R120,2,SRV_5_BASE,True,Six stored torque enables
+R126,1,SRV_5_BASE,True,Six stored torque enables
+R126,2,GND,True,Six stored torque enables
+R132,1,SRV_5_SINK,True,Six stored torque enables
+R132,2,M5_SRV_ON,True,Six stored torque enables
+C63,1,VCC3V3,True,Six stored torque enables
+C63,2,GND,True,Six stored torque enables
+U29,1,SRV_0_CLEAR_N,True,Six stored torque enables
+U29,2,M0_ALARM,True,Six stored torque enables
+U29,3,SYS_TORQUE_CLEAR_H,True,Six stored torque enables
+U29,4,SRV_1_CLEAR_N,True,Six stored torque enables
+U29,5,M1_ALARM,True,Six stored torque enables
+U29,6,SYS_TORQUE_CLEAR_H,True,Six stored torque enables
+U29,7,GND,True,Six stored torque enables
+U29,8,M2_ALARM,True,Six stored torque enables
+U29,9,SYS_TORQUE_CLEAR_H,True,Six stored torque enables
+U29,10,SRV_2_CLEAR_N,True,Six stored torque enables
+U29,11,SYS_BASE_CLEAR_H,True,Six stored torque enables
+U29,12,AUX15V_BAD,True,Six stored torque enables
+U29,13,S3_CLEAR_OR_N,True,Six stored torque enables
+U29,14,VCC3V3,True,Six stored torque enables
+U29,15,GND,True,Six stored torque enables
+U30,1,SRV_3_CLEAR_N,True,Six stored torque enables
+U30,2,M3_ALARM,True,Six stored torque enables
+U30,3,SYS_TORQUE_CLEAR_H,True,Six stored torque enables
+U30,4,SRV_4_CLEAR_N,True,Six stored torque enables
+U30,5,M4_ALARM,True,Six stored torque enables
+U30,6,SYS_TORQUE_CLEAR_H,True,Six stored torque enables
+U30,7,GND,True,Six stored torque enables
+U30,8,M5_ALARM,True,Six stored torque enables
+U30,9,SYS_TORQUE_CLEAR_H,True,Six stored torque enables
+U30,10,SRV_5_CLEAR_N,True,Six stored torque enables
+U30,11,S3_CLEAR_OR_N,True,Six stored torque enables
+U30,12,S3_CLEAR_OR_N,True,Six stored torque enables
+U30,13,SYS_TORQUE_CLEAR_H,True,Six stored torque enables
+U30,14,VCC3V3,True,Six stored torque enables
+U30,15,GND,True,Six stored torque enables
+C64,1,VCC3V3,True,Six stored torque enables
+C64,2,GND,True,Six stored torque enables
+C65,1,VCC3V3,True,Six stored torque enables
+C65,2,GND,True,Six stored torque enables
+U35,1,IOX_RESET_N,True,Six stored torque enables
+U35,2,SRV_RELEASE_CLEAR_N,True,Six stored torque enables
+U35,3,GND,True,Six stored torque enables
+U35,4,SYS_BASE_CLEAR_H,True,Six stored torque enables
+U35,5,VCC3V3,True,Six stored torque enables
+C70,1,VCC3V3,True,Six stored torque enables
+C70,2,GND,True,Six stored torque enables
+R113,1,SRV_ARM_CLOCK,True,Six stored torque enables
+R113,2,GND,True,Six stored torque enables
+R114,1,SRV_RELEASE_CLEAR_N,True,Six stored torque enables
+R114,2,GND,True,Six stored torque enables
+U31,1,SRV_0_LATCHED,True,Six stored torque enables
+U31,2,GND,True,Six stored torque enables
+U31,3,SRV_1_LATCHED,True,Six stored torque enables
+U31,4,TORQUE_BANK_0_ON,True,Six stored torque enables
+U31,5,VCC3V3,True,Six stored torque enables
+U31,6,SRV_2_LATCHED,True,Six stored torque enables
+U32,1,SRV_3_LATCHED,True,Six stored torque enables
+U32,2,GND,True,Six stored torque enables
+U32,3,SRV_4_LATCHED,True,Six stored torque enables
+U32,4,TORQUE_BANK_1_ON,True,Six stored torque enables
+U32,5,VCC3V3,True,Six stored torque enables
+U32,6,SRV_5_LATCHED,True,Six stored torque enables
+U33,1,TORQUE_BANK_0_ON,True,Six stored torque enables
+U33,2,TORQUE_BANK_1_ON,True,Six stored torque enables
+U33,3,GND,True,Six stored torque enables
+U33,4,ALL_TORQUE_ENABLED,True,Six stored torque enables
+U33,5,VCC3V3,True,Six stored torque enables
+C66,1,VCC3V3,True,Six stored torque enables
+C66,2,GND,True,Six stored torque enables
+C67,1,VCC3V3,True,Six stored torque enables
+C67,2,GND,True,Six stored torque enables
+C68,1,VCC3V3,True,Six stored torque enables
+C68,2,GND,True,Six stored torque enables
+U39,1,VINRAW,True,Auxiliary boost / fault monitoring
+U39,2,AUX15V_EF_UVLO,True,Auxiliary boost / fault monitoring
+U39,3,AUX15V_EF_OVP,True,Auxiliary boost / fault monitoring
+U39,4,AUX15V_OV_N,True,Auxiliary boost / fault monitoring
+U39,5,AUX15V_EF_RTN,True,Auxiliary boost / fault monitoring
+U39,6,GND,True,Auxiliary boost / fault monitoring
+U39,7,AUX15V_EF_ILIM,True,Auxiliary boost / fault monitoring
+U39,8,AUX15V_EF_DVDT,True,Auxiliary boost / fault monitoring
+U39,9,AUX15V_CTRL,True,Auxiliary boost / fault monitoring
+U39,10,AUX15V_VIN,True,Auxiliary boost / fault monitoring
+U39,11,AUX15V_EF_RTN,True,Auxiliary boost / fault monitoring
+R142,1,AUX15V_EF_ILIM,True,Auxiliary boost / fault monitoring
+R142,2,AUX15V_EF_RTN,True,Auxiliary boost / fault monitoring
+R143,1,VINRAW,True,Auxiliary boost / fault monitoring
+R143,2,AUX15V_EF_UVLO,True,Auxiliary boost / fault monitoring
+R144,1,VINRAW,True,Auxiliary boost / fault monitoring
+R144,2,AUX15V_EF_OVP,True,Auxiliary boost / fault monitoring
+R145,1,AUX15V_EF_OVP,True,Auxiliary boost / fault monitoring
+R145,2,AUX15V_EF_RTN,True,Auxiliary boost / fault monitoring
+C79,1,AUX15V_EF_DVDT,True,Auxiliary boost / fault monitoring
+C79,2,AUX15V_EF_RTN,True,Auxiliary boost / fault monitoring
+C80,1,VINRAW,True,12V input / 5V buck
+C80,2,GND,True,12V input / 5V buck
+D30,1,AUX15V_VIN,True,Auxiliary boost / fault monitoring
+D30,2,GND,True,Auxiliary boost / fault monitoring
+U36,1,AUX15V_FB,True,Auxiliary boost / fault monitoring
+U36,2,AUX15V_COMP,True,Auxiliary boost / fault monitoring
+U36,3,GND,True,Auxiliary boost / fault monitoring
+U36,4,AUX15V_SW,True,Auxiliary boost / fault monitoring
+U36,5,AUX15V_CTRL,True,Auxiliary boost / fault monitoring
+U36,6,AUX15V_VIN,True,Auxiliary boost / fault monitoring
+U36,7,GND,True,Auxiliary boost / fault monitoring
+L3,1,AUX15V_VIN,True,Auxiliary boost / fault monitoring
+L3,2,AUX15V_SW,True,Auxiliary boost / fault monitoring
+D31,1,AUX15V,True,Auxiliary boost / fault monitoring
+D31,2,AUX15V_SW,True,Auxiliary boost / fault monitoring
+C71,1,AUX15V_VIN,True,Auxiliary boost / fault monitoring
+C71,2,GND,True,Auxiliary boost / fault monitoring
+C72,1,AUX15V_VIN,True,Auxiliary boost / fault monitoring
+C72,2,GND,True,Auxiliary boost / fault monitoring
+C73,1,AUX15V,True,Auxiliary boost / fault monitoring
+C73,2,GND,True,Auxiliary boost / fault monitoring
+C74,1,AUX15V,True,Auxiliary boost / fault monitoring
+C74,2,GND,True,Auxiliary boost / fault monitoring
+R133,1,AUX15V,True,Auxiliary boost / fault monitoring
+R133,2,AUX15V_FB,True,Auxiliary boost / fault monitoring
+R134,1,AUX15V_FB,True,Auxiliary boost / fault monitoring
+R134,2,GND,True,Auxiliary boost / fault monitoring
+R135,1,AUX15V_COMP,True,Auxiliary boost / fault monitoring
+R135,2,AUX15V_COMP_RC,True,Auxiliary boost / fault monitoring
+C75,1,AUX15V_COMP_RC,True,Auxiliary boost / fault monitoring
+C75,2,GND,True,Auxiliary boost / fault monitoring
+R136,1,VCC3V3,True,Auxiliary boost / fault monitoring
+R136,2,AUX15V_CTRL,True,Auxiliary boost / fault monitoring
+R138,1,AUX15V_MON_SENSE,True,Auxiliary boost / fault monitoring
+R138,2,GND,True,Auxiliary boost / fault monitoring
+R141,1,VCC3V3,True,Auxiliary boost / fault monitoring
+R141,2,AUX15V_UV_OK,True,Auxiliary boost / fault monitoring
+C77,1,VCC3V3,True,Auxiliary boost / fault monitoring
+C77,2,GND,True,Auxiliary boost / fault monitoring
+R146,1,AUX15V,True,Auxiliary boost / fault monitoring
+R146,2,AUX15V_OV_SENSE,True,Auxiliary boost / fault monitoring
+C81,1,VINRAW,True,Auxiliary boost / fault monitoring
+C81,2,AUX15V_EF_RTN,True,Auxiliary boost / fault monitoring
+U38,1,AUX15V_OV_N,True,Auxiliary boost / fault monitoring
+U38,2,AUX15V_EF_RTN,True,Auxiliary boost / fault monitoring
+U38,3,AUX15V_LOGIC_SENSE,True,Auxiliary boost / fault monitoring
+U38,4,AUX15V_OV_SENSE,True,Auxiliary boost / fault monitoring
+U38,5,VINRAW,True,Auxiliary boost / fault monitoring
+U38,6,AUX15V_OV_N,True,Auxiliary boost / fault monitoring
+U37,1,AUX15V_UV_OK,True,Auxiliary boost / fault monitoring
+U37,2,GND,True,Auxiliary boost / fault monitoring
+U37,3,AUX15V_MON_SENSE,True,Auxiliary boost / fault monitoring
+U37,4,GND,True,Auxiliary boost / fault monitoring
+U37,5,VCC3V3,True,Auxiliary boost / fault monitoring
+U37,6,,True,Auxiliary boost / fault monitoring
+U40,1,AUX15V_UV_OK,True,Auxiliary boost / fault monitoring
+U40,2,AUX15V_OV_N,True,Auxiliary boost / fault monitoring
+U40,3,GND,True,Auxiliary boost / fault monitoring
+U40,4,AUX15V_BAD,True,Auxiliary boost / fault monitoring
+U40,5,VCC3V3,True,Auxiliary boost / fault monitoring
+R149,1,VCC3V3,True,Auxiliary boost / fault monitoring
+R149,2,AUX15V_LOGIC_SENSE,True,Auxiliary boost / fault monitoring
+R150,1,AUX15V_LOGIC_SENSE,True,Auxiliary boost / fault monitoring
+R150,2,AUX15V_EF_RTN,True,Auxiliary boost / fault monitoring
+R151,1,AUX15V_OV_N,True,Auxiliary boost / fault monitoring
+R151,2,AUX15V_EF_RTN,True,Auxiliary boost / fault monitoring
+C82,1,VCC3V3,True,Auxiliary boost / fault monitoring
+C82,2,GND,True,Auxiliary boost / fault monitoring
+R137,1,AUX15V,True,Auxiliary boost / fault monitoring
+R137,2,AUX15V_MON_SENSE,True,Auxiliary boost / fault monitoring
+R147,1,AUX15V_OV_SENSE,True,Auxiliary boost / fault monitoring
+R147,2,AUX15V_EF_RTN,True,Auxiliary boost / fault monitoring
+R148,1,VCC3V3,True,Auxiliary boost / fault monitoring
+R148,2,AUX15V_OV_N,True,Auxiliary boost / fault monitoring
+U18,1,FIELD_VGOOD_3V3,True,Protected Hall field supply
+U18,2,GND,True,Protected Hall field supply
+U18,3,FIELD_VSENSE,True,Protected Hall field supply
+U18,4,GND,True,Protected Hall field supply
+U18,5,VCC3V3,True,Protected Hall field supply
+U18,6,,True,Protected Hall field supply
+R80,1,FIELD_12V,True,Protected Hall field supply
+R80,2,FIELD_VDIV,True,Protected Hall field supply
+R81,1,FIELD_VDIV,True,Protected Hall field supply
+R81,2,GND,True,Protected Hall field supply
+R83,1,FIELD_VGOOD_3V3,True,Protected Hall field supply
+R83,2,VCC3V3,True,Protected Hall field supply
+U41,1,ARM_CLEAR_N,True,Common pulse permission
+U41,2,GND,True,Common pulse permission
+U41,3,FIELD_VGOOD_3V3,True,Common pulse permission
+U41,4,PULSE_CLEAR_N,True,Common pulse permission
+U41,5,VCC3V3,True,Common pulse permission
+U41,6,ALL_TORQUE_ENABLED,True,Common pulse permission
+U42,1,VIN_IDEAL_VCAP,True,Input ideal-diode bypass
+U42,2,GND,True,Input ideal-diode bypass
+U42,3,VIN12,True,Input ideal-diode bypass
+U42,4,VINRAW,True,Input ideal-diode bypass
+U42,5,VIN_IDEAL_GATE,True,Input ideal-diode bypass
+U42,6,VIN12,True,Input ideal-diode bypass
+C83,1,VCC3V3,True,Common pulse permission
+C83,2,GND,True,Common pulse permission
+C84,1,VIN_IDEAL_VCAP,True,Input ideal-diode bypass
+C84,2,VIN12,True,Input ideal-diode bypass
+C85,1,VIN12,True,Input ideal-diode bypass
+C85,2,GND,True,Input ideal-diode bypass
+Q11,1,VIN_IDEAL_GATE,True,Input ideal-diode bypass
+Q11,2,VIN12,True,Input ideal-diode bypass
+Q11,3,VINRAW,True,Input ideal-diode bypass
+D1,1,VINRAW,True,12V input / 5V buck
+D1,2,VIN12,True,12V input / 5V buck

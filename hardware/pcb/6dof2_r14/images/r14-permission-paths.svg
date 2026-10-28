@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="520" viewBox="0 0 1120 520">
+<defs><marker id="a" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="none" stroke="#546477"/></marker></defs>
+<rect width="1120" height="520" fill="#f5f7fa"/>
+<g font-family="Arial,sans-serif" fill="#203248"><text x="35" y="44" font-size="25" font-weight="bold">R14: pulse permission, holding torque and sensor evidence</text>
+<g fill="white" stroke="#a8b6c6" stroke-width="2">
+<rect x="35" y="85" width="230" height="92" rx="8"/><rect x="335" y="85" width="230" height="92" rx="8"/><rect x="665" y="85" width="410" height="92" rx="8"/>
+<rect x="35" y="240" width="230" height="112" rx="8"/><rect x="335" y="240" width="230" height="112" rx="8"/><rect x="665" y="240" width="410" height="112" rx="8"/>
+</g>
+<g font-size="19"><text x="53" y="116" font-weight="bold">Explicit operator request</text><text x="53" y="145">Fresh, qualified inputs</text>
+<text x="353" y="116" font-weight="bold">U11 pulse permission</text><text x="353" y="145">GPIO47 inhibit / 48 arm</text>
+<text x="683" y="116" font-weight="bold">Differential STEP/DIR to six drives</text><text x="683" y="145">Independent physical pulse-count validation</text>
+<text x="53" y="271" font-weight="bold">Six NC Hall channels</text><text x="53" y="300">Protected remote feed</text><text x="53" y="329">10 V minimum at sensors</text>
+<text x="353" y="271" font-weight="bold">Six torque latches</text><text x="353" y="300">Individual alarm clear</text><text x="353" y="329">Reset / release / AUX fault</text>
+<text x="683" y="271" font-weight="bold">Healthy drives can retain torque</text><text x="683" y="300">Ordinary pulse stop does not request release</text><text x="683" y="329">Independent machine E-stop still required</text></g>
+<g stroke="#546477" stroke-width="2.5" fill="none" marker-end="url(#a)"><path d="M265 130H335"/><path d="M565 130H665"/><path d="M565 296H665"/></g>
+<g stroke="#386b54" stroke-width="2.5" fill="none" marker-end="url(#a)"><path d="M150 240V207H400V177"/><path d="M450 240V177"/></g>
+<text x="35" y="410" font-size="19" fill="#986015">U41 direct hardware inhibit: field-good + all-torque loss clears U11; intentional rearm required.</text>
+<text x="35" y="446" font-size="18">Hall open is not proof of home. A build is not a timing test. CAD is not an assembled-board test.</text>
+<text x="35" y="482" font-size="17" fill="#64758a">Corrected master 2026-10-26 • Static checks pass • Assemble and bench-qualify before motion</text></g></svg>

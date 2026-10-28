@@ -3,7 +3,7 @@
 Desktop-scale **mini** variant of the Stewart-platform firmware: an **ESP32** driving
 **6 hobby servos via LEDC PWM**. This is one of two firmware variants in this repo — see
 [Firmware variants](../../docs/FIRMWARE.md) for the variant map. Both variants share the
-single [`stewart-core`](../stewart-core) submodule under `controller/` (IK / AxisScaling /
+single [`stewart-core`](https://github.com/knaufinator/stewart-core) submodule under `controller/` (IK / AxisScaling /
 MotionCueing — single source of truth).
 
 | | This variant (`controller/mini/`) | `controller/` (normal) |

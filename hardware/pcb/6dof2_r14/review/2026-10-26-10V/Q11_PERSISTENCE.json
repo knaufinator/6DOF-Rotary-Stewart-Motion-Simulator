@@ -1,0 +1,29 @@
+{
+  "status": "PASS_SAVED_CLOSED_REOPENED",
+  "schematic": {
+    "kind": "SCH",
+    "savedAndReopened": true,
+    "sku": "C155242"
+  },
+  "pcb": {
+    "kind": "PCB",
+    "savedAndReopened": true,
+    "sku": "C155242"
+  },
+  "reconciliation": [
+    {
+      "kind": "SCH",
+      "id": "aa9052d3e1f75b44",
+      "sku": "C155242",
+      "mpn": "DMN6075S-7",
+      "comment": "DMN6075S-7"
+    },
+    {
+      "kind": "PCB",
+      "id": "f71d2e163f55fb37",
+      "sku": "C155242",
+      "mpn": "DMN6075S-7",
+      "comment": "DMN6075S-7"
+    }
+  ]
+}

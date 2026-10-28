@@ -1,0 +1,79 @@
+﻿Interface,Pin,Expected,Actual,Result
+ESP32-S3,4,M0S_G,M0S_G,PASS
+ESP32-S3,5,M1S_G,M1S_G,PASS
+ESP32-S3,6,M2S_G,M2S_G,PASS
+ESP32-S3,7,M3S_G,M3S_G,PASS
+ESP32-S3,8,M4S_G,M4S_G,PASS
+ESP32-S3,9,M5S_G,M5S_G,PASS
+ESP32-S3,10,M0D_G,M0D_G,PASS
+ESP32-S3,11,M1D_G,M1D_G,PASS
+ESP32-S3,12,M2D_G,M2D_G,PASS
+ESP32-S3,13,M3D_G,M3D_G,PASS
+ESP32-S3,14,M4D_G,M4D_G,PASS
+ESP32-S3,17,M5D_G,M5D_G,PASS
+ESP32-S3,21,ESTOP_MCU,ESTOP_MCU,PASS
+ESP32-S3,47,MCU_INHIBIT,MCU_INHIBIT,PASS
+ESP32-S3,48,ARM_PULSE,ARM_PULSE,PASS
+ESP32-S3,35,MOSI,MOSI,PASS
+ESP32-S3,36,SCLK,SCLK,PASS
+ESP32-S3,37,MISO,MISO,PASS
+ESP32-S3,38,SCSN,SCSN,PASS
+ESP32-S3,39,INTN,INTN,PASS
+ESP32-S3,19,USB_DN_PIN,USB_DN_PIN,PASS
+ESP32-S3,20,USB_DP_PIN,USB_DP_PIN,PASS
+ESP32-S3,41,HALL_I2C_SDA,HALL_I2C_SDA,PASS
+ESP32-S3,42,HALL_I2C_SCL,HALL_I2C_SCL,PASS
+ESP32-S3,1,M0_ALARM,M0_ALARM,PASS
+ESP32-S3,2,M1_ALARM,M1_ALARM,PASS
+ESP32-S3,15,M2_ALARM,M2_ALARM,PASS
+ESP32-S3,16,M3_ALARM,M3_ALARM,PASS
+ESP32-S3,18,M4_ALARM,M4_ALARM,PASS
+ESP32-S3,40,M5_ALARM,M5_ALARM,PASS
+J3,3,M0S_P,M0S_P,PASS_LOGICAL_MAP; physical digit/cable gate
+J3,14,M0S_N,M0S_N,PASS_LOGICAL_MAP; physical digit/cable gate
+J3,4,M0D_P,M0D_P,PASS_LOGICAL_MAP; physical digit/cable gate
+J3,5,M0D_N,M0D_N,PASS_LOGICAL_MAP; physical digit/cable gate
+J3,6,M0_SRV_ON,M0_SRV_ON,PASS_LOGICAL_MAP; physical digit/cable gate
+J3,9,AUX15V,AUX15V,PASS_LOGICAL_MAP; physical digit/cable gate
+J3,10,GND,GND,PASS_LOGICAL_MAP; physical digit/cable gate
+J3,23,M0_ALARM_DRV,M0_ALARM_DRV,PASS_LOGICAL_MAP; physical digit/cable gate
+J4,3,M1S_P,M1S_P,PASS_LOGICAL_MAP; physical digit/cable gate
+J4,14,M1S_N,M1S_N,PASS_LOGICAL_MAP; physical digit/cable gate
+J4,4,M1D_P,M1D_P,PASS_LOGICAL_MAP; physical digit/cable gate
+J4,5,M1D_N,M1D_N,PASS_LOGICAL_MAP; physical digit/cable gate
+J4,6,M1_SRV_ON,M1_SRV_ON,PASS_LOGICAL_MAP; physical digit/cable gate
+J4,9,AUX15V,AUX15V,PASS_LOGICAL_MAP; physical digit/cable gate
+J4,10,GND,GND,PASS_LOGICAL_MAP; physical digit/cable gate
+J4,23,M1_ALARM_DRV,M1_ALARM_DRV,PASS_LOGICAL_MAP; physical digit/cable gate
+J5,3,M2S_P,M2S_P,PASS_LOGICAL_MAP; physical digit/cable gate
+J5,14,M2S_N,M2S_N,PASS_LOGICAL_MAP; physical digit/cable gate
+J5,4,M2D_P,M2D_P,PASS_LOGICAL_MAP; physical digit/cable gate
+J5,5,M2D_N,M2D_N,PASS_LOGICAL_MAP; physical digit/cable gate
+J5,6,M2_SRV_ON,M2_SRV_ON,PASS_LOGICAL_MAP; physical digit/cable gate
+J5,9,AUX15V,AUX15V,PASS_LOGICAL_MAP; physical digit/cable gate
+J5,10,GND,GND,PASS_LOGICAL_MAP; physical digit/cable gate
+J5,23,M2_ALARM_DRV,M2_ALARM_DRV,PASS_LOGICAL_MAP; physical digit/cable gate
+J6,3,M3S_P,M3S_P,PASS_LOGICAL_MAP; physical digit/cable gate
+J6,14,M3S_N,M3S_N,PASS_LOGICAL_MAP; physical digit/cable gate
+J6,4,M3D_P,M3D_P,PASS_LOGICAL_MAP; physical digit/cable gate
+J6,5,M3D_N,M3D_N,PASS_LOGICAL_MAP; physical digit/cable gate
+J6,6,M3_SRV_ON,M3_SRV_ON,PASS_LOGICAL_MAP; physical digit/cable gate
+J6,9,AUX15V,AUX15V,PASS_LOGICAL_MAP; physical digit/cable gate
+J6,10,GND,GND,PASS_LOGICAL_MAP; physical digit/cable gate
+J6,23,M3_ALARM_DRV,M3_ALARM_DRV,PASS_LOGICAL_MAP; physical digit/cable gate
+J7,3,M4S_P,M4S_P,PASS_LOGICAL_MAP; physical digit/cable gate
+J7,14,M4S_N,M4S_N,PASS_LOGICAL_MAP; physical digit/cable gate
+J7,4,M4D_P,M4D_P,PASS_LOGICAL_MAP; physical digit/cable gate
+J7,5,M4D_N,M4D_N,PASS_LOGICAL_MAP; physical digit/cable gate
+J7,6,M4_SRV_ON,M4_SRV_ON,PASS_LOGICAL_MAP; physical digit/cable gate
+J7,9,AUX15V,AUX15V,PASS_LOGICAL_MAP; physical digit/cable gate
+J7,10,GND,GND,PASS_LOGICAL_MAP; physical digit/cable gate
+J7,23,M4_ALARM_DRV,M4_ALARM_DRV,PASS_LOGICAL_MAP; physical digit/cable gate
+J8,3,M5S_P,M5S_P,PASS_LOGICAL_MAP; physical digit/cable gate
+J8,14,M5S_N,M5S_N,PASS_LOGICAL_MAP; physical digit/cable gate
+J8,4,M5D_P,M5D_P,PASS_LOGICAL_MAP; physical digit/cable gate
+J8,5,M5D_N,M5D_N,PASS_LOGICAL_MAP; physical digit/cable gate
+J8,6,M5_SRV_ON,M5_SRV_ON,PASS_LOGICAL_MAP; physical digit/cable gate
+J8,9,AUX15V,AUX15V,PASS_LOGICAL_MAP; physical digit/cable gate
+J8,10,GND,GND,PASS_LOGICAL_MAP; physical digit/cable gate
+J8,23,M5_ALARM_DRV,M5_ALARM_DRV,PASS_LOGICAL_MAP; physical digit/cable gate

@@ -17,13 +17,24 @@
 #include "esp_vfs.h"
 #include "driver/uart.h"
 #include "driver/uart_vfs.h"
-
-#define COBS_MAX_FRAME  512
+#include "esp_timer.h"
+#if CONFIG_ESP_CONSOLE_USB_SERIAL_JTAG
+#include "driver/usb_serial_jtag.h"
+#include "driver/usb_serial_jtag_vfs.h"
+#endif
 
 static SemaphoreHandle_t s_tx_mutex = NULL;
 static cobs_data_cb_t s_data_handler = NULL;
 static cobs_cmd_cb_t  s_cmd_handler  = NULL;
+static cobs_tx_sink_t s_tx_sink      = NULL;
 static int s_stdin_fd = -1;
+
+// motion sequence bookkeeping (DATA18_SEQ)
+static volatile uint32_t s_seq_frames = 0, s_seq_gaps = 0, s_seq_lost = 0, s_seq_restarts = 0;
+static volatile int64_t  s_motion_last_us = 0;
+static volatile int      s_motion_last_src = -1;
+static uint16_t s_seq_expect = 0;
+static bool     s_seq_valid = false;
 
 // Decoder accumulation buffer
 static uint8_t s_rx_acc[COBS_MAX_FRAME];
@@ -35,6 +46,16 @@ void cobs_transport_init(int baud_rate) {
     // Suppress ESP_LOG globally — raw log text corrupts the COBS stream.
     esp_log_level_set("*", ESP_LOG_NONE);
 
+#if CONFIG_ESP_CONSOLE_USB_SERIAL_JTAG
+    // Console is the native USB (J11). Install the driver so reads block/poll cleanly and
+    // writes are interrupt driven; 4 kB each way covers a 1 kHz motion stream with margin.
+    usb_serial_jtag_driver_config_t ucfg = USB_SERIAL_JTAG_DRIVER_CONFIG_DEFAULT();
+    ucfg.rx_buffer_size = 4096;
+    ucfg.tx_buffer_size = 4096;
+    usb_serial_jtag_driver_install(&ucfg);
+    usb_serial_jtag_vfs_use_driver();
+    (void)baud_rate;   // USB CDC has no baud rate
+#else
     // Set baud rate at runtime (sdkconfig defaults can be wrong after fullclean)
     uart_config_t cfg = {};
     cfg.baud_rate  = baud_rate;
@@ -51,6 +72,7 @@ void cobs_transport_init(int baud_rate) {
     // ESP_LINE_ENDINGS_LF = pass-through (no conversion).
     uart_vfs_dev_port_set_tx_line_endings(0, ESP_LINE_ENDINGS_LF);
     uart_vfs_dev_port_set_rx_line_endings(0, ESP_LINE_ENDINGS_LF);
+#endif
 
     // TX mutex for thread-safe frame writes
     s_tx_mutex = xSemaphoreCreateMutex();
@@ -98,8 +120,24 @@ void cobs_send(uint8_t channel, const uint8_t *payload, int payload_len) {
     if (s_out_fd < 0) s_out_fd = fileno(stdout);
 
     xSemaphoreTake(s_tx_mutex, portMAX_DELAY);
+#if CONFIG_ESP_CONSOLE_USB_SERIAL_JTAG
+    // The VFS write blocks forever once the 4 kB TX ring is full and no host drains the USB
+    // port (port closed, cable out). Write through the driver with a short bound instead, and
+    // skip the console entirely while no host is attached: the Ethernet mirror still gets it.
+    (void)s_out_fd;
+    // 0 ticks: write what fits in the 4 kB ring and drop the rest. With a terminal attached the
+    // ring drains and nothing is lost; without one, no frame costs more than a few microseconds
+    // (a 2 ms bound measured as exactly 2 ms added to every Ethernet reply).
+    if (usb_serial_jtag_is_connected())
+        usb_serial_jtag_write_bytes(enc, enc_len, 0);
+#else
     write(s_out_fd, enc, enc_len);
+#endif
     xSemaphoreGive(s_tx_mutex);
+
+    // mirror to the secondary carrier (Ethernet peer), outside the console mutex
+    cobs_tx_sink_t sink = s_tx_sink;
+    if (sink) sink(enc, enc_len);
 }
 
 void cobs_send_str(uint8_t channel, const char *str) {
@@ -128,7 +166,12 @@ void cobs_send_telemetry(const float angles[6], const float positions[6]) {
 
 // ── Receive & Dispatch (via VFS stdin — proven working path) ────────
 
-static void dispatch_frame(const uint8_t *data, int len) {
+static inline void note_motion(int source) {
+    s_motion_last_us = esp_timer_get_time();
+    s_motion_last_src = source;
+}
+
+void cobs_dispatch_frame(const uint8_t *data, int len, int source) {
     if (len < 1) return;
     uint8_t ch = data[0];
     const uint8_t *payload = data + 1;
@@ -136,8 +179,26 @@ static void dispatch_frame(const uint8_t *data, int len) {
 
     switch (ch) {
         case COBS_CH_DATA18:
-            if (s_data_handler && plen >= 18)
-                s_data_handler(payload, plen);
+            if (s_data_handler && plen >= 18) {
+                note_motion(source);
+                s_data_handler(payload, plen, source);
+            }
+            break;
+        case COBS_CH_DATA18_SEQ:
+            // [uint16 seq LE][18 bytes]: count gaps, then hand over the DATA18 part
+            if (s_data_handler && plen >= 20) {
+                uint16_t seq = (uint16_t)(payload[0] | (payload[1] << 8));
+                if (s_seq_valid && seq != s_seq_expect) {
+                    uint16_t d = (uint16_t)(seq - s_seq_expect);
+                    if (seq == 0 || d > 32768) { s_seq_restarts++; }   // sender restarted / reordered, not loss
+                    else { s_seq_gaps++; s_seq_lost += d; }
+                }
+                s_seq_expect = (uint16_t)(seq + 1);
+                s_seq_valid = true;
+                s_seq_frames++;
+                note_motion(source);
+                s_data_handler(payload + 2, plen - 2, source);
+            }
             break;
         case COBS_CH_CMD:
             if (s_cmd_handler && plen > 0) {
@@ -145,12 +206,26 @@ static void dispatch_frame(const uint8_t *data, int len) {
                 int clen = plen < 255 ? plen : 255;
                 memcpy(cmd, payload, clen);
                 cmd[clen] = '\0';
-                s_cmd_handler(cmd);
+                s_cmd_handler(cmd, source);
             }
             break;
         default:
             break;
     }
+}
+
+static inline void dispatch_frame(const uint8_t *data, int len) {
+    cobs_dispatch_frame(data, len, COBS_SRC_SERIAL);
+}
+
+void cobs_motion_stats(cobs_motion_stats_t *out) {
+    if (!out) return;
+    out->seq_frames = s_seq_frames;
+    out->seq_gaps = s_seq_gaps;
+    out->seq_lost = s_seq_lost;
+    out->seq_restarts = s_seq_restarts;
+    out->last_rx_age_ms = s_motion_last_us ? (uint32_t)((esp_timer_get_time() - s_motion_last_us) / 1000) : 0xFFFFFFFFu;
+    out->last_source = s_motion_last_src;
 }
 
 int cobs_read_process(int timeout_ms) {
@@ -180,3 +255,4 @@ int cobs_read_process(int timeout_ms) {
 
 void cobs_set_data_handler(cobs_data_cb_t handler) { s_data_handler = handler; }
 void cobs_set_cmd_handler(cobs_cmd_cb_t handler)   { s_cmd_handler  = handler; }
+void cobs_set_tx_sink(cobs_tx_sink_t sink)         { s_tx_sink = sink; }

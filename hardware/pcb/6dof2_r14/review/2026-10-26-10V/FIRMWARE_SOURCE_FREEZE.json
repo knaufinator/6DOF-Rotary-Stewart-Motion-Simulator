@@ -1,0 +1,147 @@
+{
+  "status": "SOURCE_FREEZE_NOT_PHYSICAL_QUALIFICATION",
+  "sharedCoreCommit": "118e6b0965cee674994bd66d7b9fb7f07c7420e8",
+  "files": [
+    {
+      "path": "app/src/serial_port.cpp",
+      "sha256": "808fc8972c4b5491faaa0ff4425b180fe7260b091bb142c0231ccefa2d35b292",
+      "canonicalSha256": "c7f2fc4f29b9c684df0cb6249672cbba07e59ec10c4ed7b6ec86717355ef52ad"
+    },
+    {
+      "path": "controller/include/R13BenchAxis.h",
+      "sha256": "fb3c4f34e88883894e6a56cca5aa14a95bf9508321567f2d2085ed623fb66d30",
+      "canonicalSha256": "fb3c4f34e88883894e6a56cca5aa14a95bf9508321567f2d2085ed623fb66d30"
+    },
+    {
+      "path": "controller/include/R13BenchPulse.h",
+      "sha256": "ba6e411f21398df7c8fcbad252f37168a0bb95f3a3b3893632a2f8ec9119bd55",
+      "canonicalSha256": "ba6e411f21398df7c8fcbad252f37168a0bb95f3a3b3893632a2f8ec9119bd55"
+    },
+    {
+      "path": "controller/include/R14SeekInterlock.h",
+      "sha256": "7c67451d004ec60c72b50ec6d1346e61738cd60a10052a69709f3308e8381364",
+      "canonicalSha256": "7c67451d004ec60c72b50ec6d1346e61738cd60a10052a69709f3308e8381364"
+    },
+    {
+      "path": "controller/include/SharedMcpwmStepEngine.h",
+      "sha256": "46300d739d1c49bafc89612212969b696462cb67a543f8103457f83a04b6a7e2",
+      "canonicalSha256": "46300d739d1c49bafc89612212969b696462cb67a543f8103457f83a04b6a7e2"
+    },
+    {
+      "path": "controller/include/StepDriver.h",
+      "sha256": "9544d2126dc127e4048cb36e041e00d21f72b0a5930b7981ab974f34c16276dc",
+      "canonicalSha256": "6de3ff4b26941508b65862d6b414a7f1c7b8df70f8590886d9698b375e32158b"
+    },
+    {
+      "path": "controller/include/DriveScaleValidation.h",
+      "sha256": "3ed593ba459c640566ec1c50776a6050a559bb667c0b237cee9318c692dfbd63",
+      "canonicalSha256": "3ed593ba459c640566ec1c50776a6050a559bb667c0b237cee9318c692dfbd63"
+    },
+    {
+      "path": "controller/include/R14BoardIo.h",
+      "sha256": "573504f32bc6b0353c6fd504d50d4589e0156e20e2d1bf3fa419d7fc58b4e1e4",
+      "canonicalSha256": "573504f32bc6b0353c6fd504d50d4589e0156e20e2d1bf3fa419d7fc58b4e1e4"
+    },
+    {
+      "path": "controller/include/R14Hardware.h",
+      "sha256": "1004dbc20ab2bf9e19ad1093d2c096a02c9c9fe6ce0f03ec020b67ed470d4e6e",
+      "canonicalSha256": "1004dbc20ab2bf9e19ad1093d2c096a02c9c9fe6ce0f03ec020b67ed470d4e6e"
+    },
+    {
+      "path": "controller/include/StepQuiescence.h",
+      "sha256": "5b516e1a903fda2a441b3fbc462532a76947d4230e5d545cb1c0ccc644f777a7",
+      "canonicalSha256": "5b516e1a903fda2a441b3fbc462532a76947d4230e5d545cb1c0ccc644f777a7"
+    },
+    {
+      "path": "controller/main/CMakeLists.txt",
+      "sha256": "198fce1a235b8c98131ce3850091098c563a0d273a32afff1a1e255cadc16e7a",
+      "canonicalSha256": "b6e7272270c2bf518b45ee71da910914353bca0a13bcbb8dce3006d220334ce5"
+    },
+    {
+      "path": "controller/main/LedStatus.cpp",
+      "sha256": "1d9fe58ddebc031dd11e4801aef079827f976732af8ac0da7f427c5f11d7e936",
+      "canonicalSha256": "1d9fe58ddebc031dd11e4801aef079827f976732af8ac0da7f427c5f11d7e936"
+    },
+    {
+      "path": "controller/main/R13BenchAxis.cpp",
+      "sha256": "d9bc8a18a361e95ea43e23bce46e74e81d9a7fc59971180ba80f33a3d71cd5bd",
+      "canonicalSha256": "d9bc8a18a361e95ea43e23bce46e74e81d9a7fc59971180ba80f33a3d71cd5bd"
+    },
+    {
+      "path": "controller/main/R14Hardware.cpp",
+      "sha256": "504cf77c86fa2986a31109a9de388545b81ae9d34715f7b7db81caf56036c444",
+      "canonicalSha256": "504cf77c86fa2986a31109a9de388545b81ae9d34715f7b7db81caf56036c444"
+    },
+    {
+      "path": "controller/main/main.cpp",
+      "sha256": "83bf63550449fb443e08cdedfdceec824f430ea4d1ad47696dd89c1b7078bef1",
+      "canonicalSha256": "83bf63550449fb443e08cdedfdceec824f430ea4d1ad47696dd89c1b7078bef1"
+    },
+    {
+      "path": "controller/tests/CMakeLists.txt",
+      "sha256": "f004b99b45abb0d2d1c54ccb234d4316a2ea3997ad3fb4a726d9c1ad25fccfcd",
+      "canonicalSha256": "1468b40a085eeffd777a3a441fcf94aacfd7e41d8c09f2b0a76b2b0aefbce52c"
+    },
+    {
+      "path": "controller/tests/test_framework.h",
+      "sha256": "4fce681d5cdec0eae053e882dc7292f5834addc1a786854fcd0c223faa5a1d50",
+      "canonicalSha256": "b7d61f81467f9ed01bca5d8f8a50abd4a6e2587fa81342451d99c71b68b7c71d"
+    },
+    {
+      "path": "controller/tests/test_main.cpp",
+      "sha256": "fe7540c6b3d80afc8abcfedc43bd821b33a107b2e9ce27e3fc10bc940b18f7e0",
+      "canonicalSha256": "304a056a5b4e17a7cc9e12b98db9c88a5150ba20afaa5181d2c8aceffdf250aa"
+    },
+    {
+      "path": "controller/tests/test_r13_bench_pulse.cpp",
+      "sha256": "297bf6fadd1688fd015f86d619771659527cbb6b7137f55a8d3744e6653c5ae4",
+      "canonicalSha256": "297bf6fadd1688fd015f86d619771659527cbb6b7137f55a8d3744e6653c5ae4"
+    },
+    {
+      "path": "controller/tests/test_r14_seek_interlock.cpp",
+      "sha256": "94c24c265ca66baed36d7d5eebfd3e12c9f4868d69ba02669b208ab198140b70",
+      "canonicalSha256": "94c24c265ca66baed36d7d5eebfd3e12c9f4868d69ba02669b208ab198140b70"
+    },
+    {
+      "path": "controller/tests/test_r14_board_io.cpp",
+      "sha256": "7e2c753d01ff03f07ff3eac8f1f76489d563124c15a30f8a9dfb7e6fb8479853",
+      "canonicalSha256": "7e2c753d01ff03f07ff3eac8f1f76489d563124c15a30f8a9dfb7e6fb8479853"
+    },
+    {
+      "path": "controller/tests/test_step_quiescence.cpp",
+      "sha256": "9ea0a319eeab9e44890a0480d5b03efb0a59b0b5afedac7fc8e4cd9a0954c730",
+      "canonicalSha256": "9ea0a319eeab9e44890a0480d5b03efb0a59b0b5afedac7fc8e4cd9a0954c730"
+    },
+    {
+      "path": "controller/tools/cobs_console.py",
+      "sha256": "34ac5b6f358b28f5a3334a983527be6e8d0d4db908c64c416a33ad0e0cdc37ba",
+      "canonicalSha256": "34ac5b6f358b28f5a3334a983527be6e8d0d4db908c64c416a33ad0e0cdc37ba"
+    },
+    {
+      "path": "hardware/pcb/6dof2_r13/bringup/linktest.py",
+      "sha256": "374d46a79c96024eac9390dbb24f00f69b6b2d67ebdeb884d335ac6ddc3b1537",
+      "canonicalSha256": "374d46a79c96024eac9390dbb24f00f69b6b2d67ebdeb884d335ac6ddc3b1537"
+    },
+    {
+      "path": "hardware/pcb/6dof2_r13/bringup/probe.py",
+      "sha256": "e4930a03be14729503f45bb4ed544dbf2b3e98e1a4a3333c38b70d37fa78822e",
+      "canonicalSha256": "e4930a03be14729503f45bb4ed544dbf2b3e98e1a4a3333c38b70d37fa78822e"
+    },
+    {
+      "path": "hardware/pcb/6dof2_r13/bringup/r13bench_core.py",
+      "sha256": "3099bd7d1f6ce77046112e4a3531c6996292fe01a154e37ea899753786a254bd",
+      "canonicalSha256": "3099bd7d1f6ce77046112e4a3531c6996292fe01a154e37ea899753786a254bd"
+    },
+    {
+      "path": "hardware/pcb/6dof2_r13/bringup/test_r13bench_core.py",
+      "sha256": "77f41c6b1a0bda8e9012be772293b6864fe55f8ebdf6c502754846560d403419",
+      "canonicalSha256": "77f41c6b1a0bda8e9012be772293b6864fe55f8ebdf6c502754846560d403419"
+    }
+  ],
+  "hostTestEvidence": "HOST_TESTS.log",
+  "physicalBoundary": "Recovered R13 only axis 0. Subsequent R14 ISR/adapter changes require physical qualification; normal motion admission remains locked.",
+  "hashConvention": {
+    "sha256": "Original preparation working-tree bytes. Retained as capture evidence.",
+    "canonicalSha256": "Source bytes with CRLF converted to LF; portable comparison against the committed source."
+  }
+}

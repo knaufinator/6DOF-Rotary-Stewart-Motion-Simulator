@@ -1,0 +1,51 @@
+{
+  "status": "ENGINEERING_CONTRACT_NOT_RELEASE",
+  "createdUtc": "2026-10-26T13:05:34.252074+00:00",
+  "baselineArchiveSha256": "d8311057b5f2ab4497c16169ba91a2d3b68f73e026eec1959fb1150e0d3c352a",
+  "requestedCable": "15 ft Ethernet, confirmed by owner",
+  "requiredCableMaxHotLoopOhmIncludingContacts": 2.0,
+  "monitorToRemoteAdditionalBoardLoopMaxOhm": 0.4,
+  "fieldCurrentScreenA": 0.25793501442729894,
+  "currentScreenLimitation": "TPS2662 table at VIN=24 V and VIN-VOUT=1 V; actual 12 V startup/fault response requires bench qualification, not a universal hard current ceiling",
+  "divider": {
+    "R80Ohm": 27000,
+    "R81Ohm": 1000,
+    "tolerance": 0.001,
+    "tcrPpm": 25,
+    "temperatureAllowanceC": 105,
+    "R82Ohm": 10000,
+    "seriesTolerancePlusDrift": 0.0205
+  },
+  "thresholdsV": {
+    "fall_min": 10.752752078117995,
+    "fall_max": 11.286455939441804,
+    "rise_min": 11.002996691394866,
+    "rise_max": 11.399241788143348
+  },
+  "conditionalSteadyRemoteFloorV": 10.133708043492478,
+  "inputRange": "Retain nominal 12 V input, maximum 12.6 V for compatibility with existing boost monitor. Low input inhibits; startup across every 11.4 V/load/temperature corner is not claimed.",
+  "powerCorrection": "Retain original D1 SS34 Schottky startup/surge path in parallel with LM74700QDBVRQ1 plus DMN6075S-7 ideal-diode stage; preserve reverse-polarity and reverse-current blocking, reduce steady forward loss.",
+  "pulseCorrection": "PULSE_CLEAR_N = ARM_CLEAR_N AND FIELD_VGOOD_3V3 AND ALL_TORQUE_ENABLED; U11.6 moves to new net, other torque-clear nets unchanged.",
+  "startup": "No automatic re-arm after field or torque loss; independent arm clocks permit torque first, pulse gate second.",
+  "unqualified": [
+    "dynamic remote voltage and maximum inhibit latency",
+    "actual cable construction and measured hot loop resistance",
+    "fuse hot drop and nominal 12 V startup budget",
+    "new ideal-diode inrush, removal and reverse-input behavior",
+    "factory allocation and assembly preview"
+  ],
+  "expectedComponentsAfterCorrection": 324,
+  "removedRefs": [
+    "D9"
+  ],
+  "newRefs": [
+    "U41",
+    "U42",
+    "Q11",
+    "C83",
+    "C84",
+    "C85"
+  ],
+  "note": "Explicit population: U18/R80/R81/R83 replaced; D9 removed; U41/U42/Q11/C83/C84/C85 added. D1, R82 and C47 retained.",
+  "stockRefresh": "Q11 C155242, exact same Diodes DMN6075S in 7-inch reel variant. See Q11_SOURCING_PREFLIGHT.json."
+}

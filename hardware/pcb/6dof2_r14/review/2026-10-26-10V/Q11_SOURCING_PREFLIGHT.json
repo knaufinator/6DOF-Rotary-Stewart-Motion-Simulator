@@ -1,0 +1,31 @@
+{
+  "componentCode": "C155242",
+  "componentModelEn": "DMN6075S-7",
+  "componentBrandEn": "Diodes Incorporated",
+  "componentSpecificationEn": "SOT-23",
+  "lcscComponentId": 166584,
+  "isBuyComponent": "1",
+  "allowPostFlag": true,
+  "miniNumLimit": "$undefined",
+  "preMinPurchaseNum": 43,
+  "encapsulationNumber": 3000,
+  "canPresaleNumber": 16242,
+  "overseasStockCount": 16865,
+  "lossNumber": 2,
+  "leastPatchNumber": 5,
+  "noBuyReason": null,
+  "initialPrice": 0.2105,
+  "checkedUtc": "2026-10-26T23:28:38.301445+00:00",
+  "url": "https://jlcpcb.com/partdetail/DiodesIncorporated-DMN6075S7/C155242",
+  "requiredQuantityFromUserOrderScreenshot": 7,
+  "availableOrderQty": 16242,
+  "availabilityEvidence": "JLC public product-page server data canPresaleNumber; page hook maps this to maxInStock and renders Available Order Qty. Not LCSC retail inventory.",
+  "status": "PASS_PUBLIC_JLC_AVAILABILITY_FINAL_ORDER_ALLOCATION_RECHECK_REQUIRED",
+  "compatibility": "Same Diodes DMN6075S electrical die and SOT23 package. Manufacturer datasheet DS37023 Rev7-2 lists -7 and -13 differing only in reel size/quantity. Preserve exact placed lands, pins, model and rotation.",
+  "otherWarning": {
+    "reference": "Y1",
+    "supplierPart": "C9006",
+    "ownerReport": "Additional placement/assembly charge; ignore warning, retain selected part",
+    "identityChanged": false
+  }
+}

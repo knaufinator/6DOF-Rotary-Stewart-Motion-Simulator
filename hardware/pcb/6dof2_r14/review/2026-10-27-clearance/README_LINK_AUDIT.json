@@ -1,0 +1,2717 @@
+{
+  "checkedUtc": "2026-10-27T23:54:41.354202+00:00",
+  "readmes": 30,
+  "linkOccurrences": 364,
+  "uniqueExternalUrls": 44,
+  "externalChecked": true,
+  "brokenOwned": [],
+  "brokenVendor": [
+    {
+      "readme": "controller/managed_components/espressif__led_strip/README.md",
+      "kind": "link",
+      "target": "http://www.world-semi.com/Certifications/WS2812B.html",
+      "vendor": true,
+      "status": "HTTP_BROKEN",
+      "httpStatus": 404
+    },
+    {
+      "readme": "controller/test_harness/managed_components/espressif__led_strip/README.md",
+      "kind": "link",
+      "target": "http://www.world-semi.com/Certifications/WS2812B.html",
+      "vendor": true,
+      "status": "HTTP_BROKEN",
+      "httpStatus": 404
+    }
+  ],
+  "unverifiedHttp": [
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-26-10V/README.md",
+      "kind": "link",
+      "target": "https://www.st.com/resource/en/datasheet/ldl1117.pdf",
+      "vendor": false,
+      "status": "HTTP_UNVERIFIED",
+      "error": "TimeoutError"
+    }
+  ],
+  "links": [
+    {
+      "readme": "app/README.md",
+      "kind": "link",
+      "target": "../README.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "app/README.md",
+      "kind": "link",
+      "target": "../controller/README.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "app/README.md",
+      "kind": "link",
+      "target": "../hardware/README.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "app/README.md",
+      "kind": "link",
+      "target": "../docs/BUILD.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "app/README.md",
+      "kind": "link",
+      "target": "../docs/FIRMWARE.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "app/README.md",
+      "kind": "link",
+      "target": "../docs/APP_GUIDE.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "app/README.md",
+      "kind": "link",
+      "target": "../docs/APP_AUTOMATION.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "app/README.md",
+      "kind": "link",
+      "target": "../hardware/pcb/6dof2_r14/README.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "app/README.md",
+      "kind": "link",
+      "target": "../hardware/pcb/6dof2_r14/FIRMWARE_STATUS.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "app/README.md",
+      "kind": "link",
+      "target": "https://opensource.org/licenses/MIT",
+      "vendor": false,
+      "status": "PASS_HTTP",
+      "httpStatus": 200,
+      "resolvedUrl": "https://opensource.org/license/MIT"
+    },
+    {
+      "readme": "app/README.md",
+      "kind": "image",
+      "target": "https://img.shields.io/badge/License-MIT-yellow.svg",
+      "vendor": false,
+      "status": "PASS_HTTP",
+      "httpStatus": 200,
+      "resolvedUrl": "https://img.shields.io/badge/License-MIT-yellow.svg"
+    },
+    {
+      "readme": "app/README.md",
+      "kind": "link",
+      "target": "https://www.espressif.com/en/products/socs/esp32s3",
+      "vendor": false,
+      "status": "PASS_HTTP",
+      "httpStatus": 200,
+      "resolvedUrl": "https://www.espressif.com/en/products/socs/esp32s3"
+    },
+    {
+      "readme": "app/README.md",
+      "kind": "image",
+      "target": "https://img.shields.io/badge/Platform-ESP32--S3-blue.svg",
+      "vendor": false,
+      "status": "PASS_HTTP",
+      "httpStatus": 200,
+      "resolvedUrl": "https://img.shields.io/badge/Platform-ESP32--S3-blue.svg"
+    },
+    {
+      "readme": "app/README.md",
+      "kind": "link",
+      "target": "https://docs.espressif.com/projects/esp-idf/en/v5.5/",
+      "vendor": false,
+      "status": "PASS_HTTP",
+      "httpStatus": 200,
+      "resolvedUrl": "https://docs.espressif.com/projects/esp-idf/en/v5.5/esp32/"
+    },
+    {
+      "readme": "app/README.md",
+      "kind": "image",
+      "target": "https://img.shields.io/badge/ESP--IDF-v5.5-green.svg",
+      "vendor": false,
+      "status": "PASS_HTTP",
+      "httpStatus": 200,
+      "resolvedUrl": "https://img.shields.io/badge/ESP--IDF-v5.5-green.svg"
+    },
+    {
+      "readme": "app/README.md",
+      "kind": "link",
+      "target": "#stepper-backend",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "app/README.md",
+      "kind": "image",
+      "target": "https://img.shields.io/badge/Step%20Rate-250%20kHz%20hardware-orange.svg",
+      "vendor": false,
+      "status": "PASS_HTTP",
+      "httpStatus": 200,
+      "resolvedUrl": "https://img.shields.io/badge/Step%20Rate-250%20kHz%20hardware-orange.svg"
+    },
+    {
+      "readme": "app/README.md",
+      "kind": "html",
+      "target": "https://www.paypal.me/knaufinator",
+      "vendor": false,
+      "status": "PASS_HTTP",
+      "httpStatus": 200,
+      "resolvedUrl": "https://www.paypal.com/paypalme/knaufinator"
+    },
+    {
+      "readme": "app/README.md",
+      "kind": "html",
+      "target": "https://img.shields.io/badge/💛_Support_This_Project-PayPal-00457C?style=for-the-badge&logo=paypal&logoColor=white",
+      "vendor": false,
+      "status": "PASS_HTTP",
+      "httpStatus": 200,
+      "resolvedUrl": "https://img.shields.io/badge/%F0%9F%92%9B_Support_This_Project-PayPal-00457C?style=for-the-badge&logo=paypal&logoColor=white"
+    },
+    {
+      "readme": "app/README.md",
+      "kind": "html",
+      "target": "../docs/images/app/overview.png",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "app/README.md",
+      "kind": "link",
+      "target": "../docs/APP_GUIDE.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "app/README.md",
+      "kind": "link",
+      "target": "../docs/APP_AUTOMATION.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "app/README.md",
+      "kind": "link",
+      "target": "../docs/APP_GUIDE.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "app/README.md",
+      "kind": "html",
+      "target": "https://www.youtube.com/watch?feature=player_embedded&v=fEcdGIq_Jzc",
+      "vendor": false,
+      "status": "PASS_HTTP",
+      "httpStatus": 200,
+      "resolvedUrl": "https://www.youtube.com/watch?feature=player_embedded&v=fEcdGIq_Jzc"
+    },
+    {
+      "readme": "app/README.md",
+      "kind": "html",
+      "target": "https://img.youtube.com/vi/fEcdGIq_Jzc/0.jpg",
+      "vendor": false,
+      "status": "PASS_HTTP",
+      "httpStatus": 200,
+      "resolvedUrl": "https://img.youtube.com/vi/fEcdGIq_Jzc/0.jpg"
+    },
+    {
+      "readme": "app/README.md",
+      "kind": "html",
+      "target": "https://www.youtube.com/watch?feature=player_embedded&v=1WXx59tWYc4",
+      "vendor": false,
+      "status": "PASS_HTTP",
+      "httpStatus": 200,
+      "resolvedUrl": "https://www.youtube.com/watch?feature=player_embedded&v=1WXx59tWYc4"
+    },
+    {
+      "readme": "app/README.md",
+      "kind": "html",
+      "target": "https://img.youtube.com/vi/1WXx59tWYc4/0.jpg",
+      "vendor": false,
+      "status": "PASS_HTTP",
+      "httpStatus": 200,
+      "resolvedUrl": "https://img.youtube.com/vi/1WXx59tWYc4/0.jpg"
+    },
+    {
+      "readme": "app/README.md",
+      "kind": "html",
+      "target": "https://www.youtube.com/watch?feature=player_embedded&v=_NR_MUGvmUo",
+      "vendor": false,
+      "status": "PASS_HTTP",
+      "httpStatus": 200,
+      "resolvedUrl": "https://www.youtube.com/watch?feature=player_embedded&v=_NR_MUGvmUo"
+    },
+    {
+      "readme": "app/README.md",
+      "kind": "html",
+      "target": "https://img.youtube.com/vi/_NR_MUGvmUo/0.jpg",
+      "vendor": false,
+      "status": "PASS_HTTP",
+      "httpStatus": 200,
+      "resolvedUrl": "https://img.youtube.com/vi/_NR_MUGvmUo/0.jpg"
+    },
+    {
+      "readme": "app/README.md",
+      "kind": "html",
+      "target": "https://www.youtube.com/watch?feature=player_embedded&v=CdDkL8X6qOE",
+      "vendor": false,
+      "status": "PASS_HTTP",
+      "httpStatus": 200,
+      "resolvedUrl": "https://www.youtube.com/watch?feature=player_embedded&v=CdDkL8X6qOE"
+    },
+    {
+      "readme": "app/README.md",
+      "kind": "html",
+      "target": "https://img.youtube.com/vi/CdDkL8X6qOE/0.jpg",
+      "vendor": false,
+      "status": "PASS_HTTP",
+      "httpStatus": 200,
+      "resolvedUrl": "https://img.youtube.com/vi/CdDkL8X6qOE/0.jpg"
+    },
+    {
+      "readme": "app/README.md",
+      "kind": "link",
+      "target": "../hardware/pcb/6DOF2_BOARD.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "app/README.md",
+      "kind": "link",
+      "target": "../hardware/pcb/6DOF2_FIRMWARE_TODO.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "app/README.md",
+      "kind": "html",
+      "target": "../docs/images/smse_250khz_logic_analyzer.png",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "app/README.md",
+      "kind": "link",
+      "target": "../hardware/pcb/",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "app/README.md",
+      "kind": "link",
+      "target": "../hardware/mechanical/",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "app/README.md",
+      "kind": "link",
+      "target": "../docs/BUILD.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "app/README.md",
+      "kind": "link",
+      "target": "../hardware/pcb/single_motor_test_plan.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "app/README.md",
+      "kind": "link",
+      "target": "https://aqtronic.com/wp-content/uploads/2025/04/AASD-15A-manual.pdf",
+      "vendor": false,
+      "status": "PASS_HTTP",
+      "httpStatus": 200,
+      "resolvedUrl": "https://aqtronic.com/wp-content/uploads/2025/04/AASD-15A-manual.pdf"
+    },
+    {
+      "readme": "app/README.md",
+      "kind": "link",
+      "target": "../docs/AASD15A_DRIVE_SETTINGS.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "app/README.md",
+      "kind": "link",
+      "target": "../hardware/mechanical/platform_geometry.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "app/README.md",
+      "kind": "link",
+      "target": "../LICENSE",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "controller/managed_components/espressif__led_strip/examples/led_strip_rmt_ws2812/README.md",
+      "kind": "link",
+      "target": "https://components.espressif.com/component/espressif/led_strip",
+      "vendor": true,
+      "status": "PASS_HTTP",
+      "httpStatus": 200,
+      "resolvedUrl": "https://components.espressif.com/components/espressif/led_strip/versions/3.1.1/readme"
+    },
+    {
+      "readme": "controller/managed_components/espressif__led_strip/examples/led_strip_rmt_ws2812/README.md",
+      "kind": "link",
+      "target": "main/led_strip_rmt_ws2812_main.c",
+      "vendor": true,
+      "status": "PASS"
+    },
+    {
+      "readme": "controller/managed_components/espressif__led_strip/examples/led_strip_rmt_ws2812/README.md",
+      "kind": "link",
+      "target": "https://docs.espressif.com/projects/esp-idf/en/latest/get-started/index.html",
+      "vendor": true,
+      "status": "PASS_HTTP",
+      "httpStatus": 200,
+      "resolvedUrl": "https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/index.html"
+    },
+    {
+      "readme": "controller/managed_components/espressif__led_strip/examples/led_strip_spi_ws2812/README.md",
+      "kind": "link",
+      "target": "https://components.espressif.com/component/espressif/led_strip",
+      "vendor": true,
+      "status": "PASS_HTTP",
+      "httpStatus": 200,
+      "resolvedUrl": "https://components.espressif.com/components/espressif/led_strip/versions/3.1.1/readme"
+    },
+    {
+      "readme": "controller/managed_components/espressif__led_strip/examples/led_strip_spi_ws2812/README.md",
+      "kind": "link",
+      "target": "main/led_strip_spi_ws2812_main.c",
+      "vendor": true,
+      "status": "PASS"
+    },
+    {
+      "readme": "controller/managed_components/espressif__led_strip/examples/led_strip_spi_ws2812/README.md",
+      "kind": "link",
+      "target": "https://docs.espressif.com/projects/esp-idf/en/latest/get-started/index.html",
+      "vendor": true,
+      "status": "PASS_HTTP",
+      "httpStatus": 200,
+      "resolvedUrl": "https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/index.html"
+    },
+    {
+      "readme": "controller/managed_components/espressif__led_strip/README.md",
+      "kind": "link",
+      "target": "https://components.espressif.com/components/espressif/led_strip",
+      "vendor": true,
+      "status": "PASS_HTTP",
+      "httpStatus": 200,
+      "resolvedUrl": "https://components.espressif.com/components/espressif/led_strip/versions/3.1.1/readme"
+    },
+    {
+      "readme": "controller/managed_components/espressif__led_strip/README.md",
+      "kind": "image",
+      "target": "https://components.espressif.com/components/espressif/led_strip/badge.svg",
+      "vendor": true,
+      "status": "PASS_HTTP",
+      "httpStatus": 200,
+      "resolvedUrl": "https://components.espressif.com/components/espressif/led_strip/badge.svg"
+    },
+    {
+      "readme": "controller/managed_components/espressif__led_strip/README.md",
+      "kind": "link",
+      "target": "http://www.world-semi.com/Certifications/WS2812B.html",
+      "vendor": true,
+      "status": "HTTP_BROKEN",
+      "httpStatus": 404
+    },
+    {
+      "readme": "controller/managed_components/espressif__led_strip/README.md",
+      "kind": "link",
+      "target": "https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/peripherals/rmt.html",
+      "vendor": true,
+      "status": "PASS_HTTP",
+      "httpStatus": 200,
+      "resolvedUrl": "https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/peripherals/rmt.html"
+    },
+    {
+      "readme": "controller/managed_components/espressif__led_strip/README.md",
+      "kind": "link",
+      "target": "https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/peripherals/spi_master.html",
+      "vendor": true,
+      "status": "PASS_HTTP",
+      "httpStatus": 200,
+      "resolvedUrl": "https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/peripherals/spi_master.html"
+    },
+    {
+      "readme": "controller/mini/README.md",
+      "kind": "link",
+      "target": "../../docs/FIRMWARE.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "controller/mini/README.md",
+      "kind": "link",
+      "target": "https://github.com/knaufinator/stewart-core",
+      "vendor": false,
+      "status": "PASS_HTTP",
+      "httpStatus": 200,
+      "resolvedUrl": "https://github.com/knaufinator/stewart-core"
+    },
+    {
+      "readme": "controller/mini/README.md",
+      "kind": "link",
+      "target": "../../hardware/mechanical/mini",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "controller/mini/README.md",
+      "kind": "link",
+      "target": "../../LICENSE",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "controller/README.md",
+      "kind": "link",
+      "target": "../README.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "controller/README.md",
+      "kind": "link",
+      "target": "../app/README.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "controller/README.md",
+      "kind": "link",
+      "target": "../docs/BUILD.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "controller/README.md",
+      "kind": "link",
+      "target": "../docs/FIRMWARE.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "controller/README.md",
+      "kind": "link",
+      "target": "../hardware/pcb/6dof2_r14/FIRMWARE_STATUS.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "controller/README.md",
+      "kind": "link",
+      "target": "../hardware/pcb/6dof2_r14/README.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "controller/README.md",
+      "kind": "link",
+      "target": "../hardware/pcb/6DOF2_BOARD.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "controller/README.md",
+      "kind": "link",
+      "target": "https://docs.espressif.com/projects/esp-idf/en/v5.5/get-started/index.html",
+      "vendor": false,
+      "status": "PASS_HTTP",
+      "httpStatus": 200,
+      "resolvedUrl": "https://docs.espressif.com/projects/esp-idf/en/v5.5/esp32/get-started/index.html"
+    },
+    {
+      "readme": "controller/README.md",
+      "kind": "link",
+      "target": "../app/README.md#desktop-app",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "controller/README.md",
+      "kind": "link",
+      "target": "../docs/FIRMWARE.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "controller/README.md",
+      "kind": "link",
+      "target": "../hardware/pcb/single_motor_test_plan.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "controller/README.md",
+      "kind": "link",
+      "target": "../hardware/pcb/6DOF2_FIRMWARE_TODO.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "controller/README.md",
+      "kind": "link",
+      "target": "../hardware/mechanical/platform_geometry.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "controller/README.md",
+      "kind": "link",
+      "target": "../app/",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "controller/README.md",
+      "kind": "link",
+      "target": "https://docs.espressif.com/projects/esp-idf/en/v5.5/",
+      "vendor": false,
+      "status": "PASS_HTTP",
+      "httpStatus": 200,
+      "resolvedUrl": "https://docs.espressif.com/projects/esp-idf/en/v5.5/esp32/"
+    },
+    {
+      "readme": "controller/README.md",
+      "kind": "link",
+      "target": "../LICENSE",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "controller/test_harness/managed_components/espressif__led_strip/examples/led_strip_rmt_ws2812/README.md",
+      "kind": "link",
+      "target": "https://components.espressif.com/component/espressif/led_strip",
+      "vendor": true,
+      "status": "PASS_HTTP",
+      "httpStatus": 200,
+      "resolvedUrl": "https://components.espressif.com/components/espressif/led_strip/versions/3.1.1/readme"
+    },
+    {
+      "readme": "controller/test_harness/managed_components/espressif__led_strip/examples/led_strip_rmt_ws2812/README.md",
+      "kind": "link",
+      "target": "main/led_strip_rmt_ws2812_main.c",
+      "vendor": true,
+      "status": "PASS"
+    },
+    {
+      "readme": "controller/test_harness/managed_components/espressif__led_strip/examples/led_strip_rmt_ws2812/README.md",
+      "kind": "link",
+      "target": "https://docs.espressif.com/projects/esp-idf/en/latest/get-started/index.html",
+      "vendor": true,
+      "status": "PASS_HTTP",
+      "httpStatus": 200,
+      "resolvedUrl": "https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/index.html"
+    },
+    {
+      "readme": "controller/test_harness/managed_components/espressif__led_strip/examples/led_strip_spi_ws2812/README.md",
+      "kind": "link",
+      "target": "https://components.espressif.com/component/espressif/led_strip",
+      "vendor": true,
+      "status": "PASS_HTTP",
+      "httpStatus": 200,
+      "resolvedUrl": "https://components.espressif.com/components/espressif/led_strip/versions/3.1.1/readme"
+    },
+    {
+      "readme": "controller/test_harness/managed_components/espressif__led_strip/examples/led_strip_spi_ws2812/README.md",
+      "kind": "link",
+      "target": "main/led_strip_spi_ws2812_main.c",
+      "vendor": true,
+      "status": "PASS"
+    },
+    {
+      "readme": "controller/test_harness/managed_components/espressif__led_strip/examples/led_strip_spi_ws2812/README.md",
+      "kind": "link",
+      "target": "https://docs.espressif.com/projects/esp-idf/en/latest/get-started/index.html",
+      "vendor": true,
+      "status": "PASS_HTTP",
+      "httpStatus": 200,
+      "resolvedUrl": "https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/index.html"
+    },
+    {
+      "readme": "controller/test_harness/managed_components/espressif__led_strip/README.md",
+      "kind": "link",
+      "target": "https://components.espressif.com/components/espressif/led_strip",
+      "vendor": true,
+      "status": "PASS_HTTP",
+      "httpStatus": 200,
+      "resolvedUrl": "https://components.espressif.com/components/espressif/led_strip/versions/3.1.1/readme"
+    },
+    {
+      "readme": "controller/test_harness/managed_components/espressif__led_strip/README.md",
+      "kind": "image",
+      "target": "https://components.espressif.com/components/espressif/led_strip/badge.svg",
+      "vendor": true,
+      "status": "PASS_HTTP",
+      "httpStatus": 200,
+      "resolvedUrl": "https://components.espressif.com/components/espressif/led_strip/badge.svg"
+    },
+    {
+      "readme": "controller/test_harness/managed_components/espressif__led_strip/README.md",
+      "kind": "link",
+      "target": "http://www.world-semi.com/Certifications/WS2812B.html",
+      "vendor": true,
+      "status": "HTTP_BROKEN",
+      "httpStatus": 404
+    },
+    {
+      "readme": "controller/test_harness/managed_components/espressif__led_strip/README.md",
+      "kind": "link",
+      "target": "https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/peripherals/rmt.html",
+      "vendor": true,
+      "status": "PASS_HTTP",
+      "httpStatus": 200,
+      "resolvedUrl": "https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/peripherals/rmt.html"
+    },
+    {
+      "readme": "controller/test_harness/managed_components/espressif__led_strip/README.md",
+      "kind": "link",
+      "target": "https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/peripherals/spi_master.html",
+      "vendor": true,
+      "status": "PASS_HTTP",
+      "httpStatus": 200,
+      "resolvedUrl": "https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/peripherals/spi_master.html"
+    },
+    {
+      "readme": "controller/test_harness/README.md",
+      "kind": "link",
+      "target": "main/main.c",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "controller/test_harness/README.md",
+      "kind": "link",
+      "target": "../../hardware/pcb/6DOF2_FIRMWARE_TODO.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "controller/test_harness/README.md",
+      "kind": "link",
+      "target": "../../hardware/pcb/6dof2_r14/FIRMWARE_STATUS.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "controller/test_harness/README.md",
+      "kind": "link",
+      "target": "main/CMakeLists.txt",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "controller/test_harness/README.md",
+      "kind": "link",
+      "target": "sdkconfig.defaults",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "docs/README.md",
+      "kind": "link",
+      "target": "../README.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "docs/README.md",
+      "kind": "link",
+      "target": "../controller/README.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "docs/README.md",
+      "kind": "link",
+      "target": "../app/README.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "docs/README.md",
+      "kind": "link",
+      "target": "../hardware/README.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "docs/README.md",
+      "kind": "link",
+      "target": "BUILD.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "docs/README.md",
+      "kind": "link",
+      "target": "FIRMWARE.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "docs/README.md",
+      "kind": "link",
+      "target": "APP_GUIDE.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "docs/README.md",
+      "kind": "link",
+      "target": "APP_AUTOMATION.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "docs/README.md",
+      "kind": "link",
+      "target": "ARCHITECTURE.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "docs/README.md",
+      "kind": "link",
+      "target": "../hardware/pcb/6dof2_r14/FIRMWARE_STATUS.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "docs/README.md",
+      "kind": "link",
+      "target": "../hardware/pcb/6dof2_r14/README.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "docs/README.md",
+      "kind": "link",
+      "target": "../hardware/pcb/6dof2_r14/DESIGN_PHILOSOPHY.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r13/bringup/README.md",
+      "kind": "link",
+      "target": "../../6dof2_r14/review/r13-recovered-source/README.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r13/bringup/README.md",
+      "kind": "link",
+      "target": "../../6dof2_r14/FIRMWARE_STATUS.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r13/bringup/README.md",
+      "kind": "link",
+      "target": "../../6dof2_r14/BRINGUP.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r13/r13-rc4-2026-09-23/README.md",
+      "kind": "link",
+      "target": "STATUS.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r13/r13-rc4-2026-09-23/README.md",
+      "kind": "link",
+      "target": "source/6DOF2-r13-rc4-20260923-UNTESTED.epro2",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r13/r13-rc4-2026-09-23/README.md",
+      "kind": "link",
+      "target": "drawings/6DOF2_r13_Schematic_Review.pdf",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r13/r13-rc4-2026-09-23/README.md",
+      "kind": "link",
+      "target": "drawings/208_final_pcb_review.png",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r13/r13-rc4-2026-09-23/README.md",
+      "kind": "link",
+      "target": "mechanical/6DOF2_r13_assembly.step",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r13/r13-rc4-2026-09-23/README.md",
+      "kind": "link",
+      "target": "fabrication/6DOF2_r13_Gerber.zip",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r13/r13-rc4-2026-09-23/README.md",
+      "kind": "link",
+      "target": "assembly/6DOF2_r13_BOM_JLC.csv",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r13/r13-rc4-2026-09-23/README.md",
+      "kind": "link",
+      "target": "assembly/6DOF2_r13_CPL_JLC.csv",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r13/r13-rc4-2026-09-23/README.md",
+      "kind": "link",
+      "target": "../HOW_TO_BUY.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r13/r13-rc4-2026-09-23/README.md",
+      "kind": "link",
+      "target": "../../6DOF2_FIRMWARE_TODO.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r13/README.md",
+      "kind": "link",
+      "target": "../6dof2_r14/FIRMWARE_STATUS.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r13/README.md",
+      "kind": "link",
+      "target": "../6dof2_r14/README.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r13/README.md",
+      "kind": "link",
+      "target": "r13-rc4-2026-09-23/README.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r13/README.md",
+      "kind": "link",
+      "target": "r13-rc4-2026-09-23/README.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r13/README.md",
+      "kind": "link",
+      "target": "../6DOF2_FIRMWARE_TODO.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r13/README.md",
+      "kind": "link",
+      "target": "../6DOF2_BOARD.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r13/README.md",
+      "kind": "link",
+      "target": "HOW_TO_BUY.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r13/README.md",
+      "kind": "link",
+      "target": "HOW_TO_USE.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/exports/2026-10-26/README.md",
+      "kind": "link",
+      "target": "../../MECHANICAL_CORRECTION.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/exports/2026-10-26/README.md",
+      "kind": "link",
+      "target": "../../review/2026-10-27-clearance/README.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/exports/2026-10-26/README.md",
+      "kind": "link",
+      "target": "R14-Gerber-FS36.zip",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/exports/2026-10-26/README.md",
+      "kind": "link",
+      "target": "R14-BOM-JLC.csv",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/exports/2026-10-26/README.md",
+      "kind": "link",
+      "target": "R14-CPL-JLC.csv",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/exports/2026-10-26/README.md",
+      "kind": "link",
+      "target": "R14-project.epro2",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/exports/2026-10-26/README.md",
+      "kind": "link",
+      "target": "R14-schematic.svg",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/exports/2026-10-26/README.md",
+      "kind": "link",
+      "target": "R14-assembly.step.zip",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/exports/2026-10-26/README.md",
+      "kind": "link",
+      "target": "RELEASE_MANIFEST.json",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/exports/2026-10-26/README.md",
+      "kind": "link",
+      "target": "../../drawings/R14-PCB.pdf",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/exports/2026-10-26/README.md",
+      "kind": "link",
+      "target": "../../drawings/R14-schematic.pdf",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/exports/2026-10-26/README.md",
+      "kind": "link",
+      "target": "../../DECISIONS.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/exports/2026-10-26/README.md",
+      "kind": "link",
+      "target": "../../REVIEW_METHOD.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/exports/2026-10-26/README.md",
+      "kind": "link",
+      "target": "../../ORDER_RECORD.json",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/exports/2026-10-26/README.md",
+      "kind": "link",
+      "target": "../../review/2026-10-26-10V/Q11_STOCK_REFRESH.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/exports/2026-10-26/README.md",
+      "kind": "link",
+      "target": "../../review/2026-10-26-10V/README.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/exports/2026-10-26/README.md",
+      "kind": "link",
+      "target": "../../BRINGUP.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/exports/2026-10-27-clearance/README.md",
+      "kind": "link",
+      "target": "../../MECHANICAL_CORRECTION.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/exports/2026-10-27-clearance/README.md",
+      "kind": "link",
+      "target": "../../review/2026-10-27-clearance/README.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/exports/2026-10-27-clearance/README.md",
+      "kind": "link",
+      "target": "RELEASE_MANIFEST.json",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/exports/2026-10-27-clearance/README.md",
+      "kind": "link",
+      "target": "R14-Gerber-FS36.zip",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/exports/2026-10-27-clearance/README.md",
+      "kind": "link",
+      "target": "R14-BOM-JLC.csv",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/exports/2026-10-27-clearance/README.md",
+      "kind": "link",
+      "target": "R14-CPL-JLC.csv",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/exports/2026-10-27-clearance/README.md",
+      "kind": "link",
+      "target": "R14-project.epro2",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/exports/2026-10-27-clearance/README.md",
+      "kind": "link",
+      "target": "R14-assembly.step.zip",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/exports/2026-10-27-clearance/README.md",
+      "kind": "link",
+      "target": "R14-schematic.svg",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/exports/2026-10-27-clearance/README.md",
+      "kind": "link",
+      "target": "EXPORT_VALIDATION.json",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/exports/2026-10-27-clearance/README.md",
+      "kind": "link",
+      "target": "../2026-10-26/README.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/exports/2026-10-27-clearance/README.md",
+      "kind": "link",
+      "target": "../../drawings/R14C1-PCB.pdf",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/exports/2026-10-27-clearance/README.md",
+      "kind": "link",
+      "target": "../../drawings/R14C1-PCB-top.svg",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/exports/2026-10-27-clearance/README.md",
+      "kind": "link",
+      "target": "../../drawings/R14-schematic.pdf",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/exports/README.md",
+      "kind": "link",
+      "target": "2026-10-27-clearance/README.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/exports/README.md",
+      "kind": "link",
+      "target": "../README.md#pcb-and-schematic",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/exports/README.md",
+      "kind": "link",
+      "target": "../MECHANICAL_CORRECTION.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/exports/README.md",
+      "kind": "link",
+      "target": "2026-10-26/README.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/exports/README.md",
+      "kind": "link",
+      "target": "../ORDER_RECORD.json",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/README.md",
+      "kind": "link",
+      "target": "MECHANICAL_CORRECTION.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/README.md",
+      "kind": "link",
+      "target": "review/2026-10-27-clearance/README.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/README.md",
+      "kind": "link",
+      "target": "DECISIONS.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/README.md",
+      "kind": "link",
+      "target": "DESIGN_PHILOSOPHY.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/README.md",
+      "kind": "link",
+      "target": "REVIEW_METHOD.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/README.md",
+      "kind": "link",
+      "target": "FIRMWARE_STATUS.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/README.md",
+      "kind": "link",
+      "target": "BRINGUP.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/README.md",
+      "kind": "link",
+      "target": "ORDER_RECORD.json",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/README.md",
+      "kind": "image",
+      "target": "images/r14c1-pcb-top.png",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/README.md",
+      "kind": "link",
+      "target": "drawings/R14C1-PCB.pdf",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/README.md",
+      "kind": "link",
+      "target": "drawings/R14C1-PCB-top.svg",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/README.md",
+      "kind": "link",
+      "target": "exports/2026-10-27-clearance/R14-project.epro2",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/README.md",
+      "kind": "image",
+      "target": "images/r14-schematic-details.png",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/README.md",
+      "kind": "link",
+      "target": "drawings/R14-schematic.pdf",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/README.md",
+      "kind": "link",
+      "target": "exports/2026-10-27-clearance/R14-schematic.svg",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/README.md",
+      "kind": "image",
+      "target": "images/r14c1-clearance-before-after.png",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/README.md",
+      "kind": "link",
+      "target": "exports/2026-10-27-clearance/R14-assembly.step.zip",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/README.md",
+      "kind": "link",
+      "target": "exports/2026-10-27-clearance/R14-Gerber-FS36.zip",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/README.md",
+      "kind": "link",
+      "target": "exports/2026-10-27-clearance/R14-BOM-JLC.csv",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/README.md",
+      "kind": "link",
+      "target": "exports/2026-10-27-clearance/R14-CPL-JLC.csv",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/README.md",
+      "kind": "link",
+      "target": "exports/2026-10-27-clearance/R14-project.epro2",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/README.md",
+      "kind": "link",
+      "target": "exports/2026-10-27-clearance/README.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/README.md",
+      "kind": "link",
+      "target": "exports/2026-10-26/README.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/README.md",
+      "kind": "link",
+      "target": "review/2026-10-27-clearance/README.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/README.md",
+      "kind": "link",
+      "target": "BRINGUP.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-26-10V/README.md",
+      "kind": "link",
+      "target": "../../MECHANICAL_CORRECTION.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-26-10V/README.md",
+      "kind": "link",
+      "target": "../../review/2026-10-27-clearance/README.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-26-10V/README.md",
+      "kind": "link",
+      "target": "../../exports/2026-10-26/README.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-26-10V/README.md",
+      "kind": "link",
+      "target": "../../ORDER_RECORD.json",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-26-10V/README.md",
+      "kind": "image",
+      "target": "../../images/r14-10v-assembly.png",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-26-10V/README.md",
+      "kind": "link",
+      "target": "Q11_STOCK_REFRESH.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-26-10V/README.md",
+      "kind": "link",
+      "target": "../R14-complete-design-review-2026-10-25.pdf",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-26-10V/README.md",
+      "kind": "link",
+      "target": "every-component.csv",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-26-10V/README.md",
+      "kind": "link",
+      "target": "every-pin.csv",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-26-10V/README.md",
+      "kind": "link",
+      "target": "every-trace-via-fill.csv",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-26-10V/README.md",
+      "kind": "link",
+      "target": "every-label.csv",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-26-10V/README.md",
+      "kind": "link",
+      "target": "interface-contract.csv",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-26-10V/README.md",
+      "kind": "link",
+      "target": "COVERAGE.json",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-26-10V/README.md",
+      "kind": "image",
+      "target": "../../images/r14-10v-power-path.svg",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-26-10V/README.md",
+      "kind": "link",
+      "target": "VOLTAGE_CONTRACT.json",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-26-10V/README.md",
+      "kind": "link",
+      "target": "DEVICE_RELINK_PROOF.json",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-26-10V/README.md",
+      "kind": "link",
+      "target": "NATIVE_VERIFICATION.json",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-26-10V/README.md",
+      "kind": "link",
+      "target": "DELTA_SUPPLEMENT.json",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-26-10V/README.md",
+      "kind": "link",
+      "target": "ACTUAL_CAM_REVIEW.json",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-26-10V/README.md",
+      "kind": "link",
+      "target": "DRILL_REVIEW.json",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-26-10V/README.md",
+      "kind": "link",
+      "target": "APERTURE_REVIEW.json",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-26-10V/README.md",
+      "kind": "link",
+      "target": "SIGNAL_REFERENCE_REVIEW.json",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-26-10V/README.md",
+      "kind": "link",
+      "target": "SILK_REVIEW.json",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-26-10V/README.md",
+      "kind": "link",
+      "target": "../../exports/2026-10-26/STEP_VERIFICATION.json",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-26-10V/README.md",
+      "kind": "image",
+      "target": "../../images/r14-10v-power-silk.png",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-26-10V/README.md",
+      "kind": "image",
+      "target": "../../images/r14-10v-monitor-silk.png",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-26-10V/README.md",
+      "kind": "image",
+      "target": "../../images/r14-10v-pulse-silk.png",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-26-10V/README.md",
+      "kind": "link",
+      "target": "DB25_DIGITS.png",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-26-10V/README.md",
+      "kind": "link",
+      "target": "../r13-recovered-source/README.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-26-10V/README.md",
+      "kind": "link",
+      "target": "../../FIRMWARE_STATUS.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-26-10V/README.md",
+      "kind": "link",
+      "target": "../../BRINGUP.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-26-10V/README.md",
+      "kind": "link",
+      "target": "https://www.ti.com/lit/ds/symlink/tlv6700.pdf",
+      "vendor": false,
+      "status": "PASS_HTTP",
+      "httpStatus": 200,
+      "resolvedUrl": "https://www.ti.com/lit/ds/symlink/tlv6700.pdf"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-26-10V/README.md",
+      "kind": "link",
+      "target": "https://www.ti.com/lit/ds/symlink/tps2662.pdf",
+      "vendor": false,
+      "status": "PASS_HTTP",
+      "httpStatus": 200,
+      "resolvedUrl": "https://www.ti.com/lit/ds/symlink/tps2662.pdf"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-26-10V/README.md",
+      "kind": "link",
+      "target": "https://www.ti.com/lit/ds/symlink/lm74700-q1.pdf",
+      "vendor": false,
+      "status": "PASS_HTTP",
+      "httpStatus": 200,
+      "resolvedUrl": "https://www.ti.com/lit/ds/symlink/lm74700-q1.pdf"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-26-10V/README.md",
+      "kind": "link",
+      "target": "https://www.diodes.com/datasheet/download/DMN6075S.pdf",
+      "vendor": false,
+      "status": "PASS_HTTP",
+      "httpStatus": 200,
+      "resolvedUrl": "https://www.diodes.com/datasheet/download/DMN6075S.pdf"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-26-10V/README.md",
+      "kind": "link",
+      "target": "https://www.ti.com/lit/ds/symlink/am26ls31.pdf",
+      "vendor": false,
+      "status": "PASS_HTTP",
+      "httpStatus": 200,
+      "resolvedUrl": "https://www.ti.com/lit/ds/symlink/am26ls31.pdf"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-26-10V/README.md",
+      "kind": "link",
+      "target": "https://www.ti.com/lit/ds/symlink/sn74lvc1g74.pdf",
+      "vendor": false,
+      "status": "PASS_HTTP",
+      "httpStatus": 200,
+      "resolvedUrl": "https://www.ti.com/lit/ds/symlink/sn74lvc1g74.pdf"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-26-10V/README.md",
+      "kind": "link",
+      "target": "https://www.ti.com/lit/ds/symlink/sn74lvc1g11.pdf",
+      "vendor": false,
+      "status": "PASS_HTTP",
+      "httpStatus": 200,
+      "resolvedUrl": "https://www.ti.com/lit/ds/symlink/sn74lvc1g11.pdf"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-26-10V/README.md",
+      "kind": "link",
+      "target": "https://www.ti.com/lit/ds/symlink/ina226.pdf",
+      "vendor": false,
+      "status": "PASS_HTTP",
+      "httpStatus": 200,
+      "resolvedUrl": "https://www.ti.com/lit/ds/symlink/ina226.pdf"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-26-10V/README.md",
+      "kind": "link",
+      "target": "https://ww1.microchip.com/downloads/aemDocuments/documents/APID/ProductDocuments/DataSheets/MCP23017-Data-Sheet-DS20001952.pdf",
+      "vendor": false,
+      "status": "PASS_HTTP",
+      "httpStatus": 200,
+      "resolvedUrl": "https://ww1.microchip.com/downloads/aemDocuments/documents/APID/ProductDocuments/DataSheets/MCP23017-Data-Sheet-DS20001952.pdf"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-26-10V/README.md",
+      "kind": "link",
+      "target": "https://docs.wiznet.io/img/products/w5500/W5500_ds_v110e.pdf",
+      "vendor": false,
+      "status": "PASS_HTTP",
+      "httpStatus": 200,
+      "resolvedUrl": "https://docs.wiznet.io/img/products/w5500/W5500_ds_v110e.pdf"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-26-10V/README.md",
+      "kind": "link",
+      "target": "https://www.st.com/resource/en/datasheet/ldl1117.pdf",
+      "vendor": false,
+      "status": "HTTP_UNVERIFIED",
+      "error": "TimeoutError"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-26-10V/README.md",
+      "kind": "link",
+      "target": "../../SENSOR_IO_SELECTION.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-26-10V/README.md",
+      "kind": "link",
+      "target": "../../FIELD_INTERFACE_CONTRACT.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-26-10V/README.md",
+      "kind": "link",
+      "target": "../../ALARM_INPUT_RESISTOR_REVIEW.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-26-10V/README.md",
+      "kind": "link",
+      "target": "../R14-complete-design-review-2026-10-25.pdf",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-26-10V/README.md",
+      "kind": "link",
+      "target": "../../exports/2026-10-26/RELEASE_MANIFEST.json",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-27-clearance/README.md",
+      "kind": "link",
+      "target": "../2026-10-26-10V/README.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-27-clearance/README.md",
+      "kind": "image",
+      "target": "../../images/r14c1-clearance-before-after.png",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-27-clearance/README.md",
+      "kind": "image",
+      "target": "../../images/r14c1-j12-clearance-proof.png",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-27-clearance/README.md",
+      "kind": "link",
+      "target": "LIVE_CURRENT_PARITY.json",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-27-clearance/README.md",
+      "kind": "link",
+      "target": "../../images/r14c1-live-editor.png",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-27-clearance/README.md",
+      "kind": "link",
+      "target": "J12_CLEARANCE_PROOF.json",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-27-clearance/README.md",
+      "kind": "link",
+      "target": "every-component-dimensions.csv",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-27-clearance/README.md",
+      "kind": "link",
+      "target": "BODY_LIMITS.json",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-27-clearance/README.md",
+      "kind": "link",
+      "target": "ALL_BODY_OUTLINES_REVIEW.json",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-27-clearance/README.md",
+      "kind": "link",
+      "target": "every-component-outline.csv",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-27-clearance/README.md",
+      "kind": "link",
+      "target": "MECHANICAL_REVIEW.json",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-27-clearance/README.md",
+      "kind": "link",
+      "target": "ORDERED_COLLISION_FINDINGS.json",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-27-clearance/README.md",
+      "kind": "link",
+      "target": "INTERNAL_CLEARANCE_REVIEW.json",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-27-clearance/README.md",
+      "kind": "link",
+      "target": "STEP_POSE_PARITY.json",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-27-clearance/README.md",
+      "kind": "link",
+      "target": "placement-changes.csv",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-27-clearance/README.md",
+      "kind": "link",
+      "target": "ELECTRICAL_FIRMWARE_PARITY.json",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-27-clearance/README.md",
+      "kind": "link",
+      "target": "ACTUAL_CAM_REVIEW.json",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-27-clearance/README.md",
+      "kind": "link",
+      "target": "every-trace-via-fill.csv",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-27-clearance/README.md",
+      "kind": "link",
+      "target": "GROUND_JOINS.json",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-27-clearance/README.md",
+      "kind": "link",
+      "target": "DRILL_REVIEW.json",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-27-clearance/README.md",
+      "kind": "link",
+      "target": "APERTURE_REVIEW.json",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-27-clearance/README.md",
+      "kind": "link",
+      "target": "LABEL_ENVELOPE_REVIEW.json",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-27-clearance/README.md",
+      "kind": "link",
+      "target": "board-labels.csv",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-27-clearance/README.md",
+      "kind": "link",
+      "target": "SILK_REVIEW.json",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-27-clearance/README.md",
+      "kind": "link",
+      "target": "DB25_DIGITS.png",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-27-clearance/README.md",
+      "kind": "link",
+      "target": "VISUAL_REVIEW.json",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-27-clearance/README.md",
+      "kind": "link",
+      "target": "../2026-10-26-10V/every-pin.csv",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-27-clearance/README.md",
+      "kind": "link",
+      "target": "../2026-10-26-10V/interface-contract.csv",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-27-clearance/README.md",
+      "kind": "link",
+      "target": "../2026-10-26-10V/VOLTAGE_CONTRACT.json",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-27-clearance/README.md",
+      "kind": "link",
+      "target": "../../BRINGUP.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-27-clearance/README.md",
+      "kind": "link",
+      "target": "SIGNAL_REFERENCES.json",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-27-clearance/README.md",
+      "kind": "link",
+      "target": "../../exports/2026-10-27-clearance/RELEASE_MANIFEST.json",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-27-clearance/README.md",
+      "kind": "link",
+      "target": "README_LINK_AUDIT.json",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/r13-recovered-source/README.md",
+      "kind": "link",
+      "target": "MANIFEST.json",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/r13-recovered-source/README.md",
+      "kind": "link",
+      "target": "verification.json",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/r13-recovered-source/README.md",
+      "kind": "link",
+      "target": "retained-binary-descriptor.json",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/r13-recovered-source/README.md",
+      "kind": "link",
+      "target": "../../FIRMWARE_STATUS.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/README.md",
+      "kind": "link",
+      "target": "../REVIEW_METHOD.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/README.md",
+      "kind": "link",
+      "target": "../DECISIONS.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/README.md",
+      "kind": "link",
+      "target": "2026-10-26-10V/README.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/README.md",
+      "kind": "link",
+      "target": "2026-10-26-10V/README.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/README.md",
+      "kind": "link",
+      "target": "2026-10-26-10V/every-component.csv",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/README.md",
+      "kind": "link",
+      "target": "2026-10-26-10V/every-pin.csv",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/README.md",
+      "kind": "link",
+      "target": "2026-10-26-10V/every-trace-via-fill.csv",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/README.md",
+      "kind": "link",
+      "target": "2026-10-26-10V/every-label.csv",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/README.md",
+      "kind": "link",
+      "target": "2026-10-26-10V/interface-contract.csv",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/README.md",
+      "kind": "link",
+      "target": "r13-recovered-source/README.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/README.md",
+      "kind": "link",
+      "target": "2026-10-26-10V/Q11_STOCK_REFRESH.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/README.md",
+      "kind": "link",
+      "target": "R14-complete-design-review-2026-10-25.pdf",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/README.md",
+      "kind": "link",
+      "target": "../ORDER_RECORD.json",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/legacy/README.md",
+      "kind": "link",
+      "target": "../6DOF2_BOARD.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/pcb/legacy/README.md",
+      "kind": "link",
+      "target": "../../README.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/README.md",
+      "kind": "link",
+      "target": "../README.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/README.md",
+      "kind": "link",
+      "target": "../controller/README.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/README.md",
+      "kind": "link",
+      "target": "../app/README.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/README.md",
+      "kind": "link",
+      "target": "../docs/README.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/README.md",
+      "kind": "image",
+      "target": "pcb/6dof2_r14/images/r14-pcb-top.png",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/README.md",
+      "kind": "link",
+      "target": "pcb/6dof2_r14/README.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/README.md",
+      "kind": "link",
+      "target": "pcb/6dof2_r14/DESIGN_PHILOSOPHY.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/README.md",
+      "kind": "link",
+      "target": "pcb/6dof2_r14/FIRMWARE_STATUS.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/README.md",
+      "kind": "link",
+      "target": "pcb/6dof2_r14/review/README.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/README.md",
+      "kind": "link",
+      "target": "pcb/6dof2_r14/BRINGUP.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/README.md",
+      "kind": "link",
+      "target": "pcb/6dof2_r14/exports/2026-10-26/README.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/README.md",
+      "kind": "link",
+      "target": "mechanical/",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/README.md",
+      "kind": "link",
+      "target": "mechanical/platform_geometry.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/README.md",
+      "kind": "link",
+      "target": "pcb/6dof2_r13/README.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/README.md",
+      "kind": "link",
+      "target": "pcb/6dof2_r13/r13-rc4-2026-09-23/README.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/README.md",
+      "kind": "link",
+      "target": "pcb/6dof2_r12/",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/README.md",
+      "kind": "link",
+      "target": "pcb/legacy/README.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/README.md",
+      "kind": "link",
+      "target": "pcb/6DOF2_BOARD.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "hardware/README.md",
+      "kind": "link",
+      "target": "pcb/6DOF2_FIRMWARE_TODO.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "README.md",
+      "kind": "link",
+      "target": "LICENSE",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "README.md",
+      "kind": "image",
+      "target": "https://img.shields.io/badge/License-MIT-yellow.svg",
+      "vendor": false,
+      "status": "PASS_HTTP",
+      "httpStatus": 200,
+      "resolvedUrl": "https://img.shields.io/badge/License-MIT-yellow.svg"
+    },
+    {
+      "readme": "README.md",
+      "kind": "link",
+      "target": "controller/README.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "README.md",
+      "kind": "image",
+      "target": "https://img.shields.io/badge/Controller-ESP32%20%2F%20ESP32--S3-blue.svg",
+      "vendor": false,
+      "status": "PASS_HTTP",
+      "httpStatus": 200,
+      "resolvedUrl": "https://img.shields.io/badge/Controller-ESP32%20%2F%20ESP32--S3-blue.svg"
+    },
+    {
+      "readme": "README.md",
+      "kind": "link",
+      "target": "#demo-and-build-videos",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "README.md",
+      "kind": "link",
+      "target": "#a-bit-of-project-history",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "README.md",
+      "kind": "link",
+      "target": "#desktop-app",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "README.md",
+      "kind": "link",
+      "target": "#getting-started",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "README.md",
+      "kind": "link",
+      "target": "#support-the-project",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "README.md",
+      "kind": "html",
+      "target": "https://www.paypal.me/knaufinator",
+      "vendor": false,
+      "status": "PASS_HTTP",
+      "httpStatus": 200,
+      "resolvedUrl": "https://www.paypal.com/paypalme/knaufinator"
+    },
+    {
+      "readme": "README.md",
+      "kind": "html",
+      "target": "https://img.shields.io/badge/Support_This_Project-PayPal-00457C?style=for-the-badge&logo=paypal&logoColor=white",
+      "vendor": false,
+      "status": "PASS_HTTP",
+      "httpStatus": 200,
+      "resolvedUrl": "https://img.shields.io/badge/Support_This_Project-PayPal-00457C?style=for-the-badge&logo=paypal&logoColor=white"
+    },
+    {
+      "readme": "README.md",
+      "kind": "link",
+      "target": "hardware/pcb/6dof2_r14/MECHANICAL_CORRECTION.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "README.md",
+      "kind": "link",
+      "target": "hardware/pcb/6dof2_r14/README.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "README.md",
+      "kind": "link",
+      "target": "hardware/pcb/6dof2_r14/DESIGN_PHILOSOPHY.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "README.md",
+      "kind": "link",
+      "target": "hardware/pcb/6dof2_r14/FIRMWARE_STATUS.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "README.md",
+      "kind": "link",
+      "target": "hardware/pcb/6dof2_r14/drawings/R14C1-PCB.pdf",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "README.md",
+      "kind": "image",
+      "target": "hardware/pcb/6dof2_r14/images/r14c1-pcb-top.png",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "README.md",
+      "kind": "link",
+      "target": "hardware/pcb/6dof2_r14/drawings/R14C1-PCB.pdf",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "README.md",
+      "kind": "link",
+      "target": "hardware/pcb/6dof2_r14/drawings/R14-schematic.pdf",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "README.md",
+      "kind": "link",
+      "target": "hardware/pcb/6dof2_r14/exports/2026-10-27-clearance/R14-schematic.svg",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "README.md",
+      "kind": "link",
+      "target": "hardware/pcb/6dof2_r14/exports/2026-10-27-clearance/R14-project.epro2",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "README.md",
+      "kind": "link",
+      "target": "hardware/pcb/6dof2_r14/exports/2026-10-27-clearance/README.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "README.md",
+      "kind": "link",
+      "target": "hardware/pcb/6dof2_r14/DECISIONS.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "README.md",
+      "kind": "link",
+      "target": "hardware/pcb/6dof2_r14/REVIEW_METHOD.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "README.md",
+      "kind": "link",
+      "target": "hardware/pcb/6dof2_r14/BRINGUP.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "README.md",
+      "kind": "image",
+      "target": "hardware/pcb/6dof2_r14/images/r14-schematic-details.png",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "README.md",
+      "kind": "html",
+      "target": "https://www.youtube.com/watch?v=_NR_MUGvmUo",
+      "vendor": false,
+      "status": "PASS_HTTP",
+      "httpStatus": 200,
+      "resolvedUrl": "https://www.youtube.com/watch?v=_NR_MUGvmUo"
+    },
+    {
+      "readme": "README.md",
+      "kind": "html",
+      "target": "https://img.youtube.com/vi/_NR_MUGvmUo/0.jpg",
+      "vendor": false,
+      "status": "PASS_HTTP",
+      "httpStatus": 200,
+      "resolvedUrl": "https://img.youtube.com/vi/_NR_MUGvmUo/0.jpg"
+    },
+    {
+      "readme": "README.md",
+      "kind": "html",
+      "target": "https://www.youtube.com/watch?v=CdDkL8X6qOE",
+      "vendor": false,
+      "status": "PASS_HTTP",
+      "httpStatus": 200,
+      "resolvedUrl": "https://www.youtube.com/watch?v=CdDkL8X6qOE"
+    },
+    {
+      "readme": "README.md",
+      "kind": "html",
+      "target": "https://img.youtube.com/vi/CdDkL8X6qOE/0.jpg",
+      "vendor": false,
+      "status": "PASS_HTTP",
+      "httpStatus": 200,
+      "resolvedUrl": "https://img.youtube.com/vi/CdDkL8X6qOE/0.jpg"
+    },
+    {
+      "readme": "README.md",
+      "kind": "link",
+      "target": "https://www.youtube.com/watch?v=_NR_MUGvmUo",
+      "vendor": false,
+      "status": "PASS_HTTP",
+      "httpStatus": 200,
+      "resolvedUrl": "https://www.youtube.com/watch?v=_NR_MUGvmUo"
+    },
+    {
+      "readme": "README.md",
+      "kind": "link",
+      "target": "https://www.youtube.com/watch?v=CdDkL8X6qOE",
+      "vendor": false,
+      "status": "PASS_HTTP",
+      "httpStatus": 200,
+      "resolvedUrl": "https://www.youtube.com/watch?v=CdDkL8X6qOE"
+    },
+    {
+      "readme": "README.md",
+      "kind": "html",
+      "target": "https://www.youtube.com/watch?v=fEcdGIq_Jzc",
+      "vendor": false,
+      "status": "PASS_HTTP",
+      "httpStatus": 200,
+      "resolvedUrl": "https://www.youtube.com/watch?v=fEcdGIq_Jzc"
+    },
+    {
+      "readme": "README.md",
+      "kind": "html",
+      "target": "https://img.youtube.com/vi/fEcdGIq_Jzc/0.jpg",
+      "vendor": false,
+      "status": "PASS_HTTP",
+      "httpStatus": 200,
+      "resolvedUrl": "https://img.youtube.com/vi/fEcdGIq_Jzc/0.jpg"
+    },
+    {
+      "readme": "README.md",
+      "kind": "html",
+      "target": "https://www.youtube.com/watch?v=1WXx59tWYc4",
+      "vendor": false,
+      "status": "PASS_HTTP",
+      "httpStatus": 200,
+      "resolvedUrl": "https://www.youtube.com/watch?v=1WXx59tWYc4"
+    },
+    {
+      "readme": "README.md",
+      "kind": "html",
+      "target": "https://img.youtube.com/vi/1WXx59tWYc4/0.jpg",
+      "vendor": false,
+      "status": "PASS_HTTP",
+      "httpStatus": 200,
+      "resolvedUrl": "https://img.youtube.com/vi/1WXx59tWYc4/0.jpg"
+    },
+    {
+      "readme": "README.md",
+      "kind": "link",
+      "target": "https://www.youtube.com/watch?v=fEcdGIq_Jzc",
+      "vendor": false,
+      "status": "PASS_HTTP",
+      "httpStatus": 200,
+      "resolvedUrl": "https://www.youtube.com/watch?v=fEcdGIq_Jzc"
+    },
+    {
+      "readme": "README.md",
+      "kind": "link",
+      "target": "https://www.youtube.com/watch?v=1WXx59tWYc4",
+      "vendor": false,
+      "status": "PASS_HTTP",
+      "httpStatus": 200,
+      "resolvedUrl": "https://www.youtube.com/watch?v=1WXx59tWYc4"
+    },
+    {
+      "readme": "README.md",
+      "kind": "link",
+      "target": "hardware/pcb/6dof2_r14/README.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "README.md",
+      "kind": "link",
+      "target": "hardware/pcb/6dof2_r14/FIRMWARE_STATUS.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "README.md",
+      "kind": "image",
+      "target": "hardware/pcb/6dof2_r14/images/r14-permission-paths.svg",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "README.md",
+      "kind": "link",
+      "target": "controller/mini/README.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "README.md",
+      "kind": "link",
+      "target": "hardware/mechanical/",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "README.md",
+      "kind": "link",
+      "target": "hardware/mechanical/platform_geometry.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "README.md",
+      "kind": "html",
+      "target": "docs/images/app/overview.png",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "README.md",
+      "kind": "link",
+      "target": "docs/APP_GUIDE.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "README.md",
+      "kind": "link",
+      "target": "app/README.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "README.md",
+      "kind": "link",
+      "target": "docs/APP_AUTOMATION.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "README.md",
+      "kind": "link",
+      "target": "docs/BUILD.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "README.md",
+      "kind": "link",
+      "target": "docs/APP_GUIDE.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "README.md",
+      "kind": "link",
+      "target": "docs/APP_AUTOMATION.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "README.md",
+      "kind": "link",
+      "target": "docs/FIRMWARE.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "README.md",
+      "kind": "link",
+      "target": "hardware/pcb/6dof2_r14/README.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "README.md",
+      "kind": "link",
+      "target": "hardware/pcb/6dof2_r14/review/README.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "README.md",
+      "kind": "link",
+      "target": "hardware/pcb/6dof2_r14/BRINGUP.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "README.md",
+      "kind": "link",
+      "target": "hardware/README.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "README.md",
+      "kind": "link",
+      "target": "hardware/README.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "README.md",
+      "kind": "link",
+      "target": "controller/README.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "README.md",
+      "kind": "link",
+      "target": "app/README.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "README.md",
+      "kind": "link",
+      "target": "docs/README.md",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "README.md",
+      "kind": "link",
+      "target": "docs/BUILD.md#repository-layout",
+      "vendor": false,
+      "status": "PASS"
+    },
+    {
+      "readme": "README.md",
+      "kind": "link",
+      "target": "https://www.paypal.me/knaufinator",
+      "vendor": false,
+      "status": "PASS_HTTP",
+      "httpStatus": 200,
+      "resolvedUrl": "https://www.paypal.com/paypalme/knaufinator"
+    },
+    {
+      "readme": "README.md",
+      "kind": "link",
+      "target": "LICENSE",
+      "vendor": false,
+      "status": "PASS"
+    }
+  ]
+}

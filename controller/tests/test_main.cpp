@@ -21,5 +21,25 @@ int main(int argc, char* argv[]) {
     printf("\n--- Motion Cueing ---\n");
     register_motion_cueing_tests();
 
+    printf("\n--- E-stop safety decisions ---\n");
+    register_estop_safety_tests();
+
+    printf("\n--- R14 six-axis trajectory schedule ---\n");
+    register_r14_trajectory_tests();
+
+    printf("\n--- R14 bounded seek interlock ---\n");
+    register_r14_seek_interlock_tests();
+
+    printf("\n--- R14 drive-alarm latch ---\n");
+    register_r14_drive_alarm_latch_tests();
+
+    printf("\n--- R14 motion admission ---\n");
+    register_r14_motion_admission_tests();
+
+    printf("\n--- R13 bench pulse schedule ---\n");
+    register_r13_bench_pulse_tests();
+    register_step_quiescence_tests();
+    register_r14_board_io_tests();
+
     PRINT_RESULTS();
 }

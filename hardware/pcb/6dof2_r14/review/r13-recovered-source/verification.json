@@ -1,0 +1,44 @@
+{
+  "verifiedUtc": "2026-10-26T00:39:07.714880+00:00",
+  "capture": "G:\\My Drive\\projects\\6dof\\firmware\\handoffs\\2026-10-25-r13-tested-baseline\\incoming\\DESKTOP-9LF81EF-20261025T2000",
+  "status": "PASS - RECEIVED CAPTURE INTEGRITY",
+  "completeMarkerPresent": true,
+  "manifestMatchesCompleteMarker": true,
+  "filesCsvMatchesCompleteMarker": true,
+  "hashedFiles": 352,
+  "hashedBytes": 565397021,
+  "missingOrMismatched": [],
+  "unexpectedFiles": [],
+  "sourceZipCrcPass": true,
+  "sourceZipEntries": 765,
+  "sourceZipFiles": 671,
+  "bundleVerification": [
+    {
+      "file": "main.bundle",
+      "exitCode": 0
+    },
+    {
+      "file": "r13-bench-one-axis.bundle",
+      "exitCode": 0
+    },
+    {
+      "file": "stewart-core-all.bundle",
+      "exitCode": 0
+    }
+  ],
+  "keyFilesCompared": 10,
+  "keyFilesDifferentFromCurrent": 10,
+  "binaryDescriptor": {
+    "version": "v0.1.21-dev.3+cc25066-26-g7cc29",
+    "project": "stewart_platform",
+    "time": "09:14:47",
+    "date": "Oct 20 2026",
+    "idf": "v5.5.2",
+    "embeddedElfSha256": "37d1b33e8511b60669cfb9e1e451849c459a87a72dc8b8a27304eb6d223af0d2",
+    "retainedElfSha256": "37d1b33e8511b60669cfb9e1e451849c459a87a72dc8b8a27304eb6d223af0d2"
+  },
+  "currentRepoStatusUnchanged": true,
+  "integrated": false,
+  "flashed": false,
+  "motorTestsRun": false
+}

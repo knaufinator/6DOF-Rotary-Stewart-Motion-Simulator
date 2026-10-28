@@ -6,13 +6,10 @@ Paths and commands in this guide start at the repository root unless noted other
 `controller/main/` and `controller/include/` are the full-size firmware project;
 `controller/mini/` and `controller/test_harness/` are separate ESP-IDF projects.
 
-> **PCBv2 / 6DOF 2: UNTESTED, firmware work pending (2026-09-23).** The routed r13
-> RC4 prototype files are complete, not a motion-ready release. Nothing is ordered.
-> No r13 firmware has been implemented or validated. Native USB input, Ethernet,
-> pulse direction guards, physical stop enforcement, alarm handling and the new
-> hardware-enable contract must be completed before connecting servo drives.
-> [Required work and acceptance tests](../hardware/pcb/6DOF2_FIRMWARE_TODO.md) ·
-> [Hardware status](../hardware/pcb/6DOF2_BOARD.md).
+> **2026-10-26:** R14 is ordered; R13 one-axis source and evidence are retained. The R14
+> diagnostic build is locked against motion while new hardware and timing changes
+> await qualification. [R14 firmware status](../hardware/pcb/6dof2_r14/FIRMWARE_STATUS.md)
+> ? [Hardware release status](../hardware/pcb/6dof2_r14/README.md).
 
 ESP-IDF v5.5 firmware for the Stewart motion platform. Supports two hardware variants from a single codebase:
 
@@ -83,14 +80,14 @@ The desktop app also builds this same core; changes require both builds.
 - **Servo drivers**: 6 × AASD-15A
 - **Interface**: Three AM26LS31 quad differential line drivers; the SN75174N breadboard interface is historical
 - **E-Stop**: GPIO 21, active HIGH — J2 normally-closed loop with 10 k pull-up; monitoring enabled, boot holds paused if the loop is open
-- **Status LED / r13 arm**: the GPIO48 WS2812 implementation belongs to the earlier DevKit setup. r13 uses GPIO48 for `ARM_PULSE` and GPIO47 for `MCU_INHIBIT`; remove the conflicting LED behavior before using r13. The earlier r12 unconnected-pin statement does not apply to r13.
+- **Status LED / r13 arm**: the GPIO48 WS2812 implementation belongs to the earlier DevKit setup. R13/R14 use GPIO48 for `ARM_PULSE` and GPIO47 for `MCU_INHIBIT`; the current PCBv2 build excludes the conflicting RGB LED initialization. The earlier r12 unconnected-pin statement does not apply to r13.
 
 #### STEP/DIR GPIO mapping (not a commissioning acceptance test)
 
 These GPIO assignments match the r12 schematic reviewed September 22 and are
 retained in the saved r13 schematic. The selected shared MCPWM backend's counters are software
-counters, not independent PCNT/RMT evidence. `PINTEST` currently bypasses stop
-gating; do not run it with drives attached.
+counters, not independent PCNT/RMT evidence. Diagnostic output commands remain subject to the current motion-admission guard;
+physical output timing and fault behavior still require qualification.
 
 | Motor / board port | STEP | DIR |
 |---|---|---|
@@ -271,9 +268,19 @@ idf.py monitor --print-filter '*:V'  # verbose log filter
 
 **ESP32 DevKit flashing issues**: If auto-reset doesn't work, manually enter boot mode (hold BOOT, press EN, release both) before running `idf.py flash`. Use `--before no_reset` with esptool if needed.
 
-**App won't connect**: Check `app_debug.log` next to the executable for serial RX trace. The app disables DTR/RTS to avoid resetting the ESP32 on connect.
+**App won't connect**: Check `app_debug.log` next to the executable for serial RX trace. The Windows app asserts DTR for the identified native USB Serial/JTAG device (`303A:1001`) and leaves RTS deasserted. USB-UART adapters retain disabled modem lines. The Python native-USB clients use DTR asserted / RTS deasserted.
 
 ## Links
+
+## Continuous integration
+
+Pull requests to the default `phoenix` branch run the controller C++ suite on Linux and Windows, the Python E-stop/R14 source contracts, and the R13 bench-host tests without connecting hardware. The main ESP32-S3 build explicitly enables `R14_BOARD_IO` and `R14_FAIL_CLOSED`, with `R13_BENCH_ONE_AXIS` disabled. The separate Mini firmware build remains covered. Bench-only firmware stays excluded from CI/release builds by its existing CMake restriction.
+
+The Windows application build also runs CTest, including recording precision and documentation-mode transport guards. The engineering-review workflow checks owned README local links, frozen order/replacement artifact hashes, J12 outline regressions, every R14C1 body outline, reviewed body/access bounds, and the complete 324-component STEP interference audit. Generated geometric/link receipts are uploaded as CI artifacts; the frozen manufacturing files are not rewritten. These checks preserve static evidence and cannot establish physical motion, cable, mating-interface or factory qualification.
+
+See [build workflow](../.github/workflows/ci.yml), [controller tests](../.github/workflows/unit_tests.yml) and [engineering review](../.github/workflows/engineering_review.yml).
+
+## References
 
 - [Firmware variants and validation](../docs/FIRMWARE.md)
 - [Single Motor Test Plan](../hardware/pcb/single_motor_test_plan.md)

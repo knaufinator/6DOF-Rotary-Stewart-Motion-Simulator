@@ -29,6 +29,47 @@ static double now_seconds() {
     return duration<double>(steady_clock::now().time_since_epoch()).count();
 }
 
+#ifdef _WIN32
+// Native ESP32-S3 USB Serial/JTAG needs DTR for its connected/readback state.
+// Identify the fixed-function peripheral through read-only device metadata;
+// USB-UART adapters retain their existing modem-line policy.
+static bool is_native_usb_serial_jtag(const char* port) {
+    HDEVINFO devices = SetupDiGetClassDevsA(&GUID_DEVINTERFACE_COMPORT_LOCAL,
+        nullptr, nullptr, DIGCF_PRESENT | DIGCF_DEVICEINTERFACE);
+    if (devices == INVALID_HANDLE_VALUE) return false;
+    bool native = false;
+    SP_DEVINFO_DATA device = {};
+    device.cbSize = sizeof(device);
+    for (DWORD i = 0; SetupDiEnumDeviceInfo(devices, i, &device); ++i) {
+        HKEY key = SetupDiOpenDevRegKey(devices, &device, DICS_FLAG_GLOBAL,
+            0, DIREG_DEV, KEY_READ);
+        if (key == INVALID_HANDLE_VALUE) continue;
+        char name[32] = {};
+        DWORD bytes = sizeof(name), type = 0;
+        const LSTATUS result = RegQueryValueExA(key, "PortName", nullptr, &type,
+            reinterpret_cast<LPBYTE>(name), &bytes);
+        name[sizeof(name) - 1] = '\0';
+        const bool match = result == ERROR_SUCCESS && type == REG_SZ &&
+            _stricmp(name, port) == 0;
+        RegCloseKey(key);
+        if (!match) continue;
+        char ids[2048] = {};
+        if (SetupDiGetDeviceRegistryPropertyA(devices, &device, SPDRP_HARDWAREID,
+                nullptr, reinterpret_cast<PBYTE>(ids), sizeof(ids), nullptr)) {
+            ids[sizeof(ids) - 1] = '\0';
+            for (char& c : ids) if (c >= 'a' && c <= 'z') c -= 'a' - 'A';
+            for (const char* id = ids; id < ids + sizeof(ids) && *id;
+                    id += std::strlen(id) + 1) {
+                if (std::strstr(id, "VID_303A&PID_1001")) { native = true; break; }
+            }
+        }
+        break;
+    }
+    SetupDiDestroyDeviceInfoList(devices);
+    return native;
+}
+#endif
+
 // ── Constructor / Destructor ─────────────────────────────────────────
 
 SerialPort::SerialPort() : m_handle((void*)(intptr_t)-1) {}
@@ -112,6 +153,7 @@ bool SerialPort::open(const char* port, int baud) {
 #ifdef _WIN32
     char path[64];
     snprintf(path, sizeof(path), "\\\\.\\%s", port);
+    const bool native_usb = is_native_usb_serial_jtag(port);
 
     SET_H(CreateFileA(path, GENERIC_READ | GENERIC_WRITE, 0,
         nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr));
@@ -133,7 +175,7 @@ bool SerialPort::open(const char* port, int baud) {
     dcb.ByteSize = 8;
     dcb.StopBits = ONESTOPBIT;
     dcb.Parity   = NOPARITY;
-    dcb.fDtrControl = DTR_CONTROL_DISABLE;  // Don't toggle DTR — prevents ESP32 auto-reset on connect
+    dcb.fDtrControl = native_usb ? DTR_CONTROL_ENABLE : DTR_CONTROL_DISABLE;
     dcb.fRtsControl = RTS_CONTROL_DISABLE;
     dcb.fOutxCtsFlow = FALSE;
     dcb.fOutxDsrFlow = FALSE;

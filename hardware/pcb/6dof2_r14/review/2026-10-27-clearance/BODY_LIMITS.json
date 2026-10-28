@@ -1,0 +1,5083 @@
+{
+  "revision": "R14C1",
+  "reviewedDate": "2026-10-27",
+  "sourceSha256": "979ab2f72b642353866ec91bb8908640fa747aaf745201abe8dcb54c569d22d0",
+  "scope": "Reviewed maximum/conservative manufacturer body bounds for internal board XY separation. Heights and external mating interfaces are not a complete enclosure certification.",
+  "expectedTestPads": 11,
+  "expectedBoardMounts": 6,
+  "entries": [
+    {
+      "ref": "C1",
+      "supplierPart": "C3338",
+      "footprintUuid": "45022d8debd20f10",
+      "nativeLocalBodyBoxMm": [
+        -3.414986,
+        -3.4,
+        3.385014,
+        3.4
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C2",
+      "supplierPart": "C4747974",
+      "footprintUuid": "a1f8871bd65961ea",
+      "nativeLocalBodyBoxMm": [
+        -3.4,
+        -3.4,
+        3.4,
+        3.4
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C3",
+      "supplierPart": "C15008",
+      "footprintUuid": "35af123ab238c9c7",
+      "nativeLocalBodyBoxMm": [
+        -1.675,
+        -0.875,
+        1.675,
+        0.875
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C4",
+      "supplierPart": "C14663",
+      "footprintUuid": "ab3a4d05c5de78dc",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C5",
+      "supplierPart": "C14663",
+      "footprintUuid": "ab3a4d05c5de78dc",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C6",
+      "supplierPart": "C15849",
+      "footprintUuid": "ab3a4d05c5de78dc",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C7",
+      "supplierPart": "C15850",
+      "footprintUuid": "65dc40e1571e0ae5",
+      "nativeLocalBodyBoxMm": [
+        -1.1,
+        -0.725,
+        1.1,
+        0.725
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C8",
+      "supplierPart": "C14663",
+      "footprintUuid": "ab3a4d05c5de78dc",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C9",
+      "supplierPart": "C14663",
+      "footprintUuid": "ab3a4d05c5de78dc",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C10",
+      "supplierPart": "C14663",
+      "footprintUuid": "ab3a4d05c5de78dc",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C11",
+      "supplierPart": "C15850",
+      "footprintUuid": "65dc40e1571e0ae5",
+      "nativeLocalBodyBoxMm": [
+        -1.1,
+        -0.725,
+        1.1,
+        0.725
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C13",
+      "supplierPart": "C14663",
+      "footprintUuid": "ab3a4d05c5de78dc",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C14",
+      "supplierPart": "C15849",
+      "footprintUuid": "ab3a4d05c5de78dc",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C16",
+      "supplierPart": "C14663",
+      "footprintUuid": "ab3a4d05c5de78dc",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C17",
+      "supplierPart": "C14663",
+      "footprintUuid": "ab3a4d05c5de78dc",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C18",
+      "supplierPart": "C14663",
+      "footprintUuid": "ab3a4d05c5de78dc",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C19",
+      "supplierPart": "C15850",
+      "footprintUuid": "65dc40e1571e0ae5",
+      "nativeLocalBodyBoxMm": [
+        -1.1,
+        -0.725,
+        1.1,
+        0.725
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C20",
+      "supplierPart": "C14663",
+      "footprintUuid": "ab3a4d05c5de78dc",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C21",
+      "supplierPart": "C14663",
+      "footprintUuid": "ab3a4d05c5de78dc",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C22",
+      "supplierPart": "C15850",
+      "footprintUuid": "65dc40e1571e0ae5",
+      "nativeLocalBodyBoxMm": [
+        -1.1,
+        -0.725,
+        1.1,
+        0.725
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C25",
+      "supplierPart": "C23631",
+      "footprintUuid": "35af123ab238c9c7",
+      "nativeLocalBodyBoxMm": [
+        -1.75,
+        -0.9,
+        1.75,
+        0.9
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "D2",
+      "supplierPart": "C8678",
+      "footprintUuid": "306abdcb1d66a9a2",
+      "nativeLocalBodyBoxMm": [
+        -2.2499873,
+        -1.4,
+        2.2500127,
+        1.4
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "D3",
+      "supplierPart": "C8678",
+      "footprintUuid": "306abdcb1d66a9a2",
+      "nativeLocalBodyBoxMm": [
+        -2.2499873,
+        -1.4,
+        2.2500127,
+        1.4
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "D4",
+      "supplierPart": "C2297",
+      "footprintUuid": "c9468a6bfee303e7",
+      "nativeLocalBodyBoxMm": [
+        -1.05,
+        -0.6750127,
+        1.05,
+        0.6749873000000001
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "D5",
+      "supplierPart": "C2297",
+      "footprintUuid": "c9468a6bfee303e7",
+      "nativeLocalBodyBoxMm": [
+        -1.05,
+        -0.6750127,
+        1.05,
+        0.6749873000000001
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "J1",
+      "supplierPart": "C49257",
+      "footprintUuid": "19700284111bc16b",
+      "nativeLocalBodyBoxMm": [
+        -4.06,
+        -1.3449873,
+        4.06,
+        1.3450126999999998
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "J2",
+      "supplierPart": "C474952",
+      "footprintUuid": "75893619cc0831f9",
+      "nativeLocalBodyBoxMm": [
+        -5.23,
+        -5.55,
+        6.03,
+        5.65
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "J9",
+      "supplierPart": "C474952",
+      "footprintUuid": "75893619cc0831f9",
+      "nativeLocalBodyBoxMm": [
+        -5.23,
+        -5.55,
+        6.03,
+        5.65
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "J10",
+      "supplierPart": "C55683",
+      "footprintUuid": "62d36a6bac2cd9d0",
+      "nativeLocalBodyBoxMm": [
+        -8.1749746,
+        -10.1252594,
+        8.1750254,
+        15.5247406
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "J11",
+      "supplierPart": "C165948",
+      "footprintUuid": "3f8ef6e6914f2768",
+      "nativeLocalBodyBoxMm": [
+        -4.5500127,
+        -5.1688948,
+        4.5499873,
+        2.3311051999999997
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "L1",
+      "supplierPart": "C7431083",
+      "footprintUuid": "c9e82b54fdbeed5e",
+      "nativeLocalBodyBoxMm": [
+        -6.25,
+        -6.25,
+        6.25,
+        6.25
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R1",
+      "supplierPart": "C25804",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R2",
+      "supplierPart": "C23186",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R3",
+      "supplierPart": "C23186",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R4",
+      "supplierPart": "C25804",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R5",
+      "supplierPart": "C25804",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R6",
+      "supplierPart": "C21190",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R7",
+      "supplierPart": "C21190",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R10",
+      "supplierPart": "C22865",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R11",
+      "supplierPart": "C25804",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R12",
+      "supplierPart": "C23140",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R13",
+      "supplierPart": "C23140",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R14",
+      "supplierPart": "C23140",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R15",
+      "supplierPart": "C23140",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R16",
+      "supplierPart": "C23140",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R17",
+      "supplierPart": "C23140",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R18",
+      "supplierPart": "C21190",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R19",
+      "supplierPart": "C21190",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R20",
+      "supplierPart": "C23140",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R21",
+      "supplierPart": "C23140",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R22",
+      "supplierPart": "C23140",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R23",
+      "supplierPart": "C23140",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R24",
+      "supplierPart": "C23140",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R25",
+      "supplierPart": "C23140",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "U3",
+      "supplierPart": "C6179",
+      "footprintUuid": "64f54e8abfeacddc",
+      "nativeLocalBodyBoxMm": [
+        -5.15,
+        -2.43,
+        5.15,
+        2.43
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "U4",
+      "supplierPart": "C6179",
+      "footprintUuid": "64f54e8abfeacddc",
+      "nativeLocalBodyBoxMm": [
+        -5.15,
+        -2.43,
+        5.15,
+        2.43
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "U5",
+      "supplierPart": "C6179",
+      "footprintUuid": "64f54e8abfeacddc",
+      "nativeLocalBodyBoxMm": [
+        -5.15,
+        -2.43,
+        5.15,
+        2.43
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "U6",
+      "supplierPart": "C61063",
+      "footprintUuid": "d11fa1664e812c80",
+      "nativeLocalBodyBoxMm": [
+        -2.55,
+        -2.0,
+        2.55,
+        2.0
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "U7",
+      "supplierPart": "C435835",
+      "footprintUuid": "fcf636a5f4d7988d",
+      "nativeLocalBodyBoxMm": [
+        -1.9500252000000002,
+        -3.35,
+        1.7499748,
+        3.35
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "U8",
+      "supplierPart": "C32843",
+      "footprintUuid": "67b1b4198cfce355",
+      "nativeLocalBodyBoxMm": [
+        -4.6,
+        -4.6,
+        4.6,
+        4.6
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "Y1",
+      "supplierPart": "C9006",
+      "footprintUuid": "75fa07ef949e7c9f",
+      "nativeLocalBodyBoxMm": [
+        -1.65,
+        -1.299873,
+        1.65,
+        1.300127
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "J3",
+      "supplierPart": "C77833",
+      "footprintUuid": "37c0b01b8fd857fe",
+      "nativeLocalBodyBoxMm": [
+        -26.669987300000003,
+        -6.44,
+        26.6700127,
+        6.44
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "J4",
+      "supplierPart": "C77833",
+      "footprintUuid": "37c0b01b8fd857fe",
+      "nativeLocalBodyBoxMm": [
+        -26.669987300000003,
+        -6.44,
+        26.6700127,
+        6.44
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "J5",
+      "supplierPart": "C77833",
+      "footprintUuid": "37c0b01b8fd857fe",
+      "nativeLocalBodyBoxMm": [
+        -26.669987300000003,
+        -6.44,
+        26.6700127,
+        6.44
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "J6",
+      "supplierPart": "C77833",
+      "footprintUuid": "37c0b01b8fd857fe",
+      "nativeLocalBodyBoxMm": [
+        -26.669987300000003,
+        -6.44,
+        26.6700127,
+        6.44
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "J7",
+      "supplierPart": "C77833",
+      "footprintUuid": "37c0b01b8fd857fe",
+      "nativeLocalBodyBoxMm": [
+        -26.669987300000003,
+        -6.44,
+        26.6700127,
+        6.44
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "J8",
+      "supplierPart": "C77833",
+      "footprintUuid": "37c0b01b8fd857fe",
+      "nativeLocalBodyBoxMm": [
+        -26.669987300000003,
+        -6.44,
+        26.6700127,
+        6.44
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R36",
+      "supplierPart": "C25804",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R37",
+      "supplierPart": "C25804",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R38",
+      "supplierPart": "C25804",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R39",
+      "supplierPart": "C25804",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R40",
+      "supplierPart": "C25804",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R41",
+      "supplierPart": "C25804",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "U9",
+      "supplierPart": "C114599",
+      "footprintUuid": "e4f4e0d059d03007",
+      "nativeLocalBodyBoxMm": [
+        -10.17,
+        -3.5,
+        10.17,
+        3.5
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "U10",
+      "supplierPart": "C114599",
+      "footprintUuid": "e4f4e0d059d03007",
+      "nativeLocalBodyBoxMm": [
+        -10.17,
+        -3.5,
+        10.17,
+        3.5
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C12",
+      "supplierPart": "C1589",
+      "footprintUuid": "ab3a4d05c5de78dc",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C15",
+      "supplierPart": "C1779",
+      "footprintUuid": "65dc40e1571e0ae5",
+      "nativeLocalBodyBoxMm": [
+        -1.075,
+        -0.7,
+        1.075,
+        0.7
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C26",
+      "supplierPart": "C14663",
+      "footprintUuid": "ab3a4d05c5de78dc",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C27",
+      "supplierPart": "C14663",
+      "footprintUuid": "ab3a4d05c5de78dc",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C28",
+      "supplierPart": "C14663",
+      "footprintUuid": "ab3a4d05c5de78dc",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C29",
+      "supplierPart": "C14663",
+      "footprintUuid": "ab3a4d05c5de78dc",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C30",
+      "supplierPart": "C14663",
+      "footprintUuid": "ab3a4d05c5de78dc",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C31",
+      "supplierPart": "C15850",
+      "footprintUuid": "65dc40e1571e0ae5",
+      "nativeLocalBodyBoxMm": [
+        -1.1,
+        -0.725,
+        1.1,
+        0.725
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "L2",
+      "supplierPart": "C108301",
+      "footprintUuid": "556dd03c72a679ea",
+      "nativeLocalBodyBoxMm": [
+        -0.875,
+        -0.474873,
+        0.875,
+        0.47512699999999997
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R42",
+      "supplierPart": "C114625",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R43",
+      "supplierPart": "C114625",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R44",
+      "supplierPart": "C114625",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R45",
+      "supplierPart": "C114625",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R58",
+      "supplierPart": "C22935",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R46",
+      "supplierPart": "C21190",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R47",
+      "supplierPart": "C21190",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R48",
+      "supplierPart": "C21190",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R49",
+      "supplierPart": "C21190",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R50",
+      "supplierPart": "C21190",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R51",
+      "supplierPart": "C21190",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R52",
+      "supplierPart": "C21190",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R53",
+      "supplierPart": "C21190",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R54",
+      "supplierPart": "C21190",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R55",
+      "supplierPart": "C21190",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R56",
+      "supplierPart": "C21190",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R57",
+      "supplierPart": "C21190",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R59",
+      "supplierPart": "C22859",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C32",
+      "supplierPart": "C21122",
+      "footprintUuid": "ab3a4d05c5de78dc",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C33",
+      "supplierPart": "C1631",
+      "footprintUuid": "ab3a4d05c5de78dc",
+      "nativeLocalBodyBoxMm": [
+        -0.9,
+        -0.5,
+        0.9,
+        0.5
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C34",
+      "supplierPart": "C1631",
+      "footprintUuid": "ab3a4d05c5de78dc",
+      "nativeLocalBodyBoxMm": [
+        -0.9,
+        -0.5,
+        0.9,
+        0.5
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C35",
+      "supplierPart": "C1589",
+      "footprintUuid": "ab3a4d05c5de78dc",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "D7",
+      "supplierPart": "C193402",
+      "footprintUuid": "addfa3fb81474c89",
+      "nativeLocalBodyBoxMm": [
+        -2.0,
+        -1.0,
+        2.0,
+        1.0
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "D6",
+      "supplierPart": "C7519",
+      "footprintUuid": "0a993f460267f0ba",
+      "nativeLocalBodyBoxMm": [
+        -1.5250253999999999,
+        -0.8749745999999999,
+        1.5249746,
+        0.8750254000000001
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "SW1",
+      "supplierPart": "C455280",
+      "footprintUuid": "b14781be45fe686b",
+      "nativeLocalBodyBoxMm": [
+        -2.075,
+        -1.625,
+        2.075,
+        1.625
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "SW2",
+      "supplierPart": "C455280",
+      "footprintUuid": "b14781be45fe686b",
+      "nativeLocalBodyBoxMm": [
+        -2.075,
+        -1.625,
+        2.075,
+        1.625
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C23",
+      "supplierPart": "C1647",
+      "footprintUuid": "ab3a4d05c5de78dc",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C24",
+      "supplierPart": "C1647",
+      "footprintUuid": "ab3a4d05c5de78dc",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "F1",
+      "supplierPart": "C883148",
+      "footprintUuid": "78bc380563145310",
+      "nativeLocalBodyBoxMm": [
+        -2.365,
+        -1.705,
+        2.365,
+        1.705
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R60",
+      "supplierPart": "C21190",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C36",
+      "supplierPart": "C14663",
+      "footprintUuid": "ab3a4d05c5de78dc",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "U11",
+      "supplierPart": "C70285",
+      "footprintUuid": "2fa12c8f68575cc0",
+      "nativeLocalBodyBoxMm": [
+        -1.35,
+        -1.2,
+        1.35,
+        1.2
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "U12",
+      "supplierPart": "C485081",
+      "footprintUuid": "2470ffd604459d7e",
+      "nativeLocalBodyBoxMm": [
+        -1.225,
+        -0.85,
+        1.225,
+        0.85
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "U13",
+      "supplierPart": "C1509297",
+      "footprintUuid": "eb161ec05c11f738",
+      "nativeLocalBodyBoxMm": [
+        -0.7750127,
+        -0.7750127,
+        0.7749873,
+        0.7749873
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "U14",
+      "supplierPart": "C485081",
+      "footprintUuid": "2470ffd604459d7e",
+      "nativeLocalBodyBoxMm": [
+        -1.225,
+        -0.85,
+        1.225,
+        0.85
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "D8",
+      "supplierPart": "C8678",
+      "footprintUuid": "306abdcb1d66a9a2",
+      "nativeLocalBodyBoxMm": [
+        -2.2499873,
+        -1.4,
+        2.2500127,
+        1.4
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R61",
+      "supplierPart": "C21190",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R62",
+      "supplierPart": "C21190",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R63",
+      "supplierPart": "C21190",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R64",
+      "supplierPart": "C21190",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R65",
+      "supplierPart": "C21190",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R66",
+      "supplierPart": "C25804",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R67",
+      "supplierPart": "C861325",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R68",
+      "supplierPart": "C95204",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R69",
+      "supplierPart": "C23140",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R70",
+      "supplierPart": "C23140",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C37",
+      "supplierPart": "C14663",
+      "footprintUuid": "ab3a4d05c5de78dc",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C38",
+      "supplierPart": "C14663",
+      "footprintUuid": "ab3a4d05c5de78dc",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C39",
+      "supplierPart": "C14663",
+      "footprintUuid": "ab3a4d05c5de78dc",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C40",
+      "supplierPart": "C14663",
+      "footprintUuid": "ab3a4d05c5de78dc",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C41",
+      "supplierPart": "C14663",
+      "footprintUuid": "ab3a4d05c5de78dc",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C42",
+      "supplierPart": "C1779",
+      "footprintUuid": "65dc40e1571e0ae5",
+      "nativeLocalBodyBoxMm": [
+        -1.075,
+        -0.7,
+        1.075,
+        0.7
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R30",
+      "supplierPart": "C229395",
+      "footprintUuid": "2c2d57167b2a5b62",
+      "nativeLocalBodyBoxMm": [
+        -1.6,
+        -0.85,
+        1.6,
+        0.85
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R31",
+      "supplierPart": "C229395",
+      "footprintUuid": "2c2d57167b2a5b62",
+      "nativeLocalBodyBoxMm": [
+        -1.6,
+        -0.85,
+        1.6,
+        0.85
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R32",
+      "supplierPart": "C229395",
+      "footprintUuid": "2c2d57167b2a5b62",
+      "nativeLocalBodyBoxMm": [
+        -1.6,
+        -0.85,
+        1.6,
+        0.85
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R33",
+      "supplierPart": "C229395",
+      "footprintUuid": "2c2d57167b2a5b62",
+      "nativeLocalBodyBoxMm": [
+        -1.6,
+        -0.85,
+        1.6,
+        0.85
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R34",
+      "supplierPart": "C229395",
+      "footprintUuid": "2c2d57167b2a5b62",
+      "nativeLocalBodyBoxMm": [
+        -1.6,
+        -0.85,
+        1.6,
+        0.85
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R35",
+      "supplierPart": "C229395",
+      "footprintUuid": "2c2d57167b2a5b62",
+      "nativeLocalBodyBoxMm": [
+        -1.6,
+        -0.85,
+        1.6,
+        0.85
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "U15",
+      "supplierPart": "C47023",
+      "footprintUuid": "c55338c203b665ef",
+      "nativeLocalBodyBoxMm": [
+        -9.2,
+        -4.0,
+        9.2,
+        4.0
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R71",
+      "supplierPart": "C23162",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R72",
+      "supplierPart": "C23162",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C43",
+      "supplierPart": "C14663",
+      "footprintUuid": "ab3a4d05c5de78dc",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "U16",
+      "supplierPart": "C485802",
+      "footprintUuid": "870c74ef719071bf",
+      "nativeLocalBodyBoxMm": [
+        -0.7,
+        -1.52,
+        0.7,
+        1.52
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R73",
+      "supplierPart": "C25803",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C44",
+      "supplierPart": "C14663",
+      "footprintUuid": "ab3a4d05c5de78dc",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "U17",
+      "supplierPart": "C1848341",
+      "footprintUuid": "25bc69da3e7f56cc",
+      "nativeLocalBodyBoxMm": [
+        -1.55,
+        -1.55,
+        1.55,
+        1.55
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R74",
+      "supplierPart": "C728587",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R76",
+      "supplierPart": "C14675",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R77",
+      "supplierPart": "C25981",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R78",
+      "supplierPart": "C25804",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R79",
+      "supplierPart": "C25804",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C45",
+      "supplierPart": "C29936",
+      "footprintUuid": "ab3a4d05c5de78dc",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C46",
+      "supplierPart": "C29936",
+      "footprintUuid": "ab3a4d05c5de78dc",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R82",
+      "supplierPart": "C25804",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C47",
+      "supplierPart": "C14663",
+      "footprintUuid": "ab3a4d05c5de78dc",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R75",
+      "supplierPart": "C13315",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "U19",
+      "supplierPart": "C114599",
+      "footprintUuid": "e4f4e0d059d03007",
+      "nativeLocalBodyBoxMm": [
+        -10.17,
+        -3.5,
+        10.17,
+        3.5
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "U20",
+      "supplierPart": "C114599",
+      "footprintUuid": "e4f4e0d059d03007",
+      "nativeLocalBodyBoxMm": [
+        -10.17,
+        -3.5,
+        10.17,
+        3.5
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R84",
+      "supplierPart": "C230412",
+      "footprintUuid": "8d9b022fd2a970ee",
+      "nativeLocalBodyBoxMm": [
+        -1.6,
+        -1.375,
+        1.6,
+        1.375
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R90",
+      "supplierPart": "C31850",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "D10",
+      "supplierPart": "C57759",
+      "footprintUuid": "14b0630698e35875",
+      "nativeLocalBodyBoxMm": [
+        -0.9000127000000001,
+        -0.6750127000000001,
+        0.8999872999999999,
+        0.6749873
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C48",
+      "supplierPart": "C1588",
+      "footprintUuid": "ab3a4d05c5de78dc",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R85",
+      "supplierPart": "C230412",
+      "footprintUuid": "8d9b022fd2a970ee",
+      "nativeLocalBodyBoxMm": [
+        -1.6,
+        -1.375,
+        1.6,
+        1.375
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R91",
+      "supplierPart": "C31850",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "D11",
+      "supplierPart": "C57759",
+      "footprintUuid": "14b0630698e35875",
+      "nativeLocalBodyBoxMm": [
+        -0.9000127000000001,
+        -0.6750127000000001,
+        0.8999872999999999,
+        0.6749873
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C49",
+      "supplierPart": "C1588",
+      "footprintUuid": "ab3a4d05c5de78dc",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R86",
+      "supplierPart": "C230412",
+      "footprintUuid": "8d9b022fd2a970ee",
+      "nativeLocalBodyBoxMm": [
+        -1.6,
+        -1.375,
+        1.6,
+        1.375
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R92",
+      "supplierPart": "C31850",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "D12",
+      "supplierPart": "C57759",
+      "footprintUuid": "14b0630698e35875",
+      "nativeLocalBodyBoxMm": [
+        -0.9000127000000001,
+        -0.6750127000000001,
+        0.8999872999999999,
+        0.6749873
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C50",
+      "supplierPart": "C1588",
+      "footprintUuid": "ab3a4d05c5de78dc",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R87",
+      "supplierPart": "C230412",
+      "footprintUuid": "8d9b022fd2a970ee",
+      "nativeLocalBodyBoxMm": [
+        -1.6,
+        -1.375,
+        1.6,
+        1.375
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R93",
+      "supplierPart": "C31850",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "D13",
+      "supplierPart": "C57759",
+      "footprintUuid": "14b0630698e35875",
+      "nativeLocalBodyBoxMm": [
+        -0.9000127000000001,
+        -0.6750127000000001,
+        0.8999872999999999,
+        0.6749873
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C51",
+      "supplierPart": "C1588",
+      "footprintUuid": "ab3a4d05c5de78dc",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R88",
+      "supplierPart": "C230412",
+      "footprintUuid": "8d9b022fd2a970ee",
+      "nativeLocalBodyBoxMm": [
+        -1.6,
+        -1.375,
+        1.6,
+        1.375
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R94",
+      "supplierPart": "C31850",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "D14",
+      "supplierPart": "C57759",
+      "footprintUuid": "14b0630698e35875",
+      "nativeLocalBodyBoxMm": [
+        -0.9000127000000001,
+        -0.6750127000000001,
+        0.8999872999999999,
+        0.6749873
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C52",
+      "supplierPart": "C1588",
+      "footprintUuid": "ab3a4d05c5de78dc",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R89",
+      "supplierPart": "C230412",
+      "footprintUuid": "8d9b022fd2a970ee",
+      "nativeLocalBodyBoxMm": [
+        -1.6,
+        -1.375,
+        1.6,
+        1.375
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R95",
+      "supplierPart": "C31850",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "D15",
+      "supplierPart": "C57759",
+      "footprintUuid": "14b0630698e35875",
+      "nativeLocalBodyBoxMm": [
+        -0.9000127000000001,
+        -0.6750127000000001,
+        0.8999872999999999,
+        0.6749873
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C53",
+      "supplierPart": "C1588",
+      "footprintUuid": "ab3a4d05c5de78dc",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "U21",
+      "supplierPart": "C7481",
+      "footprintUuid": "49c30ff15259c304",
+      "nativeLocalBodyBoxMm": [
+        -2.7,
+        -2.5,
+        2.7,
+        2.5
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "Q1",
+      "supplierPart": "C20917",
+      "footprintUuid": "870c74ef719071bf",
+      "nativeLocalBodyBoxMm": [
+        -1.027,
+        -1.677,
+        1.027,
+        1.677
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "Q2",
+      "supplierPart": "C20917",
+      "footprintUuid": "870c74ef719071bf",
+      "nativeLocalBodyBoxMm": [
+        -1.027,
+        -1.677,
+        1.027,
+        1.677
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "Q3",
+      "supplierPart": "C15127",
+      "footprintUuid": "befad4211daec5b9",
+      "nativeLocalBodyBoxMm": [
+        -1.0269872999999998,
+        -1.6770380999999999,
+        1.0270127,
+        1.6769619000000002
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R108",
+      "supplierPart": "C25803",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C54",
+      "supplierPart": "C14663",
+      "footprintUuid": "ab3a4d05c5de78dc",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R96",
+      "supplierPart": "C22843",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "D16",
+      "supplierPart": "C98221",
+      "footprintUuid": "c9468a6bfee303e7",
+      "nativeLocalBodyBoxMm": [
+        -1.05,
+        -0.6750127,
+        1.05,
+        0.6749873000000001
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R102",
+      "supplierPart": "C22843",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "D22",
+      "supplierPart": "C94868",
+      "footprintUuid": "c9468a6bfee303e7",
+      "nativeLocalBodyBoxMm": [
+        -1.05,
+        -0.6750127,
+        1.05,
+        0.6749873000000001
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R97",
+      "supplierPart": "C22843",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "D17",
+      "supplierPart": "C98221",
+      "footprintUuid": "c9468a6bfee303e7",
+      "nativeLocalBodyBoxMm": [
+        -1.05,
+        -0.6750127,
+        1.05,
+        0.6749873000000001
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R103",
+      "supplierPart": "C22843",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "D23",
+      "supplierPart": "C94868",
+      "footprintUuid": "c9468a6bfee303e7",
+      "nativeLocalBodyBoxMm": [
+        -1.05,
+        -0.6750127,
+        1.05,
+        0.6749873000000001
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R98",
+      "supplierPart": "C22843",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "D18",
+      "supplierPart": "C98221",
+      "footprintUuid": "c9468a6bfee303e7",
+      "nativeLocalBodyBoxMm": [
+        -1.05,
+        -0.6750127,
+        1.05,
+        0.6749873000000001
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R104",
+      "supplierPart": "C22843",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "D24",
+      "supplierPart": "C94868",
+      "footprintUuid": "c9468a6bfee303e7",
+      "nativeLocalBodyBoxMm": [
+        -1.05,
+        -0.6750127,
+        1.05,
+        0.6749873000000001
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R99",
+      "supplierPart": "C22843",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "D19",
+      "supplierPart": "C98221",
+      "footprintUuid": "c9468a6bfee303e7",
+      "nativeLocalBodyBoxMm": [
+        -1.05,
+        -0.6750127,
+        1.05,
+        0.6749873000000001
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R105",
+      "supplierPart": "C22843",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "D25",
+      "supplierPart": "C94868",
+      "footprintUuid": "c9468a6bfee303e7",
+      "nativeLocalBodyBoxMm": [
+        -1.05,
+        -0.6750127,
+        1.05,
+        0.6749873000000001
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R100",
+      "supplierPart": "C22843",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "D20",
+      "supplierPart": "C98221",
+      "footprintUuid": "c9468a6bfee303e7",
+      "nativeLocalBodyBoxMm": [
+        -1.05,
+        -0.6750127,
+        1.05,
+        0.6749873000000001
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R106",
+      "supplierPart": "C22843",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "D26",
+      "supplierPart": "C94868",
+      "footprintUuid": "c9468a6bfee303e7",
+      "nativeLocalBodyBoxMm": [
+        -1.05,
+        -0.6750127,
+        1.05,
+        0.6749873000000001
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R101",
+      "supplierPart": "C22843",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "D21",
+      "supplierPart": "C98221",
+      "footprintUuid": "c9468a6bfee303e7",
+      "nativeLocalBodyBoxMm": [
+        -1.05,
+        -0.6750127,
+        1.05,
+        0.6749873000000001
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R107",
+      "supplierPart": "C22843",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "D27",
+      "supplierPart": "C94868",
+      "footprintUuid": "c9468a6bfee303e7",
+      "nativeLocalBodyBoxMm": [
+        -1.05,
+        -0.6750127,
+        1.05,
+        0.6749873000000001
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "J12",
+      "supplierPart": "C599441",
+      "footprintUuid": "607a9ad3ba8fdde1",
+      "nativeLocalBodyBoxMm": [
+        -8.256,
+        -8.886031000000001,
+        8.256,
+        6.865969
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "U2",
+      "supplierPart": "C2913204",
+      "footprintUuid": "6b120e8e0d9a1448",
+      "nativeLocalBodyBoxMm": [
+        -9.1,
+        -9.205036499999999,
+        9.1,
+        16.4949635
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R109",
+      "supplierPart": "C21190",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R110",
+      "supplierPart": "C25803",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C55",
+      "supplierPart": "C14663",
+      "footprintUuid": "ab3a4d05c5de78dc",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "Q4",
+      "supplierPart": "C20917",
+      "footprintUuid": "870c74ef719071bf",
+      "nativeLocalBodyBoxMm": [
+        -1.027,
+        -1.677,
+        1.027,
+        1.677
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "D28",
+      "supplierPart": "C2297",
+      "footprintUuid": "c9468a6bfee303e7",
+      "nativeLocalBodyBoxMm": [
+        -1.05,
+        -0.6750127,
+        1.05,
+        0.6749873000000001
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R111",
+      "supplierPart": "C21190",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "U22",
+      "supplierPart": "C49851",
+      "footprintUuid": "02ec338442be4710",
+      "nativeLocalBodyBoxMm": [
+        -1.8,
+        -1.7,
+        1.8,
+        1.7
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C56",
+      "supplierPart": "C14663",
+      "footprintUuid": "ab3a4d05c5de78dc",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R112",
+      "supplierPart": "C22775",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C57",
+      "supplierPart": "C14663",
+      "footprintUuid": "ab3a4d05c5de78dc",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "U23",
+      "supplierPart": "C70285",
+      "footprintUuid": "2fa12c8f68575cc0",
+      "nativeLocalBodyBoxMm": [
+        -1.35,
+        -1.2,
+        1.35,
+        1.2
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "Q5",
+      "supplierPart": "C20526",
+      "footprintUuid": "870c74ef719071bf",
+      "nativeLocalBodyBoxMm": [
+        -0.7,
+        -1.5,
+        0.7,
+        1.5
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R115",
+      "supplierPart": "C13167",
+      "footprintUuid": "00f5fa9b965cb62b",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R121",
+      "supplierPart": "C25803",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R127",
+      "supplierPart": "C21189",
+      "footprintUuid": "00f5fa9b965cb62b",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C58",
+      "supplierPart": "C14663",
+      "footprintUuid": "ab3a4d05c5de78dc",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "U24",
+      "supplierPart": "C70285",
+      "footprintUuid": "2fa12c8f68575cc0",
+      "nativeLocalBodyBoxMm": [
+        -1.35,
+        -1.2,
+        1.35,
+        1.2
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "Q6",
+      "supplierPart": "C20526",
+      "footprintUuid": "870c74ef719071bf",
+      "nativeLocalBodyBoxMm": [
+        -0.7,
+        -1.5,
+        0.7,
+        1.5
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R116",
+      "supplierPart": "C13167",
+      "footprintUuid": "00f5fa9b965cb62b",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R122",
+      "supplierPart": "C25803",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R128",
+      "supplierPart": "C21189",
+      "footprintUuid": "00f5fa9b965cb62b",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C59",
+      "supplierPart": "C14663",
+      "footprintUuid": "ab3a4d05c5de78dc",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "U25",
+      "supplierPart": "C70285",
+      "footprintUuid": "2fa12c8f68575cc0",
+      "nativeLocalBodyBoxMm": [
+        -1.35,
+        -1.2,
+        1.35,
+        1.2
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "Q7",
+      "supplierPart": "C20526",
+      "footprintUuid": "870c74ef719071bf",
+      "nativeLocalBodyBoxMm": [
+        -0.7,
+        -1.5,
+        0.7,
+        1.5
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R117",
+      "supplierPart": "C13167",
+      "footprintUuid": "00f5fa9b965cb62b",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R123",
+      "supplierPart": "C25803",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R129",
+      "supplierPart": "C21189",
+      "footprintUuid": "00f5fa9b965cb62b",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C60",
+      "supplierPart": "C14663",
+      "footprintUuid": "ab3a4d05c5de78dc",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "U26",
+      "supplierPart": "C70285",
+      "footprintUuid": "2fa12c8f68575cc0",
+      "nativeLocalBodyBoxMm": [
+        -1.35,
+        -1.2,
+        1.35,
+        1.2
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "Q8",
+      "supplierPart": "C20526",
+      "footprintUuid": "870c74ef719071bf",
+      "nativeLocalBodyBoxMm": [
+        -0.7,
+        -1.5,
+        0.7,
+        1.5
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R118",
+      "supplierPart": "C13167",
+      "footprintUuid": "00f5fa9b965cb62b",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R124",
+      "supplierPart": "C25803",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R130",
+      "supplierPart": "C21189",
+      "footprintUuid": "00f5fa9b965cb62b",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C61",
+      "supplierPart": "C14663",
+      "footprintUuid": "ab3a4d05c5de78dc",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "U27",
+      "supplierPart": "C70285",
+      "footprintUuid": "2fa12c8f68575cc0",
+      "nativeLocalBodyBoxMm": [
+        -1.35,
+        -1.2,
+        1.35,
+        1.2
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "Q9",
+      "supplierPart": "C20526",
+      "footprintUuid": "870c74ef719071bf",
+      "nativeLocalBodyBoxMm": [
+        -0.7,
+        -1.5,
+        0.7,
+        1.5
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R119",
+      "supplierPart": "C13167",
+      "footprintUuid": "00f5fa9b965cb62b",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R125",
+      "supplierPart": "C25803",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R131",
+      "supplierPart": "C21189",
+      "footprintUuid": "00f5fa9b965cb62b",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C62",
+      "supplierPart": "C14663",
+      "footprintUuid": "ab3a4d05c5de78dc",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "U28",
+      "supplierPart": "C70285",
+      "footprintUuid": "2fa12c8f68575cc0",
+      "nativeLocalBodyBoxMm": [
+        -1.35,
+        -1.2,
+        1.35,
+        1.2
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "Q10",
+      "supplierPart": "C20526",
+      "footprintUuid": "870c74ef719071bf",
+      "nativeLocalBodyBoxMm": [
+        -0.7,
+        -1.5,
+        0.7,
+        1.5
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R120",
+      "supplierPart": "C13167",
+      "footprintUuid": "00f5fa9b965cb62b",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R126",
+      "supplierPart": "C25803",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R132",
+      "supplierPart": "C21189",
+      "footprintUuid": "00f5fa9b965cb62b",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C63",
+      "supplierPart": "C14663",
+      "footprintUuid": "ab3a4d05c5de78dc",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "U29",
+      "supplierPart": "C4471167",
+      "footprintUuid": "d3638b6b784677ee",
+      "nativeLocalBodyBoxMm": [
+        -1.55,
+        -1.3,
+        1.55,
+        1.3
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "U30",
+      "supplierPart": "C4471167",
+      "footprintUuid": "d3638b6b784677ee",
+      "nativeLocalBodyBoxMm": [
+        -1.55,
+        -1.3,
+        1.55,
+        1.3
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C64",
+      "supplierPart": "C14663",
+      "footprintUuid": "ab3a4d05c5de78dc",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C65",
+      "supplierPart": "C14663",
+      "footprintUuid": "ab3a4d05c5de78dc",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "U35",
+      "supplierPart": "C205992",
+      "footprintUuid": "b15cd951ebfca020",
+      "nativeLocalBodyBoxMm": [
+        -1.3250507999999999,
+        -0.9499873,
+        1.3249492,
+        0.9500126999999999
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C70",
+      "supplierPart": "C14663",
+      "footprintUuid": "ab3a4d05c5de78dc",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R113",
+      "supplierPart": "C25803",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R114",
+      "supplierPart": "C25804",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "U31",
+      "supplierPart": "C529281",
+      "footprintUuid": "fb7570439acb2ee8",
+      "nativeLocalBodyBoxMm": [
+        -1.225,
+        -0.85,
+        1.225,
+        0.85
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "U32",
+      "supplierPart": "C529281",
+      "footprintUuid": "fb7570439acb2ee8",
+      "nativeLocalBodyBoxMm": [
+        -1.225,
+        -0.85,
+        1.225,
+        0.85
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "U33",
+      "supplierPart": "C7832",
+      "footprintUuid": "1a0d17d873845a7f",
+      "nativeLocalBodyBoxMm": [
+        -0.9499872999999999,
+        -1.3250126999999998,
+        0.9500127,
+        1.3249873
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C66",
+      "supplierPart": "C14663",
+      "footprintUuid": "ab3a4d05c5de78dc",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C67",
+      "supplierPart": "C14663",
+      "footprintUuid": "ab3a4d05c5de78dc",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C68",
+      "supplierPart": "C14663",
+      "footprintUuid": "ab3a4d05c5de78dc",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "U39",
+      "supplierPart": "C1848341",
+      "footprintUuid": "25bc69da3e7f56cc",
+      "nativeLocalBodyBoxMm": [
+        -1.55,
+        -1.55,
+        1.55,
+        1.55
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R142",
+      "supplierPart": "C728587",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R143",
+      "supplierPart": "C13315",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R144",
+      "supplierPart": "C14675",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R145",
+      "supplierPart": "C25981",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C79",
+      "supplierPart": "C14663",
+      "footprintUuid": "ab3a4d05c5de78dc",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C80",
+      "supplierPart": "C29936",
+      "footprintUuid": "ab3a4d05c5de78dc",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "D30",
+      "supplierPart": "C8678",
+      "footprintUuid": "306abdcb1d66a9a2",
+      "nativeLocalBodyBoxMm": [
+        -2.2499873,
+        -1.4,
+        2.2500127,
+        1.4
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "U36",
+      "supplierPart": "C15163",
+      "footprintUuid": "4510aae0d03ff6e4",
+      "nativeLocalBodyBoxMm": [
+        -1.05,
+        -1.05,
+        1.05,
+        1.05
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "L3",
+      "supplierPart": "C84608",
+      "footprintUuid": "77e61bc662700f67",
+      "nativeLocalBodyBoxMm": [
+        -2.6,
+        -2.6,
+        2.6,
+        2.6
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "D31",
+      "supplierPart": "C8678",
+      "footprintUuid": "306abdcb1d66a9a2",
+      "nativeLocalBodyBoxMm": [
+        -2.2499873,
+        -1.4,
+        2.2500127,
+        1.4
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C71",
+      "supplierPart": "C28323",
+      "footprintUuid": "86fd0c36f5e69e67",
+      "nativeLocalBodyBoxMm": [
+        -1.05,
+        -0.675,
+        1.05,
+        0.675
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C72",
+      "supplierPart": "C14663",
+      "footprintUuid": "ab3a4d05c5de78dc",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C73",
+      "supplierPart": "C89632",
+      "footprintUuid": "3c35e8e1304d32a2",
+      "nativeLocalBodyBoxMm": [
+        -1.675,
+        -0.875,
+        1.675,
+        0.875
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C74",
+      "supplierPart": "C14663",
+      "footprintUuid": "ab3a4d05c5de78dc",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R133",
+      "supplierPart": "C22788",
+      "footprintUuid": "00f5fa9b965cb62b",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R134",
+      "supplierPart": "C25804",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R135",
+      "supplierPart": "C23046",
+      "footprintUuid": "00f5fa9b965cb62b",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C75",
+      "supplierPart": "C1589",
+      "footprintUuid": "ab3a4d05c5de78dc",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R136",
+      "supplierPart": "C25803",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R138",
+      "supplierPart": "C25804",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R141",
+      "supplierPart": "C25804",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C77",
+      "supplierPart": "C14663",
+      "footprintUuid": "ab3a4d05c5de78dc",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R146",
+      "supplierPart": "C22788",
+      "footprintUuid": "00f5fa9b965cb62b",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C81",
+      "supplierPart": "C14663",
+      "footprintUuid": "ab3a4d05c5de78dc",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "U38",
+      "supplierPart": "C33002",
+      "footprintUuid": "42b61b70d92d03eb",
+      "nativeLocalBodyBoxMm": [
+        -0.875,
+        -1.525,
+        0.875,
+        1.525
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "U37",
+      "supplierPart": "C2868382",
+      "footprintUuid": "06d7fe72712bc2e2",
+      "nativeLocalBodyBoxMm": [
+        -0.875,
+        -1.525,
+        0.875,
+        1.525
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "U40",
+      "supplierPart": "C205992",
+      "footprintUuid": "b15cd951ebfca020",
+      "nativeLocalBodyBoxMm": [
+        -1.3250507999999999,
+        -0.9499873,
+        1.3249492,
+        0.9500126999999999
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R149",
+      "supplierPart": "C23087",
+      "footprintUuid": "ff074495e2227cd6",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R150",
+      "supplierPart": "C21190",
+      "footprintUuid": "5a8e485bf7262fce",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R151",
+      "supplierPart": "C23162",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C82",
+      "supplierPart": "C14663",
+      "footprintUuid": "11880e4df81e3238",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R137",
+      "supplierPart": "C23139",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R147",
+      "supplierPart": "C25965",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R148",
+      "supplierPart": "C22843",
+      "footprintUuid": "2c302890482fc905",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "U18",
+      "supplierPart": "C2868382",
+      "footprintUuid": "06d7fe72712bc2e2",
+      "nativeLocalBodyBoxMm": [
+        -0.875,
+        -1.525,
+        0.875,
+        1.525
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R80",
+      "supplierPart": "C309651",
+      "footprintUuid": "00f5fa9b965cb62b",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R81",
+      "supplierPart": "C110776",
+      "footprintUuid": "00f5fa9b965cb62b",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "R83",
+      "supplierPart": "C25804",
+      "footprintUuid": "00f5fa9b965cb62b",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "U41",
+      "supplierPart": "C529281",
+      "footprintUuid": "fb7570439acb2ee8",
+      "nativeLocalBodyBoxMm": [
+        -1.225,
+        -0.85,
+        1.225,
+        0.85
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "U42",
+      "supplierPart": "C2941042",
+      "footprintUuid": "4c741b98b731ae49",
+      "nativeLocalBodyBoxMm": [
+        -1.7750253999999999,
+        -1.1249745999999998,
+        1.7749746,
+        1.1250254000000002
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C83",
+      "supplierPart": "C14663",
+      "footprintUuid": "11880e4df81e3238",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C84",
+      "supplierPart": "C14663",
+      "footprintUuid": "9dfda1344b75c6a0",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "C85",
+      "supplierPart": "C14663",
+      "footprintUuid": "9dfda1344b75c6a0",
+      "nativeLocalBodyBoxMm": [
+        -0.85,
+        -0.45,
+        0.85,
+        0.45
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "Q11",
+      "supplierPart": "C155242",
+      "footprintUuid": "8ee8e22185821a97",
+      "nativeLocalBodyBoxMm": [
+        -0.7,
+        -1.5,
+        0.7,
+        1.5
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    },
+    {
+      "ref": "D1",
+      "supplierPart": "C8678",
+      "footprintUuid": "8d408d90be16d2d9",
+      "nativeLocalBodyBoxMm": [
+        -2.2499873,
+        -1.4,
+        2.2500127,
+        1.4
+      ],
+      "registrationAllowanceEachSideMm": 0.15
+    }
+  ],
+  "sources": {
+    "C3338": {
+      "mpn": "RVT1E101M0607",
+      "bodyLongBoundMm": 6.8,
+      "bodyShortBoundMm": 6.8,
+      "heightBoundAboveBoardMm": 8.0,
+      "basis": "HONOR RVT 6.3x7.7 family base6.6+0.2, L7.7+0.3; contact span7.4 separate",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/4ec4cfc2b89f173d2532ed891957b1a7.pdf?productCode=C3338",
+      "paperSha256": "285ae57abc097a56fae89388feef643b79f8d7c2901d6457de4bc00a5f91ce1b",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C4747974": {
+      "mpn": "RST220UF25V019",
+      "bodyLongBoundMm": 6.8,
+      "bodyShortBoundMm": 6.8,
+      "heightBoundAboveBoardMm": 8.0,
+      "basis": "KNSCHA exact RST220UF25V019 6.3x7.7, PDF pp1,5,6; base6.6+0.2, L7.7+0.3",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/14a3635b3dd040b9da29700226de150d.pdf?productCode=C4747974",
+      "paperSha256": "e5ba3fe717f3f2a0b616ae8a7aecdd0aee17e267fb88f051520fc9c520ec22b1",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C15008": {
+      "mpn": "CL31A107MQHNNNE",
+      "bodyLongBoundMm": 3.35,
+      "bodyShortBoundMm": 1.75,
+      "heightBoundAboveBoardMm": 1.8,
+      "basis": "Samsung MLCC size31 thicknessH dimensions PDF C15008 p6",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/02336ea48ea44ca18c72517dd3cb7b47.pdf?productCode=C15008",
+      "paperSha256": "96baebe4bd0ce363e87be28b5b003f511f1502e084a6fc4f02333ded56c808f6",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C14663": {
+      "mpn": "CC0603KRX7R9BB104",
+      "bodyLongBoundMm": 1.7,
+      "bodyShortBoundMm": 0.9,
+      "heightBoundAboveBoardMm": 0.9,
+      "basis": "YAGEO X7R0603 100nF50V DA dimensions PDFp5",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/23ccee80ee542e7cf156a772bb589942.pdf?productCode=C14663",
+      "paperSha256": "61a606825ab314ea318cfb5362848a62fdffb851efa9818d642e9a541c56a648",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C15849": {
+      "mpn": "CL10A105KB8NNNC",
+      "bodyLongBoundMm": 1.7,
+      "bodyShortBoundMm": 0.9,
+      "heightBoundAboveBoardMm": 0.9,
+      "basis": "Samsung general MLCC size10 thickness8 dimensions PDF C15008 p6",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/02336ea48ea44ca18c72517dd3cb7b47.pdf?productCode=C15008",
+      "paperSha256": "96baebe4bd0ce363e87be28b5b003f511f1502e084a6fc4f02333ded56c808f6",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C15850": {
+      "mpn": "CL21A106KAYNNNE",
+      "bodyLongBoundMm": 2.2,
+      "bodyShortBoundMm": 1.45,
+      "heightBoundAboveBoardMm": 1.45,
+      "basis": "Samsung MLCC size21 thicknessY dimensions PDF C15008 p6",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/02336ea48ea44ca18c72517dd3cb7b47.pdf?productCode=C15008",
+      "paperSha256": "96baebe4bd0ce363e87be28b5b003f511f1502e084a6fc4f02333ded56c808f6",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C23631": {
+      "mpn": "CC1206KKX7RDBB102",
+      "bodyLongBoundMm": 3.5,
+      "bodyShortBoundMm": 1.8,
+      "heightBoundAboveBoardMm": 1.8,
+      "basis": "YAGEO highvoltage1206 family bound PDFp3; largest 3.2+0.3/1.6+0.2/T1.6+0.2",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/9a86cbae8c34c796174906a7ab23dad0.pdf?productCode=C23631",
+      "paperSha256": "cdbb0064d796c01670a079836ffcdb07a855856b26d313e6dab2bd61dabfb8c8",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C8678": {
+      "mpn": "SS34",
+      "bodyLongBoundMm": 4.5,
+      "bodyShortBoundMm": 2.8,
+      "heightBoundAboveBoardMm": 2.45,
+      "basis": "MDD SS32..SS3200 Rev2024A5, PDF p1; body4.5x2.8, lead span5.3",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/dfa1ff67dea875d0135103ba9ada713a.pdf?productCode=C8678",
+      "paperSha256": "fb4970875779696914d235bcf954240569302fb325399838f2861d474cbf9760",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C2297": {
+      "mpn": "KT-0805G",
+      "bodyLongBoundMm": 2.1,
+      "bodyShortBoundMm": 1.35,
+      "heightBoundAboveBoardMm": 0.95,
+      "basis": "KT0805 green PDF p2:2.0x1.25x0.85, general +/-0.1",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/de342fde3322df0797012cd7a04e2194.pdf?productCode=C2297",
+      "paperSha256": "853e6752f600e247475ba548092207fa4fc707a3f8a0b1562a834bc9a901a8d9",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C49257": {
+      "mpn": "2.54-1*3P\u9488",
+      "bodyLongBoundMm": 8.12,
+      "bodyShortBoundMm": 2.69,
+      "heightBoundAboveBoardMm": 8.55,
+      "basis": "BOOMELE 2.54-1x3: n*2.54+0.5, width2.54+0.15; top pin5.7+0.2 plus base2.50+0.15",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/d52c83a07830c4e9e9a614accc55f5cd.pdf?productCode=C49257",
+      "paperSha256": "2ca0710c19e7b1a11c0062278895f29943cd72797456b1710cee49589bd29c0a",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C474952": {
+      "mpn": "KF128-5.08-2P-AA",
+      "bodyLongBoundMm": 11.260000000000002,
+      "bodyShortBoundMm": 11.2,
+      "heightBoundAboveBoardMm": 14.5,
+      "basis": "KEFA KF128-5.08 2P:10.16+0.30 housing plus0.60+0.20 interlock tongue gives11.26 mm; depth10.70+0.50 gives11.20 mm. Explicit asymmetric pin-row datum retained in local box.",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/29da5b9f86f95d4ff856cbb6af0595a9.pdf?productCode=C474952",
+      "paperSha256": "4781221a025b068464bce493173984ac1e90efb9db90c1433e1e448ea9bdaead",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C55683": {
+      "mpn": "HR961160C",
+      "bodyLongBoundMm": 25.65,
+      "bodyShortBoundMm": 16.35,
+      "heightBoundAboveBoardMm": 14.36,
+      "basis": "HANRUN HR961160C RevB4 PDFp2:body A25.4+0.25/B16.1+0.25; shell ears18.9+0.25 and leads27.01+0.38 covered by footprint lands/STEP checks",
+      "paperUrl": null,
+      "paperSha256": "4ffa98ae1bc7cb679e9c66d642a5429d120e543d83404fde824a81b514251719",
+      "archivedRepositoryPath": "hardware/pcb/6dof2_r14/references/HR961160C-HANRUN-REV-B4-OFFICIAL-20261017.pdf",
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C165948": {
+      "mpn": "TYPE-C-31-M-12",
+      "bodyLongBoundMm": 9.1,
+      "bodyShortBoundMm": 7.5,
+      "heightBoundAboveBoardMm": 3.36,
+      "basis": "HRO TYPE-C-31-M-12 drawing:8.94+0.15/7.35+0.15; H3.26+0.10; rounded width upwards",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/9e56b777c022540fcce7c7f67825f55e.pdf?productCode=C165948",
+      "paperSha256": "6ae33d50ac47820114661138dc4e4659f40fdc5d4f485b46685dfec338da1a9e",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C7431083": {
+      "mpn": "CYH125-68UH",
+      "bodyLongBoundMm": 12.5,
+      "bodyShortBoundMm": 12.5,
+      "heightBoundAboveBoardMm": 6.0,
+      "basis": "SHOUHAN CYH125-680M drawing, PDF p1; A/B/C explicit maxima",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/8734fd7126c885743043267d7f6e8d1a.pdf?productCode=C7431083",
+      "paperSha256": "98e57939da17f8d69fa754be157ffe3011ee1b78273c3958f1cd41996554673a",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C25804": {
+      "mpn": "0603WAF1002T5E",
+      "bodyLongBoundMm": 1.7,
+      "bodyShortBoundMm": 0.9,
+      "heightBoundAboveBoardMm": 0.55,
+      "basis": "Selected UNI-ROYAL/YAGEO RC/RT 0603 size table PDFp4, maximum1.60+0.10/0.80+0.10/0.45+0.10",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/0a975aaa49b7c97f38a963127be4a823.pdf?productCode=C25804",
+      "paperSha256": "11cd644d5d8a34a6d12775afb80bf58d8fc11f0c3b700dbd0f7a59942ceaa5ef",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C23186": {
+      "mpn": "0603WAF5101T5E",
+      "bodyLongBoundMm": 1.7,
+      "bodyShortBoundMm": 0.9,
+      "heightBoundAboveBoardMm": 0.55,
+      "basis": "Selected UNI-ROYAL/YAGEO RC/RT 0603 size table PDFp4, maximum1.60+0.10/0.80+0.10/0.45+0.10",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/0a975aaa49b7c97f38a963127be4a823.pdf?productCode=C23186",
+      "paperSha256": "11cd644d5d8a34a6d12775afb80bf58d8fc11f0c3b700dbd0f7a59942ceaa5ef",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C21190": {
+      "mpn": "0603WAF1001T5E",
+      "bodyLongBoundMm": 1.7,
+      "bodyShortBoundMm": 0.9,
+      "heightBoundAboveBoardMm": 0.55,
+      "basis": "Selected UNI-ROYAL/YAGEO RC/RT 0603 size table PDFp4, maximum1.60+0.10/0.80+0.10/0.45+0.10",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/0a975aaa49b7c97f38a963127be4a823.pdf?productCode=C21190",
+      "paperSha256": "11cd644d5d8a34a6d12775afb80bf58d8fc11f0c3b700dbd0f7a59942ceaa5ef",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C22865": {
+      "mpn": "0603WAF1242T5E",
+      "bodyLongBoundMm": 1.7,
+      "bodyShortBoundMm": 0.9,
+      "heightBoundAboveBoardMm": 0.55,
+      "basis": "Selected UNI-ROYAL/YAGEO RC/RT 0603 size table PDFp4, maximum1.60+0.10/0.80+0.10/0.45+0.10",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/0a975aaa49b7c97f38a963127be4a823.pdf?productCode=C22865",
+      "paperSha256": "11cd644d5d8a34a6d12775afb80bf58d8fc11f0c3b700dbd0f7a59942ceaa5ef",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C23140": {
+      "mpn": "0603WAF330JT5E",
+      "bodyLongBoundMm": 1.7,
+      "bodyShortBoundMm": 0.9,
+      "heightBoundAboveBoardMm": 0.55,
+      "basis": "Selected UNI-ROYAL/YAGEO RC/RT 0603 size table PDFp4, maximum1.60+0.10/0.80+0.10/0.45+0.10",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/0a975aaa49b7c97f38a963127be4a823.pdf?productCode=C23140",
+      "paperSha256": "11cd644d5d8a34a6d12775afb80bf58d8fc11f0c3b700dbd0f7a59942ceaa5ef",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C6179": {
+      "mpn": "AM26LS31CDR",
+      "bodyLongBoundMm": 10.3,
+      "bodyShortBoundMm": 4.86,
+      "heightBoundAboveBoardMm": 1.75,
+      "basis": "TI D0016A mpds432:body10.0+2*0.15,4.0+2*0.43 interleadflash; p1",
+      "paperUrl": "https://www.ti.com/lit/pdf/mpds432",
+      "paperSha256": "322df13e3522508db6d364f5e3d0923994be41f1cd1b21cee2928fa8ee2bb1ce",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Archived manufacturer drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C61063": {
+      "mpn": "XL1509-5.0E1",
+      "bodyLongBoundMm": 5.1,
+      "bodyShortBoundMm": 4.0,
+      "heightBoundAboveBoardMm": 1.75,
+      "basis": "XLSEMI XL1509 SOP8 mechanical, PDF p13",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/6764d4cba2504b189b593202c77b9bd6.pdf?productCode=C61063",
+      "paperSha256": "8b10b01cdcb052767549f29a014c0cb9983ef957b89b95c325cbea5d1316a660",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C435835": {
+      "mpn": "LDL1117S33R",
+      "bodyLongBoundMm": 6.7,
+      "bodyShortBoundMm": 3.7,
+      "heightBoundAboveBoardMm": 1.8,
+      "basis": "ST LDL1117 SOT223 Table5 PDFp17; full leadspan7.3 checked with lands/model",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/29f4e8f2c569cb1b438995f2c8fccc58.pdf?productCode=C435835",
+      "paperSha256": "387b4375ad125c2473388b57c0e2aae166034c8c687af337f10f15c72bcb2fa3",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C32843": {
+      "mpn": "W5500",
+      "bodyLongBoundMm": 9.2,
+      "bodyShortBoundMm": 9.2,
+      "heightBoundAboveBoardMm": 1.6,
+      "basis": "WIZnet W5500 PDFp65: conservative complete9.0+0.2 lead envelope reserved as body; mold protrusion not a separately certified supplier limit",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/30476b02c653bde72f85075618aea7c4.pdf?productCode=C32843",
+      "paperSha256": "7b826b808084ccd986bcc22904c00a07a508ef42fb93d079fe7150a4c4f1a63d",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C9006": {
+      "mpn": "X322525MOB4SI",
+      "bodyLongBoundMm": 3.3,
+      "bodyShortBoundMm": 2.6,
+      "heightBoundAboveBoardMm": 0.8,
+      "basis": "YXC YSX321SL same3215 family drawing:3.2+0.1/2.5+0.1/0.7+0.1",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/a84bd8d530dd46e4b0f6d0ee59d8a89c.pdf?productCode=C9006",
+      "paperSha256": "7bc18549e407d8e381075b0f5fc696e48cf0fa060aeee67971925f43cfdfbb8b",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C77833": {
+      "mpn": "DS1034-25FUNSI44",
+      "bodyLongBoundMm": 53.34,
+      "bodyShortBoundMm": 12.88,
+      "heightBoundAboveBoardMm": null,
+      "basis": "CONNFLY C-DS1034-XXXXXXX-H:25-way C53.04+0.30, female flange12.5+0.38; exact nut stack height separate",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/ae451d35fb59d99ccde45ddd856a4f83.pdf?productCode=C77833",
+      "paperSha256": "3cd37d1ec38078f54932fae833be7da0eb0ba8a13801c4a4843e5ebddbe50ffd",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "UNCONFIRMED_EXACT_STACK"
+    },
+    "C114599": {
+      "mpn": "LTV-847S",
+      "bodyLongBoundMm": 20.34,
+      "bodyShortBoundMm": 7.0,
+      "heightBoundAboveBoardMm": 4.0,
+      "basis": "LITEON LTV-847S outline, PDF p7 (printed p6); 19.84+0.5, 6.5+0.5; lead span10.46 checked separately",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/50d1272e98b44b3f93dc4865833860f5.pdf?productCode=C114599",
+      "paperSha256": "d3ce12235039ef68278d106e06733e633f597a9b2acce6efce1386a5f51ea202",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C1589": {
+      "mpn": "CL10B103KB8NNNC",
+      "bodyLongBoundMm": 1.7,
+      "bodyShortBoundMm": 0.9,
+      "heightBoundAboveBoardMm": 0.9,
+      "basis": "Samsung general MLCC size10 thickness8 dimensions PDF C15008 p6",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/02336ea48ea44ca18c72517dd3cb7b47.pdf?productCode=C15008",
+      "paperSha256": "96baebe4bd0ce363e87be28b5b003f511f1502e084a6fc4f02333ded56c808f6",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C1779": {
+      "mpn": "CL21A475KAQNNNE",
+      "bodyLongBoundMm": 2.15,
+      "bodyShortBoundMm": 1.4,
+      "heightBoundAboveBoardMm": 1.4,
+      "basis": "Samsung MLCC size21 thicknessQ dimensions PDF C15008 p6",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/02336ea48ea44ca18c72517dd3cb7b47.pdf?productCode=C15008",
+      "paperSha256": "96baebe4bd0ce363e87be28b5b003f511f1502e084a6fc4f02333ded56c808f6",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C108301": {
+      "mpn": "PBY160808T-601Y-N",
+      "bodyLongBoundMm": 1.75,
+      "bodyShortBoundMm": 0.95,
+      "heightBoundAboveBoardMm": 0.95,
+      "basis": "Chilisin PBY160808 dimensions table, PDF p1",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/36009442722fe7c09ae8f8272ac198c3.pdf?productCode=C108301",
+      "paperSha256": "5a923312990f15980eb81c40638b347bd8cc893dc0729527ef670c20c2991de4",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C114625": {
+      "mpn": "RC0603FR-0749R9L",
+      "bodyLongBoundMm": 1.7,
+      "bodyShortBoundMm": 0.9,
+      "heightBoundAboveBoardMm": 0.55,
+      "basis": "Selected UNI-ROYAL/YAGEO RC/RT 0603 size table PDFp4, maximum1.60+0.10/0.80+0.10/0.45+0.10",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/b426be3ce22c6de3e0c3a2248e49159e.pdf?productCode=C114625",
+      "paperSha256": "e7dbabb0611925227ccfc429c14c8833a7b1f2c755684444124446f20b22a229",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C22935": {
+      "mpn": "0603WAF1004T5E",
+      "bodyLongBoundMm": 1.7,
+      "bodyShortBoundMm": 0.9,
+      "heightBoundAboveBoardMm": 0.55,
+      "basis": "Selected UNI-ROYAL/YAGEO RC/RT 0603 size table PDFp4, maximum1.60+0.10/0.80+0.10/0.45+0.10",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/0a975aaa49b7c97f38a963127be4a823.pdf?productCode=C22935",
+      "paperSha256": "11cd644d5d8a34a6d12775afb80bf58d8fc11f0c3b700dbd0f7a59942ceaa5ef",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C22859": {
+      "mpn": "0603WAF100JT5E",
+      "bodyLongBoundMm": 1.7,
+      "bodyShortBoundMm": 0.9,
+      "heightBoundAboveBoardMm": 0.55,
+      "basis": "Selected UNI-ROYAL/YAGEO RC/RT 0603 size table PDFp4, maximum1.60+0.10/0.80+0.10/0.45+0.10",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/0a975aaa49b7c97f38a963127be4a823.pdf?productCode=C22859",
+      "paperSha256": "11cd644d5d8a34a6d12775afb80bf58d8fc11f0c3b700dbd0f7a59942ceaa5ef",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C21122": {
+      "mpn": "CL10B223KB8NNNC",
+      "bodyLongBoundMm": 1.7,
+      "bodyShortBoundMm": 0.9,
+      "heightBoundAboveBoardMm": 0.9,
+      "basis": "Samsung general MLCC size10 thickness8 dimensions PDF C15008 p6",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/02336ea48ea44ca18c72517dd3cb7b47.pdf?productCode=C15008",
+      "paperSha256": "96baebe4bd0ce363e87be28b5b003f511f1502e084a6fc4f02333ded56c808f6",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C1631": {
+      "mpn": "0603B682K500NT",
+      "bodyLongBoundMm": 1.8,
+      "bodyShortBoundMm": 1.0,
+      "heightBoundAboveBoardMm": 1.0,
+      "basis": "FENGHUA0603 family DB maximum bound PDFp5; conservative larger class",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/09fe2daf22580a99fa7fea93ccb20fb7.pdf?productCode=C1631",
+      "paperSha256": "705023d3be0454148a96fc2715d249a32d8ff442e70b64d1116d3490ed1d8136",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C193402": {
+      "mpn": "SMF5.0A",
+      "bodyLongBoundMm": 4.0,
+      "bodyShortBoundMm": 2.0,
+      "heightBoundAboveBoardMm": 1.5,
+      "basis": "MDD SMF5.0(C)A drawing PDFp1, complete package4.00x2.00, H1.35 rounded1.5; body3.00x2.00 so long bound conservative",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/82c461b905225ff344e885083d94bbf3.pdf?productCode=C193402",
+      "paperSha256": "a25eff3c49c148330430af495f4120020aac2273a4b9bd6d1baad6ee5560d049",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C7519": {
+      "mpn": "USBLC6-2SC6",
+      "bodyLongBoundMm": 3.05,
+      "bodyShortBoundMm": 1.75,
+      "heightBoundAboveBoardMm": 1.45,
+      "basis": "ST USBLC6-2SC6 SOT23-6L Table4, PDF p12",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/0d3a2ab954b34651a0695e7ccf534db0.pdf?productCode=C7519",
+      "paperSha256": "8ba7ab4ec1781b7f6052f5999a2304bd611c0ed2b5e8f36ffa5092552932a42e",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C455280": {
+      "mpn": "TS-1088R-02026",
+      "bodyLongBoundMm": 4.15,
+      "bodyShortBoundMm": 3.25,
+      "heightBoundAboveBoardMm": 2.1,
+      "basis": "XUNPU TS1088R-02026:3.9x3.0 plus0.25 general XY tolerance, selected H2.0 plus0.1",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/d36ef8d43e89de62c59fa43456d00a3f.pdf?productCode=C455280",
+      "paperSha256": "fbcea844b292de8d0377a6b6023cca960ec9907c43e9849f1dad22680ab06383",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C1647": {
+      "mpn": "CL10C180JB8NNNC",
+      "bodyLongBoundMm": 1.7,
+      "bodyShortBoundMm": 0.9,
+      "heightBoundAboveBoardMm": 0.9,
+      "basis": "Samsung general MLCC size10 thickness8 dimensions PDF C15008 p6",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/02336ea48ea44ca18c72517dd3cb7b47.pdf?productCode=C15008",
+      "paperSha256": "96baebe4bd0ce363e87be28b5b003f511f1502e084a6fc4f02333ded56c808f6",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C883148": {
+      "mpn": "BSMD1812-110-16V",
+      "bodyLongBoundMm": 4.73,
+      "bodyShortBoundMm": 3.41,
+      "heightBoundAboveBoardMm": 1.0,
+      "basis": "BHFUSE BSMD1812 dimensions table PDFp7, exact BSMD1812-110-16V row: A4.73 maximum, B3.41 maximum, C1.00 maximum.",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/5d64a96d2854b34a986411c86a560ca3.pdf?productCode=C883148",
+      "paperSha256": "a7f7e8936d26d547302e2920acc580c907da40b475082b3ba077d570dd14c5e2",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_SELECTED_ROW"
+    },
+    "C70285": {
+      "mpn": "SN74LVC1G74DCUR",
+      "bodyLongBoundMm": 2.7,
+      "bodyShortBoundMm": 2.4,
+      "heightBoundAboveBoardMm": 0.9,
+      "basis": "TI DCU0008A official PDFp22:2.4/2.1 plus0.15flash per side; full leadspan3.2 separate",
+      "paperUrl": "https://www.ti.com/lit/ds/symlink/sn74lvc1g74.pdf",
+      "paperSha256": "e46a5a867fec742290000dca5ed3b291535f3c4418ef2ae267acc4ab51b26d8a",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C485081": {
+      "mpn": "SN74LVC1G98DCKR",
+      "bodyLongBoundMm": 2.45,
+      "bodyShortBoundMm": 1.7,
+      "heightBoundAboveBoardMm": 1.1,
+      "basis": "TI DCK0006A 4214835/D official PDFp15; flash included",
+      "paperUrl": "https://www.ti.com/lit/ds/symlink/sn74lvc1g98.pdf",
+      "paperSha256": "c09ee4c65839e8773c5875dfe2b4b227886dcf8d2d6b700fa1bb4a65fbc147c0",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C1509297": {
+      "mpn": "TPS389001DSER",
+      "bodyLongBoundMm": 1.55,
+      "bodyShortBoundMm": 1.55,
+      "heightBoundAboveBoardMm": 0.8,
+      "basis": "TI DSE0006A PDFp24",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/8b8961a9ee79d18e190ebcad304ba957.pdf?productCode=C1509297",
+      "paperSha256": "e05a60eb7899b092ba5c8268267fcc381f3c007dee0c63904599b97a6d0bc7cb",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C861325": {
+      "mpn": "RT0603BRD0732KL",
+      "bodyLongBoundMm": 1.7,
+      "bodyShortBoundMm": 0.9,
+      "heightBoundAboveBoardMm": 0.55,
+      "basis": "Selected UNI-ROYAL/YAGEO RC/RT 0603 size table PDFp4, maximum1.60+0.10/0.80+0.10/0.45+0.10",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/46d7760c582640714d605308a25a220a.pdf?productCode=C861325",
+      "paperSha256": "0a729d144519a7021c82a0ef242b064e467c70d44afcf9eabd6c7ffdc4b673a3",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C95204": {
+      "mpn": "RT0603BRD0710KL",
+      "bodyLongBoundMm": 1.7,
+      "bodyShortBoundMm": 0.9,
+      "heightBoundAboveBoardMm": 0.55,
+      "basis": "Selected UNI-ROYAL/YAGEO RC/RT 0603 size table PDFp4, maximum1.60+0.10/0.80+0.10/0.45+0.10",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/46d7760c582640714d605308a25a220a.pdf?productCode=C95204",
+      "paperSha256": "0a729d144519a7021c82a0ef242b064e467c70d44afcf9eabd6c7ffdc4b673a3",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C229395": {
+      "mpn": "AC1206FR-071K5L",
+      "bodyLongBoundMm": 3.2,
+      "bodyShortBoundMm": 1.7,
+      "heightBoundAboveBoardMm": 0.65,
+      "basis": "YAGEO AC1206 dimensions PDFp4; maximum3.10+0.10/1.60+0.10/0.55+0.10",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/3511efb0564cb1711d9237ab09d6e97b.pdf?productCode=C229395",
+      "paperSha256": "a601b4c4d33a69ed5e3173e8b92e0a5a4fc2bf5fef2aa740f8bca4c057ed43ae",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C47023": {
+      "mpn": "MCP23017-E/SO",
+      "bodyLongBoundMm": 18.4,
+      "bodyShortBoundMm": 8.0,
+      "heightBoundAboveBoardMm": 2.65,
+      "basis": "Microchip C04-052C PDFpp30-31:17.90BSC+flash0.15/end plus conservative profile allowance;7.5BSC+0.25/side; width rounded8.0",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/04c9ac8e40f2f0d387d228bbb2902323.pdf?productCode=C47023",
+      "paperSha256": "63cb5f2bec44434cdeeada1790d0316c9dc06b33febb489ad87bb0e2d540496a",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C23162": {
+      "mpn": "0603WAF4701T5E",
+      "bodyLongBoundMm": 1.7,
+      "bodyShortBoundMm": 0.9,
+      "heightBoundAboveBoardMm": 0.55,
+      "basis": "Selected UNI-ROYAL/YAGEO RC/RT 0603 size table PDFp4, maximum1.60+0.10/0.80+0.10/0.45+0.10",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/0a975aaa49b7c97f38a963127be4a823.pdf?productCode=C23162",
+      "paperSha256": "11cd644d5d8a34a6d12775afb80bf58d8fc11f0c3b700dbd0f7a59942ceaa5ef",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C485802": {
+      "mpn": "TPS3839G33DBZR",
+      "bodyLongBoundMm": 3.04,
+      "bodyShortBoundMm": 1.4,
+      "heightBoundAboveBoardMm": 1.12,
+      "basis": "TI DBZ0003A PDFp31",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/3321f789585078cc8dd76a2053163339.pdf?productCode=C485802",
+      "paperSha256": "0b0ab8cf2ab65a0a9f47a12c292b5a3aaac73a5491fe8257bc8d6fda517b1fdd",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C25803": {
+      "mpn": "0603WAF1003T5E",
+      "bodyLongBoundMm": 1.7,
+      "bodyShortBoundMm": 0.9,
+      "heightBoundAboveBoardMm": 0.55,
+      "basis": "Selected UNI-ROYAL/YAGEO RC/RT 0603 size table PDFp4, maximum1.60+0.10/0.80+0.10/0.45+0.10",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/0a975aaa49b7c97f38a963127be4a823.pdf?productCode=C25803",
+      "paperSha256": "11cd644d5d8a34a6d12775afb80bf58d8fc11f0c3b700dbd0f7a59942ceaa5ef",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C1848341": {
+      "mpn": "TPS26621DRCR",
+      "bodyLongBoundMm": 3.1,
+      "bodyShortBoundMm": 3.1,
+      "heightBoundAboveBoardMm": 1.0,
+      "basis": "TI DRC0010J PDFp43",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/6462dffca37359c81f9409fea3030637.pdf?productCode=C1848341",
+      "paperSha256": "8722e848da9ff30dfba1e5860067b0868370a39391af50fdb2d853a21de42469",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C728587": {
+      "mpn": "RT0603BRD0726K7L",
+      "bodyLongBoundMm": 1.7,
+      "bodyShortBoundMm": 0.9,
+      "heightBoundAboveBoardMm": 0.55,
+      "basis": "Selected UNI-ROYAL/YAGEO RC/RT 0603 size table PDFp4, maximum1.60+0.10/0.80+0.10/0.45+0.10",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/46d7760c582640714d605308a25a220a.pdf?productCode=C728587",
+      "paperSha256": "0a729d144519a7021c82a0ef242b064e467c70d44afcf9eabd6c7ffdc4b673a3",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C14675": {
+      "mpn": "RC0603FR-07100KL",
+      "bodyLongBoundMm": 1.7,
+      "bodyShortBoundMm": 0.9,
+      "heightBoundAboveBoardMm": 0.55,
+      "basis": "Selected UNI-ROYAL/YAGEO RC/RT 0603 size table PDFp4, maximum1.60+0.10/0.80+0.10/0.45+0.10",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/b426be3ce22c6de3e0c3a2248e49159e.pdf?productCode=C14675",
+      "paperSha256": "e7dbabb0611925227ccfc429c14c8833a7b1f2c755684444124446f20b22a229",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C25981": {
+      "mpn": "0603WAF8201T5E",
+      "bodyLongBoundMm": 1.7,
+      "bodyShortBoundMm": 0.9,
+      "heightBoundAboveBoardMm": 0.55,
+      "basis": "Selected UNI-ROYAL/YAGEO RC/RT 0603 size table PDFp4, maximum1.60+0.10/0.80+0.10/0.45+0.10",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/0a975aaa49b7c97f38a963127be4a823.pdf?productCode=C25981",
+      "paperSha256": "11cd644d5d8a34a6d12775afb80bf58d8fc11f0c3b700dbd0f7a59942ceaa5ef",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C29936": {
+      "mpn": "CL10B105KA8NNNC",
+      "bodyLongBoundMm": 1.7,
+      "bodyShortBoundMm": 0.9,
+      "heightBoundAboveBoardMm": 0.9,
+      "basis": "Samsung general MLCC size10 thickness8 dimensions PDF C15008 p6",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/02336ea48ea44ca18c72517dd3cb7b47.pdf?productCode=C15008",
+      "paperSha256": "96baebe4bd0ce363e87be28b5b003f511f1502e084a6fc4f02333ded56c808f6",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C13315": {
+      "mpn": "0603WAF1204T5E",
+      "bodyLongBoundMm": 1.7,
+      "bodyShortBoundMm": 0.9,
+      "heightBoundAboveBoardMm": 0.55,
+      "basis": "Selected UNI-ROYAL/YAGEO RC/RT 0603 size table PDFp4, maximum1.60+0.10/0.80+0.10/0.45+0.10",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/0a975aaa49b7c97f38a963127be4a823.pdf?productCode=C13315",
+      "paperSha256": "11cd644d5d8a34a6d12775afb80bf58d8fc11f0c3b700dbd0f7a59942ceaa5ef",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C230412": {
+      "mpn": "AC1210JR-071K1L",
+      "bodyLongBoundMm": 3.2,
+      "bodyShortBoundMm": 2.75,
+      "heightBoundAboveBoardMm": 0.65,
+      "basis": "YAGEO AC1210 dimensions PDFp4; maximum3.10+0.10/2.60+0.15/0.55+0.10",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/3511efb0564cb1711d9237ab09d6e97b.pdf?productCode=C230412",
+      "paperSha256": "a601b4c4d33a69ed5e3173e8b92e0a5a4fc2bf5fef2aa740f8bca4c057ed43ae",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C31850": {
+      "mpn": "0603WAF2202T5E",
+      "bodyLongBoundMm": 1.7,
+      "bodyShortBoundMm": 0.9,
+      "heightBoundAboveBoardMm": 0.55,
+      "basis": "Selected UNI-ROYAL/YAGEO RC/RT 0603 size table PDFp4, maximum1.60+0.10/0.80+0.10/0.45+0.10",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/0a975aaa49b7c97f38a963127be4a823.pdf?productCode=C31850",
+      "paperSha256": "11cd644d5d8a34a6d12775afb80bf58d8fc11f0c3b700dbd0f7a59942ceaa5ef",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C57759": {
+      "mpn": "1N4148WS",
+      "bodyLongBoundMm": 1.8,
+      "bodyShortBoundMm": 1.35,
+      "heightBoundAboveBoardMm": 1.1,
+      "basis": "SEMTECH 1N4148WS SC76, PDF p3, D/E/A maxima",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/9b6108cea18747c5be6fedfca8ce414e.pdf?productCode=C57759",
+      "paperSha256": "3305a485d13b5135a2be83af66cc42f00504915802e444a0fa44ea4259c3c1bb",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C1588": {
+      "mpn": "CL10B102KB8NNNC",
+      "bodyLongBoundMm": 1.7,
+      "bodyShortBoundMm": 0.9,
+      "heightBoundAboveBoardMm": 0.9,
+      "basis": "Samsung general MLCC size10 thickness8 dimensions PDF C15008 p6",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/02336ea48ea44ca18c72517dd3cb7b47.pdf?productCode=C15008",
+      "paperSha256": "96baebe4bd0ce363e87be28b5b003f511f1502e084a6fc4f02333ded56c808f6",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C7481": {
+      "mpn": "SN74AHCT14PWR",
+      "bodyLongBoundMm": 5.4,
+      "bodyShortBoundMm": 5.0,
+      "heightBoundAboveBoardMm": 1.2,
+      "basis": "TI PW0014A official PDFp39:5.1+0.30,4.5+0.50 interleadflash",
+      "paperUrl": "https://www.ti.com/lit/ds/symlink/sn74ahct14.pdf",
+      "paperSha256": "5b6f5446ef14bd518b9c9b714ba05f816d562ea3a986ed1fc78bde272c1288c3",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C20917": {
+      "mpn": "AO3400A",
+      "bodyLongBoundMm": 3.354,
+      "bodyShortBoundMm": 2.054,
+      "heightBoundAboveBoardMm": 1.25,
+      "basis": "AOS PO-00001 SOT23 Rev N: D3.1/E1 1.8 plus 0.127 per side mold allowance",
+      "paperUrl": "https://aosmd.com/sites/default/files/res/package/SOT23.pdf",
+      "paperSha256": "b6fac64d55f133ce74dd85ddddc618c3d5408e9531cb21e660f6a8ef3d8c5408",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Archived manufacturer drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C15127": {
+      "mpn": "AO3401A",
+      "bodyLongBoundMm": 3.354,
+      "bodyShortBoundMm": 2.054,
+      "heightBoundAboveBoardMm": 1.25,
+      "basis": "AOS PO-00001 SOT23 Rev N: conservative same family envelope as AO3400A",
+      "paperUrl": "https://aosmd.com/sites/default/files/res/package/SOT23.pdf",
+      "paperSha256": "b6fac64d55f133ce74dd85ddddc618c3d5408e9531cb21e660f6a8ef3d8c5408",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Archived manufacturer drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C22843": {
+      "mpn": "0603WAF1501T5E",
+      "bodyLongBoundMm": 1.7,
+      "bodyShortBoundMm": 0.9,
+      "heightBoundAboveBoardMm": 0.55,
+      "basis": "Selected UNI-ROYAL/YAGEO RC/RT 0603 size table PDFp4, maximum1.60+0.10/0.80+0.10/0.45+0.10",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/0a975aaa49b7c97f38a963127be4a823.pdf?productCode=C22843",
+      "paperSha256": "11cd644d5d8a34a6d12775afb80bf58d8fc11f0c3b700dbd0f7a59942ceaa5ef",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C98221": {
+      "mpn": "LTST-C170KGKT",
+      "bodyLongBoundMm": 2.1,
+      "bodyShortBoundMm": 1.35,
+      "heightBoundAboveBoardMm": 1.5,
+      "basis": "LITEON LTST-C170KGKT PDF p2, 2.0x1.25x1.40 plus0.1 general tolerance",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/df825b6c68a749899bf3cb9f98af74d4.pdf?productCode=C98221",
+      "paperSha256": "e513a527a6e92db4de32e048a227fbd7ec2c837263d9c5765577e7e362a66155",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C94868": {
+      "mpn": "LTST-C170KRKT",
+      "bodyLongBoundMm": 2.1,
+      "bodyShortBoundMm": 1.35,
+      "heightBoundAboveBoardMm": 1.5,
+      "basis": "LITEON LTST-C170KRKT PDF p2, 2.0x1.25x1.40 plus0.1 general tolerance",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/27340ae4949e4f7e959b38db84ec6af2.pdf?productCode=C94868",
+      "paperSha256": "dc3d9e6359fbb6213dd6becf0ea9475fba3e00ee4d2e6ea7fdcca041cebcd2cf",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C599441": {
+      "mpn": "RJHSE-5080",
+      "bodyLongBoundMm": 16.512,
+      "bodyShortBoundMm": 15.752,
+      "heightBoundAboveBoardMm": 13.591,
+      "basis": "Amphenol P-RJHSE-5080 RevJ:body15.75x14.99; conservative +/-0.381 EACH EDGE around placed nominal body, H13.21+0.381",
+      "paperUrl": "https://cdn.amphenol-cs.com/media/wysiwyg/files/drawing/p-rjhse-5080.pdf",
+      "paperSha256": null,
+      "archivedRepositoryPath": null,
+      "sourceVerification": "PDF drawing reviewed; local binary unavailable",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C2913204": {
+      "mpn": "ESP32-S3-WROOM-1-N8R2",
+      "bodyLongBoundMm": 25.7,
+      "bodyShortBoundMm": 18.2,
+      "heightBoundAboveBoardMm": 3.25,
+      "basis": "Espressif WROOM1 PDFp29:25.5+0.2,18+0.2,3.1+0.15; WROOM1-U diagram not used",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/24a44651a4767a6582addcdaa9cab2ca.pdf?productCode=C2913204",
+      "paperSha256": "d053da7fbeb6896bff4bd973239d1512924867d58e6ef6317fd678f7bf881ebe",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C49851": {
+      "mpn": "INA226AIDGSR",
+      "bodyLongBoundMm": 3.6,
+      "bodyShortBoundMm": 3.4,
+      "heightBoundAboveBoardMm": 1.1,
+      "basis": "TI DGS0010A PDFp36:3.1+2*0.25 and3.1+2*0.15; maximum mold/interlead allowances included",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/c67b965eb2a01e8d671b6f15d639e314.pdf?productCode=C49851",
+      "paperSha256": "eb6683997aa6cea3b736a42afc7402ecc38fd701e1217e746b8992b02df864d2",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C22775": {
+      "mpn": "0603WAF1000T5E",
+      "bodyLongBoundMm": 1.7,
+      "bodyShortBoundMm": 0.9,
+      "heightBoundAboveBoardMm": 0.55,
+      "basis": "Selected UNI-ROYAL/YAGEO RC/RT 0603 size table PDFp4, maximum1.60+0.10/0.80+0.10/0.45+0.10",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/0a975aaa49b7c97f38a963127be4a823.pdf?productCode=C22775",
+      "paperSha256": "11cd644d5d8a34a6d12775afb80bf58d8fc11f0c3b700dbd0f7a59942ceaa5ef",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C20526": {
+      "mpn": "MMBT3904(RANGE:100-300)",
+      "bodyLongBoundMm": 3.0,
+      "bodyShortBoundMm": 1.4,
+      "heightBoundAboveBoardMm": 1.15,
+      "basis": "JSCJ SOT23 D/E/A maxima, PDF p3",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/9335632bcfa83df8351353eab379720e.pdf?productCode=C20526",
+      "paperSha256": "6c2034cb0bd0d85be51c9c4f82aad838a688aa70c20de1a71681be8ec02b659b",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C13167": {
+      "mpn": "0603WAF2701T5E",
+      "bodyLongBoundMm": 1.7,
+      "bodyShortBoundMm": 0.9,
+      "heightBoundAboveBoardMm": 0.55,
+      "basis": "Selected UNI-ROYAL/YAGEO RC/RT 0603 size table PDFp4, maximum1.60+0.10/0.80+0.10/0.45+0.10",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/0a975aaa49b7c97f38a963127be4a823.pdf?productCode=C13167",
+      "paperSha256": "11cd644d5d8a34a6d12775afb80bf58d8fc11f0c3b700dbd0f7a59942ceaa5ef",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C21189": {
+      "mpn": "0603WAF0000T5E",
+      "bodyLongBoundMm": 1.7,
+      "bodyShortBoundMm": 0.9,
+      "heightBoundAboveBoardMm": 0.55,
+      "basis": "Selected UNI-ROYAL/YAGEO RC/RT 0603 size table PDFp4, maximum1.60+0.10/0.80+0.10/0.45+0.10",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/f42da6c80a0747bae77c2f98f4e46d1d.pdf?productCode=C21189",
+      "paperSha256": "d20b4e5f35745009db079d282eee44b798b9bd27c26033ae50d6a7cd4fc6b9cb",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C4471167": {
+      "mpn": "SN74HCS02BQAR",
+      "bodyLongBoundMm": 3.1,
+      "bodyShortBoundMm": 2.6,
+      "heightBoundAboveBoardMm": 0.8,
+      "basis": "TI BQA0014A SN74HCS02 official PDFp24",
+      "paperUrl": "https://www.ti.com/lit/ds/symlink/sn74hcs02.pdf",
+      "paperSha256": "e4ac5e76460cea7e421f30bcda9301ed09f1dc6d2ba240243ad4904df1e553d3",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C205992": {
+      "mpn": "SN74LVC1G132DCKR",
+      "bodyLongBoundMm": 2.65,
+      "bodyShortBoundMm": 1.9,
+      "heightBoundAboveBoardMm": 1.1,
+      "basis": "TI DCK0005A 4214834/G official PDFp24; flash included",
+      "paperUrl": "https://www.ti.com/lit/ds/symlink/sn74lvc1g132.pdf",
+      "paperSha256": "fae33d78fe46834ab99230aaa1106f58321f23cf06c65be9cf08ea9c0dbcb623",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C529281": {
+      "mpn": "SN74LVC1G11DCKR",
+      "bodyLongBoundMm": 2.45,
+      "bodyShortBoundMm": 1.7,
+      "heightBoundAboveBoardMm": 1.1,
+      "basis": "TI DCK0006A 4214835/D official PDFp27; max2.15/1.4 plus0.15flash EACH SIDE",
+      "paperUrl": "https://www.ti.com/lit/ds/symlink/sn74lvc1g11.pdf",
+      "paperSha256": "ffd953703273b43844eae23cfbf31cfc801a3b9443f2c863d49dde62f5a9232b",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C7832": {
+      "mpn": "SN74LVC1G08DCKR",
+      "bodyLongBoundMm": 2.65,
+      "bodyShortBoundMm": 1.9,
+      "heightBoundAboveBoardMm": 1.1,
+      "basis": "TI DCK0005A 4214834/G official PDFp47; max2.15/1.4 plus0.25flash EACH SIDE",
+      "paperUrl": "https://www.ti.com/lit/ds/symlink/sn74lvc1g08.pdf",
+      "paperSha256": "30b963cc44233cf3ca35c891ff987c8323a2244ecc765e23296ec96ca4b42666",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C15163": {
+      "mpn": "TPS61170DRVR",
+      "bodyLongBoundMm": 2.1,
+      "bodyShortBoundMm": 2.1,
+      "heightBoundAboveBoardMm": 0.8,
+      "basis": "TI DRV S-PWSON-N6 4206925/E drawing PDFp27; maximum body2.10square, seated0.80; thermal pad separately p28",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/c42f254ca5a44e8fa3c12301553cdebb.pdf?productCode=C15163",
+      "paperSha256": "f94f8926c7a90603b20a601d6a62296a36f1a9535e3918391c3f7db0a1d59eb5",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C84608": {
+      "mpn": "SWPA5040S100MT",
+      "bodyLongBoundMm": 5.2,
+      "bodyShortBoundMm": 5.2,
+      "heightBoundAboveBoardMm": 4.0,
+      "basis": "Sunlord SWPA5040S family Table4-1, 5.0+0.2 axes, C4.0max",
+      "paperUrl": "https://www.sunlordinc.com/uploads/files/20221122/SWPA%20series%20of%20SMD%20Power%20Inductor.pdf",
+      "paperSha256": "f08f8c1a753b71e4104101bcc60d2bb77f10ea4ecb5777e897f15d3283a9e266",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Archived manufacturer drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C28323": {
+      "mpn": "CL21B105KBFNNNE",
+      "bodyLongBoundMm": 2.1,
+      "bodyShortBoundMm": 1.35,
+      "heightBoundAboveBoardMm": 1.35,
+      "basis": "Samsung MLCC size21 thicknessF dimensions PDF C15008 p6",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/02336ea48ea44ca18c72517dd3cb7b47.pdf?productCode=C15008",
+      "paperSha256": "96baebe4bd0ce363e87be28b5b003f511f1502e084a6fc4f02333ded56c808f6",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C89632": {
+      "mpn": "CL31B106KBHNNNE",
+      "bodyLongBoundMm": 3.35,
+      "bodyShortBoundMm": 1.75,
+      "heightBoundAboveBoardMm": 1.8,
+      "basis": "Samsung MLCC size31 thicknessH dimensions PDF C15008 p6",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/02336ea48ea44ca18c72517dd3cb7b47.pdf?productCode=C15008",
+      "paperSha256": "96baebe4bd0ce363e87be28b5b003f511f1502e084a6fc4f02333ded56c808f6",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C22788": {
+      "mpn": "0603WAF1243T5E",
+      "bodyLongBoundMm": 1.7,
+      "bodyShortBoundMm": 0.9,
+      "heightBoundAboveBoardMm": 0.55,
+      "basis": "Selected UNI-ROYAL/YAGEO RC/RT 0603 size table PDFp4, maximum1.60+0.10/0.80+0.10/0.45+0.10",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/0a975aaa49b7c97f38a963127be4a823.pdf?productCode=C22788",
+      "paperSha256": "11cd644d5d8a34a6d12775afb80bf58d8fc11f0c3b700dbd0f7a59942ceaa5ef",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C23046": {
+      "mpn": "0603WAF4991T5E",
+      "bodyLongBoundMm": 1.7,
+      "bodyShortBoundMm": 0.9,
+      "heightBoundAboveBoardMm": 0.55,
+      "basis": "Selected UNI-ROYAL/YAGEO RC/RT 0603 size table PDFp4, maximum1.60+0.10/0.80+0.10/0.45+0.10",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/0a975aaa49b7c97f38a963127be4a823.pdf?productCode=C23046",
+      "paperSha256": "11cd644d5d8a34a6d12775afb80bf58d8fc11f0c3b700dbd0f7a59942ceaa5ef",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C33002": {
+      "mpn": "TPS3700DDCR",
+      "bodyLongBoundMm": 3.05,
+      "bodyShortBoundMm": 1.75,
+      "heightBoundAboveBoardMm": 1.1,
+      "basis": "TI TPS3700 DDC package identity plus TI DDC0006A drawing in TLV6700 official PDFp25",
+      "paperUrl": "https://www.ti.com/lit/ds/symlink/tlv6700.pdf",
+      "paperSha256": "b97ac5c46caafd69bb762ee3da123e7906fb68394f552455a51b41385890c2fc",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C2868382": {
+      "mpn": "TLV6700DDCR",
+      "bodyLongBoundMm": 3.05,
+      "bodyShortBoundMm": 1.75,
+      "heightBoundAboveBoardMm": 1.1,
+      "basis": "TI DDC0006A TLV6700 official PDFp25; same registered DDC for TPS3700",
+      "paperUrl": "https://www.ti.com/lit/ds/symlink/tlv6700.pdf",
+      "paperSha256": "b97ac5c46caafd69bb762ee3da123e7906fb68394f552455a51b41385890c2fc",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C23087": {
+      "mpn": "0603WAF6341T5E",
+      "bodyLongBoundMm": 1.7,
+      "bodyShortBoundMm": 0.9,
+      "heightBoundAboveBoardMm": 0.55,
+      "basis": "Selected UNI-ROYAL/YAGEO RC/RT 0603 size table PDFp4, maximum1.60+0.10/0.80+0.10/0.45+0.10",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/0a975aaa49b7c97f38a963127be4a823.pdf?productCode=C23087",
+      "paperSha256": "11cd644d5d8a34a6d12775afb80bf58d8fc11f0c3b700dbd0f7a59942ceaa5ef",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C23139": {
+      "mpn": "0603WAF3323T5E",
+      "bodyLongBoundMm": 1.7,
+      "bodyShortBoundMm": 0.9,
+      "heightBoundAboveBoardMm": 0.55,
+      "basis": "Selected UNI-ROYAL/YAGEO RC/RT 0603 size table PDFp4, maximum1.60+0.10/0.80+0.10/0.45+0.10",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/0a975aaa49b7c97f38a963127be4a823.pdf?productCode=C23139",
+      "paperSha256": "11cd644d5d8a34a6d12775afb80bf58d8fc11f0c3b700dbd0f7a59942ceaa5ef",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C25965": {
+      "mpn": "0603WAF2551T5E",
+      "bodyLongBoundMm": 1.7,
+      "bodyShortBoundMm": 0.9,
+      "heightBoundAboveBoardMm": 0.55,
+      "basis": "Selected UNI-ROYAL/YAGEO RC/RT 0603 size table PDFp4, maximum1.60+0.10/0.80+0.10/0.45+0.10",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/0a975aaa49b7c97f38a963127be4a823.pdf?productCode=C25965",
+      "paperSha256": "11cd644d5d8a34a6d12775afb80bf58d8fc11f0c3b700dbd0f7a59942ceaa5ef",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C309651": {
+      "mpn": "RT0603BRD0727KL",
+      "bodyLongBoundMm": 1.7,
+      "bodyShortBoundMm": 0.9,
+      "heightBoundAboveBoardMm": 0.55,
+      "basis": "Selected UNI-ROYAL/YAGEO RC/RT 0603 size table PDFp4, maximum1.60+0.10/0.80+0.10/0.45+0.10",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/46d7760c582640714d605308a25a220a.pdf?productCode=C309651",
+      "paperSha256": "0a729d144519a7021c82a0ef242b064e467c70d44afcf9eabd6c7ffdc4b673a3",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C110776": {
+      "mpn": "RT0603BRD071KL",
+      "bodyLongBoundMm": 1.7,
+      "bodyShortBoundMm": 0.9,
+      "heightBoundAboveBoardMm": 0.55,
+      "basis": "Selected UNI-ROYAL/YAGEO RC/RT 0603 size table PDFp4, maximum1.60+0.10/0.80+0.10/0.45+0.10",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/46d7760c582640714d605308a25a220a.pdf?productCode=C110776",
+      "paperSha256": "0a729d144519a7021c82a0ef242b064e467c70d44afcf9eabd6c7ffdc4b673a3",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C2941042": {
+      "mpn": "LM74700QDBVRQ1",
+      "bodyLongBoundMm": 3.55,
+      "bodyShortBoundMm": 2.25,
+      "heightBoundAboveBoardMm": 1.45,
+      "basis": "TI DBV0006A PDFp30 maxbody3.05/1.75 plus0.25moldflash per side",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/447cabab1808fa061ec80788e97d5328.pdf?productCode=C2941042",
+      "paperSha256": "59c554056e8d280869e5264c7c9bb5fb44a25324cac430a7888959caf5c2ccbd",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    },
+    "C155242": {
+      "mpn": "DMN6075S-7",
+      "bodyLongBoundMm": 3.0,
+      "bodyShortBoundMm": 1.4,
+      "heightBoundAboveBoardMm": 1.1,
+      "basis": "Diodes DS37023 SOT23, PDF p6; body H/B and seated K1",
+      "paperUrl": "https://datasheet.lcsc.com/datasheet/pdf/d3a3e3e47a9dfdf604ec2915aaa8adf8.pdf?productCode=C155242",
+      "paperSha256": "c07a47cd2aa0994d7a68bee67108bd005d518df541d8e1d965dc7d3ffeb63925",
+      "archivedRepositoryPath": null,
+      "sourceVerification": "Manufacturer-authored drawing reviewed",
+      "status": "CONSERVATIVE_BODY_BOUND_REVIEWED",
+      "heightQualification": "EXACT_OR_FAMILY_BOUND"
+    }
+  }
+}

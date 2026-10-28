@@ -1,0 +1,57 @@
+{
+  "status": "PASS_LIVE_OPEN_BOARD_MATCHES_COMMITTED_PHYSICAL_GEOMETRY",
+  "projectUuid": "df6039acdfad4375ae07aa6257cd0186",
+  "pcbUuid": "6567ed8798fb578fbfd0297236c2ee0e",
+  "liveSourceSha256": "33a20197fe2e7ceee4ed30d3bf956ac6a47b1622991493e99aefc45e312ea674",
+  "committedProjectSha256": "979ab2f72b642353866ec91bb8908640fa747aaf745201abe8dcb54c569d22d0",
+  "components": 324,
+  "physicalRecordsIdentical": true,
+  "metadataDifferences": [],
+  "metadataRecordsMissing": [],
+  "metadataRecordsAdded": [],
+  "keyPoses": {
+    "J12": {
+      "xMm": 270.00000102,
+      "yMm": 8.51000076,
+      "angleDeg": 0
+    },
+    "U19": {
+      "xMm": 255.89999873999997,
+      "yMm": 21.99999918,
+      "angleDeg": 0
+    },
+    "U20": {
+      "xMm": 277.50000126000003,
+      "yMm": 21.99999918,
+      "angleDeg": 180
+    },
+    "C53": {
+      "xMm": 280.30000074,
+      "yMm": 8.70000038,
+      "angleDeg": -90
+    },
+    "D13": {
+      "xMm": 267.70000054,
+      "yMm": 32.80000044,
+      "angleDeg": 0
+    },
+    "R87": {
+      "xMm": 264.00000032,
+      "yMm": 33.39999924,
+      "angleDeg": 90
+    },
+    "J1": {
+      "xMm": 290.09999891999996,
+      "yMm": 11.20000046,
+      "angleDeg": 90
+    },
+    "J2": {
+      "xMm": 294.69999987999995,
+      "yMm": 21.99999918,
+      "angleDeg": 90
+    }
+  },
+  "comparisonBasis": "All live physical records exactly match the final saved raw source; all324 live anchors additionally compared to the committed native archive with3nm tolerance.",
+  "savedRawSourceSha256": "2e4a397b3130fdd34c9ed5c32a3403ec7293530aafe58707d7a354fa971d9b74",
+  "maximumLiveToCommittedAnchorErrorMm": 1.2600000331985939e-06
+}

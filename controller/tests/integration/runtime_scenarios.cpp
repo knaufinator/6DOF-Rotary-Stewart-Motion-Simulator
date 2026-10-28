@@ -22,6 +22,7 @@
 #include "driver/i2c_master.h"
 #include "driver/gpio.h"
 #include "driver/usb_serial_jtag.h"
+#include "runtime_fixture.h"
 
 namespace sim {
 struct Stop {};
@@ -276,6 +277,54 @@ extern "C" void serial_printf(const char* fmt,...) {
 extern "C" void r14_report_normalized_drive_alarm(int axis) {sim::alarm_bits|=1<<axis;sim::event("alarm_callback",0,axis);}
 extern "C" void r14_report_transport_reconnect() {++sim::io_faults;sim::event("io_fault_callback");}
 
+namespace runtime_fixture {
+namespace {
+size_t motion_packets=0;
+std::array<uint32_t,6> motion{};
+}
+void start() {
+    sim::startup(false,false);
+    sim::tx.clear();
+    cobs_set_data_handler([](const uint8_t* payload,int len,int source) {
+        sim::require(len==18,"unexpected motion payload size");
+        ++motion_packets;
+        for(int i=0;i<6;++i) motion[i]=uint32_t(payload[3*i]) |
+            (uint32_t(payload[3*i+1])<<8) | (uint32_t(payload[3*i+2])<<16);
+        sim::event("motion_callback",source,0,len);
+        // Deliberately no motor callback: this observes protocol delivery only.
+    });
+}
+void tick() {sim::tick();}
+void finish() {sim::finish();}
+void receive(const std::vector<uint8_t>& wire,bool serial_bridge) {
+    sim::require(!wire.empty() && wire.size()<=COBS_MAX_FRAME,"invalid test datagram size");
+    if(serial_bridge) {
+        sim::rx.insert(sim::rx.end(),wire.begin(),wire.end());
+        while(sim::rx_pos<sim::rx.size()) sim::require(cobs_read_process(0)>0,"stream stalled");
+    } else {
+        // Test carrier substitutes W5500 datagram delivery; use the real codec/dispatcher.
+        sim::require(wire.back()==0,"missing test datagram delimiter");
+        uint8_t frame[COBS_MAX_FRAME];
+        int n=cobs_decode(wire.data(),int(wire.size()-1),frame);
+        if(n>0) cobs_dispatch_frame(frame,n,COBS_SRC_ETHERNET);
+    }
+}
+std::vector<uint8_t> take_output() {std::vector<uint8_t> result;result.swap(sim::tx);return result;}
+void telemetry(const float angles[6],const float positions[6]) {cobs_send_telemetry(angles,positions);}
+size_t motion_count() {return motion_packets;}
+std::array<uint32_t,6> last_motion() {return motion;}
+MotionStats motion_stats() {
+    cobs_motion_stats_t s{};cobs_motion_stats(&s);
+    return {s.seq_frames,s.seq_gaps,s.seq_lost,s.seq_restarts,s.last_source};
+}
+bool field_on() {return (sim::mcp[0x15]&2)!=0;}
+void check_no_arm() {sim::no_arm();}
+void save_trace(const std::string& path,const std::string& scenario,const std::string& error) {
+    sim::save_trace(path,scenario,error);
+}
+}
+
+#ifndef R14_RUNTIME_NO_MAIN
 int main(int argc,char** argv) {
     if(argc!=3){std::fprintf(stderr,"usage: runtime-scenarios SCENARIO TRACE.json\n");return 2;}
     std::string error;
@@ -285,3 +334,4 @@ int main(int argc,char** argv) {
     if(!error.empty()){std::fprintf(stderr,"FAIL %s: %s\n",argv[1],error.c_str());return 1;}
     std::printf("PASS %s: production COBS/board monitor; no arm edges; virtual_us=%lld\n",argv[1],static_cast<long long>(sim::now.load()));return 0;
 }
+#endif

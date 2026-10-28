@@ -129,8 +129,38 @@ if(WIN32)
     set_target_properties(stewart-platform PROPERTIES LINK_FLAGS "/ENTRY:mainCRTStartup")
 endif()
 
-# Read-only safety regression: hardware transports are disabled before any I/O.
+# Headless loopback integration. SDK substitutes apply only to the firmware
+# fixture library, never to desktop socket code or the ESP-IDF firmware build.
 include(CTest)
+if(BUILD_TESTING AND WIN32)
+    set(R14_TEST_FIXTURE ${CONTROLLER_DIR}/tests/integration)
+    add_library(r14-transport-runtime STATIC
+        ${R14_TEST_FIXTURE}/runtime_scenarios.cpp
+        ${CONTROLLER_DIR}/main/R14Hardware.cpp
+        ${CONTROLLER_DIR}/main/CobsTransport.cpp
+    )
+    target_include_directories(r14-transport-runtime PRIVATE
+        ${R14_TEST_FIXTURE}/sdk ${CONTROLLER_DIR}/include)
+    target_compile_definitions(r14-transport-runtime PRIVATE
+        CONFIG_ESP_CONSOLE_USB_SERIAL_JTAG=1 R14_RUNTIME_NO_MAIN=1)
+    if(MSVC)
+        target_compile_options(r14-transport-runtime PRIVATE /FI${R14_TEST_FIXTURE}/sdk/compat.h)
+    endif()
+    add_executable(stewart-runtime-transport-tests
+        tests/test_runtime_transport.cpp src/automation.cpp src/udp_transport.cpp)
+    target_include_directories(stewart-runtime-transport-tests PRIVATE
+        src ${cjson_SOURCE_DIR} ${R14_TEST_FIXTURE})
+    target_link_libraries(stewart-runtime-transport-tests PRIVATE
+        r14-transport-runtime cjson ws2_32)
+    foreach(mode direct bridge)
+        add_test(NAME desktop_runtime_${mode} COMMAND stewart-runtime-transport-tests
+            ${mode} ${CMAKE_CURRENT_BINARY_DIR}/runtime-desktop-${mode}.json)
+        set_tests_properties(desktop_runtime_${mode} PROPERTIES TIMEOUT 30
+            ENVIRONMENT "STEWART_DOCUMENTATION_MODE=0")
+    endforeach()
+endif()
+
+# Read-only safety regression: hardware transports are disabled before any I/O.
 if(BUILD_TESTING)
     add_executable(stewart-recording-tests tests/test_recording.cpp)
     add_test(NAME recording_precision COMMAND stewart-recording-tests)

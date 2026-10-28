@@ -8,6 +8,8 @@ on:
       - 'controller/main/**'
       - 'controller/stewart-core' # shared submodule gitlink — the math under test lives here now
       - 'controller/tests/**'
+      - 'app/tools/**'
+      - 'tools/check_r14_runtime_sensitivity.py'
       - 'hardware/pcb/6dof2_r13/bringup/r13bench_core.py'
       - 'hardware/pcb/6dof2_r13/bringup/test_r13bench_core.py'
       - '.github/workflows/unit_tests.yml'
@@ -18,6 +20,8 @@ on:
       - 'controller/main/**'
       - 'controller/stewart-core' # shared submodule gitlink — the math under test lives here now
       - 'controller/tests/**'
+      - 'app/tools/**'
+      - 'tools/check_r14_runtime_sensitivity.py'
       - 'hardware/pcb/6dof2_r13/bringup/r13bench_core.py'
       - 'hardware/pcb/6dof2_r13/bringup/test_r13bench_core.py'
       - '.github/workflows/unit_tests.yml'
@@ -48,13 +52,19 @@ jobs:
       - name: Build tests
         run: cmake --build controller/tests/build --config Release
 
-      - name: Run tests (Linux)
-        if: runner.os == 'Linux'
-        run: ./controller/tests/build/stewart-tests
+      - name: Run unit and production-runtime integration scenarios
+        run: ctest --test-dir controller/tests/build -C Release --output-on-failure --no-tests=error
 
-      - name: Run tests (Windows)
-        if: runner.os == 'Windows'
-        run: .\controller\tests\build\Release\stewart-tests.exe
+      - name: Verify fault-test sensitivity with isolated production mutants
+        run: python tools/check_r14_runtime_sensitivity.py --output "${{ runner.temp }}/r14-runtime-negative-controls"
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: r14-runtime-${{ matrix.os }}
+          path: |
+            controller/tests/build/runtime-*.json
+            ${{ runner.temp }}/r14-runtime-negative-controls/*.json
 
   host-contracts:
     name: Firmware Contracts and R13 Bench Host
@@ -70,3 +80,14 @@ jobs:
           python controller/tests/test_r14_failclosed_source_contract.py
       - name: R13 bench-host regressions without hardware
         run: python hardware/pcb/6dof2_r13/bringup/test_r13bench_core.py
+
+  app-tools:
+    name: MCP Tooling Compatibility
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r app/tools/requirements.txt
+      - run: python -m unittest discover -s app/tools

@@ -12,3 +12,6 @@ CMakeLists.txt text eol=lf
 hardware/pcb/6dof2_r14/** -text
 hardware/pcb/6dof2_r14/exports/** -whitespace
 hardware/pcb/6dof2_r14/review/r13-recovered-source/** -whitespace
+
+# Preserve raw emulator evidence against its recorded SHA-256 digests.
+docs/testing/r14-runtime/2026-10-28/** -text

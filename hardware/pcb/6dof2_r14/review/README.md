@@ -5,6 +5,8 @@ complete; manufactured-board qualification is pending. Start with the
 [review method](../REVIEW_METHOD.md), [design decisions](../DECISIONS.md) and
 [current section report](2026-10-26-10V/README.md).
 
+The [27 October R14C1 review](2026-10-27-clearance/README.md) supersedes the ordered placement, copper and label evidence after correcting the confirmed J12 collision. The [28 October Amphenol connector study](2026-10-28-amphenol/README.md) checks the proposed replacement at all six positions; it is not applied or approved for ordering.
+
 | Current evidence | Scope |
 | --- | --- |
 | [Section report](2026-10-26-10V/README.md) | Circuit-by-circuit findings and qualification limits |

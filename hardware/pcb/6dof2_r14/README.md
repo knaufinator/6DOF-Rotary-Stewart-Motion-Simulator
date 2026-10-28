@@ -6,6 +6,8 @@ The ESP32-S3 controller provides Ethernet, six differential STEP/DIR outputs, in
 
 [Design decisions](DECISIONS.md) · [Design philosophy](DESIGN_PHILOSOPHY.md) · [Review method](REVIEW_METHOD.md) · [Firmware status](FIRMWARE_STATUS.md) · [Bring-up](BRINGUP.md) · [Original order record](ORDER_RECORD.json)
 
+The proposed all-black Amphenol DB25 replacement has a separate [six-position 3D verification](review/2026-10-28-amphenol/README.md): nominal internal clearance passes, but model/drawing height and mounting hardware remain unresolved. This study has not changed the master or the manufacturing files below.
+
 ## PCB and schematic
 
 ![R14C1 top copper and silkscreen from the final Gerbers](images/r14c1-pcb-top.png)

@@ -272,6 +272,16 @@ idf.py monitor --print-filter '*:V'  # verbose log filter
 
 ## Links
 
+## Continuous integration
+
+Pull requests to the default `phoenix` branch run the controller C++ suite on Linux and Windows, the Python E-stop/R14 source contracts, and the R13 bench-host tests without connecting hardware. The main ESP32-S3 build explicitly enables `R14_BOARD_IO` and `R14_FAIL_CLOSED`, with `R13_BENCH_ONE_AXIS` disabled. The separate Mini firmware build remains covered. Bench-only firmware stays excluded from CI/release builds by its existing CMake restriction.
+
+The Windows application build also runs CTest, including recording precision and documentation-mode transport guards. The engineering-review workflow checks owned README local links, frozen order/replacement artifact hashes, J12 outline regressions, every R14C1 body outline, reviewed body/access bounds, and the complete 324-component STEP interference audit. Generated geometric/link receipts are uploaded as CI artifacts; the frozen manufacturing files are not rewritten. These checks preserve static evidence and cannot establish physical motion, cable, mating-interface or factory qualification.
+
+See [build workflow](../.github/workflows/ci.yml), [controller tests](../.github/workflows/unit_tests.yml) and [engineering review](../.github/workflows/engineering_review.yml).
+
+## References
+
 - [Firmware variants and validation](../docs/FIRMWARE.md)
 - [Single Motor Test Plan](../hardware/pcb/single_motor_test_plan.md)
 - [Firmware and commissioning requirements](../hardware/pcb/6DOF2_FIRMWARE_TODO.md)

@@ -295,6 +295,7 @@ void start() {
     });
 }
 void tick() {sim::tick();}
+void record_handshake_event(const char* kind,int value) {sim::event(kind,0,0,value);}
 void finish() {sim::finish();}
 void receive(const std::vector<uint8_t>& wire,bool serial_bridge) {
     sim::require(!wire.empty() && wire.size()<=COBS_MAX_FRAME,"invalid test datagram size");

@@ -99,6 +99,8 @@ add_executable(stewart-platform WIN32
     src/main.cpp
     src/automation.cpp
     src/app.cpp
+    src/hil_handshake.cpp
+    src/pipeline_config.cpp
     src/ui_panels.cpp
     src/platform_viz.cpp
     src/serial_port.cpp
@@ -136,6 +138,7 @@ if(BUILD_TESTING AND WIN32)
     set(R14_TEST_FIXTURE ${CONTROLLER_DIR}/tests/integration)
     add_library(r14-transport-runtime STATIC
         ${R14_TEST_FIXTURE}/runtime_scenarios.cpp
+        ${R14_TEST_FIXTURE}/runtime_handshake.cpp
         ${CONTROLLER_DIR}/main/R14Hardware.cpp
         ${CONTROLLER_DIR}/main/CobsTransport.cpp
     )
@@ -143,6 +146,7 @@ if(BUILD_TESTING AND WIN32)
         ${R14_TEST_FIXTURE}/sdk ${CONTROLLER_DIR}/include)
     target_compile_definitions(r14-transport-runtime PRIVATE
         CONFIG_ESP_CONSOLE_USB_SERIAL_JTAG=1 R14_RUNTIME_NO_MAIN=1)
+    target_link_libraries(r14-transport-runtime PRIVATE stewart_math)
     if(MSVC)
         target_compile_options(r14-transport-runtime PRIVATE /FI${R14_TEST_FIXTURE}/sdk/compat.h)
     endif()
@@ -156,6 +160,20 @@ if(BUILD_TESTING AND WIN32)
         add_test(NAME desktop_runtime_${mode} COMMAND stewart-runtime-transport-tests
             ${mode} ${CMAKE_CURRENT_BINARY_DIR}/runtime-desktop-${mode}.json)
         set_tests_properties(desktop_runtime_${mode} PROPERTIES TIMEOUT 30
+            ENVIRONMENT "STEWART_DOCUMENTATION_MODE=0")
+    endforeach()
+    add_executable(stewart-handshake-tests tests/test_handshake.cpp
+        tests/handshake_app_shell.cpp src/hil_handshake.cpp src/pipeline_config.cpp
+        src/automation.cpp src/udp_transport.cpp)
+    target_include_directories(stewart-handshake-tests PRIVATE
+        src ${cjson_SOURCE_DIR} ${R14_TEST_FIXTURE})
+    target_compile_definitions(stewart-handshake-tests PRIVATE DEV_LOG_ENABLED=0)
+    target_link_libraries(stewart-handshake-tests PRIVATE
+        r14-transport-runtime stewart_math cjson ws2_32)
+    foreach(scenario happy retry timeout reconnect identity bad_bits malformed compatibility)
+        add_test(NAME handshake_${scenario} COMMAND stewart-handshake-tests
+            ${scenario} ${CMAKE_CURRENT_BINARY_DIR}/runtime-handshake-${scenario}.json)
+        set_tests_properties(handshake_${scenario} PROPERTIES TIMEOUT 30
             ENVIRONMENT "STEWART_DOCUMENTATION_MODE=0")
     endforeach()
 endif()

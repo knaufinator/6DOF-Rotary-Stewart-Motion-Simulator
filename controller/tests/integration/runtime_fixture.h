@@ -9,6 +9,10 @@
 namespace runtime_fixture {
 struct MotionStats { uint32_t frames, gaps, lost, restarts; int source; };
 void start();
+void enable_handshake();
+int handshake_bits();
+int handshake_cue_resets();
+void record_handshake_event(const char* kind,int value);
 void tick();
 void finish();
 void receive(const std::vector<uint8_t>& wire, bool serial_bridge);

@@ -122,6 +122,7 @@ bool r13_engine_latch_comp(int set) {
 #include "BleTransport.h"
 #endif
 #include "CobsTransport.h"
+#include "ControllerHandshake.h"
 
 static const char *TAG = "stewart_main";
 
@@ -988,38 +989,12 @@ void process_data(char * data) {
     // Any delay here blocks motion — the app won't send packets until
     // the handshake reaches Ready.
 
-    if (strcmp(data, "FINGERPRINT?") == 0) {
-        uint8_t mac[6];
-        esp_efuse_mac_get_default(mac);
-        serial_printf("FINGERPRINT:%02X%02X%02X%02X%02X%02X,fw=%s,proto=%d\r\n",
-            mac[0], mac[1], mac[2], mac[3], mac[4], mac[5],
-            FW_VERSION_STRING, FW_PROTOCOL_VERSION);
-        return;
-    }
-
-    if (strcmp(data, "CONFIG?") == 0) {
-        serial_printf("CONFIG:RD=%.2f,PD=%.2f,L1=%.2f,L2=%.2f,height=%.2f,theta_r=%.2f,theta_p=%.2f,theta_s=%.2f,%.2f,%.2f,%.2f,%.2f,%.2f\r\n",
-            stewartConfig.RD, stewartConfig.PD,
-            stewartConfig.ServoArmLengthL1, stewartConfig.ConnectingArmLengthL2,
-            stewartConfig.platformHeight, stewartConfig.theta_r, stewartConfig.theta_p,
-            stewartConfig.theta_s[0], stewartConfig.theta_s[1], stewartConfig.theta_s[2],
-            stewartConfig.theta_s[3], stewartConfig.theta_s[4], stewartConfig.theta_s[5]);
-        serial_printf("DRIVE:encoder=%d,gear=%.4f,planetary=%.2f,steps_deg=%.4f\r\n",
-            stewartConfig.encoder_ppr, stewartConfig.virtual_gear,
-            stewartConfig.planetary_ratio, stewartConfig.steps_per_degree);
-        return;
-    }
-
-    if (strcmp(data, "BITS?") == 0) {
-        serial_printf("BITS:%d,max_raw=%.0f\r\n", inputBitRange, maxRawInput);
-        return;
-    }
-
-    if (strcmp(data, "VERSION?") == 0) {
-        serial_printf("VERSION:%s,proto=%d,date=%s,time=%s\r\n",
-            FW_VERSION_STRING, FW_PROTOCOL_VERSION, FW_BUILD_DATE, FW_BUILD_TIME);
-        return;
-    }
+    const controller::HandshakeIdentity identity = {
+        [](uint8_t* mac) { esp_efuse_mac_get_default(mac); },
+        FW_VERSION_STRING, FW_PROTOCOL_VERSION, FW_BUILD_DATE, FW_BUILD_TIME
+    };
+    if (controller::handshake_query(data, stewartConfig, inputBitRange, maxRawInput,
+                                    identity, serial_printf)) return;
 
     // ── Input source selection ───────────────────────────────────────
     if (strcmp(data, "INPUT?") == 0) {
@@ -1888,18 +1863,8 @@ void process_data(char * data) {
     }
 
     // ── BITS:N — Set input bit depth (determines max_raw for axis scaling) ─
-    if (strncmp(data, "BITS:", 5) == 0) {
-        int bits = atoi(data + 5);
-        if (bits >= 8 && bits <= 18) {
-            inputBitRange = (uint8_t)bits;
-            maxRawInput = (float)((1 << bits) - 1);
-            resetMotionCueing(&mcaConfig);
-            serial_printf("BITS:%d,max_raw=%.0f\r\n", inputBitRange, maxRawInput);
-        } else {
-            serial_printf("ERR:BITS range 8-18\r\n");
-        }
-        return;
-    }
+    if (controller::handshake_set_bits(data, inputBitRange, maxRawInput,
+            [] { resetMotionCueing(&mcaConfig); }, serial_printf)) return;
 
     // NOTE: FINGERPRINT?, CONFIG?, BITS?, VERSION? are handled at the top
     // of process_data() for handshake priority. Only CONFIG:key=value (setter)

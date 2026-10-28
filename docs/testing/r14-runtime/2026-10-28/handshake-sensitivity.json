@@ -1,0 +1,20 @@
+{
+  "status": "PASS_HANDSHAKE_NEGATIVE_CONTROL_SENSITIVITY",
+  "productionSourceSha256": "17cd765c6af4e9df36e7197a6c284966f362cbbb9cf8954b5f5ab7726b157803",
+  "results": [
+    {
+      "mutation": "accept_wrong_bits",
+      "scenario": "bad_bits",
+      "detected": true,
+      "failure": "FAIL bad_bits: incorrect bit-depth confirmation accepted",
+      "mutatedSourceSha256": "ee67d6a3e81a39c8c76db18b69fff29dacfadd3b2a989ed9987453f477e2b08b"
+    },
+    {
+      "mutation": "accept_bad_geometry",
+      "scenario": "malformed",
+      "detected": true,
+      "failure": "FAIL malformed: incomplete geometry accepted",
+      "mutatedSourceSha256": "836c6aa1216d95f18f0efbe0870bb8ead6626331baf374a5239883d6f6b29625"
+    }
+  ]
+}

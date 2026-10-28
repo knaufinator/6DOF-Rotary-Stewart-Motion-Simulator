@@ -73,3 +73,16 @@ foreach(scenario cold_boot retained_boot retained_bank1 bus_failure startup_bus_
         COMMAND r14-runtime-scenarios ${scenario} ${CMAKE_CURRENT_BINARY_DIR}/runtime-${scenario}.json)
     set_tests_properties(runtime_${scenario} PROPERTIES TIMEOUT 10)
 endforeach()
+
+# Isolated actual-engine integration against a declared ideal peripheral/plant.
+# No test SDK include or macro is added to a firmware target.
+add_executable(r14-plant-scenarios plant/plant_scenarios.cpp plant/plant_model.cpp)
+target_include_directories(r14-plant-scenarios PRIVATE plant/sdk ../include)
+foreach(scenario vectors wrap trajectory locked limits stop_resume stop_phases irq_gap stop_timeout
+        seek stall missed_steps hall_closed hall_open_boot hall_early hall_late
+        wrong_direction drive_direction physical_limit estop field_loss stale deadline
+        alarm_0 alarm_1 alarm_2 alarm_3 alarm_4 alarm_5)
+    add_test(NAME plant_${scenario} COMMAND r14-plant-scenarios ${scenario}
+        ${CMAKE_CURRENT_BINARY_DIR}/plant-${scenario}.json)
+    set_tests_properties(plant_${scenario} PROPERTIES TIMEOUT 15)
+endforeach()

@@ -1,0 +1,1474 @@
+{
+  "status": "PASS_LOCAL_INDEPENDENT_STEP_PLANT",
+  "checkoutBaseCommit": "e8b518001e0c48c080f91191c7406d3bcd916447",
+  "implementationIdentifiedBySourceHashes": true,
+  "toolchain": "MSVC 19.43 / C++17 / Release",
+  "controllerCtestEntriesPassed": 40,
+  "plantScenariosPassed": 29,
+  "hardwareTimingQualified": false,
+  "productionMainLinked": false,
+  "sourceSha256": {
+    "controller/include/SharedMcpwmStepEngine.h": "46300d739d1c49bafc89612212969b696462cb67a543f8103457f83a04b6a7e2",
+    "controller/include/StepQuiescence.h": "5b516e1a903fda2a441b3fbc462532a76947d4230e5d545cb1c0ccc644f777a7",
+    "controller/include/R14SeekInterlock.h": "7c67451d004ec60c72b50ec6d1346e61738cd60a10052a69709f3308e8381364",
+    "controller/include/R14MotionAdmission.h": "3e921182a8684faaf7e6a8821dc6de6de3ec31fffaf264060e4ceafb8086df8b",
+    "controller/include/R14DriveAlarmLatch.h": "b27f28e6e839dd2f033f2856930716bbe93efdf9a27bb0e62717ab72ea27d37d",
+    "controller/include/R14SixAxisTrajectory.h": "8bd971e4d9b92956d70bd10f6d4ffd35d9e347f93e73cbe6e6157ad6741e1023",
+    "controller/tests/plant/plant_scenarios.cpp": "5f6800d9cf327720b0b8daed252dd5eb720c8cfdb853a74bb43f60812604f9f8",
+    "controller/tests/plant/plant_model.cpp": "2f9c817e452b93a9c5e9c9d68a4b1942796c7a61593491325583d9f5a73e1a4c",
+    "controller/tests/plant/plant_model.h": "35b2648c4df8258d5dea80ec603e185679bf5906532cf01f00604b9b238c4cd0",
+    "controller/tests/plant/sdk/plant_sdk.h": "fdada4aeb0b50770178363927143be36f705e12e66e34ef4d0f95f9585656e83"
+  },
+  "results": [
+    {
+      "scenario": "alarm_0",
+      "passed": true,
+      "fault": "DRIVE_FAULT",
+      "stopTimingFault": false,
+      "axisCounts": [
+        {
+          "axis": 0,
+          "engine": 4,
+          "pin": 4,
+          "physical": 4,
+          "risingEdges": 4
+        },
+        {
+          "axis": 1,
+          "engine": 4,
+          "pin": 4,
+          "physical": 4,
+          "risingEdges": 4
+        },
+        {
+          "axis": 2,
+          "engine": 4,
+          "pin": 4,
+          "physical": 4,
+          "risingEdges": 4
+        },
+        {
+          "axis": 3,
+          "engine": 4,
+          "pin": 4,
+          "physical": 4,
+          "risingEdges": 4
+        },
+        {
+          "axis": 4,
+          "engine": 4,
+          "pin": 4,
+          "physical": 4,
+          "risingEdges": 4
+        },
+        {
+          "axis": 5,
+          "engine": 4,
+          "pin": 4,
+          "physical": 4,
+          "risingEdges": 4
+        }
+      ]
+    },
+    {
+      "scenario": "alarm_1",
+      "passed": true,
+      "fault": "DRIVE_FAULT",
+      "stopTimingFault": false,
+      "axisCounts": [
+        {
+          "axis": 0,
+          "engine": 4,
+          "pin": 4,
+          "physical": 4,
+          "risingEdges": 4
+        },
+        {
+          "axis": 1,
+          "engine": 4,
+          "pin": 4,
+          "physical": 4,
+          "risingEdges": 4
+        },
+        {
+          "axis": 2,
+          "engine": 4,
+          "pin": 4,
+          "physical": 4,
+          "risingEdges": 4
+        },
+        {
+          "axis": 3,
+          "engine": 4,
+          "pin": 4,
+          "physical": 4,
+          "risingEdges": 4
+        },
+        {
+          "axis": 4,
+          "engine": 4,
+          "pin": 4,
+          "physical": 4,
+          "risingEdges": 4
+        },
+        {
+          "axis": 5,
+          "engine": 4,
+          "pin": 4,
+          "physical": 4,
+          "risingEdges": 4
+        }
+      ]
+    },
+    {
+      "scenario": "alarm_2",
+      "passed": true,
+      "fault": "DRIVE_FAULT",
+      "stopTimingFault": false,
+      "axisCounts": [
+        {
+          "axis": 0,
+          "engine": 4,
+          "pin": 4,
+          "physical": 4,
+          "risingEdges": 4
+        },
+        {
+          "axis": 1,
+          "engine": 4,
+          "pin": 4,
+          "physical": 4,
+          "risingEdges": 4
+        },
+        {
+          "axis": 2,
+          "engine": 4,
+          "pin": 4,
+          "physical": 4,
+          "risingEdges": 4
+        },
+        {
+          "axis": 3,
+          "engine": 4,
+          "pin": 4,
+          "physical": 4,
+          "risingEdges": 4
+        },
+        {
+          "axis": 4,
+          "engine": 4,
+          "pin": 4,
+          "physical": 4,
+          "risingEdges": 4
+        },
+        {
+          "axis": 5,
+          "engine": 4,
+          "pin": 4,
+          "physical": 4,
+          "risingEdges": 4
+        }
+      ]
+    },
+    {
+      "scenario": "alarm_3",
+      "passed": true,
+      "fault": "DRIVE_FAULT",
+      "stopTimingFault": false,
+      "axisCounts": [
+        {
+          "axis": 0,
+          "engine": 4,
+          "pin": 4,
+          "physical": 4,
+          "risingEdges": 4
+        },
+        {
+          "axis": 1,
+          "engine": 4,
+          "pin": 4,
+          "physical": 4,
+          "risingEdges": 4
+        },
+        {
+          "axis": 2,
+          "engine": 4,
+          "pin": 4,
+          "physical": 4,
+          "risingEdges": 4
+        },
+        {
+          "axis": 3,
+          "engine": 4,
+          "pin": 4,
+          "physical": 4,
+          "risingEdges": 4
+        },
+        {
+          "axis": 4,
+          "engine": 4,
+          "pin": 4,
+          "physical": 4,
+          "risingEdges": 4
+        },
+        {
+          "axis": 5,
+          "engine": 4,
+          "pin": 4,
+          "physical": 4,
+          "risingEdges": 4
+        }
+      ]
+    },
+    {
+      "scenario": "alarm_4",
+      "passed": true,
+      "fault": "DRIVE_FAULT",
+      "stopTimingFault": false,
+      "axisCounts": [
+        {
+          "axis": 0,
+          "engine": 4,
+          "pin": 4,
+          "physical": 4,
+          "risingEdges": 4
+        },
+        {
+          "axis": 1,
+          "engine": 4,
+          "pin": 4,
+          "physical": 4,
+          "risingEdges": 4
+        },
+        {
+          "axis": 2,
+          "engine": 4,
+          "pin": 4,
+          "physical": 4,
+          "risingEdges": 4
+        },
+        {
+          "axis": 3,
+          "engine": 4,
+          "pin": 4,
+          "physical": 4,
+          "risingEdges": 4
+        },
+        {
+          "axis": 4,
+          "engine": 4,
+          "pin": 4,
+          "physical": 4,
+          "risingEdges": 4
+        },
+        {
+          "axis": 5,
+          "engine": 4,
+          "pin": 4,
+          "physical": 4,
+          "risingEdges": 4
+        }
+      ]
+    },
+    {
+      "scenario": "alarm_5",
+      "passed": true,
+      "fault": "DRIVE_FAULT",
+      "stopTimingFault": false,
+      "axisCounts": [
+        {
+          "axis": 0,
+          "engine": 4,
+          "pin": 4,
+          "physical": 4,
+          "risingEdges": 4
+        },
+        {
+          "axis": 1,
+          "engine": 4,
+          "pin": 4,
+          "physical": 4,
+          "risingEdges": 4
+        },
+        {
+          "axis": 2,
+          "engine": 4,
+          "pin": 4,
+          "physical": 4,
+          "risingEdges": 4
+        },
+        {
+          "axis": 3,
+          "engine": 4,
+          "pin": 4,
+          "physical": 4,
+          "risingEdges": 4
+        },
+        {
+          "axis": 4,
+          "engine": 4,
+          "pin": 4,
+          "physical": 4,
+          "risingEdges": 4
+        },
+        {
+          "axis": 5,
+          "engine": 4,
+          "pin": 4,
+          "physical": 4,
+          "risingEdges": 4
+        }
+      ]
+    },
+    {
+      "scenario": "deadline",
+      "passed": true,
+      "fault": "SEEK_TIME_LIMIT",
+      "stopTimingFault": false,
+      "axisCounts": [
+        {
+          "axis": 0,
+          "engine": 5,
+          "pin": 5,
+          "physical": 5,
+          "risingEdges": 5
+        },
+        {
+          "axis": 1,
+          "engine": 5,
+          "pin": 5,
+          "physical": 5,
+          "risingEdges": 5
+        },
+        {
+          "axis": 2,
+          "engine": 5,
+          "pin": 5,
+          "physical": 5,
+          "risingEdges": 5
+        },
+        {
+          "axis": 3,
+          "engine": 5,
+          "pin": 5,
+          "physical": 5,
+          "risingEdges": 5
+        },
+        {
+          "axis": 4,
+          "engine": 5,
+          "pin": 5,
+          "physical": 5,
+          "risingEdges": 5
+        },
+        {
+          "axis": 5,
+          "engine": 5,
+          "pin": 5,
+          "physical": 5,
+          "risingEdges": 5
+        }
+      ]
+    },
+    {
+      "scenario": "drive_direction",
+      "passed": true,
+      "fault": "SEEK_PULSE_LIMIT",
+      "stopTimingFault": false,
+      "axisCounts": [
+        {
+          "axis": 0,
+          "engine": 20,
+          "pin": 20,
+          "physical": -20,
+          "risingEdges": 20
+        },
+        {
+          "axis": 1,
+          "engine": 8,
+          "pin": 8,
+          "physical": 8,
+          "risingEdges": 8
+        },
+        {
+          "axis": 2,
+          "engine": 10,
+          "pin": 10,
+          "physical": 10,
+          "risingEdges": 10
+        },
+        {
+          "axis": 3,
+          "engine": 12,
+          "pin": 12,
+          "physical": 12,
+          "risingEdges": 12
+        },
+        {
+          "axis": 4,
+          "engine": 14,
+          "pin": 14,
+          "physical": 14,
+          "risingEdges": 14
+        },
+        {
+          "axis": 5,
+          "engine": 16,
+          "pin": 16,
+          "physical": 16,
+          "risingEdges": 16
+        }
+      ]
+    },
+    {
+      "scenario": "estop",
+      "passed": true,
+      "fault": "INPUT_LOST",
+      "stopTimingFault": false,
+      "axisCounts": [
+        {
+          "axis": 0,
+          "engine": 4,
+          "pin": 4,
+          "physical": 4,
+          "risingEdges": 4
+        },
+        {
+          "axis": 1,
+          "engine": 4,
+          "pin": 4,
+          "physical": 4,
+          "risingEdges": 4
+        },
+        {
+          "axis": 2,
+          "engine": 4,
+          "pin": 4,
+          "physical": 4,
+          "risingEdges": 4
+        },
+        {
+          "axis": 3,
+          "engine": 4,
+          "pin": 4,
+          "physical": 4,
+          "risingEdges": 4
+        },
+        {
+          "axis": 4,
+          "engine": 4,
+          "pin": 4,
+          "physical": 4,
+          "risingEdges": 4
+        },
+        {
+          "axis": 5,
+          "engine": 4,
+          "pin": 4,
+          "physical": 4,
+          "risingEdges": 4
+        }
+      ]
+    },
+    {
+      "scenario": "field_loss",
+      "passed": true,
+      "fault": "INPUT_LOST",
+      "stopTimingFault": false,
+      "axisCounts": [
+        {
+          "axis": 0,
+          "engine": 4,
+          "pin": 4,
+          "physical": 4,
+          "risingEdges": 4
+        },
+        {
+          "axis": 1,
+          "engine": 4,
+          "pin": 4,
+          "physical": 4,
+          "risingEdges": 4
+        },
+        {
+          "axis": 2,
+          "engine": 4,
+          "pin": 4,
+          "physical": 4,
+          "risingEdges": 4
+        },
+        {
+          "axis": 3,
+          "engine": 4,
+          "pin": 4,
+          "physical": 4,
+          "risingEdges": 4
+        },
+        {
+          "axis": 4,
+          "engine": 4,
+          "pin": 4,
+          "physical": 4,
+          "risingEdges": 4
+        },
+        {
+          "axis": 5,
+          "engine": 4,
+          "pin": 4,
+          "physical": 4,
+          "risingEdges": 4
+        }
+      ]
+    },
+    {
+      "scenario": "hall_closed",
+      "passed": true,
+      "fault": "SEEK_PULSE_LIMIT",
+      "stopTimingFault": false,
+      "axisCounts": [
+        {
+          "axis": 0,
+          "engine": 20,
+          "pin": 20,
+          "physical": 20,
+          "risingEdges": 20
+        },
+        {
+          "axis": 1,
+          "engine": 8,
+          "pin": 8,
+          "physical": 8,
+          "risingEdges": 8
+        },
+        {
+          "axis": 2,
+          "engine": 10,
+          "pin": 10,
+          "physical": 10,
+          "risingEdges": 10
+        },
+        {
+          "axis": 3,
+          "engine": 12,
+          "pin": 12,
+          "physical": 12,
+          "risingEdges": 12
+        },
+        {
+          "axis": 4,
+          "engine": 14,
+          "pin": 14,
+          "physical": 14,
+          "risingEdges": 14
+        },
+        {
+          "axis": 5,
+          "engine": 16,
+          "pin": 16,
+          "physical": 16,
+          "risingEdges": 16
+        }
+      ]
+    },
+    {
+      "scenario": "hall_early",
+      "passed": true,
+      "fault": "HALL_TOO_EARLY",
+      "stopTimingFault": false,
+      "axisCounts": [
+        {
+          "axis": 0,
+          "engine": 1,
+          "pin": 1,
+          "physical": 1,
+          "risingEdges": 1
+        },
+        {
+          "axis": 1,
+          "engine": 1,
+          "pin": 1,
+          "physical": 1,
+          "risingEdges": 1
+        },
+        {
+          "axis": 2,
+          "engine": 1,
+          "pin": 1,
+          "physical": 1,
+          "risingEdges": 1
+        },
+        {
+          "axis": 3,
+          "engine": 1,
+          "pin": 1,
+          "physical": 1,
+          "risingEdges": 1
+        },
+        {
+          "axis": 4,
+          "engine": 1,
+          "pin": 1,
+          "physical": 1,
+          "risingEdges": 1
+        },
+        {
+          "axis": 5,
+          "engine": 1,
+          "pin": 1,
+          "physical": 1,
+          "risingEdges": 1
+        }
+      ]
+    },
+    {
+      "scenario": "hall_late",
+      "passed": true,
+      "fault": "SEEK_PULSE_LIMIT",
+      "stopTimingFault": false,
+      "axisCounts": [
+        {
+          "axis": 0,
+          "engine": 20,
+          "pin": 20,
+          "physical": 20,
+          "risingEdges": 20
+        },
+        {
+          "axis": 1,
+          "engine": 8,
+          "pin": 8,
+          "physical": 8,
+          "risingEdges": 8
+        },
+        {
+          "axis": 2,
+          "engine": 10,
+          "pin": 10,
+          "physical": 10,
+          "risingEdges": 10
+        },
+        {
+          "axis": 3,
+          "engine": 12,
+          "pin": 12,
+          "physical": 12,
+          "risingEdges": 12
+        },
+        {
+          "axis": 4,
+          "engine": 14,
+          "pin": 14,
+          "physical": 14,
+          "risingEdges": 14
+        },
+        {
+          "axis": 5,
+          "engine": 16,
+          "pin": 16,
+          "physical": 16,
+          "risingEdges": 16
+        }
+      ]
+    },
+    {
+      "scenario": "hall_open_boot",
+      "passed": true,
+      "fault": "NONE",
+      "stopTimingFault": false,
+      "axisCounts": [
+        {
+          "axis": 0,
+          "engine": 0,
+          "pin": 0,
+          "physical": 0,
+          "risingEdges": 0
+        },
+        {
+          "axis": 1,
+          "engine": 0,
+          "pin": 0,
+          "physical": 0,
+          "risingEdges": 0
+        },
+        {
+          "axis": 2,
+          "engine": 0,
+          "pin": 0,
+          "physical": 0,
+          "risingEdges": 0
+        },
+        {
+          "axis": 3,
+          "engine": 0,
+          "pin": 0,
+          "physical": 0,
+          "risingEdges": 0
+        },
+        {
+          "axis": 4,
+          "engine": 0,
+          "pin": 0,
+          "physical": 0,
+          "risingEdges": 0
+        },
+        {
+          "axis": 5,
+          "engine": 0,
+          "pin": 0,
+          "physical": 0,
+          "risingEdges": 0
+        }
+      ]
+    },
+    {
+      "scenario": "irq_gap",
+      "passed": true,
+      "fault": "NONE",
+      "stopTimingFault": false,
+      "axisCounts": [
+        {
+          "axis": 0,
+          "engine": 56,
+          "pin": 56,
+          "physical": 56,
+          "risingEdges": 56
+        },
+        {
+          "axis": 1,
+          "engine": 58,
+          "pin": 58,
+          "physical": 58,
+          "risingEdges": 58
+        },
+        {
+          "axis": 2,
+          "engine": 56,
+          "pin": 56,
+          "physical": 56,
+          "risingEdges": 56
+        },
+        {
+          "axis": 3,
+          "engine": 58,
+          "pin": 58,
+          "physical": 58,
+          "risingEdges": 58
+        },
+        {
+          "axis": 4,
+          "engine": 56,
+          "pin": 56,
+          "physical": 56,
+          "risingEdges": 56
+        },
+        {
+          "axis": 5,
+          "engine": 58,
+          "pin": 58,
+          "physical": 58,
+          "risingEdges": 58
+        }
+      ]
+    },
+    {
+      "scenario": "limits",
+      "passed": true,
+      "fault": "NONE",
+      "stopTimingFault": false,
+      "axisCounts": [
+        {
+          "axis": 0,
+          "engine": 0,
+          "pin": 0,
+          "physical": 0,
+          "risingEdges": 0
+        },
+        {
+          "axis": 1,
+          "engine": 0,
+          "pin": 0,
+          "physical": 0,
+          "risingEdges": 0
+        },
+        {
+          "axis": 2,
+          "engine": 0,
+          "pin": 0,
+          "physical": 0,
+          "risingEdges": 0
+        },
+        {
+          "axis": 3,
+          "engine": 0,
+          "pin": 0,
+          "physical": 0,
+          "risingEdges": 0
+        },
+        {
+          "axis": 4,
+          "engine": 0,
+          "pin": 0,
+          "physical": 0,
+          "risingEdges": 0
+        },
+        {
+          "axis": 5,
+          "engine": 0,
+          "pin": 0,
+          "physical": 0,
+          "risingEdges": 0
+        }
+      ]
+    },
+    {
+      "scenario": "locked",
+      "passed": true,
+      "fault": "NONE",
+      "stopTimingFault": false,
+      "axisCounts": [
+        {
+          "axis": 0,
+          "engine": 0,
+          "pin": 0,
+          "physical": 0,
+          "risingEdges": 0
+        },
+        {
+          "axis": 1,
+          "engine": 0,
+          "pin": 0,
+          "physical": 0,
+          "risingEdges": 0
+        },
+        {
+          "axis": 2,
+          "engine": 0,
+          "pin": 0,
+          "physical": 0,
+          "risingEdges": 0
+        },
+        {
+          "axis": 3,
+          "engine": 0,
+          "pin": 0,
+          "physical": 0,
+          "risingEdges": 0
+        },
+        {
+          "axis": 4,
+          "engine": 0,
+          "pin": 0,
+          "physical": 0,
+          "risingEdges": 0
+        },
+        {
+          "axis": 5,
+          "engine": 0,
+          "pin": 0,
+          "physical": 0,
+          "risingEdges": 0
+        }
+      ]
+    },
+    {
+      "scenario": "missed_steps",
+      "passed": true,
+      "fault": "SEEK_PULSE_LIMIT",
+      "stopTimingFault": false,
+      "axisCounts": [
+        {
+          "axis": 0,
+          "engine": 20,
+          "pin": 20,
+          "physical": 10,
+          "risingEdges": 20
+        },
+        {
+          "axis": 1,
+          "engine": 8,
+          "pin": 8,
+          "physical": 8,
+          "risingEdges": 8
+        },
+        {
+          "axis": 2,
+          "engine": 10,
+          "pin": 10,
+          "physical": 10,
+          "risingEdges": 10
+        },
+        {
+          "axis": 3,
+          "engine": 12,
+          "pin": 12,
+          "physical": 12,
+          "risingEdges": 12
+        },
+        {
+          "axis": 4,
+          "engine": 14,
+          "pin": 14,
+          "physical": 14,
+          "risingEdges": 14
+        },
+        {
+          "axis": 5,
+          "engine": 16,
+          "pin": 16,
+          "physical": 16,
+          "risingEdges": 16
+        }
+      ]
+    },
+    {
+      "scenario": "physical_limit",
+      "passed": true,
+      "fault": "DRIVE_FAULT",
+      "stopTimingFault": false,
+      "axisCounts": [
+        {
+          "axis": 0,
+          "engine": 5,
+          "pin": 5,
+          "physical": 4,
+          "risingEdges": 5
+        },
+        {
+          "axis": 1,
+          "engine": 5,
+          "pin": 5,
+          "physical": 5,
+          "risingEdges": 5
+        },
+        {
+          "axis": 2,
+          "engine": 5,
+          "pin": 5,
+          "physical": 5,
+          "risingEdges": 5
+        },
+        {
+          "axis": 3,
+          "engine": 5,
+          "pin": 5,
+          "physical": 5,
+          "risingEdges": 5
+        },
+        {
+          "axis": 4,
+          "engine": 5,
+          "pin": 5,
+          "physical": 5,
+          "risingEdges": 5
+        },
+        {
+          "axis": 5,
+          "engine": 5,
+          "pin": 5,
+          "physical": 5,
+          "risingEdges": 5
+        }
+      ]
+    },
+    {
+      "scenario": "seek",
+      "passed": true,
+      "fault": "NONE",
+      "stopTimingFault": false,
+      "axisCounts": [
+        {
+          "axis": 0,
+          "engine": 6,
+          "pin": 6,
+          "physical": 6,
+          "risingEdges": 6
+        },
+        {
+          "axis": 1,
+          "engine": 8,
+          "pin": 8,
+          "physical": 8,
+          "risingEdges": 8
+        },
+        {
+          "axis": 2,
+          "engine": 10,
+          "pin": 10,
+          "physical": 10,
+          "risingEdges": 10
+        },
+        {
+          "axis": 3,
+          "engine": 12,
+          "pin": 12,
+          "physical": 12,
+          "risingEdges": 12
+        },
+        {
+          "axis": 4,
+          "engine": 14,
+          "pin": 14,
+          "physical": 14,
+          "risingEdges": 14
+        },
+        {
+          "axis": 5,
+          "engine": 16,
+          "pin": 16,
+          "physical": 16,
+          "risingEdges": 16
+        }
+      ]
+    },
+    {
+      "scenario": "stale",
+      "passed": true,
+      "fault": "CLOCK_OR_INPUT_STALE",
+      "stopTimingFault": false,
+      "axisCounts": [
+        {
+          "axis": 0,
+          "engine": 4,
+          "pin": 4,
+          "physical": 4,
+          "risingEdges": 4
+        },
+        {
+          "axis": 1,
+          "engine": 4,
+          "pin": 4,
+          "physical": 4,
+          "risingEdges": 4
+        },
+        {
+          "axis": 2,
+          "engine": 4,
+          "pin": 4,
+          "physical": 4,
+          "risingEdges": 4
+        },
+        {
+          "axis": 3,
+          "engine": 4,
+          "pin": 4,
+          "physical": 4,
+          "risingEdges": 4
+        },
+        {
+          "axis": 4,
+          "engine": 4,
+          "pin": 4,
+          "physical": 4,
+          "risingEdges": 4
+        },
+        {
+          "axis": 5,
+          "engine": 4,
+          "pin": 4,
+          "physical": 4,
+          "risingEdges": 4
+        }
+      ]
+    },
+    {
+      "scenario": "stall",
+      "passed": true,
+      "fault": "SEEK_PULSE_LIMIT",
+      "stopTimingFault": false,
+      "axisCounts": [
+        {
+          "axis": 0,
+          "engine": 20,
+          "pin": 20,
+          "physical": 0,
+          "risingEdges": 20
+        },
+        {
+          "axis": 1,
+          "engine": 8,
+          "pin": 8,
+          "physical": 8,
+          "risingEdges": 8
+        },
+        {
+          "axis": 2,
+          "engine": 10,
+          "pin": 10,
+          "physical": 10,
+          "risingEdges": 10
+        },
+        {
+          "axis": 3,
+          "engine": 12,
+          "pin": 12,
+          "physical": 12,
+          "risingEdges": 12
+        },
+        {
+          "axis": 4,
+          "engine": 14,
+          "pin": 14,
+          "physical": 14,
+          "risingEdges": 14
+        },
+        {
+          "axis": 5,
+          "engine": 16,
+          "pin": 16,
+          "physical": 16,
+          "risingEdges": 16
+        }
+      ]
+    },
+    {
+      "scenario": "stop_phases",
+      "passed": true,
+      "fault": "NONE",
+      "stopTimingFault": false,
+      "axisCounts": [
+        {
+          "axis": 0,
+          "engine": 77,
+          "pin": 77,
+          "physical": 68,
+          "risingEdges": 77
+        },
+        {
+          "axis": 1,
+          "engine": 79,
+          "pin": 79,
+          "physical": 70,
+          "risingEdges": 79
+        },
+        {
+          "axis": 2,
+          "engine": 77,
+          "pin": 77,
+          "physical": 68,
+          "risingEdges": 77
+        },
+        {
+          "axis": 3,
+          "engine": 79,
+          "pin": 79,
+          "physical": 70,
+          "risingEdges": 79
+        },
+        {
+          "axis": 4,
+          "engine": 77,
+          "pin": 77,
+          "physical": 68,
+          "risingEdges": 77
+        },
+        {
+          "axis": 5,
+          "engine": 79,
+          "pin": 79,
+          "physical": 70,
+          "risingEdges": 79
+        }
+      ]
+    },
+    {
+      "scenario": "stop_resume",
+      "passed": true,
+      "fault": "NONE",
+      "stopTimingFault": false,
+      "axisCounts": [
+        {
+          "axis": 0,
+          "engine": 28,
+          "pin": 28,
+          "physical": 28,
+          "risingEdges": 28
+        },
+        {
+          "axis": 1,
+          "engine": 30,
+          "pin": 30,
+          "physical": 30,
+          "risingEdges": 30
+        },
+        {
+          "axis": 2,
+          "engine": 28,
+          "pin": 28,
+          "physical": 28,
+          "risingEdges": 28
+        },
+        {
+          "axis": 3,
+          "engine": 30,
+          "pin": 30,
+          "physical": 30,
+          "risingEdges": 30
+        },
+        {
+          "axis": 4,
+          "engine": 28,
+          "pin": 28,
+          "physical": 28,
+          "risingEdges": 28
+        },
+        {
+          "axis": 5,
+          "engine": 30,
+          "pin": 30,
+          "physical": 30,
+          "risingEdges": 30
+        }
+      ]
+    },
+    {
+      "scenario": "stop_timeout",
+      "passed": true,
+      "fault": "NONE",
+      "stopTimingFault": true,
+      "axisCounts": [
+        {
+          "axis": 0,
+          "engine": 23,
+          "pin": 273,
+          "physical": 22,
+          "risingEdges": 273
+        },
+        {
+          "axis": 1,
+          "engine": 25,
+          "pin": 275,
+          "physical": 24,
+          "risingEdges": 275
+        },
+        {
+          "axis": 2,
+          "engine": 23,
+          "pin": 273,
+          "physical": 22,
+          "risingEdges": 273
+        },
+        {
+          "axis": 3,
+          "engine": 25,
+          "pin": 275,
+          "physical": 24,
+          "risingEdges": 275
+        },
+        {
+          "axis": 4,
+          "engine": 23,
+          "pin": 273,
+          "physical": 22,
+          "risingEdges": 273
+        },
+        {
+          "axis": 5,
+          "engine": 25,
+          "pin": 275,
+          "physical": 24,
+          "risingEdges": 275
+        }
+      ]
+    },
+    {
+      "scenario": "trajectory",
+      "passed": true,
+      "fault": "NONE",
+      "stopTimingFault": false,
+      "axisCounts": [
+        {
+          "axis": 0,
+          "engine": 12,
+          "pin": 12,
+          "physical": 12,
+          "risingEdges": 12
+        },
+        {
+          "axis": 1,
+          "engine": -24,
+          "pin": -24,
+          "physical": -24,
+          "risingEdges": 24
+        },
+        {
+          "axis": 2,
+          "engine": 36,
+          "pin": 36,
+          "physical": 36,
+          "risingEdges": 36
+        },
+        {
+          "axis": 3,
+          "engine": -48,
+          "pin": -48,
+          "physical": -48,
+          "risingEdges": 48
+        },
+        {
+          "axis": 4,
+          "engine": 60,
+          "pin": 60,
+          "physical": 60,
+          "risingEdges": 60
+        },
+        {
+          "axis": 5,
+          "engine": -72,
+          "pin": -72,
+          "physical": -72,
+          "risingEdges": 72
+        }
+      ]
+    },
+    {
+      "scenario": "vectors",
+      "passed": true,
+      "fault": "NONE",
+      "stopTimingFault": false,
+      "axisCounts": [
+        {
+          "axis": 0,
+          "engine": 0,
+          "pin": 0,
+          "physical": 0,
+          "risingEdges": 24
+        },
+        {
+          "axis": 1,
+          "engine": 0,
+          "pin": 0,
+          "physical": 0,
+          "risingEdges": 48
+        },
+        {
+          "axis": 2,
+          "engine": 0,
+          "pin": 0,
+          "physical": 0,
+          "risingEdges": 72
+        },
+        {
+          "axis": 3,
+          "engine": 0,
+          "pin": 0,
+          "physical": 0,
+          "risingEdges": 96
+        },
+        {
+          "axis": 4,
+          "engine": 0,
+          "pin": 0,
+          "physical": 0,
+          "risingEdges": 120
+        },
+        {
+          "axis": 5,
+          "engine": 0,
+          "pin": 0,
+          "physical": 0,
+          "risingEdges": 144
+        }
+      ]
+    },
+    {
+      "scenario": "wrap",
+      "passed": true,
+      "fault": "NONE",
+      "stopTimingFault": false,
+      "axisCounts": [
+        {
+          "axis": 0,
+          "engine": 0,
+          "pin": 0,
+          "physical": 0,
+          "risingEdges": 24
+        },
+        {
+          "axis": 1,
+          "engine": 0,
+          "pin": 0,
+          "physical": 0,
+          "risingEdges": 48
+        },
+        {
+          "axis": 2,
+          "engine": 0,
+          "pin": 0,
+          "physical": 0,
+          "risingEdges": 72
+        },
+        {
+          "axis": 3,
+          "engine": 0,
+          "pin": 0,
+          "physical": 0,
+          "risingEdges": 96
+        },
+        {
+          "axis": 4,
+          "engine": 0,
+          "pin": 0,
+          "physical": 0,
+          "risingEdges": 120
+        },
+        {
+          "axis": 5,
+          "engine": 0,
+          "pin": 0,
+          "physical": 0,
+          "risingEdges": 144
+        }
+      ]
+    },
+    {
+      "scenario": "wrong_direction",
+      "passed": true,
+      "fault": "WRONG_DIRECTION",
+      "stopTimingFault": false,
+      "axisCounts": [
+        {
+          "axis": 0,
+          "engine": 0,
+          "pin": 0,
+          "physical": 0,
+          "risingEdges": 0
+        },
+        {
+          "axis": 1,
+          "engine": 0,
+          "pin": 0,
+          "physical": 0,
+          "risingEdges": 0
+        },
+        {
+          "axis": 2,
+          "engine": 0,
+          "pin": 0,
+          "physical": 0,
+          "risingEdges": 0
+        },
+        {
+          "axis": 3,
+          "engine": 0,
+          "pin": 0,
+          "physical": 0,
+          "risingEdges": 0
+        },
+        {
+          "axis": 4,
+          "engine": 0,
+          "pin": 0,
+          "physical": 0,
+          "risingEdges": 0
+        },
+        {
+          "axis": 5,
+          "engine": 0,
+          "pin": 0,
+          "physical": 0,
+          "risingEdges": 0
+        }
+      ]
+    }
+  ]
+}

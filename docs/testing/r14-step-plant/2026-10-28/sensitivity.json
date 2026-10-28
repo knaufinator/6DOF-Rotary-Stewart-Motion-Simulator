@@ -1,0 +1,27 @@
+{
+  "status": "PASS_STEP_PLANT_NEGATIVE_CONTROL_SENSITIVITY",
+  "productionSourceSha256": "46300d739d1c49bafc89612212969b696462cb67a543f8103457f83a04b6a7e2",
+  "results": [
+    {
+      "mutation": "skip_direction",
+      "scenario": "vectors",
+      "detected": true,
+      "failure": "FAIL vectors: independent pin count disagrees with engine",
+      "mutatedSourceSha256": "1b41179f6301af9e8574e6f34a9c0a5bb5b2840c554ef85ee9da12a62d683da4"
+    },
+    {
+      "mutation": "ignore_stop",
+      "scenario": "stop_resume",
+      "detected": true,
+      "failure": "FAIL stop_resume: stop failed to drain within its software budget",
+      "mutatedSourceSha256": "df4825d7430e1ba016b0627d63316404245e71ff645dea3db1626490008bd194"
+    },
+    {
+      "mutation": "disable_latch_comp",
+      "scenario": "irq_gap",
+      "detected": true,
+      "failure": "FAIL irq_gap: independent pin count disagrees with engine",
+      "mutatedSourceSha256": "180dc1d7a995dbd4f71dfa4d9a42943f42cad355546e1556ed73d0b042e5c629"
+    }
+  ]
+}

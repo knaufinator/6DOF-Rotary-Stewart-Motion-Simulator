@@ -129,7 +129,7 @@ enum class HandshakePhase {
     WaitBits,           // sent BITS?, awaiting response
     WaitBitsConfirm,    // sent BITS:N, awaiting firmware echo confirmation
     Validating,         // all responses in — comparing params
-    Ready,              // handshake passed — motion enabled
+    Ready,              // app streaming allowed; firmware motion admission is separate
     Failed              // mismatch or timeout — motion blocked
 };
 
@@ -447,6 +447,7 @@ struct App {
     Entity* findEntity(int id);
     void    log(int entity_id, const char* source, const char* fmt, ...);
     void    handleHilLine(int entity_id, const char* line);  // parse ESP32 serial responses
+    void    pollHilHandshake(Entity& e);  // bounded retries, called by update and headless tests
     void    update();   // called every frame
 
 

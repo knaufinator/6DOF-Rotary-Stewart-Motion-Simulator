@@ -1,6 +1,6 @@
 # R14 runtime integration and ESP32-S3 boot probe
 
-Implemented 28 October 2026: deterministic board runtime and headless desktop transport integration from the [simulation plan](../../FIRMWARE_SIMULATION_PLAN.md). Production firmware source, the recovered R13 pulse engine, SDK options and R14 motion admission are unchanged.
+Implemented 28 October 2026: deterministic board runtime, desktop transport and handshake integration from the [simulation plan](../../FIRMWARE_SIMULATION_PLAN.md). The recovered R13 pulse engine, SDK options and R14 motion admission are unchanged. Firmware handshake formatting/bit-setting now lives in a shared production helper; the desktop handshake has the validation fixes below.
 
 ## Production runtime exercised on the host
 
@@ -42,9 +42,30 @@ The Windows app build adds two headless CTest scenarios, `desktop_runtime_direct
 
 The peer is a **test carrier**, not an emulation of the Voron bridge or W5500 driver. Direct datagrams use the firmware codec and Ethernet source tag; bridge datagrams feed the actual fragmented console decoder as serial input. Outbound firmware COBS bytes are relayed by the peer to the desktop UDP reader. Bridge JSON status/response messages are test inputs, not controller-generated evidence. Serial-carrier authority in this substitute is not a finding that real remote bridge access has been qualified.
 
-`main.cpp`'s motion callback is replaced by a payload observer. The tests therefore establish packet delivery and modeled board behavior, not motion admission, target decoding into physical pulses or a complete application connection. The `FINGERPRINT?`/`CONFIG?` handshake and app device-card state machine are not linked. Mode negotiation here means the actual transport's TCP-connect/fallback behavior. The virtual axis plant, emitted-step integration and target-side QEMU protocol round trip remain outstanding.
+`main.cpp`'s motion callback is replaced by a payload observer. These two carrier scenarios establish packet delivery and modeled board behavior, not motion admission or physical pulses. Their mode negotiation means the actual transport's TCP-connect/fallback behavior. The additional handshake scenarios below link the production application protocol. The virtual axis plant, emitted-step integration and target-side QEMU protocol round trip remain outstanding.
 
 Both scenarios passed ten consecutive runs on local MSVC. The app's four CTest entries pass together, including recording precision and documentation safety. [Direct trace](2026-10-28/desktop-direct.json), [bridge trace](2026-10-28/desktop-bridge.json) and [desktop sensitivity receipt](2026-10-28/desktop-sensitivity.json) retain the local evidence. Traces describe modeled bus/board/callback events with virtual timestamps; socket deadlines use real host time. CI runs the same scenarios and uploads fresh traces.
+
+## Application/controller handshake
+
+Eight additional Windows scenarios connect the actual application connection setup, parser, phase transitions and retry policy to production firmware queries over loopback. Protocol methods moved from `app.cpp` into [hil_handshake.cpp](../../../app/src/hil_handshake.cpp), while unchanged pipeline defaults moved into `pipeline_config.cpp`. `App::update()` calls the extracted retry method. Firmware `main.cpp` uses [ControllerHandshake.h](../../../controller/include/ControllerHandshake.h) for its existing query formatting and BITS setter, preserving wire formats, range and cue-reset behavior.
+
+Before the fixes, the new tests reproduced an 18-bit request accepting a 12-bit confirmation and `CONFIG:garbage` being accepted as complete geometry. The app now requires a valid 12-hex-digit identity, supported protocol 1/2, complete finite geometry with positive dimensions, and matching bit-depth/full-scale confirmation before Ready. Historical `(1<<bits)-2` query values remain supported; setter confirmation must match its existing `(1<<bits)-1` contract. An unmatched confirmation keeps the gate closed until a matching reply or bounded timeout, allowing delayed BITS? replies without accepting them as confirmation. Late identity replies cannot alter failed/ready sessions. Disconnect clears Ready, pending state and queued commands; reconnect must handshake again. Logs now say **transport ready**, which does not grant firmware motion admission.
+
+| Scenario | Checked result |
+| --- | --- |
+| Happy path | Actual FINGERPRINT → CONFIG → BITS query → BITS:18 exchange; identity, geometry and scaling match; delayed old bit reply ignored |
+| Lost replies | Drop the first response in each phase; production retries complete the connection |
+| Timeout | Suppress each phase's responses until its retry budget expires; no Ready or late pairing |
+| Reconnect | Closing a ready transport clears permission; recreation requires a new exchange |
+| Identity rejection | Malformed MAC, missing version, unsupported protocol and different paired MAC cannot become ready |
+| Bit rejection | Wrong bits/full scale, NaN and trailing numeric garbage cannot become ready |
+| Geometry rejection | Missing, NaN and negative geometry fail without output requests |
+| Legacy/Mini compatibility | Declared transcript: protocol 2, no theta_s, following SERVO response; an early SERVO cannot replace CONFIG |
+
+All twelve app CTest entries pass locally. Representative evidence: [happy trace](2026-10-28/handshake-happy.json), [retry trace](2026-10-28/handshake-retry.json), [invalid-confirmation trace](2026-10-28/handshake-bad-bits.json), [sensitivity receipt](2026-10-28/handshake-sensitivity.json). Two isolated production mutations restore wrong-bit acceptance or bypass geometry validation; their scenarios must fail with the specific assertion. CI runs all eight cases and both controls, uploading every trace. Trace query values 1/2/3/4 identify FINGERPRINT?/CONFIG?/BITS?/BITS:N; phase values follow `HandshakePhase` in `app.h`.
+
+The test-only App shell substitutes lifetime/plugin startup, avoiding the global App, background TX worker, plugin discovery, persistence and UI. Protocol/configuration methods are production code. Firmware identity/version and default geometry replace eFuse/NVS; existing SDK/board/response adapters remain explicit. Real COBS and the actual cue-reset function run. PEERMAC, other `process_data()` commands, main stop/task loops, full UI/TX behavior, NVS and physical output remain unqualified. Matching geometry is tested; the existing asynchronous geometry-correction queue is not independently qualified here. The compatibility transcript is not a Mini firmware emulator. No handshake scenario sends motion, changes modeled field feed or produces an arm-clock edge.
 
 ## Negative controls
 
@@ -75,7 +96,7 @@ The probe ended at its host timeout. This identifies an incomplete emulated W550
 | MCP23017 / INA226 | Production bus/monitor code runs against declared host device models | Real I²C and complete target-side emulation |
 | Alarm GPIO | Production polling and dispatch exercised through host GPIO substitute | Electrical polarity/latency and target-side I/O |
 | MCPWM STEP/DIR | Existing logic tests retained; pulse engine bytes untouched | Peripheral model, independent edge captures and physical timing |
-| Desktop transport | Real Windows loopback UDP/TCP, production codec/dispatcher and R14 monitor round trips | Full app handshake/state machine, real bridge, W5500 and physical USB |
+| Desktop transport/application protocol | Real loopback UDP/TCP, production handshake/retries, firmware queries and board runtime | Full UI/TX/main loops, geometry-correction acknowledgements, real bridge, W5500 and physical USB |
 
 ## Reproduce
 
@@ -97,6 +118,7 @@ cmake -S app -B build-app
 cmake --build build-app --config Release
 ctest --test-dir build-app -C Release --output-on-failure --no-tests=error
 python tools/check_desktop_runtime_sensitivity.py --app-build build-app --output C:/temp/desktop-mutants
+python tools/check_handshake_sensitivity.py --app-build build-app --output C:/temp/handshake-mutants
 ```
 
 The sensitivity helper reuses the normal build's fetched, pinned cJSON source. The active network scenarios are Windows-only because the production `UdpTransport` socket implementation is Windows-only. Linux continues to run the deterministic board scenarios; it does not claim desktop network coverage.

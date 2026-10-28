@@ -8,6 +8,7 @@ on:
     paths:
       - 'controller/**'
       - 'app/**'
+      - 'tools/check_desktop_runtime_sensitivity.py'
       - 'controller/stewart-core' # shared submodule gitlink — a bump must trigger firmware + SIL
       - '.github/workflows/ci.yml'
   pull_request:
@@ -15,6 +16,7 @@ on:
     paths:
       - 'controller/**'
       - 'app/**'
+      - 'tools/check_desktop_runtime_sensitivity.py'
       - 'controller/stewart-core' # shared submodule gitlink — a bump must trigger firmware + SIL
       - '.github/workflows/ci.yml'
 
@@ -180,8 +182,20 @@ jobs:
       - name: Build
         run: cmake --build app/build --config Release
 
-      - name: App recording and documentation transport regressions
+      - name: App recording, documentation guards and runtime transport integration
         run: ctest --test-dir app/build -C Release --output-on-failure --no-tests=error
+
+      - name: Verify desktop test sensitivity with isolated transport mutants
+        run: python tools/check_desktop_runtime_sensitivity.py --app-build app/build --output "${{ runner.temp }}/desktop-runtime-negative-controls"
+
+      - name: Upload desktop runtime traces
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: desktop-runtime-traces
+          path: |
+            app/build/runtime-desktop-*.json
+            ${{ runner.temp }}/desktop-runtime-negative-controls/*.json
 
       - name: Upload desktop app artifact
         uses: actions/upload-artifact@v4

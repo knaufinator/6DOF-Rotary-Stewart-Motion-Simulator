@@ -1,12 +1,12 @@
 # Firmware simulation and integration-test plan
 
-**First milestone implemented, 28 October 2026; remaining stages proposed.** Baseline: `b99b3a2`, PR #32, ESP-IDF 5.5.2, shared core `118e6b0965cee674994bd66d7b9fb7f07c7420e8`. See the [runtime results and QEMU support boundary](testing/r14-runtime/README.md). This plan adds runtime integration evidence while preserving the recovered R13 engine and the current R14 motion lock.
+**Board-runtime and desktop-transport milestones implemented, 28 October 2026; remaining stages proposed.** Baseline: `b99b3a2`, PR #32, ESP-IDF 5.5.2, shared core `118e6b0965cee674994bd66d7b9fb7f07c7420e8`. The desktop lane builds on merged runtime PR #33 (`bd0f6ee`). See the [runtime results and QEMU support boundary](testing/r14-runtime/README.md). This plan adds runtime integration evidence while preserving the recovered R13 engine and the current R14 motion lock.
 
 ## Current coverage and the missing layer
 
-CI already builds full-size and Mini firmware, runs 85 controller C++ tests on Linux/Windows, exercises 9 source-contract and 10 bench-host tests, and runs the Windows app's two CTest checks. The engineering workflow checks artifacts, links, outlines, body/access clearances and all 324 STEP models. Some unit tests already simulate register values, elapsed time and admission states.
+CI builds full-size and Mini firmware, runs 85 controller C++ tests on Linux/Windows, exercises 9 source-contract and 10 bench-host tests, and runs the Windows app's four CTest checks. The engineering workflow checks artifacts, links, outlines, body/access clearances and all 324 STEP models. Some unit tests already simulate register values, elapsed time and admission states.
 
-The first delivery adds ten scenarios through the actual COBS stream decoder, R14 diagnostic dispatcher and board-monitor task using test-only SDK/device adapters. QEMU reached `app_main()` in the unchanged CI image but its observed stack was waiting for W5500 SPI transfer completion. Hosted CI does **not** yet qualify a complete emulated controller or connect the actual desktop transport to one. Desktop SIL exercises math and presentation; it is not an emulated controller. The separate `controller/test_harness` image is a physical analyzer, not a firmware emulator.
+The board-runtime delivery adds ten scenarios through the actual COBS stream decoder, R14 diagnostic dispatcher and board-monitor task using test-only SDK/device adapters. The next delivery connects the actual Windows UDP/TCP transport to that runtime in two loopback scenarios, with fixed packet vectors, sequence loss/restart accounting, source restrictions, diagnostic replies, telemetry and reconnect checks. Its carrier and main callbacks are explicit substitutes; the full application handshake and independent emitted-step plant remain unimplemented. QEMU reached `app_main()` in the unchanged CI image but its observed stack was waiting for W5500 SPI transfer completion. Hosted CI does **not** yet qualify a complete emulated controller. Desktop SIL exercises math and presentation; it is not an emulated controller. The separate `controller/test_harness` image is a physical analyzer, not a firmware emulator.
 
 One important implementation limit must remain visible: `MotionAdmission<false>` is the production staging type, and `normal_motion_permitted()` currently returns false even for the test-qualified specialization. Passing a simulated home sequence must not be described as working production R14 homing or permission for normal six-axis motion.
 
@@ -72,6 +72,8 @@ ESP-IDF's Linux/POSIX target is another possible adapter route, but it is experi
 **Exit:** end-to-end scenarios reach the production dispatcher and verify observable outputs, with a deterministic replay command and no hardware I/O. Pure helper tests alone do not satisfy this milestone.
 
 ### 3. Connect the real desktop transport and virtual environment
+
+**Partially implemented:** direct/bridge transport scenarios now run in the Windows app CTest lane and share the actual board runtime fixture. Two isolated desktop defects prove packing/NaN assertions detect regressions. Full handshake/state-machine integration, physical-output callbacks and the independent virtual plant below remain future work; the current payload observer does not stand in for a step engine.
 
 - Add a headless integration executable that uses the production packet encoders and applicable `UdpTransport` control/telemetry paths. Exercise direct-controller mode and bridge mode separately; do not assume they have the same handshake.
 - Bind only isolated test endpoints. Use temporary settings/NVS/recordings and explicit endpoint configuration; never discover serial ports, broadcast to the LAN or use live device addresses.

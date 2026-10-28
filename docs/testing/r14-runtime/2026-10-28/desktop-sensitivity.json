@@ -1,0 +1,20 @@
+{
+  "status": "PASS_DESKTOP_NEGATIVE_CONTROL_SENSITIVITY",
+  "productionSourceSha256": "757c66fa8519c4241dccfb5f5ad36281ad711b139ec059542846203b378e76d9",
+  "results": [
+    {
+      "mutation": "unmasked_targets",
+      "detected": true,
+      "exitCode": 1,
+      "failure": "FAIL direct: motion axis/18-bit encoding",
+      "mutatedSourceSha256": "d37136dadd6b4d91bdb35b3523162339e3c7ebb4e41c0d37004f75c4744392cb"
+    },
+    {
+      "mutation": "accept_nan",
+      "detected": true,
+      "exitCode": 1,
+      "failure": "FAIL direct: NaN telemetry not rejected",
+      "mutatedSourceSha256": "6dd1fad82519359ee155dcf51b0429b52a6dea1daa252d6fc7e44eafefe01473"
+    }
+  ]
+}

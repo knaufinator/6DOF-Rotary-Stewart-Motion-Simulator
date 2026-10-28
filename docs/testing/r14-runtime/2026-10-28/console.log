@@ -1,0 +1,9 @@
+ESP-ROM:esp32s3-20210327
+Build:Mar 27 2021
+rst:0x1 (POWERON),boot:0x4 (SPI_FLASH_BOOT)
+SPIWP:0xee
+mode:DIO, clock div:1
+load:0x3fce2820,len:0x1230
+load:0x403c8700,len:0xcc8
+load:0x403cb700,len:0x2e9c
+entry 0x403c8910

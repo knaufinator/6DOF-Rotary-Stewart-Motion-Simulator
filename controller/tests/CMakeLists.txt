@@ -52,3 +52,24 @@ endif()
 # ── CTest integration ──────────────────────────────────────────────
 enable_testing()
 add_test(NAME unit_tests COMMAND stewart-tests)
+
+# Production runtime sources, with SDK/board substitutes scoped to this executable.
+# No changes to ESP-IDF build bindings or hardware firmware options.
+find_package(Threads REQUIRED)
+add_executable(r14-runtime-scenarios
+    integration/runtime_scenarios.cpp
+    ../main/R14Hardware.cpp
+    ../main/CobsTransport.cpp
+)
+target_include_directories(r14-runtime-scenarios PRIVATE integration/sdk ../include)
+target_compile_definitions(r14-runtime-scenarios PRIVATE CONFIG_ESP_CONSOLE_USB_SERIAL_JTAG=1)
+target_link_libraries(r14-runtime-scenarios PRIVATE Threads::Threads)
+if(MSVC)
+    target_compile_options(r14-runtime-scenarios PRIVATE /FI${CMAKE_CURRENT_SOURCE_DIR}/integration/sdk/compat.h)
+endif()
+foreach(scenario cold_boot retained_boot retained_bank1 bus_failure startup_bus_failure
+        missing_adc remote_rejection alarm_during_bus_failure stale_status malformed_frame)
+    add_test(NAME runtime_${scenario}
+        COMMAND r14-runtime-scenarios ${scenario} ${CMAKE_CURRENT_BINARY_DIR}/runtime-${scenario}.json)
+    set_tests_properties(runtime_${scenario} PROPERTIES TIMEOUT 10)
+endforeach()

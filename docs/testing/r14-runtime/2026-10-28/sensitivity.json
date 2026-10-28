@@ -1,0 +1,22 @@
+{
+  "status": "PASS_NEGATIVE_CONTROL_SENSITIVITY",
+  "productionSourceSha256": "504cf77c86fa2986a31109a9de388545b81ae9d34715f7b7db81caf56036c444",
+  "results": [
+    {
+      "mutation": "suppress_io_fault",
+      "scenario": "bus_failure",
+      "exitCode": 1,
+      "detected": true,
+      "failure": "FAIL bus_failure: fault or independent alarm not reported",
+      "mutatedSourceSha256": "6a4c038c1a3c5e616a71952e36b26f834662a086858759022e4b127ce83d55cf"
+    },
+    {
+      "mutation": "accept_remote",
+      "scenario": "remote_rejection",
+      "exitCode": 1,
+      "detected": true,
+      "failure": "FAIL remote_rejection: source accepted",
+      "mutatedSourceSha256": "9ea72cb03cae257f9db1d7fb4c240fe4273240d6aafd515fce2a6c9f46ab0185"
+    }
+  ]
+}

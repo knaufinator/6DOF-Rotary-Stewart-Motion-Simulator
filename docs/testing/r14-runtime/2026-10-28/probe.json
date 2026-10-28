@@ -1,0 +1,68 @@
+{
+  "status": "BOOT_ATTEMPT_RECORDED_NOT_QUALIFICATION",
+  "sourceCommit": "cc79d9eb246237e6fdfa06c1074d0eef5fc2dc45",
+  "qemuVersion": "QEMU emulator version 9.2.2 (esp_develop_9.2.2_20250817)",
+  "command": [
+    "C:\\Users\\Chris\\.espressif\\tools\\qemu-xtensa\\esp_develop_9.2.2_20250817\\qemu\\bin\\qemu-system-xtensa.exe",
+    "-machine",
+    "esp32s3",
+    "-display",
+    "none",
+    "-monitor",
+    "none",
+    "-serial",
+    "stdio",
+    "-nic",
+    "none",
+    "-no-reboot",
+    "-drive",
+    "file=C:/src/r14-qemu-20261028/final-probe/qemu-flash.bin,if=mtd,format=raw",
+    "-gdb",
+    "tcp:127.0.0.1:64428"
+  ],
+  "inputArtifacts": [
+    {
+      "name": "bootloader-v0.1.1-dev.6+6422d64.bin",
+      "offset": 0,
+      "bytes": 19952,
+      "sha256": "7cc0be3e64b447d8504098e63f6e1864bdf5b9872db6c849f6717f8d41e75d26"
+    },
+    {
+      "name": "partition-table-v0.1.1-dev.6+6422d64.bin",
+      "offset": 32768,
+      "bytes": 3072,
+      "sha256": "5295e8c42d6fb5f95e4e8a185932c6191d27cfc5078322475347e40e71af815a"
+    },
+    {
+      "name": "firmware-v0.1.1-dev.6+6422d64.bin",
+      "offset": 65536,
+      "bytes": 1366912,
+      "sha256": "35856f6d7d186956aad164177ae203ec98434c3d0fbbb442c3e2a34989e74701"
+    }
+  ],
+  "initialFlashSha256": "8ab1f6b3f4408655e003d688259ce4b93a34dedd8962cfcec946b33c7c5a5664",
+  "finalFlashSha256": "8ab1f6b3f4408655e003d688259ce4b93a34dedd8962cfcec946b33c7c5a5664",
+  "timeoutSeconds": 15.0,
+  "timeoutReached": true,
+  "exitCode": 1,
+  "hostElapsedSeconds": 15.046999999787658,
+  "consoleSha256": "c95fe78be927015417d90614cfcc7156a93492a6afe92bb26bdb9849666ed52e",
+  "stderrSha256": "9b84897e8a8cf208b80b43c2c8e5868a877c1971cf171cdbf76cdaebb34d7096",
+  "consoleBytes": 226,
+  "stderrBytes": 25,
+  "networkBackend": "none",
+  "physicalHardwareAccess": false,
+  "limits": [
+    "No boot success inferred from a timeout or ROM banner.",
+    "No peripheral/RTOS/pulse qualification inferred from emulator startup.",
+    "SDK configuration and artifact provenance must be reviewed with the console log."
+  ],
+  "debugger": {
+    "exitCode": 0,
+    "snapshotSha256": "1ef64e8f7ec4200749910391249e7ef130c4c93c101a89f712c8f56b48bc73f3",
+    "elfSha256": "d374c29a0b5f68b581ae06603f26da405f6c27462163d82bec03b7510b137aad",
+    "appMainInObservedStack": true,
+    "w5500SpiPollingInObservedStack": true,
+    "qualification": "Single debugger snapshot, not peripheral or scheduler qualification"
+  }
+}

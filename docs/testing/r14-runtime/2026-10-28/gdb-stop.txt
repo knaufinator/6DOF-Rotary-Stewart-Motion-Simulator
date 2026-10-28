@@ -1,0 +1,25 @@
+0x40387e3a in spi_hal_usr_is_done (hal=<optimized out>) at /opt/esp/idf/components/hal/spi_hal_iram.c:236
+
+Thread 2 (Thread 1.2 (CPU#1 [halted ])):
+#0  0x4037f596 in esp_cpu_wait_for_intr () at /opt/esp/idf/components/esp_hw_support/cpu.c:64
+#1  0x420ede41 in esp_vApplicationIdleHook () at /opt/esp/idf/components/esp_system/freertos_hooks.c:58
+#2  0x40383ccf in prvIdleTask (pvParameters=<optimized out>) at /opt/esp/idf/components/freertos/FreeRTOS-Kernel/tasks.c:4350
+
+Thread 1 (Thread 1.1 (CPU#0 [running])):
+#0  0x40387e3a in spi_hal_usr_is_done (hal=<optimized out>) at /opt/esp/idf/components/hal/spi_hal_iram.c:236
+#1  0x4037d49a in spi_device_polling_end (handle=0x3fcbab78, ticks_to_wait=4294967295) at /opt/esp/idf/components/esp_driver_spi/src/gpspi/spi_master.c:1454
+#2  0x4037d528 in spi_device_polling_transmit (handle=0x3fcbab78, trans_desc=0x3fcb1db0) at /opt/esp/idf/components/esp_driver_spi/src/gpspi/spi_master.c:1500
+#3  0x4201128c in spi_xfer (addr=<optimized out>, ctrl=<optimized out>, write=<optimized out>, buf=<optimized out>, len=<optimized out>) at /app/knaufinator/6DOF-Rotary-Stewart-Motion-Simulator/controller/main/EthernetTransport.cpp:112
+#4  0x42011324 in eth_spi_write (ctx=0x1, cmd=0, addr=4, data=0x3fcb1e30, len=1) at /app/knaufinator/6DOF-Rotary-Stewart-Motion-Simulator/controller/main/EthernetTransport.cpp:130
+#5  0x4206a800 in w5500_write (emac=0x3fcbad60, address=0, data=0x3fcb1e30, len=1) at /opt/esp/idf/components/esp_eth/src/spi/w5500/esp_eth_mac_w5500.c:198
+#6  w5500_reset (emac=0x3fcbad60) at /opt/esp/idf/components/esp_eth/src/spi/w5500/esp_eth_mac_w5500.c:281
+#7  emac_w5500_init (mac=0x3fcbad60) at /opt/esp/idf/components/esp_eth/src/spi/w5500/esp_eth_mac_w5500.c:881
+#8  0x420683ee in esp_eth_driver_install (config=<optimized out>, out_hdl=<optimized out>) at /opt/esp/idf/components/esp_eth/src/esp_eth.c:250
+#9  0x42011e0f in ethernet_transport_init () at /app/knaufinator/6DOF-Rotary-Stewart-Motion-Simulator/controller/main/EthernetTransport.cpp:407
+#10 0x4200ffd6 in app_main () at /app/knaufinator/6DOF-Rotary-Stewart-Motion-Simulator/controller/main/main.cpp:2426
+#11 0x420eeb92 in main_task (args=0x0) at /opt/esp/idf/components/freertos/app_startup.c:208
+pc             0x40387e3a          0x40387e3a <spi_hal_usr_is_done+10>
+[Inferior 1 (process 1) detached]
+warning: could not convert 'main' from the host encoding (CP1252) to UTF-32.
+This normally should not happen, please file a bug report.
+warning: 236	/opt/esp/idf/components/hal/spi_hal_iram.c: No such file or directory

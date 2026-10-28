@@ -270,8 +270,6 @@ idf.py monitor --print-filter '*:V'  # verbose log filter
 
 **App won't connect**: Check `app_debug.log` next to the executable for serial RX trace. The Windows app asserts DTR for the identified native USB Serial/JTAG device (`303A:1001`) and leaves RTS deasserted. USB-UART adapters retain disabled modem lines. The Python native-USB clients use DTR asserted / RTS deasserted.
 
-## Links
-
 ## Continuous integration
 
 Pull requests to the default `phoenix` branch run the controller C++ suite on Linux and Windows, the Python E-stop/R14 source contracts, and the R13 bench-host tests without connecting hardware. The main ESP32-S3 build explicitly enables `R14_BOARD_IO` and `R14_FAIL_CLOSED`, with `R13_BENCH_ONE_AXIS` disabled. The separate Mini firmware build remains covered. Bench-only firmware stays excluded from CI/release builds by its existing CMake restriction.
@@ -279,6 +277,8 @@ Pull requests to the default `phoenix` branch run the controller C++ suite on Li
 The Windows application build also runs CTest, including recording precision and documentation-mode transport guards. The engineering-review workflow checks owned README local links, frozen order/replacement artifact hashes, J12 outline regressions, every R14C1 body outline, reviewed body/access bounds, and the complete 324-component STEP interference audit. Generated geometric/link receipts are uploaded as CI artifacts; the frozen manufacturing files are not rewritten. These checks preserve static evidence and cannot establish physical motion, cable, mating-interface or factory qualification.
 
 See [build workflow](../.github/workflows/ci.yml), [controller tests](../.github/workflows/unit_tests.yml) and [engineering review](../.github/workflows/engineering_review.yml).
+
+CTest now also runs ten scenarios compiled from the unchanged production COBS transport and R14 board-monitor task, with isolated SDK/device adapters. Two deliberately faulty source copies confirm that the bus-fault and remote-command tests fail when their protections are removed. CI uploads the event traces and also runs the MCP tooling tests against the pinned SDK. Read the [runtime integration results and QEMU limitation](../docs/testing/r14-runtime/README.md) before interpreting these as whole-controller coverage.
 
 ## References
 

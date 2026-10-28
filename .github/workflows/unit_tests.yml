@@ -10,6 +10,7 @@ on:
       - 'controller/tests/**'
       - 'app/tools/**'
       - 'tools/check_r14_runtime_sensitivity.py'
+      - 'tools/check_step_plant_sensitivity.py'
       - 'hardware/pcb/6dof2_r13/bringup/r13bench_core.py'
       - 'hardware/pcb/6dof2_r13/bringup/test_r13bench_core.py'
       - '.github/workflows/unit_tests.yml'
@@ -22,6 +23,7 @@ on:
       - 'controller/tests/**'
       - 'app/tools/**'
       - 'tools/check_r14_runtime_sensitivity.py'
+      - 'tools/check_step_plant_sensitivity.py'
       - 'hardware/pcb/6dof2_r13/bringup/r13bench_core.py'
       - 'hardware/pcb/6dof2_r13/bringup/test_r13bench_core.py'
       - '.github/workflows/unit_tests.yml'
@@ -58,13 +60,18 @@ jobs:
       - name: Verify fault-test sensitivity with isolated production mutants
         run: python tools/check_r14_runtime_sensitivity.py --output "${{ runner.temp }}/r14-runtime-negative-controls"
 
+      - name: Verify independent step-plant detection with isolated engine mutants
+        run: python tools/check_step_plant_sensitivity.py --output "${{ runner.temp }}/step-plant-negative-controls"
+
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: r14-runtime-${{ matrix.os }}
           path: |
             controller/tests/build/runtime-*.json
+            controller/tests/build/plant-*.json
             ${{ runner.temp }}/r14-runtime-negative-controls/*.json
+            ${{ runner.temp }}/step-plant-negative-controls/*.json
 
   host-contracts:
     name: Firmware Contracts and R13 Bench Host

@@ -12,6 +12,7 @@ Shared build instructions, user guides and developer references live here.
 | [App guide](APP_GUIDE.md) | Desktop controls, entities, motion pipeline and recordings |
 | [App automation](APP_AUTOMATION.md) | Repository-local MCP setup, isolated documentation mode and real UI captures |
 | [Architecture](ARCHITECTURE.md) | Implemented software boundaries, data flow and shared kinematics |
+| [Firmware simulation plan](FIRMWARE_SIMULATION_PLAN.md) | Proposed host integration, ESP32-S3 emulation, fault injection and physical-test boundaries |
 
 R13 one-axis bench evidence and the recovered firmware are documented in the
 [R14 firmware status](../hardware/pcb/6dof2_r14/FIRMWARE_STATUS.md). The

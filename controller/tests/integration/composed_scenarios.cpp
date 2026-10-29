@@ -1,6 +1,8 @@
 // Shared production safety/decoder + real board monitor/COBS + unchanged engine.
-// main.cpp, tasks, NVS, app networking and real peripheral timing are NOT linked.
+// Main tasks, NVS and real peripheral timing are NOT linked. The standalone
+// runner excludes desktop networking; the test facade also serves its app lane.
 #include "runtime_fixture.h"
+#include "composed_fixture.h"
 #include "../plant/plant_model.h"
 #include "SharedMcpwmStepEngine.h"
 #include "ControllerMotionPayload.h"
@@ -65,7 +67,7 @@ void on_data(const uint8_t* payload,int len,int source) {
     float raw[6];
     if(!controller::decode_motion_payload(payload,len,raw))return;
     ++decoded;for(int i=0;i<6;++i)last_raw[i]=raw[i];
-    // The live application checks this before mapping/IK, and again per target.
+    // The live application checks this before IK, and again per target.
     if(blocked()){++rejected;return;}
     StewartConfig config;initDefaultStewartConfig(&config);
     config.virtual_gear=2.0f;computeStepsPerDegree(&config);
@@ -238,6 +240,25 @@ void save(const std::string& path,const std::string& name,const std::string& err
     plant::save(path+".plant.json",name,error,counts,int(admission.seek_state()),engine.stopTimingFault());
 }
 }
+namespace composed_fixture {
+void start(bool serial_carrier) {
+    configure("locked_serial");
+    active_source=serial_carrier?COBS_SRC_SERIAL:COBS_SRC_ETHERNET;
+}
+void release_software_pause_for_test() {paused=false;}
+Snapshot snapshot() {
+    return {delivered,source_drops,decoded,rejected,target_writes,alarm_callbacks,
+        io_callbacks,stop_calls,discard_calls,alarms.axis_mask(),edges(),blocked(),
+        engine.isRunning()||plant::timer_running(),last_raw};
+}
+void assert_locked() {
+    plant::run_us(500);no_motion();require(edges()==0,"desktop traffic emitted STEP");
+}
+void save_trace(const std::string& path,const std::string& name,const std::string& error) {
+    save(path,name,error);
+}
+}
+#ifndef R14_COMPOSED_NO_MAIN
 int main(int argc,char** argv) {
     if(argc!=3)return 2;std::string name=argv[1],error;
     try {
@@ -254,3 +275,4 @@ int main(int argc,char** argv) {
     if(!error.empty()){std::fprintf(stderr,"FAIL %s: %s\n",name.c_str(),error.c_str());return 1;}
     std::printf("PASS %s: shared safety/decoder, board monitor, COBS and actual engine\n",name.c_str());return 0;
 }
+#endif

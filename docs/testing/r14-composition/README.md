@@ -4,6 +4,8 @@ Implemented 29 October 2026 on baseline `e422e3c` (PR #36), shared core `118e6b0
 
 ## What now runs together
 
+Later on 29 October, [ten desktop-to-safety scenarios](../r14-desktop-safety/README.md) connected actual Windows transport and App handshake handling to this same composition through a test-only facade. The twenty cases documented here retain their original scope and evidence; the complete App TX worker/main task graph remains excluded.
+
 The new executable compiles actual `CobsTransport.cpp`, `R14Hardware.cpp`, `BoardIo`, `MotionAdmission<false>`, the drive alarm latch and `SharedMcpwmStepEngine.h`. It reuses the earlier deterministic board and independent pin/plant models. Production `main.cpp` now calls two small shared headers: [ControllerMotionPayload.h](../../../controller/include/ControllerMotionPayload.h) preserves DATA18 decoding and the per-motor write guard; [R14RuntimeSafety.h](../../../controller/include/R14RuntimeSafety.h) preserves the admission decision and alarm/reconnect stop sequence. GPIO47/48, pause, bench-stop and StepDriver operations remain bound in `main.cpp`. Source contracts check those bindings and the locked build/boot policy.
 
 ```mermaid
@@ -60,4 +62,4 @@ python controller/tests/test_r14_failclosed_source_contract.py
 
 Each scenario has a fresh process and a CTest timeout; monitor scheduling also has a bounded host wait. No serial port, device discovery, LAN endpoint, flashing or real motor is involved. The recovered engine, staging admission class, ESP-IDF options and frozen PCB exports are unchanged. The application seam extraction intends to preserve existing firmware behavior; full-size and Mini CI builds check both bindings.
 
-Remaining work includes connecting the real desktop lane to these safety seams, exercising the complete application/task/NVS graph, a unified scheduler for logical deadline tests, and a supported target-image protocol path past QEMU's W5500 limitation. Physical pulse/gate, sensor power, wiring and mechanics qualification still follows [R14 bring-up](../../../hardware/pcb/6dof2_r14/BRINGUP.md).
+The [desktop connection](../r14-desktop-safety/README.md) is now implemented with explicit callback/carrier substitutions. Remaining work includes the complete App TX/application/task/NVS graph, a unified scheduler for logical deadline tests, and a supported target-image protocol path past QEMU's W5500 limitation. Physical pulse/gate, sensor power, wiring and mechanics qualification still follows [R14 bring-up](../../../hardware/pcb/6dof2_r14/BRINGUP.md).

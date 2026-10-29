@@ -176,6 +176,44 @@ if(BUILD_TESTING AND WIN32)
         set_tests_properties(handshake_${scenario} PROPERTIES TIMEOUT 30
             ENVIRONMENT "STEWART_DOCUMENTATION_MODE=0")
     endforeach()
+
+    # Full desktop transport/handshake -> shared safety -> actual engine model.
+    # The board and pulse SDK substitutes stay in separate translation units.
+    add_library(r14-desktop-safety-board STATIC
+        ${R14_TEST_FIXTURE}/runtime_scenarios.cpp ${R14_TEST_FIXTURE}/runtime_handshake.cpp
+        ${CONTROLLER_DIR}/main/R14Hardware.cpp ${CONTROLLER_DIR}/main/CobsTransport.cpp)
+    target_include_directories(r14-desktop-safety-board PRIVATE
+        ${R14_TEST_FIXTURE}/sdk ${CONTROLLER_DIR}/include)
+    target_compile_definitions(r14-desktop-safety-board PRIVATE
+        CONFIG_ESP_CONSOLE_USB_SERIAL_JTAG=1 R14_RUNTIME_NO_MAIN=1
+        gpio_config=runtime_gpio_config gpio_config_t=runtime_gpio_config_t)
+    target_link_libraries(r14-desktop-safety-board PRIVATE stewart_math)
+    add_library(r14-desktop-safety-engine STATIC ${R14_TEST_FIXTURE}/composed_scenarios.cpp
+        ${CONTROLLER_DIR}/tests/plant/plant_model.cpp)
+    target_include_directories(r14-desktop-safety-engine PRIVATE
+        ${CONTROLLER_DIR}/tests/plant/sdk ${CONTROLLER_DIR}/include)
+    target_compile_definitions(r14-desktop-safety-engine PRIVATE R14_COMPOSED_NO_MAIN=1)
+    target_link_libraries(r14-desktop-safety-engine PRIVATE r14-desktop-safety-board stewart_math)
+    if(MSVC)
+        target_compile_options(r14-desktop-safety-board PRIVATE /FI${R14_TEST_FIXTURE}/sdk/compat.h)
+        target_compile_options(r14-desktop-safety-engine PRIVATE /FI${R14_TEST_FIXTURE}/sdk/compat.h)
+    endif()
+    add_executable(stewart-safety-runtime-tests tests/test_safety_runtime.cpp
+        tests/handshake_app_shell.cpp src/hil_handshake.cpp src/pipeline_config.cpp
+        src/automation.cpp src/udp_transport.cpp)
+    target_include_directories(stewart-safety-runtime-tests PRIVATE
+        src ${cjson_SOURCE_DIR} ${R14_TEST_FIXTURE})
+    target_compile_definitions(stewart-safety-runtime-tests PRIVATE DEV_LOG_ENABLED=0)
+    target_link_libraries(stewart-safety-runtime-tests PRIVATE
+        r14-desktop-safety-engine stewart_math cjson ws2_32)
+    foreach(scenario direct_locked bridge_locked direct_alarm bridge_alarm
+            direct_bus_recovery bridge_bus_recovery direct_reconnect bridge_reconnect
+            direct_handshake_fault bridge_control_loss)
+        add_test(NAME desktop_safety_${scenario} COMMAND stewart-safety-runtime-tests
+            ${scenario} ${CMAKE_CURRENT_BINARY_DIR}/runtime-safety-${scenario}.json)
+        set_tests_properties(desktop_safety_${scenario} PROPERTIES TIMEOUT 30
+            ENVIRONMENT "STEWART_DOCUMENTATION_MODE=0")
+    endforeach()
 endif()
 
 # Read-only safety regression: hardware transports are disabled before any I/O.

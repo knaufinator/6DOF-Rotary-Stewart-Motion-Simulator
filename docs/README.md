@@ -14,6 +14,7 @@ Shared build instructions, user guides and developer references live here.
 | [Architecture](ARCHITECTURE.md) | Implemented software boundaries, data flow and shared kinematics |
 | [Firmware simulation plan](FIRMWARE_SIMULATION_PLAN.md) | Implemented host lanes, remaining ESP32-S3 emulation and physical-test boundaries |
 | [R14 safety composition results](testing/r14-composition/README.md) | Twenty combined protocol/board/admission/engine scenarios, fault detection and explicit exclusions |
+| [Desktop through R14 safety](testing/r14-desktop-safety/README.md) | Ten real desktop transport/handshake scenarios connected to the combined safety runner |
 
 R13 one-axis bench evidence and the recovered firmware are documented in the
 [R14 firmware status](../hardware/pcb/6dof2_r14/FIRMWARE_STATUS.md). The

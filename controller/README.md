@@ -282,6 +282,8 @@ CTest now also runs ten scenarios compiled from the unchanged production COBS tr
 
 The [independent plant lane](../docs/testing/r14-step-plant/README.md) adds 29 actual-engine scenarios, and the [production safety composition](../docs/testing/r14-composition/README.md) joins COBS, board monitoring, shared decoding/admission/stop decisions and the pulse model in twenty more. Controller CTest has 60 entries including the unit executable; seven additional engine/composition mutants verify detection. Production `main.cpp` uses the same extracted safety helpers, while the R14 lock remains closed. Complete task/NVS/application execution and physical timing remain outside these host lanes.
 
+The [desktop-to-safety lane](../docs/testing/r14-desktop-safety/README.md) now connects real Windows sockets and App handshake handling to that combined runner in ten additional scenarios. It verifies zero admitted output under faults, reconnects and delayed packets, and documents the bridge raw-channel boundary. The app has 22 CTest entries; three isolated production defects verify this new lane's detection. The full App TX worker and controller task graph remain separate work.
+
 ## References
 
 - [Firmware variants and validation](../docs/FIRMWARE.md)

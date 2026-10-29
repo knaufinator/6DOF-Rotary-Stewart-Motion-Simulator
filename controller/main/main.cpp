@@ -33,7 +33,9 @@
 #if defined(R14_FAIL_CLOSED) && PCB_VERSION == 2
 #include "R14DriveAlarmLatch.h"
 #include "R14MotionAdmission.h"
+#include "R14RuntimeSafety.h"
 #endif
+#include "ControllerMotionPayload.h"
 #if defined(R14_BOARD_IO)
 #include "R14Hardware.h"
 #endif
@@ -198,14 +200,14 @@ static bool estop_motion_is_blocked();
 #if PCB_VERSION == 1
 static inline int32_t motor_getPos(int i)    { return motorCurrentPos[i]; }
 static inline int32_t motor_getTarget(int i) { return motorTargetPos[i]; }
-static inline bool    motor_setTarget(int i, int32_t pos) { if (estop_motion_is_blocked()) return false; motorTargetPos[i] = pos; return true; }
+static inline bool    motor_setTarget(int i, int32_t pos) { return controller::guarded_motor_target(estop_motion_is_blocked(), [=]() { motorTargetPos[i] = pos; return true; }); }
 static inline void    motor_resetPosition(int i) { motorCurrentPos[i] = 0; motorTargetPos[i] = 0; }
 static inline void    motor_emergencyStop(int i) { motorTargetPos[i] = motorCurrentPos[i]; }
 static inline bool    motor_isInit(int)      { return motorInitialized; }
 #else
 static inline int32_t motor_getPos(int i)    { return StepDriver_getPosition(i); }
 static inline int32_t motor_getTarget(int i) { return StepDriver_getTarget(i); }
-static inline bool    motor_setTarget(int i, int32_t pos) { return !estop_motion_is_blocked() && StepDriver_setTarget(i, pos); }
+static inline bool    motor_setTarget(int i, int32_t pos) { return controller::guarded_motor_target(estop_motion_is_blocked(), [=]() { return StepDriver_setTarget(i, pos); }); }
 static inline void    motor_resetPosition(int i) { StepDriver_resetPosition(i); }
 static inline void    motor_emergencyStop(int i) { StepDriver_setTarget(i, StepDriver_getPosition(i)); }
 static inline bool    motor_isInit(int)      { return StepDriver_isInitialized(); }
@@ -489,8 +491,7 @@ static bool estop_input_active() {
 
 static bool estop_motion_is_blocked() {
 #if defined(R14_FAIL_CLOSED) && PCB_VERSION == 2
-    if (!r14MotionAdmission.normal_motion_permitted() ||
-        r14DriveAlarms.faulted()) return true;
+    if (r14::admission_blocks_motion(r14MotionAdmission, r14DriveAlarms)) return true;
 #endif
     return estop_motion_blocked(isPausedEStop.load(),
                                 gpio_get_level((gpio_num_t)ESTOP_PIN) == ESTOP_ACTIVE_STATE,
@@ -501,19 +502,26 @@ static bool estop_motion_is_blocked() {
 // Task-context ingress: R14Hardware samples GPIO1/2/15/16/18/40. The measured
 // R13 interface is LOW healthy / HIGH alarm, off or open; verify all R14 cables.
 // Hardware clears only the faulted torque latch; common pulse stop uses GPIO47.
-extern "C" void r14_report_normalized_drive_alarm(int axis) {
-    r14DriveAlarms.assert_alarm(axis);
-    r14MotionAdmission.report_alarm(axis);
-    isPausedEStop.store(true);
+struct R14FaultStopOps {
+    void pause() const { isPausedEStop.store(true); }
+    void bench_stop(const char* reason) const {
 #if defined(R13_BENCH_ACTIVE)
-    r13_bench_stop("DRIVE_ALARM");
+        r13_bench_stop(reason);
+#else
+        (void)reason;
 #endif
-    gpio_set_level(GPIO_NUM_47, 1); // existing output-latch inhibit
-    gpio_set_level(GPIO_NUM_48, 0);
-    if (StepDriver_isInitialized()) {
-        StepDriver_stop();
-        StepDriver_emergencyStop(); // discard all six commanded targets
     }
+    void inhibit() const {
+        gpio_set_level(GPIO_NUM_47, 1); // existing output-latch inhibit
+        gpio_set_level(GPIO_NUM_48, 0);
+    }
+    bool initialized() const { return StepDriver_isInitialized(); }
+    void stop() const { StepDriver_stop(); }
+    void discard_targets() const { StepDriver_emergencyStop(); }
+};
+
+extern "C" void r14_report_normalized_drive_alarm(int axis) {
+    r14::report_alarm_and_stop(r14MotionAdmission, r14DriveAlarms, axis, R14FaultStopOps{});
 }
 
 // These task-context entrypoints are reserved for a *local*, qualified IO
@@ -527,17 +535,7 @@ extern "C" bool r14_request_local_home(uint64_t now_us) {
 }
 
 extern "C" void r14_report_transport_reconnect(void) {
-    r14MotionAdmission.report_reconnect_or_reset();
-    isPausedEStop.store(true);
-#if defined(R13_BENCH_ACTIVE)
-    r13_bench_stop("TRANSPORT_RECONNECT");
-#endif
-    gpio_set_level(GPIO_NUM_47, 1);
-    gpio_set_level(GPIO_NUM_48, 0);
-    if (StepDriver_isInitialized()) {
-        StepDriver_stop();
-        StepDriver_emergencyStop();
-    }
+    r14::report_reconnect_and_stop(r14MotionAdmission, R14FaultStopOps{});
 }
 #endif
 
@@ -933,19 +931,9 @@ void send_telemetry(const float angles[6]) {
 }
 
 void process_binary_packet(const uint8_t *payload, int len) {
-    if (!payload) return;
-    if (len < 18) return;  // CH_DATA18: 6 x uint24 LE = 18 bytes minimum
-
-    binPktCount++;
     float raw[6], mapped[6];
-
-    // COBS DATA18 payload: 6 x uint24 LE (low 18 bits used)
-    for (int i = 0; i < 6; i++) {
-        uint32_t v = (uint32_t)payload[i * 3]
-                   | ((uint32_t)payload[i * 3 + 1] << 8)
-                   | ((uint32_t)payload[i * 3 + 2] << 16);
-        raw[i] = (float)(v & 0x3FFFFu);
-    }
+    if (!controller::decode_motion_payload(payload, len, raw)) return;
+    binPktCount++;
 
     mapRawToPosition(raw, &axisScales, maxRawInput, mapped);
     // No MCA here — the SIL server already applies motion cueing before

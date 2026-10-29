@@ -24,4 +24,9 @@ MotionStats motion_stats();
 bool field_on();
 void check_no_arm();
 void save_trace(const std::string& path, const std::string& scenario, const std::string& error);
+// Optional composition hooks. Install before start(); callbacks execute only
+// while the runner owns the monitor's deterministic scheduling boundary.
+void set_fault_handlers(void (*alarm)(int), void (*io_fault)());
+void inject_alarm_mask(uint8_t mask);
+void inject_bus_failure(bool failed);
 }

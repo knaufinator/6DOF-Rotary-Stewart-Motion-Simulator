@@ -2,6 +2,8 @@
 
 Implemented 28 October 2026, following the [simulation plan](../../FIRMWARE_SIMULATION_PLAN.md) and [protocol/runtime work](../r14-runtime/README.md). This adds 29 host scenarios. Production firmware, the recovered R13 engine, R14 admission lock, SDK options and PCB exports are unchanged.
 
+Update, 29 October: the [production safety composition](../r14-composition/README.md) reuses this independent peripheral/plant model with the board monitor, COBS and shared application safety seams. Its twenty scenarios are a separate executable; the isolated positive-motion cases here remain test-only.
+
 ## Method and assumptions
 
 The executable includes **unchanged `SharedMcpwmStepEngine.h`**: actual ISR, direction guard, register writes, latch accounting and stop/resume. A separate [peripheral/plant model](../../../controller/tests/plant/plant_model.cpp) supplies the narrow SDK surface and advances latch/comparator events from those register writes. It never reads the engine's position/target to generate travel. Signed pin-edge counts are compared with engine bookkeeping after the pipeline drains.
@@ -34,7 +36,7 @@ Unsupported period, latch mode, GPIO and register bits fail the model. Allocatio
 
 ## Coverage and results
 
-All 29 cases pass locally under MSVC. Controller CTest now has 40 entries: the existing 85-case unit executable, ten board-runtime scenarios and 29 plant scenarios. Linux/Windows CI runs them and retains all JSON traces.
+All 29 cases pass locally under MSVC. This delivery expanded controller CTest to 40 entries: the existing 85-case unit executable, ten board-runtime scenarios and 29 plant scenarios; the later composition expands that to 60. Linux/Windows CI runs them and retains all JSON traces.
 
 | Group | Observable assertions |
 | --- | --- |

@@ -43,6 +43,8 @@ int arm_edges=0,io_faults=0,alarm_bits=0;
 int64_t conversion_started=0;
 int voltage_raw=4000;
 uint8_t alarm_gpio=0;
+void (*alarm_observer)(int)=nullptr;
+void (*io_fault_observer)()=nullptr;
 
 void event(const std::string& kind,int address=0,int reg=0,int value=0) {
     events.push_back({now.load(),kind,address,reg,value});
@@ -274,10 +276,21 @@ extern "C" void serial_printf(const char* fmt,...) {
     sim::require(n>=0&&n<int(sizeof(b)),"response truncated");
     cobs_send(COBS_CH_RESP,reinterpret_cast<const uint8_t*>(b),n);
 }
-extern "C" void r14_report_normalized_drive_alarm(int axis) {sim::alarm_bits|=1<<axis;sim::event("alarm_callback",0,axis);}
-extern "C" void r14_report_transport_reconnect() {++sim::io_faults;sim::event("io_fault_callback");}
+extern "C" void r14_report_normalized_drive_alarm(int axis) {
+    sim::alarm_bits|=1<<axis;sim::event("alarm_callback",0,axis);
+    if(sim::alarm_observer)sim::alarm_observer(axis);
+}
+extern "C" void r14_report_transport_reconnect() {
+    ++sim::io_faults;sim::event("io_fault_callback");
+    if(sim::io_fault_observer)sim::io_fault_observer();
+}
 
 namespace runtime_fixture {
+void set_fault_handlers(void (*alarm)(int),void (*io_fault)()) {
+    sim::alarm_observer=alarm;sim::io_fault_observer=io_fault;
+}
+void inject_alarm_mask(uint8_t mask) {sim::alarm_gpio=mask;}
+void inject_bus_failure(bool failed) {sim::bus_failed=failed;}
 namespace {
 size_t motion_packets=0;
 std::array<uint32_t,6> motion{};

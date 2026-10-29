@@ -74,6 +74,33 @@ foreach(scenario cold_boot retained_boot retained_bank1 bus_failure startup_bus_
     set_tests_properties(runtime_${scenario} PROPERTIES TIMEOUT 10)
 endforeach()
 
+# Compose board and pulse lanes without leaking incompatible test SDK types.
+# The board-only gpio_config type/function get private names; pulse operations
+# keep the engine model's own SDK surface. No firmware compile definitions change.
+add_library(r14-composed-board STATIC integration/runtime_scenarios.cpp
+    ../main/R14Hardware.cpp ../main/CobsTransport.cpp)
+target_include_directories(r14-composed-board PRIVATE integration/sdk ../include)
+target_compile_definitions(r14-composed-board PRIVATE CONFIG_ESP_CONSOLE_USB_SERIAL_JTAG=1
+    R14_RUNTIME_NO_MAIN=1 gpio_config=runtime_gpio_config gpio_config_t=runtime_gpio_config_t)
+target_link_libraries(r14-composed-board PRIVATE Threads::Threads)
+if(MSVC)
+    target_compile_options(r14-composed-board PRIVATE /FI${CMAKE_CURRENT_SOURCE_DIR}/integration/sdk/compat.h)
+endif()
+add_executable(r14-composed-scenarios integration/composed_scenarios.cpp plant/plant_model.cpp)
+target_include_directories(r14-composed-scenarios PRIVATE plant/sdk ../include)
+target_link_libraries(r14-composed-scenarios PRIVATE r14-composed-board stewart_math)
+if(MSVC)
+    target_compile_options(r14-composed-scenarios PRIVATE /FI${CMAKE_CURRENT_SOURCE_DIR}/integration/sdk/compat.h)
+endif()
+foreach(scenario locked_serial locked_ethernet protocol diagnostics reconnect bus_recovery
+        startup_alarm startup_bus_failure
+        alarm_0 alarm_1 alarm_2 alarm_3 alarm_4 alarm_5
+        bus_alarm_0 bus_alarm_1 bus_alarm_2 bus_alarm_3 bus_alarm_4 bus_alarm_5)
+    add_test(NAME composed_${scenario} COMMAND r14-composed-scenarios ${scenario}
+        ${CMAKE_CURRENT_BINARY_DIR}/composed-${scenario}.json)
+    set_tests_properties(composed_${scenario} PROPERTIES TIMEOUT 15)
+endforeach()
+
 # Isolated actual-engine integration against a declared ideal peripheral/plant.
 # No test SDK include or macro is added to a firmware target.
 add_executable(r14-plant-scenarios plant/plant_scenarios.cpp plant/plant_model.cpp)

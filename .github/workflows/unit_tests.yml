@@ -11,6 +11,7 @@ on:
       - 'app/tools/**'
       - 'tools/check_r14_runtime_sensitivity.py'
       - 'tools/check_step_plant_sensitivity.py'
+      - 'tools/check_r14_composition_sensitivity.py'
       - 'hardware/pcb/6dof2_r13/bringup/r13bench_core.py'
       - 'hardware/pcb/6dof2_r13/bringup/test_r13bench_core.py'
       - '.github/workflows/unit_tests.yml'
@@ -24,6 +25,7 @@ on:
       - 'app/tools/**'
       - 'tools/check_r14_runtime_sensitivity.py'
       - 'tools/check_step_plant_sensitivity.py'
+      - 'tools/check_r14_composition_sensitivity.py'
       - 'hardware/pcb/6dof2_r13/bringup/r13bench_core.py'
       - 'hardware/pcb/6dof2_r13/bringup/test_r13bench_core.py'
       - '.github/workflows/unit_tests.yml'
@@ -63,6 +65,9 @@ jobs:
       - name: Verify independent step-plant detection with isolated engine mutants
         run: python tools/check_step_plant_sensitivity.py --output "${{ runner.temp }}/step-plant-negative-controls"
 
+      - name: Verify composed production safety and decoding detect defects
+        run: python tools/check_r14_composition_sensitivity.py --output "${{ runner.temp }}/r14-composition-negative-controls"
+
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -70,8 +75,10 @@ jobs:
           path: |
             controller/tests/build/runtime-*.json
             controller/tests/build/plant-*.json
+            controller/tests/build/composed-*.json*
             ${{ runner.temp }}/r14-runtime-negative-controls/*.json
             ${{ runner.temp }}/step-plant-negative-controls/*.json
+            ${{ runner.temp }}/r14-composition-negative-controls/*.json*
 
   host-contracts:
     name: Firmware Contracts and R13 Bench Host

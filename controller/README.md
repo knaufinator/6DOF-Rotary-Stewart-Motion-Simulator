@@ -280,6 +280,8 @@ See [build workflow](../.github/workflows/ci.yml), [controller tests](../.github
 
 CTest now also runs ten scenarios compiled from the unchanged production COBS transport and R14 board-monitor task, with isolated SDK/device adapters. Two deliberately faulty source copies confirm that the bus-fault and remote-command tests fail when their protections are removed. CI uploads the event traces and also runs the MCP tooling tests against the pinned SDK. Read the [runtime integration results and QEMU limitation](../docs/testing/r14-runtime/README.md) before interpreting these as whole-controller coverage.
 
+The [independent plant lane](../docs/testing/r14-step-plant/README.md) adds 29 actual-engine scenarios, and the [production safety composition](../docs/testing/r14-composition/README.md) joins COBS, board monitoring, shared decoding/admission/stop decisions and the pulse model in twenty more. Controller CTest has 60 entries including the unit executable; seven additional engine/composition mutants verify detection. Production `main.cpp` uses the same extracted safety helpers, while the R14 lock remains closed. Complete task/NVS/application execution and physical timing remain outside these host lanes.
+
 ## References
 
 - [Firmware variants and validation](../docs/FIRMWARE.md)

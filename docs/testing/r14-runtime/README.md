@@ -2,6 +2,8 @@
 
 Implemented 28 October 2026: deterministic board runtime, desktop transport and handshake integration from the [simulation plan](../../FIRMWARE_SIMULATION_PLAN.md). The recovered R13 pulse engine, SDK options and R14 motion admission are unchanged. Firmware handshake formatting/bit-setting now lives in a shared production helper; the desktop handshake has the validation fixes below.
 
+Update, 29 October: [twenty production safety composition scenarios](../r14-composition/README.md) now join this board/COBS fixture, extracted production safety decisions and the unchanged pulse engine model. That separate executable still substitutes the main ingress callback and scheduler; the desktop lane below retains its payload observer. Controller CTest now has 60 entries, including the unit executable and all three controller scenario lanes.
+
 ## Production runtime exercised on the host
 
 `controller/tests` builds `r14-runtime-scenarios` from the actual `R14Hardware.cpp` and `CobsTransport.cpp`, rather than a rewritten controller. SDK headers are substituted **only for host runtime test targets**. The tests drive encoded/fragmented console input through the production stream decoder, frame dispatcher, R14 diagnostic handler, atomic field-request queue, actual monitor task, actual I²C adapter and `BoardIo`, then decode production COBS response frames.
@@ -21,7 +23,7 @@ The monitor runs on a host thread, paused at each `vTaskDelay` rendezvous. A tes
 | Stale snapshot | Status reports stale data when virtual sample age exceeds the existing 50 ms threshold |
 | Malformed COBS input | A truncated frame is discarded and the following valid status command resynchronizes |
 
-All ten scenarios pass locally under MSVC, alongside the existing 85 C++ unit tests. CTest contains eleven entries: the unit-suite executable plus ten runtime scenarios. CI runs these on Linux and Windows and uploads JSON event traces. Each scenario uses a fresh process so production file-scope state is not reset by hidden test hooks.
+All ten scenarios pass locally under MSVC, alongside the existing 85 C++ unit tests. The initial runtime delivery contained eleven CTest entries: the unit-suite executable plus ten runtime scenarios; later plant/composition additions are linked above. CI runs these on Linux and Windows and uploads JSON event traces. Each scenario uses a fresh process so production file-scope state is not reset by hidden test hooks.
 
 The test-only SDK substitutes GPIO, I²C, console USB/VFS, synchronization and scheduling. It also supplies the response/fault callbacks normally implemented in `main.cpp`. These tests do **not** exercise the entire `process_data()` routing, `main.cpp` stop side effects, OS USB/DTR/RTS, FreeRTOS scheduling, emitted MCPWM edges or real electrical gates. Their `motion_qualified=0` response is the production diagnostic text; it is not an independent pulse measurement. Existing source-contract and admission tests continue to cover the production motion lock.
 

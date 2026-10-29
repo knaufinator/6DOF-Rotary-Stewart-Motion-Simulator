@@ -1,0 +1,37 @@
+{
+  "status": "PASS_R14_COMPOSITION_NEGATIVE_CONTROL_SENSITIVITY",
+  "productionSources": {
+    "ControllerMotionPayload.h": "96579af010a73c9d0b4a8322eec7cff3e83f63cc24a69a1392583382137ec2be",
+    "R14RuntimeSafety.h": "6023f54b7176f15b237a036de4918bba0e178b7753c7b1bc324042a5950669b3"
+  },
+  "results": [
+    {
+      "mutation": "bypass_admission",
+      "scenario": "locked_serial",
+      "detected": true,
+      "failure": "FAIL locked_serial: direct motor guard accepted locked target",
+      "mutatedSourceSha256": "9cf4b5e4f0f102aefe8e29d9fb2faf9cb0994e79c688a9a1d362b8cef93cb618"
+    },
+    {
+      "mutation": "bypass_motor_guard",
+      "scenario": "locked_serial",
+      "detected": true,
+      "failure": "FAIL locked_serial: direct motor guard accepted locked target",
+      "mutatedSourceSha256": "37974fcb1c07805536f28228005c673019b098f9798c95fa0df84f760ae3c601"
+    },
+    {
+      "mutation": "omit_engine_stop",
+      "scenario": "alarm_0",
+      "detected": true,
+      "failure": "FAIL alarm_0: fault stop left timer running",
+      "mutatedSourceSha256": "c44ae89db86ca990930a624c20ff6c943f7328ef4d335a6726e8bc3c9724b561"
+    },
+    {
+      "mutation": "omit_wire_mask",
+      "scenario": "locked_serial",
+      "detected": true,
+      "failure": "FAIL locked_serial: independent DATA18 decode vector differs",
+      "mutatedSourceSha256": "f1a9f537db678d3a8489fca7eaec31c9cdce8feb2bd2a1e6b51355fd3e76c7dd"
+    }
+  ]
+}

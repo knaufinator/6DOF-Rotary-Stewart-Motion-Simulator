@@ -27,7 +27,7 @@ def main():
          'return !blocked && write();', 'return write();',
          'locked_serial', 'direct motor guard accepted locked target'),
         ('omit_engine_stop', 'R14RuntimeSafety.h', 'ops.stop();', '(void)0;',
-         'alarm_0', 'stop/discard callback missing'),
+         'alarm_0', 'fault stop left timer running'),
         ('omit_wire_mask', 'ControllerMotionPayload.h', 'float(value & 0x3ffffu)', 'float(value)',
          'locked_serial', 'independent DATA18 decode vector differs'),
     ]

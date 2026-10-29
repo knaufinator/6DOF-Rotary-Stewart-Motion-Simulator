@@ -46,7 +46,7 @@ Representative evidence: [locked serial summary](2026-10-29/locked-serial.json),
 
 ## Detection and reproduction
 
-Four isolated source-copy defects must fail their specific scenario: bypass admission, bypass the motor guard, omit backend stop, or remove the wire mask. The first two expose an actual guarded target write to the engine; the third exposes the missing stop call and the fourth breaks an independent byte vector. A crash or unrelated failure is insufficient. [Sensitivity receipt](2026-10-29/sensitivity.json). No production source is mutated by the helper.
+Four isolated source-copy defects must fail their specific scenario: bypass admission, bypass the motor guard, omit backend stop, or remove the wire mask. The first two expose an actual guarded target write to the engine; the third leaves the actual engine and modeled timer running, and the fourth breaks an independent byte vector. A crash or unrelated failure is insufficient. [Sensitivity receipt](2026-10-29/sensitivity.json). No production source is mutated by the helper.
 
 ```sh
 git submodule update --init --recursive

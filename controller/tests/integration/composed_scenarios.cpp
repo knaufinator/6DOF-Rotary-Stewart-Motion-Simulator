@@ -178,6 +178,7 @@ void containment(const std::string& name) {
         runtime_fixture::tick();status("iox=1 adc=1 fresh=1");
         require(io_callbacks==(bus?1:0)&&alarm_callbacks==(axis>=0?1:0),"recovery repeated fault callback");
     }
+    require(!engine.isRunning()&&!plant::timer_running(),"fault stop left timer running");
     require(stop_calls>0&&discard_calls==stop_calls,"stop/discard callback missing");
     require(!engine.stopTimingFault(),"fault stop did not drain");
     require(stop_order.size()==size_t(stop_calls*4),"incomplete fault stop sequence");

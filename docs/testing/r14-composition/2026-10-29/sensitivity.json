@@ -23,7 +23,7 @@
       "mutation": "omit_engine_stop",
       "scenario": "alarm_0",
       "detected": true,
-      "failure": "FAIL alarm_0: stop/discard callback missing",
+      "failure": "FAIL alarm_0: fault stop left timer running",
       "mutatedSourceSha256": "c44ae89db86ca990930a624c20ff6c943f7328ef4d335a6726e8bc3c9724b561"
     },
     {

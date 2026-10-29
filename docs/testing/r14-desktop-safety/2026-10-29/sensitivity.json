@@ -1,0 +1,31 @@
+{
+  "status": "PASS_DESKTOP_SAFETY_NEGATIVE_CONTROL_SENSITIVITY",
+  "productionSources": {
+    "app/src/udp_transport.cpp": "757c66fa8519c4241dccfb5f5ad36281ad711b139ec059542846203b378e76d9",
+    "controller/main/R14Hardware.cpp": "504cf77c86fa2986a31109a9de388545b81ae9d34715f7b7db81caf56036c444",
+    "app/src/hil_handshake.cpp": "17cd765c6af4e9df36e7197a6c284966f362cbbb9cf8954b5f5ab7726b157803"
+  },
+  "results": [
+    {
+      "mutation": "swap_wire_axes",
+      "scenario": "direct_locked",
+      "detected": true,
+      "failure": "FAIL direct_locked: desktop/controller fixed motion vector differs",
+      "mutatedSourceSha256": "2b6e0d8aab7a16fb501cf51376d0bbf96a850bd6da750552c8e03a634fb3ac48"
+    },
+    {
+      "mutation": "drop_alarm_dispatch",
+      "scenario": "direct_alarm",
+      "detected": true,
+      "failure": "FAIL direct_alarm: board alarm did not reach shared stop",
+      "mutatedSourceSha256": "6807b20a3c71cca4e3a5f51df53e2a84e9b9f1f7c8228a70a6d3de520883ff4d"
+    },
+    {
+      "mutation": "retain_app_readiness",
+      "scenario": "direct_reconnect",
+      "detected": true,
+      "failure": "FAIL direct_reconnect: desktop disconnect retained readiness or queued command",
+      "mutatedSourceSha256": "90f8cd46274e167884c82e91ef02a832c91ce02ec8660a4ac911e99f10c457b4"
+    }
+  ]
+}

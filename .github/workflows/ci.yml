@@ -10,6 +10,7 @@ on:
       - 'app/**'
       - 'tools/check_desktop_runtime_sensitivity.py'
       - 'tools/check_handshake_sensitivity.py'
+      - 'tools/check_desktop_safety_sensitivity.py'
       - 'controller/stewart-core' # shared submodule gitlink — a bump must trigger firmware + SIL
       - '.github/workflows/ci.yml'
   pull_request:
@@ -19,6 +20,7 @@ on:
       - 'app/**'
       - 'tools/check_desktop_runtime_sensitivity.py'
       - 'tools/check_handshake_sensitivity.py'
+      - 'tools/check_desktop_safety_sensitivity.py'
       - 'controller/stewart-core' # shared submodule gitlink — a bump must trigger firmware + SIL
       - '.github/workflows/ci.yml'
 
@@ -193,6 +195,9 @@ jobs:
       - name: Verify handshake validation with isolated protocol mutants
         run: python tools/check_handshake_sensitivity.py --app-build app/build --output "${{ runner.temp }}/handshake-negative-controls"
 
+      - name: Verify desktop-to-safety integration detects production defects
+        run: python tools/check_desktop_safety_sensitivity.py --app-build app/build --output "${{ runner.temp }}/desktop-safety-negative-controls"
+
       - name: Upload desktop runtime traces
         uses: actions/upload-artifact@v4
         if: always()
@@ -201,8 +206,10 @@ jobs:
           path: |
             app/build/runtime-desktop-*.json
             app/build/runtime-handshake-*.json
+            app/build/runtime-safety-*.json*
             ${{ runner.temp }}/desktop-runtime-negative-controls/*.json
             ${{ runner.temp }}/handshake-negative-controls/*.json
+            ${{ runner.temp }}/desktop-safety-negative-controls/*.json*
 
       - name: Upload desktop app artifact
         uses: actions/upload-artifact@v4

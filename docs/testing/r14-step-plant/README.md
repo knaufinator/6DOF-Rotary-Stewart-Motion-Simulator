@@ -36,7 +36,7 @@ Unsupported period, latch mode, GPIO and register bits fail the model. Allocatio
 
 ## Coverage and results
 
-All 29 cases pass locally under MSVC. This delivery expanded controller CTest to 40 entries: the existing 85-case unit executable, ten board-runtime scenarios and 29 plant scenarios; the later composition expands that to 60. Linux/Windows CI runs them and retains all JSON traces.
+All 29 cases pass locally under MSVC. This delivery expanded controller CTest to 40 entries: the existing 85-case unit executable, ten board-runtime scenarios and 29 plant scenarios; the later composition expands that to 60. Linux/Windows CI runs all cases and retains the JSON traces.
 
 | Group | Observable assertions |
 | --- | --- |
@@ -60,7 +60,7 @@ Representative axis-0 values from the [complete local receipt](2026-10-28/result
 | Reversed drive wiring | 20 | 20 | -20 | Seek pulse limit |
 | Locked staging component | 0 | 0 | 0 | Timer never started |
 
-Three deliberate defects are compiled in isolated engine copies: skip DIR guard, ignore quiescence permission, or disable latch compensation. Their scenarios must fail with the specific independent-count/drain assertion; [sensitivity receipt](2026-10-28/sensitivity.json). Production source remains read-only. Representative full traces: [vectors](2026-10-28/vectors.json), [stall](2026-10-28/stall.json), [interrupt gap](2026-10-28/irq-gap.json). The local receipt records source hashes and all case summaries without duplicating every raw trace.
+Three deliberate defects are compiled in isolated engine copies: skip DIR guard, ignore quiescence permission, or disable latch compensation. The corresponding scenarios must fail with the specific independent-count/drain assertion; [sensitivity receipt](2026-10-28/sensitivity.json). Production source remains read-only. Representative full traces: [vectors](2026-10-28/vectors.json), [stall](2026-10-28/stall.json), [interrupt gap](2026-10-28/irq-gap.json). The local receipt records source hashes and all case summaries without duplicating every raw trace.
 
 ## Reproduce and remaining boundary
 

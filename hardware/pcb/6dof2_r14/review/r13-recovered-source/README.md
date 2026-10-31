@@ -1,7 +1,7 @@
 # Exact recovered R13 source delta
 
 These ten files are immutable evidence from laptop capture
-`DESKTOP-9LF81EF-20261025T2000`; they are not a second build tree. Apply them to the
+`DESKTOP-9LF81EF-20261025T2000`, not a second build tree. Apply these files to the
 Git base recorded in [MANIFEST.json](MANIFEST.json), with the recorded shared-core
 revision, to recover the tested source delta. Active `controller/` sources also
 contain later R14 changes and are not byte-identical to this evidence.

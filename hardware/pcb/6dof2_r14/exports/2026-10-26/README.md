@@ -2,7 +2,7 @@
 
 # R14 ordered manufacturing package — 26 October 2026
 
-**Ordered, as confirmed by the owner. Hardware testing is pending.** The selected
+**Ordered. Hardware testing is pending.** The selected
 Q11 is DMN6075S-7 / C155242; Y1 remains C9006. This package is the ordered design
 baseline. Future changes belong in a new revision/export directory.
 
@@ -41,8 +41,9 @@ The [section report](../../review/2026-10-26-10V/README.md) records actual coppe
 drill, mask/paste, silk and STEP checks. Factory allocation, placement/rotation,
 11 non-SMT/hybrid connector processes, J11 shell slots/paste, J12 centroid and the
 inherited stencil/via questions were not independently captured through the review
-API. The order is recorded from the owner's confirmation, not a newly invented
-factory acceptance witness. No manufactured R14 qualification is claimed.
+API. The [order record](../../ORDER_RECORD.json) documents order confirmation;
+factory acceptance has not been independently verified. No manufactured R14
+qualification is claimed.
 
 Use [BRINGUP.md](../../BRINGUP.md) when boards arrive. The supply/cable and dynamic
 behavior assumptions remain acceptance items even though the PCB is ordered.

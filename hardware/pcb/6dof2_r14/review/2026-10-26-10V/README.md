@@ -6,7 +6,7 @@
 The corrected EasyEDA master has **324 components, 1,214 logical pins, 2,667 copper
 objects and 360 labels**. Native DRC and schematic/PCB comparison both return `[]`.
 Use only the matching [2026-10-26 exports](../../exports/2026-10-26/README.md).
-**The owner confirmed the order on 26 October 2026. Hardware testing is pending.**
+**Order confirmed on 26 October 2026. Hardware testing is pending.**
 The [order record](../../ORDER_RECORD.json) binds this revision. Final factory
 allocation/placement/process evidence was not independently captured through the
 review API; no manufactured R14 behavior is claimed by this report.
@@ -17,7 +17,7 @@ Current sourcing update: Q11 is **C155242 / DMN6075S-7**. The
 [stock-correction addendum](Q11_STOCK_REFRESH.md) binds the unchanged geometry
 review to the refreshed exports. The before-stock project/CAM hashes in older
 geometry receipts remain evidence; the exact metadata/CAM parity proof connects
-them to the new package. Y1 remains unchanged as instructed.
+the earlier geometry receipts to the new package. Y1 remains unchanged.
 
 ## Scope and evidence
 
@@ -57,7 +57,7 @@ include support parts assigned by net/proximity, not just the named ICs.
 | I²C I/O / initialization — 4 | MCP23017 at 0x20, INA226 at 0x40; SDA41/SCL42. New adapter normalizes warm BANK state, writes inactive OLAT before directions, verifies outputs/readback. GPA7/GPB7 are output-only. | Actual stuck/missing bus, warm MCU reset and stale readback fault injection. |
 | Protected Hall field supply — 15 | U17 TPS26621 auto-retry and 26.7 kΩ current setting retained. U18 now TLV6700, R80/R81 27 kΩ/1 kΩ precision, R82 retained, R83 pullup, D9 removed. Direct field-good reaches U41. | Cable/12 V current-limit/startup/fault/temperature envelope below; automatic retry cannot rearm motion. |
 | Hall conditioning — 17 | J12 plain field 8P8C: 1 GND, 2 FIELD_12V, 3–8 Hall0–5. Six NC opto/filter channels reach GPA0–5. New adapter decodes six independent states. | Open at boot is not home; shorted/stuck signal, unplugged cable, magnet position and bounded seek require tests. |
-| Hall indicators — 46 | AHCT14 and six red/green pairs, 1.5 kΩ LED resistors and reset-dependent blanking retained. They do not consume Hall I/O ports. | AHCT needs its valid 5 V range; color under rail collapse is not a home/safety verdict. |
+| Hall indicators — 46 | AHCT14 and six red/green pairs, 1.5 kΩ LED resistors and reset-dependent blanking retained without consuming Hall I/O ports. | AHCT needs its valid 5 V range; color under rail collapse is not a home/safety verdict. |
 | Six stored torque enables — 50 | Six independent latch Q/sink paths, individual alarm clear, global reset/release/AUX BAD and aggregate ALL_Q retained. U41 consumes the aggregate without forcing healthy torque requests off. | Logic Q is not real torque. Verify drive DI/SRV-ON polarity/parameters, reset/recovery and independent machine emergency stop. |
 | Auxiliary boost / faults — 40 | TPS61170 nominal 16.4686 V, TLV6700 UV, TPS3700 OV and RTN-referenced eFuse/window logic match the prior reference review. C82 lands explicitly preserved; optional C78 remains absent. | UV minimum falling 12.69874 V versus max input 12.6 V leaves only 98.7 mV static separation. Startup, RTN, overvoltage, backfeed and transient behavior remain tests. |
 | 5 V ADC / readback — 7 | INA226 VBUS/filter measures VCC5; both shunt pins are grounded. New adapter checks fresh bus conversions and DRIVE_ENABLE readback. | Cannot report load current or infer actual motor torque from this wiring. |
@@ -135,7 +135,7 @@ The via-only drill file duplicates 891 PTH operations; those are not additional
 unique holes. No tenting, resin fill or capping is inferred from nullable native
 fields. Exported drill-to-aperture geometry and factory registration/stencil
 approval are distinct. Eleven required non-SMT/hybrid connector references remain
-in BOM/CPL. Their assembly process, J11 shell slots/paste, J12 centroid, connector
+in BOM/CPL. The connector assembly process, J11 shell slots/paste, J12 centroid, connector
 hoods and mated cable/enclosure fit need the final factory/physical review.
 
 ![Input-stage actual exported silkscreen](../../images/r14-10v-power-silk.png)
@@ -184,7 +184,7 @@ results are retained in `README_LINK_AUDIT.json`. Git whitespace checks passed.
 
 ## Exact remaining release and qualification gates
 
-The CAD correction is finished and the owner subsequently confirmed the order.
+The CAD correction is complete, and the order was subsequently confirmed.
 The static review did not independently capture the final live JLC allocation,
 every placement/polarity/rotation row or connector/stencil/via process acceptance.
 These remain evidence limitations, not claims that the order is still waiting.
@@ -194,8 +194,7 @@ After assembly, measure the cable resistance and remote supply, startup and faul
 envelopes, physical pulse counts/last edge and DIR timing, alarm/torque/rearm
 behavior, six-axis operation and bounded homing. These are prototype acceptance
 activities, not evidence already obtained. No flash or motor command was performed
-during this correction. Git publication records the ordered design and pending tests;
-the order itself was reported by the owner.
+during this correction. The repository records the confirmed order and pending hardware tests.
 
 ## Primary reference basis
 

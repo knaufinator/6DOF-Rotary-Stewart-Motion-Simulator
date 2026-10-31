@@ -1,6 +1,6 @@
 # R14 design review
 
-R14 was ordered on 26 October 2026, as confirmed by the owner. Static review is
+R14 was ordered on 26 October 2026. Static review is
 complete; manufactured-board qualification is pending. Start with the
 [review method](../REVIEW_METHOD.md), [design decisions](../DECISIONS.md) and
 [current section report](2026-10-26-10V/README.md).

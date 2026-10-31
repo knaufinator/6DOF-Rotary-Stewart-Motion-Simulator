@@ -2,7 +2,7 @@
 
 [Repository](../README.md) ? [Controller](../controller/README.md) ? [App](../app/README.md) ? [Documentation](../docs/README.md)
 
-**R14 was ordered on 26 October 2026, confirmed by the owner. Hardware testing is next.** R13 was manufactured and demonstrated on one bench axis; that evidence does not qualify the new R14 circuits or a loaded platform.
+**R14 was ordered on 26 October 2026. Hardware testing is next.** R13 was manufactured and demonstrated on one bench axis; that evidence does not qualify the new R14 circuits or a loaded platform.
 
 ![Ordered R14 top copper and silkscreen](pcb/6dof2_r14/images/r14-pcb-top.png)
 

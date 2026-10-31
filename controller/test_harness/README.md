@@ -130,7 +130,7 @@ Channels 4–5 can also emit activity notifications while streaming; for example
   a zero period and therefore reports zero rate; startup/history changes are not
   calibrated instantaneous-frequency measurements.
 - **Summary/events:** `SUMMARY` and the activity task read the separate shared
-  statistics, not the PCNT accumulators. Do not use them to validate channels 0–3.
+  statistics, not the PCNT accumulators. Do not use those summaries/events to validate channels 0–3.
   Activity events on channels 4–5 use a one-second idle threshold. There is no
   independent controller-idle signal or automatic ghost-pulse verdict.
 - **Acceptance:** this analyzer is a development aid, not a calibrated reference.
@@ -143,7 +143,7 @@ Channels 4–5 can also emit activity notifications while streaming; for example
 `test_pins.py` can send a chosen ASCII command to an explicitly selected analyzer
 port (requires `pyserial` in your Python environment). Review it before use.
 The other `test_*.py` files and `serial_monitor.py` include historical controller
-commands, default COM ports and/or motion-generating diagnostics; they are not
-an offline test suite or an approved r13 commissioning workflow. In particular,
+commands, default COM ports and/or motion-generating diagnostics. These helpers
+are not an offline test suite or an approved r13 commissioning workflow. In particular,
 `serial_monitor.py` sends `RATETEST` despite its name. Do not run those helpers on
-connected drives or assume their protocol matches current controller firmware.
+connected drives or assume the helper protocol matches current controller firmware.

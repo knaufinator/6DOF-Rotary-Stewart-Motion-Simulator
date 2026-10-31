@@ -30,8 +30,8 @@ See **`PROTOCOL.md`** for the decided wire format + JSON schema + state machine.
 
 ## Run locally (no hardware)
 
-With `HIL_SERIAL_DEV` unset the bridge uses a `MockSerial` sink — safe to run
-with no ESP attached (the physical mini may be in use elsewhere).
+With `HIL_SERIAL_DEV` unset, the bridge uses a `MockSerial` sink and runs
+without an attached ESP32.
 
 ```bash
 python3 -m venv .venv
@@ -69,6 +69,5 @@ Ports (defaults): UDP motion `8767`, WS control `8788`, TCP control `8789`.
 `install.sh` starts in **mock serial mode** if `SERIAL_DEV` is unset — set it in
 `/etc/systemd/system/hil_bridge.service` and restart once the mini is attached.
 
-> This installer is provided for the Voron; **do not run it on this Windows dev
-> box.** Per the task, the physical mini is in use by another task — the service
-> and self-test run entirely against a mock serial.
+> Run the installer on the Linux Voron host, **not on Windows**. Use mock serial
+> mode for hardware-free service checks and self-tests.

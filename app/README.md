@@ -42,7 +42,7 @@ Actual app screenshot using synthetic SIL data, not hardware telemetry. See the 
 - **Toolbar** — Plugin/capture source selector, START/STOP/E-STOP, record/playback controls and entity counts. Add entities through the **Entity** menu.
 - **Input Strip** — Live per-axis channel mapping (Assetto Corsa shared memory, SimTools UDP, test signals) with configurable ranges and invert toggles
 - **SIL Entity** — Software-in-the-Loop: interactive 3D Stewart platform visualization with orbit camera and servo angle readout
-- **HIL Entity** — connection settings and telemetry displays for hardware work. Documentation examples are disconnected/offline; they do not validate r13 firmware or the PCB.
+- **HIL Entity** — connection settings and telemetry displays for hardware work. Documentation examples are disconnected/offline and do not validate r13 firmware or the PCB.
 - **Dynamics Panel** — Per-entity signal processing pipeline, MCA washout filters, per-axis low-pass and notch controls. Edits are staged until **Apply**; **Revert** discards staged edits.
 - **Data Streams** — **Recording**, **Snapshot**, **Time-Series**, and **Spectrogram** tabs
 - **Entity tabs** — **Overview**, **Dynamics**, **Settings**, **Platform**, **Test Harness** (HIL only), and **I/O**
@@ -230,7 +230,7 @@ Motion data on `CH_DATA18`: `6 × uint24 LE`, low 18 bits used. Baud `921600` (U
 ### UDP over Ethernet — W5500 SPI (opt-in)
 
 Current code accepts 12 raw bytes (`6 × uint16_t LE`) on UDP port 4210, but forwards
-them to an 18-byte decoder, so targets do not update. Do not implement a new sender
+the payload to an 18-byte decoder, so targets do not update. Do not implement a new sender
 from that old format: freeze a common versioned host/controller protocol first.
 W5500 MAC initialization must also be fixed before DHCP/link testing.
 

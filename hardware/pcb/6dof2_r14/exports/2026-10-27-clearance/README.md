@@ -14,6 +14,6 @@
 
 Native BOM/CPL TSV files retain EasyEDA's original export bytes. The JLC CSVs normalize columns/units and group by supplier code without changing component identities. PCB/schematic `.net` files and native DRC/comparison JSON are review evidence. The EasyEDA archive contains the full native documents, so duplicate standalone source dumps are omitted from this curated package. Filenames retain the R14 family prefix; the manifest and board marking identify R14C1.
 
-The factory must accept and review this complete set before proceeding. If original boards are already fabricated, changing the CPL cannot relocate their pads; new fabrication is required. No factory upload, hold or message was performed here. The [original ordered package](../2026-10-26/README.md) remains frozen and is superseded for assembly.
+The factory must accept and review this complete set before proceeding. If original boards are already fabricated, changing the CPL cannot relocate the fabricated pads; new fabrication is required. No factory upload, hold or message was performed here. The [original ordered package](../2026-10-26/README.md) remains frozen and is superseded for assembly.
 
 Readable [four-layer PCB PDF](../../drawings/R14C1-PCB.pdf), [top SVG](../../drawings/R14C1-PCB-top.svg) and [schematic PDF](../../drawings/R14-schematic.pdf) accompany the native exports. Internal board spacing passes the documented limits. External connector/enclosure fit, process exceptions and physical R14 qualification remain as described in the report.

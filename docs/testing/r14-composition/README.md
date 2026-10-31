@@ -4,7 +4,7 @@ Implemented 29 October 2026 on baseline `e422e3c` (PR #36), shared core `118e6b0
 
 ## What now runs together
 
-Later on 29 October, [ten desktop-to-safety scenarios](../r14-desktop-safety/README.md) connected actual Windows transport and App handshake handling to this same composition through a test-only facade. The twenty cases documented here retain their original scope and evidence; the complete App TX worker/main task graph remains excluded.
+Later on 29 October, [ten desktop-to-safety scenarios](../r14-desktop-safety/README.md) connected actual Windows transport and App handshake handling to this same composition through a test-only facade. The twenty cases documented here retain the original scope and evidence; the complete App TX worker/main task graph remains excluded.
 
 The new executable compiles actual `CobsTransport.cpp`, `R14Hardware.cpp`, `BoardIo`, `MotionAdmission<false>`, the drive alarm latch and `SharedMcpwmStepEngine.h`. It reuses the earlier deterministic board and independent pin/plant models. Production `main.cpp` now calls two small shared headers: [ControllerMotionPayload.h](../../../controller/include/ControllerMotionPayload.h) preserves DATA18 decoding and the per-motor write guard; [R14RuntimeSafety.h](../../../controller/include/R14RuntimeSafety.h) preserves the admission decision and alarm/reconnect stop sequence. GPIO47/48, pause, bench-stop and StepDriver operations remain bound in `main.cpp`. Source contracts check those bindings and the locked build/boot policy.
 
@@ -24,7 +24,7 @@ flowchart LR
 
 This is **production-seam composition**, not the complete `main.cpp` task graph or a CPU emulator. The ingress callback/input selection is a declared test adapter; it is not the persisted source-selection/NVS path. The normal production staging gate blocks before IK. A fallback shared-core mapping/IK path in the adapter exists to expose a bypass, but these locked cases do not qualify that full motion pipeline. The desktop application/handshake still runs in its separate loopback lane.
 
-The board monitor advances its existing tick clock; the pulse model advances its own cycle clock at explicit scenario boundaries. Their event ordering is controlled, but they do not share a target scheduler. **No stop latency, dual-core race, GPIO propagation or physical gate timing is measured.** Board input and engine SDK headers remain private to their test targets; the board GPIO configuration type/function are renamed only within that host library to prevent collisions with the pulse model.
+The board monitor advances its existing tick clock; the pulse model advances its own cycle clock at explicit scenario boundaries. Event ordering is controlled, but the models do not share a target scheduler. **No stop latency, dual-core race, GPIO propagation or physical gate timing is measured.** Board input and engine SDK headers remain private to the corresponding test targets; the board GPIO configuration type/function are renamed only within that host library to prevent collisions with the pulse model.
 
 ## Scenarios and observations
 
@@ -48,7 +48,7 @@ Representative evidence: [locked serial summary](2026-10-29/locked-serial.json),
 
 ## Detection and reproduction
 
-Four isolated source-copy defects must fail their specific scenario: bypass admission, bypass the motor guard, omit backend stop, or remove the wire mask. The first two expose an actual guarded target write to the engine; the third leaves the actual engine and modeled timer running, and the fourth breaks an independent byte vector. A crash or unrelated failure is insufficient. [Sensitivity receipt](2026-10-29/sensitivity.json). No production source is mutated by the helper.
+Four isolated source-copy defects must fail the corresponding scenario: bypass admission, bypass the motor guard, omit backend stop, or remove the wire mask. The first two expose an actual guarded target write to the engine; the third leaves the actual engine and modeled timer running, and the fourth breaks an independent byte vector. A crash or unrelated failure is insufficient. [Sensitivity receipt](2026-10-29/sensitivity.json). No production source is mutated by the helper.
 
 ```sh
 git submodule update --init --recursive

@@ -59,7 +59,7 @@ controller/mini/
 └── CMakeLists.txt            # project-level, wires EXTRA_COMPONENT_DIRS → ../stewart-core
 ```
 
-IK / AxisScaling / MotionCueing are **not** in this tree — they come from `../stewart-core`.
+IK / AxisScaling / MotionCueing come from `../stewart-core`, **not** this tree.
 The only mini-specific code is the LEDC servo backend + BLE transport + pin map.
 
 ## Hardware
@@ -139,7 +139,7 @@ Runtime serial control without reflashing: see the `6dof-mini-serial` skill.
 The intended architecture is that **nothing about a device's capabilities is hardcoded per
 connection** — the device advertises what it is (variant, PCB version, actuator type, servo mode,
 axis count, `caps=raw`, partition/OTA presence) via the **FINGERPRINT handshake**, and the app /
-Linux bridge / Android client **derive** their UI/config/param-set from that report. Build-time
+Linux bridge / Android client UI/config/param-set values are **derived** from that report. Build-time
 feature flags determine the flashed feature set → the firmware reports it at runtime → the config
 follows. FINGERPRINT already reports `platform=mini-6dof` and `caps=raw`; extending it to the full
 capability set is the follow-up (the handshake is **not** being re-architected now).

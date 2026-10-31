@@ -21,10 +21,10 @@ scripts are eligible for tracking; obsolete does not mean disposable. The root
 ignore rules no longer hide this entire directory. These files remain history,
 not current manufacturing inputs.
 
-Only `easyeda-mcp/` and `pro-api-sdk/` remain explicitly excluded here because
-they are separate embedded Git checkouts with their own local modifications.
-Their source changes are not backed up by a parent-repository commit. Preserve
-them independently before moving or cleaning those checkouts; do not delete
-or accidentally add them as unconfigured Git submodules. Their `node_modules/`,
+Only `easyeda-mcp/` and `pro-api-sdk/` remain explicitly excluded here. These
+separate embedded Git checkouts contain local modifications that are not backed
+up by a parent-repository commit. Preserve those changes independently before
+moving or cleaning the checkouts; do not delete the directories or accidentally
+add unconfigured Git submodules. The `node_modules/`,
 `dist/` and packaged `build/dist/` outputs are generated, but
 `build/packaged.ts` is source, not a disposable build artifact.

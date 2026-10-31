@@ -87,8 +87,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 2450,
-      "sha256": "175fe2b6193665565dccd88715358ca3d82ff65524aabe797f64b169df269c7e"
+      "bytes": 2459,
+      "sha256": "d402ab7d3b4ade8f856a558719338a052b64b3788baad5ea3f2cd794ffea5b7b"
     }
   ],
   "reviewDirectory": "../../review/2026-10-27-clearance",
@@ -171,7 +171,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "5e40a026d1fb2826ccec832977b37975415830a62ff1e428cf574daa5c7e1063"
+      "sha256": "fc0ccc7a28b8ddc3b8a551fae4d7bca25dc5c44877a44649c0888ead50e2a1e7"
     },
     {
       "path": "README_LINK_AUDIT.json",

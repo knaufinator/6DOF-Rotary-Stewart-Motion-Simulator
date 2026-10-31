@@ -7,7 +7,7 @@
 
 
 **2026-09-23: ROUTED; NATIVE DRC EMPTY; UNTESTED PCB. Nothing ordered or paid for.**
-The owner intends to order fully assembled prototypes for testing shortly.
+Fully assembled prototypes are planned for testing.
 **DO NOT ORDER** until the [exact release status](r13-rc4-2026-09-23/README.md)
 and actual JLC processed-allocation/full-assembly gates are satisfied. Local file
 verification is not a working-controller or factory functional-test certificate.
@@ -39,7 +39,7 @@ The earlier archive-default omission was investigated with a separate imported c
 the current PCB's four-layer stack/rules restore with empty native DRC. Keep the
 included raw source and final archive/import evidence. Never test an import over the
 working production project. The previous routed/shutdown checkpoints and RC1/RC2/RC3/r12
-files are history; do not use them to fill gaps or mix revisions.
+files are history; do not use those files to fill gaps or mix revisions.
 
 The final gray-strip/oversized-background artifact was a stale EasyEDA `BOARD.path`
 display cache. Regenerating board shape from the existing closed outline and
@@ -51,7 +51,7 @@ contains fresh PCB exports and the unchanged, hash-rebound SCH189 review PDF.
 Independent audits prove exact routing persistence, all non-GND copper connected,
 and all 123 GND pads joined to the actual single native ground plane. The repaired
 USB pair's reference corridor passes. Fourteen legacy USB trace pieces approach
-their own or the other USB leg's via antipads; no unrelated voids or new reference
+the same or opposite USB leg's via antipads; no unrelated voids or new reference
 loss were found. This does not establish controlled impedance or measured USB
 signal integrity. Native DRC is not electrical or firmware validation.
 
@@ -77,5 +77,5 @@ See [the board overview](../6DOF2_BOARD.md) for the current revision and interfa
 - [How to use](HOW_TO_USE.md): USB-alone programming, power/inhibit contract,
   disconnected-drive bench gates and the firmware work required before motion.
 
-Both guides remain prototype instructions. Their presence, a clean DRC result or a
-complete transfer package does not mean an order or functional test was completed.
+Both guides remain prototype instructions. Documentation, a clean DRC result or a
+complete transfer package does not establish a completed order or functional test.

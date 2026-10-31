@@ -50,7 +50,7 @@ signal captures do **not** validate the current PCB/firmware combination.
 [Editable EasyEDA project](hardware/pcb/6dof2_r14/exports/2026-10-27-clearance/R14-project.epro2) ·
 [Manufacturing files](hardware/pcb/6dof2_r14/exports/2026-10-27-clearance/README.md)
 
-The owner confirmed the R14 order on 26 October 2026. Read the
+The R14 order was confirmed on 26 October 2026. Read the
 [design decisions](hardware/pcb/6dof2_r14/DECISIONS.md),
 [review methodology](hardware/pcb/6dof2_r14/REVIEW_METHOD.md) and
 [hardware-test plan](hardware/pcb/6dof2_r14/BRINGUP.md). Testing the manufactured
@@ -183,8 +183,8 @@ hardware acceptance tests.
    [app guide](docs/APP_GUIDE.md). For an explicitly hardware-disabled session,
    use the [documentation-mode workflow](docs/APP_AUTOMATION.md).
 2. **Choose the right controller:** read the [firmware variant map](docs/FIRMWARE.md)
-   before working with the full-size, Mini or analyzer firmware. Their outputs
-   and hardware requirements differ.
+   before working with the full-size, Mini or analyzer firmware. Output formats
+   and hardware requirements differ between variants.
 3. **Review the PCB:** use the [R14 overview](hardware/pcb/6dof2_r14/README.md),
    [review evidence](hardware/pcb/6dof2_r14/review/README.md),
    and [bench qualification plan](hardware/pcb/6dof2_r14/BRINGUP.md).

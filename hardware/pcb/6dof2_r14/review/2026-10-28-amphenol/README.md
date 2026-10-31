@@ -6,7 +6,7 @@
 
 ## Measurements
 
-The owner supplied [L77SDB25SOL2.stp](L77SDB25SOL2-user-supplied.stp). OCCT 8.0.1 reads it as **29 valid solids**, including the socket contacts, tails, insulator and shell. Its internal assembly name is `101-2524820010-A1_ASM`, dated 18 January 2019. The filename alone does not authenticate its origin or establish dimensional equivalence to the purchased part.
+The reviewed STEP model is [L77SDB25SOL2.stp](L77SDB25SOL2-user-supplied.stp). OCCT 8.0.1 reads it as **29 valid solids**, including the socket contacts, tails, insulator and shell. Its internal assembly name is `101-2524820010-A1_ASM`, dated 18 January 2019. The filename alone does not authenticate its origin or establish dimensional equivalence to the purchased part.
 
 | Check | Result |
 | --- | --- |
@@ -19,7 +19,7 @@ The owner supplied [L77SDB25SOL2.stp](L77SDB25SOL2-user-supplied.stp). OCCT 8.0.
 | Body height | **Unresolved:** model is **11.65 mm** above its rear seating surface; supplied 2007 drawing gives **12.30 mm** |
 | Tail geometry | Model projects **4.60 mm** below that surface, drawing 4.40 mm; diameter 0.60 mm versus drawing 0.62 mm |
 
-The candidate drawing's maximum XY dimensions, 53.24 × 12.75 mm using its stated ±0.20 mm tolerance, fit inside the previously reviewed 53.34 × 12.88 mm connector envelope. The [independent baseline body/access review](../2026-10-27-clearance/README.md) remains a conservative XY screen at these unchanged anchors. Exact STEP distances here concern nominal geometry; they are not maximum-tolerance solid distances.
+The candidate drawing's maximum XY dimensions, 53.24 × 12.75 mm using its stated ±0.20 mm tolerance, fit inside the previously reviewed 53.34 × 12.88 mm connector envelope. The [independent baseline body/access review](../2026-10-27-clearance/README.md) remains a conservative XY screen at these unchanged anchors. Exact STEP distances concern nominal geometry, not maximum-tolerance solid distances.
 
 | Candidate | Closest retained component | Exact nominal gap |
 | --- | --- | --- |
@@ -38,7 +38,7 @@ A +90° rotation aligns the supplied model's contact grid with the native number
 
 For the six candidates versus the 318 retained components and each other, optimal analytic bounding boxes supply a distance lower bound. All pairs with a bound of 10 mm or less receive exact OCCT surface-distance calculations. Pairs beyond that band cannot collide. Intersection volume would be calculated for a zero-distance pair; none occurred. Rendered triangles illustrate the same solids and do not determine the measurements. Unchanged-to-unchanged checks remain in the baseline review.
 
-The OCCT audit, inspection and rendering scripts remain in the local `2026-10-28-connector-substitutes` research folder. They use local paths and are not presented as a portable repository command. This curated folder retains the model, reference drawing, numeric receipt and visual witness.
+The OCCT audit, inspection and rendering scripts remain in the local `2026-10-28-connector-substitutes` research folder. These scripts use local paths and are not presented as a portable repository command. This curated folder retains the model, reference drawing, numeric receipt and visual witness.
 
 ## Remaining qualification
 

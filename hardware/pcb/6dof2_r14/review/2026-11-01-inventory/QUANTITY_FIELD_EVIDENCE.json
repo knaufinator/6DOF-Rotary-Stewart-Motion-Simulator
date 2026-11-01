@@ -1,0 +1,10 @@
+{
+  "sourceUrl": "https://assets.jlcpcb.com/web-resources/component-platform-static/CanaryLane/latest/_next/static/chunks/app/%5Blocale%5D/partdetail/%5B...urlSuffix%5D/page-5d49ca895ef509da.js",
+  "sourceSha256": "776243a15b5fdf3cefb44b0cfca77dd2fc087e8c8850399715b73a51558d9461",
+  "capturedDateUtc": "2026-11-01",
+  "purpose": "Official public product frontend field mapping; no account-private data. Excerpts only, no executable source retained.",
+  "excerpts": [
+    ",allowPostFlag:C,componentAlternativesCode:k,replaceUrlSuffix:L,shopShowForeignPriceFlag:S,minPurchaseNum:E,preMinPurchaseNum:M,encapsulationNumber:_,canPresaleNumber:P,overseasStockCount:I,fullReelPrice:A,initialPrice:B,priceList:R,prices:F,buyPrices:T}=e,z=_||1,D=I||0,U=P||0,O=\"0\"!==w,q=!O&&!!k,J=!O&&!k&&!!C,W=!1!==S,V=D>0,H=(0,r.useCallback)(()=>{if(J)return 1;let e=E||1;return U<=0||U<e?e>(M||0)?e:M||1:e},[J,U,E,M]),[Z,Q]=(0,r.useState)(H),Y=(0,r.useMemo)(()=>Z>U||U<=0||U<E?Math.max(E||0,M||0):E||1,[Z,U,E,M]),[X,G]=(0,r.useState)(null),$=(0,r.useMemo)(()=>u((null==R?void 0:R.length)?R:(null==F?void 0:F.length)?F:[]),[R,F]),K=(0,r.useMemo)",
+    "showPrice:W,needQuote:!W,isInStock:V,isPreOrder:ee,isPreOrderToStock:et,hasAlternative:q,canConsign:J,hasFullReelDiscount:el,minOrder:Y,fullReelNum:z,stockCount:D,maxInStock:U,spotPriceList:$,preOrderPriceList:K,activePriceList:en,currentPrice:ea,totalPrice:er,fullReelDiscountAmount:es,unitPrice:ei,quantity:Z,setQuantity:Q,handleQuantityChange:ec,handleIncrease:ed,handleDecrease:em,handlePriceRowClick:ex,loading:null!==X,addToCartLoading:\"cart\"===X,requestQuoteLoading:\"quote\"===X,consignLoading:\"consign\"===X,handleAddToCart:ep,handleRequestQuote:eh,handleConsignPart:ef,handleGoAlternative:(0,r.useCallback)(e=>{e.preventDefault(),L&&window.ope"
+  ]
+}

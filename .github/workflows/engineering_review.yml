@@ -59,6 +59,8 @@ jobs:
           python tools/verify_r14_order_lock.py
           python tools/test_r14_release_manifest.py
           python tools/verify_r14_release_manifest.py
+      - name: Inventory parser and stock classification regressions (offline)
+        run: python tools/test_jlc_inventory.py
       - name: J12 outline regression and complete outline coverage
         run: |
           mkdir -p "$RUNNER_TEMP/pcb-review"

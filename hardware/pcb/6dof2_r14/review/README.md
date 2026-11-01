@@ -17,6 +17,7 @@ The [27 October R14C1 review](2026-10-27-clearance/README.md) supersedes the ord
 | [Interface contract](2026-10-26-10V/interface-contract.csv) | 78 firmware/DB25 mappings |
 | [R13 recovery](r13-recovered-source/README.md) | Exact tested-source provenance and evidence limits |
 | [Q11 sourcing correction](2026-10-26-10V/Q11_STOCK_REFRESH.md) | Same MOSFET, alternate reel code, unchanged geometry |
+| [1 November inventory check](2026-11-01-inventory/README.md) | All 91 current BOM codes; three public quantity shortfalls for five boards |
 
 The [26-page 25 October report](R14-complete-design-review-2026-10-25.pdf) is a
 historical circuit-rationale appendix. It predates R13 recovery and the sensor

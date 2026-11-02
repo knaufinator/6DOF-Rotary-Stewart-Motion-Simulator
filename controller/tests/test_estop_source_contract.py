@@ -4,7 +4,7 @@ from pathlib import Path
 import unittest
 
 
-SOURCE = (Path(__file__).resolve().parents[1] / "main" / "main.cpp").read_text(encoding="utf-8")
+SOURCE = (Path(__file__).resolve().parents[1] / "main" / "StepDirRuntime.cpp").read_text(encoding="utf-8")
 
 
 def between(start: str, end: str) -> str:

@@ -12,16 +12,17 @@ The [app guide](APP_GUIDE.md) documents the user interface.
 | Desktop presentation | [`ui_panels.cpp`](../app/src/ui_panels.cpp) builds the Dear ImGui/ImPlot interface; [`platform_viz.cpp`](../app/src/platform_viz.cpp) renders the platform geometry. |
 | Input plugins | [`plugin_api.h`](../app/src/plugin_api.h) defines the plugin interface; [`plugin_manager.cpp`](../app/src/plugin_manager.cpp) loads and runs plugins. Implementations live in [`app/plugins/`](../app/plugins/). |
 | Shared math | `controller/stewart-core/` is a Git submodule of [`knaufinator/stewart-core`](https://github.com/knaufinator/stewart-core); it contains inverse kinematics, axis scaling, filters and motion cueing. |
-| Full-size firmware | [`controller/main/main.cpp`](../controller/main/main.cpp), `app_main()`: ESP-IDF application, commands, input selection, step targets and telemetry. |
-| Mini firmware | [`controller/mini/main/main.cpp`](../controller/mini/main/main.cpp), `app_main()` and `CueTask()`: hobby-servo output, live input and embedded playback. |
+| Unified firmware | [`Application.cpp`](../controller/main/Application.cpp): one ESP-IDF entry and command router; build-time hardware profiles select the output/runtime policy. |
+| STEP/DIR runtime | [`StepDirRuntime.cpp`](../controller/main/StepDirRuntime.cpp): drive I/O, alarms, guarded step targets and telemetry. |
+| PWM runtime | [`MiniRuntime.cpp`](../controller/main/MiniRuntime.cpp): hobby-servo output, fixed-rate cue task, calibration and embedded playback. |
 | Signal analyzer | [`controller/test_harness/main/main.c`](../controller/test_harness/main/main.c): a separate ESP-IDF application for measuring step/direction signals. |
 | Optional network bridge | [`app/bridge/`](../app/bridge/): a separate process relaying desktop motion/control traffic to a serial-connected device. |
 
 The desktop compiles the three shared math implementations into `stewart_math`
-in [`app/CMakeLists.txt`](../app/CMakeLists.txt). Both controller projects consume
+in [`app/CMakeLists.txt`](../app/CMakeLists.txt). The unified controller project consumes
 the same submodule as an ESP-IDF component through `EXTRA_COMPONENT_DIRS`.
-Hardware drivers, transport handlers, commands and persistence remain in their
-respective applications; sharing math does not make firmware variants equivalent.
+Transport, identity and common geometry code are shared; hardware runtime policies
+retain profile-specific scheduling, capabilities, persistence and safety behavior.
 
 ## Desktop execution and data flow
 

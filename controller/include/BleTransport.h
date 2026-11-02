@@ -1,5 +1,6 @@
 #ifndef BLE_TRANSPORT_H
 #define BLE_TRANSPORT_H
+#include "FirmwareProfile.h"
 
 #ifdef ENABLE_BLE
 
@@ -25,6 +26,10 @@ bool ble_transport_init(void (*process_packet)(const uint8_t *payload));
 /**
  * Returns true when a BLE client is connected.
  */
+#if FIRMWARE_PROFILE_MINI
+void ble_transport_set_accel_callback(void (*process_accel)(const float *data));
+#endif
+
 bool ble_transport_connected(void);
 
 /**

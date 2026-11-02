@@ -14,27 +14,50 @@ struct HandshakeIdentity {
     int protocol;
     const char* build_date;
     const char* build_time;
+    const char* platform;
+    const char* capabilities;
+    HandshakeIdentity(void (*mac)(uint8_t*), const char* ver, int proto,
+                      const char* date, const char* time,
+                      const char* board = nullptr, const char* caps = nullptr)
+        : read_mac(mac), version(ver), protocol(proto), build_date(date),
+          build_time(time), platform(board), capabilities(caps) {}
 };
+
+inline bool handshake_identity_query(const char* command, uint8_t bits, float max_raw,
+                                     const HandshakeIdentity& identity, HandshakeReply reply) {
+    if(std::strcmp(command,"FINGERPRINT?")==0) {
+        uint8_t mac[6];identity.read_mac(mac);
+        if (identity.platform && identity.capabilities)
+            reply("FINGERPRINT:%02X%02X%02X%02X%02X%02X,fw=%s,proto=%d,platform=%s,caps=%s\r\n",
+                  mac[0],mac[1],mac[2],mac[3],mac[4],mac[5],identity.version,identity.protocol,
+                  identity.platform,identity.capabilities);
+        else
+            reply("FINGERPRINT:%02X%02X%02X%02X%02X%02X,fw=%s,proto=%d\r\n",
+                  mac[0],mac[1],mac[2],mac[3],mac[4],mac[5],identity.version,identity.protocol);
+    } else if(std::strcmp(command,"BITS?")==0) {
+        reply("BITS:%d,max_raw=%.0f\r\n",bits,max_raw);
+    } else if(std::strcmp(command,"VERSION?")==0) {
+        if (identity.platform)
+            reply("VERSION:%s,proto=%d,platform=%s,date=%s,time=%s\r\n",
+                  identity.version,identity.protocol,identity.platform,identity.build_date,identity.build_time);
+        else
+            reply("VERSION:%s,proto=%d,date=%s,time=%s\r\n",
+                  identity.version,identity.protocol,identity.build_date,identity.build_time);
+    } else return false;
+    return true;
+}
 
 template<class Config>
 bool handshake_query(const char* command,const Config& config,uint8_t bits,float max_raw,
                      const HandshakeIdentity& identity,HandshakeReply reply) {
-    if(std::strcmp(command,"FINGERPRINT?")==0) {
-        uint8_t mac[6];identity.read_mac(mac);
-        reply("FINGERPRINT:%02X%02X%02X%02X%02X%02X,fw=%s,proto=%d\r\n",
-              mac[0],mac[1],mac[2],mac[3],mac[4],mac[5],identity.version,identity.protocol);
-    } else if(std::strcmp(command,"CONFIG?")==0) {
+    if (handshake_identity_query(command,bits,max_raw,identity,reply)) return true;
+    if(std::strcmp(command,"CONFIG?")==0) {
         reply("CONFIG:RD=%.2f,PD=%.2f,L1=%.2f,L2=%.2f,height=%.2f,theta_r=%.2f,theta_p=%.2f,theta_s=%.2f,%.2f,%.2f,%.2f,%.2f,%.2f\r\n",
               config.RD,config.PD,config.ServoArmLengthL1,config.ConnectingArmLengthL2,
               config.platformHeight,config.theta_r,config.theta_p,config.theta_s[0],config.theta_s[1],
               config.theta_s[2],config.theta_s[3],config.theta_s[4],config.theta_s[5]);
         reply("DRIVE:encoder=%d,gear=%.4f,planetary=%.2f,steps_deg=%.4f\r\n",
               config.encoder_ppr,config.virtual_gear,config.planetary_ratio,config.steps_per_degree);
-    } else if(std::strcmp(command,"BITS?")==0) {
-        reply("BITS:%d,max_raw=%.0f\r\n",bits,max_raw);
-    } else if(std::strcmp(command,"VERSION?")==0) {
-        reply("VERSION:%s,proto=%d,date=%s,time=%s\r\n",
-              identity.version,identity.protocol,identity.build_date,identity.build_time);
     } else return false;
     return true;
 }

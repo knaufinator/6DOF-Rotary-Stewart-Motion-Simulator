@@ -1,5 +1,6 @@
 #!/usr/bin/env pwsh
 # ESP-IDF Build Script for Stewart Platform
+param([ValidateSet("mini", "r14", "r13-bench", "legacy")][string]$Profile = "r14")
 
 Write-Host "Setting up ESP-IDF environment..." -ForegroundColor Cyan
 
@@ -38,13 +39,9 @@ Write-Host "Loading ESP-IDF environment..." -ForegroundColor Cyan
 # Navigate to project directory
 Set-Location $PSScriptRoot
 
-# Set target
-Write-Host "Setting target to ESP32-S3..." -ForegroundColor Cyan
-idf.py set-target esp32s3
-
-# Build the project
-Write-Host "Building project..." -ForegroundColor Cyan
-idf.py build
+# The profile chooses the chip and owns a separate SDK configuration.
+Write-Host "Building firmware profile $Profile..." -ForegroundColor Cyan
+idf.py -B "build-$Profile" -D "FIRMWARE_PROFILE=$Profile" build
 
 if ($LASTEXITCODE -eq 0) {
     Write-Host "`nBuild completed successfully!" -ForegroundColor Green

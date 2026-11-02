@@ -28,6 +28,8 @@
 
 // Project headers
 #include "helpers.h"
+#include "ControllerApplication.h"
+#include "ControllerGeometry.h"
 #include "EStopSafety.h"
 #include "DriveScaleValidation.h"
 #if defined(R14_FAIL_CLOSED) && PCB_VERSION == 2
@@ -115,8 +117,9 @@ bool r13_engine_latch_comp(int set) {
 #include "EthernetTransport.h"
 #endif
 
+#if PCB_VERSION == 2
 #include "LedStatus.h"
-#define STATUS_LED_GPIO 48
+#endif
 #ifdef ENABLE_WIFI
 #include "WifiTransport.h"
 #endif
@@ -1067,7 +1070,9 @@ void process_data(char * data) {
     // ── TICKRATE? — Query current ISR tick period and derived rates ────
     // Response: TICKRATE:<us>,hz=<tick_hz>,max_step=<max_hz>
     if (strcmp(data, "TICKRATE?") == 0) {
-#if !defined(STEP_DRIVER_MCPWM)
+#if PCB_VERSION == 1
+        serial_printf("TICKRATE:ERR unsupported on legacy MCP23S17 backend\r\n");
+#elif !defined(STEP_DRIVER_MCPWM)
         serial_printf("TICKRATE:%lu,hz=%lu,max_step=%lu\r\n",
             (unsigned long)StepDriver_getTickUs(),
             (unsigned long)(1000000UL / StepDriver_getTickUs()),
@@ -1086,7 +1091,9 @@ void process_data(char * data) {
     // Response: TICKRATE:<us>,hz=<tick_hz>,max_step=<max_hz>
     //           TICKRATE:ERR:<reason>
     if (strncmp(data, "TICKRATE:", 9) == 0 && data[9] != '?') {
-#if !defined(STEP_DRIVER_MCPWM)
+#if PCB_VERSION == 1
+        serial_printf("TICKRATE:ERR unsupported on legacy MCP23S17 backend\r\n");
+#elif !defined(STEP_DRIVER_MCPWM)
         int us = atoi(data + 9);
         if (us < 4 || us > 100) {
             serial_printf("TICKRATE:ERR range 4-100 us (requested %d)\r\n", us);
@@ -1683,6 +1690,9 @@ void process_data(char * data) {
     // App sends this after handshake to show the entity's UI color.
     // LED breathes in this color until an error/warning overrides it.
     if (strncmp(data, "LED:", 4) == 0) {
+#if PCB_VERSION == 1
+        serial_printf("ERR:LED unsupported on legacy MCP23S17 board\r\n");
+#else
         int r = 0, g = 0, b = 0;
         if (sscanf(data + 4, "%d,%d,%d", &r, &g, &b) == 3) {
             led_status_set_entity_color((uint8_t)r, (uint8_t)g, (uint8_t)b);
@@ -1690,6 +1700,7 @@ void process_data(char * data) {
         } else {
             serial_printf("ERR:LED format LED:R,G,B (0-255)\r\n");
         }
+#endif
         return;
     }
 
@@ -1867,15 +1878,8 @@ void process_data(char * data) {
         if (eq) {
             *eq = '\0';
             float val = atof(eq + 1);
-            bool changed = true;
-            if (strcmp(param, "RD") == 0) stewartConfig.RD = val;
-            else if (strcmp(param, "PD") == 0) stewartConfig.PD = val;
-            else if (strcmp(param, "L1") == 0) stewartConfig.ServoArmLengthL1 = val;
-            else if (strcmp(param, "L2") == 0) stewartConfig.ConnectingArmLengthL2 = val;
-            else if (strcmp(param, "height") == 0) stewartConfig.platformHeight = val;
-            else if (strcmp(param, "theta_r") == 0) stewartConfig.theta_r = val;
-            else if (strcmp(param, "theta_p") == 0) stewartConfig.theta_p = val;
-            else { changed = false; serial_printf("CONFIG:ERR unknown key '%s'\r\n", param); }
+            const bool changed = controller::set_geometry_parameter(stewartConfig, param, val);
+            if (!changed) serial_printf("CONFIG:ERR unknown key '%s'\r\n", param);
             if (changed) {
                 computeAxisScalesFromGeometry(&axisScales, &stewartConfig, 0.90f);
                 configSaveToNVS(&stewartConfig);
@@ -1932,9 +1936,15 @@ void process_data(char * data) {
             if (StepDriver_isInitialized()) for (int i = 0; i < STEP_DRIVER_NUM_MOTORS; i++)
                 StepDriver_setSoftLimits(i, -motorSoftLimitSteps(), motorSoftLimitSteps());
 #endif
+#if PCB_VERSION == 2
             serial_printf("DRIVE:OK %s=%.4f → steps_deg=%.4f soft_limit=±%ld steps (±%.0f deg)%s\r\n", param, val,
                           stewartConfig.steps_per_degree, (long)motorSoftLimitSteps(), (double)MOTOR_SOFT_LIMIT_DEG,
                           saved == 0 ? " (saved)" : " (NVS save failed)");
+#else
+            serial_printf("DRIVE:OK %s=%.4f steps_deg=%.4f%s\r\n", param, val,
+                          stewartConfig.steps_per_degree,
+                          saved == 0 ? " (saved)" : " (NVS save failed)");
+#endif
         } else if (strcmp(param, "?") == 0) {
             serial_printf("DRIVE:encoder=%d,gear=%.4f,planetary=%.2f,steps_deg=%.4f,pulses_per_motor_rev=%.1f,pulses_per_output_rev=%.1f\r\n",
                 stewartConfig.encoder_ppr, stewartConfig.virtual_gear, stewartConfig.planetary_ratio,
@@ -2209,7 +2219,7 @@ void outputDebugData() {
 }
 
 // ESP-IDF entry point (replaces Arduino setup/loop)
-extern "C" void app_main(void)
+void controller_profile_run()
 {
 #if PCB_VERSION == 2
     // r13 drive-enable latch (F02, minimal): GPIO47 MCU_INHIBIT must be HIGH and GPIO48
@@ -2249,19 +2259,7 @@ extern "C" void app_main(void)
         (void)source;
         serial_packet_handler(payload, len);
     });
-    cobs_set_cmd_handler([](const char *cmd, int source) {
-        (void)source;   // replies go to the console and are mirrored to the Ethernet peer
-#if defined(R13_BENCH_ACTIVE)
-        if (r13_bench_command(cmd, source)) return;   // console-only, refuses network sources
-#endif
-#if defined(R14_BOARD_IO)
-        if (r14_hardware_command(cmd, source)) return;
-#endif
-        // process_data takes non-const char* for legacy reasons
-        char buf[256];
-        int n = snprintf(buf, sizeof(buf), "%s", cmd);
-        if (n > 0) process_data(buf);
-    });
+    cobs_set_cmd_handler(controller_command_dispatch);
 
     ESP_LOGI(TAG, "Stewart Platform Controller v%s (%s %s)",
         FW_VERSION_STRING, FW_BUILD_DATE, FW_BUILD_TIME);
@@ -2302,7 +2300,7 @@ extern "C" void app_main(void)
                 activeInputSource = (InputSource)src;
                 ESP_LOGI(TAG, "Input source: %s (from NVS)", inputSourceName(activeInputSource));
             }
-#if !defined(STEP_DRIVER_MCPWM)
+#if PCB_VERSION == 2 && !defined(STEP_DRIVER_MCPWM)
             uint8_t tick_us = 0;
             if (nvs_get_u8(nvs, "tick_us", &tick_us) == ESP_OK && tick_us >= 4 && tick_us <= 100) {
                 StepDriver_setTickRate((uint32_t)tick_us);
@@ -2402,14 +2400,23 @@ extern "C" void app_main(void)
     // LED status indicator — white solid during boot, green breathe when ready.
     // Not on the r13 board: GPIO48 is the drive-enable ARM input there (F02), so the WS2812
     // waveform must never be generated. led_status_set/clear stay harmless no-ops.
-#if PCB_VERSION != 2
-    led_status_init(STATUS_LED_GPIO);
-#endif
-
+#if PCB_VERSION == 2
     led_status_clear(LED_STATE_BOOT);
     led_status_set(LED_STATE_READY);
+#endif
     ESP_LOGI(TAG, "Setup Complete!");
     serial_println("READY");
     
     // app_main returns, tasks continue running
+}
+
+void controller_profile_command(char* cmd, int source) {
+    (void)source;   // replies go to the console and are mirrored to the Ethernet peer
+#if defined(R13_BENCH_ACTIVE)
+    if (r13_bench_command(cmd, source)) return;   // console-only, refuses network sources
+#endif
+#if defined(R14_BOARD_IO)
+    if (r14_hardware_command(cmd, source)) return;
+#endif
+    process_data(cmd);
 }

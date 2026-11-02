@@ -1,5 +1,6 @@
 #ifndef VERSION_H
 #define VERSION_H
+#include "FirmwareProfile.h"
 
 // ── Firmware Version ─────────────────────────────────────────────────
 // Bump MAJOR for breaking changes (protocol, config format)
@@ -13,7 +14,13 @@
 
 // Protocol version — bump when wire format changes (binary packet, telemetry, commands)
 // App checks this on connect to ensure compatibility
+#if FIRMWARE_PROFILE_MINI
+#define FW_PROTOCOL_VERSION 1
+#define FW_PLATFORM_ID "mini-6dof"
+#else
 #define FW_PROTOCOL_VERSION  2   // 2: DATA18_SEQ frames, Ethernet COBS-over-UDP, INPUT_STAT age/gaps
+
+#endif
 
 #define FW_BUILD_DATE     __DATE__
 #define FW_BUILD_TIME     __TIME__

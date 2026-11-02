@@ -6,7 +6,7 @@
 
 # ── Source files (common to both PCB versions) ──
 set(COMMON_SRCS
-    "main.cpp"
+    "Application.cpp"
     "helpers.cpp"
     "WifiTransport.cpp"
     "BleTransport.cpp"
@@ -21,13 +21,17 @@ set(PRIV_REQS
     esp_netif esp_event esp_wifi bt esp_driver_usb_serial_jtag
 )
 
-if(IDF_TARGET STREQUAL "esp32")
+if(PROFILE_MINI)
+    set(PCB_SRCS ${COMMON_SRCS} "MiniRuntime.cpp")
+    set(PRIV_REQS stewart-core driver esp_timer nvs_flash freertos bt vfs)
+    set(PCB_VERSION 0)
+elseif(IDF_TARGET STREQUAL "esp32")
     # PCBv1: MCP23S17 SPI expander for step/dir, no W5500 Ethernet
-    set(PCB_SRCS ${COMMON_SRCS} "MCP23S17.cpp")
+    set(PCB_SRCS ${COMMON_SRCS} "StepDirRuntime.cpp" "MCP23S17.cpp")
     set(PCB_VERSION 1)
 elseif(IDF_TARGET STREQUAL "esp32s3")
     # PCBv2: Direct GPIO MCPWM + W5500 SPI Ethernet
-    set(PCB_SRCS ${COMMON_SRCS} "EthernetTransport.cpp" "LedStatus.cpp")
+    set(PCB_SRCS ${COMMON_SRCS} "StepDirRuntime.cpp" "EthernetTransport.cpp" "LedStatus.cpp")
     list(APPEND PRIV_REQS esp_eth)
     set(PCB_VERSION 2)
     # R13_BENCH_ONE_AXIS: console-only axis-0 bench mode, M1_OUTPUT_TEST_PLAN.md step 12
@@ -56,12 +60,17 @@ else()
     message(FATAL_ERROR "Unsupported target '${IDF_TARGET}': only esp32 (PCBv1) and esp32s3 (PCBv2) are supported")
 endif()
 
+if(PROFILE_MINI)
+    list(REMOVE_ITEM PCB_SRCS "WifiTransport.cpp")
+    set(PROFILE_ASSETS "../profiles/mini/laps123_moderate.m6p")
+endif()
 idf_component_register(
     SRCS ${PCB_SRCS}
     INCLUDE_DIRS 
         "."
         "../include"
     PRIV_REQUIRES ${PRIV_REQS}
+    EMBED_FILES ${PROFILE_ASSETS}
 )
 
 # Enable C++11 support for all source files
@@ -89,11 +98,15 @@ target_compile_options(${COMPONENT_LIB} PRIVATE
 set(STEP_DRIVER_BACKEND "STEP_DRIVER_SHARED_MCPWM")
 
 target_compile_definitions(${COMPONENT_LIB} PRIVATE
+    FIRMWARE_PROFILE_MINI=${PROFILE_MINI}
+    FIRMWARE_PROFILE_NAME="${FIRMWARE_PROFILE}"
     PCB_VERSION=${PCB_VERSION}
     ENABLE_DEBUG_UART=1
-    ENABLE_WIFI=1
     ENABLE_BLE=1
 )
+if(NOT PROFILE_MINI)
+    target_compile_definitions(${COMPONENT_LIB} PRIVATE ENABLE_WIFI=1)
+endif()
 if(PCB_VERSION EQUAL 2)
     # R14 integration is intentionally locked until the installed Hall, local
     # enable and drive-alarm IO adapter is electrically qualified. Existing

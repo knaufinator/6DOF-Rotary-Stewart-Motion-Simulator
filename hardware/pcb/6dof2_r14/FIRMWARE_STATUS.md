@@ -43,13 +43,14 @@ This machine-specific location is provenance, not a portable documentation link.
 
 ## Build variants
 
+The [unified project](../../../docs/FIRMWARE.md) selects explicit board profiles.
 Use separate build directories and SDKCONFIG files. ESP-IDF 5.5.2 is the checked
 baseline. Do not reuse a bench build directory for the R14 image.
 
 ```text
 # Run from controller/ in an ESP-IDF environment; configure esp32s3 first.
-idf.py -B build-r14 -D R13_BENCH_ONE_AXIS=OFF -D R14_BOARD_IO=ON -D R14_FAIL_CLOSED=ON build
-idf.py -B build-r13-bench -D R13_BENCH_ONE_AXIS=ON -D R14_BOARD_IO=OFF -D R14_FAIL_CLOSED=ON build
+idf.py -B build-r14 -D FIRMWARE_PROFILE=r14 build
+idf.py -B build-r13-bench -D FIRMWARE_PROFILE=r13-bench build
 ```
 
 `R14_BOARD_IO` and `R13_BENCH_ONE_AXIS` cannot be enabled together. The R14 adapter

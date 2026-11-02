@@ -7,6 +7,8 @@ CMakeLists.txt text eol=lf
 *.png binary
 *.zip binary
 *.epro2 binary
+controller/profiles/mini/partitions.csv text eol=lf
+controller/profiles/*.lock text eol=lf
 
 # Preserve native engineering files and recovered-source evidence exactly.
 hardware/pcb/6dof2_r14/** -text

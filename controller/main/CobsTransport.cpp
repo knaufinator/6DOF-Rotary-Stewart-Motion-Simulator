@@ -3,6 +3,7 @@
 // No uart_driver_install — avoids conflicts with ESP-IDF console subsystem.
 
 #include "CobsTransport.h"
+#include "FirmwareProfile.h"
 #include "cobs.h"
 
 #include <cstring>
@@ -25,6 +26,7 @@
 
 static SemaphoreHandle_t s_tx_mutex = NULL;
 static cobs_data_cb_t s_data_handler = NULL;
+static cobs_data_cb_t s_raw_handler = NULL;
 static cobs_cmd_cb_t  s_cmd_handler  = NULL;
 static cobs_tx_sink_t s_tx_sink      = NULL;
 static int s_stdin_fd = -1;
@@ -33,8 +35,10 @@ static int s_stdin_fd = -1;
 static volatile uint32_t s_seq_frames = 0, s_seq_gaps = 0, s_seq_lost = 0, s_seq_restarts = 0;
 static volatile int64_t  s_motion_last_us = 0;
 static volatile int      s_motion_last_src = -1;
+#if !FIRMWARE_PROFILE_MINI
 static uint16_t s_seq_expect = 0;
 static bool     s_seq_valid = false;
+#endif
 
 // Decoder accumulation buffer
 static uint8_t s_rx_acc[COBS_MAX_FRAME];
@@ -178,6 +182,14 @@ void cobs_dispatch_frame(const uint8_t *data, int len, int source) {
     int plen = len - 1;
 
     switch (ch) {
+#if FIRMWARE_PROFILE_MINI
+        case COBS_CH_DATA:
+            if (s_data_handler && plen >= 12) s_data_handler(payload, plen, source);
+            break;
+        case COBS_CH_DATA_RAW:
+            if (s_raw_handler && plen >= 24) s_raw_handler(payload, plen, source);
+            break;
+#else
         case COBS_CH_DATA18:
             if (s_data_handler && plen >= 18) {
                 note_motion(source);
@@ -200,10 +212,11 @@ void cobs_dispatch_frame(const uint8_t *data, int len, int source) {
                 s_data_handler(payload + 2, plen - 2, source);
             }
             break;
+#endif
         case COBS_CH_CMD:
-            if (s_cmd_handler && plen > 0) {
+            if (s_cmd_handler && plen > 0 && plen < 256) {
                 char cmd[256];
-                int clen = plen < 255 ? plen : 255;
+                int clen = plen;
                 memcpy(cmd, payload, clen);
                 cmd[clen] = '\0';
                 s_cmd_handler(cmd, source);
@@ -256,3 +269,5 @@ int cobs_read_process(int timeout_ms) {
 void cobs_set_data_handler(cobs_data_cb_t handler) { s_data_handler = handler; }
 void cobs_set_cmd_handler(cobs_cmd_cb_t handler)   { s_cmd_handler  = handler; }
 void cobs_set_tx_sink(cobs_tx_sink_t sink)         { s_tx_sink = sink; }
+
+void cobs_set_data_raw_handler(cobs_data_cb_t handler) { s_raw_handler = handler; }

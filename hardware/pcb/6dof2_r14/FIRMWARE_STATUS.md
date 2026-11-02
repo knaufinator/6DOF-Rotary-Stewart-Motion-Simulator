@@ -1,7 +1,8 @@
 # R14 firmware and R13 evidence
 
-Updated 2026-10-26. This documents source and build evidence; no R14 image was
-flashed and no new motor test was performed during repository preparation.
+Updated 2026-11-02. R14C2 is ordered, awaiting physical testing. This snapshot
+changes no firmware. This document records source and build evidence; no R14 image
+was flashed and no new motor test was performed during repository preparation.
 
 ## Provenance
 
@@ -81,7 +82,7 @@ The normal R14 build still reports `motion_qualified=0` and denies motion admiss
 
 ## Ordered hardware checkpoint
 
-The owner confirmed R14 ordered on 26 October 2026. The
-[order record](ORDER_RECORD.json) binds the current manufacturing package and
-this firmware source checkpoint. Physical R14 testing is pending; normal motion
-admission remains locked. See [BRINGUP.md](BRINGUP.md) for the acceptance record.
+R14C2 was confirmed ordered on 2 November 2026. The
+[C2 order record](ORDER_RECORD_C2.json) freezes the current prepared package. The original
+[26 October record](ORDER_RECORD.json) remains historical evidence for its own
+package. Physical R14 testing is pending; normal motion admission remains locked. See [BRINGUP.md](BRINGUP.md) for the acceptance record.

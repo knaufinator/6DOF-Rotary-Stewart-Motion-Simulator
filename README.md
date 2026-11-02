@@ -25,11 +25,11 @@ learned along the way—not just the latest PCB package.
 
 ## Current development status
 
-> **2026-11-02: R14C2 stock revision implemented; fabrication gates remain open.**
-> The saved master uses better-stock resistors, six Amphenol DB25 sockets and a Hanrun MagJack.
-> All 324 parts remain fitted. Native, actual CAM and internal mechanical checks pass.
-> Ethernet SI/stack-up, factory processing/allocation and external mounting fit remain unqualified.
-> See the [C2 review and gates](hardware/pcb/6dof2_r14/review/2026-11-01-stock/README.md).
+> **2026-11-02: R14C2 ordered; awaiting physical testing.**
+> The frozen snapshot contains all 324 fitted parts, including the Amphenol DB25 sockets and Hanrun MagJack.
+> Fresh EasyEDA exports match the reviewed C2 source and manufacturing geometry.
+> See the [ordered snapshot and acceptance limits](hardware/pcb/6dof2_r14/review/2026-11-02-ordered/README.md).
+> Ethernet performance, external mounting fit and powered operation still require bench qualification.
 > The R14C1 J12 correction is retained; the original ordered placement still has confirmed interference.
 > The recovered R13 firmware baseline and original ordered exports are preserved.
 > See the [R14 board, schematic and status](hardware/pcb/6dof2_r14/README.md),
@@ -43,21 +43,21 @@ signal captures do **not** validate the current PCB/firmware combination.
 
 ## R14C2 controller hardware
 
-[![R14C2 top copper and silkscreen](hardware/pcb/6dof2_r14/images/r14c2-pcb-top.png)](hardware/pcb/6dof2_r14/drawings/R14C2-PCB.pdf)
+[![R14C2 top copper and silkscreen](hardware/pcb/6dof2_r14/images/r14c2-pcb-top.png)](hardware/pcb/6dof2_r14/exports/2026-11-02-ordered/R14-PCB.pdf)
 
-[PCB PDF](hardware/pcb/6dof2_r14/drawings/R14C2-PCB.pdf) ·
-[Schematic PDF](hardware/pcb/6dof2_r14/drawings/R14C2-schematic.pdf) ·
-[Native schematic SVG](hardware/pcb/6dof2_r14/exports/2026-11-01-stock/R14-schematic.svg) ·
-[Editable EasyEDA project](hardware/pcb/6dof2_r14/exports/2026-11-01-stock/R14-project.epro2) ·
-[Assembly BOM](hardware/pcb/6dof2_r14/exports/2026-11-01-stock/R14-BOM-JLC.csv) ·
-[Matching engineering package](hardware/pcb/6dof2_r14/exports/2026-11-01-stock/README.md)
+[PCB PDF](hardware/pcb/6dof2_r14/exports/2026-11-02-ordered/R14-PCB.pdf) ·
+[Schematic PDF](hardware/pcb/6dof2_r14/exports/2026-11-02-ordered/R14-schematic.pdf) ·
+[Native schematic SVG](hardware/pcb/6dof2_r14/exports/2026-11-02-ordered/R14-schematic.svg) ·
+[Editable EasyEDA project](hardware/pcb/6dof2_r14/exports/2026-11-02-ordered/R14-project.epro2) ·
+[Assembly BOM](hardware/pcb/6dof2_r14/exports/2026-11-02-ordered/R14-BOM-JLC.csv) ·
+[Frozen ordered snapshot](hardware/pcb/6dof2_r14/exports/2026-11-02-ordered/README.md)
 
-The R14 order was confirmed on 26 October 2026. Read the
+The R14C2 order was confirmed on 2 November 2026. Read the
 [design decisions](hardware/pcb/6dof2_r14/DECISIONS.md),
 [review methodology](hardware/pcb/6dof2_r14/REVIEW_METHOD.md) and
-[hardware-test plan](hardware/pcb/6dof2_r14/BRINGUP.md). Testing the manufactured
-board follows correction of the factory clearance issue; the current firmware
-keeps normal motion admission locked.
+[hardware-test plan](hardware/pcb/6dof2_r14/BRINGUP.md). The C2 source retains the
+J12 clearance correction; the current firmware keeps normal motion admission
+locked until physical qualification.
 
 <details>
 <summary>R14 schematic preview — full sheet and detail pages in the PDF</summary>
@@ -191,7 +191,7 @@ hardware acceptance tests.
    [review evidence](hardware/pcb/6dof2_r14/review/README.md),
    and [bench qualification plan](hardware/pcb/6dof2_r14/BRINGUP.md).
    Buying and bench-use guidance is indexed in [Hardware](hardware/README.md);
-   the current **do-not-order** status still applies.
+   R14C2 is **ordered, awaiting physical testing**.
 
 ## Repository layout
 

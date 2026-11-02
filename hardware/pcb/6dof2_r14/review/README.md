@@ -1,6 +1,8 @@
 # R14 design review
 
-The [1 November R14C2 stock-revision report](2026-11-01-stock/README.md) is the current implementation review: all 324 required parts, native/CAM/STEP checks, sourcing and explicit fabrication gates. The [matching C2 package](../exports/2026-11-01-stock/README.md) contains the saved master and fresh exports. Firmware and safety interfaces are unchanged; physical qualification is pending.
+R14C2 was confirmed **ordered on 2 November 2026; physical testing is pending**. The [ordered snapshot report](2026-11-02-ordered/README.md) and [matching exports](../exports/2026-11-02-ordered/README.md) are the current handoff.
+
+The [1 November R14C2 stock-revision report](2026-11-01-stock/README.md) is the retained implementation review: all 324 required parts, native/CAM/STEP checks, sourcing and explicit fabrication gates. The [pre-order candidate package](../exports/2026-11-01-stock/README.md) contains the saved master and fresh exports. Firmware and safety interfaces are unchanged; physical qualification is pending.
 
 R14 was ordered on 26 October 2026. Static review is
 complete; manufactured-board qualification is pending. Start with the

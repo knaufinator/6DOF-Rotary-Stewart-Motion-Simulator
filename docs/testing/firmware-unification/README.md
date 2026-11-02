@@ -20,6 +20,8 @@ The shared-protocol executables compile the actual `Application.cpp`, `CobsTrans
 
 The build-binding tool inspects ESP-IDF's actual main-component source inventory and compile commands, then checks emitted BIN/ELF/bootloader/partition files. It rejects a Mini image containing STEP/DIR or R14 board I/O and an R14 image missing its lock/monitor flags. Separate per-chip dependency locks and per-build SDK configurations prevent Mini/S3 builds from overwriting one another's target settings.
 
+The new legacy native-build lane exposed inherited references to S3-only tick/soft-limit diagnostics. Those commands and NVS tick restoration are now gated by the actual backend. Legacy explicitly rejects unsupported `TICKRATE` commands and does not report an S3 software soft limit. R14/R13 behavior is unchanged.
+
 ## Physical boundary
 
 No device was flashed, no serial connection was opened, and no new physical motor or Hall test was performed. A newly linked binary is not the previously tested R13 image. Pulse-engine source preservation and passing host models do not establish electrical timing or physical acceptance of this refactor. Recheck console/handshake/BLE behavior on each hardware profile before relying on a new image.

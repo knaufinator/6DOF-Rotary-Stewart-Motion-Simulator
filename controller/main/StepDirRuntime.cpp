@@ -1069,7 +1069,9 @@ void process_data(char * data) {
     // ── TICKRATE? — Query current ISR tick period and derived rates ────
     // Response: TICKRATE:<us>,hz=<tick_hz>,max_step=<max_hz>
     if (strcmp(data, "TICKRATE?") == 0) {
-#if !defined(STEP_DRIVER_MCPWM)
+#if PCB_VERSION == 1
+        serial_printf("TICKRATE:ERR unsupported on legacy MCP23S17 backend\r\n");
+#elif !defined(STEP_DRIVER_MCPWM)
         serial_printf("TICKRATE:%lu,hz=%lu,max_step=%lu\r\n",
             (unsigned long)StepDriver_getTickUs(),
             (unsigned long)(1000000UL / StepDriver_getTickUs()),
@@ -1088,7 +1090,9 @@ void process_data(char * data) {
     // Response: TICKRATE:<us>,hz=<tick_hz>,max_step=<max_hz>
     //           TICKRATE:ERR:<reason>
     if (strncmp(data, "TICKRATE:", 9) == 0 && data[9] != '?') {
-#if !defined(STEP_DRIVER_MCPWM)
+#if PCB_VERSION == 1
+        serial_printf("TICKRATE:ERR unsupported on legacy MCP23S17 backend\r\n");
+#elif !defined(STEP_DRIVER_MCPWM)
         int us = atoi(data + 9);
         if (us < 4 || us > 100) {
             serial_printf("TICKRATE:ERR range 4-100 us (requested %d)\r\n", us);
@@ -1927,9 +1931,15 @@ void process_data(char * data) {
             if (StepDriver_isInitialized()) for (int i = 0; i < STEP_DRIVER_NUM_MOTORS; i++)
                 StepDriver_setSoftLimits(i, -motorSoftLimitSteps(), motorSoftLimitSteps());
 #endif
+#if PCB_VERSION == 2
             serial_printf("DRIVE:OK %s=%.4f → steps_deg=%.4f soft_limit=±%ld steps (±%.0f deg)%s\r\n", param, val,
                           stewartConfig.steps_per_degree, (long)motorSoftLimitSteps(), (double)MOTOR_SOFT_LIMIT_DEG,
                           saved == 0 ? " (saved)" : " (NVS save failed)");
+#else
+            serial_printf("DRIVE:OK %s=%.4f steps_deg=%.4f%s\r\n", param, val,
+                          stewartConfig.steps_per_degree,
+                          saved == 0 ? " (saved)" : " (NVS save failed)");
+#endif
         } else if (strcmp(param, "?") == 0) {
             serial_printf("DRIVE:encoder=%d,gear=%.4f,planetary=%.2f,steps_deg=%.4f,pulses_per_motor_rev=%.1f,pulses_per_output_rev=%.1f\r\n",
                 stewartConfig.encoder_ppr, stewartConfig.virtual_gear, stewartConfig.planetary_ratio,
@@ -2285,7 +2295,7 @@ void controller_profile_run()
                 activeInputSource = (InputSource)src;
                 ESP_LOGI(TAG, "Input source: %s (from NVS)", inputSourceName(activeInputSource));
             }
-#if !defined(STEP_DRIVER_MCPWM)
+#if PCB_VERSION == 2 && !defined(STEP_DRIVER_MCPWM)
             uint8_t tick_us = 0;
             if (nvs_get_u8(nvs, "tick_us", &tick_us) == ESP_OK && tick_us >= 4 && tick_us <= 100) {
                 StepDriver_setTickRate((uint32_t)tick_us);

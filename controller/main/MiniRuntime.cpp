@@ -13,6 +13,7 @@
  */
 
 #include <stdio.h>
+#include <stdarg.h>
 #include <string.h>
 #include <stdlib.h>
 #include <math.h>
@@ -34,6 +35,9 @@
 
 // Project headers
 #include "helpers.h"
+#include "ControllerApplication.h"
+#include "ControllerGeometry.h"
+#include "ControllerHandshake.h"
 #include "debug_uart.h"
 #include "InverseKinematics.h"
 #include "AxisScaling.h"
@@ -51,6 +55,15 @@ bool debugEnabled = false;
 
 // ── Thread-safe serial printf (via COBS RESP channel) ───────────────
 #define serial_printf(fmt, ...) cobs_send_fmt(COBS_CH_RESP, fmt, ##__VA_ARGS__)
+static void cobs_reply(const char* fmt, ...) {
+    char buffer[256];
+    va_list args;
+    va_start(args, fmt);
+    const int n = vsnprintf(buffer, sizeof(buffer), fmt, args);
+    va_end(args);
+    if (n > 0) cobs_send_str(COBS_CH_RESP, buffer);
+}
+
 
 // ── Platform Configuration ───────────────────────────────────────────
 static StewartConfig stewartConfig;
@@ -797,16 +810,13 @@ void process_data(char* data) {
     // Any delay here blocks motion — the app won't send packets until
     // the handshake reaches Ready.
 
-    if (strcmp(data, "FINGERPRINT?") == 0) {
-        uint8_t mac[6];
-        esp_efuse_mac_get_default(mac);
-        // caps=raw advertises on-device RAW-HIL cueing (CH_DATA_RAW + M6P2) so
-        // the app enables raw mode (it gates on caps=...raw... in FINGERPRINT).
-        serial_printf("FINGERPRINT:%02X%02X%02X%02X%02X%02X,fw=%s,proto=%d,platform=%s,caps=raw\r\n",
-            mac[0], mac[1], mac[2], mac[3], mac[4], mac[5],
-            FW_VERSION_STRING, FW_PROTOCOL_VERSION, FW_PLATFORM_ID);
-        return;
-    }
+    const controller::HandshakeIdentity identity = {
+        [](uint8_t* mac) { esp_efuse_mac_get_default(mac); },
+        FW_VERSION_STRING, FW_PROTOCOL_VERSION, FW_BUILD_DATE, FW_BUILD_TIME,
+        FW_PLATFORM_ID, "raw"
+    };
+    if (controller::handshake_identity_query(data, inputBitRange, maxRawInput,
+                                              identity, cobs_reply)) return;
 
     if (strcmp(data, "CONFIG?") == 0) {
         serial_printf("CONFIG:RD=%.2f,PD=%.2f,L1=%.2f,L2=%.2f,height=%.2f,theta_r=%.2f,theta_p=%.2f\r\n",
@@ -816,18 +826,6 @@ void process_data(char* data) {
         serial_printf("SERVO:center=%d,%d,%d,%d,%d,%d,pulse_per_rad=%.1f\r\n",
             servoCenter[0], servoCenter[1], servoCenter[2],
             servoCenter[3], servoCenter[4], servoCenter[5], servoPulsePerRad);
-        return;
-    }
-
-    if (strcmp(data, "BITS?") == 0) {
-        serial_printf("BITS:%d,max_raw=%.0f\r\n", inputBitRange, maxRawInput);
-        return;
-    }
-
-    if (strcmp(data, "VERSION?") == 0) {
-        serial_printf("VERSION:%s,proto=%d,platform=%s,date=%s,time=%s\r\n",
-            FW_VERSION_STRING, FW_PROTOCOL_VERSION, FW_PLATFORM_ID,
-            FW_BUILD_DATE, FW_BUILD_TIME);
         return;
     }
 
@@ -860,15 +858,8 @@ void process_data(char* data) {
         if (eq) {
             *eq = '\0';
             float val = atof(eq + 1);
-            bool changed = true;
-            if (strcmp(param, "RD") == 0) stewartConfig.RD = val;
-            else if (strcmp(param, "PD") == 0) stewartConfig.PD = val;
-            else if (strcmp(param, "L1") == 0) stewartConfig.ServoArmLengthL1 = val;
-            else if (strcmp(param, "L2") == 0) stewartConfig.ConnectingArmLengthL2 = val;
-            else if (strcmp(param, "height") == 0) stewartConfig.platformHeight = val;
-            else if (strcmp(param, "theta_r") == 0) stewartConfig.theta_r = val;
-            else if (strcmp(param, "theta_p") == 0) stewartConfig.theta_p = val;
-            else { changed = false; serial_printf("CONFIG:ERR unknown key '%s'\r\n", param); }
+            const bool changed = controller::set_geometry_parameter(stewartConfig, param, val);
+            if (!changed) serial_printf("CONFIG:ERR unknown key '%s'\r\n", param);
             if (changed) {
                 computeAxisScalesFromGeometry(&axisScales, &stewartConfig, 0.90f);
                 serial_printf("CONFIG:OK %s=%.4f (scales recomputed)\r\n", param, val);
@@ -1225,7 +1216,7 @@ void InterfaceMonitorTask(void* pvParameters) {
 
 // ── App Main ─────────────────────────────────────────────────────────
 
-extern "C" void app_main(void) {
+void controller_profile_run() {
     // Initialize NVS
     esp_err_t ret = nvs_flash_init();
     if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {
@@ -1238,21 +1229,19 @@ extern "C" void app_main(void) {
 
     // Initialize COBS transport on UART0 (must be before any serial_printf)
     cobs_transport_init(921600);
-    cobs_set_data_handler([](const uint8_t *payload, int len) {
+    cobs_set_data_handler([](const uint8_t *payload, int len, int source) {
+        (void)source;
         (void)len;
         if (liveMotionGate())          // SOURCE:OFF gates; DEMO auto-switches to LIVE
             process_binary_packet(payload);   // baked -> shared target
     });
-    cobs_set_data_raw_handler([](const uint8_t *payload, int len) {
+    cobs_set_data_raw_handler([](const uint8_t *payload, int len, int source) {
+        (void)source;
         (void)len;
         if (liveMotionGate())
             process_raw_packet(payload);       // RAW pre-cue -> shared target (cued by CueTask)
     });
-    cobs_set_cmd_handler([](const char *cmd) {
-        char buf[256];
-        int n = snprintf(buf, sizeof(buf), "%s", cmd);
-        if (n > 0) process_data(buf);
-    });
+    cobs_set_cmd_handler(controller_command_dispatch);
 
     // Initialize platform config with Mini-6DOF defaults, then overlay NVS
     initMiniDefaults(&stewartConfig);
@@ -1446,4 +1435,9 @@ extern "C" void app_main(void) {
 
         vTaskDelay(pdMS_TO_TICKS(telemetryDelayMs));
     }
+}
+
+void controller_profile_command(char* cmd, int source) {
+    (void)source;
+    process_data(cmd);
 }

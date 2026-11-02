@@ -5,7 +5,7 @@ import unittest
 
 
 ROOT = Path(__file__).resolve().parents[1]
-MAIN = (ROOT / "main" / "main.cpp").read_text(encoding="utf-8")
+MAIN = (ROOT / "main" / "StepDirRuntime.cpp").read_text(encoding="utf-8")
 CMAKE = (ROOT / "main" / "CMakeLists.txt").read_text(encoding="utf-8")
 SAFETY = (ROOT / "include" / "R14RuntimeSafety.h").read_text(encoding="utf-8")
 

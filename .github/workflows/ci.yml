@@ -7,6 +7,7 @@ on:
       - 'v*.*.*'
     paths:
       - 'controller/**'
+      - 'tools/verify_firmware_profile_build.py'
       - 'app/**'
       - 'tools/check_desktop_runtime_sensitivity.py'
       - 'tools/check_handshake_sensitivity.py'
@@ -17,6 +18,7 @@ on:
     branches: [ phoenix, main ]
     paths:
       - 'controller/**'
+      - 'tools/verify_firmware_profile_build.py'
       - 'app/**'
       - 'tools/check_desktop_runtime_sensitivity.py'
       - 'tools/check_handshake_sensitivity.py'
@@ -104,7 +106,10 @@ jobs:
           esp_idf_version: v5.5.2
           target: esp32s3
           path: 'controller'
-          command: idf.py -D R13_BENCH_ONE_AXIS=OFF -D R14_BOARD_IO=ON -D R14_FAIL_CLOSED=ON build
+          command: idf.py -D FIRMWARE_PROFILE=r14 -D R13_BENCH_ONE_AXIS=OFF -D R14_BOARD_IO=ON -D R14_FAIL_CLOSED=ON build
+
+      - name: Verify R14 build profile and safety bindings
+        run: python tools/verify_firmware_profile_build.py --directory controller/build --profile r14
 
       - name: Package firmware with version
         run: |
@@ -147,16 +152,19 @@ jobs:
         with:
           esp_idf_version: v5.5.2
           target: esp32
-          path: 'controller/mini'
-          command: idf.py build
+          path: 'controller'
+          command: idf.py -B build-mini -D FIRMWARE_PROFILE=mini build
+
+      - name: Verify Mini build profile and source isolation
+        run: python tools/verify_firmware_profile_build.py --directory controller/build-mini --profile mini
 
       - name: Package mini firmware with version
         run: |
           VERSION="${{ needs.version.outputs.version }}"
-          cp controller/mini/build/mini_6dof.bin "mini-firmware-${VERSION}.bin"
-          cp controller/mini/build/mini_6dof.elf "mini-firmware-${VERSION}.elf"
-          cp controller/mini/build/bootloader/bootloader.bin "mini-bootloader-${VERSION}.bin"
-          cp controller/mini/build/partition_table/partition-table.bin "mini-partition-table-${VERSION}.bin"
+          cp controller/build-mini/stewart_platform.bin "mini-firmware-${VERSION}.bin"
+          cp controller/build-mini/stewart_platform.elf "mini-firmware-${VERSION}.elf"
+          cp controller/build-mini/bootloader/bootloader.bin "mini-bootloader-${VERSION}.bin"
+          cp controller/build-mini/partition_table/partition-table.bin "mini-partition-table-${VERSION}.bin"
 
       - name: Upload mini firmware artifacts
         uses: actions/upload-artifact@v4
@@ -168,6 +176,22 @@ jobs:
             mini-bootloader-*.bin
             mini-partition-table-*.bin
           retention-days: 90
+
+  legacy-firmware-build:
+    name: Build Unified Legacy Profile (ESP-IDF)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: espressif/esp-idf-ci-action@v1
+        with:
+          esp_idf_version: v5.5.2
+          target: esp32
+          path: controller
+          command: idf.py -B build-legacy -D FIRMWARE_PROFILE=legacy build
+      - name: Verify legacy profile sources and image
+        run: python tools/verify_firmware_profile_build.py --directory controller/build-legacy --profile legacy
 
   desktop-app-build:
     name: Build Desktop App (CMake)
@@ -220,7 +244,7 @@ jobs:
 
   create-release:
     name: Create GitHub Release
-    needs: [version, firmware-build, desktop-app-build]
+    needs: [version, firmware-build, mini-firmware-build, legacy-firmware-build, desktop-app-build]
     runs-on: ubuntu-latest
     if: startsWith(github.ref, 'refs/tags/')
     permissions:
@@ -236,6 +260,11 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: firmware-${{ needs.version.outputs.version }}
+
+      - name: Download Mini profile artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: mini-firmware-${{ needs.version.outputs.version }}
 
       - name: Download desktop app artifact
         uses: actions/download-artifact@v4
@@ -324,6 +353,8 @@ jobs:
             firmware-*.elf
             bootloader-*.bin
             partition-table-*.bin
+            mini-*.bin
+            mini-*.elf
             stewart-platform.exe
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

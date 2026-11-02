@@ -1,5 +1,5 @@
-#ifndef HELPERS_H
-#define HELPERS_H
+#ifndef MINI_PINS_H
+#define MINI_PINS_H
 
 #include <math.h>
 
@@ -53,4 +53,4 @@
 // Helper function declarations
 float mapfloat(float x, float in_min, float in_max, float out_min, float out_max);
 
-#endif // HELPERS_H
+#endif // MINI_PINS_H

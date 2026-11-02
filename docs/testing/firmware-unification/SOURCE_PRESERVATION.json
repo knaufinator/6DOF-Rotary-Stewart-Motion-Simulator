@@ -1,0 +1,74 @@
+{
+  "baselineCommit": "271dc4e3d63d6bfbe20330dacd2ced5fb07295b3",
+  "status": "PASS_PRESERVED_SOURCE_BYTES",
+  "files": [
+    {
+      "baselinePath": "controller/include/SharedMcpwmStepEngine.h",
+      "currentPath": "controller/include/SharedMcpwmStepEngine.h",
+      "bytes": 40366,
+      "sha256": "46300d739d1c49bafc89612212969b696462cb67a543f8103457f83a04b6a7e2"
+    },
+    {
+      "baselinePath": "controller/include/StepQuiescence.h",
+      "currentPath": "controller/include/StepQuiescence.h",
+      "bytes": 1814,
+      "sha256": "5b516e1a903fda2a441b3fbc462532a76947d4230e5d545cb1c0ccc644f777a7"
+    },
+    {
+      "baselinePath": "controller/include/R14MotionAdmission.h",
+      "currentPath": "controller/include/R14MotionAdmission.h",
+      "bytes": 3454,
+      "sha256": "3e921182a8684faaf7e6a8821dc6de6de3ec31fffaf264060e4ceafb8086df8b"
+    },
+    {
+      "baselinePath": "controller/include/R14SeekInterlock.h",
+      "currentPath": "controller/include/R14SeekInterlock.h",
+      "bytes": 8711,
+      "sha256": "7c67451d004ec60c72b50ec6d1346e61738cd60a10052a69709f3308e8381364"
+    },
+    {
+      "baselinePath": "controller/include/R14RuntimeSafety.h",
+      "currentPath": "controller/include/R14RuntimeSafety.h",
+      "bytes": 1147,
+      "sha256": "6023f54b7176f15b237a036de4918bba0e178b7753c7b1bc324042a5950669b3"
+    },
+    {
+      "baselinePath": "controller/include/R14BoardIo.h",
+      "currentPath": "controller/include/R14BoardIo.h",
+      "bytes": 4060,
+      "sha256": "573504f32bc6b0353c6fd504d50d4589e0156e20e2d1bf3fa419d7fc58b4e1e4"
+    },
+    {
+      "baselinePath": "controller/include/R13BenchPulse.h",
+      "currentPath": "controller/include/R13BenchPulse.h",
+      "bytes": 2149,
+      "sha256": "ba6e411f21398df7c8fcbad252f37168a0bb95f3a3b3893632a2f8ec9119bd55"
+    },
+    {
+      "baselinePath": "controller/main/R14Hardware.cpp",
+      "currentPath": "controller/main/R14Hardware.cpp",
+      "bytes": 5537,
+      "sha256": "504cf77c86fa2986a31109a9de388545b81ae9d34715f7b7db81caf56036c444"
+    },
+    {
+      "baselinePath": "controller/main/R13BenchAxis.cpp",
+      "currentPath": "controller/main/R13BenchAxis.cpp",
+      "bytes": 27047,
+      "sha256": "d9bc8a18a361e95ea43e23bce46e74e81d9a7fc59971180ba80f33a3d71cd5bd"
+    },
+    {
+      "baselinePath": "controller/mini/main/laps123_moderate.m6p",
+      "currentPath": "controller/profiles/mini/laps123_moderate.m6p",
+      "bytes": 549328,
+      "sha256": "a0194a8605714e2e217f1992dec3570e8bd17d73875f7aaf7359d64bc4f1721b"
+    },
+    {
+      "baselinePath": "controller/mini/partitions.csv",
+      "currentPath": "controller/profiles/mini/partitions.csv",
+      "bytes": 615,
+      "sha256": "343b2f9960c7fd66557c076c13cdc750a4c825c95b8cb49e11b8001b550d2763"
+    }
+  ],
+  "sharedCoreCommit": "118e6b0965cee674994bd66d7b9fb7f07c7420e8",
+  "qualification": "Source preservation only; new images require hardware verification."
+}

@@ -3,10 +3,12 @@
 [Repository overview](../README.md) · [Desktop app](../app/README.md) · [Build guide](../docs/BUILD.md) · [Firmware variants](../docs/FIRMWARE.md)
 
 Paths and commands in this guide start at the repository root unless noted otherwise.
-`controller/main/` and `controller/include/` are the full-size firmware project;
-`controller/mini/` and `controller/test_harness/` are separate ESP-IDF projects.
+The [unification verification record](../docs/testing/firmware-unification/README.md) documents preserved behavior and validation limits.
+`controller/` is the unified firmware project. Select `r14`, `r13-bench`, `mini` or
+`legacy` using `FIRMWARE_PROFILE`; see the [profile/build guide](../docs/FIRMWARE.md).
+`controller/test_harness/` remains a separate signal-analyzer project.
 
-> **2026-10-26:** R14 is ordered; R13 one-axis source and evidence are retained. The R14
+> **2026-11-02:** R14C2 is ordered; R13 one-axis source and evidence are retained. The R14
 > diagnostic build is locked against motion while new hardware and timing changes
 > await qualification. [R14 firmware status](../hardware/pcb/6dof2_r14/FIRMWARE_STATUS.md)
 > ? [Hardware release status](../hardware/pcb/6dof2_r14/README.md).
@@ -21,18 +23,18 @@ ESP-IDF v5.5 firmware for the Stewart motion platform. Supports two hardware var
 | **E-Stop** | GPIO 22, active LOW | GPIO 21, active HIGH (NC loop opened / broken = stop) |
 | **Baud** | 115200 (UART0) | 115200 (USB CDC — nominal) |
 
-The build system auto-detects the target chip and sets `PCB_VERSION` accordingly.
+The selected profile determines the required chip and board I/O. Mini uses `PCB_VERSION=0`; the STEP/DIR profiles retain PCBv1/PCBv2 mappings. Conflicting targets or safety flags are rejected.
 
 ## Project Structure
 
 ```text
 controller/
-├── main/                Full-size application, transports and ESP-IDF component
+├── main/                Shared entry/transports and selected hardware runtime
 ├── include/             Controller I/O, pulse engines, protocol and platform headers
-├── CMakeLists.txt       Full-size ESP-IDF project
+├── CMakeLists.txt       Unified ESP-IDF project
 ├── sdkconfig.defaults*  Common and target-specific configuration defaults
 ├── build-esp-idf.ps1     Local Windows build helper
-├── mini/                Separate ESP32 hobby-servo firmware project
+├── mini/                Mini profile hardware/command guide (no second project)
 ├── test_harness/        Separate ESP32-S3 step/dir analyzer project
 ├── stewart-core/        Shared Git submodule: IK, axis scaling and motion cueing
 ├── tests/               Host-side regression tests
@@ -138,24 +140,16 @@ Requires [ESP-IDF v5.5](https://docs.espressif.com/projects/esp-idf/en/v5.5/get-
 
 ```bash
 cd controller
-
-# PCBv1 (ESP32 DevKit):
-idf.py set-target esp32
-idf.py build
-idf.py -p COM6 flash monitor
-
-# PCBv2 (ESP32-S3 DevKit):
-idf.py set-target esp32s3
-idf.py build
-idf.py -p COM3 flash monitor
+idf.py -B build-r14 -D FIRMWARE_PROFILE=r14 build
+idf.py -B build-mini -D FIRMWARE_PROFILE=mini build
+idf.py -B build-legacy -D FIRMWARE_PROFILE=legacy build
 ```
+
+Each directory contains `stewart_platform.bin` and its matching bootloader/partition table. Use that same directory for any later flash command. The [profile guide](../docs/FIRMWARE.md) also documents the local-only R13 bench build.
 
 > **Note**: The ESP32 DevKit may require manual boot mode for flashing (hold BOOT, press EN, release both) if auto-reset via DTR/RTS is unreliable.
 
-The build system automatically:
-- Sets `PCB_VERSION=1` for ESP32, `PCB_VERSION=2` for ESP32-S3
-- Includes MCP23S17 driver only for PCBv1, MCPWM + EthernetTransport only for PCBv2
-- Applies target-specific `sdkconfig.defaults.esp32` or `sdkconfig.defaults.esp32s3`
+The build system rejects chip/profile mismatches and conflicting safety flags. It selects the board runtime, drivers, SDK defaults and Mini partition table before ESP-IDF configures components. R14 requires its motion lock and board monitoring; Mini links no STEP/DIR runtime.
 
 ### Build Options
 

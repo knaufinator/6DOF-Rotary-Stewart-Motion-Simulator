@@ -28,6 +28,8 @@
 
 // Project headers
 #include "helpers.h"
+#include "ControllerApplication.h"
+#include "ControllerGeometry.h"
 #include "EStopSafety.h"
 #include "DriveScaleValidation.h"
 #if defined(R14_FAIL_CLOSED) && PCB_VERSION == 2
@@ -1867,15 +1869,8 @@ void process_data(char * data) {
         if (eq) {
             *eq = '\0';
             float val = atof(eq + 1);
-            bool changed = true;
-            if (strcmp(param, "RD") == 0) stewartConfig.RD = val;
-            else if (strcmp(param, "PD") == 0) stewartConfig.PD = val;
-            else if (strcmp(param, "L1") == 0) stewartConfig.ServoArmLengthL1 = val;
-            else if (strcmp(param, "L2") == 0) stewartConfig.ConnectingArmLengthL2 = val;
-            else if (strcmp(param, "height") == 0) stewartConfig.platformHeight = val;
-            else if (strcmp(param, "theta_r") == 0) stewartConfig.theta_r = val;
-            else if (strcmp(param, "theta_p") == 0) stewartConfig.theta_p = val;
-            else { changed = false; serial_printf("CONFIG:ERR unknown key '%s'\r\n", param); }
+            const bool changed = controller::set_geometry_parameter(stewartConfig, param, val);
+            if (!changed) serial_printf("CONFIG:ERR unknown key '%s'\r\n", param);
             if (changed) {
                 computeAxisScalesFromGeometry(&axisScales, &stewartConfig, 0.90f);
                 configSaveToNVS(&stewartConfig);
@@ -2209,7 +2204,7 @@ void outputDebugData() {
 }
 
 // ESP-IDF entry point (replaces Arduino setup/loop)
-extern "C" void app_main(void)
+void controller_profile_run()
 {
 #if PCB_VERSION == 2
     // r13 drive-enable latch (F02, minimal): GPIO47 MCU_INHIBIT must be HIGH and GPIO48
@@ -2249,19 +2244,7 @@ extern "C" void app_main(void)
         (void)source;
         serial_packet_handler(payload, len);
     });
-    cobs_set_cmd_handler([](const char *cmd, int source) {
-        (void)source;   // replies go to the console and are mirrored to the Ethernet peer
-#if defined(R13_BENCH_ACTIVE)
-        if (r13_bench_command(cmd, source)) return;   // console-only, refuses network sources
-#endif
-#if defined(R14_BOARD_IO)
-        if (r14_hardware_command(cmd, source)) return;
-#endif
-        // process_data takes non-const char* for legacy reasons
-        char buf[256];
-        int n = snprintf(buf, sizeof(buf), "%s", cmd);
-        if (n > 0) process_data(buf);
-    });
+    cobs_set_cmd_handler(controller_command_dispatch);
 
     ESP_LOGI(TAG, "Stewart Platform Controller v%s (%s %s)",
         FW_VERSION_STRING, FW_BUILD_DATE, FW_BUILD_TIME);
@@ -2412,4 +2395,15 @@ extern "C" void app_main(void)
     serial_println("READY");
     
     // app_main returns, tasks continue running
+}
+
+void controller_profile_command(char* cmd, int source) {
+    (void)source;   // replies go to the console and are mirrored to the Ethernet peer
+#if defined(R13_BENCH_ACTIVE)
+    if (r13_bench_command(cmd, source)) return;   // console-only, refuses network sources
+#endif
+#if defined(R14_BOARD_IO)
+    if (r14_hardware_command(cmd, source)) return;
+#endif
+    process_data(cmd);
 }

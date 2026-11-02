@@ -1,6 +1,10 @@
+#include "FirmwareProfile.h"
 #ifdef ENABLE_BLE
 
 #include "BleTransport.h"
+#if FIRMWARE_PROFILE_MINI
+#include "CobsTransport.h"
+#endif
 #include "helpers.h"
 #include "debug_uart.h"
 
@@ -21,7 +25,7 @@
 
 static const char *TAG = "ble_transport";
 
-// Binary protocol constants (shared with serial/UDP paths)
+// Binary protocol constants (shared with serial path)
 #define BIN_SYNC_0       0xAA
 #define BIN_SYNC_1       0x55
 #define BIN_PAYLOAD_SIZE 12
@@ -35,6 +39,9 @@ typedef enum {
 
 static volatile ble_state_t s_ble_state = BLE_STATE_IDLE;
 static void (*s_packet_callback)(const uint8_t *payload) = NULL;
+#if FIRMWARE_PROFILE_MINI
+static void (*s_accel_callback)(const float *data) = NULL;
+#endif
 
 // GATT handles
 static uint16_t s_gatts_if = ESP_GATT_IF_NONE;
@@ -42,8 +49,15 @@ static uint16_t s_conn_id = 0;
 static uint16_t s_service_handle = 0;
 static uint16_t s_char_motion_handle = 0;   // writable: receives motion packets
 static uint16_t s_char_status_handle = 0;   // notify: sends status/telemetry
+#if FIRMWARE_PROFILE_MINI
+static uint16_t s_char_accel_handle = 0;    // writable: receives accel packets
+#else
 // (CCCD handle tracked implicitly by Bluedroid stack)
+#endif
 static bool s_notify_enabled = false;
+#if FIRMWARE_PROFILE_MINI
+static int s_char_add_phase = 0;            // tracks which char we're adding
+#endif
 
 // Service UUID: 42100001-0001-1000-8000-00805f9b34fb
 static uint8_t s_service_uuid[16] = {
@@ -79,9 +93,17 @@ static esp_ble_adv_params_t s_adv_params = {
     .adv_filter_policy = ADV_FILTER_ALLOW_SCAN_ANY_CON_ANY,
 };
 
+#if FIRMWARE_PROFILE_MINI
+#define DEVICE_NAME "Mini6DOF"
+#else
 #define DEVICE_NAME "StewartPlatform"
+#endif
 #define GATTS_APP_ID 0
+#if FIRMWARE_PROFILE_MINI
+#define GATTS_NUM_HANDLE 12
+#else
 #define GATTS_NUM_HANDLE 8
+#endif
 
 // ── Process received BLE data ────────────────────────────────────────
 
@@ -104,12 +126,37 @@ static void process_ble_write(const uint8_t *data, uint16_t len)
         if (xor_check == data[14]) {
             s_packet_callback(&data[2]);
         } else {
+#if FIRMWARE_PROFILE_MINI
+            DEBUG_PRINTLN("BLE checksum fail");
+#else
             DEBUG_PRINTF("BLE checksum fail\n");
+#endif
         }
         return;
     }
 
+#if FIRMWARE_PROFILE_MINI
+    DEBUG_PRINTLN("BLE: unexpected %d bytes", len);
+}
+
+// ── Process received BLE accel data ──────────────────────────────────
+
+static void process_ble_accel_write(const uint8_t *data, uint16_t len)
+{
+    if (s_accel_callback == NULL) return;
+
+    // Accept 24-byte raw payload: 6 x float32 LE
+    if (len == 24) {
+        float values[6];
+        memcpy(values, data, 24);
+        s_accel_callback(values);
+        return;
+    }
+
+    DEBUG_PRINTLN("BLE accel: unexpected %d bytes", len);
+#else
     DEBUG_PRINTF("BLE: unexpected %d bytes\n", len);
+#endif
 }
 
 // ── GAP event handler ────────────────────────────────────────────────
@@ -125,6 +172,11 @@ static void gap_event_handler(esp_gap_ble_cb_event_t event, esp_ble_gap_cb_param
                 s_ble_state = BLE_STATE_ADVERTISING;
                 ESP_LOGI(TAG, "BLE advertising started");
             }
+#if FIRMWARE_PROFILE_MINI
+            break;
+        case ESP_GAP_BLE_SET_PKT_LENGTH_COMPLETE_EVT:
+            ESP_LOGI(TAG, "BLE packet length updated");
+#endif
             break;
         default:
             break;
@@ -155,6 +207,9 @@ static void gatts_event_handler(esp_gatts_cb_event_t event, esp_gatt_if_t gatts_
         case ESP_GATTS_CREATE_EVT: {
             s_service_handle = param->create.service_handle;
             esp_ble_gatts_start_service(s_service_handle);
+#if FIRMWARE_PROFILE_MINI
+            s_char_add_phase = 0;
+#endif
 
             // Motion RX characteristic (writable — receives binary motion packets)
             esp_bt_uuid_t motion_uuid = {
@@ -168,11 +223,19 @@ static void gatts_event_handler(esp_gatts_cb_event_t event, esp_gatt_if_t gatts_
         }
 
         case ESP_GATTS_ADD_CHAR_EVT: {
+#if FIRMWARE_PROFILE_MINI
+            if (s_char_add_phase == 0) {
+                // Phase 0: Motion RX char just added
+#else
             if (s_char_motion_handle == 0) {
+#endif
                 s_char_motion_handle = param->add_char.attr_handle;
                 ESP_LOGI(TAG, "Motion RX char handle: %d", s_char_motion_handle);
+#if FIRMWARE_PROFILE_MINI
+                s_char_add_phase = 1;
+#endif
 
-                // Status TX characteristic (notify — sends telemetry/status)
+                // Add Status TX characteristic (notify — sends telemetry/status)
                 esp_bt_uuid_t status_uuid = {
                     .len = ESP_UUID_LEN_16,
                     .uuid = { .uuid16 = 0xFF02 },
@@ -180,9 +243,30 @@ static void gatts_event_handler(esp_gatts_cb_event_t event, esp_gatt_if_t gatts_
                 esp_gatt_perm_t status_perm = ESP_GATT_PERM_READ;
                 esp_gatt_char_prop_t status_prop = ESP_GATT_CHAR_PROP_BIT_NOTIFY | ESP_GATT_CHAR_PROP_BIT_READ;
                 esp_ble_gatts_add_char(s_service_handle, &status_uuid, status_perm, status_prop, NULL, NULL);
+#if FIRMWARE_PROFILE_MINI
+            } else if (s_char_add_phase == 1) {
+                // Phase 1: Status TX char just added
+#else
             } else {
+#endif
                 s_char_status_handle = param->add_char.attr_handle;
                 ESP_LOGI(TAG, "Status TX char handle: %d", s_char_status_handle);
+#if FIRMWARE_PROFILE_MINI
+                s_char_add_phase = 2;
+
+                // Add Accel RX characteristic (writable — receives 24-byte accel packets)
+                esp_bt_uuid_t accel_uuid = {
+                    .len = ESP_UUID_LEN_16,
+                    .uuid = { .uuid16 = 0xFF03 },
+                };
+                esp_gatt_perm_t accel_perm = ESP_GATT_PERM_WRITE;
+                esp_gatt_char_prop_t accel_prop = ESP_GATT_CHAR_PROP_BIT_WRITE | ESP_GATT_CHAR_PROP_BIT_WRITE_NR;
+                esp_ble_gatts_add_char(s_service_handle, &accel_uuid, accel_perm, accel_prop, NULL, NULL);
+            } else {
+                // Phase 2: Accel RX char just added
+                s_char_accel_handle = param->add_char.attr_handle;
+                ESP_LOGI(TAG, "Accel RX char handle: %d", s_char_accel_handle);
+#endif
             }
             break;
         }
@@ -200,9 +284,18 @@ static void gatts_event_handler(esp_gatts_cb_event_t event, esp_gatt_if_t gatts_
             conn_params.timeout = 400;     // 4s
             esp_ble_gap_update_conn_params(&conn_params);
 
+#if FIRMWARE_PROFILE_MINI
+            // Request preferred connection params for higher throughput
+            esp_ble_gap_set_prefer_conn_params(param->connect.remote_bda, 6, 6, 0, 400);
+
+#endif
             ESP_LOGI(TAG, "BLE client connected (conn_id=%d)", s_conn_id);
+#if FIRMWARE_PROFILE_MINI
+            cobs_send_fmt(COBS_CH_LOG, "BLE:CONNECTED");
+#else
             printf("BLE:CONNECTED\r\n");
             fflush(stdout);
+#endif
             break;
         }
 
@@ -210,8 +303,12 @@ static void gatts_event_handler(esp_gatts_cb_event_t event, esp_gatt_if_t gatts_
             s_ble_state = BLE_STATE_ADVERTISING;
             s_notify_enabled = false;
             ESP_LOGI(TAG, "BLE client disconnected, restarting advertising");
+#if FIRMWARE_PROFILE_MINI
+            cobs_send_fmt(COBS_CH_LOG, "BLE:DISCONNECTED");
+#else
             printf("BLE:DISCONNECTED\r\n");
             fflush(stdout);
+#endif
             esp_ble_gap_start_advertising(&s_adv_params);
             break;
         }
@@ -219,6 +316,11 @@ static void gatts_event_handler(esp_gatts_cb_event_t event, esp_gatt_if_t gatts_
         case ESP_GATTS_WRITE_EVT: {
             if (param->write.handle == s_char_motion_handle) {
                 process_ble_write(param->write.value, param->write.len);
+#if FIRMWARE_PROFILE_MINI
+            }
+            if (param->write.handle == s_char_accel_handle) {
+                process_ble_accel_write(param->write.value, param->write.len);
+#endif
             }
             // Handle CCCD write for notifications
             if (param->write.len == 2) {
@@ -248,7 +350,7 @@ bool ble_transport_init(void (*process_packet)(const uint8_t *payload))
 {
     s_packet_callback = process_packet;
 
-    // Release classic BT memory (ESP32-S3 only has BLE)
+    // Release classic BT memory (we only need BLE)
     ESP_ERROR_CHECK(esp_bt_controller_mem_release(ESP_BT_MODE_CLASSIC_BT));
 
     esp_bt_controller_config_t bt_cfg = BT_CONTROLLER_INIT_CONFIG_DEFAULT();
@@ -280,12 +382,27 @@ bool ble_transport_init(void (*process_packet)(const uint8_t *payload))
     esp_ble_gap_register_callback(gap_event_handler);
     esp_ble_gatts_app_register(GATTS_APP_ID);
 
+#if FIRMWARE_PROFILE_MINI
+    // Set MTU high enough for 24-byte accel packets + ATT overhead
+    esp_ble_gatt_set_local_mtu(128);
+#else
     // Set MTU to allow 15-byte packets in a single write
     esp_ble_gatt_set_local_mtu(23);  // minimum ATT MTU that supports our packet size
+#endif
 
+#if FIRMWARE_PROFILE_MINI
+    ESP_LOGI(TAG, "BLE transport initialized, device name: %s (MTU=128)", DEVICE_NAME);
+#else
     ESP_LOGI(TAG, "BLE transport initialized, device name: %s", DEVICE_NAME);
+#endif
     return true;
 }
+
+#if FIRMWARE_PROFILE_MINI
+void ble_transport_set_accel_callback(void (*process_accel)(const float *data)) {
+    s_accel_callback = process_accel;
+}
+#endif
 
 bool ble_transport_connected(void)
 {

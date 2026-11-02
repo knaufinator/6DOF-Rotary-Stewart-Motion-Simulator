@@ -1,3 +1,8 @@
+#pragma once
+#include "FirmwareProfile.h"
+#if FIRMWARE_PROFILE_MINI
+#include "boards/MiniPins.h"
+#else
 #ifndef HELPERS_H
 #define HELPERS_H
 
@@ -113,3 +118,5 @@ float mapfloat(float x, float in_min, float in_max, float out_min, float out_max
 float rateLimit(float target, float current);
 
 #endif // HELPERS_H
+
+#endif

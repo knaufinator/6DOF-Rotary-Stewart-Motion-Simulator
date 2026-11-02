@@ -26,5 +26,5 @@ Board-specific build/buy/bench guidance stays with the hardware package.
 Unless stated otherwise, command examples start at the repository root. The app
 normally runs with `app/` as its working directory to retain its existing settings
 and recordings. Documentation automation instead uses an isolated empty session;
-see the automation guide. Firmware projects are `controller/`, `controller/mini/` and
-`controller/test_harness/`; the shared core is `controller/stewart-core/`.
+see the automation guide. The unified firmware project is `controller/`; `controller/test_harness/` is the
+independent analyzer project; the shared core is `controller/stewart-core/`.

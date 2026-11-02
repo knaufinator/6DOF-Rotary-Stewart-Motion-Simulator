@@ -53,6 +53,20 @@ endif()
 enable_testing()
 add_test(NAME unit_tests COMMAND stewart-tests)
 
+foreach(profile mini full)
+    add_executable(unified-${profile}-protocol integration/unified_protocol.cpp
+        ../main/Application.cpp ../main/CobsTransport.cpp)
+    target_include_directories(unified-${profile}-protocol PRIVATE integration/sdk ../include)
+    target_compile_definitions(unified-${profile}-protocol PRIVATE CONFIG_ESP_CONSOLE_USB_SERIAL_JTAG=1)
+    if(profile STREQUAL "mini")
+        target_compile_definitions(unified-${profile}-protocol PRIVATE FIRMWARE_PROFILE_MINI=1 FIRMWARE_PROFILE_NAME="mini")
+    endif()
+    if(MSVC)
+        target_compile_options(unified-${profile}-protocol PRIVATE /FI${CMAKE_CURRENT_SOURCE_DIR}/integration/sdk/compat.h)
+    endif()
+    add_test(NAME unified_${profile}_protocol COMMAND unified-${profile}-protocol)
+endforeach()
+
 # Production runtime sources, with SDK/board substitutes scoped to this executable.
 # No changes to ESP-IDF build bindings or hardware firmware options.
 find_package(Threads REQUIRED)

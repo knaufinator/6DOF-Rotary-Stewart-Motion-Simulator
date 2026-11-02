@@ -1,10 +1,6 @@
 # `controller/mini/` — Mini-6DOF Firmware Variant
 
-Desktop-scale **mini** variant of the Stewart-platform firmware: an **ESP32** driving
-**6 hobby servos via LEDC PWM**. This is one of two firmware variants in this repo — see
-[Firmware variants](../../docs/FIRMWARE.md) for the variant map. Both variants share the
-single [`stewart-core`](https://github.com/knaufinator/stewart-core) submodule under `controller/` (IK / AxisScaling /
-MotionCueing — single source of truth).
+The `mini` profile of the [unified controller firmware](../../docs/FIRMWARE.md) drives six hobby servos using ESP32 LEDC PWM. Build it from `controller/`; this directory retains the hardware/command guide. The separate Mini ESP-IDF project and duplicated transport/header files have been removed. Shared code and Mini's runtime now live alongside the STEP/DIR runtime.
 
 | | This variant (`controller/mini/`) | `controller/` (normal) |
 |---|---|---|
@@ -19,48 +15,19 @@ MotionCueing — single source of truth).
 > firmware) into the main app repo as part of the firmware-unification effort. The mini's former
 > `components/stewart-core` submodule was dropped in favor of the shared submodule now under `controller/`.
 
-## Build
+## Build and source layout
 
-Requires ESP-IDF v5.5 (matches the rest of the repo).
+Use ESP-IDF 5.5.2. From the repository root:
 
 ```bash
-# from repo root, one-time: fetch the shared core
 git submodule update --init --recursive
-
-cd controller/mini
-idf.py set-target esp32   # first time only
-idf.py build
-idf.py -p COM6 flash monitor
+cd controller
+idf.py -B build-mini -D FIRMWARE_PROFILE=mini build
 ```
 
-`controller/mini/CMakeLists.txt` points at the sibling shared submodule via
-`set(EXTRA_COMPONENT_DIRS "${CMAKE_CURRENT_LIST_DIR}/../stewart-core")`.
-The main controller uses `${CMAKE_CURRENT_LIST_DIR}/stewart-core` instead; `main/CMakeLists.txt` resolves it through `PRIV_REQUIRES stewart-core`.
+The image is `controller/build-mini/stewart_platform.bin`. Use the same build directory for later ESP-IDF flash commands. `PROFILE?` returns `mini,pwm-servo`; the existing fingerprint still reports `platform=mini-6dof,caps=raw` with protocol 1. No device is flashed by building.
 
-On this machine, the headless build is driven by the **`6dof-esp-build`** skill
-(`idf_build.ps1 -ProjDir controller/mini -Clean`, run from the repository root), which encodes the ESP-IDF v5.5 env setup that avoids the
-MSYS/venv/stderr traps. CI builds it the same way (see the "Build Mini Firmware" job in
-`.github/workflows/ci.yml`).
-
-## Project structure
-
-```
-controller/mini/
-├── main/
-│   ├── main.cpp              # app_main, CueTask, SOURCE modes, command API, LEDC servo output
-│   ├── CobsTransport.cpp     # COBS-framed serial transport (CH_DATA18 / CH_DATA_RAW / CH_CMD)
-│   ├── BleTransport.cpp      # BLE GATT server (motion + accel characteristics)
-│   ├── helpers.cpp           # mapfloat / rate-limit utilities
-│   ├── laps123_moderate.m6p  # baked 50 Hz motion-cued laps 1-3 (EMBED_FILES) for boot demo
-│   └── CMakeLists.txt        # component build (PRIV_REQUIRES stewart-core)
-├── include/                  # BleTransport.h, CobsTransport.h, cobs.h, helpers.h, version.h, debug_uart.h
-├── partitions.csv            # 4 MB no-OTA table: 2 MB app + raw seq partition
-├── sdkconfig.defaults        # ESP32 config
-└── CMakeLists.txt            # project-level, wires EXTRA_COMPONENT_DIRS → ../stewart-core
-```
-
-IK / AxisScaling / MotionCueing come from `../stewart-core`, **not** this tree.
-The only mini-specific code is the LEDC servo backend + BLE transport + pin map.
+The [Mini runtime](../main/MiniRuntime.cpp) contains the PWM/cue task, servo calibration, source state and playback policy. [Mini pins](../include/boards/MiniPins.h), [SDK defaults](../profiles/mini/sdkconfig.defaults), [partition table](../profiles/mini/partitions.csv) and embedded sequence live in the unified project. COBS, BLE, codec, helpers, identity formatting and geometry setters are shared. Existing NVS keys, partition offsets, boot demo, source transitions and PWM defaults are preserved; the R14 profile cannot inherit Mini's demo startup.
 
 ## Hardware
 
@@ -113,7 +80,7 @@ mini cue loop. See `6dof/MINI_SERVO_UPGRADE.md` for the servo spec.
 
 ## Communication
 
-- **Serial**: COBS-framed over USB — `CH_DATA18` (0x06, baked 18-byte motion), `CH_DATA_RAW`
+- **Serial**: COBS-framed over USB — `CH_DATA` (0x01, baked 12-byte motion), `CH_DATA_RAW`
   (0x07, raw 6×float32 live telemetry), `CH_CMD` (0x02, ASCII commands). Legacy 15-byte
   `0xAA/0x55` binary + CSV also accepted.
 - **BLE**: GATT server (device name `Mini6DOF`) — Motion char `0xFF01` (12 B, 6×uint16 LE),

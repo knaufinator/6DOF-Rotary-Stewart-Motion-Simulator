@@ -55,6 +55,7 @@ typedef void (*cobs_tx_sink_t)(const uint8_t *encoded_frame, int len);  // inclu
 
 // Register handlers for incoming DATA and CMD channels
 void cobs_set_data_handler(cobs_data_cb_t handler);
+void cobs_set_data_raw_handler(cobs_data_cb_t handler);
 void cobs_set_cmd_handler(cobs_cmd_cb_t handler);
 
 // Mirror every outbound frame to a second carrier (e.g. the Ethernet peer). NULL disables.

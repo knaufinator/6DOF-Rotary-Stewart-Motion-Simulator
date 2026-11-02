@@ -7,6 +7,8 @@
 #include <stdint.h>
 
 // Channel IDs for multiplexed COBS transport
+#define COBS_CH_DATA 0x01 // Mini baked: 6 x uint16
+#define COBS_CH_DATA_RAW 0x07 // Mini pre-cue: 6 x float32
 #define COBS_CH_CMD    0x02  // App->ESP: ASCII command string
 #define COBS_CH_TEL    0x03  // ESP->App: telemetry (48 bytes: 12x float32 LE)
 #define COBS_CH_LOG    0x04  // ESP->App: log/debug text

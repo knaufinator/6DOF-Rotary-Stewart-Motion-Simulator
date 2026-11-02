@@ -1,0 +1,104 @@
+{
+  "schemaVersion": 1,
+  "revision": "R14C2",
+  "status": "ORDERED_HARDWARE_TESTS_PENDING",
+  "orderedDate": "2026-11-02",
+  "timezone": "America/New_York",
+  "confirmationSource": "Confirmed in this conversation: ordered; waiting to test.",
+  "orderIdentifier": null,
+  "boardQuantity": null,
+  "finalFactoryReceiptCaptured": false,
+  "packageBinding": "Fresh prepared repository snapshot captured from unchanged verified C2 master after order confirmation; actual factory-upload bytes and private allocation were not independently captured.",
+  "exportDirectory": "exports/2026-11-02-ordered",
+  "originalOrderRecord": "ORDER_RECORD.json",
+  "reviewedSourceCommit": "e461af3ef665219d376daa7173cd8837f362c3d0",
+  "projectUuid": "df6039acdfad4375ae07aa6257cd0186",
+  "pcbUuid": "6567ed8798fb578fbfd0297236c2ee0e",
+  "components": 324,
+  "supplierCodes": 91,
+  "logicalPins": 1214,
+  "hardwareTests": "NOT_RUN",
+  "firmwareChanged": false,
+  "motionAdmission": "LOCKED_PENDING_PHYSICAL_R14_QUALIFICATION",
+  "acceptancePlan": "BRINGUP.md",
+  "qualificationLimits": "review/2026-11-02-ordered/README.md",
+  "expectedGitTag": "r14c2-ordered-2026-11-02",
+  "changePolicy": "Preserve frozen manufacturing inputs. Record later changes in a new dated snapshot.",
+  "frozenFiles": [
+    {
+      "path": "hardware/pcb/6dof2_r14/exports/2026-11-02-ordered/EXPORT_VALIDATION.json",
+      "bytes": 600,
+      "sha256": "743d6187993dbbf1633bf76c97ae184a70671e847f7f904b728a12abe2a24a7c"
+    },
+    {
+      "path": "hardware/pcb/6dof2_r14/exports/2026-11-02-ordered/NATIVE_COMPARISON.json",
+      "bytes": 2,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "path": "hardware/pcb/6dof2_r14/exports/2026-11-02-ordered/NATIVE_DRC.json",
+      "bytes": 2,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "path": "hardware/pcb/6dof2_r14/exports/2026-11-02-ordered/R14-assembly.step.zip",
+      "bytes": 15393645,
+      "sha256": "ca1a1faaa3e5b6055930c5cbdf1925f48249e5882d91ce8e40001627fdc3e820"
+    },
+    {
+      "path": "hardware/pcb/6dof2_r14/exports/2026-11-02-ordered/R14-BOM-JLC.csv",
+      "bytes": 5156,
+      "sha256": "0e332823f787165ef38ffba0926bea9d2474265717dc43329da65e584a7ff86b"
+    },
+    {
+      "path": "hardware/pcb/6dof2_r14/exports/2026-11-02-ordered/R14-BOM-native.tsv",
+      "bytes": 16578,
+      "sha256": "2522d7dc3e6520b726df69b5313175e5544c7f0a4f6a1cecc1744aec5e30c6ab"
+    },
+    {
+      "path": "hardware/pcb/6dof2_r14/exports/2026-11-02-ordered/R14-CPL-JLC.csv",
+      "bytes": 8754,
+      "sha256": "a270e03dc50374ead78288100bc4359a748f71387faa3615ecc2e3689f2036f4"
+    },
+    {
+      "path": "hardware/pcb/6dof2_r14/exports/2026-11-02-ordered/R14-CPL-native.tsv",
+      "bytes": 105768,
+      "sha256": "03164896b430f276bf940e01520639d275c9d4cfa3d2f86767d606c6e42b88d2"
+    },
+    {
+      "path": "hardware/pcb/6dof2_r14/exports/2026-11-02-ordered/R14-Gerber-FS36.zip",
+      "bytes": 506820,
+      "sha256": "e6974a9362af625a3b2d1f043c66ea0797b335678b36eacb4c908d5ae17f5bd2"
+    },
+    {
+      "path": "hardware/pcb/6dof2_r14/exports/2026-11-02-ordered/R14-PCB.net",
+      "bytes": 615871,
+      "sha256": "d644340a932cb89312f361e47b67cf864caeafeddf2380eb232da87667cfa60c"
+    },
+    {
+      "path": "hardware/pcb/6dof2_r14/exports/2026-11-02-ordered/R14-PCB.pdf",
+      "bytes": 2906800,
+      "sha256": "472a04f2d4b49ff5a19aa10603d32b66a1582ec0357b4c6dbfda5a68a09b2c1f"
+    },
+    {
+      "path": "hardware/pcb/6dof2_r14/exports/2026-11-02-ordered/R14-project.epro2",
+      "bytes": 1157773,
+      "sha256": "a0a305afbc1e878dcb2c90e79f736d677dfe18d381ad196d0835b33649409fe9"
+    },
+    {
+      "path": "hardware/pcb/6dof2_r14/exports/2026-11-02-ordered/R14-schematic.net",
+      "bytes": 876143,
+      "sha256": "a45cf49cdd5f1aa20773cfd13e2c7c40d31adfb9330ed839f5e4b392794a1753"
+    },
+    {
+      "path": "hardware/pcb/6dof2_r14/exports/2026-11-02-ordered/R14-schematic.pdf",
+      "bytes": 1982829,
+      "sha256": "623a903f2a9055c1266996bfefd605289c35b339d922b3aa600dddc474b5a41e"
+    },
+    {
+      "path": "hardware/pcb/6dof2_r14/exports/2026-11-02-ordered/R14-schematic.svg",
+      "bytes": 1783135,
+      "sha256": "82cfb8ff0bebf9be33819200da21f04256a37ea2008d0940f806af9bc8231533"
+    }
+  ]
+}

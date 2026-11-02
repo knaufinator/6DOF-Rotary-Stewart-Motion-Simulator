@@ -57,6 +57,7 @@ jobs:
       - name: Original order and replacement evidence integrity
         run: |
           python tools/verify_r14_order_lock.py
+          python tools/verify_r14_order_lock.py --record hardware/pcb/6dof2_r14/ORDER_RECORD_C2.json
           python tools/test_r14_release_manifest.py
           python tools/verify_r14_release_manifest.py
       - name: Inventory parser and stock classification regressions (offline)
@@ -101,12 +102,19 @@ jobs:
             --source hardware/pcb/6dof2_r14/exports/2026-11-01-stock/R14-project.epro2 \
             --bounds hardware/pcb/6dof2_r14/review/2026-11-01-stock/BODY_LIMITS.json \
             --output "$RUNNER_TEMP/pcb-review/c2-clearance.json"
-      - name: R14C2 all 324 native STEP components and interference pairs
+      - name: Ordered C2 snapshot parity, body/access checks and integrity
+        run: |
+          python tools/verify_r14_ordered_exports.py \
+            --output "$RUNNER_TEMP/pcb-review/c2-ordered-parity.json" \
+            --clearance-output "$RUNNER_TEMP/pcb-review/c2-ordered-clearance.json"
+          python tools/verify_r14_release_manifest.py \
+            --manifest hardware/pcb/6dof2_r14/exports/2026-11-02-ordered/RELEASE_MANIFEST.json
+      - name: Ordered R14C2 all 324 native STEP components and interference pairs
         run: |
           python tools/audit_pcb_mechanical.py \
-            --source hardware/pcb/6dof2_r14/exports/2026-11-01-stock/R14-project.epro2 \
-            --step hardware/pcb/6dof2_r14/exports/2026-11-01-stock/R14-assembly.step.zip \
-            --internal-clearance "$RUNNER_TEMP/pcb-review/c2-clearance.json" \
+            --source hardware/pcb/6dof2_r14/exports/2026-11-02-ordered/R14-project.epro2 \
+            --step hardware/pcb/6dof2_r14/exports/2026-11-02-ordered/R14-assembly.step.zip \
+            --internal-clearance "$RUNNER_TEMP/pcb-review/c2-ordered-clearance.json" \
             --output "$RUNNER_TEMP/pcb-review/c2-mechanical.json"
       - uses: actions/upload-artifact@v4
         if: always()

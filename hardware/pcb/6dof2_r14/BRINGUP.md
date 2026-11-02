@@ -1,13 +1,17 @@
 # R14 bench qualification plan
 
+## R14C2 entry condition — 2 November 2026
+
+R14C2 is ordered and awaiting physical testing. Use the [C2 order record](ORDER_RECORD_C2.json) and [frozen files](exports/2026-11-02-ordered/README.md) as the current reference. Verify the delivered board has C2's 1.10 mm Amphenol signal drills, HR911105A footprint and retained J12 clearance correction. Record the received order identifier, quantities and actual fitted parts when available; these were not captured with the confirmation. Check connector mating height/support and Ethernet link reliability before progressing to motion. All acceptance steps below remain **NOT RUN on R14**.
+
 ## R14C1 entry condition — 27 October 2026
 
 Identify the physical board and file set before applying power. The original ordered R14 placement has confirmed J12 interference and is not assembly-approved. R14C1 carries the corrected positions, matching rerouted pads and R14C1 board marking. Retain J12. Verify the complete replacement package was used; a CPL-only change cannot repair an already fabricated board. See [factory disposition](MECHANICAL_CORRECTION.md).
 
 Inspect J12 versus U20/D13/R87/C53, U19 solder joints and via locations, J1/J2 room, all probe sites, mounting heads, actual D-sub nut stacks and mated connector/hood/cable fit. Confirm every part's polarity and orientation against the native source/BOM. Static internal clearance checks pass, but physical fit, cable loss, temperature and motion behavior remain untested. The electrical acceptance sequence below remains required.
 
-**R14 was ordered on 26 October 2026, as confirmed by the owner.**
-The [ordered package](exports/2026-10-26/README.md) is the design baseline.
+**The original R14 order was confirmed on 26 October 2026.**
+The [original package](exports/2026-10-26/README.md) is retained as history; use the C2 reference above for the new delivery.
 All hardware acceptance steps below remain NOT RUN on R14. Record the actual
 hardware/package hash, firmware image/ELF hash, instrument and setup for each result.
 Keep motion admission locked until the applicable gates pass.

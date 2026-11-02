@@ -1,0 +1,119 @@
+{
+  "schemaVersion": 1,
+  "revision": "R14C2",
+  "capturedDate": "2026-11-02",
+  "status": "ORDERED_HARDWARE_TESTS_PENDING",
+  "components": 324,
+  "supplierCodes": 91,
+  "logicalPins": 1214,
+  "nativeDrc": [],
+  "schematicPcbComparison": [],
+  "hardwareTests": "NOT_RUN",
+  "firmwareChanged": false,
+  "orderConfirmation": "Conversation; no independent factory receipt captured",
+  "reviewDirectory": "../../review/2026-11-02-ordered",
+  "files": [
+    {
+      "path": "EXPORT_VALIDATION.json",
+      "bytes": 600,
+      "sha256": "743d6187993dbbf1633bf76c97ae184a70671e847f7f904b728a12abe2a24a7c"
+    },
+    {
+      "path": "NATIVE_COMPARISON.json",
+      "bytes": 2,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "path": "NATIVE_DRC.json",
+      "bytes": 2,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "path": "R14-assembly.step.zip",
+      "bytes": 15393645,
+      "sha256": "ca1a1faaa3e5b6055930c5cbdf1925f48249e5882d91ce8e40001627fdc3e820"
+    },
+    {
+      "path": "R14-BOM-JLC.csv",
+      "bytes": 5156,
+      "sha256": "0e332823f787165ef38ffba0926bea9d2474265717dc43329da65e584a7ff86b"
+    },
+    {
+      "path": "R14-BOM-native.tsv",
+      "bytes": 16578,
+      "sha256": "2522d7dc3e6520b726df69b5313175e5544c7f0a4f6a1cecc1744aec5e30c6ab"
+    },
+    {
+      "path": "R14-CPL-JLC.csv",
+      "bytes": 8754,
+      "sha256": "a270e03dc50374ead78288100bc4359a748f71387faa3615ecc2e3689f2036f4"
+    },
+    {
+      "path": "R14-CPL-native.tsv",
+      "bytes": 105768,
+      "sha256": "03164896b430f276bf940e01520639d275c9d4cfa3d2f86767d606c6e42b88d2"
+    },
+    {
+      "path": "R14-Gerber-FS36.zip",
+      "bytes": 506820,
+      "sha256": "e6974a9362af625a3b2d1f043c66ea0797b335678b36eacb4c908d5ae17f5bd2"
+    },
+    {
+      "path": "R14-PCB.net",
+      "bytes": 615871,
+      "sha256": "d644340a932cb89312f361e47b67cf864caeafeddf2380eb232da87667cfa60c"
+    },
+    {
+      "path": "R14-PCB.pdf",
+      "bytes": 2906800,
+      "sha256": "472a04f2d4b49ff5a19aa10603d32b66a1582ec0357b4c6dbfda5a68a09b2c1f"
+    },
+    {
+      "path": "R14-project.epro2",
+      "bytes": 1157773,
+      "sha256": "a0a305afbc1e878dcb2c90e79f736d677dfe18d381ad196d0835b33649409fe9"
+    },
+    {
+      "path": "R14-schematic.net",
+      "bytes": 876143,
+      "sha256": "a45cf49cdd5f1aa20773cfd13e2c7c40d31adfb9330ed839f5e4b392794a1753"
+    },
+    {
+      "path": "R14-schematic.pdf",
+      "bytes": 1982829,
+      "sha256": "623a903f2a9055c1266996bfefd605289c35b339d922b3aa600dddc474b5a41e"
+    },
+    {
+      "path": "R14-schematic.svg",
+      "bytes": 1783135,
+      "sha256": "82cfb8ff0bebf9be33819200da21f04256a37ea2008d0940f806af9bc8231533"
+    },
+    {
+      "path": "README.md",
+      "bytes": 2854,
+      "sha256": "a9f4a24d9e04f5e42b30b8849e11957395eaa9c5d47269b0440ad1a6fa20829f"
+    }
+  ],
+  "reviewFiles": [
+    {
+      "path": "EXPORT_PARITY.json",
+      "bytes": 771,
+      "sha256": "0668905084a560e41a4b3d33f1eab050be93f483d48668af6dafaf388f035196"
+    },
+    {
+      "path": "INTERNAL_CLEARANCE.json",
+      "bytes": 34079,
+      "sha256": "e5adda03b7c1fcf19996fdb5aba562b07cffcc5e42cc49db0edfe2a0c6ed2822"
+    },
+    {
+      "path": "MECHANICAL_REVIEW.json",
+      "bytes": 270381,
+      "sha256": "a593d715f475bab10fb5e6a7cbaa970725587f9b4a9a0a434f64d34bcdb2f52b"
+    },
+    {
+      "path": "README.md",
+      "bytes": 3874,
+      "sha256": "27fc16011b83c2446136aaf44a38f2b501b6ab659b5f500b973e6f2399a2f3b8"
+    }
+  ]
+}

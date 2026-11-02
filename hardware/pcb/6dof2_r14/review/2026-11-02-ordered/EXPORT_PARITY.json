@@ -1,0 +1,14 @@
+{
+  "status": "PASS_ORDERED_C2_SOURCE_CAM_AND_ASSEMBLY_IDENTITIES",
+  "components": 324,
+  "nativeNonHeaderRecordsEqual": true,
+  "manufacturingCommandsEqual": true,
+  "assemblyTablesByteEqual": true,
+  "nativeNetlistsEqual": true,
+  "stepDataEntitiesByteEqual": false,
+  "stepPlacementRefs": 324,
+  "stepGeometryQualification": "Independent fresh STEP validity/interference report required; regenerated entity IDs are not a geometry comparison.",
+  "baselineArchiveSha256": "8fb559fe2727b469ed42737be82b6bcb11eccb92d8a7e25eae8332830f782948",
+  "orderedArchiveSha256": "a0a305afbc1e878dcb2c90e79f736d677dfe18d381ad196d0835b33649409fe9",
+  "scope": "Prepared snapshot parity; actual factory-upload bytes and physical tests are not independently verified."
+}

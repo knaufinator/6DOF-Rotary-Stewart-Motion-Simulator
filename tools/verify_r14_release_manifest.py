@@ -1,4 +1,4 @@
-"""Read-only integrity check of the R14C1 export and review manifest.
+"""Read-only integrity check of an R14 export and review manifest.
 
 Hash agreement preserves recorded evidence; it does not approve manufacture,
 qualify hardware, or regenerate an electrical/CAM review.
@@ -36,7 +36,8 @@ def verify(manifest=DEFAULT, root=ROOT):
     for name in ('NATIVE_DRC.json', 'NATIVE_COMPARISON.json'):
         if json.loads((manifest.parent / name).read_text(encoding='utf8')) != []:
             raise ValueError('Unresolved native findings: ' + name)
-    return {'status': 'PASS_R14C1_RECORDED_ARTIFACT_INTEGRITY',
+    revision = data.get('revision', 'R14C1')
+    return {'status': 'PASS_'+revision+'_RECORDED_ARTIFACT_INTEGRITY',
             'exportFiles': len(files), 'reviewFiles': len(reviews),
             'qualification': 'Recorded evidence integrity only; physical and factory gates unchanged'}
 

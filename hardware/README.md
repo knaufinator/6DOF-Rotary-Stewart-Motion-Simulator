@@ -2,18 +2,18 @@
 
 [Repository](../README.md) ? [Controller](../controller/README.md) ? [App](../app/README.md) ? [Documentation](../docs/README.md)
 
-**R14 was ordered on 26 October 2026. Hardware testing is next.** R13 was manufactured and demonstrated on one bench axis; that evidence does not qualify the new R14 circuits or a loaded platform.
+**R14C2 stock revision implemented, 1 November 2026; fabrication gates remain open.** The original R14 was ordered on 26 October and later required the J12 clearance correction. C2 preserves that correction and changes three supplier-code groups. R13 was demonstrated on one bench axis; that evidence does not qualify the new R14 circuits or a loaded platform.
 
-![Ordered R14 top copper and silkscreen](pcb/6dof2_r14/images/r14-pcb-top.png)
+![R14C2 top copper and silkscreen](pcb/6dof2_r14/images/r14c2-pcb-top.png)
 
 | Start here | Contents |
 | --- | --- |
-| [R14 status](pcb/6dof2_r14/README.md) | Ordered revision, PCB/schematic previews and manufacturing files |
+| [R14 status](pcb/6dof2_r14/README.md) | Current candidate, PCB/schematic previews, BOM and release gates |
 | [Design philosophy](pcb/6dof2_r14/DESIGN_PHILOSOPHY.md) | Pulse permission, retained healthy-axis torque, sensing and hardware checks |
 | [Firmware evidence](pcb/6dof2_r14/FIRMWARE_STATUS.md) | Recovered R13 baseline, new R14 code and qualification limits |
 | [Design review](pcb/6dof2_r14/review/README.md) | Section report and component/pin/copper/label registers |
 | [Bench qualification](pcb/6dof2_r14/BRINGUP.md) | Electrical, cable, pulse, fault and drive tests |
-| [Corrected exports](pcb/6dof2_r14/exports/2026-10-26/README.md) | Matching Gerber/BOM/CPL, master, STEP and hashes |
+| [C2 engineering exports](pcb/6dof2_r14/exports/2026-11-01-stock/README.md) | Matching Gerber/BOM/CPL, master, STEP and hashes; DO NOT ORDER until gates are resolved |
 | [Mechanical models](mechanical/) | Platform and mini printed-part assets |
 | [Platform geometry](mechanical/platform_geometry.md) | Dimensions, motor layout and calibration |
 

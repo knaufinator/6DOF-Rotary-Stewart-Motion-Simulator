@@ -1,5 +1,7 @@
 # R14C1 inventory check — 1 November 2026
 
+Historical C1 stock snapshot. The [subsequent C2 revision](../2026-11-01-stock/README.md) changes the three shortfall codes; its [native-derived inventory check](../2026-11-01-stock/inventory/INVENTORY.csv) records the new selection.
+
 **88 of 91 BOM codes cover the net fitted demand for five boards in JLC's public Available Order Qty. Three codes have shortfalls.** This is a sourcing snapshot, not an order allocation or fabrication release.
 
 The check ran from 21:21:53 to 21:22:27 UTC (16:21–16:22 EST) against the current [R14C1 BOM](../../exports/2026-10-27-clearance/R14-BOM-JLC.csv) and [CPL](../../exports/2026-10-27-clearance/R14-CPL-JLC.csv) at commit `671702d10a9232910f4c6d9a5750f699a1a23051`. All 324 required fitted references and 91 unique supplier codes resolved. BOM quantities match designator counts; the BOM and CPL contain the same unique references.

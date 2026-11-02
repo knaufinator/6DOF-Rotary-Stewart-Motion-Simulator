@@ -43,7 +43,7 @@ jobs:
           path: ${{ runner.temp }}/readme-links.json
 
   pcb-review:
-    name: R14C1 Artifact and Mechanical Regressions
+    name: R14C1 and R14C2 Artifact and Mechanical Regressions
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
@@ -61,6 +61,8 @@ jobs:
           python tools/verify_r14_release_manifest.py
       - name: Inventory parser and stock classification regressions (offline)
         run: python tools/test_jlc_inventory.py
+      - name: Supplier STEP assembly-root regression tests
+        run: python tools/test_r14_step_refs.py
       - name: J12 outline regression and complete outline coverage
         run: |
           mkdir -p "$RUNNER_TEMP/pcb-review"
@@ -82,8 +84,32 @@ jobs:
             --step hardware/pcb/6dof2_r14/exports/2026-10-27-clearance/R14-assembly.step.zip \
             --internal-clearance "$RUNNER_TEMP/pcb-review/internal-clearance.json" \
             --output "$RUNNER_TEMP/pcb-review/mechanical.json"
+      - name: R14C2 source interfaces, bounded routing delta and artifact integrity
+        run: |
+          python tools/verify_r14_stock_revision.py --output "$RUNNER_TEMP/pcb-review/c2-source.json"
+          python tools/verify_r14_release_manifest.py \
+            --manifest hardware/pcb/6dof2_r14/exports/2026-11-01-stock/RELEASE_MANIFEST.json
+          python tools/validate_r14_exports.py \
+            --directory hardware/pcb/6dof2_r14/exports/2026-11-01-stock --profile sensor-10v
+      - name: R14C2 all body outlines, manufacturer envelopes and access
+        run: |
+          python tools/audit_pcb_outline_coverage.py \
+            --source hardware/pcb/6dof2_r14/exports/2026-11-01-stock/R14-project.epro2 \
+            --output "$RUNNER_TEMP/pcb-review/c2-outlines.json" \
+            --csv "$RUNNER_TEMP/pcb-review/c2-outlines.csv"
+          python tools/verify_pcb_body_bounds.py \
+            --source hardware/pcb/6dof2_r14/exports/2026-11-01-stock/R14-project.epro2 \
+            --bounds hardware/pcb/6dof2_r14/review/2026-11-01-stock/BODY_LIMITS.json \
+            --output "$RUNNER_TEMP/pcb-review/c2-clearance.json"
+      - name: R14C2 all 324 native STEP components and interference pairs
+        run: |
+          python tools/audit_pcb_mechanical.py \
+            --source hardware/pcb/6dof2_r14/exports/2026-11-01-stock/R14-project.epro2 \
+            --step hardware/pcb/6dof2_r14/exports/2026-11-01-stock/R14-assembly.step.zip \
+            --internal-clearance "$RUNNER_TEMP/pcb-review/c2-clearance.json" \
+            --output "$RUNNER_TEMP/pcb-review/c2-mechanical.json"
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: r14c1-mechanical-ci-evidence
+          name: r14c1-c2-mechanical-ci-evidence
           path: ${{ runner.temp }}/pcb-review/

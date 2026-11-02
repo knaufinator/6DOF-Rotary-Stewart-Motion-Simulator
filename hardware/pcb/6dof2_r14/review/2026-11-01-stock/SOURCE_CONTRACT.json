@@ -1,0 +1,12 @@
+{
+  "status": "PASS_R14C2_SOURCE_AND_INTERFACE_CONTRACT",
+  "components": 324,
+  "supplierCodes": 91,
+  "logicalPins": 1214,
+  "newTraces": 21,
+  "newVias": 9,
+  "deletedTerminalTraces": 13,
+  "unchangedUnrelatedCopper": true,
+  "sourceSha256": "8fb559fe2727b469ed42737be82b6bcb11eccb92d8a7e25eae8332830f782948",
+  "limits": "Source regression only; actual CAM/STEP reports, stack-up/SI and factory qualification are separate."
+}

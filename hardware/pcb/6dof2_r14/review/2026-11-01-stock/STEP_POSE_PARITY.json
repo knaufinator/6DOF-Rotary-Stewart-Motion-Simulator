@@ -1,0 +1,101 @@
+{
+  "status": "PASS_ALL_324_NATIVE_STEP_POSES",
+  "sourceSha256": "8fb559fe2727b469ed42737be82b6bcb11eccb92d8a7e25eae8332830f782948",
+  "stepSha256": "31d3922d4dfeda94ba7e51ef86363b7cca9de86040288fb769407c98f0242457",
+  "unchangedModels": 317,
+  "maximumUnchangedModelBoundingBoxDeltaMm": 0.0,
+  "newConnectorModels": [
+    {
+      "ref": "J10",
+      "nativeModelBoundsMm": [
+        227.065843179267,
+        -2.330008750067001,
+        -1.6817824564339998,
+        242.93353705637298,
+        19.269991349934003,
+        15.458217743566
+      ],
+      "modelXYWithinReviewedEnvelope": true,
+      "boundsMethod": "OCCT AddOptimal_s; mechanical report uses conservative Add_s boxes for pair screening."
+    },
+    {
+      "ref": "J3",
+      "nativeModelBoundsMm": [
+        11.725035560071001,
+        12.725078740156999,
+        -2.9817744613329995,
+        24.275035560071004,
+        65.775078740157,
+        13.268225678813
+      ],
+      "modelXYWithinReviewedEnvelope": true,
+      "boundsMethod": "OCCT AddOptimal_s; mechanical report uses conservative Add_s boxes for pair screening."
+    },
+    {
+      "ref": "J4",
+      "nativeModelBoundsMm": [
+        39.725091440183,
+        12.725078740156999,
+        -2.9817744613329995,
+        52.275091440183,
+        65.775078740157,
+        13.268225678813
+      ],
+      "modelXYWithinReviewedEnvelope": true,
+      "boundsMethod": "OCCT AddOptimal_s; mechanical report uses conservative Add_s boxes for pair screening."
+    },
+    {
+      "ref": "J5",
+      "nativeModelBoundsMm": [
+        67.725147320295,
+        12.725078740156999,
+        -2.9817744613329995,
+        80.275147320295,
+        65.775078740157,
+        13.268225678813
+      ],
+      "modelXYWithinReviewedEnvelope": true,
+      "boundsMethod": "OCCT AddOptimal_s; mechanical report uses conservative Add_s boxes for pair screening."
+    },
+    {
+      "ref": "J6",
+      "nativeModelBoundsMm": [
+        95.725203200406,
+        12.725078740156999,
+        -2.9817744613329995,
+        108.27520320040601,
+        65.775078740157,
+        13.268225678813
+      ],
+      "modelXYWithinReviewedEnvelope": true,
+      "boundsMethod": "OCCT AddOptimal_s; mechanical report uses conservative Add_s boxes for pair screening."
+    },
+    {
+      "ref": "J7",
+      "nativeModelBoundsMm": [
+        123.72525908051799,
+        12.725078740156999,
+        -2.9817744613329995,
+        136.275259080518,
+        65.775078740157,
+        13.268225678813
+      ],
+      "modelXYWithinReviewedEnvelope": true,
+      "boundsMethod": "OCCT AddOptimal_s; mechanical report uses conservative Add_s boxes for pair screening."
+    },
+    {
+      "ref": "J8",
+      "nativeModelBoundsMm": [
+        151.72531496063,
+        12.725078740156999,
+        -2.9817744613329995,
+        164.27531496063,
+        65.775078740157,
+        13.268225678813
+      ],
+      "modelXYWithinReviewedEnvelope": true,
+      "boundsMethod": "OCCT AddOptimal_s; mechanical report uses conservative Add_s boxes for pair screening."
+    }
+  ],
+  "limits": "XY envelope/pose evidence; exact height, hardware and external access qualification remain open."
+}

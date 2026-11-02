@@ -1,0 +1,273 @@
+{
+  "revision": "R14C2",
+  "startedDate": "2026-11-01",
+  "reviewedDate": "2026-11-02",
+  "status": "ENGINEERING_CANDIDATE_DO_NOT_ORDER_FABRICATION_GATES_OPEN",
+  "components": 324,
+  "supplierCodes": 91,
+  "logicalPins": 1214,
+  "newTraces": 21,
+  "newVias": 9,
+  "uniqueDrills": 1121,
+  "nativeDrc": [],
+  "schematicPcbComparison": [],
+  "firmwareChanged": false,
+  "hardwareTests": "NOT_RUN",
+  "factorySubmission": "NOT_PERFORMED",
+  "factoryAcceptance": "NOT_CONFIRMED",
+  "reviewDirectory": "../../review/2026-11-01-stock",
+  "files": [
+    {
+      "path": "../../drawings/R14C2-PCB-top.svg",
+      "bytes": 1146215,
+      "sha256": "faca3dda31fd6db542eb0a87ca3284f64578fc9c4759caf16ff6073a21aec105"
+    },
+    {
+      "path": "../../drawings/R14C2-PCB.pdf",
+      "bytes": 2906833,
+      "sha256": "57ecf31090b81b18aa021f56a2275586c7fe92ea80cd14270b083d9252c308f7"
+    },
+    {
+      "path": "../../drawings/R14C2-schematic.pdf",
+      "bytes": 1982829,
+      "sha256": "6f1e166c723be6e7fadbeea6e0123c034a87b70141311762f821448b4897b9cf"
+    },
+    {
+      "path": "EXPORT_VALIDATION.json",
+      "bytes": 600,
+      "sha256": "743d6187993dbbf1633bf76c97ae184a70671e847f7f904b728a12abe2a24a7c"
+    },
+    {
+      "path": "NATIVE_COMPARISON.json",
+      "bytes": 2,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "path": "NATIVE_DRC.json",
+      "bytes": 2,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "path": "R14-assembly.step.zip",
+      "bytes": 15393695,
+      "sha256": "b39be50b242b34402c48180aaef6574b080ff6f82a526e34ad52aff38402ad59"
+    },
+    {
+      "path": "R14-BOM-JLC.csv",
+      "bytes": 5156,
+      "sha256": "0e332823f787165ef38ffba0926bea9d2474265717dc43329da65e584a7ff86b"
+    },
+    {
+      "path": "R14-BOM-native.tsv",
+      "bytes": 16578,
+      "sha256": "2522d7dc3e6520b726df69b5313175e5544c7f0a4f6a1cecc1744aec5e30c6ab"
+    },
+    {
+      "path": "R14-CPL-JLC.csv",
+      "bytes": 8754,
+      "sha256": "a270e03dc50374ead78288100bc4359a748f71387faa3615ecc2e3689f2036f4"
+    },
+    {
+      "path": "R14-CPL-native.tsv",
+      "bytes": 105768,
+      "sha256": "03164896b430f276bf940e01520639d275c9d4cfa3d2f86767d606c6e42b88d2"
+    },
+    {
+      "path": "R14-Gerber-FS36.zip",
+      "bytes": 506809,
+      "sha256": "3c2255a6a18ffd5b62e1bfe587780f571d7e70700f17228ba52c8034a6a2f3b3"
+    },
+    {
+      "path": "R14-PCB.net",
+      "bytes": 615871,
+      "sha256": "d644340a932cb89312f361e47b67cf864caeafeddf2380eb232da87667cfa60c"
+    },
+    {
+      "path": "R14-project.epro2",
+      "bytes": 1157890,
+      "sha256": "8fb559fe2727b469ed42737be82b6bcb11eccb92d8a7e25eae8332830f782948"
+    },
+    {
+      "path": "R14-schematic.net",
+      "bytes": 876143,
+      "sha256": "a45cf49cdd5f1aa20773cfd13e2c7c40d31adfb9330ed839f5e4b392794a1753"
+    },
+    {
+      "path": "R14-schematic.svg",
+      "bytes": 1783139,
+      "sha256": "db53d07f657b7af9d8e598dbeb8a1e7c624a6ee7816ee7689d3c6a703082acbb"
+    },
+    {
+      "path": "README.md",
+      "bytes": 3226,
+      "sha256": "9dc3480c1e1cccb748ef5a37164a0707853f2c0c3420f6423cb9c5ecbbdc25e9"
+    },
+    {
+      "path": "../../images/r14c2-pcb-top.png",
+      "bytes": 524084,
+      "sha256": "19bea1db3ceacfa6d32d881ac5074c8a5f932896994b7711a244a1c008ba6b81"
+    },
+    {
+      "path": "../../images/r14c2-schematic-details.png",
+      "bytes": 156789,
+      "sha256": "baafeaa44810c440e551570de3a78d07d252f297e2f35d6ad3fa5d3bb135273b"
+    },
+    {
+      "path": "../../images/r14c2-schematic.png",
+      "bytes": 119688,
+      "sha256": "bb28afeac40786733a923b96ac21f3df5fccfdb027efd4d6221485a3fa7ceba7"
+    },
+    {
+      "path": "../../references/0603WAF1204T5E-UNIROYAL-C22766-20261101.pdf",
+      "bytes": 620589,
+      "sha256": "2ce7e326c6755e2fe12b30195a59c2021bcaddf72a70ff457c5f67da215b0d65"
+    },
+    {
+      "path": "../../references/HR911105A-HANRUN-REV-A6-20261101.pdf",
+      "bytes": 288611,
+      "sha256": "5e6d40d950b985a19bc3ee4a9ebe36fddd3a7ee9a594b3bd53646df53259670e"
+    },
+    {
+      "path": "../../references/L77SDB25SOL2-Amphenol-20261101.pdf",
+      "bytes": 125788,
+      "sha256": "1de4bd28d38818fde89adc3cdb4a8626bde986718f56d15cd8f3ed0b8ea457fc"
+    }
+  ],
+  "reviewFiles": [
+    {
+      "path": "ACTUAL_CAM_REVIEW.json",
+      "bytes": 35866,
+      "sha256": "fb4d5aea1a9b49f4d4cb625bb753fe923a299eb570f80f7b585dd5e392a5710a"
+    },
+    {
+      "path": "ACTUAL_NATIVE_ONLY_BINDING.json",
+      "bytes": 120,
+      "sha256": "8172dfbc0d8589f182c88559f4e29f25c4de796e0f16532fe3ec0dff22dd3188"
+    },
+    {
+      "path": "APERTURE_REVIEW.json",
+      "bytes": 545105,
+      "sha256": "5dd7b7511f89a25f425d57dcd130de7f798792dbfdbdcd61b43dfd23dba3becc"
+    },
+    {
+      "path": "body-outlines.csv",
+      "bytes": 54573,
+      "sha256": "d7b34e9023341ec67be9716e8e5907b22f15a8e242fb6f7ba7c99aa652c82ec7"
+    },
+    {
+      "path": "BODY_LIMITS.json",
+      "bytes": 149115,
+      "sha256": "674233b644ac0a44fee8459059f24beae130f73ebbed64ee97be2cf016fc19cf"
+    },
+    {
+      "path": "BODY_OUTLINES.json",
+      "bytes": 943,
+      "sha256": "dd39fcbe7ed3a3fb9f674292814e20fffe878843bf4527175f7792b67380c06a"
+    },
+    {
+      "path": "CONNECTOR_CPL_REGISTRATION.json",
+      "bytes": 2474,
+      "sha256": "78ff452923c40bb0041fb9bbd0193e36f9bddb540bce08c0f233a5e63e7733d5"
+    },
+    {
+      "path": "DB25_DIGITS.png",
+      "bytes": 120364,
+      "sha256": "9dc9b09cfa7bf08c9cfc03048432bf64568b80f3b5d78b0d0388d50b731d239e"
+    },
+    {
+      "path": "DRILL_REVIEW.json",
+      "bytes": 3594,
+      "sha256": "264fa03eb0deaf077edd3ec0d4e0d31f362075e999420518fb862c971a3044de"
+    },
+    {
+      "path": "FIRMWARE_PARITY.json",
+      "bytes": 354,
+      "sha256": "23a51cf50846372e8bb98703d8a349b77536eb2b6b03f55bad674572c9bd1239"
+    },
+    {
+      "path": "GROUND_JOINS.json",
+      "bytes": 83338,
+      "sha256": "5a05dcd655c923fc498d144ef908f5aede5d7cfca9d0f108a05b31a88cfb6ba4"
+    },
+    {
+      "path": "INTERNAL_CLEARANCE.json",
+      "bytes": 33829,
+      "sha256": "e0713d9274b914ea34dc47097b494b9837a2db8721fe68135508e6282d554ce7"
+    },
+    {
+      "path": "inventory/INVENTORY.csv",
+      "bytes": 19541,
+      "sha256": "2a7ece5362f07368982dd40608f4162f2501123d98ab8f448c3a82ecf8437408"
+    },
+    {
+      "path": "inventory/INVENTORY.json",
+      "bytes": 209032,
+      "sha256": "bdafcb54cc8577c95e7b121a8e38a741c13acc7ae000680bc34a1e0fd20a1307"
+    },
+    {
+      "path": "LABEL_ENVELOPES.json",
+      "bytes": 56924,
+      "sha256": "788037f639610a8a5a1f299526642b59e4c7083db6f2833a8d33604258d46527"
+    },
+    {
+      "path": "LIVE_SOURCE_PARITY.json",
+      "bytes": 331,
+      "sha256": "2c74e6c1a31bab687bb9957cc212b63463b8cd174a825a0a5eeac203ac4ef0e1"
+    },
+    {
+      "path": "MDI_PATH_LENGTHS.json",
+      "bytes": 10357,
+      "sha256": "9f143ec1ac9f40d57ccee3fb2ad9ece151a130b016a5a49e3453091927f4cce7"
+    },
+    {
+      "path": "MECHANICAL.json",
+      "bytes": 270381,
+      "sha256": "0b093bc1e41d74cff234e93d17a1e42717a0117af8e22e06f2f791ec3cb60049"
+    },
+    {
+      "path": "QUALIFICATION_GATES.json",
+      "bytes": 2181,
+      "sha256": "23c04699a91a423ca74589c1389a06ce8df657f17afa1db3cb04e908eac0a62e"
+    },
+    {
+      "path": "README.md",
+      "bytes": 9202,
+      "sha256": "48b1238bf94365c8ee1b0b8f91d23731153e653893eb30c09111893ae75c2e9e"
+    },
+    {
+      "path": "README_LINK_REVIEW.json",
+      "bytes": 2003,
+      "sha256": "f6e7662d5b36225aa2d877c759f0e3db0e3150e745df460eb412a35cddc39892"
+    },
+    {
+      "path": "SIGNAL_REFERENCES.json",
+      "bytes": 47992,
+      "sha256": "43c4016d6cd1bae19b12a7b6b21c2de20709c5e841e18426a36776ee185ad5b1"
+    },
+    {
+      "path": "SILK_REVIEW.json",
+      "bytes": 3605,
+      "sha256": "4dc0c5815812f923a53ef5b3007006091d722ff32cc6b53b9cb4dfcdda915c99"
+    },
+    {
+      "path": "SOURCE_CONTRACT.json",
+      "bytes": 442,
+      "sha256": "9c43d8b940721fc1bcaf032912db18d3689799255f740bd46a75ec95b9e7353a"
+    },
+    {
+      "path": "STEP_POSE_PARITY.json",
+      "bytes": 3247,
+      "sha256": "82a5e2ac41851a30a08ef1d8125190b05582427873255ff19e6efa95d7d08b51"
+    },
+    {
+      "path": "STOCK_REVISION_CONTRACT.json",
+      "bytes": 16475,
+      "sha256": "cec3293106a632e6321fd3cc7dd0fe5e5b01c83189efeb5c9bb0a8d1213ad575"
+    },
+    {
+      "path": "VISUAL_REVIEW.json",
+      "bytes": 726,
+      "sha256": "0d6cf2a57a4fd58b2bd723827e4e238c5c9e8a35deb405e0372b4d0f1d6c7ff2"
+    }
+  ]
+}

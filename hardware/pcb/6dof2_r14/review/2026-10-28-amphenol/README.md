@@ -1,5 +1,7 @@
 # Amphenol DB25 replacement: 3D verification, 28 October 2026
 
+This dated offline study is now followed by the [applied C2 revision](../2026-11-01-stock/README.md). The master-state statements below describe 28 October; C2 applies the sockets and retains the height/hardware limits.
+
 **Nominal internal clearance passes at all six positions. Substitution approval remains on hold because installed height and mounting hardware are not qualified.** This is an offline study of black Amphenol **L77SDB25SOL2 / C3110947** for J3–J8. The EasyEDA master and manufacturing package still contain the original Connfly connectors. No component, trace, drill, supplier identity or firmware was changed by this study.
 
 ![Actual supplied STEP solids at all six positions, closest pair and height comparison](amphenol-six-position-3d-proof.png)

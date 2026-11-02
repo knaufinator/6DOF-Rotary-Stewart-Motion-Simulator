@@ -117,8 +117,9 @@ bool r13_engine_latch_comp(int set) {
 #include "EthernetTransport.h"
 #endif
 
+#if PCB_VERSION == 2
 #include "LedStatus.h"
-#define STATUS_LED_GPIO 48
+#endif
 #ifdef ENABLE_WIFI
 #include "WifiTransport.h"
 #endif
@@ -1689,6 +1690,9 @@ void process_data(char * data) {
     // App sends this after handshake to show the entity's UI color.
     // LED breathes in this color until an error/warning overrides it.
     if (strncmp(data, "LED:", 4) == 0) {
+#if PCB_VERSION == 1
+        serial_printf("ERR:LED unsupported on legacy MCP23S17 board\r\n");
+#else
         int r = 0, g = 0, b = 0;
         if (sscanf(data + 4, "%d,%d,%d", &r, &g, &b) == 3) {
             led_status_set_entity_color((uint8_t)r, (uint8_t)g, (uint8_t)b);
@@ -1696,6 +1700,7 @@ void process_data(char * data) {
         } else {
             serial_printf("ERR:LED format LED:R,G,B (0-255)\r\n");
         }
+#endif
         return;
     }
 
@@ -2395,12 +2400,10 @@ void controller_profile_run()
     // LED status indicator — white solid during boot, green breathe when ready.
     // Not on the r13 board: GPIO48 is the drive-enable ARM input there (F02), so the WS2812
     // waveform must never be generated. led_status_set/clear stay harmless no-ops.
-#if PCB_VERSION != 2
-    led_status_init(STATUS_LED_GPIO);
-#endif
-
+#if PCB_VERSION == 2
     led_status_clear(LED_STATE_BOOT);
     led_status_set(LED_STATE_READY);
+#endif
     ESP_LOGI(TAG, "Setup Complete!");
     serial_println("READY");
     

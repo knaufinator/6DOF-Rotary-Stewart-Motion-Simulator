@@ -25,11 +25,12 @@ learned along the way—not just the latest PCB package.
 
 ## Current development status
 
-> **2026-10-27: R14 engineering hold following a JLCPCB component-clearance query.**
-> The ordered placement has confirmed J12 interference. J12 remains required;
-> R14C1 now passes the documented internal mechanical and exported electrical checks.
-> Complete replacement files are prepared; factory acceptance and physical tests remain pending.
-> See the [mechanical correction](hardware/pcb/6dof2_r14/MECHANICAL_CORRECTION.md).
+> **2026-11-02: R14C2 stock revision implemented; fabrication gates remain open.**
+> The saved master uses better-stock resistors, six Amphenol DB25 sockets and a Hanrun MagJack.
+> All 324 parts remain fitted. Native, actual CAM and internal mechanical checks pass.
+> Ethernet SI/stack-up, factory processing/allocation and external mounting fit remain unqualified.
+> See the [C2 review and gates](hardware/pcb/6dof2_r14/review/2026-11-01-stock/README.md).
+> The R14C1 J12 correction is retained; the original ordered placement still has confirmed interference.
 > The recovered R13 firmware baseline and original ordered exports are preserved.
 > See the [R14 board, schematic and status](hardware/pcb/6dof2_r14/README.md),
 > [design philosophy](hardware/pcb/6dof2_r14/DESIGN_PHILOSOPHY.md) and
@@ -40,15 +41,16 @@ stop hardware must be in place before powered operation; the app's E-STOP button
 is not a substitute for a physical safety system. Earlier working builds and
 signal captures do **not** validate the current PCB/firmware combination.
 
-## R14C1 corrected hardware
+## R14C2 controller hardware
 
-[![R14 top copper and silkscreen](hardware/pcb/6dof2_r14/images/r14c1-pcb-top.png)](hardware/pcb/6dof2_r14/drawings/R14C1-PCB.pdf)
+[![R14C2 top copper and silkscreen](hardware/pcb/6dof2_r14/images/r14c2-pcb-top.png)](hardware/pcb/6dof2_r14/drawings/R14C2-PCB.pdf)
 
-[PCB PDF](hardware/pcb/6dof2_r14/drawings/R14C1-PCB.pdf) ·
-[Schematic PDF](hardware/pcb/6dof2_r14/drawings/R14-schematic.pdf) ·
-[Native schematic SVG](hardware/pcb/6dof2_r14/exports/2026-10-27-clearance/R14-schematic.svg) ·
-[Editable EasyEDA project](hardware/pcb/6dof2_r14/exports/2026-10-27-clearance/R14-project.epro2) ·
-[Manufacturing files](hardware/pcb/6dof2_r14/exports/2026-10-27-clearance/README.md)
+[PCB PDF](hardware/pcb/6dof2_r14/drawings/R14C2-PCB.pdf) ·
+[Schematic PDF](hardware/pcb/6dof2_r14/drawings/R14C2-schematic.pdf) ·
+[Native schematic SVG](hardware/pcb/6dof2_r14/exports/2026-11-01-stock/R14-schematic.svg) ·
+[Editable EasyEDA project](hardware/pcb/6dof2_r14/exports/2026-11-01-stock/R14-project.epro2) ·
+[Assembly BOM](hardware/pcb/6dof2_r14/exports/2026-11-01-stock/R14-BOM-JLC.csv) ·
+[Matching engineering package](hardware/pcb/6dof2_r14/exports/2026-11-01-stock/README.md)
 
 The R14 order was confirmed on 26 October 2026. Read the
 [design decisions](hardware/pcb/6dof2_r14/DECISIONS.md),
@@ -60,7 +62,7 @@ keeps normal motion admission locked.
 <details>
 <summary>R14 schematic preview — full sheet and detail pages in the PDF</summary>
 
-![R14 schematic detail regions](hardware/pcb/6dof2_r14/images/r14-schematic-details.png)
+![R14C2 native schematic detail regions](hardware/pcb/6dof2_r14/images/r14c2-schematic-details.png)
 
 These are crops of the native schematic, retaining named-net stubs and source
 label placement. Use the linked vector PDF/SVG to inspect the complete sheet.

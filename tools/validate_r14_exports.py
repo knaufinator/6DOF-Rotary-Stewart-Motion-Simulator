@@ -59,6 +59,21 @@ def pins(c):
     for k,v in c['pinInfoMap'].items():
         if not k:assert not v['net'],'Unnamed mechanical pad unexpectedly carries a net'
     return {str(k):v['net'] for k,v in c['pinInfoMap'].items() if k}
+
+def step_component_refs(text, expected):
+    """Match the component assembly root, including imported nested STEP models.
+
+    EasyEDA's ordinary models have an additional ``REF->0`` child. Imported
+    supplier assemblies can lack that child; their root REF occurrence is the
+    placement identity. Require one complete, duplicate-free common parent.
+    """
+    parents=collections.defaultdict(list)
+    for ref,parent in re.findall(r"NEXT_ASSEMBLY_USAGE_OCCURRENCE\('\s*([A-Z]+\d+)\s*'\s*,\s*''\s*,\s*''\s*,\s*#(\d+)\s*,\s*#\d+\s*,\s*\$\s*\)",text):
+        parents[parent].append(ref)
+    candidates=[refs for refs in parents.values() if set(refs)==set(expected) and len(refs)==len(set(refs))]
+    if len(candidates)!=1:
+        raise ValueError('STEP must contain one complete, duplicate-free component assembly root')
+    return candidates[0]
 def main():
     ap=argparse.ArgumentParser();ap.add_argument('--directory',type=Path,default=ROOT/'hardware/pcb/6dof2_r14/exports/2026-10-25');ap.add_argument('--review-baseline',type=Path);ap.add_argument('--profile',choices=PROFILES,default='baseline')
     a=ap.parse_args();d=a.directory;profile=PROFILES[a.profile];count,groups=profile['components'],profile['groups']
@@ -112,7 +127,7 @@ def main():
             assert z.testzip() is None
             name,=[n for n in z.namelist() if n.endswith('.step')]
             text=z.read(name).decode('utf8')
-        models=re.findall(r"NEXT_ASSEMBLY_USAGE_OCCURRENCE\('([A-Z]+\d+)->",text)
+        models=step_component_refs(text,refs)
         assert len(models)==count and set(models)==set(refs)
         assert text.rstrip().endswith('END-ISO-10303-21;')
         result['stepPlacementRefs']=count

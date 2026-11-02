@@ -1,0 +1,20 @@
+{
+  "status": "PASS_ALL_COMPONENT_BODY_OUTLINES_DOUBLE_CHECKED",
+  "sourceSha256": "8fb559fe2727b469ed42737be82b6bcb11eccb92d8a7e25eae8332830f782948",
+  "components": 324,
+  "uniqueUsedFootprints": 57,
+  "successfullyReconstructedComponents": 324,
+  "componentBodyEncodings": {
+    "{\"POLY\": 1}": 321,
+    "{\"FILL\": 1}": 2,
+    "{\"LINE\": 4}": 1
+  },
+  "uniqueFootprintBodyEncodings": {
+    "{\"POLY\": 1}": 54,
+    "{\"FILL\": 1}": 2,
+    "{\"LINE\": 4}": 1
+  },
+  "errors": [],
+  "method": "Independent Shapely polygonize_full for original LINE segments, explicit polygon closure/validity/area, complete segment accounting and primary coverage agreement. Every used footprint and every fitted reference enumerated.",
+  "limits": "Native outline completeness only. Manufacturer maxima/placement/access and actual STEP interference are separately checked; a closed outline alone does not prove accurate dimensions."
+}

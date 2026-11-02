@@ -1,0 +1,109 @@
+{
+  "pass": true,
+  "components": 324,
+  "allSchematicLogicalNetsMatch": true,
+  "allNineCodesMatch": true,
+  "factoryNumberedPadRegistration": [
+    {
+      "ref": "J3",
+      "nativeCplMidMm": [
+        18.0,
+        39.25
+      ],
+      "nativeCplRefMm": [
+        18.0,
+        39.25
+      ],
+      "rotation": 90.0,
+      "checkedPads": 25,
+      "maximumCatalogPadResidualMm": 0.0002544401131888022
+    },
+    {
+      "ref": "J4",
+      "nativeCplMidMm": [
+        46.0,
+        39.25
+      ],
+      "nativeCplRefMm": [
+        46.0,
+        39.25
+      ],
+      "rotation": 90.0,
+      "checkedPads": 25,
+      "maximumCatalogPadResidualMm": 0.0002545601131382678
+    },
+    {
+      "ref": "J5",
+      "nativeCplMidMm": [
+        74.0,
+        39.25
+      ],
+      "nativeCplRefMm": [
+        74.0,
+        39.25
+      ],
+      "rotation": 90.0,
+      "checkedPads": 25,
+      "maximumCatalogPadResidualMm": 0.0002546801130806783
+    },
+    {
+      "ref": "J6",
+      "nativeCplMidMm": [
+        102.0,
+        39.25
+      ],
+      "nativeCplRefMm": [
+        102.0,
+        39.25
+      ],
+      "rotation": 90.0,
+      "checkedPads": 25,
+      "maximumCatalogPadResidualMm": 0.00025480011303734984
+    },
+    {
+      "ref": "J7",
+      "nativeCplMidMm": [
+        130.0,
+        39.25
+      ],
+      "nativeCplRefMm": [
+        130.0,
+        39.25
+      ],
+      "rotation": 90.0,
+      "checkedPads": 25,
+      "maximumCatalogPadResidualMm": 0.00025492011297986066
+    },
+    {
+      "ref": "J8",
+      "nativeCplMidMm": [
+        158.0,
+        39.25
+      ],
+      "nativeCplRefMm": [
+        158.0,
+        39.25
+      ],
+      "rotation": 90.0,
+      "checkedPads": 25,
+      "maximumCatalogPadResidualMm": 0.00025504011296505414
+    },
+    {
+      "ref": "J10",
+      "nativeCplMidMm": [
+        235.0,
+        10.765
+      ],
+      "nativeCplRefMm": [
+        235.0,
+        8.77
+      ],
+      "rotation": 0.0,
+      "checkedPads": 14,
+      "maximumCatalogPadResidualMm": 0.005080084025670453
+    }
+  ],
+  "method": "Native CPL Mid coordinates and native rotation applied to catalog numbered pads; compare raw placed footprint pad centres. No manual placement offsets.",
+  "sourceSha256": "8fb559fe2727b469ed42737be82b6bcb11eccb92d8a7e25eae8332830f782948",
+  "nativeCplSha256": "03164896b430f276bf940e01520639d275c9d4cfa3d2f86767d606c6e42b88d2"
+}

@@ -1,0 +1,15 @@
+{
+  "status": "VISUALLY_REVIEWED_EXPORTED_DRAWINGS_AND_DB25_GLYPHS",
+  "sourceSha256": "8fb559fe2727b469ed42737be82b6bcb11eccb92d8a7e25eae8332830f782948",
+  "images": [
+    "../../images/r14c2-pcb-top.png",
+    "../../images/r14c2-schematic-details.png",
+    "DB25_DIGITS.png"
+  ],
+  "observations": [
+    "C2 board markings and all six DB25 positions are visible in actual Gerber-derived artwork.",
+    "All12DB25glyphs read1/13 at the native orientations for J3-J8; actual ink clears openings.",
+    "Native schematic crops retain inherited overlapping labels; full vector sheet and netlist remain available.",
+    "Rendered artwork is not a manufacturer-dimensional or powered-hardware qualification."
+  ]
+}

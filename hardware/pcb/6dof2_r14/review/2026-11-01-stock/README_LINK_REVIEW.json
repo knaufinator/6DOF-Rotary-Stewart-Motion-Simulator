@@ -1,0 +1,55 @@
+{
+  "status": "PASS_OWNED_LOCAL_LINKS_EXTERNAL_LIMITS_RECORDED",
+  "localCheckedUtc": "2026-11-02T10:57:12.624631+00:00",
+  "readmes": 39,
+  "linkOccurrences": 531,
+  "brokenOwnedLocal": [],
+  "externalCheckedUtc": "2026-11-02T10:50:18.734953+00:00",
+  "uniqueExternalUrls": 59,
+  "brokenOwnedHttp": [],
+  "unverifiedHttp": [
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-26-10V/README.md",
+      "kind": "link",
+      "target": "https://www.st.com/resource/en/datasheet/ldl1117.pdf",
+      "vendor": false,
+      "status": "HTTP_UNVERIFIED",
+      "error": "TimeoutError"
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-10-28-amphenol/README.md",
+      "kind": "link",
+      "target": "https://www.amphenol-cs.com/product/l77sdb25sol2.html",
+      "vendor": false,
+      "status": "HTTP_UNVERIFIED",
+      "httpStatus": 403
+    },
+    {
+      "readme": "hardware/pcb/6dof2_r14/review/2026-11-01-stock/README.md",
+      "kind": "link",
+      "target": "https://www.amphenol-cs.com/product/l77sdb25sol2.html",
+      "vendor": false,
+      "status": "HTTP_UNVERIFIED",
+      "httpStatus": 403
+    }
+  ],
+  "brokenVendorHttp": [
+    {
+      "readme": "controller/managed_components/espressif__led_strip/README.md",
+      "kind": "link",
+      "target": "http://www.world-semi.com/Certifications/WS2812B.html",
+      "vendor": true,
+      "status": "HTTP_BROKEN",
+      "httpStatus": 404
+    },
+    {
+      "readme": "controller/test_harness/managed_components/espressif__led_strip/README.md",
+      "kind": "link",
+      "target": "http://www.world-semi.com/Certifications/WS2812B.html",
+      "vendor": true,
+      "status": "HTTP_BROKEN",
+      "httpStatus": 404
+    }
+  ],
+  "limits": "Automated403/timeout responses do not verify those external pages. Supplier PDFs are archived in the repository. Two inherited WS2812B vendor-README404occurrences remain in managed dependencies; no vendor source was rewritten."
+}

@@ -1,0 +1,8 @@
+{
+  "status": "PASS_UNCHANGED_FIRMWARE",
+  "baselineCommit": "91783c7e0274e32be587a21c979624b21723d97e",
+  "controllerDiff": "EMPTY",
+  "functionalPinMaps": "All other323parts unchanged; J10 role-preserving map checked in SOURCE_CONTRACT.json",
+  "normalMotionAdmission": "LOCKED_PENDING_PHYSICAL_QUALIFICATION",
+  "R14PoweredTests": "NOT_RUN"
+}

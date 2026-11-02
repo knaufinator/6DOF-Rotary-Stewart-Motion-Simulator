@@ -1,0 +1,19 @@
+{
+  "status": "ENGINEERING_CANDIDATE_STATIC_CHECKS_PASS_FABRICATION_GATES_OPEN",
+  "revision": "R14C2",
+  "sourceSha256": "8fb559fe2727b469ed42737be82b6bcb11eccb92d8a7e25eae8332830f782948",
+  "fabricationGates": [
+    "C2 changes the Ethernet drill pattern and DB25 signal drill diameters. It requires matching C2 PCB fabrication; a BOM/CPL substitution cannot retrofit already fabricated original/C1 boards. Confirm factory disposition before using an existing order.",
+    "Ethernet is not a controlled-impedance or SI-qualified layout. Resolve exact fabrication stack-up/impedance and the documented entry-void/layer-transition exceptions before unrestricted release; prototype testing must measure Ethernet reliability/EMI.",
+    "JLC private allocation, attrition and through-hole assembly/fixture handling are not verified by public inventory. Reprocess a fresh matching package in the actual order.",
+    "Exact Amphenol seating height/support hardware and external cable/panel/enclosure interfaces remain unqualified. Native STEP/reference dimensions and maximum XY bounds are recorded separately.",
+    "Exact EasyEDA integrated JLC order preview has not been exercised in this MCP-only session. A fresh preview is required; older browser order pages are stale."
+  ],
+  "hardwareQualification": "NOT_RUN: retain MotionAdmission<false>; qualify the actual15ft sensor cable, monitor hysteresis, hardware clear/reset/fault paths, pulse timing and unloaded axes before normal operation.",
+  "processReview": "50 inherited via drill-to-SMT-mask/paste positive gaps fall below the0.125mm review band; minimum mask gap0.032061mm. No drill intersects an opening. Assembler registration/stencil disposition remains open.",
+  "stepReaderDiagnostic": "OCCT reported9 unresolved references while reading the native assembly. All324 named component shapes were recovered, passed shape validity and the full interference check. The diagnostic is retained; nominal models do not certify exact manufacturer geometry.",
+  "maximumMdiUnsupportedEntryCentrelineMm": 14.12259848651834,
+  "firmwareChanged": false,
+  "factorySubmitted": false,
+  "factoryConfirmed": false
+}

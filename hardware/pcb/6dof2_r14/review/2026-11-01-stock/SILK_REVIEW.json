@@ -1,0 +1,151 @@
+{
+  "status": "PASS_ACTUAL_INK_GEOMETRY_VISUAL_READ_PENDING",
+  "sourceSha256": "8fb559fe2727b469ed42737be82b6bcb11eccb92d8a7e25eae8332830f782948",
+  "camSha256": "3c2255a6a18ffd5b62e1bfe587780f571d7e70700f17228ba52c8034a6a2f3b3",
+  "scriptSha256": "d38a81b7539a2f2a1bbed1353c724baa5e250fe50ff1981408d958dc4bffe937",
+  "boardOutlineCount": 1,
+  "nativeActualOutlineSymmetricDifferenceMm2": 0.0,
+  "actualInkMaskOverlapAreaMm2": 0.0,
+  "actualInkOutsideBoardAreaMm2": 0.0,
+  "layers": {
+    "GTO": {
+      "file": "Gerber_TopSilkscreenLayer.GTO",
+      "objects": 15910,
+      "primitives": 15910,
+      "clearPrimitives": 0,
+      "batches": 1,
+      "areaMm2": 993.8841134240056
+    },
+    "GTS": {
+      "file": "Gerber_TopSolderMaskLayer.GTS",
+      "objects": 1235,
+      "primitives": 8379,
+      "clearPrimitives": 0,
+      "batches": 1,
+      "areaMm2": 1856.2888754388696
+    },
+    "GKO": {
+      "file": "Gerber_BoardOutlineLayer.GKO",
+      "objects": 4,
+      "primitives": 4,
+      "clearPrimitives": 0,
+      "batches": 1,
+      "areaMm2": 203.99895347610072
+    }
+  },
+  "DB25Glyphs": [
+    {
+      "ref": "J3",
+      "text": "1",
+      "anchorMm": [
+        9.871999559999999,
+        55.86998223999999
+      ],
+      "actualInkAreaMm2": 0.14110293397651585
+    },
+    {
+      "ref": "J3",
+      "text": "13",
+      "anchorMm": [
+        9.871999559999999,
+        22.63001824
+      ],
+      "actualInkAreaMm2": 0.39328252901272404
+    },
+    {
+      "ref": "J4",
+      "text": "1",
+      "anchorMm": [
+        37.871999439999996,
+        55.86998223999999
+      ],
+      "actualInkAreaMm2": 0.14110293397651605
+    },
+    {
+      "ref": "J4",
+      "text": "13",
+      "anchorMm": [
+        37.871999439999996,
+        22.63001824
+      ],
+      "actualInkAreaMm2": 0.39328252901272576
+    },
+    {
+      "ref": "J5",
+      "text": "1",
+      "anchorMm": [
+        65.87199932,
+        55.86998223999999
+      ],
+      "actualInkAreaMm2": 0.14110293397651505
+    },
+    {
+      "ref": "J5",
+      "text": "13",
+      "anchorMm": [
+        65.87199932,
+        22.63001824
+      ],
+      "actualInkAreaMm2": 0.3932825290127212
+    },
+    {
+      "ref": "J6",
+      "text": "1",
+      "anchorMm": [
+        93.87199919999999,
+        55.86998223999999
+      ],
+      "actualInkAreaMm2": 0.14110293397651524
+    },
+    {
+      "ref": "J6",
+      "text": "13",
+      "anchorMm": [
+        93.87199919999999,
+        22.63001824
+      ],
+      "actualInkAreaMm2": 0.3932825290127211
+    },
+    {
+      "ref": "J7",
+      "text": "1",
+      "anchorMm": [
+        121.87199908,
+        55.86998223999999
+      ],
+      "actualInkAreaMm2": 0.14110293397651524
+    },
+    {
+      "ref": "J7",
+      "text": "13",
+      "anchorMm": [
+        121.87199908,
+        22.63001824
+      ],
+      "actualInkAreaMm2": 0.3932825290127212
+    },
+    {
+      "ref": "J8",
+      "text": "1",
+      "anchorMm": [
+        149.87199895999998,
+        55.86998223999999
+      ],
+      "actualInkAreaMm2": 0.14110293397651452
+    },
+    {
+      "ref": "J8",
+      "text": "13",
+      "anchorMm": [
+        149.87199895999998,
+        22.63001824
+      ],
+      "actualInkAreaMm2": 0.3932825290127207
+    }
+  ],
+  "errors": [],
+  "limits": [
+    "Geometry does not perform OCR. Read actual DB25_DIGITS.png and PCB/schematic rendered drawings.",
+    "Arc approximation tolerance <=0.001mm. Export-clipped footprint outlines are not physical body dimensions."
+  ]
+}

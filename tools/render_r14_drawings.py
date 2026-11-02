@@ -113,7 +113,7 @@ def main():
 
     native = fitz.open(stream=(EXPORT / 'R14-schematic.svg').read_bytes(), filetype='svg')
     full = fitz.open('pdf', native.convert_to_pdf())
-    full[0].get_pixmap(matrix=fitz.Matrix(2800/full[0].rect.width, 2800/full[0].rect.width), alpha=False).save(IMAGES / 'r14-schematic.png')
+    full[0].get_pixmap(matrix=fitz.Matrix(2800/full[0].rect.width, 2800/full[0].rect.width), alpha=False).save(IMAGES / (args.prefix.lower()+'-schematic.png'))
     # Add readable source-coordinate detail pages, retaining the complete sheet.
     viewbox = re.search(rb'viewBox="([^"]+)"', (EXPORT / 'R14-schematic.svg').read_bytes()).group(1).decode().split()
     min_x, min_y = map(float, viewbox[:2])
@@ -133,9 +133,9 @@ def main():
     page.show_pdf_page(fitz.Rect(0, 0, 1400, 525), detail_pdf, 0)
     page.show_pdf_page(fitz.Rect(0, 525, 700, 1050), detail_pdf, 1)
     page.show_pdf_page(fitz.Rect(700, 525, 1400, 1050), detail_pdf, 2)
-    page.get_pixmap(matrix=fitz.Matrix(1.7, 1.7), alpha=False).save(IMAGES / 'r14-schematic-details.png')
+    page.get_pixmap(matrix=fitz.Matrix(1.7, 1.7), alpha=False).save(IMAGES / (args.prefix.lower()+'-schematic-details.png'))
     detail_pdf.insert_pdf(full)
-    detail_pdf.save(DRAWINGS / 'R14-schematic.pdf', garbage=4, deflate=True)
+    detail_pdf.save(DRAWINGS / (args.prefix+'-schematic.pdf'), garbage=4, deflate=True)
     print(json.dumps({'pcbPdfPages': len(pdf), 'schematicPdfPages': len(detail_pdf),
                       'inputs': ['R14-Gerber-FS36.zip', 'R14-schematic.svg'],
                       'method': 'Gerbonara vector Gerber rendering; MuPDF native-SVG rendering. No CAD mutation.'}, indent=2))

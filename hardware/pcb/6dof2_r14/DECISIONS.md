@@ -112,3 +112,9 @@ Primary sources: [OMCH sensor](https://www.omchsmps.com/product/njk-5002c/),
 [TI LM74700-Q1](https://www.ti.com/lit/ds/symlink/lm74700-q1.pdf),
 [Diodes DMN6075S](https://www.diodes.com/datasheet/download/DMN6075S.pdf),
 [TI TPS2662](https://www.ti.com/lit/ds/symlink/tps2662.pdf).
+
+## R14C2: sourcing changes belong in the master
+
+The [1 November C2 revision](review/2026-11-01-stock/README.md) replaces the three shortfall codes in both schematic and PCB. R75/R143 retain the exact resistor MPN under C22766. J3–J8 use Amphenol L77SDB25SOL2/C3110947 with 1.10 mm signal drills and the supplied STEP. J10 uses Hanrun HR911105A/C12074 with its A/6 grid, mapped TX/RX/centre-tap/LED/shield roles and new terminal routing. Native BOM/CPL exports require no identity, rotation or coordinate patch.
+
+All 324 parts remain required. The R14C1 J12 correction, 11.046 V nominal falling monitor threshold, recovered R13 pulse engine and normal-motion lock remain unchanged. End-to-end MDI planar lengths are matched and new bends use 45-degree chamfers. The recorded layer-transition/plane-void exceptions and exact fabrication stack-up still need SI disposition; clean DRC does not imply Ethernet or powered-motion qualification. The [matching candidate package](exports/2026-11-01-stock/README.md) remains DO NOT ORDER until its fabrication gates are resolved.

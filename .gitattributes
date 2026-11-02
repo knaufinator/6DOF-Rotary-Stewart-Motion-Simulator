@@ -10,8 +10,17 @@ CMakeLists.txt text eol=lf
 
 # Preserve native engineering files and recovered-source evidence exactly.
 hardware/pcb/6dof2_r14/** -text
+hardware/pcb/6dof2_r14/** whitespace=trailing-space,space-before-tab,cr-at-eol
 hardware/pcb/6dof2_r14/exports/** -whitespace
 hardware/pcb/6dof2_r14/review/r13-recovered-source/** -whitespace
 
 # Preserve raw emulator evidence against its recorded SHA-256 digests.
 docs/testing/r14-runtime/2026-10-28/** -text
+
+# Collapse generated C2 artifacts in reviews; keep the engineering contract visible.
+hardware/pcb/6dof2_r14/exports/2026-11-01-stock/** linguist-generated
+hardware/pcb/6dof2_r14/drawings/R14C2* linguist-generated
+hardware/pcb/6dof2_r14/review/2026-11-01-stock/*.json linguist-generated
+hardware/pcb/6dof2_r14/review/2026-11-01-stock/BODY_LIMITS.json -linguist-generated
+hardware/pcb/6dof2_r14/review/2026-11-01-stock/STOCK_REVISION_CONTRACT.json -linguist-generated
+hardware/pcb/6dof2_r14/review/2026-11-01-stock/QUALIFICATION_GATES.json -linguist-generated
